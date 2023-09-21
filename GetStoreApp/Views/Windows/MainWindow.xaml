@@ -5,7 +5,6 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:properties="using:GetStoreApp.Properties"
     xmlns:root="using:GetStoreApp.Services.Root"
     Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
     Activated="{x:Bind OnActivated}"

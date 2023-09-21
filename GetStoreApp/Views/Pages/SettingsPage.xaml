@@ -92,9 +92,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/Theme')}" />
 
                         <TextBlock
+                            x:Name="ThemeDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}" Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <HyperlinkButton
@@ -167,9 +175,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/Backdrop')}" />
 
                         <TextBlock
+                            x:Name="BackdropDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}" Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <HyperlinkButton
@@ -276,9 +292,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdrop')}" />
 
                         <TextBlock
+                            x:Name="AlwaysShowBackdropDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropDescription')}" Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <ToggleSwitch
@@ -326,9 +350,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/Language')}" />
 
                         <TextBlock
+                            x:Name="LanguageDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}" Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <HyperlinkButton
@@ -385,9 +417,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMost')}" />
 
                         <TextBlock
+                            x:Name="TopMostDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostDescription')}" Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <ToggleSwitch
@@ -438,9 +478,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/Notification')}" />
 
                         <TextBlock
+                            x:Name="NotificationDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}" Visibility="{x:Bind NotificationDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <HyperlinkButton
@@ -490,10 +538,17 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLite')}" />
 
                         <TextBlock
-                            VerticalAlignment="Center"
+                            x:Name="HistoryLiteDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}" Visibility="{x:Bind HistoryLiteDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <DropDownButton
@@ -551,9 +606,17 @@
                                 <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilter')}" />
 
                                 <TextBlock
+                                    x:Name="LinkFilterDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}" Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
                     </Expander.Header>
@@ -573,9 +636,17 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackage')}" />
                                         <TextBlock
+                                            x:Name="EncryptedPackageDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}" Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <ToggleSwitch
@@ -604,9 +675,17 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMap')}" />
                                         <TextBlock
+                                            x:Name="BlockMapDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}" Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <ToggleSwitch
@@ -653,9 +732,17 @@
                                 <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfig')}" />
 
                                 <TextBlock
+                                    x:Name="WinGetConfigDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigDescription')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigDescription')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigDescription')}" Visibility="{x:Bind WinGetConfigDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
                     </Expander.Header>
@@ -675,9 +762,17 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersion')}" />
                                         <TextBlock
+                                            x:Name="WinGetVersionDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}" Visibility="{x:Bind WinGetVersionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <Button
@@ -793,9 +888,17 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallMode')}" />
                                         <TextBlock
+                                            x:Name="WinGetInstallModeDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}" Visibility="{x:Bind WinGetInstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <DropDownButton
@@ -839,9 +942,17 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettings')}" />
                                         <TextBlock
+                                            x:Name="WinGetSettingsDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}" Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <Button
@@ -887,9 +998,17 @@
                                 <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptions')}" />
 
                                 <TextBlock
+                                    x:Name="DownloadOptionsDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}" Visibility="{x:Bind DownloadOptionsDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
                     </Expander.Header>
@@ -911,9 +1030,13 @@
 
                                         <HyperlinkButton
                                             Click="{x:Bind OnOpenFolderClicked}"
-                                            Content="{x:Bind DownloadFolder.Path, Mode=OneWay}"
                                             Style="{StaticResource HyperlinkButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" />
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}">
+
+                                            <HyperlinkButton.Content>
+                                                <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                                            </HyperlinkButton.Content>
+                                        </HyperlinkButton>
                                     </StackPanel>
 
                                     <DropDownButton
@@ -969,9 +1092,17 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItem')}" />
                                         <TextBlock
+                                            x:Name="DownloadItemDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}" Visibility="{x:Bind DownloadItemDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <DropDownButton
@@ -1022,9 +1153,17 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadMode')}" />
                                         <TextBlock
+                                            x:Name="DownloadModeDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadModeDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadModeDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadModeDescription')}" Visibility="{x:Bind DownloadModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <DropDownButton
@@ -1092,9 +1231,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallMode')}" />
 
                         <TextBlock
+                            x:Name="InstallModeDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}" Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <DropDownButton
@@ -1152,9 +1299,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanup')}" />
 
                         <TextBlock
+                            x:Name="TraceCleanupDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}" Visibility="{x:Bind TraceCleanupDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <Button
@@ -1194,9 +1349,17 @@
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/ExperimentalFeatures')}" />
 
                         <TextBlock
+                            x:Name="ExperimentalFeaturesDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ExperimentalFeaturesDescription')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ExperimentalFeaturesDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ExperimentalFeaturesDescription')}" Visibility="{x:Bind ExperimentalFeaturesDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
                     </StackPanel>
 
                     <Button
@@ -1236,9 +1399,17 @@
                                 <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecord')}" />
 
                                 <TextBlock
+                                    x:Name="LogRecordDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecordDescription')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecordDescription')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecordDescription')}" Visibility="{x:Bind LogRecordDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </StackPanel>
                         </Grid>
                     </Expander.Header>
@@ -1259,10 +1430,17 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolder')}" />
 
                                         <TextBlock
-                                            VerticalAlignment="Center"
+                                            x:Name="LogFolderDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}" Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <Button
@@ -1289,10 +1467,17 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLog')}" />
 
                                         <TextBlock
-                                            VerticalAlignment="Center"
+                                            x:Name="ClearLogDescription"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}" Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                     </StackPanel>
 
                                     <Button

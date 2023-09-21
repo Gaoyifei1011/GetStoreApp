@@ -55,6 +55,8 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void SetTheme(GroupOptionsModel theme)
         {
+            AppTheme = theme;
+
             ConfigService.SaveSetting(ThemeSettingsKey, theme.SelectedValue);
         }
 

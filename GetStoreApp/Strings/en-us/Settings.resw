@@ -220,7 +220,7 @@
     <value>Downloads</value>
   </data>
   <data name="DownloadInApp" xml:space="preserve">
-    <value>Use the in-app download manager to download</value>
+    <value>In-app download</value>
   </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>The number of simultaneous download tasks</value>
@@ -241,13 +241,13 @@
     <value>Application download file settings</value>
   </data>
   <data name="DownloadWithBrowser" xml:space="preserve">
-    <value>Download using the browser</value>
+    <value>Browser download</value>
   </data>
   <data name="EncryptedPackage" xml:space="preserve">
     <value>The encrypted package file is not displayed</value>
   </data>
   <data name="EncryptedPackageDescription" xml:space="preserve">
-    <value>This type of file is an encrypted application package that has been available since the Windows 8.1 Store</value>
+    <value>This type of file is an encrypted application package</value>
   </data>
   <data name="EncryptedPackageOffContent" xml:space="preserve">
     <value>Do not filter</value>
@@ -277,7 +277,7 @@
     <value>5 items</value>
   </data>
   <data name="HistoryLiteDescription" xml:space="preserve">
-    <value>The maximum number of history entries that will appear when the main page opens after the app launches</value>
+    <value>The maximum number of History entries displayed on a Microsoft Store page</value>
   </data>
   <data name="InstallMode" xml:space="preserve">
     <value>Application install mode</value>

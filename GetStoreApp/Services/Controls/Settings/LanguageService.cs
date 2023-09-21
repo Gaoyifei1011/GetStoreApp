@@ -105,12 +105,9 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 语言发生修改时修改设置存储的语言值
         /// </summary>
-        public static void SetLanguage(GroupOptionsModel language, bool isNotFirstSet = true)
+        public static void SetLanguage(GroupOptionsModel language)
         {
-            if (isNotFirstSet)
-            {
-                AppLanguage = language;
-            }
+            AppLanguage = language;
 
             ConfigService.SaveSetting(SettingsKey, language.SelectedValue);
             StringConverterHelper.AppCulture = new CultureInfo(language.SelectedValue);
