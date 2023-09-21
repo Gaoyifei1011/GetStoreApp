@@ -184,7 +184,7 @@
                         <ProgressRing
                             IsActive="{x:Bind StatePrRingActValue, Mode=OneWay}"
                             IsIndeterminate="True"
-                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(StatePrRingActValue), Mode=OneWay}" />
+                            Visibility="{x:Bind StatePrRingActValue, Mode=OneWay}" />
                     </InfoBar.Content>
                 </InfoBar>
 
@@ -273,7 +273,7 @@
                                             TextTrimming="CharacterEllipsis">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Type')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(HistoryTypeHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Type')}" Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
 
@@ -286,7 +286,7 @@
                                             TextTrimming="CharacterEllipsis">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(HistoryChannelHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}" Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
 
@@ -299,7 +299,7 @@
                                             TextTrimming="CharacterEllipsis">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Link')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(HistoryLinkHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Link')}" Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                             </ToolTipService.ToolTip>
                                         </TextBlock>
 
@@ -401,7 +401,7 @@
                     </Expander.Content>
                 </Expander>
 
-                <Grid CornerRadius="{ThemeResource ColorPickerSliderCornerRadius}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(ResultControlVisable), Mode=OneWay}">
+                <Grid CornerRadius="{ThemeResource ColorPickerSliderCornerRadius}" Visibility="{x:Bind ResultControlVisable, Mode=OneWay}">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -601,10 +601,10 @@
                                     VerticalAlignment="Center"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
                                     TextTrimming="CharacterEllipsis"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}">
+                                    Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(SelectHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}" Visibility="{x:Bind SelectHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -617,7 +617,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(FileNameHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}" Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -630,7 +630,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(LinkExpireTimeText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}" Visibility="{x:Bind LinkExpireTimeText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -643,7 +643,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(FileSHA1HeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}" Visibility="{x:Bind FileSHA1HeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -656,7 +656,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(FileSizeHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}" Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -698,7 +698,7 @@
                                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                         IsThreeState="False"
                                         ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Store'),Mode=OneWay}"
-                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
+                                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
 
                                     <HyperlinkButton
                                         Grid.Column="1"

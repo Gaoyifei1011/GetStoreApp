@@ -163,7 +163,7 @@
         <Grid
             Grid.Row="2"
             Margin="0,3,0,0"
-            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSearchCompleted), Mode=OneWay}">
+            Visibility="{x:Bind IsSearchCompleted, Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

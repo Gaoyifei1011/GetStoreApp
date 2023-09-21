@@ -29,14 +29,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 布尔值与控件显示值转换
-        /// </summary>
-        public static Visibility BooleanToVisibilityConvert(bool value)
-        {
-            return value is true ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        /// <summary>
         /// 布尔值与控件显示值转换（判断结果相反）
         /// </summary>
         public static Visibility BooleanToVisibilityReverseConvert(bool value)

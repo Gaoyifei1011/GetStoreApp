@@ -391,7 +391,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryName')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(EntryNameHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryName')}" Visibility="{x:Bind EntryNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -404,7 +404,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryDescription')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(EntryDescriptionHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryDescription')}" Visibility="{x:Bind EntryDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -417,7 +417,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/AUMID')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(AUMIDHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/AUMID')}" Visibility="{x:Bind AUMIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -636,7 +636,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyName')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(DependencyNameHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyName')}" Visibility="{x:Bind DependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -649,7 +649,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyPublisher')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(DependencyDescriptionHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyPublisher')}" Visibility="{x:Bind DependencyDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
@@ -662,7 +662,7 @@
                                     TextTrimming="CharacterEllipsis">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyVersion')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(DependencyVersionHeaderText.IsTextTrimmed), Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyVersion')}" Visibility="{x:Bind DependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 

@@ -208,7 +208,7 @@
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                             IsThreeState="False"
                             ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Download'),Mode=OneWay}"
-                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsSelectMode), Mode=OneWay}" />
+                            Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
 
                         <Grid
                             Grid.Column="1"

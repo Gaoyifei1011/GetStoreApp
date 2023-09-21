@@ -184,7 +184,7 @@
     <Grid
         Grid.Row="2"
         Padding="0,3,0,0"
-        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsLoadedCompleted), Mode=OneWay}">
+        Visibility="{x:Bind IsLoadedCompleted, Mode=OneWay}">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -200,7 +200,7 @@
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}"
-                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(IsInstalledAppsEmpty), Mode=OneWay}">
+                Visibility="{x:Bind IsInstalledAppsEmpty, Mode=OneWay}">
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"

@@ -213,7 +213,7 @@
                                     Height="32"
                                     Padding="11,0,11,0"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/Mica')}"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop)}">
+                                    Visibility="{x:Bind CanUseMicaBackdrop}">
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnBackdropSelectClicked}"
@@ -234,7 +234,7 @@
                                     Height="32"
                                     Padding="11,0,11,0"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopAcrylic')}"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityConvert(CanUseMicaBackdrop)}">
+                                    Visibility="{x:Bind CanUseMicaBackdrop}">
 
                                     <ToggleMenuFlyoutItem
                                         Click="{x:Bind OnBackdropSelectClicked}"
