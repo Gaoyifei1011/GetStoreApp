@@ -1034,7 +1034,10 @@
                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}">
 
                                             <HyperlinkButton.Content>
-                                                <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                                                <TextBlock
+                                                    Text="{x:Bind DownloadFolder.Path, Mode=OneWay}"
+                                                    TextTrimming="CharacterEllipsis"
+                                                    TextWrapping="NoWrap" />
                                             </HyperlinkButton.Content>
                                         </HyperlinkButton>
                                     </StackPanel>

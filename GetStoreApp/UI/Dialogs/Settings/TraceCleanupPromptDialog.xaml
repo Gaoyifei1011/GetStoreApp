@@ -49,6 +49,7 @@
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanFailed')}"
                                 TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
                                 Visibility="{x:Bind IsCleanFailed, Mode=OneWay}">
 
                                 <ToolTipService.ToolTip>

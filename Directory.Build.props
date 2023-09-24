@@ -11,8 +11,8 @@
     <TargetFrameworkMoniker>native,Version=v0.0</TargetFrameworkMoniker>
     <!--指定自己的体系为native-->
     <NuGetTargetMoniker Condition="'$(NuGetTargetMoniker)' == ''">native,Version=v0.0</NuGetTargetMoniker>
-    <TargetFrameworkMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCore,Version=v5.0</TargetFrameworkMoniker>
-    <NuGetTargetMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCore,Version=v5.0</NuGetTargetMoniker>
+    <TargetFrameworkMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCoreApp,Version=v8.0</TargetFrameworkMoniker>
+    <NuGetTargetMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCoreApp,Version=v8.0</NuGetTargetMoniker>
     <!--如果不指定这一行，那么arm64平台会找不到RID而失败-->
     <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">win;win-x86;win-x64;win-arm;win-arm64;win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>

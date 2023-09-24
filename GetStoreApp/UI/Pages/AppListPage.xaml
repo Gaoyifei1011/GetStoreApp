@@ -329,6 +329,7 @@
                                         Text="{x:Bind DisplayName}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap"
                                         ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(DisplayName,'DisplayName')}" />
 
                                     <TextBlock
@@ -340,6 +341,7 @@
                                         Text="{x:Bind PublisherName}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap"
                                         ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(PublisherName,'PublisherName')}" />
 
                                     <TextBlock
@@ -352,6 +354,7 @@
                                         Text="{x:Bind Version}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap"
                                         ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(Version,'Version')}" />
 
                                     <TextBlock
@@ -364,6 +367,7 @@
                                         Text="{x:Bind InstallDate}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap"
                                         ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(InstallDate,'InstallDate')}" />
 
                                     <basicInput:ExtendedSplitButton

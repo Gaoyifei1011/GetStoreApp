@@ -270,7 +270,8 @@
                                             Margin="10,0,0,0"
                                             VerticalAlignment="Center"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Store/Type')}"
-                                            TextTrimming="CharacterEllipsis">
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Type')}" Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -283,7 +284,8 @@
                                             Margin="10,0,0,0"
                                             VerticalAlignment="Center"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}"
-                                            TextTrimming="CharacterEllipsis">
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}" Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -296,7 +298,8 @@
                                             Margin="10,0,0,0"
                                             VerticalAlignment="Center"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Store/Link')}"
-                                            TextTrimming="CharacterEllipsis">
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Link')}" Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -338,7 +341,8 @@
                                                 FontSize="14"
                                                 Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
                                                 TextAlignment="Left"
-                                                TextTrimming="CharacterEllipsis">
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -354,7 +358,8 @@
                                                 FontSize="14"
                                                 Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
                                                 TextAlignment="Left"
-                                                TextTrimming="CharacterEllipsis">
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -370,7 +375,8 @@
                                                 FontSize="14"
                                                 Text="{x:Bind HistoryLink}"
                                                 TextAlignment="Left"
-                                                TextTrimming="CharacterEllipsis">
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip Content="{x:Bind HistoryLink}" Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -601,6 +607,7 @@
                                     VerticalAlignment="Center"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
                                     TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap"
                                     Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
@@ -614,7 +621,8 @@
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}" Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -627,7 +635,8 @@
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}" Visibility="{x:Bind LinkExpireTimeText.IsTextTrimmed, Mode=OneWay}" />
@@ -640,7 +649,8 @@
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}" Visibility="{x:Bind FileSHA1HeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -653,7 +663,8 @@
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}" Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -715,7 +726,8 @@
                                             <TextBlock
                                                 x:Name="FileNameHyperlinkText"
                                                 Text="{x:Bind FileName}"
-                                                TextTrimming="CharacterEllipsis">
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}" Visibility="{Binding ElementName=FileNameHyperlinkText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                 </ToolTipService.ToolTip>
@@ -732,7 +744,8 @@
                                         FontSize="14"
                                         Text="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}"
                                         TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis">
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip Content="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}" Visibility="{Binding ElementName=FileLinkExpireTimeText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -748,7 +761,8 @@
                                         FontSize="14"
                                         Text="{x:Bind FileSHA1}"
                                         TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis">
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip Content="{x:Bind FileSHA1}" Visibility="{Binding ElementName=FileSHA1Text, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -764,7 +778,8 @@
                                         FontSize="14"
                                         Text="{x:Bind FileSize}"
                                         TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis">
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip Content="{x:Bind FileSize}" Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}" />

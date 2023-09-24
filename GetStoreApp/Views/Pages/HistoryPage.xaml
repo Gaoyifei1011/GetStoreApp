@@ -411,6 +411,7 @@
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Select')}"
                         TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap"
                         Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <ToolTipService.ToolTip>
@@ -424,7 +425,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/DateTime')}" Visibility="{x:Bind DateTimeHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -437,7 +439,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Type')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Type')}" Visibility="{x:Bind TypeText.IsTextTrimmed, Mode=OneWay}" />
@@ -450,7 +453,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Channel')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Channel')}" Visibility="{x:Bind ChannelText.IsTextTrimmed, Mode=OneWay}" />
@@ -463,7 +467,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('History/Link')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('History/Link')}" Visibility="{x:Bind LinkText.IsTextTrimmed, Mode=OneWay}" />
@@ -533,7 +538,8 @@
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}"
                                     TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind converter:StringConverterHelper.TimeStampFormat(CreateTimeStamp)}" Visibility="{Binding ElementName=CreateTimeStampText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -549,7 +555,8 @@
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
                                     TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -565,7 +572,8 @@
                                     FontSize="14"
                                     Text="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}"
                                     TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind converter:StringConverterHelper.ChannelNameFormat(HistoryChannel)}" Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -581,7 +589,8 @@
                                     FontSize="14"
                                     Text="{x:Bind HistoryLink}"
                                     TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis">
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{x:Bind HistoryLink}" Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}" />

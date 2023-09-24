@@ -289,7 +289,10 @@
                                         ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.AboutReferenceToolTipFormat(Key)}">
 
                                         <HyperlinkButton.Content>
-                                            <TextBlock Text="{x:Bind Key}" TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                Text="{x:Bind Key}"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap" />
                                         </HyperlinkButton.Content>
                                     </HyperlinkButton>
                                 </DataTemplate>
@@ -825,7 +828,10 @@
                                             ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.AboutThanksToolTipFormat(Key)}">
 
                                             <HyperlinkButton.Content>
-                                                <TextBlock Text="{x:Bind Key}" TextTrimming="CharacterEllipsis" />
+                                                <TextBlock
+                                                    Text="{x:Bind Key}"
+                                                    TextTrimming="CharacterEllipsis"
+                                                    TextWrapping="NoWrap" />
                                             </HyperlinkButton.Content>
                                         </HyperlinkButton>
                                     </DataTemplate>

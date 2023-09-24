@@ -57,7 +57,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}" Visibility="{x:Bind ArgumentNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -70,7 +71,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}" Visibility="{x:Bind ArgumentHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -83,7 +85,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}" Visibility="{x:Bind IsRequiredHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -96,7 +99,8 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}"
-                        TextTrimming="CharacterEllipsis">
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
                             <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}" Visibility="{x:Bind InputContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
@@ -130,7 +134,8 @@
                             FontSize="14"
                             Text="{x:Bind ArgumentName}"
                             TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis">
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind ArgumentName}" Visibility="{Binding ElementName=ArgumentNameText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -146,7 +151,8 @@
                             FontSize="14"
                             Text="{x:Bind Argument}"
                             TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis">
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind Argument}" Visibility="{Binding ElementName=ArgumentText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -162,7 +168,8 @@
                             FontSize="14"
                             Text="{x:Bind IsRequired}"
                             TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis">
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind IsRequired}" Visibility="{Binding ElementName=IsRequiredText, Path=IsTextTrimmed, Mode=OneWay}" />
@@ -178,7 +185,8 @@
                             FontSize="14"
                             Text="{x:Bind ArgumentContent}"
                             TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis">
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
                                 <ToolTip Content="{x:Bind ArgumentContent}" Visibility="{Binding ElementName=ArgumentContentText, Path=IsTextTrimmed, Mode=OneWay}" />

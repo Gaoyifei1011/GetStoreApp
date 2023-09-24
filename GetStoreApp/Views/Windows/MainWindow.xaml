@@ -168,7 +168,8 @@
                         <TextBlock
                             x:Name="WindowStoreText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
@@ -186,7 +187,8 @@
                         <TextBlock
                             x:Name="WindowHistoryText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
@@ -204,7 +206,8 @@
                         <TextBlock
                             x:Name="WindowDownloadText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
@@ -224,7 +227,8 @@
                         <TextBlock
                             x:Name="WindowWinGetText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
@@ -242,7 +246,8 @@
                         <TextBlock
                             x:Name="WindowUWPAppText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
@@ -262,7 +267,8 @@
                         <TextBlock
                             x:Name="WindowWebText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
@@ -282,7 +288,8 @@
                         <TextBlock
                             x:Name="WindowAboutText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
@@ -300,7 +307,8 @@
                         <TextBlock
                             x:Name="WindowSettingsText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                            TextTrimming="CharacterEllipsis" />
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
                     </NavigationViewItem.Content>
 
                     <NavigationViewItem.Icon>
