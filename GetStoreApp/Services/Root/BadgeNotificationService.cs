@@ -8,17 +8,19 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class BadgeNotificationService
     {
+        private static string badgeXmlString = "<badge value='{0}'/>";
+
+        private static BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
+
+        private static XmlDocument badgeDocument = new XmlDocument();
+
         /// <summary>
         /// 设置任务栏数字角标的值，并显示
         /// </summary>
         public static void Show(int value)
         {
-            string badgeXmlString = string.Format("<badge value='{0}'/>", value);
-            XmlDocument badgeDocument = new XmlDocument();
-            badgeDocument.LoadXml(badgeXmlString);
-
+            badgeDocument.LoadXml(string.Format(badgeXmlString, value));
             BadgeNotification badge = new BadgeNotification(badgeDocument);
-            BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
             badgeUpdater.Update(badge);
         }
     }

@@ -43,6 +43,8 @@ namespace GetStoreApp.UI.Pages
 
         private bool isInitialized = false;
 
+        private bool needToRefreshData = false;
+
         private AutoResetEvent autoResetEvent;
 
         private PackageManager PackageManager { get; } = new PackageManager();
@@ -647,7 +649,7 @@ namespace GetStoreApp.UI.Pages
         public void OnFilterWayClicked(object sender, RoutedEventArgs args)
         {
             IsFramework = !IsFramework;
-            InitializeData();
+            needToRefreshData = true;
         }
 
         /// <summary>
@@ -655,19 +657,19 @@ namespace GetStoreApp.UI.Pages
         /// </summary>
         public void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem is not null)
+            ToggleButton toggleButton = sender as ToggleButton;
+            if (toggleButton is not null)
             {
-                if (SignType.HasFlag((PackageSignKind)toggleMenuFlyoutItem.Tag))
+                if (SignType.HasFlag((PackageSignKind)toggleButton.Tag))
                 {
-                    SignType &= ~(PackageSignKind)toggleMenuFlyoutItem.Tag;
+                    SignType &= ~(PackageSignKind)toggleButton.Tag;
                 }
                 else
                 {
-                    SignType |= (PackageSignKind)toggleMenuFlyoutItem.Tag;
+                    SignType |= (PackageSignKind)toggleButton.Tag;
                 }
 
-                InitializeData();
+                needToRefreshData = true;
             }
         }
 
@@ -681,7 +683,19 @@ namespace GetStoreApp.UI.Pages
             SearchText = string.Empty;
             Task.Delay(500);
             GetInstalledApps();
-            InitializeData();
+        }
+
+        /// <summary>
+        /// 浮出菜单关闭后更新数据
+        /// </summary>
+        public void OnClosed(object sender, object args)
+        {
+            if (needToRefreshData)
+            {
+                InitializeData();
+            }
+
+            needToRefreshData = false;
         }
 
         /// <summary>
@@ -968,6 +982,9 @@ namespace GetStoreApp.UI.Pages
             }
         }
 
+        /// <summary>
+        /// 获取应用包安装日期
+        /// </summary>
         public DateTimeOffset GetInstalledDate(Package package)
         {
             try

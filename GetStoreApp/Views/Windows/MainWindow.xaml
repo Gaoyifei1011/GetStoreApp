@@ -35,14 +35,14 @@
                 </Grid.ColumnDefinitions>
                 <Image
                     Grid.Column="0"
-                    Width="22"
-                    Height="22"
+                    Width="18"
+                    Height="18"
                     Margin="2,3,0,0"
                     HorizontalAlignment="Left"
                     Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
                 <TextBlock
                     Grid.Column="1"
-                    Margin="13,2,0,0"
+                    Margin="12,2,0,0"
                     VerticalAlignment="Center"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"

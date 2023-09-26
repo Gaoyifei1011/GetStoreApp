@@ -54,7 +54,6 @@ namespace GetStoreApp.Services.Controls.Download
                 }
             }
 
-            BadgeNotificationService.Show(DownloadingList.Count);
             DownloadSchedulerTimer = ThreadPoolTimer.CreatePeriodicTimer(DownloadSchedulerTimerElapsed, TimeSpan.FromSeconds(1));
         }
 
