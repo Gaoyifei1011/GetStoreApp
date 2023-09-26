@@ -30,13 +30,13 @@
                 VerticalAlignment="Center"
                 Canvas.ZIndex="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="22" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Image
                     Grid.Column="0"
-                    Width="18"
-                    Height="18"
+                    Width="22"
+                    Height="22"
                     Margin="2,3,0,0"
                     HorizontalAlignment="Left"
                     Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />

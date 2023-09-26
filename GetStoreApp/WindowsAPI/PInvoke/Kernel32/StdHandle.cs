@@ -3,7 +3,7 @@
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
     /// <summary>
-    /// <see cref="Kernel32Library.GetStdHandle"/> 和 <see cref="Kernel32Library.SetStdHandle"/> 方法的标准句柄。
+    /// GetStdHandle 和 SetStdHandle 方法的标准句柄。
     /// </summary>
     [Flags]
     public enum StdHandle

@@ -54,6 +54,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
             }
 
+            BadgeNotificationService.Show(DownloadingList.Count);
             DownloadSchedulerTimer = ThreadPoolTimer.CreatePeriodicTimer(DownloadSchedulerTimerElapsed, TimeSpan.FromSeconds(1));
         }
 
@@ -502,6 +503,8 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     DownloadingList.Remove(backgroundItem);
                 }
+
+                BadgeNotificationService.Show(DownloadingList.Count + WaitingList.Count);
 
                 // 下载完成后发送通知
                 if (DownloadingList.Count is 0 && WaitingList.Count is 0)

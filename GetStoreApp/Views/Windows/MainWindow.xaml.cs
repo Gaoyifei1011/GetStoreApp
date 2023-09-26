@@ -821,11 +821,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (Content is not null && Content.XamlRoot is not null)
                         {
-                            PointInt32 pt;
-                            unsafe
-                            {
-                                User32Library.GetCursorPos(&pt);
-                            }
+                            PointInt32 pt = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
 
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.ShowMode = FlyoutShowMode.Standard;

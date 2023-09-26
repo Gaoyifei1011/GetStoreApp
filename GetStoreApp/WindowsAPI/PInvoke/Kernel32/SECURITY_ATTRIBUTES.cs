@@ -4,14 +4,14 @@ using System.Runtime.InteropServices;
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
     /// <summary>
-    /// <see cref="SECURITY_ATTRIBUTES"> 结构包含对象的安全描述符，并指定通过指定此结构检索的句柄是否可继承。此结构为由各种函数（如 CreateFile、<see cref="Kernel32Library.CreatePipe">、<see cref="Kernel32Library.CreateProcess">、RegCreateKeyEx 或 RegSaveKeyEx）创建的对象提供安全设置。
+    /// SECURITY_ATTRIBUTES 结构包含对象的安全描述符，并指定通过指定此结构检索的句柄是否可继承。此结构为由各种函数（如 CreateFile、CreatePipe、CreateProcess、RegCreateKeyEx 或 RegSaveKeyEx）创建的对象提供安全设置。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct SECURITY_ATTRIBUTES
     {
         /// <summary>
         /// 此结构的大小（以字节为单位）。
-        /// 将此值设置为 <see cref="SECURITY_ATTRIBUTES"/> 结构的大小。
+        /// 将此值设置为 SECURITY_ATTRIBUTES 结构的大小。
         /// </summary>
         public int nLength;
 

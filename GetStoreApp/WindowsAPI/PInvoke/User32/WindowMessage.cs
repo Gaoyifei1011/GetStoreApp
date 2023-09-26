@@ -60,7 +60,7 @@
         WM_ENABLE = 0x000A,
 
         /// <summary>
-        /// 将 <see cref="WM_SETREDRAW"> 消息发送到窗口，以允许重新绘制该窗口中的更改，或阻止重新绘制该窗口中的更改。
+        /// 将 WM_SETREDRAW 消息发送到窗口，以允许重新绘制该窗口中的更改，或阻止重新绘制该窗口中的更改。
         /// </summary>
         WM_SETREDRAW = 0x000B,
 
@@ -80,8 +80,8 @@
         WM_GETTEXTLENGTH = 0x000E,
 
         /// <summary>
-        /// 当系统或其他应用程序发出绘制应用程序窗口部分的请求时，将发送 <see cref="WM_PAINT"> 消息。 当调用 UpdateWindow 或 RedrawWindow 函数或
-        /// DispatchMessage 函数时，应用程序通过使用 GetMessage 或 PeekMessage 函数获取 <see cref="WM_PAINT"> 消息时发送该消息。
+        /// 当系统或其他应用程序发出绘制应用程序窗口部分的请求时，将发送 WM_PAINT 消息。 当调用 UpdateWindow 或 RedrawWindow 函数或
+        /// DispatchMessage 函数时，应用程序通过使用 GetMessage 或 PeekMessage 函数获取 WM_PAINT 消息时发送该消息。
         /// </summary>
         WM_PAINT = 0x000F,
 
@@ -91,7 +91,7 @@
         WM_CLOSE = 0x0010,
 
         /// <summary>
-        /// <see cref="WM_ENDSESSION"> 消息在系统处理 <see cref="WM_QUERYENDSESSION"> 消息的结果后发送到应用程序。 <see cref="WM_ENDSESSION"> 消息通知应用程序会话是否结束。
+        /// WM_ENDSESSION 消息在系统处理 WM_QUERYENDSESSION 消息的结果后发送到应用程序。 WM_ENDSESSION 消息通知应用程序会话是否结束。
         /// </summary>
         WM_QUERYENDSESSION = 0x0011,
 
@@ -116,7 +116,7 @@
         WM_SYSCOLORCHANGE = 0x0015,
 
         /// <summary>
-        /// <see cref="WM_ENDSESSION"> 消息在系统处理 <see cref="WM_QUERYENDSESSION"> 消息的结果后发送到应用程序。 <see cref="WM_ENDSESSION"> 消息通知应用程序会话是否结束。
+        /// WM_ENDSESSION 消息在系统处理 WM_QUERYENDSESSION 消息的结果后发送到应用程序。 WM_ENDSESSION 消息通知应用程序会话是否结束。
         /// </summary>
         WM_ENDSESSION = 0x0016,
 
@@ -128,12 +128,12 @@
         WM_SHOWWINDOW = 0x0018,
 
         /// <summary>
-        /// 在每个控件开始绘制之前，都会向其父窗口发送 <see cref="WM_CTLCOLOR"> 通告消息，在该消息的处理函数中，可以设置控件显示文本的前景色、背景色以及字体。该消息处理函数还要求返回一个画刷的句柄，用于在控件具体的绘制之前擦除其客户区。
+        /// 在每个控件开始绘制之前，都会向其父窗口发送 WM_CTLCOLOR 通告消息，在该消息的处理函数中，可以设置控件显示文本的前景色、背景色以及字体。该消息处理函数还要求返回一个画刷的句柄，用于在控件具体的绘制之前擦除其客户区。
         /// </summary>
         WM_CTLCOLOR = 0x0019,
 
         /// <summary>
-        /// 应用程序在更改WIN.INI文件后，将 <see cref="WM_WININICHANGE"> 消息发送到所有顶级窗口。 SystemParametersInfo 函数在应用程序使用该函数更改WIN.INI中的设置后发送此消息。
+        /// 应用程序在更改WIN.INI文件后，将 WM_WININICHANGE 消息发送到所有顶级窗口。 SystemParametersInfo 函数在应用程序使用该函数更改WIN.INI中的设置后发送此消息。
         /// </summary>
         WM_WININICHANGE = 0x001A,
 
@@ -143,7 +143,7 @@
         WM_SETTINGCHANGE = WM_WININICHANGE,
 
         /// <summary>
-        /// 每当用户更改设备模式设置时， <see cref="WM_DEVMODECHANGE"> 消息都会发送到所有顶级窗口。
+        /// 每当用户更改设备模式设置时， WM_DEVMODECHANGE 消息都会发送到所有顶级窗口。
         /// </summary>
         WM_DEVMODECHANGE = 0x001B,
 
@@ -153,7 +153,7 @@
         WM_ACTIVATEAPP = 0x001C,
 
         /// <summary>
-        /// 应用程序更改字体资源池后，将 <see cref="WM_FONTCHANGE"> 消息发送到系统中的所有顶级窗口。
+        /// 应用程序更改字体资源池后，将 WM_FONTCHANGE 消息发送到系统中的所有顶级窗口。
         /// </summary>
         WM_FONTCHANGE = 0x001D,
 
@@ -213,7 +213,7 @@
         WM_ALTTABACTIVE = 0x0029,
 
         /// <summary>
-        /// 每当向打印管理器队列中添加或删除作业时，都会从打印管理器发送 <see cref="WM_SPOOLERSTATUS"> 消息。
+        /// 每当向打印管理器队列中添加或删除作业时，都会从打印管理器发送 WM_SPOOLERSTATUS 消息。
         /// </summary>
         WM_SPOOLERSTATUS = 0x002A,
 
@@ -228,17 +228,17 @@
         WM_MEASUREITEM = 0x002C,
 
         /// <summary>
-        /// 当列表框或组合框被销毁或项目被 LB_DELETESTRING、 LB_RESETCONTENT、 CB_DELETESTRING或 CB_RESETCONTENT 消息删除时，发送到列表框或组合框的所有者。 系统为每个已删除的项发送 一条 <see cref="WM_DELETEITEM"> 消息。 系统为包含非零项数据的任何已删除列表框或组合框项发送 <see cref="WM_DELETEITEM"> 消息。
+        /// 当列表框或组合框被销毁或项目被 LB_DELETESTRING、 LB_RESETCONTENT、 CB_DELETESTRING或 CB_RESETCONTENT 消息删除时，发送到列表框或组合框的所有者。 系统为每个已删除的项发送 一条 WM_DELETEITEM 消息。 系统为包含非零项数据的任何已删除列表框或组合框项发送 WM_DELETEITEM 消息。
         /// </summary>
         WM_DELETEITEM = 0x002D,
 
         /// <summary>
-        /// 由具有 LBS_WANTKEYBOARDINPUT 样式的列表框发送到其所有者以响应 <see cref="WM_KEYDOWN"> 消息。
+        /// 由具有 LBS_WANTKEYBOARDINPUT 样式的列表框发送到其所有者以响应 WM_KEYDOWN 消息。
         /// </summary>
         WM_VKEYTOITEM = 0x002E,
 
         /// <summary>
-        /// 由具有 LBS_WANTKEYBOARDINPUT 样式的列表框发送到其所有者，以响应 <see cref="WM_CHAR"> 消息。
+        /// 由具有 LBS_WANTKEYBOARDINPUT 样式的列表框发送到其所有者，以响应 WM_CHAR 消息。
         /// </summary>
         WM_CHARTOITEM = 0x002F,
 
@@ -305,7 +305,7 @@
         WM_OTHERWINDOWDESTROYED = 0x0043,
 
         /// <summary>
-        /// 每当发生 COM 端口事件时，通信设备驱动程序都会发布 <see cref="WM_COMMNOTIFY"> 消息。该消息指示窗口的输入或输出队列的状态。
+        /// 每当发生 COM 端口事件时，通信设备驱动程序都会发布 WM_COMMNOTIFY 消息。该消息指示窗口的输入或输出队列的状态。
         /// </summary>
         WM_COMMNOTIFY = 0x0044,
 
@@ -327,12 +327,12 @@
         WM_POWER = 0x0048,
 
         /// <summary>
-        /// 从 Win3.1 开始可能与 <see cref="WM_COPYDATA"> 有关，现在很可能从 MSDN 中删除。每个于此相关的功能还是带着这个消息。
+        /// 从 Win3.1 开始可能与 WM_COPYDATA 有关，现在很可能从 MSDN 中删除。每个于此相关的功能还是带着这个消息。
         /// </summary>
         WM_COPYGLOBALDATA = 0x0049,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_COPYDATA"> 消息发送到另一个应用程序。
+        /// 应用程序将 WM_COPYDATA 消息发送到另一个应用程序。
         /// </summary>
         WM_COPYDATA = 0x004A,
 
@@ -368,7 +368,7 @@
         WM_TCARD = 0x0052,
 
         /// <summary>
-        /// 指示用户按下了 F1 键。 如果按下 F1 时菜单处于活动状态， <see cref="WM_HELP"> 发送到与菜单关联的窗口;否则， <see cref="WM_HELP"> 将发送到具有键盘焦点的窗口。 如果没有窗口具有键盘焦点， <see cref="WM_HELP"> 将发送到当前活动窗口。
+        /// 指示用户按下了 F1 键。 如果按下 F1 时菜单处于活动状态， WM_HELP 发送到与菜单关联的窗口;否则， WM_HELP 将发送到具有键盘焦点的窗口。 如果没有窗口具有键盘焦点， WM_HELP 将发送到当前活动窗口。
         /// </summary>
         WM_HELP = 0x0053,
 
@@ -378,7 +378,7 @@
         WM_USERCHANGED = 0x0054,
 
         /// <summary>
-        /// 确定窗口是否接受 <see cref="WM_NOTIFY"> 通知消息中的 ANSI 或 Unicode 结构。 <see cref="WM_NOTIFYFORMAT"> 消息从公共控件发送到其父窗口，从父窗口发送到公共控件。
+        /// 确定窗口是否接受 WM_NOTIFY 通知消息中的 ANSI 或 Unicode 结构。 WM_NOTIFYFORMAT 消息从公共控件发送到其父窗口，从父窗口发送到公共控件。
         /// </summary>
         WM_NOTIFYFORMAT = 0x0055,
 
@@ -396,17 +396,17 @@
         WM_CONTEXTMENU = 0x007B,
 
         /// <summary>
-        /// 当 <see cref="User32Library.SetWindowLong"> 函数即将更改窗口的一个或多个样式时，发送到窗口。
+        /// 当 SetWindowLong 函数即将更改窗口的一个或多个样式时，发送到窗口。
         /// </summary>
         WM_STYLECHANGING = 0x007C,
 
         /// <summary>
-        /// <see cref="User32Library.SetWindowLong"> 函数更改窗口的一个或多个样式后发送到窗口。
+        /// SetWindowLong 函数更改窗口的一个或多个样式后发送到窗口。
         /// </summary>
         WM_STYLECHANGED = 0x007D,
 
         /// <summary>
-        /// 显示分辨率发生更改时 ，会将 <see cref="WM_DISPLAYCHANGE"> 消息发送到所有窗口。
+        /// 显示分辨率发生更改时 ，会将 WM_DISPLAYCHANGE 消息发送到所有窗口。
         /// </summary>
         WM_DISPLAYCHANGE = 0x007E,
 
@@ -421,13 +421,13 @@
         WM_SETICON = 0x0080,
 
         /// <summary>
-        /// 首次创建窗口时 ，在 <see cref="WM_CREATE"> 消息之前发送。
+        /// 首次创建窗口时 ，在 WM_CREATE 消息之前发送。
         /// </summary>
         WM_NCCREATE = 0x0081,
 
         /// <summary>
-        /// 通知窗口其非客户区域正在被销毁。 DestroyWindow 函数将 <see cref="WM_NCDESTROY"> 消息发送到 <see cref="WM_DESTROY"> 消息后面的窗口。<see cref="WM_DESTROY"> 用于释放与窗口关联的已分配内存对象。
-        /// 子窗口被销毁后，将发送 <see cref="WM_NCDESTROY"> 消息。 相比之下， <see cref="WM_DESTROY"> 在销毁子窗口之前发送。
+        /// 通知窗口其非客户区域正在被销毁。 DestroyWindow 函数将 WM_NCDESTROY 消息发送到 WM_DESTROY 消息后面的窗口。WM_DESTROY 用于释放与窗口关联的已分配内存对象。
+        /// 子窗口被销毁后，将发送 WM_NCDESTROY 消息。 相比之下， WM_DESTROY 在销毁子窗口之前发送。
         /// </summary>
         WM_NCDESTROY = 0x0082,
 
@@ -442,7 +442,7 @@
         WM_NCHITTEST = 0x0084,
 
         /// <summary>
-        /// <see cref="WM_NCPAINT"> 消息在必须绘制其框架时发送到窗口。
+        /// WM_NCPAINT 消息在必须绘制其框架时发送到窗口。
         /// </summary>
         WM_NCPAINT = 0x0085,
 
@@ -452,12 +452,12 @@
         WM_NCACTIVATE = 0x0086,
 
         /// <summary>
-        /// 发送到与控件关联的窗口过程。 默认情况下，系统将处理控件的所有键盘输入;系统将某些类型的键盘输入解释为对话框导航键。 若要替代此默认行为，控件可以响应 <see cref="WM_GETDLGCODE"> 消息，以指示要处理其本身的输入类型。
+        /// 发送到与控件关联的窗口过程。 默认情况下，系统将处理控件的所有键盘输入;系统将某些类型的键盘输入解释为对话框导航键。 若要替代此默认行为，控件可以响应 WM_GETDLGCODE 消息，以指示要处理其本身的输入类型。
         /// </summary>
         WM_GETDLGCODE = 0x0087,
 
         /// <summary>
-        /// <see cref="WM_SYNCPAINT"> 消息用于同步绘制，同时避免链接独立的 GUI 线程。
+        /// WM_SYNCPAINT 消息用于同步绘制，同时避免链接独立的 GUI 线程。
         /// </summary>
         WM_SYNCPAINT = 0x0088,
 
@@ -587,7 +587,7 @@
         EM_SETRECTNP = 0x00B4,
 
         /// <summary>
-        /// 在多行编辑控件中垂直滚动文本。 此消息等效于将 <see cref="WM_VSCROLL"> 消息发送到编辑控件。 可以将此消息发送到编辑控件或丰富的编辑控件。
+        /// 在多行编辑控件中垂直滚动文本。 此消息等效于将 WM_VSCROLL 消息发送到编辑控件。 可以将此消息发送到编辑控件或丰富的编辑控件。
         /// </summary>
         EM_SCROLL = 0x00B5,
 
@@ -667,7 +667,7 @@
         /// <summary>
         /// 设置编辑控件的文本限制。 文本限制是用户可在编辑控件中键入的最大文本量（ 在 TCHARs 中）。 可以将此消息发送到编辑控件或丰富的编辑控件。
         /// 对于编辑控件和 Microsoft Rich Edit 1.0，将使用字节。 对于 Microsoft Rich Edit 2.0 及更高版本，将使用字符。
-        /// <see cref="EM_SETLIMITTEXT"> 消息与 <see cref="EM_LIMITTEXT"> 消息相同。
+        /// EM_SETLIMITTEXT 消息与 EM_LIMITTEXT 消息相同。
         /// </summary>
         EM_SETLIMITTEXT = EM_LIMITTEXT,
 
@@ -692,7 +692,7 @@
         EM_LINEFROMCHAR = 0x00C9,
 
         /// <summary>
-        /// 本操作现已不支持，请使用 <see cref="EM_SETWORDBREAKPROC">
+        /// 本操作现已不支持，请使用 EM_SETWORDBREAKPROC
         /// </summary>
         EM_SETWORDBREAK = 0x00CA,
 
@@ -801,21 +801,21 @@
         SBM_GETRANGE = 0x00E3,
 
         /// <summary>
-        /// 应用程序发送 <see cref="SBM_ENABLE_ARROWS"> 消息，以启用或禁用滚动条控件的一个或多个箭头。
+        /// 应用程序发送 SBM_ENABLE_ARROWS 消息，以启用或禁用滚动条控件的一个或多个箭头。
         /// </summary>
         SBM_ENABLE_ARROWS = 0x00E4,
 
         // 0x00E5 消息未定义
 
         /// <summary>
-        /// 应用程序将 <see cref="SBM_SETRANGEREDRAW"> 消息发送到滚动条控件，以设置最小和最大位置值并重新绘制控件。
+        /// 应用程序将 SBM_SETRANGEREDRAW 消息发送到滚动条控件，以设置最小和最大位置值并重新绘制控件。
         /// </summary>
         SBM_SETRANGEREDRAW = 0x00E6,
 
         // 0x00E7 - 0x00E8 消息未定义
 
         /// <summary>
-        /// 发送 <see cref="SBM_SETSCROLLINFO"> 消息以设置滚动条的参数。
+        /// 发送 SBM_SETSCROLLINFO 消息以设置滚动条的参数。
         /// 应用程序不应直接发送此消息。 相反，它们应使用 SetScrollInfo 函数。 窗口通过其 WndProc 函数接收此消息。 实现自定义滚动条控件的应用程序必须响应这些消息， SetScrollInfo 函数才能正常运行。
         /// </summary>
         SBM_SETSCROLLINFO = 0x00E9,
@@ -859,7 +859,7 @@
         BM_SETSTYLE = 0x00F4,
 
         /// <summary>
-        /// 模拟用户单击按钮。 此消息会导致该按钮接收 <see cref="WM_LBUTTONDOWN"> 和 <see cref="WM_LBUTTONUP"> 消息，以及按钮的父窗口接收 BN_CLICKED 通知代码。
+        /// 模拟用户单击按钮。 此消息会导致该按钮接收 WM_LBUTTONDOWN 和 WM_LBUTTONUP 消息，以及按钮的父窗口接收 BN_CLICKED 通知代码。
         /// </summary>
         BM_CLICK = 0x00F5,
 
@@ -908,39 +908,39 @@
         WM_KEYUP = 0x0101,
 
         /// <summary>
-        /// 当 TranslateMessage 函数翻译 <see cref="WM_KEYDOWN"> 消息时，发布到具有键盘焦点的窗口。 <see cref="WM_CHAR"> 消息包含按下的键的字符代码。
+        /// 当 TranslateMessage 函数翻译 WM_KEYDOWN 消息时，发布到具有键盘焦点的窗口。 WM_CHAR 消息包含按下的键的字符代码。
         /// </summary>
         WM_CHAR = 0x0102,
 
         /// <summary>
-        /// 当 TranslateMessage 函数翻译 <see cref="WM_KEYUP"> 消息时，发布到具有键盘焦点的窗口。 <see cref="WM_DEADCHAR"> 指定死键生成的字符代码。 死键是生成字符（如 umlaut (双点) ）的键，该键与另一个字符结合使用以形成复合字符。 例如，通过键入 umlaut 字符的死键，然后键入 O 键，生成 umlaut-O 字符 ( ) 。
+        /// 当 TranslateMessage 函数翻译 WM_KEYUP 消息时，发布到具有键盘焦点的窗口。 WM_DEADCHAR 指定死键生成的字符代码。 死键是生成字符（如 umlaut (双点) ）的键，该键与另一个字符结合使用以形成复合字符。 例如，通过键入 umlaut 字符的死键，然后键入 O 键，生成 umlaut-O 字符 ( ) 。
         /// </summary>
         WM_DEADCHAR = 0x0103,
 
         /// <summary>
-        /// 当用户按下 F10 键 (激活菜单栏) 或按住 Alt 键，然后按另一个键时，发布到具有键盘焦点的窗口。 当当前没有窗口具有键盘焦点时，也会发生这种情况;在这种情况下， <see cref="WM_SYSKEYDOWN"> 消息发送到活动窗口。 接收消息的窗口可以通过检查 lParam 参数中的上下文代码来区分这两个上下文。
+        /// 当用户按下 F10 键 (激活菜单栏) 或按住 Alt 键，然后按另一个键时，发布到具有键盘焦点的窗口。 当当前没有窗口具有键盘焦点时，也会发生这种情况;在这种情况下， WM_SYSKEYDOWN 消息发送到活动窗口。 接收消息的窗口可以通过检查 lParam 参数中的上下文代码来区分这两个上下文。
         /// </summary>
         WM_SYSKEYDOWN = 0x0104,
 
         /// <summary>
-        /// 当用户释放按下 Alt 键时按下的键时，发布到具有键盘焦点的窗口。 当没有窗口当前具有键盘焦点时，也会发生这种情况;在这种情况下， <see cref="WM_SYSKEYUP"> 消息将发送到活动窗口。 接收消息的窗口可以通过检查 lParam 参数中的上下文代码来区分这两个上下文。
+        /// 当用户释放按下 Alt 键时按下的键时，发布到具有键盘焦点的窗口。 当没有窗口当前具有键盘焦点时，也会发生这种情况;在这种情况下， WM_SYSKEYUP 消息将发送到活动窗口。 接收消息的窗口可以通过检查 lParam 参数中的上下文代码来区分这两个上下文。
         /// </summary>
         WM_SYSKEYUP = 0x0105,
 
         /// <summary>
-        /// 当 TranslateMessage 函数翻译 <see cref="WM_SYSKEYDOWN"> 消息时，使用键盘焦点发布到窗口。 它指定系统字符键的字符代码，即在 ALT 键关闭时按下的字符键。
+        /// 当 TranslateMessage 函数翻译 WM_SYSKEYDOWN 消息时，使用键盘焦点发布到窗口。 它指定系统字符键的字符代码，即在 ALT 键关闭时按下的字符键。
         /// </summary>
         WM_SYSCHAR = 0x0106,
 
         /// <summary>
-        /// 当 TranslateMessage 函数翻译 <see cref="WM_SYSKEYDOWN"> 消息时，使用键盘焦点发送到窗口。 <see cref="WM_SYSDEADCHAR"> 指定系统死键的字符代码，即按住 Alt 键时按下的死键。
+        /// 当 TranslateMessage 函数翻译 WM_SYSKEYDOWN 消息时，使用键盘焦点发送到窗口。 WM_SYSDEADCHAR 指定系统死键的字符代码，即按住 Alt 键时按下的死键。
         /// </summary>
         WM_SYSDEADCHAR = 0x0107,
 
         WM_YOMICHAR = 0x0108,
 
         /// <summary>
-        /// 应用程序可以使用 <see cref="WM_UNICHAR"> 消息将输入发布到其他窗口。 此消息包含按下的键的字符代码。 (测试目标应用是否可以通过将 wParam 设置为 UNICODE_NOCHAR.) 的消息来处理 <see cref="WM_UNICHAR"> 消息
+        /// 应用程序可以使用 WM_UNICHAR 消息将输入发布到其他窗口。 此消息包含按下的键的字符代码。 (测试目标应用是否可以通过将 wParam 设置为 UNICODE_NOCHAR.) 的消息来处理 WM_UNICHAR 消息
         /// </summary>
         WM_UNICHAR = 0x0109,
 
@@ -993,12 +993,12 @@
         WM_TIMER = 0x0113,
 
         /// <summary>
-        /// 当窗口的标准水平滚动条中发生滚动事件时， 会将 <see cref="WM_HSCROLL"/> 消息发送到窗口。 当控件中发生滚动事件时，此消息也会发送到水平滚动条控件的所有者。
+        /// 当窗口的标准水平滚动条中发生滚动事件时， 会将 WM_HSCROLL 消息发送到窗口。 当控件中发生滚动事件时，此消息也会发送到水平滚动条控件的所有者。
         /// </summary>
         WM_HSCROLL = 0x0114,
 
         /// <summary>
-        /// 当窗口的标准垂直滚动条中发生滚动事件时， 会将 <see cref="WM_VSCROLL"> 消息发送到窗口。 当控件中发生滚动事件时，此消息也会发送到垂直滚动条控件的所有者。
+        /// 当窗口的标准垂直滚动条中发生滚动事件时， 会将 WM_VSCROLL 消息发送到窗口。 当控件中发生滚动事件时，此消息也会发送到垂直滚动条控件的所有者。
         /// </summary>
         WM_VSCROLL = 0x0115,
 
@@ -1013,7 +1013,7 @@
         WM_INITMENUPOPUP = 0x0117,
 
         /// <summary>
-        /// <see cref="WM_SYSTIMER"> 是一个众所周知但仍未记录的消息。Windows 使用 <see cref="WM_SYSTIMER"> 进行滚动等内部操作。
+        /// WM_SYSTIMER 是一个众所周知但仍未记录的消息。Windows 使用 WM_SYSTIMER 进行滚动等内部操作。
         /// </summary>
         WM_SYSTIMER = 0x0118,
 
@@ -1074,17 +1074,17 @@
         WM_MENUCOMMAND = 0x0126,
 
         /// <summary>
-        /// 应用程序发送 <see cref="WM_CHANGEUISTATE"> 消息以指示应更改 UI 状态。
+        /// 应用程序发送 WM_CHANGEUISTATE 消息以指示应更改 UI 状态。
         /// </summary>
         WM_CHANGEUISTATE = 0x0127,
 
         /// <summary>
-        /// 应用程序发送 <see cref="WM_UPDATEUISTATE"> 消息以更改指定窗口及其所有子窗口的 UI 状态。
+        /// 应用程序发送 WM_UPDATEUISTATE 消息以更改指定窗口及其所有子窗口的 UI 状态。
         /// </summary>
         WM_UPDATEUISTATE = 0x0128,
 
         /// <summary>
-        /// 应用程序发送 <see cref="WM_QUERYUISTATE"> 消息以检索窗口的 UI 状态。
+        /// 应用程序发送 WM_QUERYUISTATE 消息以检索窗口的 UI 状态。
         /// </summary>
         WM_QUERYUISTATE = 0x0129,
 
@@ -1098,7 +1098,7 @@
         WM_CTLCOLORMSGBOX = 0x0132,
 
         /// <summary>
-        /// 非只读或禁用的编辑控件将在控件即将绘制时将 <see cref="WM_CTLCOLOREDIT"> 消息发送到其父窗口。 通过响应此消息，父窗口可以使用指定的设备上下文句柄来设置编辑控件的文本和背景色。
+        /// 非只读或禁用的编辑控件将在控件即将绘制时将 WM_CTLCOLOREDIT 消息发送到其父窗口。 通过响应此消息，父窗口可以使用指定的设备上下文句柄来设置编辑控件的文本和背景色。
         /// </summary>
         WM_CTLCOLOREDIT = 0x0133,
 
@@ -1108,7 +1108,7 @@
         WM_CTLCOLORLISTBOX = 0x0134,
 
         /// <summary>
-        /// 在绘制按钮之前， <see cref="WM_CTLCOLORBTN"> 消息发送到按钮的父窗口。 父窗口可以更改按钮的文本和背景色。 但是，只有所有者绘制的按钮响应处理此消息的父窗口。
+        /// 在绘制按钮之前， WM_CTLCOLORBTN 消息发送到按钮的父窗口。 父窗口可以更改按钮的文本和背景色。 但是，只有所有者绘制的按钮响应处理此消息的父窗口。
         /// </summary>
         WM_CTLCOLORBTN = 0x0135,
 
@@ -1118,12 +1118,12 @@
         WM_CTLCOLORDLG = 0x0136,
 
         /// <summary>
-        /// 当控件即将绘制时， <see cref="WM_CTLCOLORSCROLLBAR"> 消息将发送到滚动条控件的父窗口。 通过响应此消息，父窗口可以使用显示上下文句柄设置滚动条控件的背景色。
+        /// 当控件即将绘制时， WM_CTLCOLORSCROLLBAR 消息将发送到滚动条控件的父窗口。 通过响应此消息，父窗口可以使用显示上下文句柄设置滚动条控件的背景色。
         /// </summary>
         WM_CTLCOLORSCROLLBAR = 0x0137,
 
         /// <summary>
-        /// 静态控件或只读或禁用的编辑控件在即将绘制控件时将 <see cref="WM_CTLCOLORSTATIC"> 消息发送到其父窗口。 通过响应此消息，父窗口可以使用指定的设备上下文句柄来设置静态控件的文本前景和背景色。
+        /// 静态控件或只读或禁用的编辑控件在即将绘制控件时将 WM_CTLCOLORSTATIC 消息发送到其父窗口。 通过响应此消息，父窗口可以使用指定的设备上下文句柄来设置静态控件的文本前景和背景色。
         /// </summary>
         WM_CTLCOLORSTATIC = 0x0138,
 
@@ -1155,7 +1155,7 @@
         CB_DELETESTRING = 0x0144,
 
         /// <summary>
-        /// 将名称添加到组合框显示的列表。 该消息将添加与指定字符串和文件属性集匹配的目录和文件的名称。 <see cref="CB_DIR"> 还可以将映射的驱动器号添加到列表中。
+        /// 将名称添加到组合框显示的列表。 该消息将添加与指定字符串和文件属性集匹配的目录和文件的名称。 CB_DIR 还可以将映射的驱动器号添加到列表中。
         /// </summary>
         CB_DIR = 0x0145,
 
@@ -1165,7 +1165,7 @@
         CB_GETCOUNT = 0x0146,
 
         /// <summary>
-        /// 应用程序在组合框的列表框中发送 <see cref="CB_GETCURSEL"> 消息以检索当前所选项（如果有）的索引。
+        /// 应用程序在组合框的列表框中发送 CB_GETCURSEL 消息以检索当前所选项（如果有）的索引。
         /// </summary>
         CB_GETCURSEL = 0x0147,
 
@@ -1180,7 +1180,7 @@
         CB_GETLBTEXTLEN = 0x0149,
 
         /// <summary>
-        /// 将字符串或项数据插入组合框列表中。 与 <see cref="CB_ADDSTRING"> 消息不同， <see cref="CB_INSERTSTRING"> 消息不会导致对具有 CBS_SORT 样式的列表进行排序。
+        /// 将字符串或项数据插入组合框列表中。 与 CB_ADDSTRING 消息不同， CB_INSERTSTRING 消息不会导致对具有 CBS_SORT 样式的列表进行排序。
         /// </summary>
         CB_INSERTSTRING = 0x014A,
 
@@ -1200,32 +1200,32 @@
         CB_SELECTSTRING = 0x014D,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETCURSEL"> 消息，以在组合框中选择字符串。 如有必要，列表会将字符串滚动到视图中。 组合框的编辑控件中的文本将更改以反映新选定内容，并删除列表中任何以前的选定内容。
+        /// 应用程序发送 CB_SETCURSEL 消息，以在组合框中选择字符串。 如有必要，列表会将字符串滚动到视图中。 组合框的编辑控件中的文本将更改以反映新选定内容，并删除列表中任何以前的选定内容。
         /// </summary>
         CB_SETCURSEL = 0x014E,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SHOWDROPDOWN"> 消息以显示或隐藏具有 CBS_DROPDOWN 或 CBS_DROPDOWNLIST 样式的组合框的列表框。
+        /// 应用程序发送 CB_SHOWDROPDOWN 消息以显示或隐藏具有 CBS_DROPDOWN 或 CBS_DROPDOWNLIST 样式的组合框的列表框。
         /// </summary>
         CB_SHOWDROPDOWN = 0x014F,
 
         /// <summary>
-        /// 应用程序将 <see cref="CB_GETITEMDATA"> 消息发送到组合框，以检索与组合框中指定项关联的应用程序提供的值。
+        /// 应用程序将 CB_GETITEMDATA 消息发送到组合框，以检索与组合框中指定项关联的应用程序提供的值。
         /// </summary>
         CB_GETITEMDATA = 0x0150,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETITEMDATA"> 消息以设置与组合框中指定项关联的值。
+        /// 应用程序发送 CB_SETITEMDATA 消息以设置与组合框中指定项关联的值。
         /// </summary>
         CB_SETITEMDATA = 0x0151,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_GETDROPPEDCONTROLRECT"> 消息以检索处于下拉状态的组合框的屏幕坐标。
+        /// 应用程序发送 CB_GETDROPPEDCONTROLRECT 消息以检索处于下拉状态的组合框的屏幕坐标。
         /// </summary>
         CB_GETDROPPEDCONTROLRECT = 0x0152,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETITEMHEIGHT"> 消息以设置组合框中的列表项或选择字段的高度。
+        /// 应用程序发送 CB_SETITEMHEIGHT 消息以设置组合框中的列表项或选择字段的高度。
         /// </summary>
         CB_SETITEMHEIGHT = 0x0153,
 
@@ -1235,7 +1235,7 @@
         CB_GETITEMHEIGHT = 0x0154,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETEXTENDEDUI"> 消息，以选择具有 CBS_DROPDOWN 或 CBS_DROPDOWNLIST 样式的组合框的默认 UI 或扩展 UI。
+        /// 应用程序发送 CB_SETEXTENDEDUI 消息，以选择具有 CBS_DROPDOWN 或 CBS_DROPDOWNLIST 样式的组合框的默认 UI 或扩展 UI。
         /// </summary>
         CB_SETEXTENDEDUI = 0x0155,
 
@@ -1255,22 +1255,22 @@
         CB_FINDSTRINGEXACT = 0x0158,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETLOCALE"> 消息以设置组合框的当前区域设置。 如果组合框具有使用 <see cref="CB_ADDSTRING"> 添加 CBS_SORT 样式和字符串，则组合框的区域设置会影响列表项的排序方式。
+        /// 应用程序发送 CB_SETLOCALE 消息以设置组合框的当前区域设置。 如果组合框具有使用 CB_ADDSTRING 添加 CBS_SORT 样式和字符串，则组合框的区域设置会影响列表项的排序方式。
         /// </summary>
         CB_SETLOCALE = 0x0159,
 
         /// <summary>
-        /// 获取组合框的当前区域设置。 区域设置用于确定使用 <see cref="CB_ADDSTRING"> 消息添加 CBS_SORT 样式和文本的组合框显示文本的正确排序顺序。
+        /// 获取组合框的当前区域设置。 区域设置用于确定使用 CB_ADDSTRING 消息添加 CBS_SORT 样式和文本的组合框显示文本的正确排序顺序。
         /// </summary>
         CB_GETLOCALE = 0x015A,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_GETTOPINDEX"> 消息以检索组合框列表框部分第一个可见项的从零开始的索引。 最初，索引为 0 的项位于列表框顶部，但如果列表框内容已滚动，则其他项可能位于顶部。
+        /// 应用程序发送 CB_GETTOPINDEX 消息以检索组合框列表框部分第一个可见项的从零开始的索引。 最初，索引为 0 的项位于列表框顶部，但如果列表框内容已滚动，则其他项可能位于顶部。
         /// </summary>
         CB_GETTOPINDEX = 0x015B,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETTOPINDEX"> 消息，以确保特定项在组合框的列表框中可见。 系统滚动列表框内容，以便指定的项显示在列表框顶部或已达到最大滚动范围。
+        /// 应用程序发送 CB_SETTOPINDEX 消息，以确保特定项在组合框的列表框中可见。 系统滚动列表框内容，以便指定的项显示在列表框顶部或已达到最大滚动范围。
         /// </summary>
         CB_SETTOPINDEX = 0x015C,
 
@@ -1280,7 +1280,7 @@
         CB_GETHORIZONTALEXTENT = 0x015D,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETHORIZONTALEXTENT"> 消息以设置宽度（以像素为单位），列表框可以水平滚动 (可滚动宽度) 。 如果列表框的宽度小于此值，则水平滚动条水平滚动列表框中的项目。 如果列表框的宽度等于或大于此值，则隐藏水平滚动条，或者，如果组合框具有 CBS_DISABLENOSCROLL 样式，则禁用。
+        /// 应用程序发送 CB_SETHORIZONTALEXTENT 消息以设置宽度（以像素为单位），列表框可以水平滚动 (可滚动宽度) 。 如果列表框的宽度小于此值，则水平滚动条水平滚动列表框中的项目。 如果列表框的宽度等于或大于此值，则隐藏水平滚动条，或者，如果组合框具有 CBS_DISABLENOSCROLL 样式，则禁用。
         /// </summary>
         CB_SETHORIZONTALEXTENT = 0x015E,
 
@@ -1290,12 +1290,12 @@
         CB_GETDROPPEDWIDTH = 0x015F,
 
         /// <summary>
-        /// 应用程序发送 <see cref="CB_SETDROPPEDWIDTH"> 消息，以设置具有 CBS_DROPDOWN 或 CBS_DROPDOWNLIST 样式的组合框列表框的最小允许宽度（以像素为单位）。
+        /// 应用程序发送 CB_SETDROPPEDWIDTH 消息，以设置具有 CBS_DROPDOWN 或 CBS_DROPDOWNLIST 样式的组合框列表框的最小允许宽度（以像素为单位）。
         /// </summary>
         CB_SETDROPPEDWIDTH = 0x0160,
 
         /// <summary>
-        /// 应用程序在将大量项目添加到组合框的列表框部分之前发送 <see cref="CB_INITSTORAGE"> 消息。 此消息分配用于存储列表框项的内存。
+        /// 应用程序在将大量项目添加到组合框的列表框部分之前发送 CB_INITSTORAGE 消息。 此消息分配用于存储列表框项的内存。
         /// </summary>
         CB_INITSTORAGE = 0x0161,
 
@@ -1318,7 +1318,7 @@
         LB_ADDSTRING = 0x0180,
 
         /// <summary>
-        /// 将字符串或项数据插入列表框中。 与 <see cref="LB_ADDSTRING"> 消息不同， <see cref="LB_INSERTSTRING"> 消息不会导致对具有 LBS_SORT 样式的列表进行排序。
+        /// 将字符串或项数据插入列表框中。 与 LB_ADDSTRING 消息不同， LB_INSERTSTRING 消息不会导致对具有 LBS_SORT 样式的列表进行排序。
         /// </summary>
         LB_INSERTSTRING = 0x0181,
 
@@ -1378,7 +1378,7 @@
         LB_SELECTSTRING = 0x018C,
 
         /// <summary>
-        /// 向列表框显示的列表添加名称。 该消息将添加与指定字符串和文件属性集匹配的目录和文件的名称。 <see cref="LB_DIR"> 还可以将映射的驱动器号添加到列表框。
+        /// 向列表框显示的列表添加名称。 该消息将添加与指定字符串和文件属性集匹配的目录和文件的名称。 LB_DIR 还可以将映射的驱动器号添加到列表框。
         /// </summary>
         LB_DIR = 0x018D,
 
@@ -1492,12 +1492,12 @@
         LBCB_CARETOFF = 0x01A4,
 
         /// <summary>
-        /// 设置列表框的当前区域设置。 可以使用区域设置来确定列表框显示的文本 (的正确排序顺序，其中包含 LBS_SORT 样式) 以及 由 <see cref="LB_ADDSTRING"> 邮件添加的文本。
+        /// 设置列表框的当前区域设置。 可以使用区域设置来确定列表框显示的文本 (的正确排序顺序，其中包含 LBS_SORT 样式) 以及 由 LB_ADDSTRING 邮件添加的文本。
         /// </summary>
         LB_SETLOCALE = 0x01A5,
 
         /// <summary>
-        /// 获取列表框的当前区域设置。 可以使用区域设置来确定列表框显示的文本 (的正确排序顺序，列表框具有 LBS_SORT 样式) 和 <see cref="LB_ADDSTRING"> 邮件添加的文本。
+        /// 获取列表框的当前区域设置。 可以使用区域设置来确定列表框显示的文本 (的正确排序顺序，列表框具有 LBS_SORT 样式) 和 LB_ADDSTRING 邮件添加的文本。
         /// </summary>
         LB_GETLOCALE = 0x01A6,
 
@@ -1551,47 +1551,47 @@
         // 0x01E2 - 0x01FF 消息未定义
 
         /// <summary>
-        /// 使用 <see cref="WM_MOUSEFIRST"> 指定第一条鼠标消息。使用 PeekMessage() 函数。
+        /// 使用 WM_MOUSEFIRST 指定第一条鼠标消息。使用 PeekMessage() 函数。
         /// </summary>
         WM_MOUSEFIRST = 0x0200,
 
         /// <summary>
-        /// 当光标移动时，<see cref="WM_MOUSEMOVE"> 消息被发送到窗口。如果没有捕获鼠标，则将消息发送到包含光标的窗口。否则，消息将被发送到捕获了鼠标的窗口。
+        /// 当光标移动时，WM_MOUSEMOVE 消息被发送到窗口。如果没有捕获鼠标，则将消息发送到包含光标的窗口。否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_MOUSEMOVE = 0x0200,
 
         /// <summary>
-        /// <see cref="WM_LBUTTONDOWN"> 消息是当用户按下鼠标左键，而光标位于窗口的客户端区域时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// WM_LBUTTONDOWN 消息是当用户按下鼠标左键，而光标位于窗口的客户端区域时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_LBUTTONDOWN = 0x0201,
 
         /// <summary>
-        /// <see cref="WM_LBUTTONUP"> 消息是在用户释放鼠标左键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// WM_LBUTTONUP 消息是在用户释放鼠标左键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_LBUTTONUP = 0x0202,
 
         /// <summary>
-        /// <see cref="WM_LBUTTONDBLCLK"> 消息是在用户双击鼠标左键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// WM_LBUTTONDBLCLK 消息是在用户双击鼠标左键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_LBUTTONDBLCLK = 0x0203,
 
         /// <summary>
-        /// <see cref="WM_RBUTTONDOWN"> 消息是当用户在窗口的客户端区域按下鼠标右键时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// WM_RBUTTONDOWN 消息是当用户在窗口的客户端区域按下鼠标右键时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_RBUTTONDOWN = 0x0204,
 
         /// <summary>
-        /// <see cref="WM_RBUTTONUP"> 消息是在用户释放鼠标右键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// WM_RBUTTONUP 消息是在用户释放鼠标右键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_RBUTTONUP = 0x0205,
 
         /// <summary>
-        /// 当用户在窗口的客户端区域内双击鼠标右键时，<see cref="WM_RBUTTONDBLCLK"> 消息将被发布。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// 当用户在窗口的客户端区域内双击鼠标右键时，WM_RBUTTONDBLCLK 消息将被发布。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_RBUTTONDBLCLK = 0x0206,
@@ -1603,13 +1603,13 @@
         WM_MBUTTONDOWN = 0x0207,
 
         /// <summary>
-        /// <see cref="WM_MBUTTONUP"> 消息是在用户释放鼠标中键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// WM_MBUTTONUP 消息是在用户释放鼠标中键时发出的，而光标位于窗口的客户端区域。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_MBUTTONUP = 0x0208,
 
         /// <summary>
-        /// <see cref="WM_MBUTTONDBLCLK"> 消息是当用户双击鼠标中间按钮，而光标位于窗口的客户端区域时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
+        /// WM_MBUTTONDBLCLK 消息是当用户双击鼠标中间按钮，而光标位于窗口的客户端区域时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
         /// 否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
         WM_MBUTTONDBLCLK = 0x0209,
@@ -1640,14 +1640,14 @@
         WM_MOUSEHWHEEL = 0x020E,
 
         /// <summary>
-        /// 使用 <see cref="WM_MOUSELAST"> 指定最后一条鼠标消息。与 PeekMessage() 函数一起使用。
+        /// 使用 WM_MOUSELAST 指定最后一条鼠标消息。与 PeekMessage() 函数一起使用。
         /// </summary>
         WM_MOUSELAST = 0x020E,
 
         // 0x020F 消息未定义
 
         /// <summary>
-        /// 当子代窗口上发生重大操作时，发送到窗口。 此消息现已扩展为包含 WM_POINTERDOWN 事件。 创建子窗口时，系统会在创建该窗口的 CreateWindow 或 CreateWindowEx 函数返回之前发送 <see cref="WM_PARENTNOTIFY">。 当子窗口被销毁时，系统会在进行任何销毁窗口的处理之前发送消息。
+        /// 当子代窗口上发生重大操作时，发送到窗口。 此消息现已扩展为包含 WM_POINTERDOWN 事件。 创建子窗口时，系统会在创建该窗口的 CreateWindow 或 CreateWindowEx 函数返回之前发送 WM_PARENTNOTIFY。 当子窗口被销毁时，系统会在进行任何销毁窗口的处理之前发送消息。
         /// </summary>
         WM_PARENTNOTIFY = 0x0210,
 
@@ -1696,22 +1696,22 @@
         // 0x021A - 0x021F 消息未定义
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDICREATE"> 消息发送到多文档接口， (MDI) 客户端窗口创建 MDI 子窗口。
+        /// 应用程序将 WM_MDICREATE 消息发送到多文档接口， (MDI) 客户端窗口创建 MDI 子窗口。
         /// </summary>
         WM_MDICREATE = 0x0220,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDIDESTROY"> 消息发送到多文档接口， (MDI) 客户端窗口关闭 MDI 子窗口。
+        /// 应用程序将 WM_MDIDESTROY 消息发送到多文档接口， (MDI) 客户端窗口关闭 MDI 子窗口。
         /// </summary>
         WM_MDIDESTROY = 0x0221,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDIGETACTIVE"> 消息发送到多文档接口 (MDI) 客户端窗口，以检索活动 MDI 子窗口的句柄。
+        /// 应用程序将 WM_MDIGETACTIVE 消息发送到多文档接口 (MDI) 客户端窗口，以检索活动 MDI 子窗口的句柄。
         /// </summary>
         WM_MDIACTIVATE = 0x0222,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDIRESTORE"> 消息发送到多文档接口， (MDI) 客户端窗口，以便从最大化或最小化的大小还原 MDI 子窗口。
+        /// 应用程序将 WM_MDIRESTORE 消息发送到多文档接口， (MDI) 客户端窗口，以便从最大化或最小化的大小还原 MDI 子窗口。
         /// </summary>
         WM_MDIRESTORE = 0x0223,
 
@@ -1721,27 +1721,27 @@
         WM_MDINEXT = 0x0224,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDIMAXIMIZE"> 消息发送到多文档接口， (MDI) 客户端窗口最大化 MDI 子窗口。 系统调整子窗口的大小，使其工作区填充客户端窗口。 系统将子窗口的窗口菜单图标置于框架窗口菜单栏的最右侧位置，并将子窗口的还原图标置于最左侧的位置。 系统还会将子窗口的标题栏文本追加到框架窗口的标题栏文本。
+        /// 应用程序将 WM_MDIMAXIMIZE 消息发送到多文档接口， (MDI) 客户端窗口最大化 MDI 子窗口。 系统调整子窗口的大小，使其工作区填充客户端窗口。 系统将子窗口的窗口菜单图标置于框架窗口菜单栏的最右侧位置，并将子窗口的还原图标置于最左侧的位置。 系统还会将子窗口的标题栏文本追加到框架窗口的标题栏文本。
         /// </summary>
         WM_MDIMAXIMIZE = 0x0225,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDITILE"> 消息发送到多文档界面， (MDI) 客户端窗口，以磁贴格式排列其所有 MDI 子窗口。
+        /// 应用程序将 WM_MDITILE 消息发送到多文档界面， (MDI) 客户端窗口，以磁贴格式排列其所有 MDI 子窗口。
         /// </summary>
         WM_MDITILE = 0x0226,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDICASCADE"> 消息发送到多文档接口 (MDI) 客户端窗口，以级联格式排列其所有子窗口。
+        /// 应用程序将 WM_MDICASCADE 消息发送到多文档接口 (MDI) 客户端窗口，以级联格式排列其所有子窗口。
         /// </summary>
         WM_MDICASCADE = 0x0227,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDIICONARRANGE"> 消息发送到多文档接口， (MDI) 客户端窗口排列所有最小化的 MDI 子窗口。 它不会影响未最小化的子窗口。
+        /// 应用程序将 WM_MDIICONARRANGE 消息发送到多文档接口， (MDI) 客户端窗口排列所有最小化的 MDI 子窗口。 它不会影响未最小化的子窗口。
         /// </summary>
         WM_MDIICONARRANGE = 0x0228,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDIGETACTIVE"> 消息发送到多文档接口 (MDI) 客户端窗口，以检索活动 MDI 子窗口的句柄。
+        /// 应用程序将 WM_MDIGETACTIVE 消息发送到多文档接口 (MDI) 客户端窗口，以检索活动 MDI 子窗口的句柄。
         /// </summary>
         WM_MDIGETACTIVE = 0x0229,
 
@@ -1758,18 +1758,18 @@
         WM_DRAGMOVE = 0x022F,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDISETMENU"> 消息发送到多文档界面， (MDI) 客户端窗口替换 MDI 框架窗口的整个菜单，替换框架窗口的窗口菜单，或两者。
+        /// 应用程序将 WM_MDISETMENU 消息发送到多文档界面， (MDI) 客户端窗口替换 MDI 框架窗口的整个菜单，替换框架窗口的窗口菜单，或两者。
         /// </summary>
         WM_MDISETMENU = 0x0230,
 
         /// <summary>
-        /// 在窗口进入移动模式循环或调整大小循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 <see cref="WM_SYSCOMMAND"> 消息传递到 DefWindowProc 函数和消息 的 wParam 参数指定 SC_MOVE 或 SC_SIZE 值时，窗口将输入移动或调整模式循环。
+        /// 在窗口进入移动模式循环或调整大小循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 WM_SYSCOMMAND 消息传递到 DefWindowProc 函数和消息 的 wParam 参数指定 SC_MOVE 或 SC_SIZE 值时，窗口将输入移动或调整模式循环。
         /// 当 DefWindowProc 返回时，该操作已完成。
         /// </summary>
         WM_ENTERSIZEMOVE = 0x0231,
 
         /// <summary>
-        /// 在窗口退出移动或调整模式循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 <see cref="WM_SYSCOMMAND"> 消息传递到 DefWindowProc 函数时，窗口将输入移动或调整模式循环，而消息的 wParam 参数指定 SC_MOV E 或 SC_SIZE 值。 当 DefWindowProc 返回时，此操作将完成。
+        /// 在窗口退出移动或调整模式循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 WM_SYSCOMMAND 消息传递到 DefWindowProc 函数时，窗口将输入移动或调整模式循环，而消息的 wParam 参数指定 SC_MOV E 或 SC_SIZE 值。 当 DefWindowProc 返回时，此操作将完成。
         /// </summary>
         WM_EXITSIZEMOVE = 0x0232,
 
@@ -1779,7 +1779,7 @@
         WM_DROPFILES = 0x0233,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_MDIREFRESHMENU"> 消息发送到多文档接口， (MDI) 客户端窗口刷新 MDI 框架窗口的窗口菜单。
+        /// 应用程序将 WM_MDIREFRESHMENU 消息发送到多文档接口， (MDI) 客户端窗口刷新 MDI 框架窗口的窗口菜单。
         /// </summary>
         WM_MDIREFRESHMENU = 0x0234,
 
@@ -1815,19 +1815,19 @@
 
         /// <summary>
         /// 发布以在指针上提供一个更新，该指针在窗口的非工作区上或在悬停未捕获的联系人移动到窗口的非工作区时进行接触。 指针悬停时，消息以指针恰好悬停在哪个窗口为目标。 当指针与表面接触时，指针会隐式捕获到指针接触的窗口，并且该窗口继续接收指针的输入，直到它断开接触。
-        /// 如果窗口捕获了此指针，则不会发布此消息。 相反， <see cref="WM_POINTERUPDATE"> 将发布到捕获此指针的窗口。
+        /// 如果窗口捕获了此指针，则不会发布此消息。 相反， WM_POINTERUPDATE 将发布到捕获此指针的窗口。
         /// </summary>
         WM_NCPOINTERUPDATE = 0x0241,
 
         /// <summary>
         /// 当指针在窗口的非工作区上进行接触时发布。 消息以指针联系的窗口为目标。 指针隐式捕获到窗口，以便窗口继续接收指针的输入，直到它中断接触。
-        /// 如果窗口捕获了此指针，则不会发布此消息。 相反， <see cref="WM_POINTERDOWN"> 会发布到捕获此指针的窗口。
+        /// 如果窗口捕获了此指针，则不会发布此消息。 相反， WM_POINTERDOWN 会发布到捕获此指针的窗口。
         /// </summary>
         WM_NCPOINTERDOWN = 0x0242,
 
         /// <summary>
-        /// 在窗口的非工作区上建立接触的指针断开联系人时发布。 该消息以指针在其中进行接触的窗口为目标，此时指针被隐式捕获到窗口，以便窗口继续接收指针的输入，直到它中断接触，包括 <see cref="WM_NCPOINTERUP"> 通知。
-        /// 如果窗口捕获了此指针，则不会发布此消息。 相反， <see cref="WM_NCPOINTERUP"> 将发布到已捕获此指针的窗口。
+        /// 在窗口的非工作区上建立接触的指针断开联系人时发布。 该消息以指针在其中进行接触的窗口为目标，此时指针被隐式捕获到窗口，以便窗口继续接收指针的输入，直到它中断接触，包括 WM_NCPOINTERUP 通知。
+        /// 如果窗口捕获了此指针，则不会发布此消息。 相反， WM_NCPOINTERUP 将发布到已捕获此指针的窗口。
         /// </summary>
         WM_NCPOINTERUP = 0x0243,
 
@@ -1844,7 +1844,7 @@
         WM_POINTERDOWN = 0x0246,
 
         /// <summary>
-        /// 在窗口工作区上建立接触的指针中断联系人时发布。 此输入消息以指针进行接触的窗口为目标，指针在该时间点隐式捕获到窗口，以便窗口继续接收输入消息，包括指针的 <see cref="WM_POINTERUP"> 通知，直到它中断联系人。
+        /// 在窗口工作区上建立接触的指针中断联系人时发布。 此输入消息以指针进行接触的窗口为目标，指针在该时间点隐式捕获到窗口，以便窗口继续接收输入消息，包括指针的 WM_POINTERUP 通知，直到它中断联系人。
         /// </summary>
         WM_POINTERUP = 0x0247,
 
@@ -1861,7 +1861,7 @@
         WM_POINTERLEAVE = 0x024A,
 
         /// <summary>
-        /// 当主指针在窗口上生成 <see cref="WM_POINTERDOWN"> 时发送到非活动窗口。 只要邮件保持未处理状态，它才会到达父窗口链，直到到达顶级窗口。 应用程序可以响应此消息，以指定是否要激活它们。
+        /// 当主指针在窗口上生成 WM_POINTERDOWN 时发送到非活动窗口。 只要邮件保持未处理状态，它才会到达父窗口链，直到到达顶级窗口。 应用程序可以响应此消息，以指定是否要激活它们。
         /// </summary>
         WM_POINTERACTIVATE = 0x024B,
 
@@ -2125,53 +2125,53 @@
         /// 当窗口的有效点数 (dpi) 更改时发送。 DPI 是窗口的规模因子。 有多个事件可能导致 DPI 更改。 以下列表指示 DPI 更改的可能原因。
         /// 窗口将移动到具有不同 DPI 的新监视器。
         /// 承载窗口的监视器的 DPI 会更改。
-        /// 窗口的当前 DPI 始终等于 <see cref="WM_DPICHANGED"> 发送的最后 一个 DPI。 对于知道 DPI 更改的线程，窗口应缩放到的缩放因子。
+        /// 窗口的当前 DPI 始终等于 WM_DPICHANGED 发送的最后 一个 DPI。 对于知道 DPI 更改的线程，窗口应缩放到的缩放因子。
         /// </summary>
         WM_DPICHANGED = 0x02E0,
 
         // 0x02E1 消息未定义
 
         /// <summary>
-        /// 对于 Per Monitor v2 顶级窗口，此消息将发送到正在发生 DPI 更改的窗口的子 HWDN 树中的所有 HWND。 此消息发生在顶层窗口接收 <see cref="WM_DPICHANGED"> 之前，并从上到下遍历子树。
+        /// 对于 Per Monitor v2 顶级窗口，此消息将发送到正在发生 DPI 更改的窗口的子 HWDN 树中的所有 HWND。 此消息发生在顶层窗口接收 WM_DPICHANGED 之前，并从上到下遍历子树。
         /// </summary>
         WM_DPICHANGED_BEFOREPARENT = 0x02E2,
 
         /// <summary>
-        /// 对于 Per Monitor v2 顶级窗口，此消息将发送到正在更改 DPI 的窗口的子 HWDN 树中的所有 HWND。 在顶层窗口收到 <see cref="WM_DPICHANGED"> 并遍历从上到下子树之后，会出现此消息。
+        /// 对于 Per Monitor v2 顶级窗口，此消息将发送到正在更改 DPI 的窗口的子 HWDN 树中的所有 HWND。 在顶层窗口收到 WM_DPICHANGED 并遍历从上到下子树之后，会出现此消息。
         /// </summary>
         WM_DPICHANGED_AFTERPARENT = 0x02E3,
 
         /// <summary>
         /// 此消息告知操作系统，窗口的大小将调整为默认值以外的维度。
-        /// 在发送 <see cref="WM_DPICHANGED"> 消息之前，此消息将发送到具有每个监视器 v2 DPI_AWARENESS_CONTEXT的顶级窗口，并允许窗口计算其挂起 DPI 更改所需的大小。 由于线性 DPI 缩放是默认行为，因此仅在窗口想要以非线性方式缩放的情况下才有用。 如果应用程序响应此消息，生成的大小将是发送到 <see cref="WM_DPICHANGED"> 的候选矩形。
-        /// 使用此消息可更改 随 <see cref="WM_DPICHANGED"> 一起提供的 rect 大小。
+        /// 在发送 WM_DPICHANGED 消息之前，此消息将发送到具有每个监视器 v2 DPI_AWARENESS_CONTEXT的顶级窗口，并允许窗口计算其挂起 DPI 更改所需的大小。 由于线性 DPI 缩放是默认行为，因此仅在窗口想要以非线性方式缩放的情况下才有用。 如果应用程序响应此消息，生成的大小将是发送到 WM_DPICHANGED 的候选矩形。
+        /// 使用此消息可更改 随 WM_DPICHANGED 一起提供的 rect 大小。
         /// </summary>
         WM_GETDPISCALEDSIZE = 0x02E4,
 
         // 0x02E5 - 0x02FF 消息未定义
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_CUT"> 消息发送到编辑控件或组合框，以删除 (剪切) 当前所选内容（如果有），并在编辑控件中以 CF_TEXT 格式将已删除的文本复制到剪贴板。
+        /// 应用程序将 WM_CUT 消息发送到编辑控件或组合框，以删除 (剪切) 当前所选内容（如果有），并在编辑控件中以 CF_TEXT 格式将已删除的文本复制到剪贴板。
         /// </summary>
         WM_CUT = 0x0300,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_COPY"> 消息发送到编辑控件或组合框，以 CF_TEXT 格式将当前选定内容复制到剪贴板。
+        /// 应用程序将 WM_COPY 消息发送到编辑控件或组合框，以 CF_TEXT 格式将当前选定内容复制到剪贴板。
         /// </summary>
         WM_COPY = 0x0301,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_PASTE"> 消息发送到编辑控件或组合框，以将剪贴板的当前内容复制到位于当前插入点位置的编辑控件。 仅当剪贴板包含 CF_TEXT 格式的数据时，才会插入数据。
+        /// 应用程序将 WM_PASTE 消息发送到编辑控件或组合框，以将剪贴板的当前内容复制到位于当前插入点位置的编辑控件。 仅当剪贴板包含 CF_TEXT 格式的数据时，才会插入数据。
         /// </summary>
         WM_PASTE = 0x0302,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_CLEAR"> 消息发送到编辑控件或组合框，以从编辑控件中删除 (清除) 当前所选内容（如果有）。
+        /// 应用程序将 WM_CLEAR 消息发送到编辑控件或组合框，以从编辑控件中删除 (清除) 当前所选内容（如果有）。
         /// </summary>
         WM_CLEAR = 0x0303,
 
         /// <summary>
-        /// 应用程序将 <see cref="WM_UNDO"> 消息发送到编辑控件以撤消最后一个操作。 当此消息发送到编辑控件时，将还原以前删除的文本或删除以前添加的文本。
+        /// 应用程序将 WM_UNDO 消息发送到编辑控件以撤消最后一个操作。 当此消息发送到编辑控件时，将还原以前删除的文本或删除以前添加的文本。
         /// </summary>
         WM_UNDO = 0x0304,
 
@@ -2226,17 +2226,17 @@
         WM_HSCROLLCLIPBOARD = 0x030E,
 
         /// <summary>
-        /// <see cref="WM_QUERYNEWPALETTE"> 消息通知一个窗口，它即将接收键盘焦点，使窗口有机会在收到焦点时实现其逻辑调色板。
+        /// WM_QUERYNEWPALETTE 消息通知一个窗口，它即将接收键盘焦点，使窗口有机会在收到焦点时实现其逻辑调色板。
         /// </summary>
         WM_QUERYNEWPALETTE = 0x030F,
 
         /// <summary>
-        /// <see cref="WM_PALETTEISCHANGING"> 消息通知应用程序应用程序要实现其逻辑调色板。
+        /// WM_PALETTEISCHANGING 消息通知应用程序应用程序要实现其逻辑调色板。
         /// </summary>
         WM_PALETTEISCHANGING = 0x0310,
 
         /// <summary>
-        /// 当窗口具有键盘焦点的窗口已实现其逻辑调色板后， <see cref="WM_PALETTECHANGED"> 消息将发送到所有顶级和重叠窗口，从而更改系统调色板。 此消息启用使用调色板但没有键盘焦点的窗口来实现其逻辑调色板并更新其工作区。
+        /// 当窗口具有键盘焦点的窗口已实现其逻辑调色板后， WM_PALETTECHANGED 消息将发送到所有顶级和重叠窗口，从而更改系统调色板。 此消息启用使用调色板但没有键盘焦点的窗口来实现其逻辑调色板并更新其工作区。
         /// </summary>
         WM_PALETTECHANGED = 0x0311,
 
@@ -2257,13 +2257,13 @@
         WM_WAKETHREAD = 0x0316,
 
         /// <summary>
-        /// <see cref="WM_PRINT"> 消息将发送到窗口，以请求它在指定的设备上下文中绘制自身，这通常是打印机设备上下文中的。
+        /// WM_PRINT 消息将发送到窗口，以请求它在指定的设备上下文中绘制自身，这通常是打印机设备上下文中的。
         /// </summary>
         WM_PRINT = 0x0317,
 
         /// <summary>
-        /// 将 <see cref="WM_PRINTCLIENT"> 消息发送到窗口，以请求它在指定的设备上下文中绘制其工作区，通常位于打印机设备上下文中。
-        /// 与 <see cref="WM_PRINT"> 不同，DefWindowProc 不会处理 <see cref="WM_PRINTCLIENT">。 窗口应通过应用程序定义的 WndProc 函数处理 <see cref="WM_PRINTCLIENT"> 消息，以便其正确使用。
+        /// 将 WM_PRINTCLIENT 消息发送到窗口，以请求它在指定的设备上下文中绘制其工作区，通常位于打印机设备上下文中。
+        /// 与 WM_PRINT 不同，DefWindowProc 不会处理 WM_PRINTCLIENT。 窗口应通过应用程序定义的 WndProc 函数处理 WM_PRINTCLIENT 消息，以便其正确使用。
         /// </summary>
         WM_PRINTCLIENT = 0x0318,
 

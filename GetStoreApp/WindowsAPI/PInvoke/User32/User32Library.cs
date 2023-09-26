@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Windows.Graphics;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
@@ -15,12 +14,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 将消息信息传递给指定的窗口过程。
         /// </summary>
         /// <param name="lpPrevWndFunc">
-        /// 上一个窗口过程。 如果通过调用设置为GWL_WNDPROC或DWL_DLGPROC的 nIndex 参数的 GetWindowLong 函数来获取此值，
-        /// 则它实际上是窗口或对话框过程的地址，或者仅对 <see cref="CallWindowProc"> 有意义的特殊内部值。</param>
+        /// 上一个窗口过程。 如果通过调用设置为 GWL_WNDPROC 或 DWL_DLGPROC 的 nIndex 参数的 GetWindowLong 函数来获取此值，
+        /// 则它实际上是窗口或对话框过程的地址，或者仅对 CallWindowProc 有意义的特殊内部值。</param>
         /// <param name="hWnd">用于接收消息的窗口过程的句柄。</param>
         /// <param name="Msg">消息。</param>
-        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
-        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 <param name="Msg"> 参数的值。</param>
+        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
+        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
         /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "CallWindowProcW", SetLastError = false)]
         public static partial IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
@@ -49,15 +48,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
 
         /// <summary>
-        /// 检索鼠标光标的位置（以屏幕坐标为单位）。
-        /// </summary>
-        /// <param name="lpPoint">指向接收光标屏幕坐标的 <see cref="PointInt32"> 结构的指针。</param>
-        /// <returns>如果成功，则返回非零值，否则返回零。 </returns>
-        [LibraryImport(User32, EntryPoint = "GetCursorPos", SetLastError = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool GetCursorPos(PointInt32* lpPoint);
-
-        /// <summary>
         /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
         /// </summary>
         /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
@@ -81,10 +71,38 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
         /// </summary>
         /// <param name="hwnd">窗口的句柄。</param>
-        /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 <see cref="GetWindowThreadProcessId"> 将进程的标识符复制到变量;否则，它不会。</param>
+        /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 GetWindowThreadProcessId 将进程的标识符复制到变量;否则，它不会。</param>
         /// <returns>返回值是创建窗口的线程的标识符。</returns>
         [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = true)]
         public static partial int GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
+
+        /// <summary>
+        /// 创建从指定文件中提取的图标的句柄数组。
+        /// </summary>
+        /// <param name="lpszFile">要从中提取图标的文件的路径和名称。</param>
+        /// <param name="nIconIndex">要提取的第一个图标的从零开始的索引。 例如，如果此值为零，函数将提取指定文件中的第一个图标。</param>
+        /// <param name="cxIcon">所需的水平图标大小。 </param>
+        /// <param name="cyIcon">所需的垂直图标大小。</param>
+        /// <param name="phicon">指向返回的图标句柄数组的指针。</param>
+        /// <param name="piconid">
+        /// 指向最适合当前显示设备的图标返回的资源标识符的指针。 如果标识符不可用于此格式，则返回的标识符0xFFFFFFFF。 如果无法获取标识符，则返回的标识符为 0。
+        /// </param>
+        /// <param name="nIcons">要从文件中提取的图标数。 此参数仅在从.exe和.dll文件时有效。</param>
+        /// <param name="flags">指定控制此函数的标志。 这些标志是 LoadImage 函数使用的 LR_* 标志。</param>
+        /// <returns>
+        /// 如果 <param name="phicon"> 参数为 NULL 且此函数成功，则返回值为文件中的图标数。 如果函数失败，则返回值为 0。 如果 <param name="phicon"> 参数不是 NULL 且函数成功，则返回值是提取的图标数。 否则，如果未找到文件，则返回值0xFFFFFFFF。
+        /// </returns>
+        [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial int PrivateExtractIcons(
+            string lpszFile,
+            int nIconIndex,
+            int cxIcon,
+            int cyIcon,
+            IntPtr[] phicon,
+            int[] piconid,
+            int nIcons,
+            int flags
+        );
 
         /// <summary>
         /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统为创建前台窗口的线程分配的优先级略高于其他线程的优先级。
@@ -96,7 +114,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial bool SetForegroundWindow(IntPtr hWnd);
 
         /// <summary>
-        /// 将指定的消息发送到窗口或窗口。 <see cref="SendMessage"> 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
+        /// 将指定的消息发送到窗口或窗口。 SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
         /// </summary>
         /// <param name="hWnd">
         /// 窗口过程的句柄将接收消息。 如果此参数 HWND_BROADCAST ( (HWND) 0xffff) ，则会将消息发送到系统中的所有顶级窗口，

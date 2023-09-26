@@ -118,9 +118,9 @@
 
                     <Image
                         Grid.Column="0"
-                        Width="100"
-                        Height="100"
-                        Margin="28,14"
+                        Width="120"
+                        Height="120"
+                        Margin="28,6"
                         Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">

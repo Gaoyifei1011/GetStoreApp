@@ -7,8 +7,10 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Graphics;
@@ -22,6 +24,8 @@ namespace GetStoreApp
     public partial class App : Application, IDisposable
     {
         private bool isDisposed;
+
+        private IntPtr[] hIcons;
 
         public bool IsAppRunning { get; set; } = true;
 
@@ -150,7 +154,7 @@ namespace GetStoreApp
                 }
             }
 
-            MainWindow.AppWindow.SetIcon("Assets\\GetStoreApp.ico");
+            SetAppIcon();
             MainWindow.AppWindow.Show();
         }
 
@@ -179,6 +183,30 @@ namespace GetStoreApp
 
             // 启动Aria2下载服务
             Aria2Service.StartAria2Process();
+        }
+
+        /// <summary>
+        /// 设置应用窗口图标
+        /// </summary>
+        private void SetAppIcon()
+        {
+            // 选中文件中的图标总数
+            int iconTotalCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
+
+            // 用于接收获取到的图标指针
+            hIcons = new IntPtr[iconTotalCount];
+
+            // 对应的图标id
+            int[] ids = new int[iconTotalCount];
+
+            // 成功获取到的图标个数
+            int successCount = User32Library.PrivateExtractIcons(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
+
+            // GetStoreApp.exe 应用程序只有一个图标
+            if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
+            {
+                MainWindow.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
+            }
         }
 
         /// <summary>

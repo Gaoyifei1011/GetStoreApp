@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AnalysisLevel>latest</AnalysisLevel>
-    <ApplicationIcon>Assets\GetStoreAppLogo.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\GetStoreApp.ico</ApplicationIcon>
     <ApplicationManifest>App.manifest</ApplicationManifest>
     <AssemblyName>GetStoreApp</AssemblyName>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
@@ -83,7 +83,7 @@
 
     <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
     <Content Include="$(TargetDir)\winrtact.dll" ExcludeFromSingleFile="true" Link="winrtact.dll" CopyToOutputDirectory="Always" />
-    <Content Remove="Assets\GetStoreAppLogo.ico" />
+    <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
     <Content Update="Assets\ControlIcon\About.png" CopyToOutputDirectory="Always" />
@@ -105,7 +105,6 @@
     </EmbeddedResource>
 
     <Manifest Include="$(ApplicationManifest)" />
-    <None Remove="Assets\GetStoreApp.ico" />
     <None Remove="Assets\LICENSE" />
     
     <None Remove="Styles\DropDownButton.xaml" />
@@ -170,8 +169,7 @@
 
     <None Remove="Views\Windows\MainWindow.xaml" />
 
-    <None Update="Assets\GetStoreAppLogo.ico" CopyToOutputDirectory="Never" />
-    <Content Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Always" />
+    <None Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Never" />
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
 

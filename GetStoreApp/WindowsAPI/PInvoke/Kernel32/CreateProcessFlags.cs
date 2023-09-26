@@ -4,7 +4,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
     /// <summary>
     /// 进程创建标志
-    /// <see cref="Kernel32Library.CreateProcess">、CreateProcessAsUser、CreateProcessWithLogonW 和 CreateProcessWithTokenW
+    /// CreateProcess、CreateProcessAsUser、CreateProcessWithLogonW 和 CreateProcessWithTokenW
     /// 函数使用以下进程创建标志。 可以在任意组合中指定它们，
     /// </summary>
     [Flags]
@@ -37,13 +37,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <summary>
         /// 新进程是新进程组的根进程。 进程组包括此根进程的子代的所有进程。 新进程组的进程标识符与进程标识符相同，该标识符在 lpProcessInformation 参数中返回。 GenerateConsoleCtrlEvent 函数使用进程组，以便向一组控制台进程发送 CTRL+BREAK 信号。
         /// 如果指定此标志，将为新进程组中的所有进程禁用 CTRL+C 信号。
-        /// 如果使用 <see cref="CREATE_NEW_CONSOLE"/> 指定，则忽略此标志。
+        /// 如果使用 CREATE_NEW_CONSOLE 指定，则忽略此标志。
         /// </summary>
         CREATE_NEW_PROCESS_GROUP = 0x00000200,
 
         /// <summary>
         /// 此过程是一个在没有控制台窗口的情况下运行的控制台应用程序。 因此，未设置应用程序的控制台句柄。
-        /// T如果应用程序不是控制台应用程序，或者将其与 <see cref="CREATE_NEW_CONSOLE"/> 或 <see cref="DETACHED_PROCESS"/> 一起使用，则忽略此标志。
+        /// T如果应用程序不是控制台应用程序，或者将其与 CREATE_NEW_CONSOLE 或 DETACHED_PROCESS 一起使用，则忽略此标志。
         /// </summary>
         CREATE_NO_WINDOW = 0x08000000,
 
@@ -91,14 +91,14 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 
         /// <summary>
         /// 调用线程启动并调试由新进程创建的新进程和所有子进程。 它可以使用 WaitForDebugEvent 函数接收所有相关的调试事件。
-        /// 使用 <see cref="DEBUG_PROCESS"/> 的进程将成为调试链的根目录。 这一点一直持续到链中的另一个进程通过 <see cref="DEBUG_PROCESS"/> 创建。
-        /// 如果此标志与 <see cref="DEBUG_ONLY_THIS_PROCESS"/>  结合使用，则调用方仅调试新进程，而不调试任何子进程。
+        /// 使用 DEBUG_PROCESS 的进程将成为调试链的根目录。 这一点一直持续到链中的另一个进程通过 DEBUG_PROCESS 创建。
+        /// 如果此标志与 DEBUG_ONLY_THIS_PROCESS  结合使用，则调用方仅调试新进程，而不调试任何子进程。
         /// </summary>
         DEBUG_PROCESS = 0x00000001,
 
         /// <summary>
-        /// 对于控制台进程，新进程不会 (默认) 继承其父级的控制台。 新进程稍后可以调用 <see cref="Kernel32Library.AllocConsole"> 函数来创建控制台。 有关详细信息，请参阅 “创建控制台”。
-        /// 此值不能与 <see cref="CREATE_NEW_CONSOLE"/> 一起使用。
+        /// 对于控制台进程，新进程不会 (默认) 继承其父级的控制台。 新进程稍后可以调用 AllocConsole 函数来创建控制台。 有关详细信息，请参阅 “创建控制台”。
+        /// 此值不能与 CREATE_NEW_CONSOLE 一起使用。
         /// </summary>
         DETACHED_PROCESS = 0x00000008,
 

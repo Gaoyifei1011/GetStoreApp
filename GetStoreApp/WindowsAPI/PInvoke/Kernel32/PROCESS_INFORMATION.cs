@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 {
     /// <summary>
-    /// 包含有关新创建的进程及其主线程的信息。 它与 <see cref="Kernel32Library.CreateProcess">、CreateProcessAsUser、CreateProcessWithLogonW 或 CreateProcessWithTokenW 函数一起使用。
+    /// 包含有关新创建的进程及其主线程的信息。 它与 CreateProcess、CreateProcessAsUser、CreateProcessWithLogonW 或 CreateProcessWithTokenW 函数一起使用。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct PROCESS_INFORMATION
