@@ -1,5 +1,5 @@
 <div align=center>
-<img src="https://user-images.githubusercontent.com/49179966/219057775-f8d6abb5-c9c3-46c6-829e-05d164937b76.png" width="140" height="140"/>
+<img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/f763ce3d-1c34-4fe5-bc02-35fdb4441dfb" width="140" height="140"/>
 </div>
 
 # <p align="center">欢迎访问 获取商店应用</p>

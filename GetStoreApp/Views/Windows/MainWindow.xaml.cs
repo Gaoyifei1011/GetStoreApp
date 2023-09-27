@@ -232,6 +232,11 @@ namespace GetStoreApp.Views.Windows
             {
                 TitlebarMenuFlyout.Hide();
             }
+
+            if (Presenter is not null)
+            {
+                IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
+            }
         }
 
         /// <summary>
@@ -302,6 +307,11 @@ namespace GetStoreApp.Views.Windows
                 if (TitlebarMenuFlyout.IsOpen)
                 {
                     TitlebarMenuFlyout.Hide();
+                }
+
+                if (Presenter is not null)
+                {
+                    IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
                 }
             }
         }
