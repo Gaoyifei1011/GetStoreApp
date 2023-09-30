@@ -69,12 +69,14 @@
 
                         <MenuFlyoutItem
                             Click="{x:Bind OnMoveClicked}"
+                            IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                             Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                             Tag="{x:Bind TitlebarMenuFlyout}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
 
                         <MenuFlyoutItem
                             Click="{x:Bind OnSizeClicked}"
+                            IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
                             Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
                             Tag="{x:Bind TitlebarMenuFlyout}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
@@ -261,7 +263,7 @@
 
                 <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                <NavigationViewItem Tag="{x:Bind TagList[4]}">
+                <NavigationViewItem Tag="{x:Bind TagList[5]}">
 
                     <NavigationViewItem.Content>
                         <TextBlock

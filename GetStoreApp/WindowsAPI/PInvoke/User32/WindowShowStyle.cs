@@ -3,7 +3,7 @@
 namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// 使用 <see cref="User32Library.ShowWindow"> 显示窗口的不同方式的枚举。
+    /// 使用 ShowWindow 显示窗口的不同方式的枚举。
     /// </summary>
     public enum WindowShowStyle : uint
     {
@@ -33,7 +33,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         SW_MAXIMIZE = 3,
 
         /// <summary>
-        /// 在其最近的大小和位置显示一个窗口。 此值类似于 <see cref="SW_SHOWNORMAL">，但窗口未激活。
+        /// 在其最近的大小和位置显示一个窗口。 此值类似于 SW_SHOWNORMAL，但窗口未激活。
         /// </summary>
         SW_SHOWNOACTIVATE = 4,
 
@@ -48,12 +48,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         SW_MINIMIZE = 6,
 
         /// <summary>
-        /// 将窗口显示为最小化窗口。 此值类似于 <see cref="SW_SHOWMINIMIZED">，但窗口未激活。
+        /// 将窗口显示为最小化窗口。 此值类似于 SW_SHOWMINIMIZED，但窗口未激活。
         /// </summary>
         SW_SHOWMINNOACTIVE = 7,
 
         /// <summary>
-        /// 以当前大小和位置显示窗口。 此值类似于 <see cref="SW_SHOW">，但窗口未激活。
+        /// 以当前大小和位置显示窗口。 此值类似于 SW_SHOW，但窗口未激活。
         /// </summary>
         SW_SHOWNA = 8,
 
@@ -63,7 +63,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         SW_RESTORE = 9,
 
         /// <summary>
-        /// 根据启动应用程序的程序传递给 CreateProcess 函数的 <see cref="STARTUPINFO"> 结构中指定的SW_值设置显示状态。
+        /// 根据启动应用程序的程序传递给 CreateProcess 函数的 STARTUPINFO 结构中指定的值设置显示状态。
         /// </summary>
         SW_SHOWDEFAULT = 10,
 

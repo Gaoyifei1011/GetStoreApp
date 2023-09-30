@@ -48,26 +48,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
 
         /// <summary>
-        /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
-        /// <param name="nIndex">要检索的值的从零开始的偏移量。 有效值在 0 到额外窗口内存的字节数中，减去 4 个;例如，如果指定了 12 个或更多字节的额外内存，则值 8 将是第三个 32 位整数的索引。
-        /// </param>
-        /// <returns>如果函数成功，则返回值是请求的值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowLongW", SetLastError = false)]
-        public static partial int GetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex);
-
-        /// <summary>
-        /// 检索有关指定窗口的信息。 该函数还会检索 64 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
-        /// <param name="nIndex">要检索的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去 LONG_PTR的大小。
-        /// </param>
-        /// <returns>如果函数成功，则返回值是请求的值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowLongPtrW", SetLastError = false)]
-        public static partial int GetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex);
-
-        /// <summary>
         /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
         /// </summary>
         /// <param name="hwnd">窗口的句柄。</param>
