@@ -10,10 +10,10 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Uxtheme
     {
         private const string Uxtheme = "uxtheme.dll";
 
-        [DllImport(Uxtheme, CharSet = CharSet.Unicode, EntryPoint = "#135")]
-        public static extern IntPtr SetPreferredAppMode(PreferredAppMode preferredAppMode);
+        [LibraryImport(Uxtheme, EntryPoint = "#135", SetLastError = false)]
+        public static partial IntPtr SetPreferredAppMode(PreferredAppMode preferredAppMode);
 
-        [DllImport(Uxtheme, CharSet = CharSet.Unicode, EntryPoint = "#136")]
-        public static extern IntPtr FlushMenuThemes();
+        [LibraryImport(Uxtheme, EntryPoint = "#136", SetLastError = false)]
+        public static partial IntPtr FlushMenuThemes();
     }
 }

@@ -240,6 +240,14 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
+        /// 窗口菜单关闭时触发的事件
+        /// </summary>
+        public void OnClosing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
+        {
+            IsClickedFromCaption = false;
+        }
+
+        /// <summary>
         /// 窗口关闭
         /// </summary>
         public void OnCloseClicked(object sender, RoutedEventArgs args)
@@ -527,27 +535,52 @@ namespace GetStoreApp.Views.Windows
         {
             if (backdropItem.SelectedValue == BackdropService.BackdropList[1].SelectedValue)
             {
-                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = true, MicaBackdropKind = MicaKind.Base };
+                SystemBackdrop = new MaterialBackdrop()
+                {
+                    IsMicaBackdrop = true,
+                    MicaBackdropKind = MicaKind.Base
+                };
             }
             else if (backdropItem.SelectedValue == BackdropService.BackdropList[2].SelectedValue)
             {
-                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = true, MicaBackdropKind = MicaKind.BaseAlt };
+                SystemBackdrop = new MaterialBackdrop()
+                {
+                    IsMicaBackdrop = true,
+                    MicaBackdropKind = MicaKind.BaseAlt
+                };
             }
             else if (backdropItem.SelectedValue == BackdropService.BackdropList[3].SelectedValue)
             {
-                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = false, DesktopAcrylicBackdropKind = DesktopAcrylicKind.Default };
+                SystemBackdrop = new MaterialBackdrop()
+                {
+                    IsMicaBackdrop = false,
+                    DesktopAcrylicBackdropKind = DesktopAcrylicKind.Default
+                };
             }
             else if (backdropItem.SelectedValue == BackdropService.BackdropList[4].SelectedValue)
             {
-                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = false, DesktopAcrylicBackdropKind = DesktopAcrylicKind.Base };
+                SystemBackdrop = new MaterialBackdrop()
+                {
+                    IsMicaBackdrop = false,
+                    DesktopAcrylicBackdropKind = DesktopAcrylicKind.Base
+                };
             }
             else if (backdropItem.SelectedValue == BackdropService.BackdropList[5].SelectedValue)
             {
-                SystemBackdrop = new MaterialBackdrop() { IsMicaBackdrop = false, DesktopAcrylicBackdropKind = DesktopAcrylicKind.Thin };
+                SystemBackdrop = new MaterialBackdrop()
+                {
+                    IsMicaBackdrop = false,
+                    DesktopAcrylicBackdropKind = DesktopAcrylicKind.Thin
+                };
             }
             else
             {
                 SystemBackdrop = null;
+            }
+
+            if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
+            {
+                (SystemBackdrop as MaterialBackdrop).BackdropConfiguration.IsInputActive = true;
             }
 
             SetWindowBackground();

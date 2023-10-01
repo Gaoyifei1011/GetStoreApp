@@ -53,6 +53,7 @@
                     <MenuFlyout
                         x:Name="TitlebarMenuFlyout"
                         x:FieldModifier="public"
+                        Closing="{x:Bind OnClosing}"
                         MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}"
                         Placement="BottomEdgeAlignedLeft">
 
