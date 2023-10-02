@@ -135,6 +135,18 @@
   <data name="CancelInstall" xml:space="preserve">
     <value>Cancel the installation</value>
   </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>Check update</value>
+  </data>
+  <data name="CheckUpdateToolTip" xml:space="preserve">
+    <value>Check and update Microsoft Store apps</value>
+  </data>
+  <data name="ControlPanel" xml:space="preserve">
+    <value>Control panel</value>
+  </data>
+  <data name="ControlPanelToolTip" xml:space="preserve">
+    <value>Open Programs and Features in Control Panel</value>
+  </data>
   <data name="CopyInstallText" xml:space="preserve">
     <value>Copy install command</value>
   </data>

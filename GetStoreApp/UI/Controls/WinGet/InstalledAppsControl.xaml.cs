@@ -158,31 +158,28 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                     if (result is ContentDialogResult.Primary)
                                     {
-                                        unsafe
+                                        Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
+                                        RebootStartupInfo.lpReserved = IntPtr.Zero;
+                                        RebootStartupInfo.lpDesktop = IntPtr.Zero;
+                                        RebootStartupInfo.lpTitle = IntPtr.Zero;
+                                        RebootStartupInfo.dwX = 0;
+                                        RebootStartupInfo.dwY = 0;
+                                        RebootStartupInfo.dwXSize = 0;
+                                        RebootStartupInfo.dwYSize = 0;
+                                        RebootStartupInfo.dwXCountChars = 500;
+                                        RebootStartupInfo.dwYCountChars = 500;
+                                        RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                        RebootStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                                        RebootStartupInfo.cbReserved2 = 0;
+                                        RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+
+                                        RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+
+                                        if (createResult)
                                         {
-                                            Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
-                                            RebootStartupInfo.lpReserved = null;
-                                            RebootStartupInfo.lpDesktop = null;
-                                            RebootStartupInfo.lpTitle = null;
-                                            RebootStartupInfo.dwX = 0;
-                                            RebootStartupInfo.dwY = 0;
-                                            RebootStartupInfo.dwXSize = 0;
-                                            RebootStartupInfo.dwYSize = 0;
-                                            RebootStartupInfo.dwXCountChars = 500;
-                                            RebootStartupInfo.dwYCountChars = 500;
-                                            RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                            RebootStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                                            RebootStartupInfo.cbReserved2 = 0;
-                                            RebootStartupInfo.lpReserved2 = IntPtr.Zero;
-
-                                            RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                            bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
-
-                                            if (createResult)
-                                            {
-                                                if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                                if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
-                                            }
+                                            if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
+                                            if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
                                         }
                                     }
                                 }

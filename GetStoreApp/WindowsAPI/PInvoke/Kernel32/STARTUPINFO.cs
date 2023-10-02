@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     /// 指定创建时进程的主窗口的窗口工作站、桌面、标准句柄和外观。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public unsafe partial struct STARTUPINFO
+    public partial struct STARTUPINFO
     {
         /// <summary>
         /// 结构大小（以字节为单位）。
@@ -18,17 +18,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <summary>
         /// 保留;必须为 NULL。
         /// </summary>
-        public char* lpReserved;
+        public IntPtr lpReserved;
 
         /// <summary>
         /// 桌面的名称，或此过程的桌面和窗口工作站的名称。 字符串中的反斜杠指示字符串包括桌面和窗口工作站名称。有关详细信息，请参阅 与桌面的线程连接。
         /// </summary>
-        public char* lpDesktop;
+        public IntPtr lpDesktop;
 
         /// <summary>
         /// 对于控制台进程，如果创建新的控制台窗口，则这是标题栏中显示的标题。 如果为 NULL，则可执行文件的名称将改为用作窗口标题。 对于不创建新控制台窗口的 GUI 或控制台进程，此参数必须为 NULL。
         /// </summary>
-        public char* lpTitle;
+        public IntPtr lpTitle;
 
         /// <summary>
         /// 如果 dwFlags 指定 STARTF_USEPOSITION，则如果创建新窗口（以像素为单位），则此成员是窗口左上角的 x 偏移量。 否则，将忽略此成员。

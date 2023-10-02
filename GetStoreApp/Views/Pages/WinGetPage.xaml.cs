@@ -1,4 +1,6 @@
 using GetStoreApp.Models.Controls.WinGet;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Windows.System;
 
@@ -81,20 +84,50 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
         /// 初始化 WinGet 程序包
         /// </summary>
-        public void OnInitializeSuccessLoaded(object sender, RoutedEventArgs args)
+        public void OnLoaded(object sender, RoutedEventArgs args)
         {
             SearchApps.WinGetInstance = this;
             UpgradableApps.WinGetInstance = this;
+        }
+
+        /// <summary>
+        /// 打开控制面板的程序与功能
+        /// </summary>
+        public void OnControlPanelClicked(object sender, RoutedEventArgs args)
+        {
+            Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+            WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
+            WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
+            WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
+            WinGetProcessStartupInfo.dwX = 0;
+            WinGetProcessStartupInfo.dwY = 0;
+            WinGetProcessStartupInfo.dwXSize = 0;
+            WinGetProcessStartupInfo.dwYSize = 0;
+            WinGetProcessStartupInfo.dwXCountChars = 500;
+            WinGetProcessStartupInfo.dwYCountChars = 500;
+            WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+            WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+            WinGetProcessStartupInfo.cbReserved2 = 0;
+            WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+            WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+            bool createResult = Kernel32Library.CreateProcess(null, "control.exe appwiz.cpl", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+            if (createResult)
+            {
+                if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+            }
+        }
+
+        /// <summary>
+        /// 检查并更新微软商店应用
+        /// </summary>
+        public async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
         }
 
         /// <summary>
@@ -119,6 +152,14 @@ namespace GetStoreApp.Views.Pages
         public async void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

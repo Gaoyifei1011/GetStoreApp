@@ -124,9 +124,9 @@ namespace GetStoreApp.Services.Shell
                 Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, hWrite);
 
                 Kernel32Library.GetStartupInfo(out DownloadProcessStartupInfo);
-                DownloadProcessStartupInfo.lpReserved = null;
-                DownloadProcessStartupInfo.lpDesktop = null;
-                DownloadProcessStartupInfo.lpTitle = null;
+                DownloadProcessStartupInfo.lpReserved = IntPtr.Zero;
+                DownloadProcessStartupInfo.lpDesktop = IntPtr.Zero;
+                DownloadProcessStartupInfo.lpTitle = IntPtr.Zero;
                 DownloadProcessStartupInfo.dwX = 0;
                 DownloadProcessStartupInfo.dwY = 0;
                 DownloadProcessStartupInfo.dwXSize = 0;

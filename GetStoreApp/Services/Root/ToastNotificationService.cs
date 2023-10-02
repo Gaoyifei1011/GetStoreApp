@@ -58,31 +58,29 @@ namespace GetStoreApp.Services.Root
                 if (splitList.Length > 1)
                 {
                     string appId = splitList[1];
-                    unsafe
+
+                    Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+                    WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
+                    WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
+                    WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
+                    WinGetProcessStartupInfo.dwX = 0;
+                    WinGetProcessStartupInfo.dwY = 0;
+                    WinGetProcessStartupInfo.dwXSize = 0;
+                    WinGetProcessStartupInfo.dwYSize = 0;
+                    WinGetProcessStartupInfo.dwXCountChars = 500;
+                    WinGetProcessStartupInfo.dwYCountChars = 500;
+                    WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                    WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
+                    WinGetProcessStartupInfo.cbReserved2 = 0;
+                    WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                    WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+                    if (createResult)
                     {
-                        Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-                        WinGetProcessStartupInfo.lpReserved = null;
-                        WinGetProcessStartupInfo.lpDesktop = null;
-                        WinGetProcessStartupInfo.lpTitle = null;
-                        WinGetProcessStartupInfo.dwX = 0;
-                        WinGetProcessStartupInfo.dwY = 0;
-                        WinGetProcessStartupInfo.dwXSize = 0;
-                        WinGetProcessStartupInfo.dwYSize = 0;
-                        WinGetProcessStartupInfo.dwXCountChars = 500;
-                        WinGetProcessStartupInfo.dwYCountChars = 500;
-                        WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                        WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
-                        WinGetProcessStartupInfo.cbReserved2 = 0;
-                        WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                        WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                        bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
-
-                        if (createResult)
-                        {
-                            if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                            if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
-                        }
+                        if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                        if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
                     }
                 }
                 Program.IsNeedAppLaunch = Application.Current is not null;

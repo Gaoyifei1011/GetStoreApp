@@ -578,7 +578,7 @@ namespace GetStoreApp.Views.Windows
                 SystemBackdrop = null;
             }
 
-            if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
+            if (SystemBackdrop is not null && AlwaysShowBackdropService.AlwaysShowBackdropValue)
             {
                 (SystemBackdrop as MaterialBackdrop).BackdropConfiguration.IsInputActive = true;
             }

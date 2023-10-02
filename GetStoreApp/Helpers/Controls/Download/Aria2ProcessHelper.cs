@@ -19,14 +19,14 @@ namespace GetStoreApp.Helpers.Controls.Download
         /// <summary>
         /// 让Aria2以RPC方式启动，并让其在后台运行
         /// </summary>
-        public static unsafe bool RunAria2Process(string fileName, string arguments = "")
+        public static bool RunAria2Process(string fileName, string arguments = "")
         {
             try
             {
                 Kernel32Library.GetStartupInfo(out Aria2ProcessStartupInfo);
-                Aria2ProcessStartupInfo.lpReserved = null;
-                Aria2ProcessStartupInfo.lpDesktop = null;
-                Aria2ProcessStartupInfo.lpTitle = null;
+                Aria2ProcessStartupInfo.lpReserved = IntPtr.Zero;
+                Aria2ProcessStartupInfo.lpDesktop = IntPtr.Zero;
+                Aria2ProcessStartupInfo.lpTitle = IntPtr.Zero;
                 Aria2ProcessStartupInfo.dwX = 0;
                 Aria2ProcessStartupInfo.dwY = 0;
                 Aria2ProcessStartupInfo.dwXSize = 0;
