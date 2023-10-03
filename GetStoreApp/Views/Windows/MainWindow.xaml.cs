@@ -11,7 +11,6 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Dispatching;
@@ -47,8 +46,6 @@ namespace GetStoreApp.Views.Windows
 
         private WNDPROC newInputNonClientPointerSourceWndProc = null;
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
-
-        private bool IsClickedFromCaption = false;
 
         private UISettings AppUISettings { get; } = new UISettings();
 
@@ -186,6 +183,9 @@ namespace GetStoreApp.Views.Windows
 
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
+                int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
+                SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
+
                 newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
                 oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
             }
@@ -237,14 +237,6 @@ namespace GetStoreApp.Views.Windows
             {
                 IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
             }
-        }
-
-        /// <summary>
-        /// 窗口菜单关闭时触发的事件
-        /// </summary>
-        public void OnClosing(FlyoutBase sender, FlyoutBaseClosingEventArgs args)
-        {
-            IsClickedFromCaption = false;
         }
 
         /// <summary>
@@ -630,9 +622,6 @@ namespace GetStoreApp.Views.Windows
                 titleBar.ButtonPressedForegroundColor = Colors.Black;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.Black;
-
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
-                UxthemeLibrary.FlushMenuThemes();
             }
             else
             {
@@ -644,9 +633,6 @@ namespace GetStoreApp.Views.Windows
                 titleBar.ButtonPressedForegroundColor = Colors.White;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
-
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
-                UxthemeLibrary.FlushMenuThemes();
             }
         }
 
@@ -689,6 +675,21 @@ namespace GetStoreApp.Views.Windows
         public void Minimize()
         {
             Presenter.Minimize();
+        }
+
+        /// <summary>
+        /// 更改指定窗口的属性
+        /// </summary>
+        private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
+        {
+            if (IntPtr.Size is 8)
+            {
+                return User32Library.GetWindowLongPtr(hWnd, nIndex);
+            }
+            else
+            {
+                return User32Library.GetWindowLong(hWnd, nIndex);
+            }
         }
 
         /// <summary>
@@ -833,16 +834,11 @@ namespace GetStoreApp.Views.Windows
                 // 任务栏窗口右键点击后的消息
                 case WindowMessage.WM_SYSMENU:
                     {
-                        if (IsClickedFromCaption)
+                        if (Presenter.State is OverlappedPresenterState.Minimized)
                         {
-                            IsClickedFromCaption = false;
-                            return 0;
+                            Presenter.Restore();
                         }
-                        else
-                        {
-                            IsClickedFromCaption = false;
-                            break;
-                        }
+                        break;
                     }
             }
             return User32Library.CallWindowProc(oldMainWindowWndProc, hWnd, Msg, wParam, lParam);
@@ -867,7 +863,6 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
-                        IsClickedFromCaption = true;
                         if (Content is not null && Content.XamlRoot is not null)
                         {
                             PointInt32 pt = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);

@@ -162,7 +162,6 @@
                             </Flyout>
                         </Button.Flyout>
                     </Button>
-
                 </StackPanel>
             </Pivot.RightHeader>
         </Pivot>
