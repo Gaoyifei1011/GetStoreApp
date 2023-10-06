@@ -96,7 +96,6 @@
     <Content Update="Assets\ControlIcon\Store.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\ControlIcon\Web.png" CopyToOutputDirectory="Always" />
     <Content Update="Assets\ControlIcon\WinGet.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\Images\DesktopApps.png" CopyToOutputDirectory="Always" />
 
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
 

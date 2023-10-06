@@ -8,14 +8,15 @@
         DownloadAborted = 0,
         InstallApp = 1,
         DownloadCompleted = 2,
-        RunAsAdministrator = 3,
-        UWPUnInstallSuccessfully = 4,
-        UWPUnInstallFailed = 5,
-        WinGetInstallSuccessfully = 6,
-        WinGetInstallFailed = 7,
-        WinGetUnInstallSuccessfully = 8,
-        WinGetUnInstallFailed = 9,
-        WinGetUpgradeSuccessfully = 10,
-        WinGetUpgradeFailed = 11
+        PinToTaskbarTip = 3,
+        RunAsAdministrator = 4,
+        UWPUnInstallSuccessfully = 5,
+        UWPUnInstallFailed = 6,
+        WinGetInstallSuccessfully = 7,
+        WinGetInstallFailed = 8,
+        WinGetUnInstallSuccessfully = 9,
+        WinGetUnInstallFailed = 10,
+        WinGetUpgradeSuccessfully = 11,
+        WinGetUpgradeFailed = 12
     }
 }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
 using Windows.System;
-using Windows.UI.Shell;
+using Windows.UI.Input.Preview.Injection;
 using Windows.UI.StartScreen;
 
 namespace GetStoreApp.UI.Pages
@@ -27,6 +27,8 @@ namespace GetStoreApp.UI.Pages
     /// </summary>
     public sealed partial class AppInfoPage : Page, INotifyPropertyChanged
     {
+        private InputInjector inputInjector = InputInjector.TryCreate();
+
         private Dictionary<string, object> AppInfoDict { get; set; }
 
         private string _displayName = string.Empty;
@@ -389,38 +391,38 @@ namespace GetStoreApp.UI.Pages
             PinToTaskbarCommand.ExecuteRequested += (sender, args) =>
             {
                 AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+                string actualTheme = ActualTheme.ToString();
 
-                if (appListEntryItem is not null)
+                Task.Run(async () =>
                 {
-                    Task.Run(async () =>
+                    if (appListEntryItem is not null)
                     {
-                        bool IsPinnedSuccessfully = false;
-
                         try
                         {
-                            string featureId = "com.microsoft.windows.taskbar.pin";
-                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
-                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+                            StartScreenManager startScreenManager = StartScreenManager.GetDefault();
 
-                            if (accessResult.Status is LimitedAccessFeatureStatus.Available)
+                            bool result = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
+
+                            if (result)
                             {
-                                IsPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(appListEntryItem.AppListEntry);
+                                ToastNotificationService.Show(NotificationKind.PinToTaskbarTip, actualTheme);
+
+                                InjectedInputKeyboardInfo pressKeyEvent = new InjectedInputKeyboardInfo();
+                                pressKeyEvent.VirtualKey = (ushort)VirtualKey.LeftWindows;
+
+                                InjectedInputKeyboardInfo releaseKeyEvent = new InjectedInputKeyboardInfo();
+                                releaseKeyEvent.VirtualKey = (ushort)VirtualKey.LeftWindows;
+                                releaseKeyEvent.KeyOptions = InjectedInputKeyOptions.KeyUp;
+
+                                inputInjector.InjectKeyboardInput(new InjectedInputKeyboardInfo[] { pressKeyEvent, releaseKeyEvent });
                             }
                         }
                         catch (Exception e)
                         {
                             LogService.WriteLog(LogLevel.ERROR, "Pin app to taskbar failed.", e);
                         }
-                        finally
-                        {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                new QuickOperationNotification(this, QuickOperationKind.Taskbar, IsPinnedSuccessfully).Show();
-                            });
-                        }
-                    });
-                }
+                    }
+                });
             };
 
             OpenStoreCommand.ExecuteRequested += (sender, args) =>

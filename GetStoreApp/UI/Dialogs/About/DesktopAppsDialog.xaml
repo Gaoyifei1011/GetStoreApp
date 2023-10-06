@@ -27,14 +27,6 @@
             TextAlignment="Justify"
             TextWrapping="Wrap" />
 
-        <Border
-            HorizontalAlignment="Left"
-            BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
-            BorderThickness="2">
-            <Image
-                Width="463"
-                Height="107"
-                Source="ms-appx:///Assets/Images/DesktopApps.png" />
-        </Border>
+        <Image Source="{x:Bind DesktopAppsImage}" Stretch="None" />
     </StackPanel>
 </ContentDialog>

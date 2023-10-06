@@ -1,4 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
+using System;
 
 namespace GetStoreApp.UI.Dialogs.About
 {
@@ -7,9 +9,12 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class DesktopAppsDialog : ContentDialog
     {
+        private BitmapImage DesktopAppsImage { get; } = new BitmapImage();
+
         public DesktopAppsDialog()
         {
             InitializeComponent();
+            DesktopAppsImage.UriSource = new Uri(string.Format("ms-appx:///Assets/Images/{0}/DesktopApps.png", ActualTheme.ToString()));
         }
     }
 }
