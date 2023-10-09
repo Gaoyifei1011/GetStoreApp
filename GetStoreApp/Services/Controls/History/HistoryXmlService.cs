@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Services.Controls.History
 {
@@ -79,7 +80,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Add history record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Add history record failed.", e);
                 return;
             }
         }
@@ -182,7 +183,7 @@ namespace GetStoreApp.Services.Controls.History
             {
                 isHistoryEmpty = true;
                 isHistoryEmptyAfterFilter = true;
-                LogService.WriteLog(LogLevel.WARNING, "Query history record with condition failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Query history record with condition failed.", e);
                 return (historyRawList, isHistoryEmpty, isHistoryEmptyAfterFilter);
             }
         }
@@ -242,7 +243,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Query history record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Query history record failed.", e);
                 return HistoryRawList;
             }
         }
@@ -290,7 +291,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Delete history record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Delete history record failed.", e);
                 return false;
             }
         }
@@ -326,7 +327,7 @@ namespace GetStoreApp.Services.Controls.History
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Clear history record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Clear history record failed.", e);
                 return false;
             }
         }

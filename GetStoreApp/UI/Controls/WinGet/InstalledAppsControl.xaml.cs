@@ -22,6 +22,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.UI.Controls.WinGet
 {
@@ -209,13 +210,13 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 操作被用户所取消异常
                         catch (OperationCanceledException e)
                         {
-                            LogService.WriteLog(LogLevel.INFO, "App uninstalling operation canceled.", e);
+                            LogService.WriteLog(LoggingLevel.Information, "App uninstalling operation canceled.", e);
                             ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
                         }
                         // 其他异常
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, "App uninstalling failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, "App uninstalling failed.", e);
                             ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
                         }
                     });
@@ -263,7 +264,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.ERROR, "Installed apps information initialized failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, "Installed apps information initialized failed.", e);
                     return;
                 }
                 isInitialized = true;
@@ -380,7 +381,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Get installed apps information failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Get installed apps information failed.", e);
             }
         }
 

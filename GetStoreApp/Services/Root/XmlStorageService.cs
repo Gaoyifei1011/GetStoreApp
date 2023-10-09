@@ -1,8 +1,8 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
 namespace GetStoreApp.Services.Root
@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.CRITICAL, "Create history storage file failed.", e);
+                LogService.WriteLog(LoggingLevel.Critical, "Create history storage file failed.", e);
                 Environment.Exit(82);
             }
         }
@@ -69,7 +69,7 @@ namespace GetStoreApp.Services.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.CRITICAL, "Create download storage file failed.", e);
+                LogService.WriteLog(LoggingLevel.Critical, "Create download storage file failed.", e);
                 Environment.Exit(82);
             }
         }

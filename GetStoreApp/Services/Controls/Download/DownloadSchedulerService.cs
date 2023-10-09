@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.System.Threading;
 
 namespace GetStoreApp.Services.Controls.Download
@@ -152,7 +153,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Pause waiting list task failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Pause waiting list task failed.", e);
                     Result = false;
                 }
             }
@@ -172,7 +173,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Pause downloading list task failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Pause downloading list task failed.", e);
                         Result = false;
                     }
                 }
@@ -211,7 +212,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Pause all downloading list task failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Pause all downloading list task failed.", e);
                         continue;
                     }
                 }
@@ -226,7 +227,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Pause all waiting list task failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Pause all waiting list task failed.", e);
                     continue;
                 }
             }
@@ -265,7 +266,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Delete waiting list task failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete waiting list task failed.", e);
                     Result = false;
                 }
             }
@@ -290,7 +291,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete downloading list task failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading list task failed.", e);
                         Result = false;
                     }
                 }
@@ -408,7 +409,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Schedule add task failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Schedule add task failed.", e);
                         continue;
                     }
                 }
@@ -430,7 +431,7 @@ namespace GetStoreApp.Services.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Schedule add task failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Schedule add task failed.", e);
                         continue;
                     }
                 }

@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Store;
+﻿using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -66,7 +66,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     responseSuccessBuilder.Append(response.RequestMessage is null ? "" : LogService.WhiteSpaceRegex.Replace(response.RequestMessage.ToString(), ""));
                     responseSuccessBuilder.Append('\n');
 
-                    LogService.WriteLog(LogLevel.INFO, "Requested successfully.", responseSuccessBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Requested successfully.", responseSuccessBuilder);
                 }
 
                 // 请求失败
@@ -86,7 +86,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
-                LogService.WriteLog(LogLevel.WARNING, "Network disconnected.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Network disconnected.", e);
             }
 
             // 捕捉因访问超时引发的异常
@@ -96,7 +96,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
-                LogService.WriteLog(LogLevel.WARNING, "Network access timeout.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Network access timeout.", e);
             }
 
             // 其他异常
@@ -106,7 +106,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
-                LogService.WriteLog(LogLevel.WARNING, "Network state unknown.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Network state unknown.", e);
             }
             finally
             {

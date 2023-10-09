@@ -1,9 +1,9 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -47,7 +47,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Get process Pid list failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Get process Pid list failed.", e);
                 return ProcessEntry32PIDList;
             }
         }

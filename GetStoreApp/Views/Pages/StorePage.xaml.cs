@@ -28,6 +28,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.System;
 
 namespace GetStoreApp.Views.Pages
@@ -351,7 +352,7 @@ namespace GetStoreApp.Views.Pages
                                             }
                                             catch (Exception e)
                                             {
-                                                LogService.WriteLog(LogLevel.WARNING, "Delete duplicated unfinished downloaded file failed.", e);
+                                                LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated unfinished downloaded file failed.", e);
                                             }
                                             finally
                                             {
@@ -395,7 +396,7 @@ namespace GetStoreApp.Views.Pages
                                             }
                                             catch (Exception e)
                                             {
-                                                LogService.WriteLog(LogLevel.WARNING, "Delete duplicated completed downloaded file failed.", e);
+                                                LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated completed downloaded file failed.", e);
                                             }
                                             finally
                                             {
@@ -799,7 +800,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LogLevel.WARNING, "Delete duplicated downloaded file failed.", e);
+                                    LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated downloaded file failed.", e);
                                 }
                                 finally
                                 {

@@ -16,6 +16,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Store.Preview;
 using Windows.Foundation;
+using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
@@ -128,7 +129,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.ERROR, "Create desktop shortcut failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
                 }
                 finally
                 {
@@ -164,7 +165,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.ERROR, "Pin app to startscreen failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
                 }
                 finally
                 {
@@ -199,7 +200,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.ERROR, "Pin app to taskbar failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
                 }
                 finally
                 {

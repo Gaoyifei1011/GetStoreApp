@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Services.Controls.Download
 {
@@ -92,7 +93,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "InitializeHistoryRecord download record state failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "InitializeHistoryRecord download record state failed.", e);
                 return;
             }
         }
@@ -140,7 +141,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Add download record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Add download record failed.", e);
                 return false;
             }
         }
@@ -192,7 +193,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Update download record flag failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Update download record flag failed.", e);
             }
             return isUpdatedSuccessfully;
         }
@@ -244,7 +245,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Update file size failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Update file size failed.", e);
             }
             return isUpdatedSuccessfully;
         }
@@ -296,7 +297,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Query download record with flag failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Query download record with flag failed.", e);
                 return DownloadRawList;
             }
         }
@@ -345,7 +346,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Query download record with downloadKey failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Query download record with downloadKey failed.", e);
                 return downloadRawModel;
             }
         }
@@ -393,7 +394,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Check duplicated download data record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Check duplicated download data record failed.", e);
                 return duplicatedDataInfo;
             }
         }
@@ -445,7 +446,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Delete download record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Delete download record failed.", e);
             }
             return isDeleteSuccessfully;
         }
@@ -500,7 +501,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Delete selected download record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Delete selected download record failed.", e);
             }
             return isDeleteSuccessfully;
         }
@@ -542,7 +543,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Clear download record failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Clear download record failed.", e);
                 return false;
             }
         }

@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
@@ -11,6 +10,7 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.UI.StartScreen;
 
@@ -109,13 +109,13 @@ namespace GetStoreApp
             // 系统背景色弹出的异常，不进行处理
             if (args.Exception.HResult is -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
             {
-                LogService.WriteLog(LogLevel.WARNING, "System backdrop config warning.", args.Exception);
+                LogService.WriteLog(LoggingLevel.Warning, "System backdrop config warning.", args.Exception);
                 return;
             }
             // 处理其他异常
             else
             {
-                LogService.WriteLog(LogLevel.ERROR, "Unknown unhandled exception.", args.Exception);
+                LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
 
                 // 退出应用
                 Dispose();

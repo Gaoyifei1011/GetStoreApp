@@ -23,6 +23,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.UI.Controls.WinGet
 {
@@ -366,7 +367,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 操作被用户所取消异常
                         catch (OperationCanceledException e)
                         {
-                            LogService.WriteLog(LogLevel.INFO, "App installing operation canceled.", e);
+                            LogService.WriteLog(LoggingLevel.Information, "App installing operation canceled.", e);
 
                             DispatcherQueue.TryEnqueue(() =>
                             {
@@ -401,7 +402,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 其他异常
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, "App installing failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, "App installing failed.", e);
 
                             DispatcherQueue.TryEnqueue(() =>
                             {
@@ -514,7 +515,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.ERROR, "Upgradable apps information initialized failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, "Upgradable apps information initialized failed.", e);
                     return;
                 }
                 GetUpgradableApps();
@@ -577,7 +578,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Get upgradable apps information failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Get upgradable apps information failed.", e);
             }
         }
 

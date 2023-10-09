@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
 namespace GetStoreApp.UI.Dialogs.About
@@ -128,7 +129,7 @@ namespace GetStoreApp.UI.Dialogs.About
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.WARNING, "Get WinUI3 version failed.", e);
+                            LogService.WriteLog(LoggingLevel.Warning, "Get WinUI3 version failed.", e);
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 WinUI3Version = string.Empty;

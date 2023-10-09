@@ -1,11 +1,11 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
 
@@ -75,7 +75,7 @@ namespace GetStoreApp.Services.Controls.Settings
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Get download saved folder failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Get download saved folder failed.", e);
                 SetFolder(AppCacheFolder);
                 return AppCacheFolder;
             }

@@ -1,9 +1,9 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
 
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LogLevel logType, string logContent, StringBuilder logBuilder)
+        public static void WriteLog(LoggingLevel logType, string logContent, StringBuilder logBuilder)
         {
             if (IsInitialized)
             {
@@ -70,7 +70,7 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LogLevel logType, string logContent, Exception exception)
+        public static void WriteLog(LoggingLevel logType, string logContent, Exception exception)
         {
             if (IsInitialized)
             {

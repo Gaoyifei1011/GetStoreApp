@@ -246,7 +246,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool ReadConsole(
             IntPtr hConsoleInput,
-            byte[] lpBuffer,
+            [In, Out] byte[] lpBuffer,
             int nNumberOfCharsToRead,
             out int lpNumberOfCharsRead,
             IntPtr pInputControl);
@@ -279,7 +279,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果函数成功，则返回值为非零 (TRUE) 。如果函数失败或异步完成，则返回值为零，(FALSE) </returns>
         [LibraryImport(Kernel32, EntryPoint = "ReadFile", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool ReadFile(IntPtr hFile, byte[] lpBuffer, uint nNumberOfBytesToRead, out uint lpNumberOfBytesRead, IntPtr lpOverlapped);
+        public static partial bool ReadFile(IntPtr hFile, [In, Out] byte[] lpBuffer, uint nNumberOfBytesToRead, out uint lpNumberOfBytesRead, IntPtr lpOverlapped);
 
         /// <summary>
         /// 设置由 WriteFile 或 WriteConsole 函数写入控制台屏幕缓冲区或由 ReadFile 或 ReadConsole 函数回显的字符的属性。 此函数会影响函数调用后写入的文本。

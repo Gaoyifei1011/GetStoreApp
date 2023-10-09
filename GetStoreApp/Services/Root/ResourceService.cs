@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel.Resources.Core;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Services.Root
 {
@@ -362,14 +363,14 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.SelectedValue), currentResourceException);
+                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.SelectedValue), currentResourceException);
                     try
                     {
                         return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.SelectedValue), defaultResourceException);
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.SelectedValue), defaultResourceException);
                         return resource;
                     }
                 }

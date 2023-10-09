@@ -1,9 +1,9 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Runtime.InteropServices;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Helpers.Controls.Download
 {
@@ -43,7 +43,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Aria2 Process create failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Aria2 Process create failed.", e);
                 return false;
             }
         }
@@ -69,7 +69,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Aria2 Process kill failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Aria2 Process kill failed.", e);
                 return;
             }
         }
@@ -103,7 +103,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Aria2 Process search failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Aria2 Process search failed.", e);
                 SearchResult = false;
             }
             return SearchResult;

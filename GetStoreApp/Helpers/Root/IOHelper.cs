@@ -1,8 +1,8 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage;
@@ -42,7 +42,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Folder delete failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Folder delete failed.", e);
                 return false;
             }
         }
@@ -85,7 +85,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "File SHA1 verify failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "File SHA1 verify failed.", e);
                 return string.Empty;
             }
         }

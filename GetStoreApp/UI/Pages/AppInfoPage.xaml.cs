@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
+using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 using Windows.UI.StartScreen;
@@ -313,7 +314,7 @@ namespace GetStoreApp.UI.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.ERROR, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
+                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
                     }
                 });
             };
@@ -345,7 +346,7 @@ namespace GetStoreApp.UI.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.ERROR, "Create desktop shortcut failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
                     }
                     finally
                     {
@@ -375,7 +376,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, "Pin app to startscreen failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
                         }
                         finally
                         {
@@ -419,7 +420,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, "Pin app to taskbar failed.", e);
+                            LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
                         }
                     }
                 });
@@ -439,7 +440,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                            LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -459,7 +460,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.WARNING, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                            LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -497,7 +498,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, "App information copy failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, "App information copy failed", e);
                         }
                     });
                 }

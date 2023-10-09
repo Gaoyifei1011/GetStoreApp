@@ -20,6 +20,8 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.Foundation.Diagnostics;
+using Windows.Management.Core;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
@@ -38,8 +40,6 @@ namespace GetStoreApp.UI.Pages
         private string No { get; } = ResourceService.GetLocalized("UWPApp/No");
 
         private readonly object AppShortListObject = new object();
-
-        private string packageRootCacheFolder = @"C:\Users\Gaoyifei\AppData\Local\Packages";
 
         private bool isInitialized = false;
 
@@ -373,7 +373,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, string.Format("Open app {0} failed", package.DisplayName), e);
+                            LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -393,7 +393,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                            LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -426,7 +426,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.ERROR, string.Format("{0}'s AppxManifest.xml file open failed", package.DisplayName), e);
+                            LogService.WriteLog(LoggingLevel.Error, string.Format("{0}'s AppxManifest.xml file open failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -446,7 +446,7 @@ namespace GetStoreApp.UI.Pages
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.WARNING, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                            LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
                         }
                     });
                 }
@@ -462,13 +462,12 @@ namespace GetStoreApp.UI.Pages
                     {
                         try
                         {
-                            string packageVolume = Path.GetPathRoot(package.InstalledPath);
-                            string packageCacheFolder = Path.Combine(packageRootCacheFolder.Replace(Path.GetPathRoot(packageRootCacheFolder), packageVolume), package.Id.FamilyName);
-                            await Launcher.LaunchFolderPathAsync(packageCacheFolder);
+                            ApplicationData applicationData = ApplicationDataManager.CreateForPackageFamily(package.Id.FamilyName);
+                            await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.INFO, "Open app cache folder failed.", e);
+                            LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
                         }
                     });
                 }
@@ -542,7 +541,7 @@ namespace GetStoreApp.UI.Pages
                                                         uninstallResult.ErrorText
                                                         );
 
-                                                    LogService.WriteLog(LogLevel.INFO, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
+                                                    LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
 
                                                     pacakgeItem.IsUnInstalling = false;
                                                     break;
@@ -561,7 +560,7 @@ namespace GetStoreApp.UI.Pages
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.INFO, string.Format("UnInstall app {0} failed", package.Id.FullName), e);
+                        LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", package.Id.FullName), e);
                     }
                 }
             };

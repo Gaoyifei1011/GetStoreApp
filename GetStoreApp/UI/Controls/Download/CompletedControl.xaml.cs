@@ -23,6 +23,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
@@ -139,14 +140,14 @@ namespace GetStoreApp.UI.Controls.Download
                                 }
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LogLevel.WARNING, "Install apps failed.", e);
+                                    LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
                                     return;
                                 }
                             }
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.WARNING, "Install apps failed.", e);
+                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
                             return;
                         }
                     }
@@ -173,7 +174,7 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.WARNING, "Completed download item folder located failed.", e);
+                            LogService.WriteLog(LoggingLevel.Warning, "Completed download item folder located failed.", e);
                             await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                         }
                     }
@@ -208,7 +209,7 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.WARNING, "Delete completed download record failed.", e);
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                         }
 
                         lock (CompletedDataListLock) isUpdatingNow = false;
@@ -237,7 +238,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete completed download file failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
                     }
 
                     bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
@@ -254,7 +255,7 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LogLevel.WARNING, "Delete completed download record failed.", e);
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                         }
 
                         lock (CompletedDataListLock) isUpdatingNow = false;
@@ -286,7 +287,7 @@ namespace GetStoreApp.UI.Controls.Download
                     catch (Exception e)
                     {
                         new ShareFailedNotification(this, false).Show();
-                        LogService.WriteLog(LogLevel.WARNING, "Share file failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
                     }
                 }
             };
@@ -441,7 +442,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete completed download record failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                         continue;
                     }
                 }
@@ -508,7 +509,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete completed download file failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
                     }
 
                     // 删除记录
@@ -523,7 +524,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete completed download record failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                         continue;
                     }
                 }
@@ -580,7 +581,7 @@ namespace GetStoreApp.UI.Controls.Download
             catch (Exception e)
             {
                 new ShareFailedNotification(this, true, SelectedCompletedDataList.Count).Show();
-                LogService.WriteLog(LogLevel.WARNING, "Share selected files failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
             }
         }
 

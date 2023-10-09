@@ -1,11 +1,11 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Services.Root
 {
@@ -108,7 +108,7 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Parse console params(type) failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Parse console params(type) failed.", e);
                     typeIndex = 1;
                 }
 
@@ -126,7 +126,7 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Parse console params(channel) failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Parse console params(channel) failed.", e);
                     channelIndex = 4;
                 }
 

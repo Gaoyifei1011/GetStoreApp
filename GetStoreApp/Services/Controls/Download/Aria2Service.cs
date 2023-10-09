@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Download;
+﻿using GetStoreApp.Helpers.Controls.Download;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.Web.Http;
 
@@ -53,7 +53,7 @@ namespace GetStoreApp.Services.Controls.Download
             //  发生异常时，使用默认的参数
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Aria2 config file save failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Aria2 config file save failed.", e);
                 Aria2Arguments = DefaultAria2Arguments;
             }
         }
@@ -96,7 +96,7 @@ namespace GetStoreApp.Services.Controls.Download
             //  发生异常时，使用默认的参数
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.ERROR, "Aria2 config file save failed.", e);
+                LogService.WriteLog(LoggingLevel.Error, "Aria2 config file save failed.", e);
                 Aria2Arguments = DefaultAria2Arguments;
             }
         }
@@ -174,13 +174,13 @@ namespace GetStoreApp.Services.Controls.Download
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException e)
             {
-                LogService.WriteLog(LogLevel.INFO, "Add download task canceled.", e);
+                LogService.WriteLog(LoggingLevel.Information, "Add download task canceled.", e);
                 return (false, string.Empty);
             }
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Add download task failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Add download task failed.", e);
                 return (false, string.Empty);
             }
             finally
@@ -255,13 +255,13 @@ namespace GetStoreApp.Services.Controls.Download
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException e)
             {
-                LogService.WriteLog(LogLevel.INFO, "Pause download task canceled.", e);
+                LogService.WriteLog(LoggingLevel.Information, "Pause download task canceled.", e);
                 return (false, string.Empty);
             }
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Pause download task failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Pause download task failed.", e);
                 return (false, string.Empty);
             }
             finally
@@ -336,13 +336,13 @@ namespace GetStoreApp.Services.Controls.Download
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException e)
             {
-                LogService.WriteLog(LogLevel.INFO, "Delete download task canceled.", e);
+                LogService.WriteLog(LoggingLevel.Information, "Delete download task canceled.", e);
                 return (false, string.Empty);
             }
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Delete download task failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Delete download task failed.", e);
                 return (false, string.Empty);
             }
             finally
@@ -437,13 +437,13 @@ namespace GetStoreApp.Services.Controls.Download
             // 捕捉因访问超时引发的异常
             catch (OperationCanceledException e)
             {
-                LogService.WriteLog(LogLevel.INFO, "Get download status canceled.", e);
+                LogService.WriteLog(LoggingLevel.Information, "Get download status canceled.", e);
                 return (false, string.Empty, default(double), default(double), default(double));
             }
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LogLevel.WARNING, "Get download status failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Get download status failed.", e);
                 return (false, string.Empty, default(double), default(double), default(double));
             }
             finally

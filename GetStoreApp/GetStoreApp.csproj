@@ -106,7 +106,7 @@
 
     <Manifest Include="$(ApplicationManifest)" />
     <None Remove="Assets\LICENSE" />
-    
+
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
@@ -155,7 +155,7 @@
     <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
     <None Remove="UI\Notifications\QuickOperationNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
-    
+
     <None Remove="UI\Pages\AppInfoPage.xaml" />
     <None Remove="UI\Pages\AppListPage.xaml" />
 
@@ -195,7 +195,7 @@
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\DownloadingControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
@@ -218,7 +218,7 @@
     <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Notifications\DataCopyNotification.xaml" Generator="MSBuild:Compile" />
@@ -232,7 +232,7 @@
 
     <Page Update="UI\Pages\AppInfoPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Pages\AppListPage.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />
@@ -265,7 +265,11 @@
     <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\runtimes\win10-$(Platform)\native\winrtact.dll" DestinationFolder="$(TargetDir)" />
   </Target>
 
+  <!--捆绑前对二进制文件进行后处理-->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
-    <Exec Command="$(ProjectDir)signtool.exe sign /f $(SolutionDir)$(AssemblyName)Package\$(AssemblyName)Package_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\win10-$(Platform)\$(RuntimeIdentifier)\msixpublish\GetStoreApp.exe" />
+    <!--修改 GetStoreApp.exe 的 InternalName 和 OriginalFileName-->
+    <Exec Command="$(ProjectDir)ResourceHacker.exe -open $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe -res $(ProjectDir)GetStoreAppVersion.res -action addoverwrite -mask VERSIONINFO -log console -save $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
+    <!--对生成的 GetStoreApp.exe 文件进行数字签名-->
+    <Exec Command="$(ProjectDir)signtool.exe sign /f $(SolutionDir)$(AssemblyName)Package\$(AssemblyName)Package_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
   </Target>
 </Project>

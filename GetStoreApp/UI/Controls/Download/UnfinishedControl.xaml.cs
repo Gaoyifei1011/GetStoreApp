@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
+﻿using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
@@ -19,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.UI.Controls.Download
 {
@@ -118,7 +118,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete unfinished download file failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download file failed.", e);
                     }
 
                     // 删除Aria2后缀下载信息记录文件
@@ -131,7 +131,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete unfinished download information file failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
                     }
 
                     // 删除记录
@@ -149,7 +149,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Delete unfinished download record failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
                     }
 
                     lock (UnfinishedDataListLock) isUpdatingNow = false;
@@ -233,7 +233,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LogLevel.WARNING, "Unfinished download list remove item failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Unfinished download list remove item failed.", e);
                         continue;
                     }
                 }
@@ -341,7 +341,7 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Delete unfinished download list  file failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download list  file failed.", e);
                 }
 
                 // 删除Aria2后缀下载信息记录文件
@@ -354,7 +354,7 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Delete unfinished download information file failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
                 }
 
                 // 删除记录
@@ -369,7 +369,7 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LogLevel.WARNING, "Delete unfinished download record failed.", e);
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
                 }
             }
 
