@@ -86,7 +86,7 @@
                         Content="{x:Bind SelectedType.DisplayName, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnTypeSelectClicked}"
                                     IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[0].InternalName), Mode=OneWay}"
@@ -124,7 +124,7 @@
                         Content="{x:Bind SelectedChannel.DisplayName, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnChannelSelectClicked}"
                                     IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[0].InternalName), Mode=OneWay}"
@@ -535,7 +535,7 @@
                                 </MenuFlyoutItem.Icon>
 
                                 <FlyoutBase.AttachedFlyout>
-                                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                    <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
                                             Click="{x:Bind OnCopySelectedLinkClicked}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
@@ -803,7 +803,7 @@
                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}">
 
                                         <DropDownButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                            <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=StoreRoot, Path=CopyLinkCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind FileLink}"

@@ -33,7 +33,8 @@
                         x:Name="DownloadFlyout"
                         FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
                         Placement="Bottom"
-                        ShouldConstrainToRootBounds="False">
+                        ShouldConstrainToRootBounds="False"
+                        SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
 
                         <StackPanel
                             Width="300"

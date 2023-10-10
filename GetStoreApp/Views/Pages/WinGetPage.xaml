@@ -63,7 +63,9 @@
                             <Flyout
                                 FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
                                 Placement="Bottom"
-                                ShouldConstrainToRootBounds="False">
+                                ShouldConstrainToRootBounds="False"
+                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
                                 <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot}">
                                     <Grid
                                         Width="300"

@@ -262,7 +262,7 @@
                                 IsPrimaryButtonEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}">
 
                                 <basicInput:ExtendedSplitButton.Flyout>
-                                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                    <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=SearchAppsRoot, Path=CopyInstallTextCommand, Mode=OneTime}"
                                             CommandParameter="{x:Bind AppID}"

@@ -96,7 +96,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                    <MenuFlyout Placement="Bottom">
                         <MenuFlyoutSubItem
                             Height="32"
                             Padding="11,0,11,0"
@@ -307,7 +307,7 @@
                                     Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}">
 
                                     <basicInput:ExtendedSplitButton.Flyout>
-                                        <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                        <MenuFlyout Placement="Bottom">
                                             <MenuFlyoutItem
                                                 Command="{Binding ElementName=InstalledAppsRoot, Path=CopyUnInstallTextCommand, Mode=OneTime}"
                                                 CommandParameter="{x:Bind AppID}"

@@ -550,7 +550,7 @@
                                         </DropDownButton.Content>
 
                                         <DropDownButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                            <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=AppInfoRoot, Path=CopyAUMIDCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind AppUserModelId}"
@@ -781,7 +781,7 @@
                                         </DropDownButton.Content>
 
                                         <DropDownButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                            <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
                                                     Command="{Binding ElementName=AppInfoRoot, Path=OpenStoreCommand, Mode=OneTime}"
                                                     CommandParameter="{x:Bind Package}"

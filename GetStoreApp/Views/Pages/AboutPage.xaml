@@ -52,7 +52,7 @@
             <DropDownButton Grid.Column="1" Content="{x:Bind root:ResourceService.GetLocalized('About/Others')}">
 
                 <DropDownButton.Flyout>
-                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                    <MenuFlyout Placement="Bottom">
 
                         <MenuFlyoutItem
                             Click="{x:Bind OnPinToDesktopClicked}"

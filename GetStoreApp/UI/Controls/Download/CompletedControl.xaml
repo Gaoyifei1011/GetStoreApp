@@ -129,7 +129,7 @@
                 </MenuFlyoutItem.Icon>
 
                 <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                    <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem
                             Click="{x:Bind OnDeleteSelectedClicked}"
                             Style="{StaticResource MenuFlyoutItemStyle}"
@@ -394,7 +394,7 @@
                                 </Button.Content>
 
                                 <Button.Flyout>
-                                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                    <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
                                             Command="{Binding ElementName=CompletedRoot, Path=DeleteCommand, Mode=OneTime}"
                                             CommandParameter="{Binding}"

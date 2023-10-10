@@ -118,7 +118,7 @@
                         Content="{x:Bind Theme.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnThemeSelectClicked}"
                                     IsChecked="{x:Bind Theme.SelectedValue.Equals(ThemeList[0].SelectedValue), Mode=OneWay}"
@@ -201,7 +201,7 @@
                         Content="{x:Bind LocalizeDisplayNumber(Backdrop), Mode=OneWay}">
 
                         <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     IsChecked="{x:Bind Backdrop.SelectedValue.Equals(BackdropList[0].SelectedValue), Mode=OneWay}"
@@ -378,7 +378,7 @@
                         <DropDownButton.Flyout>
                             <MenuFlyout x:Name="LanguageFlyout" Placement="Bottom">
                                 <MenuFlyout.MenuFlyoutPresenterStyle>
-                                    <Style BasedOn="{StaticResource MenuFlyoutPresenterStyle}" TargetType="MenuFlyoutPresenter">
+                                    <Style BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}" TargetType="MenuFlyoutPresenter">
                                         <Setter Property="MaxHeight" Value="200" />
                                     </Style>
                                 </MenuFlyout.MenuFlyoutPresenterStyle>
@@ -557,7 +557,7 @@
                         Content="{x:Bind HistoryLiteItem.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnHistoryLiteSelectClicked}"
                                     IsChecked="{x:Bind HistoryLiteItem.SelectedValue.Equals(HistoryLiteNumList[0].SelectedValue), Mode=OneWay}"
@@ -783,7 +783,8 @@
                                             <Flyout
                                                 FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
                                                 Placement="Bottom"
-                                                ShouldConstrainToRootBounds="False">
+                                                ShouldConstrainToRootBounds="False"
+                                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
 
                                                 <StackPanel Width="250" Padding="16,15,16,10">
                                                     <Grid Margin="0,0,0,8">
@@ -907,7 +908,7 @@
                                         Content="{x:Bind WinGetInstallMode.DisplayMember, Mode=OneWay}">
 
                                         <DropDownButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                            <MenuFlyout Placement="Bottom">
                                                 <ToggleMenuFlyoutItem
                                                     Click="{x:Bind OnWinGetInstallModeSelectClicked}"
                                                     IsChecked="{x:Bind WinGetInstallMode.SelectedValue.Equals(WinGetInstallModeList[0].SelectedValue), Mode=OneWay}"
@@ -1048,7 +1049,7 @@
                                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
 
                                         <DropDownButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                            <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
                                                     Click="{x:Bind OnChangeFolderClicked}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
@@ -1114,7 +1115,7 @@
                                         Content="{x:Bind DownloadItem, Mode=OneWay}">
 
                                         <DropDownButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                            <MenuFlyout Placement="Bottom">
                                                 <ToggleMenuFlyoutItem
                                                     Click="{x:Bind OnDownloadItemSelectClicked}"
                                                     IsChecked="{x:Bind DownloadItem.Equals(1), Mode=OneWay}"
@@ -1175,7 +1176,7 @@
                                         Content="{x:Bind DownloadMode.DisplayMember, Mode=OneWay}">
 
                                         <DropDownButton.Flyout>
-                                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                            <MenuFlyout Placement="Bottom">
                                                 <ToggleMenuFlyoutItem
                                                     Click="{x:Bind OnDownloadModeSelectClicked}"
                                                     IsChecked="{x:Bind DownloadMode.SelectedValue.Equals(DownloadModeList[0].SelectedValue), Mode=OneWay}"
@@ -1253,7 +1254,7 @@
                         Content="{x:Bind InstallMode.DisplayMember, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
-                            <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                            <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
                                     Click="{x:Bind OnInstallModeSelectClicked}"
                                     IsChecked="{x:Bind InstallMode.SelectedValue.Equals(InstallModeList[0].SelectedValue), Mode=OneWay}"

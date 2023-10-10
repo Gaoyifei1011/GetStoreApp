@@ -221,7 +221,7 @@
                             IsPrimaryButtonEnabled="{x:Bind IsUpgrading.Equals(x:False), Mode=OneWay}">
 
                             <basicInput:ExtendedSplitButton.Flyout>
-                                <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource MenuFlyoutPresenterStyle}" Placement="Bottom">
+                                <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
                                         Command="{Binding ElementName=UpgradableAppsRoot, Path=CopyUpgradeTextCommand, Mode=OneTime}"
                                         CommandParameter="{x:Bind AppID}"
