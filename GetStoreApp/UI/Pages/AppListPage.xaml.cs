@@ -129,30 +129,6 @@ namespace GetStoreApp.UI.Pages
             }
         }
 
-        // 查看应用信息
-        public XamlUICommand ViewInformationCommand { get; } = new XamlUICommand();
-
-        // 打开应用
-        public XamlUICommand OpenAppCommand { get; } = new XamlUICommand();
-
-        // 打开商店
-        public XamlUICommand OpenStoreCommand { get; } = new XamlUICommand();
-
-        // 获取应用安装包
-        public XamlUICommand GetPackageCommand { get; } = new XamlUICommand();
-
-        // 打开应用清单文件
-        public XamlUICommand OpenManifestCommand { get; } = new XamlUICommand();
-
-        // 打开应用安装目录
-        public XamlUICommand OpenInstalledFolderCommand { get; } = new XamlUICommand();
-
-        // 打开应用缓存目录
-        public XamlUICommand OpenCacheFolderCommand { get; } = new XamlUICommand();
-
-        // 卸载应用
-        public XamlUICommand UnInstallCommand { get; } = new XamlUICommand();
-
         private List<Package> MatchResultList;
 
         public ObservableCollection<PackageModel> UwpAppDataList { get; } = new ObservableCollection<PackageModel>();
@@ -162,408 +138,6 @@ namespace GetStoreApp.UI.Pages
         public AppListPage()
         {
             InitializeComponent();
-
-            ViewInformationCommand.ExecuteRequested += (sender, args) =>
-            {
-                PackageModel packageItem = args.Parameter as PackageModel;
-                UWPAppPage uwpAppPage = NavigationService.NavigationFrame.Content as UWPAppPage;
-
-                if (packageItem is not null && uwpAppPage is not null)
-                {
-                    Task.Run(() =>
-                    {
-                        Dictionary<string, object> packageDict = new Dictionary<string, object>();
-
-                        packageDict["DisplayName"] = packageItem.DisplayName;
-                        try
-                        {
-                            packageDict["FamilyName"] = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
-                        }
-                        catch
-                        {
-                            packageDict["DisplayName"] = Unknown;
-                        }
-
-                        try
-                        {
-                            packageDict["FullName"] = string.IsNullOrEmpty(packageItem.Package.Id.FullName) ? Unknown : packageItem.Package.Id.FullName;
-                        }
-                        catch
-                        {
-                            packageDict["FullName"] = Unknown;
-                        }
-
-                        try
-                        {
-                            packageDict["Description"] = string.IsNullOrEmpty(packageItem.Package.Description) ? Unknown : packageItem.Package.Description;
-                        }
-                        catch
-                        {
-                            packageDict["FullName"] = Unknown;
-                        }
-
-                        packageDict["PublisherName"] = packageItem.PublisherName;
-
-                        try
-                        {
-                            packageDict["PublisherId"] = string.IsNullOrEmpty(packageItem.Package.Id.PublisherId) ? Unknown : packageItem.Package.Id.PublisherId;
-                        }
-                        catch
-                        {
-                            packageDict["PublisherId"] = Unknown;
-                        }
-
-                        packageDict["Version"] = packageItem.Version;
-                        packageDict["InstalledDate"] = packageItem.InstallDate;
-
-                        try
-                        {
-                            packageDict["Architecture"] = string.IsNullOrEmpty(packageItem.Package.Id.Architecture.ToString()) ? Unknown : packageItem.Package.Id.Architecture.ToString();
-                        }
-                        catch
-                        {
-                            packageDict["Architecture"] = Unknown;
-                        }
-
-                        packageDict["SignatureKind"] = ResourceService.GetLocalized(string.Format("UWPApp/Signature{0}", packageItem.SignatureKind.ToString()));
-
-                        try
-                        {
-                            packageDict["ResourceId"] = string.IsNullOrEmpty(packageItem.Package.Id.ResourceId) ? Unknown : packageItem.Package.Id.ResourceId;
-                        }
-                        catch
-                        {
-                            packageDict["ResourceId"] = Unknown;
-                        }
-
-                        try
-                        {
-                            packageDict["IsBundle"] = packageItem.Package.IsBundle ? Yes : No;
-                        }
-                        catch
-                        {
-                            packageDict["IsBundle"] = Unknown;
-                        }
-
-                        try
-                        {
-                            packageDict["IsDevelopmentMode"] = packageItem.Package.IsDevelopmentMode ? Yes : No;
-                        }
-                        catch
-                        {
-                            packageDict["IsDevelopmentMode"] = Unknown;
-                        }
-
-                        packageDict["IsFramework"] = packageItem.IsFramework ? Yes : No;
-
-                        try
-                        {
-                            packageDict["IsOptional"] = packageItem.Package.IsOptional ? Yes : No;
-                        }
-                        catch
-                        {
-                            packageDict["IsOptional"] = Unknown;
-                        }
-
-                        try
-                        {
-                            packageDict["IsResourcePackage"] = packageItem.Package.IsResourcePackage ? Yes : No;
-                        }
-                        catch
-                        {
-                            packageDict["IsResourcePackage"] = Unknown;
-                        }
-
-                        try
-                        {
-                            packageDict["IsStub"] = packageItem.Package.IsStub ? Yes : No;
-                        }
-                        catch
-                        {
-                            packageDict["IsStub"] = Unknown;
-                        }
-
-                        try
-                        {
-                            packageDict["VertifyIsOK"] = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
-                        }
-                        catch
-                        {
-                            packageDict["VertifyIsOK"] = Unknown;
-                        }
-
-                        try
-                        {
-                            List<AppListEntryModel> appListEntryList = new List<AppListEntryModel>();
-                            foreach (AppListEntry appListEntryItem in packageItem.Package.GetAppListEntries().ToList())
-                            {
-                                appListEntryList.Add(new AppListEntryModel()
-                                {
-                                    DisplayName = appListEntryItem.DisplayInfo.DisplayName,
-                                    Description = appListEntryItem.DisplayInfo.Description,
-                                    AppUserModelId = appListEntryItem.AppUserModelId,
-                                    AppListEntry = appListEntryItem
-                                });
-                            }
-                            packageDict["AppListEntryList"] = appListEntryList;
-                        }
-                        catch
-                        {
-                            packageDict["AppListEntryList"] = new List<AppListEntry>();
-                        }
-
-                        try
-                        {
-                            List<PackageModel> dependenciesList = new List<PackageModel>();
-                            IReadOnlyList<Package> dependcies = packageItem.Package.Dependencies;
-
-                            if (dependcies.Count > 0)
-                            {
-                                foreach (Package packageItem in dependcies.ToList())
-                                {
-                                    try
-                                    {
-                                        dependenciesList.Add(new PackageModel()
-                                        {
-                                            DisplayName = packageItem.DisplayName,
-                                            PublisherName = packageItem.PublisherDisplayName,
-                                            Version = string.Format("{0}.{1}.{2}.{3}",
-                                                packageItem.Id.Version.Major,
-                                                packageItem.Id.Version.Minor,
-                                                packageItem.Id.Version.Build,
-                                                packageItem.Id.Version.Revision
-                                                ),
-                                            Package = packageItem
-                                        });
-                                    }
-                                    catch
-                                    {
-                                        continue;
-                                    }
-                                }
-                            }
-
-                            dependenciesList = dependenciesList.OrderBy(item => item.DisplayName).ToList();
-                            packageDict["DependenciesList"] = dependenciesList;
-                        }
-                        catch
-                        {
-                            packageDict["DependenciesList"] = new List<PackageModel>();
-                        }
-
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            uwpAppPage.ShowAppInformation(packageDict);
-                        });
-                    });
-                }
-            };
-
-            OpenAppCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await package.GetAppListEntries()[0].LaunchAsync();
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", package.DisplayName), e);
-                        }
-                    });
-                }
-            };
-
-            OpenStoreCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await Launcher.LaunchUriAsync(new Uri($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
-                        }
-                    });
-                }
-            };
-
-            GetPackageCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    NavigationService.NavigateTo(typeof(StorePage), new object[] { AppNaviagtionArgs.Store, "PackageFamilyName", "Retail", package.Id.FamilyName });
-                }
-            };
-
-            OpenManifestCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-                if (package is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            StorageFile file = await StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml"));
-                            if (file is not null)
-                            {
-                                await Launcher.LaunchFileAsync(file);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, string.Format("{0}'s AppxManifest.xml file open failed", package.DisplayName), e);
-                        }
-                    });
-                }
-            };
-
-            OpenInstalledFolderCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await Launcher.LaunchFolderPathAsync(package.InstalledPath);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
-                        }
-                    });
-                }
-            };
-
-            OpenCacheFolderCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            ApplicationData applicationData = ApplicationDataManager.CreateForPackageFamily(package.Id.FamilyName);
-                            await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
-                        }
-                    });
-                }
-            };
-
-            UnInstallCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    foreach (PackageModel packageItem in UwpAppDataList)
-                    {
-                        if (packageItem.Package.Id.FullName == package.Id.FullName)
-                        {
-                            lock (AppShortListObject)
-                            {
-                                packageItem.IsUnInstalling = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    try
-                    {
-                        Task.Run(() =>
-                        {
-                            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = PackageManager.RemovePackageAsync(package.Id.FullName);
-
-                            ManualResetEvent uninstallCompletedEvent = new ManualResetEvent(false);
-
-                            uninstallOperation.Completed = (result, progress) =>
-                            {
-                                // 卸载成功
-                                if (result.Status is AsyncStatus.Completed)
-                                {
-                                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                                    {
-                                        lock (AppShortListObject)
-                                        {
-                                            foreach (PackageModel pacakgeItem in UwpAppDataList)
-                                            {
-                                                if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
-                                                {
-                                                    ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
-
-                                                    UwpAppDataList.Remove(pacakgeItem);
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    });
-                                }
-
-                                // 卸载失败
-                                else if (result.Status is AsyncStatus.Error)
-                                {
-                                    DeploymentResult uninstallResult = uninstallOperation.GetResults();
-
-                                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                                    {
-                                        lock (AppShortListObject)
-                                        {
-                                            foreach (PackageModel pacakgeItem in UwpAppDataList)
-                                            {
-                                                if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
-                                                {
-                                                    ToastNotificationService.Show(NotificationKind.UWPUnInstallFailed,
-                                                        pacakgeItem.Package.DisplayName,
-                                                        uninstallResult.ExtendedErrorCode.HResult.ToString(),
-                                                        uninstallResult.ErrorText
-                                                        );
-
-                                                    LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
-
-                                                    pacakgeItem.IsUnInstalling = false;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    });
-                                }
-
-                                uninstallCompletedEvent.Set();
-                            };
-
-                            uninstallCompletedEvent.WaitOne();
-                            uninstallCompletedEvent.Dispose();
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", package.Id.FullName), e);
-                    }
-                }
-            };
         }
 
         /// <summary>
@@ -584,6 +158,432 @@ namespace GetStoreApp.UI.Pages
         public bool IsSelected(Enum value, Enum comparedValue)
         {
             return value.HasFlag(comparedValue);
+        }
+
+        /// <summary>
+        /// 获取应用安装包
+        /// </summary>
+        public void OnGetPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                NavigationService.NavigateTo(typeof(StorePage), new object[] { AppNaviagtionArgs.Store, "PackageFamilyName", "Retail", package.Id.FamilyName });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用
+        /// </summary>
+        public void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await package.GetAppListEntries()[0].LaunchAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", package.DisplayName), e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用缓存目录
+        /// </summary>
+        public void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        ApplicationData applicationData = ApplicationDataManager.CreateForPackageFamily(package.Id.FamilyName);
+                        await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用安装目录
+        /// </summary>
+        public void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开应用清单文件
+        /// </summary>
+        public void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        StorageFile file = await StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml"));
+                        if (file is not null)
+                        {
+                            await Launcher.LaunchFileAsync(file);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, string.Format("{0}'s AppxManifest.xml file open failed", package.DisplayName), e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开商店
+        /// </summary>
+        public void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new Uri($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 卸载应用
+        /// </summary>
+        public void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                foreach (PackageModel packageItem in UwpAppDataList)
+                {
+                    if (packageItem.Package.Id.FullName == package.Id.FullName)
+                    {
+                        lock (AppShortListObject)
+                        {
+                            packageItem.IsUnInstalling = true;
+                            break;
+                        }
+                    }
+                }
+
+                try
+                {
+                    Task.Run(() =>
+                    {
+                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = PackageManager.RemovePackageAsync(package.Id.FullName);
+
+                        ManualResetEvent uninstallCompletedEvent = new ManualResetEvent(false);
+
+                        uninstallOperation.Completed = (result, progress) =>
+                        {
+                            // 卸载成功
+                            if (result.Status is AsyncStatus.Completed)
+                            {
+                                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                                {
+                                    lock (AppShortListObject)
+                                    {
+                                        foreach (PackageModel pacakgeItem in UwpAppDataList)
+                                        {
+                                            if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
+                                            {
+                                                ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
+
+                                                UwpAppDataList.Remove(pacakgeItem);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+
+                            // 卸载失败
+                            else if (result.Status is AsyncStatus.Error)
+                            {
+                                DeploymentResult uninstallResult = uninstallOperation.GetResults();
+
+                                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                                {
+                                    lock (AppShortListObject)
+                                    {
+                                        foreach (PackageModel pacakgeItem in UwpAppDataList)
+                                        {
+                                            if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
+                                            {
+                                                ToastNotificationService.Show(NotificationKind.UWPUnInstallFailed,
+                                                    pacakgeItem.Package.DisplayName,
+                                                    uninstallResult.ExtendedErrorCode.HResult.ToString(),
+                                                    uninstallResult.ErrorText
+                                                    );
+
+                                                LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
+
+                                                pacakgeItem.IsUnInstalling = false;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+
+                            uninstallCompletedEvent.Set();
+                        };
+
+                        uninstallCompletedEvent.WaitOne();
+                        uninstallCompletedEvent.Dispose();
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", package.Id.FullName), e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 查看应用信息
+        /// </summary>
+        public void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            PackageModel packageItem = args.Parameter as PackageModel;
+            UWPAppPage uwpAppPage = NavigationService.NavigationFrame.Content as UWPAppPage;
+
+            if (packageItem is not null && uwpAppPage is not null)
+            {
+                Task.Run(() =>
+                {
+                    Dictionary<string, object> packageDict = new Dictionary<string, object>();
+
+                    packageDict["DisplayName"] = packageItem.DisplayName;
+                    try
+                    {
+                        packageDict["FamilyName"] = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
+                    }
+                    catch
+                    {
+                        packageDict["DisplayName"] = Unknown;
+                    }
+
+                    try
+                    {
+                        packageDict["FullName"] = string.IsNullOrEmpty(packageItem.Package.Id.FullName) ? Unknown : packageItem.Package.Id.FullName;
+                    }
+                    catch
+                    {
+                        packageDict["FullName"] = Unknown;
+                    }
+
+                    try
+                    {
+                        packageDict["Description"] = string.IsNullOrEmpty(packageItem.Package.Description) ? Unknown : packageItem.Package.Description;
+                    }
+                    catch
+                    {
+                        packageDict["FullName"] = Unknown;
+                    }
+
+                    packageDict["PublisherName"] = packageItem.PublisherName;
+
+                    try
+                    {
+                        packageDict["PublisherId"] = string.IsNullOrEmpty(packageItem.Package.Id.PublisherId) ? Unknown : packageItem.Package.Id.PublisherId;
+                    }
+                    catch
+                    {
+                        packageDict["PublisherId"] = Unknown;
+                    }
+
+                    packageDict["Version"] = packageItem.Version;
+                    packageDict["InstalledDate"] = packageItem.InstallDate;
+
+                    try
+                    {
+                        packageDict["Architecture"] = string.IsNullOrEmpty(packageItem.Package.Id.Architecture.ToString()) ? Unknown : packageItem.Package.Id.Architecture.ToString();
+                    }
+                    catch
+                    {
+                        packageDict["Architecture"] = Unknown;
+                    }
+
+                    packageDict["SignatureKind"] = ResourceService.GetLocalized(string.Format("UWPApp/Signature{0}", packageItem.SignatureKind.ToString()));
+
+                    try
+                    {
+                        packageDict["ResourceId"] = string.IsNullOrEmpty(packageItem.Package.Id.ResourceId) ? Unknown : packageItem.Package.Id.ResourceId;
+                    }
+                    catch
+                    {
+                        packageDict["ResourceId"] = Unknown;
+                    }
+
+                    try
+                    {
+                        packageDict["IsBundle"] = packageItem.Package.IsBundle ? Yes : No;
+                    }
+                    catch
+                    {
+                        packageDict["IsBundle"] = Unknown;
+                    }
+
+                    try
+                    {
+                        packageDict["IsDevelopmentMode"] = packageItem.Package.IsDevelopmentMode ? Yes : No;
+                    }
+                    catch
+                    {
+                        packageDict["IsDevelopmentMode"] = Unknown;
+                    }
+
+                    packageDict["IsFramework"] = packageItem.IsFramework ? Yes : No;
+
+                    try
+                    {
+                        packageDict["IsOptional"] = packageItem.Package.IsOptional ? Yes : No;
+                    }
+                    catch
+                    {
+                        packageDict["IsOptional"] = Unknown;
+                    }
+
+                    try
+                    {
+                        packageDict["IsResourcePackage"] = packageItem.Package.IsResourcePackage ? Yes : No;
+                    }
+                    catch
+                    {
+                        packageDict["IsResourcePackage"] = Unknown;
+                    }
+
+                    try
+                    {
+                        packageDict["IsStub"] = packageItem.Package.IsStub ? Yes : No;
+                    }
+                    catch
+                    {
+                        packageDict["IsStub"] = Unknown;
+                    }
+
+                    try
+                    {
+                        packageDict["VertifyIsOK"] = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
+                    }
+                    catch
+                    {
+                        packageDict["VertifyIsOK"] = Unknown;
+                    }
+
+                    try
+                    {
+                        List<AppListEntryModel> appListEntryList = new List<AppListEntryModel>();
+                        foreach (AppListEntry appListEntryItem in packageItem.Package.GetAppListEntries().ToList())
+                        {
+                            appListEntryList.Add(new AppListEntryModel()
+                            {
+                                DisplayName = appListEntryItem.DisplayInfo.DisplayName,
+                                Description = appListEntryItem.DisplayInfo.Description,
+                                AppUserModelId = appListEntryItem.AppUserModelId,
+                                AppListEntry = appListEntryItem
+                            });
+                        }
+                        packageDict["AppListEntryList"] = appListEntryList;
+                    }
+                    catch
+                    {
+                        packageDict["AppListEntryList"] = new List<AppListEntry>();
+                    }
+
+                    try
+                    {
+                        List<PackageModel> dependenciesList = new List<PackageModel>();
+                        IReadOnlyList<Package> dependcies = packageItem.Package.Dependencies;
+
+                        if (dependcies.Count > 0)
+                        {
+                            foreach (Package packageItem in dependcies.ToList())
+                            {
+                                try
+                                {
+                                    dependenciesList.Add(new PackageModel()
+                                    {
+                                        DisplayName = packageItem.DisplayName,
+                                        PublisherName = packageItem.PublisherDisplayName,
+                                        Version = string.Format("{0}.{1}.{2}.{3}",
+                                            packageItem.Id.Version.Major,
+                                            packageItem.Id.Version.Minor,
+                                            packageItem.Id.Version.Build,
+                                            packageItem.Id.Version.Revision
+                                            ),
+                                        Package = packageItem
+                                    });
+                                }
+                                catch
+                                {
+                                    continue;
+                                }
+                            }
+                        }
+
+                        dependenciesList = dependenciesList.OrderBy(item => item.DisplayName).ToList();
+                        packageDict["DependenciesList"] = dependenciesList;
+                    }
+                    catch
+                    {
+                        packageDict["DependenciesList"] = new List<PackageModel>();
+                    }
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        uwpAppPage.ShowAppInformation(packageDict);
+                    });
+                });
+            }
         }
 
         /// <summary>

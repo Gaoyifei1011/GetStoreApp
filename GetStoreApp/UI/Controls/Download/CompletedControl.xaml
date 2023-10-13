@@ -9,9 +9,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
-    x:Name="CompletedRoot"
     Padding="0"
     mc:Ignorable="d">
+
+    <Grid.Resources>
+        <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
+        <XamlUICommand x:Name="DeleteWithFileCommand" ExecuteRequested="{x:Bind OnDeleteWithFileExecuteRequested}" />
+        <XamlUICommand x:Name="FileInformationCommand" ExecuteRequested="{x:Bind OnFileInformationExecuteRequested}" />
+        <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="OpenItemFolderCommand" ExecuteRequested="{x:Bind OnOpenItemFolderExecuteRequested}" />
+        <XamlUICommand x:Name="ShareFileCommand" ExecuteRequested="{x:Bind OnShareFileExecuteRequested}" />
+    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -352,7 +360,7 @@
                                             Height="32"
                                             Margin="5,0,0,0"
                                             Padding="0"
-                                            Command="{Binding ElementName=CompletedRoot, Path=InstallCommand, Mode=OneTime}"
+                                            Command="{StaticResource InstallCommand}"
                                             CommandParameter="{Binding}"
                                             CornerRadius="{StaticResource ControlCornerRadius}"
                                             IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
@@ -369,7 +377,7 @@
                                         Height="32"
                                         Margin="5,0,0,0"
                                         Padding="0"
-                                        Command="{Binding ElementName=CompletedRoot, Path=OpenItemFolderCommand, Mode=OneTime}"
+                                        Command="{StaticResource OpenItemFolderCommand}"
                                         CommandParameter="{x:Bind FilePath}"
                                         CornerRadius="{StaticResource ControlCornerRadius}"
                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}">
@@ -396,14 +404,14 @@
                                 <Button.Flyout>
                                     <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=DeleteCommand, Mode=OneTime}"
+                                            Command="{StaticResource DeleteCommand}"
                                             CommandParameter="{Binding}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}"
                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}" />
 
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=DeleteWithFileCommand, Mode=OneTime}"
+                                            Command="{StaticResource DeleteWithFileCommand}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
@@ -413,7 +421,7 @@
                                         <MenuFlyoutSeparator />
 
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=ShareFileCommand, Mode=OneTime}"
+                                            Command="{StaticResource ShareFileCommand}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
@@ -425,7 +433,7 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=CompletedRoot, Path=FileInformationCommand, Mode=OneTime}"
+                                            Command="{StaticResource FileInformationCommand}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"

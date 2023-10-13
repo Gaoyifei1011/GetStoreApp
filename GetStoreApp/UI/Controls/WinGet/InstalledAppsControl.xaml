@@ -10,10 +10,14 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
-    x:Name="InstalledAppsRoot"
     Padding="0"
     Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
+
+    <Grid.Resources>
+        <XamlUICommand x:Name="CopyUnInstallTextCommand" ExecuteRequested="{x:Bind OnCopyUnInstallTextExecuteRequested}" />
+        <XamlUICommand x:Name="UnInstallCommand" ExecuteRequested="{x:Bind OnUnInstallExecuteRequested}" />
+    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -302,14 +306,14 @@
                                     MinWidth="100"
                                     basicInput:ExtendedSplitButton.PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}"
                                     basicInput:ExtendedSplitButton.SecondaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
-                                    Command="{Binding ElementName=InstalledAppsRoot, Path=UnInstallCommand, Mode=OneTime}"
+                                    Command="{StaticResource UnInstallCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}">
 
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <MenuFlyout Placement="Bottom">
                                             <MenuFlyoutItem
-                                                Command="{Binding ElementName=InstalledAppsRoot, Path=CopyUnInstallTextCommand, Mode=OneTime}"
+                                                Command="{StaticResource CopyUnInstallTextCommand}"
                                                 CommandParameter="{x:Bind AppID}"
                                                 Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">

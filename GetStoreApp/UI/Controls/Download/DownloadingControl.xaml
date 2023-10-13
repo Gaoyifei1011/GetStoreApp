@@ -8,9 +8,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
-    x:Name="DownloadingRoot"
     Padding="0"
     mc:Ignorable="d">
+
+    <Grid.Resources>
+        <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
+        <XamlUICommand x:Name="PauseCommand" ExecuteRequested="{x:Bind OnPauseExecuteRequested}" />
+    </Grid.Resources>
 
     <Grid Padding="0">
         <Grid.RowDefinitions>
@@ -310,7 +314,7 @@
                                     Height="32"
                                     Margin="5,0,0,0"
                                     Padding="0"
-                                    Command="{Binding ElementName=DownloadingRoot, Path=PauseCommand, Mode=OneTime}"
+                                    Command="{StaticResource PauseCommand}"
                                     CommandParameter="{Binding}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}">
@@ -325,7 +329,7 @@
                                     Height="32"
                                     Margin="5,0,0,0"
                                     Padding="0"
-                                    Command="{Binding ElementName=DownloadingRoot, Path=DeleteCommand, Mode=OneTime}"
+                                    Command="{StaticResource DeleteCommand}"
                                     CommandParameter="{Binding}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteDownloadingToolTip')}">

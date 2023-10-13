@@ -9,9 +9,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
-    x:Name="HistoryRoot"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="CopyCommand" ExecuteRequested="{x:Bind OnCopyExecuteRequested}" />
+        <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillInExecuteRequested}" />
+    </Page.Resources>
 
     <Grid Padding="0">
 
@@ -600,7 +604,7 @@
                                 <HyperlinkButton
                                     Grid.Column="5"
                                     Margin="10,0,0,0"
-                                    Command="{Binding ElementName=HistoryRoot, Path=FillinCommand, Mode=OneTime}"
+                                    Command="{StaticResource FillinCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Fillin')}"
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
@@ -609,7 +613,7 @@
 
                                 <HyperlinkButton
                                     Grid.Column="6"
-                                    Command="{Binding ElementName=HistoryRoot, Path=CopyCommand, Mode=OneTime}"
+                                    Command="{StaticResource CopyCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('History/Copy')}"
                                     IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"

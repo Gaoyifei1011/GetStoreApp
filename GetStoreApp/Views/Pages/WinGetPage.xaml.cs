@@ -35,8 +35,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public XamlUICommand CancelInstallCommand { get; } = new XamlUICommand();
-
         public ObservableCollection<InstallingAppsModel> InstallingAppsList = new ObservableCollection<InstallingAppsModel>();
 
         public Dictionary<string, CancellationTokenSource> InstallingStateDict = new Dictionary<string, CancellationTokenSource>();
@@ -46,25 +44,6 @@ namespace GetStoreApp.Views.Pages
         public WinGetPage()
         {
             InitializeComponent();
-
-            CancelInstallCommand.ExecuteRequested += (sender, args) =>
-            {
-                string appId = args.Parameter as string;
-                if (appId is not null)
-                {
-                    lock (InstallingAppsObject)
-                    {
-                        if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
-                        {
-                            if (!tokenSource.IsCancellationRequested)
-                            {
-                                tokenSource.Cancel();
-                                tokenSource.Dispose();
-                            }
-                        }
-                    }
-                }
-            };
         }
 
         /// <summary>
@@ -80,6 +59,28 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 return result;
+            }
+        }
+
+        /// <summary>
+        /// 取消下载
+        /// </summary>
+        public void OnCancelInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            string appId = args.Parameter as string;
+            if (appId is not null)
+            {
+                lock (InstallingAppsObject)
+                {
+                    if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
+                    {
+                        if (!tokenSource.IsCancellationRequested)
+                        {
+                            tokenSource.Cancel();
+                            tokenSource.Dispose();
+                        }
+                    }
+                }
             }
         }
 

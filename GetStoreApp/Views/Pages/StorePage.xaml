@@ -11,10 +11,17 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
     xmlns:sys="using:System"
-    x:Name="StoreRoot"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="CopyCommand" ExecuteRequested="{x:Bind OnCopyExecuteRequested}" />
+        <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
+        <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
+        <XamlUICommand x:Name="CopyLinkCommand" ExecuteRequested="{x:Bind OnCopyLinkExecuteRequested}" />
+        <XamlUICommand x:Name="CopyContentCommand" ExecuteRequested="{x:Bind OnCopyContentExecuteRequested}" />
+    </Page.Resources>
 
     <Grid Padding="0">
 
@@ -386,7 +393,7 @@
                                             <HyperlinkButton
                                                 Grid.Column="3"
                                                 Margin="10,0,0,0"
-                                                Command="{Binding ElementName=StoreRoot, Path=FillinCommand, Mode=OneTime}"
+                                                Command="{StaticResource FillinCommand}"
                                                 CommandParameter="{Binding}"
                                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
                                                 Style="{StaticResource HyperlinkButtonStyle}"
@@ -394,7 +401,7 @@
 
                                             <HyperlinkButton
                                                 Grid.Column="4"
-                                                Command="{Binding ElementName=StoreRoot, Path=CopyCommand, Mode=OneTime}"
+                                                Command="{StaticResource CopyCommand}"
                                                 CommandParameter="{Binding}"
                                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
                                                 Style="{StaticResource HyperlinkButtonStyle}"
@@ -715,7 +722,7 @@
                                         Grid.Column="1"
                                         Margin="10,0,0,0"
                                         VerticalAlignment="Center"
-                                        Command="{Binding ElementName=StoreRoot, Path=DownloadCommand, Mode=OneTime}"
+                                        Command="{StaticResource DownloadCommand}"
                                         CommandParameter="{Binding}"
                                         IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                                         IsRightTapEnabled="True"
@@ -805,14 +812,14 @@
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=StoreRoot, Path=CopyLinkCommand, Mode=OneTime}"
+                                                    Command="{StaticResource CopyLinkCommand}"
                                                     CommandParameter="{x:Bind FileLink}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyLink')}"
                                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyLinkToolTip')}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=StoreRoot, Path=CopyContentCommand, Mode=OneTime}"
+                                                    Command="{StaticResource CopyContentCommand}"
                                                     CommandParameter="{Binding}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyContent')}"

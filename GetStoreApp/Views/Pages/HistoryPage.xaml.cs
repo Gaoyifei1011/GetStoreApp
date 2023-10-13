@@ -135,47 +135,11 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        // 填入指定项目的内容
-        public XamlUICommand FillinCommand { get; } = new XamlUICommand();
-
-        // 复制指定项目的内容
-        public XamlUICommand CopyCommand { get; } = new XamlUICommand();
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public HistoryPage()
         {
             InitializeComponent();
-
-            FillinCommand.ExecuteRequested += (sender, args) =>
-            {
-                HistoryModel historyItem = args.Parameter as HistoryModel;
-                if (historyItem is not null)
-                {
-                    NavigationService.NavigateTo(typeof(StorePage), new object[] { AppNaviagtionArgs.Store, historyItem.HistoryType, historyItem.HistoryChannel, historyItem.HistoryLink });
-                }
-            };
-
-            CopyCommand.ExecuteRequested += (sender, args) =>
-            {
-                HistoryModel historyItem = (HistoryModel)args.Parameter;
-                Task.Run(() =>
-                {
-                    if (historyItem is not null)
-                    {
-                        string copyContent = string.Format("{0}\t{1}\t{2}",
-                            TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
-                            ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
-                            historyItem.HistoryLink);
-
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            CopyPasteHelper.CopyToClipBoard(copyContent);
-                            new DataCopyNotification(this, DataCopyKind.History, false).Show();
-                        });
-                    }
-                });
-            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs args)
@@ -190,6 +154,42 @@ namespace GetStoreApp.Views.Pages
             {
                 HistoryNavigationArgs = AppNaviagtionArgs.None;
             }
+        }
+
+        /// <summary>
+        /// 填入指定项目的内容
+        /// </summary>
+        public void OnFillInExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            HistoryModel historyItem = args.Parameter as HistoryModel;
+            if (historyItem is not null)
+            {
+                NavigationService.NavigateTo(typeof(StorePage), new object[] { AppNaviagtionArgs.Store, historyItem.HistoryType, historyItem.HistoryChannel, historyItem.HistoryLink });
+            }
+        }
+
+        /// <summary>
+        /// 复制指定项目的内容
+        /// </summary>
+        public void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            HistoryModel historyItem = (HistoryModel)args.Parameter;
+            Task.Run(() =>
+            {
+                if (historyItem is not null)
+                {
+                    string copyContent = string.Format("{0}\t{1}\t{2}",
+                        TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
+                        ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                        historyItem.HistoryLink);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        CopyPasteHelper.CopyToClipBoard(copyContent);
+                        new DataCopyNotification(this, DataCopyKind.History, false).Show();
+                    });
+                }
+            });
         }
 
         /// <summary>

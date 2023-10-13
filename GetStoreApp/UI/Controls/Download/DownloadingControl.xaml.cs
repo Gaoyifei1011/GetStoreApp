@@ -49,12 +49,6 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
-        // 暂停下载当前任务
-        public XamlUICommand PauseCommand { get; } = new XamlUICommand();
-
-        // 删除当前任务
-        public XamlUICommand DeleteCommand { get; } = new XamlUICommand();
-
         public ObservableCollection<DownloadingModel> DownloadingDataList { get; } = new ObservableCollection<DownloadingModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -67,67 +61,6 @@ namespace GetStoreApp.UI.Controls.Download
             DownloadingTimer.Tick += DownloadInfoTimerTick;
             // Interval 获取或设置计时器刻度之间的时间段
             DownloadingTimer.Interval = new TimeSpan(0, 0, 1);
-
-            PauseCommand.ExecuteRequested += async (sender, args) =>
-            {
-                DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
-                if (downloadingItem is not null)
-                {
-                    // 有信息在更新时，等待操作
-                    while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-                    lock (DownloadingNowLock) IsUpdatingNow = true;
-
-                    bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
-
-                    // 信息更新完毕时，允许其他操作开始执行
-                    lock (DownloadingNowLock) IsUpdatingNow = false;
-                }
-            };
-
-            DeleteCommand.ExecuteRequested += async (sender, args) =>
-            {
-                DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
-                if (downloadingItem is not null)
-                {
-                    // 有信息在更新时，等待操作
-                    while (IsUpdatingNow) await Task.Delay(50);
-                    lock (DownloadingNowLock) IsUpdatingNow = true;
-
-                    bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
-
-                    if (DeleteResult)
-                    {
-                        // 删除下载文件
-                        try
-                        {
-                            if (File.Exists(downloadingItem.FilePath))
-                            {
-                                File.Delete(downloadingItem.FilePath);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Delete downloading file failed.", e);
-                        }
-
-                        // 删除Aria2后缀下载信息记录文件
-                        try
-                        {
-                            if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
-                            {
-                                File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Delete downloading information file failed.", e);
-                        }
-                    }
-
-                    // 信息更新完毕时，允许其他操作开始执行
-                    lock (DownloadingNowLock) IsUpdatingNow = false;
-                }
-            };
 
             // 订阅事件
             DownloadSchedulerService.DownloadingList.CollectionChanged += OnDownloadingListItemsChanged;
@@ -146,6 +79,73 @@ namespace GetStoreApp.UI.Controls.Download
             else
             {
                 return string.Format(ResourceService.GetLocalized("Download/DownloadingCountInfo"), count);
+            }
+        }
+
+        /// <summary>
+        /// 删除当前任务
+        /// </summary>
+        public async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
+            if (downloadingItem is not null)
+            {
+                // 有信息在更新时，等待操作
+                while (IsUpdatingNow) await Task.Delay(50);
+                lock (DownloadingNowLock) IsUpdatingNow = true;
+
+                bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+
+                if (DeleteResult)
+                {
+                    // 删除下载文件
+                    try
+                    {
+                        if (File.Exists(downloadingItem.FilePath))
+                        {
+                            File.Delete(downloadingItem.FilePath);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading file failed.", e);
+                    }
+
+                    // 删除Aria2后缀下载信息记录文件
+                    try
+                    {
+                        if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
+                        {
+                            File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading information file failed.", e);
+                    }
+                }
+
+                // 信息更新完毕时，允许其他操作开始执行
+                lock (DownloadingNowLock) IsUpdatingNow = false;
+            }
+        }
+
+        /// <summary>
+        /// 暂停下载当前任务
+        /// </summary>
+        public async void OnPauseExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
+            if (downloadingItem is not null)
+            {
+                // 有信息在更新时，等待操作
+                while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
+                lock (DownloadingNowLock) IsUpdatingNow = true;
+
+                bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+
+                // 信息更新完毕时，允许其他操作开始执行
+                lock (DownloadingNowLock) IsUpdatingNow = false;
             }
         }
 

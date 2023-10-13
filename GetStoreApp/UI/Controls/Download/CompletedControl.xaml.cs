@@ -52,24 +52,6 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
-        // 安装应用
-        public XamlUICommand InstallCommand { get; } = new XamlUICommand();
-
-        // 打开当前项目存储的文件夹
-        public XamlUICommand OpenItemFolderCommand { get; } = new XamlUICommand();
-
-        // 删除当前任务
-        public XamlUICommand DeleteCommand { get; } = new XamlUICommand();
-
-        // 删除当前任务（包括文件）
-        public XamlUICommand DeleteWithFileCommand { get; } = new XamlUICommand();
-
-        // 共享文件
-        public XamlUICommand ShareFileCommand { get; } = new XamlUICommand();
-
-        // 查看文件信息
-        public XamlUICommand FileInformationCommand { get; } = new XamlUICommand();
-
         public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -77,230 +59,6 @@ namespace GetStoreApp.UI.Controls.Download
         public CompletedControl()
         {
             InitializeComponent();
-
-            InstallCommand.ExecuteRequested += async (sender, args) =>
-            {
-                CompletedModel completedItem = args.Parameter as CompletedModel;
-                if (completedItem is not null)
-                {
-                    // 使用应用安装程序安装
-                    if (!string.IsNullOrEmpty(completedItem.FilePath))
-                    {
-                        try
-                        {
-                            StorageFile CompletedFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
-
-                            if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[0].SelectedValue)
-                            {
-                                await Launcher.LaunchFileAsync(CompletedFile);
-                            }
-
-                            // 直接安装
-                            else if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[1].SelectedValue)
-                            {
-                                // 标记安装状态
-                                try
-                                {
-                                    int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
-
-                                    if (InstallIndex is not -1 && InstallIndex < CompletedDataList.Count)
-                                    {
-                                        CompletedDataList[InstallIndex].IsInstalling = true;
-
-                                        PackageManager packageManager = new PackageManager();
-
-                                        // 更新安装进度
-                                        Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
-                                        {
-                                            CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
-                                        });
-
-                                        try
-                                        {
-                                            // 安装目标应用
-                                            DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
-                                            // 显示安装成功通知
-                                            ToastNotificationService.Show(NotificationKind.InstallApp, "Successfully", CompletedFile.Name);
-                                        }
-                                        // 安装失败显示失败信息
-                                        catch (Exception e)
-                                        {
-                                            CompletedDataList[InstallIndex].InstallError = true;
-                                            // 显示安装失败通知
-                                            ToastNotificationService.Show(NotificationKind.InstallApp, "Error", CompletedFile.Name, e.Message);
-                                        }
-                                        // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
-                                        finally
-                                        {
-                                            await Task.Delay(500);
-                                            CompletedDataList[InstallIndex].IsInstalling = false;
-                                            CompletedDataList[InstallIndex].InstallError = false;
-                                        }
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
-                                    return;
-                                }
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
-                            return;
-                        }
-                    }
-                }
-            };
-
-            OpenItemFolderCommand.ExecuteRequested += async (sender, args) =>
-            {
-                string filePath = args.Parameter as string;
-                if (filePath is not null)
-                {
-                    filePath = filePath.Replace(@"\\", @"\");
-
-                    // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
-                    if (!string.IsNullOrEmpty(filePath))
-                    {
-                        try
-                        {
-                            StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
-                            StorageFolder folder = await file.GetParentAsync();
-                            FolderLauncherOptions options = new FolderLauncherOptions();
-                            options.ItemsToSelect.Add(file);
-                            await Launcher.LaunchFolderAsync(folder, options);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Completed download item folder located failed.", e);
-                            await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
-                        }
-                    }
-                    else
-                    {
-                        await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
-                    }
-                }
-            };
-
-            DeleteCommand.ExecuteRequested += async (sender, args) =>
-            {
-                CompletedModel completedItem = args.Parameter as CompletedModel;
-                if (completedItem is not null)
-                {
-                    if (completedItem.IsInstalling is true)
-                    {
-                        await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
-                        return;
-                    }
-
-                    bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
-
-                    if (DeleteResult)
-                    {
-                        while (isUpdatingNow) await Task.Delay(50);
-                        lock (CompletedDataListLock) isUpdatingNow = true;
-
-                        try
-                        {
-                            CompletedDataList.Remove(completedItem);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
-                        }
-
-                        lock (CompletedDataListLock) isUpdatingNow = false;
-                    }
-                }
-            };
-
-            DeleteWithFileCommand.ExecuteRequested += async (sender, args) =>
-            {
-                CompletedModel completedItem = args.Parameter as CompletedModel;
-                if (completedItem is not null)
-                {
-                    if (completedItem.IsInstalling is true)
-                    {
-                        await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
-                        return;
-                    }
-
-                    // 删除文件
-                    try
-                    {
-                        if (File.Exists(completedItem.FilePath))
-                        {
-                            File.Delete(completedItem.FilePath);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
-                    }
-
-                    bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
-
-                    // 删除记录
-                    if (DeleteResult)
-                    {
-                        while (isUpdatingNow) await Task.Delay(50);
-                        lock (CompletedDataListLock) isUpdatingNow = true;
-
-                        try
-                        {
-                            CompletedDataList.Remove(completedItem);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
-                        }
-
-                        lock (CompletedDataListLock) isUpdatingNow = false;
-                    }
-                }
-            };
-
-            ShareFileCommand.ExecuteRequested += (sender, args) =>
-            {
-                CompletedModel completedItem = args.Parameter as CompletedModel;
-
-                if (completedItem is not null)
-                {
-                    try
-                    {
-                        DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle);
-
-                        dataTransferManager.DataRequested += async (sender, args) =>
-                        {
-                            DataRequestDeferral deferral = args.Request.GetDeferral();
-
-                            args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
-                            args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
-                            deferral.Complete();
-                        };
-
-                        DataTransferManagerInterop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
-                    }
-                    catch (Exception e)
-                    {
-                        new ShareFailedNotification(this, false).Show();
-                        LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
-                    }
-                }
-            };
-
-            FileInformationCommand.ExecuteRequested += async (sender, args) =>
-            {
-                CompletedModel completedItem = args.Parameter as CompletedModel;
-
-                if (completedItem is not null)
-                {
-                    await ContentDialogHelper.ShowAsync(new FileInformationDialog(completedItem), this);
-                }
-            };
 
             // 订阅事件
             DownloadSchedulerService.DownloadingList.CollectionChanged += OnDownloadingListItemsChanged;
@@ -318,6 +76,248 @@ namespace GetStoreApp.UI.Controls.Download
             else
             {
                 return string.Format(ResourceService.GetLocalized("Download/CompletedCountInfo"), count);
+            }
+        }
+
+        /// <summary>
+        /// 删除当前任务
+        /// </summary>
+        public async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            CompletedModel completedItem = args.Parameter as CompletedModel;
+            if (completedItem is not null)
+            {
+                if (completedItem.IsInstalling is true)
+                {
+                    await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
+                    return;
+                }
+
+                bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
+
+                if (DeleteResult)
+                {
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (CompletedDataListLock) isUpdatingNow = true;
+
+                    try
+                    {
+                        CompletedDataList.Remove(completedItem);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                    }
+
+                    lock (CompletedDataListLock) isUpdatingNow = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除当前任务（包括文件）
+        /// </summary>
+        public async void OnDeleteWithFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            CompletedModel completedItem = args.Parameter as CompletedModel;
+            if (completedItem is not null)
+            {
+                if (completedItem.IsInstalling is true)
+                {
+                    await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
+                    return;
+                }
+
+                // 删除文件
+                try
+                {
+                    if (File.Exists(completedItem.FilePath))
+                    {
+                        File.Delete(completedItem.FilePath);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
+                }
+
+                bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
+
+                // 删除记录
+                if (DeleteResult)
+                {
+                    while (isUpdatingNow) await Task.Delay(50);
+                    lock (CompletedDataListLock) isUpdatingNow = true;
+
+                    try
+                    {
+                        CompletedDataList.Remove(completedItem);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                    }
+
+                    lock (CompletedDataListLock) isUpdatingNow = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 查看文件信息
+        /// </summary>
+        public async void OnFileInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            CompletedModel completedItem = args.Parameter as CompletedModel;
+
+            if (completedItem is not null)
+            {
+                await ContentDialogHelper.ShowAsync(new FileInformationDialog(completedItem), this);
+            }
+        }
+
+        /// <summary>
+        /// 安装应用
+        /// </summary>
+        public async void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            CompletedModel completedItem = args.Parameter as CompletedModel;
+            if (completedItem is not null)
+            {
+                // 使用应用安装程序安装
+                if (!string.IsNullOrEmpty(completedItem.FilePath))
+                {
+                    try
+                    {
+                        StorageFile CompletedFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+
+                        if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[0].SelectedValue)
+                        {
+                            await Launcher.LaunchFileAsync(CompletedFile);
+                        }
+
+                        // 直接安装
+                        else if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[1].SelectedValue)
+                        {
+                            // 标记安装状态
+                            try
+                            {
+                                int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
+
+                                if (InstallIndex is not -1 && InstallIndex < CompletedDataList.Count)
+                                {
+                                    CompletedDataList[InstallIndex].IsInstalling = true;
+
+                                    PackageManager packageManager = new PackageManager();
+
+                                    // 更新安装进度
+                                    Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
+                                    {
+                                        CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
+                                    });
+
+                                    try
+                                    {
+                                        // 安装目标应用
+                                        DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+                                        // 显示安装成功通知
+                                        ToastNotificationService.Show(NotificationKind.InstallApp, "Successfully", CompletedFile.Name);
+                                    }
+                                    // 安装失败显示失败信息
+                                    catch (Exception e)
+                                    {
+                                        CompletedDataList[InstallIndex].InstallError = true;
+                                        // 显示安装失败通知
+                                        ToastNotificationService.Show(NotificationKind.InstallApp, "Error", CompletedFile.Name, e.Message);
+                                    }
+                                    // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
+                                    finally
+                                    {
+                                        await Task.Delay(500);
+                                        CompletedDataList[InstallIndex].IsInstalling = false;
+                                        CompletedDataList[InstallIndex].InstallError = false;
+                                    }
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                                return;
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                        return;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 打开当前项目存储的文件夹
+        /// </summary>
+        public async void OnOpenItemFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            string filePath = args.Parameter as string;
+            if (filePath is not null)
+            {
+                filePath = filePath.Replace(@"\\", @"\");
+
+                // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    try
+                    {
+                        StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                        StorageFolder folder = await file.GetParentAsync();
+                        FolderLauncherOptions options = new FolderLauncherOptions();
+                        options.ItemsToSelect.Add(file);
+                        await Launcher.LaunchFolderAsync(folder, options);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Completed download item folder located failed.", e);
+                        await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                    }
+                }
+                else
+                {
+                    await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 共享文件
+        /// </summary>
+        public void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            CompletedModel completedItem = args.Parameter as CompletedModel;
+
+            if (completedItem is not null)
+            {
+                try
+                {
+                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle);
+
+                    dataTransferManager.DataRequested += async (sender, args) =>
+                    {
+                        DataRequestDeferral deferral = args.Request.GetDeferral();
+
+                        args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+                        args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
+                        deferral.Complete();
+                    };
+
+                    DataTransferManagerInterop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
+                }
+                catch (Exception e)
+                {
+                    new ShareFailedNotification(this, false).Show();
+                    LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
+                }
             }
         }
 

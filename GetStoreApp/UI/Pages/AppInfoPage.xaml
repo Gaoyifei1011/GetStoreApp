@@ -8,9 +8,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.UWPApp"
     xmlns:root="using:GetStoreApp.Services.Root"
-    x:Name="AppInfoRoot"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="CopyAUMIDCommand" ExecuteRequested="{x:Bind OnCopyAUMIDExecuteRequested}" />
+        <XamlUICommand x:Name="CopyDependencyInformationCommand" ExecuteRequested="{x:Bind OnCopyDependencyInformationExecuteRequested}" />
+        <XamlUICommand x:Name="CopyDependencyNameCommand" ExecuteRequested="{x:Bind OnCopyDependencyNameExecuteRequested}" />
+        <XamlUICommand x:Name="LaunchCommand" ExecuteRequested="{x:Bind OnLaunchExecuteRequested}" />
+        <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
+        <XamlUICommand x:Name="OpenStoreCommand" ExecuteRequested="{x:Bind OnOpenStoreExecuteRequested}" />
+        <XamlUICommand x:Name="PinToDesktopCommand" ExecuteRequested="{x:Bind OnPinToDesktopExecuteRequested}" />
+        <XamlUICommand x:Name="PinToStartScreenCommand" ExecuteRequested="{x:Bind OnPinToStartScreenExecuteRequested}" />
+        <XamlUICommand x:Name="PinToTaskbarCommand" ExecuteRequested="{x:Bind OnPinToTaskbarExecuteRequested}" />
+    </Page.Resources>
 
     <ScrollViewer Margin="0,5,0,0">
         <StackPanel Margin="30,0,30,30" Spacing="3">
@@ -504,7 +515,7 @@
                                     <HyperlinkButton
                                         Grid.Column="3"
                                         Margin="10,0,0,0"
-                                        Command="{Binding ElementName=AppInfoRoot, Path=LaunchCommand, Mode=OneTime}"
+                                        Command="{StaticResource LaunchCommand}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource HyperlinkButtonStyle}">
 
@@ -552,7 +563,7 @@
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=CopyAUMIDCommand, Mode=OneTime}"
+                                                    Command="{StaticResource CopyAUMIDCommand}"
                                                     CommandParameter="{x:Bind AppUserModelId}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyAUMID')}" />
@@ -560,20 +571,20 @@
                                                 <MenuFlyoutSeparator />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=PinToDesktopCommand, Mode=OneTime}"
+                                                    Command="{StaticResource PinToDesktopCommand}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToDesktop')}"
                                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToDesktopToolTip')}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=PinToStartScreenCommand, Mode=OneTime}"
+                                                    Command="{StaticResource PinToStartScreenCommand}"
                                                     CommandParameter="{Binding}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToStartScreen')}"
                                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToStartScreenToolTip')}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=PinToTaskbarCommand, Mode=OneTime}"
+                                                    Command="{StaticResource PinToTaskbarCommand}"
                                                     CommandParameter="{Binding}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToTaskbar')}"
@@ -783,13 +794,13 @@
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=OpenStoreCommand, Mode=OneTime}"
+                                                    Command="{StaticResource OpenStoreCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=OpenFolderCommand, Mode=OneTime}"
+                                                    Command="{StaticResource OpenFolderCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenFolder')}" />
@@ -797,13 +808,13 @@
                                                 <MenuFlyoutSeparator />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=CopyDependencyNameCommand, Mode=OneTime}"
+                                                    Command="{StaticResource CopyDependencyNameCommand}"
                                                     CommandParameter="{x:Bind DisplayName}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyDependencyName')}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppInfoRoot, Path=CopyDependencyInformationCommand, Mode=OneTime}"
+                                                    Command="{StaticResource CopyDependencyInformationCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyDependencyInformation')}" />

@@ -8,10 +8,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
-    x:Name="UpgradableAppsRoot"
     Padding="0"
     Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
+
+    <Grid.Resources>
+        <XamlUICommand x:Name="CopyUpgradeTextCommand" ExecuteRequested="{x:Bind OnCopyUpgradeTextExecuteRequested}" />
+        <XamlUICommand x:Name="InstallWithCmdCommand" ExecuteRequested="{x:Bind OnInstallWithCmdExecuteRequested}" />
+        <XamlUICommand x:Name="UpdateCommand" ExecuteRequested="{x:Bind OnUpdateExecuteRequested}" />
+    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -215,7 +220,7 @@
                             MinWidth="100"
                             basicInput:ExtendedSplitButton.PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
                             basicInput:ExtendedSplitButton.SecondaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
-                            Command="{Binding ElementName=UpgradableAppsRoot, Path=UpdateCommand, Mode=OneTime}"
+                            Command="{StaticResource UpdateCommand}"
                             CommandParameter="{Binding}"
                             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Update')}"
                             IsPrimaryButtonEnabled="{x:Bind IsUpgrading.Equals(x:False), Mode=OneWay}">
@@ -223,7 +228,7 @@
                             <basicInput:ExtendedSplitButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
-                                        Command="{Binding ElementName=UpgradableAppsRoot, Path=CopyUpgradeTextCommand, Mode=OneTime}"
+                                        Command="{StaticResource CopyUpgradeTextCommand}"
                                         CommandParameter="{x:Bind AppID}"
                                         Style="{StaticResource MenuFlyoutItemStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
@@ -234,7 +239,7 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
-                                        Command="{Binding ElementName=UpgradableAppsRoot, Path=InstallWithCmdCommand, Mode=OneTime}"
+                                        Command="{StaticResource InstallWithCmdCommand}"
                                         CommandParameter="{x:Bind AppID}"
                                         Style="{StaticResource MenuFlyoutItemStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">

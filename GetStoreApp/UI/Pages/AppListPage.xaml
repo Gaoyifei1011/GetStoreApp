@@ -10,10 +10,20 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     xmlns:uwpApp="using:GetStoreApp.Models.Controls.UWPApp"
-    x:Name="AppListRoot"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="GetPackageCommand" ExecuteRequested="{x:Bind OnGetPackageExecuteRequested}" />
+        <XamlUICommand x:Name="OpenAppCommand" ExecuteRequested="{x:Bind OnOpenAppExecuteRequested}" />
+        <XamlUICommand x:Name="OpenCacheFolderCommand" ExecuteRequested="{x:Bind OnOpenCacheFolderExecuteRequested}" />
+        <XamlUICommand x:Name="OpenInstalledFolderCommand" ExecuteRequested="{x:Bind OnOpenInstalledFolderExecuteRequested}" />
+        <XamlUICommand x:Name="OpenManifestCommand" ExecuteRequested="{x:Bind OnOpenManifestExecuteRequested}" />
+        <XamlUICommand x:Name="OpenStoreCommand" ExecuteRequested="{x:Bind OnOpenStoreExecuteRequested}" />
+        <XamlUICommand x:Name="UnInstallCommand" ExecuteRequested="{x:Bind OnUnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="ViewInformationCommand" ExecuteRequested="{x:Bind OnViewInformationExecuteRequested}" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -404,7 +414,7 @@
 
                                     <basicInput:ExtendedSplitButton
                                         Grid.Column="4"
-                                        Command="{Binding ElementName=AppListRoot, Path=ViewInformationCommand}"
+                                        Command="{StaticResource ViewInformationCommand}"
                                         CommandParameter="{Binding}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/View')}"
                                         PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/ViewToolTip')}"
@@ -413,28 +423,28 @@
                                         <basicInput:ExtendedSplitButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppListRoot, Path=OpenAppCommand, Mode=OneTime}"
+                                                    Command="{StaticResource OpenAppCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenApp')}"
                                                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCount)}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppListRoot, Path=OpenStoreCommand, Mode=OneTime}"
+                                                    Command="{StaticResource OpenStoreCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppListRoot, Path=GetPackageCommand, Mode=OneTime}"
+                                                    Command="{StaticResource GetPackageCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/GetPackage')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppListRoot, Path=OpenManifestCommand, Mode=OneTime}"
+                                                    Command="{StaticResource OpenManifestCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenManifest')}" />
@@ -445,20 +455,20 @@
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenFolder')}">
 
                                                     <MenuFlyoutItem
-                                                        Command="{Binding ElementName=AppListRoot, Path=OpenInstalledFolderCommand}"
+                                                        Command="{StaticResource OpenInstalledFolderCommand}"
                                                         CommandParameter="{x:Bind Package}"
                                                         Style="{StaticResource MenuFlyoutItemStyle}"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenInstalledFolder')}" />
 
                                                     <MenuFlyoutItem
-                                                        Command="{Binding ElementName=AppListRoot, Path=OpenCacheFolderCommand}"
+                                                        Command="{StaticResource OpenCacheFolderCommand}"
                                                         CommandParameter="{x:Bind Package}"
                                                         Style="{StaticResource MenuFlyoutItemStyle}"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenCacheFolder')}" />
                                                 </MenuFlyoutSubItem>
 
                                                 <MenuFlyoutItem
-                                                    Command="{Binding ElementName=AppListRoot, Path=UnInstallCommand, Mode=OneTime}"
+                                                    Command="{StaticResource UnInstallCommand}"
                                                     CommandParameter="{x:Bind Package}"
                                                     Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}"

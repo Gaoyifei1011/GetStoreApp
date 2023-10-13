@@ -45,12 +45,6 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
-        // 继续下载当前任务
-        public XamlUICommand ContinueCommand { get; } = new XamlUICommand();
-
-        // 删除当前任务
-        public XamlUICommand DeleteCommand { get; } = new XamlUICommand();
-
         public ObservableCollection<UnfinishedModel> UnfinishedDataList { get; } = new ObservableCollection<UnfinishedModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,103 +52,6 @@ namespace GetStoreApp.UI.Controls.Download
         public UnfinishedControl()
         {
             InitializeComponent();
-
-            ContinueCommand.ExecuteRequested += async (sender, args) =>
-            {
-                UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
-                if (unfinishedItem is not null)
-                {
-                    // 查看是否开启了网络监控服务
-                    if (NetWorkMonitorService.NetWorkMonitorValue)
-                    {
-                        // 网络处于未连接状态，不再进行下载，显示通知
-                        if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
-                        {
-                            if (!checkFailed)
-                            {
-                                new NetWorkErrorNotification(this).Show();
-                                return;
-                            }
-                        }
-                    }
-
-                    if (unfinishedItem.DownloadFlag is 2)
-                    {
-                        bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
-                        {
-                            DownloadKey = unfinishedItem.DownloadKey,
-                            FileName = unfinishedItem.FileName,
-                            FileLink = unfinishedItem.FileLink,
-                            FilePath = unfinishedItem.FilePath,
-                            FileSHA1 = unfinishedItem.FileSHA1,
-                            TotalSize = unfinishedItem.TotalSize
-                        });
-
-                        if (ContinueResult)
-                        {
-                            while (isUpdatingNow) await Task.Delay(50);
-                            lock (UnfinishedDataListLock) isUpdatingNow = true;
-
-                            UnfinishedDataList.Remove(unfinishedItem);
-
-                            lock (UnfinishedDataListLock) isUpdatingNow = false;
-                        }
-                    }
-                }
-            };
-
-            DeleteCommand.ExecuteRequested += async (sender, args) =>
-            {
-                UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
-                if (unfinishedItem is not null)
-                {
-                    // 删除下载文件
-                    try
-                    {
-                        if (File.Exists(unfinishedItem.FilePath))
-                        {
-                            File.Delete(unfinishedItem.FilePath);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download file failed.", e);
-                    }
-
-                    // 删除Aria2后缀下载信息记录文件
-                    try
-                    {
-                        if (File.Exists(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2")))
-                        {
-                            File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
-                    }
-
-                    // 删除记录
-                    while (isUpdatingNow) await Task.Delay(50);
-                    lock (UnfinishedDataListLock) isUpdatingNow = true;
-
-                    try
-                    {
-                        bool DeleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
-
-                        if (DeleteResult)
-                        {
-                            UnfinishedDataList.Remove(unfinishedItem);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
-                    }
-
-                    lock (UnfinishedDataListLock) isUpdatingNow = false;
-                }
-            };
 
             // 订阅事件
             DownloadSchedulerService.DownloadingList.CollectionChanged += OnDownloadingListItemsChanged;
@@ -172,6 +69,109 @@ namespace GetStoreApp.UI.Controls.Download
             else
             {
                 return string.Format(ResourceService.GetLocalized("Download/UnfinishedCountInfo"), count);
+            }
+        }
+
+        /// <summary>
+        /// 继续下载当前任务
+        /// </summary>
+        public async void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
+            if (unfinishedItem is not null)
+            {
+                // 查看是否开启了网络监控服务
+                if (NetWorkMonitorService.NetWorkMonitorValue)
+                {
+                    // 网络处于未连接状态，不再进行下载，显示通知
+                    if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
+                    {
+                        if (!checkFailed)
+                        {
+                            new NetWorkErrorNotification(this).Show();
+                            return;
+                        }
+                    }
+                }
+
+                if (unfinishedItem.DownloadFlag is 2)
+                {
+                    bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
+                    {
+                        DownloadKey = unfinishedItem.DownloadKey,
+                        FileName = unfinishedItem.FileName,
+                        FileLink = unfinishedItem.FileLink,
+                        FilePath = unfinishedItem.FilePath,
+                        FileSHA1 = unfinishedItem.FileSHA1,
+                        TotalSize = unfinishedItem.TotalSize
+                    });
+
+                    if (ContinueResult)
+                    {
+                        while (isUpdatingNow) await Task.Delay(50);
+                        lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+                        UnfinishedDataList.Remove(unfinishedItem);
+
+                        lock (UnfinishedDataListLock) isUpdatingNow = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除当前任务
+        /// </summary>
+        public async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
+            if (unfinishedItem is not null)
+            {
+                // 删除下载文件
+                try
+                {
+                    if (File.Exists(unfinishedItem.FilePath))
+                    {
+                        File.Delete(unfinishedItem.FilePath);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download file failed.", e);
+                }
+
+                // 删除Aria2后缀下载信息记录文件
+                try
+                {
+                    if (File.Exists(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2")))
+                    {
+                        File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
+                }
+
+                // 删除记录
+                while (isUpdatingNow) await Task.Delay(50);
+                lock (UnfinishedDataListLock) isUpdatingNow = true;
+
+                try
+                {
+                    bool DeleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
+
+                    if (DeleteResult)
+                    {
+                        UnfinishedDataList.Remove(unfinishedItem);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
+                }
+
+                lock (UnfinishedDataListLock) isUpdatingNow = false;
             }
         }
 

@@ -8,9 +8,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
-    x:Name="UnfinishedRoot"
     Padding="0"
     mc:Ignorable="d">
+
+    <Grid.Resources>
+        <XamlUICommand x:Name="ContinueCommand" ExecuteRequested="{x:Bind OnContinueExecuteRequested}" />
+        <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
+    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -269,7 +273,7 @@
                                 Height="32"
                                 Margin="5,0,0,0"
                                 Padding="0"
-                                Command="{Binding ElementName=UnfinishedRoot, Path=ContinueCommand, Mode=OneTime}"
+                                Command="{StaticResource ContinueCommand}"
                                 CommandParameter="{Binding}"
                                 CornerRadius="{StaticResource ControlCornerRadius}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
@@ -285,7 +289,7 @@
                                 Height="32"
                                 Margin="5,0,0,0"
                                 Padding="0"
-                                Command="{Binding ElementName=UnfinishedRoot, Path=DeleteCommand, Mode=OneTime}"
+                                Command="{StaticResource DeleteCommand}"
                                 CommandParameter="{Binding}"
                                 CornerRadius="{StaticResource ControlCornerRadius}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteUnfinishedToolTip')}">

@@ -266,33 +266,6 @@ namespace GetStoreApp.UI.Pages
             }
         }
 
-        // 启动对应入口的应用
-        public XamlUICommand LaunchCommand { get; } = new XamlUICommand();
-
-        // 复制应用入口的应用程序用户模型 ID
-        public XamlUICommand CopyAUMIDCommand { get; } = new XamlUICommand();
-
-        // 固定应用到桌面
-        public XamlUICommand PinToDesktopCommand { get; } = new XamlUICommand();
-
-        // 固定应用入口到开始“屏幕”
-        public XamlUICommand PinToStartScreenCommand { get; } = new XamlUICommand();
-
-        // 固定应用入口到任务栏
-        public XamlUICommand PinToTaskbarCommand { get; } = new XamlUICommand();
-
-        // 打开商店
-        public XamlUICommand OpenStoreCommand { get; } = new XamlUICommand();
-
-        // 打开安装目录
-        public XamlUICommand OpenFolderCommand { get; } = new XamlUICommand();
-
-        // 复制依赖包名称
-        public XamlUICommand CopyDependencyNameCommand { get; } = new XamlUICommand();
-
-        // 复制依赖包信息
-        public XamlUICommand CopyDependencyInformationCommand { get; } = new XamlUICommand();
-
         public ObservableCollection<AppListEntryModel> AppListEntryList { get; } = new ObservableCollection<AppListEntryModel>();
 
         public ObservableCollection<PackageModel> DependenciesList { get; } = new ObservableCollection<PackageModel>();
@@ -302,207 +275,6 @@ namespace GetStoreApp.UI.Pages
         public AppInfoPage()
         {
             InitializeComponent();
-
-            LaunchCommand.ExecuteRequested += (sender, args) =>
-            {
-                AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
-                Task.Run(async () =>
-                {
-                    try
-                    {
-                        await appListEntryItem.AppListEntry.LaunchAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
-                    }
-                });
-            };
-
-            CopyAUMIDCommand.ExecuteRequested += (sender, args) =>
-            {
-                string aumid = args.Parameter as string;
-
-                if (aumid is not null)
-                {
-                    CopyPasteHelper.CopyToClipBoard(aumid);
-                    new DataCopyNotification(this, DataCopyKind.AppUserModelId).Show();
-                }
-            };
-
-            PinToDesktopCommand.ExecuteRequested += (sender, args) =>
-            {
-                Task.Run(() =>
-                {
-                    bool IsPinnedSuccessfully = false;
-
-                    try
-                    {
-                        if (StoreConfiguration.IsPinToDesktopSupported())
-                        {
-                            StoreConfiguration.PinToDesktop(FamilyName);
-                            IsPinnedSuccessfully = true;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
-                    }
-                    finally
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            new QuickOperationNotification(this, QuickOperationKind.Desktop, IsPinnedSuccessfully).Show();
-                        });
-                    }
-                });
-            };
-
-            PinToStartScreenCommand.ExecuteRequested += (sender, args) =>
-            {
-                AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
-
-                if (appListEntryItem is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        bool IsPinnedSuccessfully = false;
-
-                        try
-                        {
-                            StartScreenManager startScreenManager = StartScreenManager.GetDefault();
-
-                            IsPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
-                        }
-                        finally
-                        {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                new QuickOperationNotification(this, QuickOperationKind.StartScreen, IsPinnedSuccessfully).Show();
-                            });
-                        }
-                    });
-                }
-            };
-
-            PinToTaskbarCommand.ExecuteRequested += (sender, args) =>
-            {
-                AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
-                string actualTheme = ActualTheme.ToString();
-
-                Task.Run(async () =>
-                {
-                    if (appListEntryItem is not null)
-                    {
-                        try
-                        {
-                            StartScreenManager startScreenManager = StartScreenManager.GetDefault();
-
-                            bool result = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
-
-                            if (result)
-                            {
-                                ToastNotificationService.Show(NotificationKind.PinToTaskbarTip, actualTheme);
-
-                                InjectedInputKeyboardInfo pressKeyEvent = new InjectedInputKeyboardInfo();
-                                pressKeyEvent.VirtualKey = (ushort)VirtualKey.LeftWindows;
-
-                                InjectedInputKeyboardInfo releaseKeyEvent = new InjectedInputKeyboardInfo();
-                                releaseKeyEvent.VirtualKey = (ushort)VirtualKey.LeftWindows;
-                                releaseKeyEvent.KeyOptions = InjectedInputKeyOptions.KeyUp;
-
-                                inputInjector.InjectKeyboardInput(new InjectedInputKeyboardInfo[] { pressKeyEvent, releaseKeyEvent });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
-                        }
-                    }
-                });
-            };
-
-            OpenStoreCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await Launcher.LaunchUriAsync(new Uri($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
-                        }
-                    });
-                }
-            };
-
-            OpenFolderCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-
-                if (package is not null)
-                {
-                    Task.Run(async () =>
-                    {
-                        try
-                        {
-                            await Launcher.LaunchFolderPathAsync(package.InstalledPath);
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
-                        }
-                    });
-                }
-            };
-
-            CopyDependencyNameCommand.ExecuteRequested += (sender, args) =>
-            {
-                string displayName = args.Parameter as string;
-                if (displayName is not null)
-                {
-                    CopyPasteHelper.CopyToClipBoard(displayName);
-                    new DataCopyNotification(this, DataCopyKind.DependencyName).Show();
-                }
-            };
-
-            CopyDependencyInformationCommand.ExecuteRequested += (sender, args) =>
-            {
-                Package package = args.Parameter as Package;
-                if (package is not null)
-                {
-                    Task.Run(() =>
-                    {
-                        try
-                        {
-                            StringBuilder copyBuilder = new StringBuilder();
-                            copyBuilder.AppendLine(package.DisplayName);
-                            copyBuilder.AppendLine(package.Id.FamilyName);
-                            copyBuilder.AppendLine(package.Id.FullName);
-
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                CopyPasteHelper.CopyToClipBoard(copyBuilder.ToString());
-                                new DataCopyNotification(this, DataCopyKind.DependencyInformation).Show();
-                            });
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "App information copy failed", e);
-                        }
-                    });
-                }
-            };
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs args)
@@ -514,6 +286,234 @@ namespace GetStoreApp.UI.Pages
             }
 
             InitializeAppInfo();
+        }
+
+        /// <summary>
+        /// 复制应用入口的应用程序用户模型 ID
+        /// </summary>
+        public void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            string aumid = args.Parameter as string;
+
+            if (aumid is not null)
+            {
+                CopyPasteHelper.CopyToClipBoard(aumid);
+                new DataCopyNotification(this, DataCopyKind.AppUserModelId).Show();
+            }
+        }
+
+        /// <summary>
+        /// 复制依赖包信息
+        /// </summary>
+        public void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+            if (package is not null)
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        StringBuilder copyBuilder = new StringBuilder();
+                        copyBuilder.AppendLine(package.DisplayName);
+                        copyBuilder.AppendLine(package.Id.FamilyName);
+                        copyBuilder.AppendLine(package.Id.FullName);
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            CopyPasteHelper.CopyToClipBoard(copyBuilder.ToString());
+                            new DataCopyNotification(this, DataCopyKind.DependencyInformation).Show();
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "App information copy failed", e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 复制依赖包名称
+        /// </summary>
+        public void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            string displayName = args.Parameter as string;
+            if (displayName is not null)
+            {
+                CopyPasteHelper.CopyToClipBoard(displayName);
+                new DataCopyNotification(this, DataCopyKind.DependencyName).Show();
+            }
+        }
+
+        /// <summary>
+        /// 启动对应入口的应用
+        /// </summary>
+        public void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await appListEntryItem.AppListEntry.LaunchAsync();
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开安装目录
+        /// </summary>
+        public void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开商店
+        /// </summary>
+        public void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new Uri($"ms-windows-store://pdp/?PFN={package.Id.FamilyName}"));
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open microsoft store {0} failed", package.DisplayName), e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 固定应用到桌面
+        /// </summary>
+        public void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Task.Run(() =>
+            {
+                bool IsPinnedSuccessfully = false;
+
+                try
+                {
+                    if (StoreConfiguration.IsPinToDesktopSupported())
+                    {
+                        StoreConfiguration.PinToDesktop(FamilyName);
+                        IsPinnedSuccessfully = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
+                }
+                finally
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        new QuickOperationNotification(this, QuickOperationKind.Desktop, IsPinnedSuccessfully).Show();
+                    });
+                }
+            });
+        }
+
+        /// <summary>
+        /// 固定应用入口到开始“屏幕”
+        /// </summary>
+        public void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+
+            if (appListEntryItem is not null)
+            {
+                Task.Run(async () =>
+                {
+                    bool IsPinnedSuccessfully = false;
+
+                    try
+                    {
+                        StartScreenManager startScreenManager = StartScreenManager.GetDefault();
+
+                        IsPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
+                    }
+                    finally
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            new QuickOperationNotification(this, QuickOperationKind.StartScreen, IsPinnedSuccessfully).Show();
+                        });
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 固定应用入口到任务栏
+        /// </summary>
+        public void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+            string actualTheme = ActualTheme.ToString();
+
+            Task.Run(async () =>
+            {
+                if (appListEntryItem is not null)
+                {
+                    try
+                    {
+                        StartScreenManager startScreenManager = StartScreenManager.GetDefault();
+
+                        bool result = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
+
+                        if (result)
+                        {
+                            ToastNotificationService.Show(NotificationKind.PinToTaskbarTip, actualTheme);
+
+                            InjectedInputKeyboardInfo pressKeyEvent = new InjectedInputKeyboardInfo();
+                            pressKeyEvent.VirtualKey = (ushort)VirtualKey.LeftWindows;
+
+                            InjectedInputKeyboardInfo releaseKeyEvent = new InjectedInputKeyboardInfo();
+                            releaseKeyEvent.VirtualKey = (ushort)VirtualKey.LeftWindows;
+                            releaseKeyEvent.KeyOptions = InjectedInputKeyOptions.KeyUp;
+
+                            inputInjector.InjectKeyboardInput(new InjectedInputKeyboardInfo[] { pressKeyEvent, releaseKeyEvent });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
+                    }
+                }
+            });
         }
 
         /// <summary>

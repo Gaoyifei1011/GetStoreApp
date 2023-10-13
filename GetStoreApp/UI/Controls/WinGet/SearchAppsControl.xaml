@@ -8,10 +8,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
-    x:Name="SearchAppsRoot"
     Padding="0"
     Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
+
+    <Grid.Resources>
+        <XamlUICommand x:Name="CopyInstallTextCommand" ExecuteRequested="{x:Bind OnCopyInstallTextExecuteRequested}" />
+        <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="InstallWithCmdCommand" ExecuteRequested="{x:Bind OnInstallWithCmdExecuteRequested}" />
+    </Grid.Resources>
 
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -256,7 +261,7 @@
                                 MinWidth="100"
                                 basicInput:ExtendedSplitButton.PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
                                 basicInput:ExtendedSplitButton.SecondaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}"
-                                Command="{Binding ElementName=SearchAppsRoot, Path=InstallCommand, Mode=OneTime}"
+                                Command="{StaticResource InstallCommand}"
                                 CommandParameter="{Binding}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
                                 IsPrimaryButtonEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}">
@@ -264,7 +269,7 @@
                                 <basicInput:ExtendedSplitButton.Flyout>
                                     <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=SearchAppsRoot, Path=CopyInstallTextCommand, Mode=OneTime}"
+                                            Command="{StaticResource CopyInstallTextCommand}"
                                             CommandParameter="{x:Bind AppID}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
 
@@ -274,7 +279,7 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
-                                            Command="{Binding ElementName=SearchAppsRoot, Path=InstallWithCmdCommand, Mode=OneTime}"
+                                            Command="{StaticResource InstallWithCmdCommand}"
                                             CommandParameter="{x:Bind AppID}"
                                             Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">

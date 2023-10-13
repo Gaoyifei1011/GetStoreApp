@@ -12,6 +12,10 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <XamlUICommand x:Name="CancelInstallCommand" ExecuteRequested="{x:Bind OnCancelInstallExecuteRequested}" />
+    </Page.Resources>
+
     <Grid Padding="0">
         <Pivot
             x:Name="WinGetPivot"
@@ -147,7 +151,7 @@
                                                         Margin="10,0,0,0"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Command="{Binding ElementName=TaskManagerFlyout, Path=DataContext.CancelInstallCommand, Mode=OneTime}"
+                                                        Command="{StaticResource CancelInstallCommand}"
                                                         CommandParameter="{x:Bind AppID}"
                                                         Style="{StaticResource ButtonNormalMenuItemStyle}"
                                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstall')}">
