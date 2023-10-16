@@ -260,9 +260,28 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
+                <NavigationViewItem Tag="{x:Bind TagList[5]}">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowAppUpdateText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </NavigationViewItem.Content>
+
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/AppUpdate.png" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}" Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
                 <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                <NavigationViewItem Tag="{x:Bind TagList[5]}">
+                <NavigationViewItem Tag="{x:Bind TagList[6]}">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -283,7 +302,7 @@
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Tag="{x:Bind TagList[6]}">
+                <NavigationViewItem Tag="{x:Bind TagList[7]}">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -302,7 +321,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="{x:Bind TagList[7]}">
+                <NavigationViewItem Tag="{x:Bind TagList[8]}">
 
                     <NavigationViewItem.Content>
                         <TextBlock

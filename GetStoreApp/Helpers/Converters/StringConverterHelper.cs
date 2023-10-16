@@ -199,5 +199,21 @@ namespace GetStoreApp.Helpers.Converters
                 return string.Empty;
             }
         }
+
+        public static string AppUpdateToolTipFormat(string content, string type)
+        {
+            if (type is "DisplayName")
+            {
+                return string.Format(ResourceService.GetLocalized("AppUpdate/DisplayNameToolTip"), content);
+            }
+            else if (type is "PublisherName")
+            {
+                return string.Format(ResourceService.GetLocalized("AppUpdate/PublisherToolTip"), content);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 }

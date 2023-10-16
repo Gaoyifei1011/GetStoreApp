@@ -123,6 +123,9 @@
   <data name="AppTitle" xml:space="preserve">
     <value>GetStoreApp</value>
   </data>
+  <data name="AppUpdate" xml:space="preserve">
+    <value>App Update</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>

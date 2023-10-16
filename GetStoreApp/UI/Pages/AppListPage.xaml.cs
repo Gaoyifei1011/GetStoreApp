@@ -682,6 +682,7 @@ namespace GetStoreApp.UI.Pages
             SearchText = string.Empty;
             Task.Delay(500);
             GetInstalledApps();
+            InitializeData();
         }
 
         /// <summary>

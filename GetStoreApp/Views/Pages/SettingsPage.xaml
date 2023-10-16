@@ -80,7 +80,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xE790;" />
 
@@ -163,7 +162,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xE771;" />
 
@@ -280,7 +278,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xE81E;" />
 
@@ -338,7 +335,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xF2B7;" />
 
@@ -405,7 +401,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xE840;" />
 
@@ -466,7 +461,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xEA8f;" />
 
@@ -527,7 +521,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xF738;" />
 
@@ -593,7 +586,6 @@
                             <FontIcon
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                 FontSize="16"
                                 Glyph="&#xE71c;" />
 
@@ -719,7 +711,6 @@
                             <FontIcon
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                 FontSize="16"
                                 Glyph="&#xE719;" />
 
@@ -986,7 +977,6 @@
                             <FontIcon
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                 FontSize="16"
                                 Glyph="&#xE896;" />
 
@@ -1223,7 +1213,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xECC8;" />
 
@@ -1291,7 +1280,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xE74d;" />
 
@@ -1341,7 +1329,6 @@
                     <FontIcon
                         Grid.Column="0"
                         Margin="0,0,12,0"
-                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
                         FontSize="16"
                         Glyph="&#xE7BA;" />
 
@@ -1390,7 +1377,6 @@
                             <FontIcon
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
-                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                 FontSize="16"
                                 Glyph="&#xE70B;" />
 

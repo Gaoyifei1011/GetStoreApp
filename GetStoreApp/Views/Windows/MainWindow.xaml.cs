@@ -138,6 +138,7 @@ namespace GetStoreApp.Views.Windows
             {"Download",typeof(DownloadPage) },
             {"WinGet",typeof(WinGetPage) },
             {"UWPApp",typeof(UWPAppPage) },
+            {"AppUpdate",typeof(AppUpdatePage) },
             {"Web",typeof(Page) },
             {"About",typeof(AboutPage) },
             {"Settings",typeof(SettingsPage) }
@@ -150,6 +151,7 @@ namespace GetStoreApp.Views.Windows
             "Download",
             "WinGet",
             "UWPApp",
+            "AppUpdate",
             "Web",
             "About",
             "Settings"

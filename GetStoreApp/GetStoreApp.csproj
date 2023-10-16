@@ -8,6 +8,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
+    <DebugType>portable</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -21,7 +22,7 @@
     <LangVersion>latest</LangVersion>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
-    <Platforms>x86;x64;ARM64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSingleFile>True</PublishSingleFile>
@@ -51,25 +52,6 @@
     <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
       <SubType>Designer</SubType>
@@ -86,15 +68,6 @@
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
-    <Content Update="Assets\ControlIcon\About.png" CopyToOutputDirectory="Always" />
-
-    <Content Update="Assets\ControlIcon\History.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\ControlIcon\Download.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\ControlIcon\Settings.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\ControlIcon\UWPApp.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\ControlIcon\Store.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\ControlIcon\Web.png" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\ControlIcon\WinGet.png" CopyToOutputDirectory="Always" />
 
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
 
@@ -159,6 +132,8 @@
     <None Remove="UI\Pages\AppListPage.xaml" />
 
     <None Remove="Views\Pages\AboutPage.xaml" />
+
+    <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\HistoryPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
@@ -232,7 +207,8 @@
     <Page Update="UI\Pages\AppInfoPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Pages\AppListPage.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="Views\Pages\AboutPage.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\AboutPage.xaml" />
+    <Page Update="Views\Pages\AppUpdatePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\UWPAppPage.xaml" Generator="MSBuild:Compile" />
