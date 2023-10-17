@@ -297,7 +297,7 @@ namespace GetStoreApp.UI.Pages
 
             if (aumid is not null)
             {
-                CopyPasteHelper.CopyToClipBoard(aumid);
+                CopyPasteHelper.CopyTextToClipBoard(aumid);
                 new DataCopyNotification(this, DataCopyKind.AppUserModelId).Show();
             }
         }
@@ -321,7 +321,7 @@ namespace GetStoreApp.UI.Pages
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            CopyPasteHelper.CopyToClipBoard(copyBuilder.ToString());
+                            CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
                             new DataCopyNotification(this, DataCopyKind.DependencyInformation).Show();
                         });
                     }
@@ -341,7 +341,7 @@ namespace GetStoreApp.UI.Pages
             string displayName = args.Parameter as string;
             if (displayName is not null)
             {
-                CopyPasteHelper.CopyToClipBoard(displayName);
+                CopyPasteHelper.CopyTextToClipBoard(displayName);
                 new DataCopyNotification(this, DataCopyKind.DependencyName).Show();
             }
         }
@@ -545,7 +545,7 @@ namespace GetStoreApp.UI.Pages
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyToClipBoard(copyBuilder.ToString());
+                    CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
                     new DataCopyNotification(this, DataCopyKind.PackageInformation).Show();
                 });
             });

@@ -276,6 +276,14 @@ namespace GetStoreApp.Services.Root
                             AppToastNotifier.Show(notificaiton);
                             break;
                         }
+                    case NotificationKind.AppUpdate:
+                        {
+                            XmlDocument notificationDocument = new XmlDocument();
+                            notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), notificationContent[0]));
+                            ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                            AppToastNotifier.Show(notificaiton);
+                            break;
+                        }
                     default:
                         break;
                 }

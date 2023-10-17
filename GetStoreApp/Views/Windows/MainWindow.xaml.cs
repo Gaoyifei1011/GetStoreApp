@@ -11,6 +11,7 @@ using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using GetStoreApp.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Dispatching;
@@ -31,6 +32,7 @@ using Windows.Foundation;
 using Windows.Graphics;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
 
@@ -47,9 +49,13 @@ namespace GetStoreApp.Views.Windows
         private WNDPROC newInputNonClientPointerSourceWndProc = null;
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
 
+        public CoreWindow UWPCoreWindow { get; private set; }
+
         private UISettings AppUISettings { get; } = new UISettings();
 
         public IntPtr Handle { get; }
+
+        private IntPtr UWPCoreWindowHandle { get; }
 
         public OverlappedPresenter Presenter { get; }
 
@@ -162,6 +168,8 @@ namespace GetStoreApp.Views.Windows
         public MainWindow()
         {
             InitializeComponent();
+
+            // 窗口部分初始化
             Handle = WindowNative.GetWindowHandle(this);
             NavigationService.NavigationFrame = WindowFrame;
             Presenter = AppWindow.Presenter as OverlappedPresenter;
@@ -172,16 +180,24 @@ namespace GetStoreApp.Views.Windows
             IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
             PaneDisplayMode = Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
 
+            // 标题栏设置
             SetTitleBar(AppTitlebar);
             SetTitleBarColor((Content as FrameworkElement).ActualTheme);
 
+            // 在桌面应用中创建 CoreWindow
+            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, Handle, typeof(ICoreWindow).GUID, out IntPtr obj);
+            UWPCoreWindow = CoreWindow.FromAbi(obj);
+
+            // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
 
+            // 为应用主窗口添加窗口过程
             newMainWindowWndProc = new WNDPROC(WindowWndProc);
             oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
 
+            // 为非工作区的窗口设置相应的窗口样式，添加窗口过程
             IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
 
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
@@ -193,6 +209,22 @@ namespace GetStoreApp.Views.Windows
                 oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
             }
 
+            // 设置 CoreWindow 窗口的样式
+            if (UWPCoreWindow is not null)
+            {
+                UWPCoreWindowHandle = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Windows.UI.Core.CoreWindow", "GetStoreAppCoreWindow");
+
+                if (UWPCoreWindowHandle != IntPtr.Zero)
+                {
+                    long style = GetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_STYLE);
+                    style &= ~(long)WindowStyle.WS_POPUP;
+                    SetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW));
+                    SetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW);
+                    User32Library.SetParent(UWPCoreWindowHandle, Handle);
+                }
+            }
+
+            // 处理提权模式下运行应用
             if (RuntimeHelper.IsElevated)
             {
                 CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
@@ -205,7 +237,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 窗口激活状态发生变化的事件
         /// </summary>
-        public void OnActivated(object sender, WindowActivatedEventArgs args)
+        public void OnActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
         {
             if (Program.ApplicationRoot.IsAppRunning && SystemBackdrop is not null)
             {
@@ -228,7 +260,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 窗体大小发生改变时的事件
         /// </summary>
-        public void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
+        public void OnSizeChanged(object sender, Microsoft.UI.Xaml.WindowSizeChangedEventArgs args)
         {
             PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftCompact;
             if (TitlebarMenuFlyout.IsOpen)
@@ -305,6 +337,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
         {
+            // 窗口位置发生变化
             if (args.DidPositionChange)
             {
                 if (TitlebarMenuFlyout.IsOpen)
@@ -717,6 +750,15 @@ namespace GetStoreApp.Views.Windows
         {
             switch (Msg)
             {
+                // 窗口大小发生更改后的消息
+                case WindowMessage.WM_SIZE:
+                    {
+                        if (UWPCoreWindowHandle != IntPtr.Zero)
+                        {
+                            User32Library.SetWindowPos(UWPCoreWindowHandle, 0, 0, 0, lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
+                        }
+                        break;
+                    }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {

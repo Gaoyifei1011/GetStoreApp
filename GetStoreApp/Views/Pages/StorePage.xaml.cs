@@ -281,7 +281,7 @@ namespace GetStoreApp.Views.Pages
                     TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
                     ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
                     historyItem.HistoryLink);
-                CopyPasteHelper.CopyToClipBoard(copyContent);
+                CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
                 new DataCopyNotification(this, DataCopyKind.History, false).Show();
             }
@@ -472,7 +472,7 @@ namespace GetStoreApp.Views.Pages
 
             if (fileLink is not null)
             {
-                CopyPasteHelper.CopyToClipBoard(fileLink);
+                CopyPasteHelper.CopyTextToClipBoard(fileLink);
                 new DataCopyNotification(this, DataCopyKind.ResultLink, false).Show();
             }
         }
@@ -492,7 +492,7 @@ namespace GetStoreApp.Views.Pages
                     resultItem.FileSize
                     );
 
-                CopyPasteHelper.CopyToClipBoard(copyContent);
+                CopyPasteHelper.CopyTextToClipBoard(copyContent);
                 new DataCopyNotification(this, DataCopyKind.ResultContent, false).Show();
             }
         }
@@ -573,7 +573,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void OnCopyIDClicked(object sender, RoutedEventArgs args)
         {
-            CopyPasteHelper.CopyToClipBoard(CategoryId);
+            CopyPasteHelper.CopyTextToClipBoard(CategoryId);
             new DataCopyNotification(this, DataCopyKind.ResultID).Show();
         }
 
@@ -663,7 +663,7 @@ namespace GetStoreApp.Views.Pages
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     new DataCopyNotification(this, DataCopyKind.ResultContent, true, selectedResultDataList.Count).Show();
                 });
             });
@@ -697,7 +697,7 @@ namespace GetStoreApp.Views.Pages
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     new DataCopyNotification(this, DataCopyKind.ResultLink, true, selectedResultDataList.Count).Show();
                 });
             });

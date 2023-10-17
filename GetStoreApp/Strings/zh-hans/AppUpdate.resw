@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AcquiringLicense" xml:space="preserve">
+    <value>正在获取许可证</value>
+  </data>
   <data name="AppUpdateCountInfo" xml:space="preserve">
     <value>共有{0}个可升级的应用</value>
   </data>
@@ -126,11 +129,26 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>安装已取消</value>
+  </data>
   <data name="CheckUpdate" xml:space="preserve">
     <value>检查更新</value>
   </data>
+  <data name="Completed" xml:space="preserve">
+    <value>安装已完成</value>
+  </data>
   <data name="DisplayNameToolTip" xml:space="preserve">
     <value>应用名称：{0}</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>正在下载，已完成{0}%</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>安装失败</value>
+  </data>
+  <data name="Installing" xml:space="preserve">
+    <value>正在安装，已完成{0}%</value>
   </data>
   <data name="LoadingUpdate" xml:space="preserve">
     <value>正在检查系统的所有应用，请稍候...</value>
@@ -138,8 +156,23 @@
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>安装已暂停</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>等待安装</value>
+  </data>
   <data name="PublisherToolTip" xml:space="preserve">
     <value>发布者：{0}</value>
+  </data>
+  <data name="ReadyToDownload" xml:space="preserve">
+    <value>已准备好下载</value>
+  </data>
+  <data name="RestoringData" xml:space="preserve">
+    <value>正在还原应用数据</value>
+  </data>
+  <data name="Starting" xml:space="preserve">
+    <value>安装正在启动</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>应用更新</value>

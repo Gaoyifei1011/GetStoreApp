@@ -103,7 +103,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             if (appId is not null)
             {
                 string copyContent = string.Format("winget install {0}", appId);
-                CopyPasteHelper.CopyToClipBoard(copyContent);
+                CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
                 new DataCopyNotification(this, DataCopyKind.WinGetUpgradeInstall).Show();
             }

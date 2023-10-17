@@ -87,7 +87,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     sender.Hide();
                     new DataCopyNotification(this, DataCopyKind.AppInformation).Show();
                 });

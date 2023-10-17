@@ -101,6 +101,15 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
 
         /// <summary>
+        /// 更改指定子窗口的父窗口。
+        /// </summary>
+        /// <param name="hWndChild">子窗口的句柄。</param>
+        /// <param name="hWndNewParent">新父窗口的句柄。 如果此参数为 NULL，桌面窗口将成为新的父窗口。 如果此参数 HWND_MESSAGE，则子窗口将成为 仅消息窗口。</param>
+        /// <returns>如果函数成功，则返回值是上一个父窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
+        [LibraryImport(User32, EntryPoint = "SetParent", SetLastError = false)]
+        public static partial IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
         /// </summary>
         /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
@@ -119,5 +128,16 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
         [LibraryImport(User32, EntryPoint = "SetWindowLongPtrW", SetLastError = false)]
         public static partial IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong);
+
+        [LibraryImport("user32.dll", EntryPoint = "SetWindowPos", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool SetWindowPos(
+            IntPtr hWnd,
+            IntPtr hWndInsertAfter,
+            int X,
+            int Y,
+            int cx,
+            int cy,
+            SetWindowPosFlags uFlags);
     }
 }

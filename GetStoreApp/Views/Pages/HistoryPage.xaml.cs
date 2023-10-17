@@ -185,7 +185,7 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        CopyPasteHelper.CopyToClipBoard(copyContent);
+                        CopyPasteHelper.CopyTextToClipBoard(copyContent);
                         new DataCopyNotification(this, DataCopyKind.History, false).Show();
                     });
                 }
@@ -322,7 +322,7 @@ namespace GetStoreApp.Views.Pages
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyToClipBoard(stringBuilder.ToString());
+                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     new DataCopyNotification(this, DataCopyKind.History, true, SelectedHistoryDataList.Count).Show();
                 });
             });

@@ -109,6 +109,18 @@ namespace GetStoreApp.UI.Notifications
                         }
                         break;
                     }
+                case DataCopyKind.ShareFile:
+                    {
+                        if (IsMultiSelected)
+                        {
+                            Content = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), Count);
+                        }
+                        else
+                        {
+                            Content = ResourceService.GetLocalized("Notification/ShareFileCopy");
+                        }
+                        break;
+                    }
                 case DataCopyKind.WinGetSearchInstall:
                     {
                         Content = ResourceService.GetLocalized("Notification/SearchInstallCopy");

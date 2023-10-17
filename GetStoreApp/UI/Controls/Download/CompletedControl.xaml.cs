@@ -8,7 +8,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.Notifications;
-using GetStoreApp.WindowsAPI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -300,18 +299,35 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 try
                 {
-                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle);
-
-                    dataTransferManager.DataRequested += async (sender, args) =>
+                    if (RuntimeHelper.IsElevated)
                     {
-                        DataRequestDeferral deferral = args.Request.GetDeferral();
+                        Task.Run(async () =>
+                        {
+                            List<StorageFile> selectedFileList = new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) };
+                            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                            {
+                                CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
+                                new DataCopyNotification(this, DataCopyKind.ShareFile, false).Show();
+                            });
+                        });
+                    }
+                    else
+                    {
+                        DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
 
-                        args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
-                        args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
-                        deferral.Complete();
-                    };
+                        dataTransferManager.DataRequested += async (sender, args) =>
+                        {
+                            DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                    DataTransferManagerInterop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
+                            args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+                            args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
+                            deferral.Complete();
+                        };
+
+                        ShareUIOptions options = new ShareUIOptions();
+                        options.Theme = (ShareUITheme)ActualTheme;
+                        DataTransferManager.ShowShareUI(options);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -559,24 +575,45 @@ namespace GetStoreApp.UI.Controls.Download
 
             try
             {
-                DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Program.ApplicationRoot.MainWindow.Handle);
-
-                dataTransferManager.DataRequested += async (sender, args) =>
+                if (RuntimeHelper.IsElevated)
                 {
-                    DataRequestDeferral deferral = args.Request.GetDeferral();
-
-                    args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
-
-                    List<StorageFile> SelectedFileList = new List<StorageFile>();
-                    foreach (BackgroundModel completedItem in SelectedCompletedDataList)
+                    await Task.Run(async () =>
                     {
-                        SelectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
-                    }
-                    args.Request.Data.SetStorageItems(SelectedFileList);
-                    deferral.Complete();
-                };
+                        List<StorageFile> SelectedFileList = new List<StorageFile>();
+                        foreach (BackgroundModel completedItem in SelectedCompletedDataList)
+                        {
+                            SelectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                        }
+                        Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                        {
+                            CopyPasteHelper.CopyFilesToClipBoard(SelectedFileList);
+                            new DataCopyNotification(this, DataCopyKind.ShareFile, true, SelectedFileList.Count).Show();
+                        });
+                    });
+                }
+                else
+                {
+                    DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
 
-                DataTransferManagerInterop.ShowShareUIForWindow(Program.ApplicationRoot.MainWindow.Handle);
+                    dataTransferManager.DataRequested += async (sender, args) =>
+                    {
+                        DataRequestDeferral deferral = args.Request.GetDeferral();
+
+                        args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+
+                        List<StorageFile> SelectedFileList = new List<StorageFile>();
+                        foreach (BackgroundModel completedItem in SelectedCompletedDataList)
+                        {
+                            SelectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                        }
+                        args.Request.Data.SetStorageItems(SelectedFileList);
+                        deferral.Complete();
+                    };
+
+                    ShareUIOptions options = new ShareUIOptions();
+                    options.Theme = (ShareUITheme)ActualTheme;
+                    DataTransferManager.ShowShareUI(options);
+                }
             }
             catch (Exception e)
             {

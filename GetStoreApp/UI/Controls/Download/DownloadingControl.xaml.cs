@@ -142,7 +142,7 @@ namespace GetStoreApp.UI.Controls.Download
                 while (IsUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
                 lock (DownloadingNowLock) IsUpdatingNow = true;
 
-                bool PauseResult = await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+                await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
 
                 // 信息更新完毕时，允许其他操作开始执行
                 lock (DownloadingNowLock) IsUpdatingNow = false;
