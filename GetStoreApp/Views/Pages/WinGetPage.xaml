@@ -45,13 +45,6 @@
                         Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanel')}"
                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}" />
 
-                    <Button
-                        x:Name="CheckUpdate"
-                        x:Load="{x:Bind WinGetPivot.SelectedIndex.Equals(2), Mode=OneWay}"
-                        Click="{x:Bind OnCheckUpdateClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/CheckUpdate')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CheckUpdateToolTip')}" />
-
                     <Button VerticalAlignment="Center">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal">

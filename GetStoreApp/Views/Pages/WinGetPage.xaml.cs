@@ -124,14 +124,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 检查并更新微软商店应用
-        /// </summary>
-        public async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
-        }
-
-        /// <summary>
         /// 了解更多有关 WinGet 程序包的描述信息
         /// </summary>
         public async void OnLearnMoreClicked(object sender, RoutedEventArgs args)

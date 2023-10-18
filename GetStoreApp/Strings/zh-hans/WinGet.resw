@@ -135,12 +135,6 @@
   <data name="CancelInstall" xml:space="preserve">
     <value>取消安装</value>
   </data>
-  <data name="CheckUpdate" xml:space="preserve">
-    <value>检查更新</value>
-  </data>
-  <data name="CheckUpdateToolTip" xml:space="preserve">
-    <value>检查并更新微软商店应用</value>
-  </data>
   <data name="ControlPanel" xml:space="preserve">
     <value>控制面板</value>
   </data>

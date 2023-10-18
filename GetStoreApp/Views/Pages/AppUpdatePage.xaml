@@ -24,11 +24,34 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock
+        <Grid
             Grid.Row="0"
             Margin="30,15,30,0"
-            FontSize="26"
-            Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Title')}" />
+            ColumnSpacing="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                FontSize="26"
+                Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Title')}" />
+
+            <Button
+                Grid.Column="1"
+                Click="{x:Bind OnOpenStoreClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/OpenStore')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppUpdate/OpenStoreToolTip')}" />
+
+            <Button
+                Grid.Column="2"
+                Click="{x:Bind OnWIPSettingsClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/WIPSettings')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppUpdate/WIPSettingsToolTip')}" />
+        </Grid>
 
         <Grid
             Grid.Row="1"
@@ -86,6 +109,7 @@
 
                 <MenuFlyoutItem
                     Click="{x:Bind OnUpdateAllClicked}"
+                    IsEnabled="{x:Bind IsLoadedCompleted.Equals(x:True), Mode=OneWay}"
                     Style="{StaticResource AppBarButtonMenuItemStyle}"
                     Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/UpdateAll')}">
 
@@ -147,7 +171,15 @@
                     Margin="0,10,0,10"
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/UpdateEmptyDescription')}"
-                    TextAlignment="Center" />
+                    TextAlignment="Center"
+                    Visibility="{x:Bind IsInitialized, Mode=OneWay}" />
+
+                <TextBlock
+                    Margin="0,10,0,10"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/NotCheckUpdateTip')}"
+                    TextAlignment="Center"
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInitialized), Mode=OneWay}" />
             </Grid>
 
             <ListView
@@ -177,7 +209,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="1.2*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
@@ -190,8 +222,7 @@
                                     Text="{x:Bind DisplayName}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(DisplayName,'DisplayName')}" />
+                                    TextWrapping="NoWrap" />
 
                                 <TextBlock
                                     Grid.Column="1"
@@ -202,21 +233,32 @@
                                     Text="{x:Bind PublisherName}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(PublisherName,'PublisherName')}" />
+                                    TextWrapping="NoWrap" />
 
-                                <TextBlock
+                                <StackPanel
                                     Grid.Column="2"
-                                    MinWidth="50"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    FontSize="14"
-                                    HorizontalTextAlignment="Left"
-                                    Text="{x:Bind InstallInformation, Mode=OneWay}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind InstallDetailInformation, Mode=OneWay}" />
+                                    Spacing="2">
+
+                                    <TextBlock
+                                        MinWidth="50"
+                                        FontSize="14"
+                                        HorizontalTextAlignment="Left"
+                                        Text="{x:Bind InstallInformation, Mode=OneWay}"
+                                        TextAlignment="Left"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
+
+                                    <TextBlock
+                                        MinWidth="50"
+                                        FontSize="12"
+                                        Text="{x:Bind InstallSubInformation, Mode=OneWay}"
+                                        TextAlignment="Left"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap"
+                                        Visibility="{x:Bind IsDownloading(AppInstallState), Mode=OneWay}" />
+                                </StackPanel>
 
                                 <Button
                                     Grid.Column="3"

@@ -138,20 +138,29 @@
   <data name="Completed" xml:space="preserve">
     <value>安装已完成</value>
   </data>
-  <data name="DisplayNameToolTip" xml:space="preserve">
-    <value>应用名称：{0}</value>
-  </data>
   <data name="Downloading" xml:space="preserve">
     <value>正在下载，已完成{0}%</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>安装失败</value>
+    <value>安装失败，错误代码：{0}</value>
   </data>
   <data name="Installing" xml:space="preserve">
     <value>正在安装，已完成{0}%</value>
   </data>
+  <data name="InstallingSubInformation" xml:space="preserve">
+    <value>应用大小{0}，已下载{1}</value>
+  </data>
   <data name="LoadingUpdate" xml:space="preserve">
-    <value>正在检查系统的所有应用，请稍候...</value>
+    <value>正在检查当前用户的所有应用，请稍候...</value>
+  </data>
+  <data name="NotCheckUpdateTip" xml:space="preserve">
+    <value>单击检查更新来查看当前用户应用的情况</value>
+  </data>
+  <data name="OpenStore" xml:space="preserve">
+    <value>打开商店</value>
+  </data>
+  <data name="OpenStoreToolTip" xml:space="preserve">
+    <value>单击打开微软商店</value>
   </data>
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
@@ -162,11 +171,8 @@
   <data name="Pending" xml:space="preserve">
     <value>等待安装</value>
   </data>
-  <data name="PublisherToolTip" xml:space="preserve">
-    <value>发布者：{0}</value>
-  </data>
   <data name="ReadyToDownload" xml:space="preserve">
-    <value>已准备好下载</value>
+    <value>已准备好更新</value>
   </data>
   <data name="RestoringData" xml:space="preserve">
     <value>正在还原应用数据</value>
@@ -185,5 +191,11 @@
   </data>
   <data name="UpdateEmptyDescription" xml:space="preserve">
     <value>所有应用都已经更新到最新版本</value>
+  </data>
+  <data name="WIPSettings" xml:space="preserve">
+    <value>预览体验计划设置</value>
+  </data>
+  <data name="WIPSettingsToolTip" xml:space="preserve">
+    <value>单击修改当前用户的预览体验计划</value>
   </data>
 </root>

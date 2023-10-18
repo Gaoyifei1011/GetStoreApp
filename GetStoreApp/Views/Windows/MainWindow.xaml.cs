@@ -30,6 +30,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics;
+using Windows.Graphics.Display;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -51,11 +52,13 @@ namespace GetStoreApp.Views.Windows
 
         public CoreWindow UWPCoreWindow { get; private set; }
 
+        public DisplayInformation DisplayInformation { get; }
+
         private UISettings AppUISettings { get; } = new UISettings();
 
         public IntPtr Handle { get; }
 
-        private IntPtr UWPCoreWindowHandle { get; }
+        private IntPtr UWPCoreHandle { get; }
 
         public OverlappedPresenter Presenter { get; }
 
@@ -187,6 +190,7 @@ namespace GetStoreApp.Views.Windows
             // 在桌面应用中创建 CoreWindow
             WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, Handle, typeof(ICoreWindow).GUID, out IntPtr obj);
             UWPCoreWindow = CoreWindow.FromAbi(obj);
+            DisplayInformation = DisplayInformation.GetForCurrentView();
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -212,15 +216,15 @@ namespace GetStoreApp.Views.Windows
             // 设置 CoreWindow 窗口的样式
             if (UWPCoreWindow is not null)
             {
-                UWPCoreWindowHandle = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Windows.UI.Core.CoreWindow", "GetStoreAppCoreWindow");
+                UWPCoreHandle = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Windows.UI.Core.CoreWindow", "GetStoreAppCoreWindow");
 
-                if (UWPCoreWindowHandle != IntPtr.Zero)
+                if (UWPCoreHandle != IntPtr.Zero)
                 {
-                    long style = GetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_STYLE);
+                    long style = GetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_STYLE);
                     style &= ~(long)WindowStyle.WS_POPUP;
-                    SetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW));
-                    SetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(UWPCoreWindowHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW);
-                    User32Library.SetParent(UWPCoreWindowHandle, Handle);
+                    SetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW));
+                    SetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW);
+                    User32Library.SetParent(UWPCoreHandle, Handle);
                 }
             }
 
@@ -753,20 +757,20 @@ namespace GetStoreApp.Views.Windows
                 // 窗口大小发生更改后的消息
                 case WindowMessage.WM_SIZE:
                     {
-                        if (UWPCoreWindowHandle != IntPtr.Zero)
+                        if (UWPCoreHandle != IntPtr.Zero)
                         {
-                            User32Library.SetWindowPos(UWPCoreWindowHandle, 0, 0, 0, lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
+                            User32Library.SetWindowPos(UWPCoreHandle, 0, 0, 0, lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
                         }
                         break;
                     }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
-                        if (Content is not null && Content.XamlRoot is not null)
+                        if (DisplayInformation is not null)
                         {
                             MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                            minMaxInfo.ptMinTrackSize.X = (int)(960 * Content.XamlRoot.RasterizationScale);
-                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * Content.XamlRoot.RasterizationScale);
+                            minMaxInfo.ptMinTrackSize.X = (int)(960 * DisplayInformation.RawPixelsPerViewPixel);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * DisplayInformation.RawPixelsPerViewPixel);
                             Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         }
 
@@ -908,14 +912,14 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
-                        if (Content is not null && Content.XamlRoot is not null)
+                        if (DisplayInformation is not null)
                         {
                             PointInt32 pt = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
 
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.ShowMode = FlyoutShowMode.Standard;
                             options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                            new Point((pt.X - AppWindow.Position.X - 8) / Content.XamlRoot.RasterizationScale, (pt.Y - AppWindow.Position.Y) / Content.XamlRoot.RasterizationScale) :
+                            new Point((pt.X - AppWindow.Position.X - 8) / DisplayInformation.RawPixelsPerViewPixel, (pt.Y - AppWindow.Position.Y) / DisplayInformation.RawPixelsPerViewPixel) :
                             new Point(pt.X - AppWindow.Position.X - 8, pt.Y - AppWindow.Position.Y);
 
                             TitlebarMenuFlyout.ShowAt(Content, options);

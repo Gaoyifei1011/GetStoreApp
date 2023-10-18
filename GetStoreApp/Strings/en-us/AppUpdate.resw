@@ -138,20 +138,29 @@
   <data name="Completed" xml:space="preserve">
     <value>Completed</value>
   </data>
-  <data name="DisplayNameToolTip" xml:space="preserve">
-    <value>App name: {0}</value>
-  </data>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading,{0}% completed</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Failed</value>
+    <value>Failed, Error code: {0}</value>
   </data>
   <data name="Installing" xml:space="preserve">
     <value>Installing,{0}% completed</value>
   </data>
+  <data name="InstallingSubInformation" xml:space="preserve">
+    <value>App size {0}, {1} downloaded</value>
+  </data>
   <data name="LoadingUpdate" xml:space="preserve">
-    <value>Checking all applications of the system, please wait...</value>
+    <value>Checking all apps for the current user, please wait...</value>
+  </data>
+  <data name="NotCheckUpdateTip" xml:space="preserve">
+    <value>Click Check for Updates to see the status of the current user application</value>
+  </data>
+  <data name="OpenStore" xml:space="preserve">
+    <value>Open store</value>
+  </data>
+  <data name="OpenStoreToolTip" xml:space="preserve">
+    <value>Click to open Microsoft Store</value>
   </data>
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>
@@ -162,11 +171,8 @@
   <data name="Pending" xml:space="preserve">
     <value>Waiting</value>
   </data>
-  <data name="PublisherToolTip" xml:space="preserve">
-    <value>Publisher: {0}</value>
-  </data>
   <data name="ReadyToDownload" xml:space="preserve">
-    <value>Ready to download</value>
+    <value>Ready to update</value>
   </data>
   <data name="RestoringData" xml:space="preserve">
     <value>Restoring data</value>
@@ -185,5 +191,11 @@
   </data>
   <data name="UpdateEmptyDescription" xml:space="preserve">
     <value>All apps are up to date</value>
+  </data>
+  <data name="WIPSettings" xml:space="preserve">
+    <value>WIP settings</value>
+  </data>
+  <data name="WIPSettingsToolTip" xml:space="preserve">
+    <value>Click to modify the preview experience plan for the current user</value>
   </data>
 </root>

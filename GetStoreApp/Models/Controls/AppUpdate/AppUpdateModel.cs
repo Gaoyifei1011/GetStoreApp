@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
@@ -58,18 +58,15 @@ namespace GetStoreApp.Models.Controls.AppUpdate
             }
         }
 
-        /// <summary>
-        /// 详细的安装信息（工具提示中显示）
-        /// </summary>
-        private string _installDetailInformation;
+        private string _installSubInformation;
 
-        public string InstallDetailInformation
+        public string InstallSubInformation
         {
-            get { return _installDetailInformation; }
+            get { return _installSubInformation; }
 
             set
             {
-                _installDetailInformation = value;
+                _installSubInformation = value;
                 OnPropertyChanged();
             }
         }
@@ -96,38 +93,6 @@ namespace GetStoreApp.Models.Controls.AppUpdate
         }
 
         /// <summary>
-        /// 已为当前应用下载的字节数
-        /// </summary>
-        private ulong _bytesDownload;
-
-        public ulong BytesDownload
-        {
-            get { return _bytesDownload; }
-
-            set
-            {
-                _bytesDownload = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// 当前应用的下载大小（以字节为单位）
-        /// </summary>
-        private ulong _downloadSizeInBytes;
-
-        public ulong DownloadSizeInBytes
-        {
-            get { return _downloadSizeInBytes; }
-
-            set
-            {
-                _downloadSizeInBytes = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
         /// 当前应用的安装完成百分比
         /// </summary>
         private double _percentComplete;
@@ -143,12 +108,19 @@ namespace GetStoreApp.Models.Controls.AppUpdate
             }
         }
 
-        /// <summary>
-        /// 遇到安装失败的应用的错误代码
-        /// </summary>
-        public Exception ErrorCode { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Visibility IsDownloading(AppInstallState appInstallState)
+        {
+            if (appInstallState is AppInstallState.Downloading)
+            {
+                return Visibility.Visible;
+            }
+            else
+            {
+                return Visibility.Collapsed;
+            }
+        }
 
         /// <summary>
         /// 属性值发生变化时通知更改
