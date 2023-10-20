@@ -370,7 +370,7 @@
     <value>Windows App SDK version：</value>
   </data>
   <data name="WinUI3Version" xml:space="preserve">
-    <value>WinUI3 version：</value>
+    <value>WinUI 3 version：</value>
   </data>
   <data name="ActionCenter" xml:space="preserve">
     <value>Application notification in action center</value>
@@ -401,5 +401,8 @@
   </data>
   <data name="AppName" xml:space="preserve">
     <value>GetStoreApp</value>
+  </data>
+  <data name="WindowsUIVersion" xml:space="preserve">
+    <value>Windows UI version:</value>
   </data>
 </root>

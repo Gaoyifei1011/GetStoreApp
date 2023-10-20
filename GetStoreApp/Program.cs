@@ -53,7 +53,7 @@ namespace GetStoreApp
                 WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
                 WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                bool createResult = Kernel32Library.CreateProcess(null, "Explorer.exe shell:AppsFolder\\Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+                bool createResult = Kernel32Library.CreateProcess(null, "explorer.exe shell:AppsFolder\\Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
 
                 if (createResult)
                 {

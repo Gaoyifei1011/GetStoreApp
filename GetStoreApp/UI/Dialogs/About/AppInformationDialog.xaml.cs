@@ -51,6 +51,19 @@ namespace GetStoreApp.UI.Dialogs.About
             }
         }
 
+        private string _windowsUIVersion;
+
+        public string WindowsUIVersion
+        {
+            get { return _windowsUIVersion; }
+
+            set
+            {
+                _windowsUIVersion = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _doNetVersion;
 
         public string DoNetVersion
@@ -117,7 +130,7 @@ namespace GetStoreApp.UI.Dialogs.About
                                 dependency.Id.Version.Revision);
                         });
 
-                        // WinUI3 版本信息
+                        // WinUI 3 版本信息
                         try
                         {
                             StorageFile WinUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
@@ -136,6 +149,25 @@ namespace GetStoreApp.UI.Dialogs.About
                             });
                         }
                     }
+                }
+
+                // Windows UI 版本信息
+                try
+                {
+                    StorageFile WindowsUIFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\System32\{1}", InfoHelper.SystemDataPath.Windows, "Windows.UI.dll"));
+                    IDictionary<string, object> WindowsUIFileProperties = await WindowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        WindowsUIVersion = WindowsUIFileProperties[FileVersionProperty] is not null ? Convert.ToString(WindowsUIFileProperties[FileVersionProperty]) : string.Empty;
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        WindowsUIVersion = string.Empty;
+                    });
                 }
             });
 

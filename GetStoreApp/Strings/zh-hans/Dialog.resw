@@ -370,7 +370,7 @@
     <value>Windows 应用 SDK 版本：</value>
   </data>
   <data name="WinUI3Version" xml:space="preserve">
-    <value>WinUI3 版本：</value>
+    <value>WinUI 3 版本：</value>
   </data>
   <data name="ActionCenter" xml:space="preserve">
     <value>操作中心的应用通知</value>
@@ -401,5 +401,8 @@
   </data>
   <data name="AppName" xml:space="preserve">
     <value>获取商店应用</value>
+  </data>
+  <data name="WindowsUIVersion" xml:space="preserve">
+    <value>Windows UI 版本</value>
   </data>
 </root>
