@@ -60,10 +60,10 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                     StringBuilder responseSuccessBuilder = new StringBuilder();
                     responseSuccessBuilder.Append("Headers:");
-                    responseSuccessBuilder.Append(response.Headers is null ? "" : LogService.WhiteSpaceRegex.Replace(response.Headers.ToString(), ""));
+                    responseSuccessBuilder.Append(response.Headers is null ? "" : response.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
                     responseSuccessBuilder.Append('\n');
                     responseSuccessBuilder.Append("ResponseMessage:");
-                    responseSuccessBuilder.Append(response.RequestMessage is null ? "" : LogService.WhiteSpaceRegex.Replace(response.RequestMessage.ToString(), ""));
+                    responseSuccessBuilder.Append(response.RequestMessage is null ? "" : response.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
                     responseSuccessBuilder.Append('\n');
 
                     LogService.WriteLog(LoggingLevel.Information, "Requested successfully.", responseSuccessBuilder);

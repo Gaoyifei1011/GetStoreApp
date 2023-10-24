@@ -10,6 +10,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI;
@@ -25,6 +26,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -44,6 +46,8 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private bool isInvoked = false;
+
         private WNDPROC newMainWindowWndProc = null;
         private IntPtr oldMainWindowWndProc = IntPtr.Zero;
 
@@ -461,7 +465,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 当菜单中的项收到交互（如单击或点击）时发生
         /// </summary>
-        public async void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        public void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             NavigationViewItemBase navigationViewItem = args.InvokedItemContainer;
             if (navigationViewItem.Tag is not null)
@@ -473,7 +477,39 @@ namespace GetStoreApp.Views.Windows
                     if (navigationItem.NavigationItem.Tag.ToString() is "Web")
                     {
                         NavigationViewItem OriginalSelectedItem = SelectedItem;
-                        await Launcher.LaunchUriAsync(new Uri("https://store.rg-adguard.net/"));
+
+                        if (!isInvoked)
+                        {
+                            Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+                            WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
+                            WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
+                            WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
+                            WinGetProcessStartupInfo.dwX = 0;
+                            WinGetProcessStartupInfo.dwY = 0;
+                            WinGetProcessStartupInfo.dwXSize = 0;
+                            WinGetProcessStartupInfo.dwYSize = 0;
+                            WinGetProcessStartupInfo.dwXCountChars = 500;
+                            WinGetProcessStartupInfo.dwYCountChars = 500;
+                            WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                            WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+                            WinGetProcessStartupInfo.cbReserved2 = 0;
+                            WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                            WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+                            bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+                            if (createResult)
+                            {
+                                isInvoked = true;
+                                if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                                if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                            }
+                        }
+                        else
+                        {
+                            isInvoked = false;
+                        }
+
                         SelectedItem = OriginalSelectedItem;
                     }
                     else
@@ -820,9 +856,32 @@ namespace GetStoreApp.Views.Windows
                                 }
                                 else if (startupArgs[1] is "Web")
                                 {
-                                    Task.Run(async () =>
+                                    Task.Run(() =>
                                     {
-                                        await Launcher.LaunchUriAsync((new Uri("https://store.rg-adguard.net/")));
+                                        Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+                                        WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
+                                        WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
+                                        WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
+                                        WinGetProcessStartupInfo.dwX = 0;
+                                        WinGetProcessStartupInfo.dwY = 0;
+                                        WinGetProcessStartupInfo.dwXSize = 0;
+                                        WinGetProcessStartupInfo.dwYSize = 0;
+                                        WinGetProcessStartupInfo.dwXCountChars = 500;
+                                        WinGetProcessStartupInfo.dwYCountChars = 500;
+                                        WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                        WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+                                        WinGetProcessStartupInfo.cbReserved2 = 0;
+                                        WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                                        WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+                                        bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+                                        if (createResult)
+                                        {
+                                            isInvoked = true;
+                                            if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                                            if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                                        }
                                     });
                                 }
                             }

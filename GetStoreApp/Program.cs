@@ -17,7 +17,7 @@ using WinRT;
 namespace GetStoreApp
 {
     /// <summary>
-    /// 获取商店应用 桌面程序
+    /// 获取商店应用
     /// </summary>
     public class Program
     {

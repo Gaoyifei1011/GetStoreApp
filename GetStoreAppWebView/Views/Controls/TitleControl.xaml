@@ -1,0 +1,103 @@
+﻿<Grid
+    x:Class="GetStoreAppWebView.Views.Controls.TitleControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreAppWebView.Helpers.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreAppWebView.Services.Root"
+    Background="Transparent"
+    RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
+    mc:Ignorable="d">
+
+    <!--  标题栏右键菜单  -->
+    <Grid.Resources>
+
+        <MenuFlyout
+            x:Name="TitlebarMenuFlyout"
+            x:FieldModifier="public"
+            Placement="BottomEdgeAlignedLeft">
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnRestoreClicked}"
+                IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
+                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE923;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnMoveClicked}"
+                IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsWindowMaximized), Mode=OneWay}"
+                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                Tag="{x:Bind TitlebarMenuFlyout}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnSizeClicked}"
+                IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsWindowMaximized), Mode=OneWay}"
+                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                Tag="{x:Bind TitlebarMenuFlyout}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnMinimizeClicked}"
+                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE921;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnMaximizeClicked}"
+                IsEnabled="{x:Bind converter:ValueConverterHelper.BooleanReverseConvert(IsWindowMaximized), Mode=OneWay}"
+                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE922;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+
+            <MenuFlyoutSeparator Width="200" />
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnCloseClicked}"
+                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE8BB;" />
+                </MenuFlyoutItem.Icon>
+
+                <MenuFlyoutItem.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="F4" Modifiers="Menu" />
+                </MenuFlyoutItem.KeyboardAccelerators>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+    </Grid.Resources>
+
+    <!--  应用标题栏内容  -->
+    <Grid
+        x:Name="AppTitlebar"
+        Height="45"
+        Margin="13,0,0,0"
+        VerticalAlignment="Top"
+        x:FieldModifier="public">
+
+        <!--  标题栏应用名称  -->
+        <TextBlock
+            Grid.Column="1"
+            Margin="12,2,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Canvas.ZIndex="2"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
+            TextWrapping="NoWrap" />
+    </Grid>
+</Grid>

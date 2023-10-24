@@ -22,7 +22,7 @@
     <LangVersion>latest</LangVersion>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
-    <Platforms>x86;x64;arm64</Platforms>
+    <Platforms>x86;x64;ARM64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSingleFile>True</PublishSingleFile>
@@ -53,9 +53,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer"/>
 
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -143,6 +141,8 @@
 
     <None Remove="Views\Windows\MainWindow.xaml" />
 
+    <None Remove="WinUIApp.xaml" />
+
     <None Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Never" />
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
@@ -215,6 +215,8 @@
 
     <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />
 
+    <Page Remove="WinUIApp.xaml" />
+    
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
