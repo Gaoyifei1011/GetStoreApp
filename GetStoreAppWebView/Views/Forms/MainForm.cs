@@ -4,6 +4,8 @@ using GetStoreAppWebView.Views.Controls;
 using GetStoreAppWebView.WindowsAPI.PInvoke.DwmApi;
 using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
+using Microsoft.Web.WebView2.Core;
+using Microsoft.Web.WebView2.WinForms;
 using Mile.Xaml;
 using Mile.Xaml.Interop;
 using System;
@@ -33,16 +35,19 @@ namespace GetStoreAppWebView.Views.Forms
         private double WindowDPI;
 
         private IContainer components = null;
+
         private WindowsXamlHost MileXamlHost = new WindowsXamlHost();
 
-        private WebBrowser WebBrowser = new WebBrowser();
+        public WebBrowser WebBrowser { get; }
+
+        public WebView2 WebView2 { get; }
+
+        public TitleControl TitleControl { get; } = new TitleControl();
 
         private WNDPROC newInputNonClientPointerSourceWndProc = null;
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
 
         public AppWindow AppWindow { get; }
-
-        public TitleControl TitleControl { get; } = new TitleControl();
 
         private IntPtr InputNonClientPointerSourceHandle { get; }
 
@@ -53,24 +58,42 @@ namespace GetStoreAppWebView.Views.Forms
             InitializeComponent();
 
             BackColor = System.Drawing.Color.Black;
-
-            MileXamlHost.AutoSize = true;
-            MileXamlHost.Child = TitleControl;
-            MileXamlHost.Dock = DockStyle.Top;
             Icon = Icon.ExtractAssociatedIcon(Process.GetCurrentProcess().MainModule.FileName);
             WindowDPI = ((double)DeviceDpi) / 96;
             MinimumSize = new Size(Convert.ToInt32(windowWidth * WindowDPI), Convert.ToInt32(windowHeight * WindowDPI));
             Size = new Size(Convert.ToInt32(windowWidth * WindowDPI), Convert.ToInt32(windowHeight * WindowDPI));
             StartPosition = FormStartPosition.CenterParent;
             Text = ResourceService.GetLocalized("WebView/Title");
+
+            MileXamlHost.AutoSize = true;
+            MileXamlHost.Child = TitleControl;
+            MileXamlHost.Dock = DockStyle.Top;
             Controls.Add(MileXamlHost);
 
-            WebBrowser.AutoSize = true;
-            WebBrowser.Url = new Uri("https://store.rg-adguard.net/");
-            WebBrowser.ScriptErrorsSuppressed = true;
-            WebBrowser.Width = Width;
-            WebBrowser.Location = new Point(0, MileXamlHost.Height);
-            Controls.Add(WebBrowser);
+            if (RuntimeHelper.IsWebView2Installed)
+            {
+                WebView2 = new WebView2();
+                WebView2.Source = new Uri("https://store.rg-adguard.net");
+                Controls.Add(WebView2);
+                WebView2.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
+                WebView2.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                WebView2.CoreWebView2InitializationCompleted += OnCoreWebView2InitializationCompleted;
+                WebView2.NavigationStarting += OnNavigationStarting;
+                WebView2.NavigationCompleted += OnNavigationCompleted;
+                WebView2.SourceChanged += OnWebView2SourceChanged;
+            }
+            else
+            {
+                WebBrowser = new WebBrowser();
+                WebBrowser.Url = new Uri("https://store.rg-adguard.net");
+                WebBrowser.ScriptErrorsSuppressed = true;
+                Controls.Add(WebBrowser);
+                WebBrowser.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
+                WebBrowser.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                WebBrowser.Navigating += OnNavigating;
+                WebBrowser.Navigated += OnNavigated;
+                WebBrowser.NewWindow += OnNewWindow;
+            }
 
             Microsoft.UI.WindowId windowId = new Microsoft.UI.WindowId();
             windowId.Value = (ulong)Handle;
@@ -97,7 +120,6 @@ namespace GetStoreAppWebView.Views.Forms
                 User32Library.SetWindowPos(UWPCoreHandle, IntPtr.Zero, 0, 0, Size.Width, Size.Height, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
             }
 
-            WebBrowser.Size = new Size(ClientSize.Width, ClientSize.Height - MileXamlHost.Height);
             TitleControl.ActualThemeChanged += OnActualThemeChanged;
         }
 
@@ -126,6 +148,23 @@ namespace GetStoreAppWebView.Views.Forms
         {
             base.OnDpiChanged(args);
             WindowDPI = ((double)args.DeviceDpiNew) / 96;
+
+            if (RuntimeHelper.IsWebView2Installed)
+            {
+                if (WebView2 is not null)
+                {
+                    WebView2.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
+                    WebView2.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                }
+            }
+            else
+            {
+                if (WebBrowser is not null)
+                {
+                    WebBrowser.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
+                    WebBrowser.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                }
+            }
         }
 
         /// <summary>
@@ -135,6 +174,43 @@ namespace GetStoreAppWebView.Views.Forms
         {
             base.OnFormClosing(args);
             TitleControl.ActualThemeChanged -= OnActualThemeChanged;
+
+            if (RuntimeHelper.IsWebView2Installed)
+            {
+                if (WebView2 is not null)
+                {
+                    try
+                    {
+                        WebView2.CoreWebView2InitializationCompleted -= OnCoreWebView2InitializationCompleted;
+                        WebView2.NavigationCompleted -= OnNavigationCompleted;
+                        WebView2.NavigationStarting -= OnNavigationStarting;
+                        WebView2.SourceChanged -= OnWebView2SourceChanged;
+
+                        if (WebView2.CoreWebView2 is not null)
+                        {
+                            WebView2.CoreWebView2.NewWindowRequested -= OnNewWindowRequested;
+                        }
+                        WebView2.Dispose();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+            else
+            {
+                if (WebBrowser is not null)
+                {
+                    try
+                    {
+                        WebBrowser.Navigated -= OnNavigated;
+                        WebBrowser.Navigating -= OnNavigating;
+                        WebBrowser.NewWindow -= OnNewWindow;
+                        WebBrowser.Dispose();
+                    }
+                    catch (Exception) { }
+                }
+            }
         }
 
         /// <summary>
@@ -148,6 +224,11 @@ namespace GetStoreAppWebView.Views.Forms
             SetAppTheme();
             SetWindowBackdrop();
             Invalidate();
+
+            if (!RuntimeHelper.IsWebView2Installed)
+            {
+                TitleControl.IsEnabled = true;
+            }
         }
 
         /// <summary>
@@ -224,7 +305,22 @@ namespace GetStoreAppWebView.Views.Forms
                 User32Library.SetWindowPos(UWPCoreHandle, IntPtr.Zero, 0, 0, Size.Width, Size.Height, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
             }
 
-            WebBrowser.Size = new Size(ClientSize.Width, ClientSize.Height - MileXamlHost.Height);
+            if (RuntimeHelper.IsWebView2Installed)
+            {
+                if (WebView2 is not null)
+                {
+                    WebView2.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
+                    WebView2.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                }
+            }
+            else
+            {
+                if (WebBrowser is not null)
+                {
+                    WebBrowser.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
+                    WebBrowser.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                }
+            }
         }
 
         /// <summary>
@@ -233,6 +329,79 @@ namespace GetStoreAppWebView.Views.Forms
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetTitleBarColor(sender.ActualTheme);
+        }
+
+        /// <summary>
+        /// 初始化 CoreWebView2 对象
+        /// </summary>
+        private void OnCoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs args)
+        {
+            if (WebView2.CoreWebView2 is not null)
+            {
+                WebView2.CoreWebView2.NewWindowRequested += OnNewWindowRequested;
+                TitleControl.IsEnabled = true;
+            }
+        }
+
+        /// <summary>
+        /// WebView2 : 页面完成导航
+        /// </summary>
+        private void OnNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            TitleControl.IsLoading = false;
+        }
+
+        /// <summary>
+        /// WebView2 : 页面开始导航
+        /// </summary>
+        private void OnNavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs args)
+        {
+            TitleControl.IsLoading = true;
+        }
+
+        /// <summary>
+        /// WebView2 : 当前页面对应的链接发生改变时触发这一事件
+        /// </summary>
+        private void OnWebView2SourceChanged(object sender, CoreWebView2SourceChangedEventArgs args)
+        {
+            TitleControl.CanGoBack = WebView2.CanGoBack;
+            TitleControl.CanGoForward = WebView2.CanGoForward;
+        }
+
+        /// <summary>
+        /// WebView2 : 捕捉打开新窗口事件，并禁止弹窗
+        /// </summary>
+        private void OnNewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs args)
+        {
+            WebBrowser.Navigate(args.Uri);
+            args.Handled = true;
+        }
+
+        /// <summary>
+        /// Winform WebBrowser : 当前页面对应的链接发生改变时触发这一事件
+        /// </summary>
+        private void OnNavigated(object sender, WebBrowserNavigatedEventArgs args)
+        {
+            TitleControl.CanGoBack = WebBrowser.CanGoBack;
+            TitleControl.CanGoForward = WebBrowser.CanGoForward;
+            TitleControl.IsLoading = false;
+        }
+
+        /// <summary>
+        /// Winform WebBrowser : 当前页面对应的链接发生改变时触发这一事件
+        /// </summary>
+        private void OnNavigating(object sender, WebBrowserNavigatingEventArgs args)
+        {
+            TitleControl.IsLoading = true;
+        }
+
+        /// <summary>
+        /// Winform WebBrowser : 捕捉打开新窗口事件，并禁止弹窗
+        /// </summary>
+        private void OnNewWindow(object sender, CancelEventArgs args)
+        {
+            args.Cancel = true;
+            WebBrowser.Navigate(WebBrowser.StatusText.ToString());
         }
 
         /// <summary>

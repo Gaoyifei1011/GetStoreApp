@@ -6,9 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreAppWebView.Services.Root"
+    HorizontalAlignment="Stretch"
     Background="Transparent"
     RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
     mc:Ignorable="d">
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
 
     <!--  标题栏右键菜单  -->
     <Grid.Resources>
@@ -84,6 +90,7 @@
     <!--  应用标题栏内容  -->
     <Grid
         x:Name="AppTitlebar"
+        Grid.Row="0"
         Height="45"
         Margin="13,0,0,0"
         VerticalAlignment="Top"
@@ -99,5 +106,151 @@
             Style="{StaticResource CaptionTextBlockStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
             TextWrapping="NoWrap" />
+    </Grid>
+
+    <Grid
+        Grid.Row="1"
+        Height="44"
+        Padding="0">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel
+            x:Name="BrowserFunction"
+            Grid.Column="0"
+            Margin="0,0,10,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Background="Transparent"
+            Orientation="Horizontal"
+            Spacing="2">
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnBrowserBackClicked}"
+                IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Back')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE72b;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnBrowserForwardClicked}"
+                IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Forward')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE72a;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnRefreshClicked}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Refresh')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE72c;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </StackPanel>
+
+        <Grid
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ProgressRing
+                Grid.Column="0"
+                Width="20"
+                Height="20"
+                Margin="0,0,5,0"
+                HorizontalAlignment="Right"
+                IsActive="{x:Bind IsLoading, Mode=OneWay}"
+                Visibility="{x:Bind IsLoading, Mode=OneWay}" />
+            <TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/WebTitle')}" />
+            <TextBlock
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Loading')}"
+                Visibility="{x:Bind IsLoading, Mode=OneWay}" />
+        </Grid>
+
+        <StackPanel
+            Grid.Column="2"
+            Margin="0,0,10,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Background="Transparent"
+            Orientation="Horizontal"
+            Spacing="2">
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnDownloadClicked}"
+                IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Download')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE896;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnFlyoutShowClicked}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/ViewMore')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE712;" />
+                </MenuFlyoutItem.Icon>
+
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE774;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutSeparator />
+
+                        <MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE8b7;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnClearWebCacheClicked}"
+                            IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE74d;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+            </MenuFlyoutItem>
+        </StackPanel>
     </Grid>
 </Grid>

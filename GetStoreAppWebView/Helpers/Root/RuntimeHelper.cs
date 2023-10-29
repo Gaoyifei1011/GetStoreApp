@@ -14,13 +14,13 @@ namespace GetStoreAppWebView.Helpers.Root
 
         public static bool IsElevated { get; private set; }
 
-        public static bool IsWebView2Exist { get; private set; }
+        public static bool IsWebView2Installed { get; private set; }
 
         static RuntimeHelper()
         {
             IsInMsixContainer();
             IsRunningElevated();
-            IsWebView2Installed();
+            GetWebView2State();
         }
 
         /// <summary>
@@ -45,23 +45,16 @@ namespace GetStoreAppWebView.Helpers.Root
         /// <summary>
         /// 判断 WebView2 运行时是否已安装
         /// </summary>
-        private static void IsWebView2Installed()
+        private static void GetWebView2State()
         {
-            string res = string.Empty;
             try
             {
-                res = CoreWebView2Environment.GetAvailableBrowserVersionString();
+                string webViewVersion = CoreWebView2Environment.GetAvailableBrowserVersionString();
+                IsWebView2Installed = !string.IsNullOrEmpty(webViewVersion);
             }
             catch (Exception)
             {
-            }
-            if (res == "" || res == null)
-            {
-                IsWebView2Exist = false;
-            }
-            else
-            {
-                IsWebView2Exist = true;
+                IsWebView2Installed = false;
             }
         }
     }

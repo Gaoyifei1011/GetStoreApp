@@ -39,6 +39,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
 
+    <Content Include="$(TargetDir)\WebView2Loader.dll" Link="WebView2Loader.dll" CopyToOutputDirectory="Always" />
+
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -52,20 +54,11 @@
     <Reference Include="Microsoft.Web.WebView2.Core" HintPath="$(TargetDir)\Microsoft.Web.WebView2.Core.dll" />
     <Reference Include="Microsoft.Web.WebView2.WinForms" HintPath="$(TargetDir)\Microsoft.Web.WebView2.WinForms.dll" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <ApplicationDefinition Update="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </ApplicationDefinition>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Styles\" />
-  </ItemGroup>
 
   <Target Name="CopyFilesToTargetDir" BeforeTargets="BeforeBuild">
     <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\lib\net45\Microsoft.Web.WebView2.Core.dll" DestinationFolder="$(TargetDir)" />
     <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\lib\net45\Microsoft.Web.WebView2.WinForms.dll" DestinationFolder="$(TargetDir)" />
+    <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\runtimes\win-$(Platform)\native\WebView2Loader.dll" DestinationFolder="$(TargetDir)" />
     <Copy SourceFiles="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0.18362\Microsoft.UI.winmd" DestinationFolder="$(TargetDir)" />
   </Target>
 </Project>

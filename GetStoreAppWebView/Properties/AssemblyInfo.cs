@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 程序集信息设置
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
-[assembly: AssemblyDescription("获取商店应用 网页浏览器")]
-[assembly: AssemblyFileVersion("2.5.1024.0")]
-[assembly: AssemblyInformationalVersion("2.5.1024.0")]
-[assembly: AssemblyProduct("获取商店应用 网页浏览器")]
-[assembly: AssemblyTitle("获取商店应用 网页浏览器")]
-[assembly: AssemblyVersion("2.5.1024.0")]
+[assembly: AssemblyDescription("网页浏览器")]
+[assembly: AssemblyFileVersion("2.5.1029.0")]
+[assembly: AssemblyInformationalVersion("2.5.1029.0")]
+[assembly: AssemblyProduct("网页浏览器")]
+[assembly: AssemblyTitle("网页浏览器")]
+[assembly: AssemblyVersion("2.5.1029.0")]
 
 // 设置程序集对 COM 组件的访问权限
 [assembly: ComVisible(false)]
