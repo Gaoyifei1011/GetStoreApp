@@ -92,10 +92,12 @@ All the content of the program has been developed
 
 ### Project References (Sort by alphabetical order)
 
+> * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
+> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
 
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [Auxiliary Tools](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;
@@ -117,8 +119,9 @@ All the content of the program has been developed
 #### <p align="center">Tools that must be installed</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0)
+> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0, .NET Framework SDK Version 4.8.1)
 > * [WinGet package manager](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) (install recommendedly)
+> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （install recommendedly）
 
 #### <p align="center">Compilation steps</p>
 

@@ -15,8 +15,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
-using Windows.UI;
+using Windows.Foundation.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,7 +37,7 @@ namespace GetStoreAppWebView.Views.Forms
 
         private IContainer components = null;
 
-        private WindowsXamlHost MileXamlHost = new WindowsXamlHost();
+        public WindowsXamlHost MileXamlHost { get; } = new WindowsXamlHost();
 
         public WebBrowser WebBrowser { get; }
 
@@ -57,7 +58,8 @@ namespace GetStoreAppWebView.Views.Forms
         {
             InitializeComponent();
 
-            BackColor = System.Drawing.Color.Black;
+            AllowDrop = false;
+            BackColor = Color.Black;
             Icon = Icon.ExtractAssociatedIcon(Process.GetCurrentProcess().MainModule.FileName);
             WindowDPI = ((double)DeviceDpi) / 96;
             MinimumSize = new Size(Convert.ToInt32(windowWidth * WindowDPI), Convert.ToInt32(windowHeight * WindowDPI));
@@ -75,8 +77,10 @@ namespace GetStoreAppWebView.Views.Forms
                 WebView2 = new WebView2();
                 WebView2.Source = new Uri("https://store.rg-adguard.net");
                 Controls.Add(WebView2);
-                WebView2.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
-                WebView2.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                WebView2.AllowExternalDrop = false;
+                WebView2.Location = new Point(0, 0);
+                WebView2.Size = new Size(ClientSize.Width, ClientSize.Height);
+                WebView2.Click += OnClick;
                 WebView2.CoreWebView2InitializationCompleted += OnCoreWebView2InitializationCompleted;
                 WebView2.NavigationStarting += OnNavigationStarting;
                 WebView2.NavigationCompleted += OnNavigationCompleted;
@@ -88,8 +92,9 @@ namespace GetStoreAppWebView.Views.Forms
                 WebBrowser.Url = new Uri("https://store.rg-adguard.net");
                 WebBrowser.ScriptErrorsSuppressed = true;
                 Controls.Add(WebBrowser);
-                WebBrowser.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
-                WebBrowser.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                WebBrowser.AllowWebBrowserDrop = false;
+                WebBrowser.Location = new Point(0, 0);
+                WebBrowser.Size = new Size(ClientSize.Width, ClientSize.Height);
                 WebBrowser.Navigating += OnNavigating;
                 WebBrowser.Navigated += OnNavigated;
                 WebBrowser.NewWindow += OnNewWindow;
@@ -99,7 +104,6 @@ namespace GetStoreAppWebView.Views.Forms
             windowId.Value = (ulong)Handle;
             AppWindow = AppWindow.GetFromWindowId(windowId);
             AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            SetTitleBarColor(TitleControl.ActualTheme);
 
             InputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
 
@@ -119,8 +123,6 @@ namespace GetStoreAppWebView.Views.Forms
             {
                 User32Library.SetWindowPos(UWPCoreHandle, IntPtr.Zero, 0, 0, Size.Width, Size.Height, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
             }
-
-            TitleControl.ActualThemeChanged += OnActualThemeChanged;
         }
 
         private void InitializeComponent()
@@ -148,23 +150,6 @@ namespace GetStoreAppWebView.Views.Forms
         {
             base.OnDpiChanged(args);
             WindowDPI = ((double)args.DeviceDpiNew) / 96;
-
-            if (RuntimeHelper.IsWebView2Installed)
-            {
-                if (WebView2 is not null)
-                {
-                    WebView2.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
-                    WebView2.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
-                }
-            }
-            else
-            {
-                if (WebBrowser is not null)
-                {
-                    WebBrowser.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
-                    WebBrowser.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
-                }
-            }
         }
 
         /// <summary>
@@ -173,7 +158,6 @@ namespace GetStoreAppWebView.Views.Forms
         protected override void OnFormClosing(FormClosingEventArgs args)
         {
             base.OnFormClosing(args);
-            TitleControl.ActualThemeChanged -= OnActualThemeChanged;
 
             if (RuntimeHelper.IsWebView2Installed)
             {
@@ -181,6 +165,7 @@ namespace GetStoreAppWebView.Views.Forms
                 {
                     try
                     {
+                        WebView2.Click -= OnClick;
                         WebView2.CoreWebView2InitializationCompleted -= OnCoreWebView2InitializationCompleted;
                         WebView2.NavigationCompleted -= OnNavigationCompleted;
                         WebView2.NavigationStarting -= OnNavigationStarting;
@@ -189,11 +174,13 @@ namespace GetStoreAppWebView.Views.Forms
                         if (WebView2.CoreWebView2 is not null)
                         {
                             WebView2.CoreWebView2.NewWindowRequested -= OnNewWindowRequested;
+                            WebView2.CoreWebView2.ProcessFailed -= OnProcessFailed;
                         }
                         WebView2.Dispose();
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogService.WriteLog(LoggingLevel.Error, "WebView2 unloaded failed", e);
                     }
                 }
             }
@@ -208,7 +195,10 @@ namespace GetStoreAppWebView.Views.Forms
                         WebBrowser.NewWindow -= OnNewWindow;
                         WebBrowser.Dispose();
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Winform WebBrowser unloaded failed", e);
+                    }
                 }
             }
         }
@@ -219,15 +209,20 @@ namespace GetStoreAppWebView.Views.Forms
         protected override void OnLoad(EventArgs args)
         {
             base.OnLoad(args);
-            Margins FormMargin = new Margins();
-            DwmApiLibrary.DwmExtendFrameIntoClientArea(Handle, ref FormMargin);
+
             SetAppTheme();
             SetWindowBackdrop();
-            Invalidate();
 
             if (!RuntimeHelper.IsWebView2Installed)
             {
                 TitleControl.IsEnabled = true;
+            }
+
+            if (InfoHelper.SystemVersion.Build >= 22621)
+            {
+                Margins FormMargin = new Margins();
+                DwmApiLibrary.DwmExtendFrameIntoClientArea(Handle, ref FormMargin);
+                Invalidate();
             }
         }
 
@@ -242,29 +237,8 @@ namespace GetStoreAppWebView.Views.Forms
                 IReadOnlyList<Popup> PopupRoot = VisualTreeHelper.GetOpenPopupsForXamlRoot(TitleControl.XamlRoot);
                 foreach (Popup popup in PopupRoot)
                 {
-                    // 关闭浮出控件
-                    if (popup.Child as FlyoutPresenter is not null)
-                    {
-                        popup.IsOpen = false;
-                        break;
-                    }
-
                     // 关闭菜单浮出控件
                     if (popup.Child as MenuFlyoutPresenter is not null)
-                    {
-                        popup.IsOpen = false;
-                        break;
-                    }
-
-                    // 关闭日期选择器浮出控件
-                    if (popup.Child as DatePickerFlyoutPresenter is not null)
-                    {
-                        popup.IsOpen = false;
-                        break;
-                    }
-
-                    // 关闭时间选择器浮出控件
-                    if (popup.Child as TimePickerFlyoutPresenter is not null)
                     {
                         popup.IsOpen = false;
                         break;
@@ -286,10 +260,10 @@ namespace GetStoreAppWebView.Views.Forms
                 IReadOnlyList<Popup> PopupRoot = VisualTreeHelper.GetOpenPopupsForXamlRoot(TitleControl.XamlRoot);
                 foreach (Popup popup in PopupRoot)
                 {
-                    // 关闭内容对话框
-                    if (popup.Child as ContentDialog is not null)
+                    // 关闭菜单浮出控件
+                    if (popup.Child as MenuFlyoutPresenter is not null)
                     {
-                        (popup.Child as ContentDialog).Hide();
+                        popup.IsOpen = false;
                         break;
                     }
                 }
@@ -309,26 +283,38 @@ namespace GetStoreAppWebView.Views.Forms
             {
                 if (WebView2 is not null)
                 {
-                    WebView2.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
-                    WebView2.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                    WebView2.Location = new Point(0, MileXamlHost.Height);
+                    WebView2.Size = new Size(ClientSize.Width, ClientSize.Height - MileXamlHost.Height);
                 }
             }
             else
             {
                 if (WebBrowser is not null)
                 {
-                    WebBrowser.Location = new Point(0, (int)(MileXamlHost.Height * WindowDPI));
-                    WebBrowser.Size = new Size(ClientSize.Width, (int)(ClientSize.Height - MileXamlHost.Height * WindowDPI));
+                    WebBrowser.Location = new Point(0, MileXamlHost.Height);
+                    WebBrowser.Size = new Size(ClientSize.Width, ClientSize.Height - MileXamlHost.Height);
                 }
             }
         }
 
         /// <summary>
-        /// 应用主题发生变化时修改应用的背景色
+        /// 点击控件时关闭浮出控件
         /// </summary>
-        private void OnActualThemeChanged(FrameworkElement sender, object args)
+        private void OnClick(object sender, EventArgs args)
         {
-            SetTitleBarColor(sender.ActualTheme);
+            if (TitleControl.XamlRoot is not null)
+            {
+                IReadOnlyList<Popup> PopupRoot = VisualTreeHelper.GetOpenPopupsForXamlRoot(TitleControl.XamlRoot);
+                foreach (Popup popup in PopupRoot)
+                {
+                    // 关闭菜单浮出控件
+                    if (popup.Child as MenuFlyoutPresenter is not null)
+                    {
+                        popup.IsOpen = false;
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -339,6 +325,7 @@ namespace GetStoreAppWebView.Views.Forms
             if (WebView2.CoreWebView2 is not null)
             {
                 WebView2.CoreWebView2.NewWindowRequested += OnNewWindowRequested;
+                WebView2.CoreWebView2.ProcessFailed += OnProcessFailed;
                 TitleControl.IsEnabled = true;
             }
         }
@@ -349,6 +336,7 @@ namespace GetStoreAppWebView.Views.Forms
         private void OnNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             TitleControl.IsLoading = false;
+            Text = string.Format("{0} - {1}", WebView2.CoreWebView2.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
         }
 
         /// <summary>
@@ -373,8 +361,33 @@ namespace GetStoreAppWebView.Views.Forms
         /// </summary>
         private void OnNewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs args)
         {
-            WebBrowser.Navigate(args.Uri);
             args.Handled = true;
+            WebBrowser.Navigate(args.Uri);
+        }
+
+        /// <summary>
+        /// WebView2 ：进程异常退出时发生
+        /// </summary>
+        private void OnProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
+        {
+            StringBuilder processFailedBuilder = new StringBuilder();
+            processFailedBuilder.Append("ProcessFailedKind:");
+            processFailedBuilder.Append(args.ProcessFailedKind.ToString());
+            processFailedBuilder.Append(Environment.NewLine);
+            processFailedBuilder.Append("Reason:");
+            processFailedBuilder.Append(args.Reason.ToString());
+            processFailedBuilder.Append(Environment.NewLine);
+            processFailedBuilder.Append("ExitCode:");
+            processFailedBuilder.Append(args.ExitCode.ToString());
+            processFailedBuilder.Append(Environment.NewLine);
+            processFailedBuilder.Append("ProcessDescription:");
+            processFailedBuilder.Append(args.ProcessDescription);
+            processFailedBuilder.Append(Environment.NewLine);
+
+            LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", processFailedBuilder);
+
+            MessageBox.Show(ResourceService.GetLocalized("WebView/WebViewProcessFailedContent"), ResourceService.GetLocalized("WebView/WebViewProcessFailedTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Program.ApplicationRoot.Dispose();
         }
 
         /// <summary>
@@ -382,6 +395,7 @@ namespace GetStoreAppWebView.Views.Forms
         /// </summary>
         private void OnNavigated(object sender, WebBrowserNavigatedEventArgs args)
         {
+            Text = string.Format("{0} - {1}", WebBrowser.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
             TitleControl.CanGoBack = WebBrowser.CanGoBack;
             TitleControl.CanGoForward = WebBrowser.CanGoForward;
             TitleControl.IsLoading = false;
@@ -405,7 +419,7 @@ namespace GetStoreAppWebView.Views.Forms
         }
 
         /// <summary>
-        /// 更改指定窗口的属性
+        /// 获取指定窗口的属性
         /// </summary>
         private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
         {
@@ -522,55 +536,22 @@ namespace GetStoreAppWebView.Views.Forms
         }
 
         /// <summary>
-        /// 设置标题栏按钮的颜色
-        /// </summary>
-        private void SetTitleBarColor(ElementTheme theme)
-        {
-            AppWindowTitleBar titleBar = AppWindow.TitleBar;
-
-            titleBar.BackgroundColor = Colors.Transparent;
-            titleBar.ForegroundColor = Colors.Transparent;
-            titleBar.InactiveBackgroundColor = Colors.Transparent;
-            titleBar.InactiveForegroundColor = Colors.Transparent;
-
-            if (theme is ElementTheme.Light)
-            {
-                titleBar.ButtonBackgroundColor = Colors.Transparent;
-                titleBar.ButtonForegroundColor = Colors.Black;
-                titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(20, 0, 0, 0);
-                titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(30, 0, 0, 0);
-                titleBar.ButtonPressedForegroundColor = Colors.Black;
-                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-                titleBar.ButtonInactiveForegroundColor = Colors.Black;
-            }
-            else
-            {
-                titleBar.ButtonBackgroundColor = Colors.Transparent;
-                titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(20, 255, 255, 255);
-                titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(30, 255, 255, 255);
-                titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-                titleBar.ButtonInactiveForegroundColor = Colors.White;
-            }
-        }
-
-        /// <summary>
         /// 设置应用的主题色
         /// </summary>
         public void SetAppTheme()
         {
-            if (Windows.UI.Xaml.Application.Current.RequestedTheme is ApplicationTheme.Light)
+            if (InfoHelper.SystemVersion.Build >= 22621)
             {
-                int useLightMode = 0;
-                DwmApiLibrary.DwmSetWindowAttribute(Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref useLightMode, Marshal.SizeOf(typeof(int)));
-            }
-            else
-            {
-                int useDarkMode = 1;
-                DwmApiLibrary.DwmSetWindowAttribute(Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref useDarkMode, Marshal.SizeOf(typeof(int)));
+                if (Windows.UI.Xaml.Application.Current.RequestedTheme is ApplicationTheme.Light)
+                {
+                    int useLightMode = 0;
+                    DwmApiLibrary.DwmSetWindowAttribute(Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref useLightMode, Marshal.SizeOf(typeof(int)));
+                }
+                else
+                {
+                    int useDarkMode = 1;
+                    DwmApiLibrary.DwmSetWindowAttribute(Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, ref useDarkMode, Marshal.SizeOf(typeof(int)));
+                }
             }
         }
 
@@ -579,8 +560,11 @@ namespace GetStoreAppWebView.Views.Forms
         /// </summary>
         public void SetWindowBackdrop()
         {
-            int micaBackdrop = 2;
-            DwmApiLibrary.DwmSetWindowAttribute(Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref micaBackdrop, Marshal.SizeOf(typeof(int)));
+            if (InfoHelper.SystemVersion.Build >= 22621)
+            {
+                int micaBackdrop = 2;
+                DwmApiLibrary.DwmSetWindowAttribute(Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref micaBackdrop, Marshal.SizeOf(typeof(int)));
+            }
         }
     }
 }

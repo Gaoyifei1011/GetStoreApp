@@ -754,7 +754,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 更改指定窗口的属性
+        /// 获取窗口属性
         /// </summary>
         private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
         {
@@ -769,7 +769,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 更改指定窗口的窗口属性
+        /// 更改窗口属性
         /// </summary>
         private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
         {

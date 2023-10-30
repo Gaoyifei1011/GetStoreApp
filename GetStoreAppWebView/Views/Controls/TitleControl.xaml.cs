@@ -1,14 +1,17 @@
 ﻿using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Windowing;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -16,23 +19,10 @@ using Windows.UI.Xaml.Controls.Primitives;
 namespace GetStoreAppWebView.Views.Controls
 {
     /// <summary>
-    /// 应用主窗口页面
+    /// 应用顶部标题栏区域控件
     /// </summary>
     public sealed partial class TitleControl : Grid, INotifyPropertyChanged
     {
-        private ElementTheme _windowTheme;
-
-        public ElementTheme WindowTheme
-        {
-            get { return _windowTheme; }
-
-            set
-            {
-                _windowTheme = value;
-                OnPropertyChanged();
-            }
-        }
-
         private bool _isWindowMaximized;
 
         public bool IsWindowMaximized
@@ -103,6 +93,39 @@ namespace GetStoreAppWebView.Views.Controls
         public TitleControl()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 应用主题发生变化时修改应用的背景色
+        /// </summary>
+        public void OnActualThemeChanged(FrameworkElement sender, object args)
+        {
+            SetTitleBarColor(ActualTheme);
+        }
+
+        /// <summary>
+        /// 控件加载完成时初始化控件位置
+        /// </summary>
+        public void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            SetTitleBarColor(ActualTheme);
+
+            if (RuntimeHelper.IsWebView2Installed)
+            {
+                if (Program.MainWindow.WebView2 is not null)
+                {
+                    Program.MainWindow.WebView2.Location = new Point(0, Program.MainWindow.MileXamlHost.Height);
+                    Program.MainWindow.WebView2.Size = new Size(Program.MainWindow.ClientSize.Width, Program.MainWindow.ClientSize.Height - Program.MainWindow.MileXamlHost.Height);
+                }
+            }
+            else
+            {
+                if (Program.MainWindow.WebBrowser is not null)
+                {
+                    Program.MainWindow.WebBrowser.Location = new Point(0, Program.MainWindow.MileXamlHost.Height);
+                    Program.MainWindow.WebBrowser.Size = new Size(Program.MainWindow.ClientSize.Width, Program.MainWindow.ClientSize.Height - Program.MainWindow.MileXamlHost.Height);
+                }
+            }
         }
 
         /// <summary>
@@ -260,7 +283,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 显示浮出控件
         /// </summary>
-        public void OnFlyoutShowClicked(object sender, RoutedEventArgs args)
+        public void OnMoreClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
@@ -321,6 +344,52 @@ namespace GetStoreAppWebView.Views.Controls
                     Process.Start("RunDll32.exe", "InetCpl.cpl,ClearMyTracksByProcess 255");
                 }
             });
+        }
+
+        /// <summary>
+        /// 设置标题栏按钮的颜色
+        /// </summary>
+        public void SetTitleBarColor(ElementTheme theme)
+        {
+            AppWindowTitleBar titleBar = Program.MainWindow.AppWindow.TitleBar;
+
+            titleBar.BackgroundColor = Colors.Transparent;
+            titleBar.ForegroundColor = Colors.Transparent;
+            titleBar.InactiveBackgroundColor = Colors.Transparent;
+            titleBar.InactiveForegroundColor = Colors.Transparent;
+
+            if (theme is ElementTheme.Light)
+            {
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonForegroundColor = Colors.Black;
+                titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(20, 0, 0, 0);
+                titleBar.ButtonHoverForegroundColor = Colors.Black;
+                titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(30, 0, 0, 0);
+                titleBar.ButtonPressedForegroundColor = Colors.Black;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveForegroundColor = Colors.Black;
+
+                if (InfoHelper.SystemVersion.Build < 22621)
+                {
+                    Program.MainWindow.BackColor = System.Drawing.Color.FromArgb(255, 240, 243, 249);
+                }
+            }
+            else
+            {
+                titleBar.ButtonBackgroundColor = Colors.Transparent;
+                titleBar.ButtonForegroundColor = Colors.White;
+                titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(20, 255, 255, 255);
+                titleBar.ButtonHoverForegroundColor = Colors.White;
+                titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(30, 255, 255, 255);
+                titleBar.ButtonPressedForegroundColor = Colors.White;
+                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                titleBar.ButtonInactiveForegroundColor = Colors.White;
+
+                if (InfoHelper.SystemVersion.Build < 22621)
+                {
+                    Program.MainWindow.BackColor = System.Drawing.Color.FromArgb(255, 20, 20, 20);
+                }
+            }
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

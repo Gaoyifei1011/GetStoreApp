@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView
 {
@@ -57,14 +58,8 @@ namespace GetStoreAppWebView
         /// </summary>
         private static void OnThreadException(object sender, ThreadExceptionEventArgs args)
         {
-            MessageBox.Show(
-                ResourceService.GetLocalized("WebView/ErrorTitle") + Environment.NewLine +
-                ResourceService.GetLocalized("WebView/Content1") + Environment.NewLine +
-                ResourceService.GetLocalized("WebView/Content2"),
-                ResourceService.GetLocalized("WebView/AppDisplayName"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-                );
+            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
+            ApplicationRoot.Dispose();
         }
 
         /// <summary>
@@ -72,14 +67,8 @@ namespace GetStoreAppWebView
         /// </summary>
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
-            MessageBox.Show(
-                ResourceService.GetLocalized("WebView/ErrorTitle") + Environment.NewLine +
-                ResourceService.GetLocalized("WebView/Content1") + Environment.NewLine +
-                ResourceService.GetLocalized("WebView/Content2"),
-                ResourceService.GetLocalized("WebView/AppDisplayName"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-                );
+            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
+            ApplicationRoot.Dispose();
         }
 
         /// <summary>

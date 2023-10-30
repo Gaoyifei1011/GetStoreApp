@@ -1,7 +1,7 @@
 ﻿using GetStoreAppWebView.Services.Root;
 using Mile.Xaml;
 using System;
-using System.Windows.Forms;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView
 {
@@ -21,14 +21,10 @@ namespace GetStoreAppWebView
         /// </summary>
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs args)
         {
-            MessageBox.Show(
-                ResourceService.GetLocalized("WebView/ErrorTitle") + Environment.NewLine +
-                ResourceService.GetLocalized("WebView/Content1") + Environment.NewLine +
-                ResourceService.GetLocalized("WebView/Content2"),
-                ResourceService.GetLocalized("WebView/AppDisplayName"),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error
-                );
+            args.Handled = true;
+
+            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
+            Dispose();
         }
 
         /// <summary>

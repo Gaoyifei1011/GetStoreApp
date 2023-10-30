@@ -7,8 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreAppWebView.Services.Root"
     HorizontalAlignment="Stretch"
+    ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     Background="Transparent"
-    RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
+    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
     <Grid.RowDefinitions>
@@ -90,19 +91,16 @@
     <!--  应用标题栏内容  -->
     <Grid
         x:Name="AppTitlebar"
-        Grid.Row="0"
         Height="45"
-        Margin="13,0,0,0"
+        Margin="16,0,0,0"
         VerticalAlignment="Top"
         x:FieldModifier="public">
 
         <!--  标题栏应用名称  -->
         <TextBlock
             Grid.Column="1"
-            Margin="12,2,0,0"
-            HorizontalAlignment="Left"
+            Margin="0,2,0,0"
             VerticalAlignment="Center"
-            Canvas.ZIndex="2"
             Style="{StaticResource CaptionTextBlockStyle}"
             Text="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
             TextWrapping="NoWrap" />
@@ -110,7 +108,7 @@
 
     <Grid
         Grid.Row="1"
-        Height="44"
+        Height="45"
         Padding="0">
 
         <Grid.ColumnDefinitions>
@@ -120,9 +118,8 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel
-            x:Name="BrowserFunction"
             Grid.Column="0"
-            Margin="0,0,10,0"
+            Margin="10,0,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Background="Transparent"
@@ -213,9 +210,9 @@
             </MenuFlyoutItem>
 
             <MenuFlyoutItem
-                Click="{x:Bind OnFlyoutShowClicked}"
+                Click="{x:Bind OnMoreClicked}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WebView/ViewMore')}">
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/More')}">
 
                 <MenuFlyoutItem.Icon>
                     <FontIcon Glyph="&#xE712;" />

@@ -92,10 +92,12 @@
 
 ### 项目引用（按英文首字母排序）
 
+> * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
+> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
  
 [学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [辅助工具](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;
@@ -117,8 +119,9 @@
 #### <p align="center">必须安装的工具</p>
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * .NET桌面开发（Visual Studio Installer中安装，.NET SDK 版本 7.0）
+> * .NET桌面开发（Visual Studio Installer 中安装，.NET SDK 版本 7.0，.NET Framework SDK 版本 4.8.1）
 > * [WinGet 程序包管理器](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) （推荐安装）
+> * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （推荐安装）
 
 #### <p align="center">编译步骤</p>
 
