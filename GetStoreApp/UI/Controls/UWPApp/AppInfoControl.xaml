@@ -1,5 +1,5 @@
-<Page
-    x:Class="GetStoreApp.UI.Pages.AppInfoPage"
+<Grid
+    x:Class="GetStoreApp.UI.Controls.UWPApp.AppInfoControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controlExtensions="using:GetStoreApp.Helpers.Controls.Extensions"
@@ -8,10 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.UWPApp"
     xmlns:root="using:GetStoreApp.Services.Root"
-    NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Page.Resources>
+    <Grid.Resources>
         <XamlUICommand x:Name="CopyAUMIDCommand" ExecuteRequested="{x:Bind OnCopyAUMIDExecuteRequested}" />
         <XamlUICommand x:Name="CopyDependencyInformationCommand" ExecuteRequested="{x:Bind OnCopyDependencyInformationExecuteRequested}" />
         <XamlUICommand x:Name="CopyDependencyNameCommand" ExecuteRequested="{x:Bind OnCopyDependencyNameExecuteRequested}" />
@@ -21,7 +20,7 @@
         <XamlUICommand x:Name="PinToDesktopCommand" ExecuteRequested="{x:Bind OnPinToDesktopExecuteRequested}" />
         <XamlUICommand x:Name="PinToStartScreenCommand" ExecuteRequested="{x:Bind OnPinToStartScreenExecuteRequested}" />
         <XamlUICommand x:Name="PinToTaskbarCommand" ExecuteRequested="{x:Bind OnPinToTaskbarExecuteRequested}" />
-    </Page.Resources>
+    </Grid.Resources>
 
     <ScrollViewer Margin="0,5,0,0">
         <StackPanel Margin="30,0,30,30" Spacing="3">
@@ -351,7 +350,7 @@
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 IsExpanded="True"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCollection.Count), Mode=OneWay}">
 
                 <Expander.Header>
                     <Grid>
@@ -377,7 +376,7 @@
                 <Expander.Content>
                     <ListView
                         ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                        ItemsSource="{x:Bind AppListEntryList, Mode=OneWay}"
+                        ItemsSource="{x:Bind AppListEntryCollection, Mode=OneWay}"
                         SelectionMode="None">
 
                         <ItemsControl.ItemContainerTransitions>
@@ -604,7 +603,7 @@
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
                 IsExpanded="True"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DependenciesList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DependenciesCollection.Count), Mode=OneWay}">
 
                 <Expander.Header>
                     <Grid>
@@ -630,7 +629,7 @@
                 <Expander.Content>
                     <ListView
                         ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                        ItemsSource="{x:Bind DependenciesList, Mode=OneWay}"
+                        ItemsSource="{x:Bind DependenciesCollection, Mode=OneWay}"
                         SelectionMode="None">
 
                         <ItemsControl.ItemContainerTransitions>
@@ -829,4 +828,4 @@
             </Expander>
         </StackPanel>
     </ScrollViewer>
-</Page>
+</Grid>

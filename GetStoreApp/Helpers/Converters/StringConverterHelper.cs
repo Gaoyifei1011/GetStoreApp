@@ -24,7 +24,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 关于界面项目引用内容格式化
         /// </summary>
-        public static string AboutReferenceToolTipFormat(string content)
+        public static string AboutReferenceToolTipFormat(object content)
         {
             return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("About/ReferenceToolTip"));
         }
@@ -32,7 +32,7 @@ namespace GetStoreApp.Helpers.Converters
         /// <summary>
         /// 关于界面感谢介绍内容格式化
         /// </summary>
-        public static string AboutThanksToolTipFormat(string content)
+        public static string AboutThanksToolTipFormat(object content)
         {
             return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("About/ThanksToolTip"));
         }

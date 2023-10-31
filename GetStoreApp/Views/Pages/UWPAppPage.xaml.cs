@@ -1,9 +1,7 @@
 using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +16,19 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class UWPAppPage : Page, INotifyPropertyChanged
     {
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _searchText = string.Empty;
 
         public string SearchText
@@ -31,13 +42,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private BreadModel AppInfoBreadModel { get; } = new BreadModel()
-        {
-            DisplayName = ResourceService.GetLocalized("UWPApp/AppInformation"),
-            InternalName = "AppInformation"
-        };
-
-        public ObservableCollection<BreadModel> BreadDataList { get; } = new ObservableCollection<BreadModel>()
+        public ObservableCollection<BreadModel> BreadCollection { get; } = new ObservableCollection<BreadModel>()
         {
             new BreadModel(){ DisplayName = ResourceService.GetLocalized("UWPApp/AppList"), InternalName = "AppList" },
         };
@@ -47,13 +52,14 @@ namespace GetStoreApp.Views.Pages
         public UWPAppPage()
         {
             InitializeComponent();
-            UWPAppFrame.Navigate(typeof(AppListPage), null);
         }
+
+        #region 第一部分：应用管理页面——挂载的事件
 
         /// <summary>
         /// 打开设置
         /// </summary>
-        public async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
         }
@@ -61,12 +67,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 单击痕迹栏条目时发生的事件
         /// </summary>
-        public void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
+        private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
         {
             BreadModel breadItem = args.Item as BreadModel;
-            if (BreadDataList.Count is 2)
+            if (BreadCollection.Count is 2)
             {
-                if (breadItem is not null && breadItem.InternalName == BreadDataList[0].InternalName)
+                if (breadItem is not null && breadItem.InternalName.Equals(BreadCollection[0].InternalName, StringComparison.OrdinalIgnoreCase))
                 {
                     BackToAppList();
                 }
@@ -76,32 +82,29 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            AppListPage appListPage = UWPAppFrame.Content as AppListPage;
-            if (appListPage.Content is not null && !string.IsNullOrEmpty(SearchText))
+            if (!string.IsNullOrEmpty(SearchText))
             {
-                appListPage.SearchText = SearchText;
-                appListPage.InitializeData(true);
+                AppList.SearchText = SearchText;
+                AppList.InitializeData(true);
             }
         }
 
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        public void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
-            if (autoSuggestBox is not null && autoSuggestBox.Text == string.Empty)
+            if (autoSuggestBox is not null && autoSuggestBox.Text.Equals(string.Empty))
             {
-                AppListPage appListPage = UWPAppFrame.Content as AppListPage;
-                if (appListPage.Content is not null)
-                {
-                    appListPage.SearchText = string.Empty;
-                    appListPage.InitializeData();
-                }
+                AppList.SearchText = string.Empty;
+                AppList.InitializeData();
             }
         }
+
+        #endregion 第一部分：应用管理页面——挂载的事件
 
         /// <summary>
         /// 属性值发生变化时通知更改
@@ -118,11 +121,12 @@ namespace GetStoreApp.Views.Pages
         {
             if (packageInstance is not null)
             {
-                UWPAppFrame.Navigate(typeof(AppInfoPage), packageInstance, new SlideNavigationTransitionInfo()
+                AppInfo.InitializeAppInfo(packageInstance);
+                BreadCollection.Add(new BreadModel()
                 {
-                    Effect = SlideNavigationTransitionEffect.FromRight
+                    DisplayName = ResourceService.GetLocalized("UWPApp/AppInformation"),
+                    InternalName = "AppInformation"
                 });
-                BreadDataList.Add(AppInfoBreadModel);
             }
         }
 
@@ -131,11 +135,15 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         public void BackToAppList()
         {
-            if (UWPAppFrame.CanGoBack)
+            if (BreadCollection.Count is 2)
             {
-                UWPAppFrame.GoBack();
-                BreadDataList.Remove(AppInfoBreadModel);
+                BreadCollection.RemoveAt(1);
             }
+        }
+
+        private int GetSelectedIndex(int count)
+        {
+            return count - 1;
         }
     }
 }

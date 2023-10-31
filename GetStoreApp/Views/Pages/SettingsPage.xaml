@@ -26,7 +26,7 @@
 
             <TextBlock
                 Grid.Column="0"
-                FontSize="26"
+                FontSize="22"
                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/Title')}" />
 
             <Button
@@ -55,11 +55,25 @@
                 Padding="0,0,0,30"
                 Spacing="3">
 
-                <TextBlock
+                <StackPanel
                     Margin="0,0,0,5"
-                    FontSize="16"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Appearance')}" />
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="5">
+
+                    <FontIcon
+                        Margin="0,2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Glyph="&#xE76C;" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/Appearance')}" />
+                </StackPanel>
 
                 <!--  应用主题设置  -->
                 <Grid
@@ -436,11 +450,25 @@
                         Toggled="{x:Bind OnTopMostToggled}" />
                 </Grid>
 
-                <TextBlock
-                    Margin="0,5"
-                    FontSize="16"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/General')}" />
+                <StackPanel
+                    Margin="0,0,0,5"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="5">
+
+                    <FontIcon
+                        Margin="0,2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Glyph="&#xE76C;" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/General')}" />
+                </StackPanel>
 
                 <!--  应用通知设置  -->
                 <Grid
@@ -1189,11 +1217,25 @@
                     </Expander.Content>
                 </Expander>
 
-                <TextBlock
-                    Margin="0,5"
-                    FontSize="16"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
+                <StackPanel
+                    Margin="0,0,0,5"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="5">
+
+                    <FontIcon
+                        Margin="0,2,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Glyph="&#xE76C;" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
+                </StackPanel>
 
                 <!--  应用安装方式设置  -->
                 <Grid

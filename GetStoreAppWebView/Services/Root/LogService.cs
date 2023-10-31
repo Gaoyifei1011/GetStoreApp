@@ -16,16 +16,19 @@ namespace GetStoreAppWebView.Services.Root
 
         private static bool IsInitialized { get; set; } = false;
 
-        private static StorageFolder LogFolder { get; set; }
+        private static string LogFolderPath { get; set; } = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs");
 
         /// <summary>
         /// 初始化日志记录
         /// </summary>
-        public static async Task InitializeAsync()
+        public static void Initialize()
         {
             try
             {
-                LogFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
+                if (!Directory.Exists(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs")))
+                {
+                    Directory.CreateDirectory(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs"));
+                }
                 IsInitialized = true;
             }
             catch (Exception)
@@ -46,7 +49,7 @@ namespace GetStoreAppWebView.Services.Root
                     Task.Run(() =>
                     {
                         File.AppendAllText(
-                            Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
+                            Path.Combine(LogFolderPath, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
                             string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logLevel), logBuilder)
                             );
                     });
@@ -84,7 +87,7 @@ namespace GetStoreAppWebView.Services.Root
                         exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 
                         File.AppendAllText(
-                            Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
+                            Path.Combine(LogFolderPath, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
                             string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logLevel), exceptionBuilder.ToString())
                             );
                     });

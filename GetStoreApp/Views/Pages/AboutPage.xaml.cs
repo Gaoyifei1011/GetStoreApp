@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.About;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.About;
@@ -10,6 +9,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -28,44 +28,36 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page
     {
-        private readonly int MajorVersion = InfoHelper.AppVersion.Major;
+        private AppNaviagtionArgs AboutNavigationArgs = AppNaviagtionArgs.None;
 
-        private readonly int MinorVersion = InfoHelper.AppVersion.Minor;
-
-        private readonly int BuildVersion = InfoHelper.AppVersion.Build;
-
-        private readonly int RevisionVersion = InfoHelper.AppVersion.Revision;
-
-        public string AppVersion => string.Format(ResourceService.GetLocalized("About/AppVersion"), MajorVersion, MinorVersion, BuildVersion, RevisionVersion);
-
-        public Uri ReleaseNotes = new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases");
+        private string AppVersion = string.Format(ResourceService.GetLocalized("About/AppVersion"), InfoHelper.AppVersion.ToString());
 
         //项目引用信息
-        public List<KeyValuePairModel> ReferenceList { get; } = new List<KeyValuePairModel>()
+        private List<DictionaryEntry> ReferenceList { get; } = new List<DictionaryEntry>()
         {
-            new KeyValuePairModel(){ Key = "Microsoft.Windows.CsWinRT",Value = "https://github.com/microsoft/cswinrt"},
-            new KeyValuePairModel(){ Key = "Microsoft.WindowsAppSDK",Value = "https://github.com/microsoft/windowsappsdk"},
-            new KeyValuePairModel(){ Key = "Microsoft.WindowsPackageManager.ComInterop",Value = "https://github.com/microsoft/winget-cli"},
-            new KeyValuePairModel(){ Key = "Mile.Aria2",Value = "https://github.com/ProjectMile/Mile.Aria2"},
+            new DictionaryEntry(){ Key = "Microsoft.Windows.CsWinRT",Value = "https://github.com/microsoft/cswinrt"},
+            new DictionaryEntry(){ Key = "Microsoft.WindowsAppSDK",Value = "https://github.com/microsoft/windowsappsdk"},
+            new DictionaryEntry(){ Key = "Microsoft.WindowsPackageManager.ComInterop",Value = "https://github.com/microsoft/winget-cli"},
+            new DictionaryEntry(){ Key = "Mile.Aria2",Value = "https://github.com/ProjectMile/Mile.Aria2"},
         };
 
         //项目感谢者信息
-        public List<KeyValuePairModel> ThanksList { get; } = new List<KeyValuePairModel>()
+        private List<DictionaryEntry> ThanksList { get; } = new List<DictionaryEntry>()
         {
-            new KeyValuePairModel(){ Key = "AndromedaMelody",Value = "https://github.com/AndromedaMelody" },
-            new KeyValuePairModel(){ Key = "cnbluefire",Value = "https://github.com/cnbluefire" },
-            new KeyValuePairModel(){ Key = "飞翔",Value = "https://fionlen.azurewebsites.net" },
-            new KeyValuePairModel(){ Key = "MouriNaruto",Value = "https://github.com/MouriNaruto" },
-            new KeyValuePairModel(){ Key = "TaylorShi",Value = "https://github.com/TaylorShi" },
-            new KeyValuePairModel(){ Key = "wherewhere",Value = "https://github.com/wherewhere" },
+            new DictionaryEntry(){ Key = "AndromedaMelody",Value = "https://github.com/AndromedaMelody" },
+            new DictionaryEntry(){ Key = "cnbluefire",Value = "https://github.com/cnbluefire" },
+            new DictionaryEntry(){ Key = "飞翔",Value = "https://fionlen.azurewebsites.net" },
+            new DictionaryEntry(){ Key = "MouriNaruto",Value = "https://github.com/MouriNaruto" },
+            new DictionaryEntry(){ Key = "TaylorShi",Value = "https://github.com/TaylorShi" },
+            new DictionaryEntry(){ Key = "wherewhere",Value = "https://github.com/wherewhere" },
         };
-
-        private AppNaviagtionArgs AboutNavigationArgs { get; set; } = AppNaviagtionArgs.None;
 
         public AboutPage()
         {
             InitializeComponent();
         }
+
+        #region 第一部分：重写父类事件
 
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
@@ -80,10 +72,14 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：关于页面——挂载的事件
+
         /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             double CurrentScrollPosition = AboutScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
@@ -113,7 +109,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 创建应用的桌面快捷方式
         /// </summary>
-        public void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
+        private void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {
@@ -144,7 +140,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 将应用固定到“开始”屏幕
         /// </summary>
-        public void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        private void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(async () =>
             {
@@ -180,7 +176,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 将应用固定到任务栏
         /// </summary>
-        public void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        private void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(async () =>
             {
@@ -215,7 +211,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 查看更新日志
         /// </summary>
-        public async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
+        private async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         }
@@ -223,7 +219,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 查看许可证
         /// </summary>
-        public async void OnShowLicenseClicked(object sender, RoutedEventArgs args)
+        private async void OnShowLicenseClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new LicenseDialog(), this);
         }
@@ -231,7 +227,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 项目主页
         /// </summary>
-        public async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
+        private async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
         }
@@ -239,7 +235,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 发送反馈
         /// </summary>
-        public async void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
+        private async void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
         }
@@ -247,7 +243,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查更新
         /// </summary>
-        public async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
+        private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         }
@@ -255,7 +251,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 桌面程序启动参数说明
         /// </summary>
-        public async void OnDesktopLaunchClicked(object sender, RoutedEventArgs args)
+        private async void OnDesktopLaunchClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new DesktopStartupArgsDialog(), this);
         }
@@ -263,7 +259,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 控制台程序启动参数说明
         /// </summary>
-        public async void OnConsoleLaunchClicked(object sender, RoutedEventArgs args)
+        private async void OnConsoleLaunchClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new ConsoleStartupArgsDialog(), this);
         }
@@ -271,7 +267,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查网络
         /// </summary>
-        public async void OnCheckNetWorkClicked(object sender, RoutedEventArgs args)
+        private async void OnCheckNetWorkClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
         }
@@ -279,7 +275,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 疑难解答
         /// </summary>
-        public async void OnTroubleShootClicked(object sender, RoutedEventArgs args)
+        private async void OnTroubleShootClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
         }
@@ -287,7 +283,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开下载设置
         /// </summary>
-        public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
@@ -295,7 +291,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 区分传统桌面应用
         /// </summary>
-        public async void OnRecognizeClicked(object sender, RoutedEventArgs args)
+        private async void OnRecognizeClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new DesktopAppsDialog(), this);
         }
@@ -303,7 +299,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 系统信息
         /// </summary>
-        public async void OnSystemInformationClicked(object sender, RoutedEventArgs args)
+        private async void OnSystemInformationClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
         }
@@ -311,7 +307,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用信息
         /// </summary>
-        public async void OnAppInformationClicked(object sender, RoutedEventArgs args)
+        private async void OnAppInformationClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new AppInformationDialog(), this);
         }
@@ -319,9 +315,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用设置
         /// </summary>
-        public async void OnAppSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnAppSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         }
+
+        #endregion 第二部分：关于页面——挂载的事件
     }
 }

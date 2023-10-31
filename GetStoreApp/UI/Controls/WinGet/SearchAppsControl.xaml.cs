@@ -189,7 +189,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == searchApps.AppID)
                                                     {
@@ -208,7 +208,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == searchApps.AppID)
                                                     {
@@ -230,7 +230,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == searchApps.AppID)
                                                     {
@@ -251,7 +251,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == searchApps.AppID)
                                                     {
@@ -271,7 +271,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == searchApps.AppID)
                                                     {
@@ -296,7 +296,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             lock (WinGetInstance.InstallingAppsObject)
                             {
-                                WinGetInstance.InstallingAppsList.Add(new InstallingAppsModel()
+                                WinGetInstance.InstallingAppsCollection.Add(new InstallingAppsModel()
                                 {
                                     AppID = searchApps.AppID,
                                     AppName = searchApps.AppName,
@@ -381,11 +381,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 完成任务后从任务管理中删除任务
                             lock (WinGetInstance.InstallingAppsObject)
                             {
-                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
                                     if (installingAppsItem.AppID == searchApps.AppID)
                                     {
-                                        WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
                                         break;
                                     }
                                 }
@@ -416,11 +416,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 完成任务后从任务管理中删除任务
                             lock (WinGetInstance.InstallingAppsObject)
                             {
-                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
                                     if (installingAppsItem.AppID == searchApps.AppID)
                                     {
-                                        WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
                                         break;
                                     }
                                 }
@@ -451,11 +451,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 完成任务后从任务管理中删除任务
                             lock (WinGetInstance.InstallingAppsObject)
                             {
-                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
                                     if (installingAppsItem.AppID == searchApps.AppID)
                                     {
-                                        WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
                                         break;
                                     }
                                 }
@@ -627,7 +627,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         if (matchItem.CatalogPackage.DefaultInstallVersion is not null)
                         {
                             bool isInstalling = false;
-                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                             {
                                 if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
                                 {

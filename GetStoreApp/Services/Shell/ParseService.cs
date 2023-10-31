@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Shell
             int FileNameColumnLength = ((FileNameHeaderLength > FileNameContentMaxLength) ? FileNameHeaderLength : FileNameContentMaxLength) + 3;
 
             ConsoleHelper.Write(ConsoleLaunchService.LineBreaks);
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ResultDataList"));
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ResultCollection"));
 
             // 打印标题
             ConsoleHelper.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));

@@ -6,7 +6,6 @@ using GetStoreApp.UI.Notifications;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,16 +20,14 @@ using Windows.System;
 using Windows.UI.Input.Preview.Injection;
 using Windows.UI.StartScreen;
 
-namespace GetStoreApp.UI.Pages
+namespace GetStoreApp.UI.Controls.UWPApp
 {
     /// <summary>
-    /// 应用信息页面
+    /// 应用信息控件
     /// </summary>
-    public sealed partial class AppInfoPage : Page, INotifyPropertyChanged
+    public sealed partial class AppInfoControl : Grid, INotifyPropertyChanged
     {
         private InputInjector inputInjector = InputInjector.TryCreate();
-
-        private Dictionary<string, object> AppInfoDict { get; set; }
 
         private string _displayName = string.Empty;
 
@@ -266,27 +263,18 @@ namespace GetStoreApp.UI.Pages
             }
         }
 
-        public ObservableCollection<AppListEntryModel> AppListEntryList { get; } = new ObservableCollection<AppListEntryModel>();
+        private ObservableCollection<AppListEntryModel> AppListEntryCollection { get; } = new ObservableCollection<AppListEntryModel>();
 
-        public ObservableCollection<PackageModel> DependenciesList { get; } = new ObservableCollection<PackageModel>();
+        private ObservableCollection<PackageModel> DependenciesCollection { get; } = new ObservableCollection<PackageModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public AppInfoPage()
+        public AppInfoControl()
         {
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs args)
-        {
-            base.OnNavigatedTo(args);
-            if (args.Parameter is not null)
-            {
-                AppInfoDict = args.Parameter as Dictionary<string, object>;
-            }
-
-            InitializeAppInfo();
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 复制应用入口的应用程序用户模型 ID
@@ -516,6 +504,10 @@ namespace GetStoreApp.UI.Pages
             });
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：应用信息控件——挂载的事件
+
         /// <summary>
         /// 复制应用信息
         /// </summary>
@@ -551,6 +543,8 @@ namespace GetStoreApp.UI.Pages
             });
         }
 
+        #endregion 第二部分：应用信息控件——挂载的事件
+
         /// <summary>
         /// 属性值发生变化时通知更改
         /// </summary>
@@ -562,37 +556,37 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 初始化应用信息
         /// </summary>
-        private void InitializeAppInfo()
+        public void InitializeAppInfo(Dictionary<string, object> appInfoDict)
         {
-            DisplayName = AppInfoDict[nameof(DisplayName)].ToString();
-            FamilyName = AppInfoDict[nameof(FamilyName)].ToString();
-            FullName = AppInfoDict[nameof(FullName)].ToString();
-            Description = AppInfoDict[nameof(Description)].ToString();
-            PublisherName = AppInfoDict[nameof(PublisherName)].ToString();
-            PublisherId = AppInfoDict[nameof(PublisherId)].ToString();
-            Version = AppInfoDict[nameof(Version)].ToString();
-            InstalledDate = AppInfoDict[nameof(InstalledDate)].ToString();
-            Architecture = AppInfoDict[nameof(Architecture)].ToString();
-            SignatureKind = AppInfoDict[nameof(SignatureKind)].ToString();
-            ResourceId = AppInfoDict[nameof(ResourceId)].ToString();
-            IsBundle = AppInfoDict[nameof(IsBundle)].ToString();
-            IsDevelopmentMode = AppInfoDict[nameof(IsDevelopmentMode)].ToString();
-            IsFramework = AppInfoDict[nameof(IsFramework)].ToString();
-            IsOptional = AppInfoDict[nameof(IsOptional)].ToString();
-            IsResourcePackage = AppInfoDict[nameof(IsResourcePackage)].ToString();
-            IsStub = AppInfoDict[nameof(IsStub)].ToString();
-            VertifyIsOK = AppInfoDict[nameof(VertifyIsOK)].ToString();
+            DisplayName = appInfoDict[nameof(DisplayName)].ToString();
+            FamilyName = appInfoDict[nameof(FamilyName)].ToString();
+            FullName = appInfoDict[nameof(FullName)].ToString();
+            Description = appInfoDict[nameof(Description)].ToString();
+            PublisherName = appInfoDict[nameof(PublisherName)].ToString();
+            PublisherId = appInfoDict[nameof(PublisherId)].ToString();
+            Version = appInfoDict[nameof(Version)].ToString();
+            InstalledDate = appInfoDict[nameof(InstalledDate)].ToString();
+            Architecture = appInfoDict[nameof(Architecture)].ToString();
+            SignatureKind = appInfoDict[nameof(SignatureKind)].ToString();
+            ResourceId = appInfoDict[nameof(ResourceId)].ToString();
+            IsBundle = appInfoDict[nameof(IsBundle)].ToString();
+            IsDevelopmentMode = appInfoDict[nameof(IsDevelopmentMode)].ToString();
+            IsFramework = appInfoDict[nameof(IsFramework)].ToString();
+            IsOptional = appInfoDict[nameof(IsOptional)].ToString();
+            IsResourcePackage = appInfoDict[nameof(IsResourcePackage)].ToString();
+            IsStub = appInfoDict[nameof(IsStub)].ToString();
+            VertifyIsOK = appInfoDict[nameof(VertifyIsOK)].ToString();
 
-            AppListEntryList.Clear();
-            foreach (AppListEntryModel appListEntry in AppInfoDict[nameof(AppListEntryList)] as List<AppListEntryModel>)
+            AppListEntryCollection.Clear();
+            foreach (AppListEntryModel appListEntry in appInfoDict[nameof(AppListEntryCollection)] as List<AppListEntryModel>)
             {
-                AppListEntryList.Add(appListEntry);
+                AppListEntryCollection.Add(appListEntry);
             }
 
-            DependenciesList.Clear();
-            foreach (PackageModel packageItem in AppInfoDict[nameof(DependenciesList)] as List<PackageModel>)
+            DependenciesCollection.Clear();
+            foreach (PackageModel packageItem in appInfoDict[nameof(DependenciesCollection)] as List<PackageModel>)
             {
-                DependenciesList.Add(packageItem);
+                DependenciesCollection.Add(packageItem);
             }
         }
     }

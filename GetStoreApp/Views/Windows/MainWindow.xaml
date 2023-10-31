@@ -130,7 +130,7 @@
             ItemInvoked="{x:Bind OnItemInvoked}"
             Loaded="{x:Bind OnLoaded}"
             OpenPaneLength="220"
-            PaneDisplayMode="{x:Bind PaneDisplayMode, Mode=OneWay}"
+            PaneDisplayMode="Left"
             SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
 
             <NavigationView.Resources>
@@ -163,7 +163,7 @@
             </NavigationView.PaneHeader>
 
             <NavigationView.MenuItems>
-                <NavigationViewItem Tag="{x:Bind TagList[0]}">
+                <NavigationViewItem Tag="0">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -182,7 +182,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="{x:Bind TagList[1]}">
+                <NavigationViewItem Tag="1">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -201,66 +201,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="{x:Bind TagList[2]}">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowDownloadText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
-                    </NavigationViewItem.Icon>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItemSeparator Margin="0,0,5,0" />
-
-                <NavigationViewItem Tag="{x:Bind TagList[3]}">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowWinGetText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/WinGet.png" />
-                    </NavigationViewItem.Icon>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItem Tag="{x:Bind TagList[4]}">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowUWPAppText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/UWPApp.png" />
-                    </NavigationViewItem.Icon>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItem Tag="{x:Bind TagList[5]}">
+                <NavigationViewItem Tag="2">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -281,7 +222,66 @@
 
                 <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                <NavigationViewItem Tag="{x:Bind TagList[6]}">
+                <NavigationViewItem Tag="3">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowWinGetText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </NavigationViewItem.Content>
+
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/WinGet.png" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="4">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowUWPAppText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </NavigationViewItem.Content>
+
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/UWPApp.png" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItemSeparator Margin="0,0,5,0" />
+
+                <NavigationViewItem Tag="5">
+
+                    <NavigationViewItem.Content>
+                        <TextBlock
+                            x:Name="WindowDownloadText"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </NavigationViewItem.Content>
+
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
+                    </NavigationViewItem.Icon>
+
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="6">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -302,7 +302,7 @@
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Tag="{x:Bind TagList[7]}">
+                <NavigationViewItem Tag="7">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -321,7 +321,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="{x:Bind TagList[8]}">
+                <NavigationViewItem Tag="8">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -343,8 +343,8 @@
 
             <Frame
                 x:Name="WindowFrame"
-                Navigated="{x:Bind OnFrameNavigated}"
-                NavigationFailed="{x:Bind OnFrameNavigationFailed}">
+                Navigated="{x:Bind OnNavigated}"
+                NavigationFailed="{x:Bind OnNavigationFailed}">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition />

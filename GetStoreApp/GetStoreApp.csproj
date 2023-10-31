@@ -53,7 +53,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer"/>
+    <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
 
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -86,15 +86,18 @@
     <None Remove="Styles\MenuFlyout.xaml" />
     <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\ScrollBar.xaml" />
+    <None Remove="Styles\Segmented.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
 
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
-    <None Remove="UI\Controls\Download\DownloadingControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
+    
+    <None Remove="UI\Controls\UWPApp\AppInfoControl.xaml" />
+    <None Remove="UI\Controls\UWPApp\AppListControl.xaml" />
 
     <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
-    <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
+    <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />    
 
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
@@ -126,11 +129,7 @@
     <None Remove="UI\Notifications\QuickOperationNotification.xaml" />
     <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
 
-    <None Remove="UI\Pages\AppInfoPage.xaml" />
-    <None Remove="UI\Pages\AppListPage.xaml" />
-
     <None Remove="Views\Pages\AboutPage.xaml" />
-
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\HistoryPage.xaml" />
@@ -161,15 +160,18 @@
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Pivot.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ScrollBar.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Segmented.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Download\DownloadingControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
+    
+    <Page Update="UI\Controls\UWPApp\AppInfoControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\UWPApp\AppListControl.xaml" Generator="MSBuild:Compile" />    
 
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
@@ -200,9 +202,6 @@
     <Page Update="UI\Notifications\NetWorkErrorNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\QuickOperationNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Notifications\ShareFailedNotification.xaml" Generator="MSBuild:Compile" />
-
-    <Page Update="UI\Pages\AppInfoPage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Pages\AppListPage.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="Views\Pages\AboutPage.xaml" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" Generator="MSBuild:Compile" />

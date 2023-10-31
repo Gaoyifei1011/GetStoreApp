@@ -47,6 +47,7 @@ namespace GetStoreApp.Views.Windows
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private bool isInvoked = false;
+        private IntPtr UWPCoreHandle;
 
         private WNDPROC newMainWindowWndProc = null;
         private IntPtr oldMainWindowWndProc = IntPtr.Zero;
@@ -54,17 +55,14 @@ namespace GetStoreApp.Views.Windows
         private WNDPROC newInputNonClientPointerSourceWndProc = null;
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
 
-        public CoreWindow UWPCoreWindow { get; private set; }
+        private OverlappedPresenter Presenter;
+        private UISettings AppUISettings = new UISettings();
+
+        public CoreWindow UWPCoreWindow { get; }
 
         public DisplayInformation DisplayInformation { get; }
 
-        private UISettings AppUISettings { get; } = new UISettings();
-
         public IntPtr Handle { get; }
-
-        private IntPtr UWPCoreHandle { get; }
-
-        public OverlappedPresenter Presenter { get; }
 
         private bool _isWindowMaximized;
 
@@ -75,6 +73,19 @@ namespace GetStoreApp.Views.Windows
             set
             {
                 _isWindowMaximized = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isBackEnabled;
+
+        public bool IsBackEnabled
+        {
+            get { return _isBackEnabled; }
+
+            set
+            {
+                _isBackEnabled = value;
                 OnPropertyChanged();
             }
         }
@@ -105,32 +116,6 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private bool _isBackEnabled;
-
-        public bool IsBackEnabled
-        {
-            get { return _isBackEnabled; }
-
-            set
-            {
-                _isBackEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private NavigationViewPaneDisplayMode _paneDisplayMode = NavigationViewPaneDisplayMode.LeftCompact;
-
-        public NavigationViewPaneDisplayMode PaneDisplayMode
-        {
-            get { return _paneDisplayMode; }
-
-            set
-            {
-                _paneDisplayMode = value;
-                OnPropertyChanged();
-            }
-        }
-
         private NavigationViewItem _selectedItem;
 
         public NavigationViewItem SelectedItem
@@ -144,30 +129,17 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private Dictionary<string, Type> PageDict { get; } = new Dictionary<string, Type>()
+        private List<KeyValuePair<string, Type>> PageList { get; } = new List<KeyValuePair<string, Type>>()
         {
-            {"Store",typeof(StorePage) },
-            {"History",typeof(HistoryPage) },
-            {"Download",typeof(DownloadPage) },
-            {"WinGet",typeof(WinGetPage) },
-            {"UWPApp",typeof(UWPAppPage) },
-            {"AppUpdate",typeof(AppUpdatePage) },
-            {"Web",typeof(Page) },
-            {"About",typeof(AboutPage) },
-            {"Settings",typeof(SettingsPage) }
-        };
-
-        public List<string> TagList { get; } = new List<string>()
-        {
-            "Store",
-            "History",
-            "Download",
-            "WinGet",
-            "UWPApp",
-            "AppUpdate",
-            "Web",
-            "About",
-            "Settings"
+            new KeyValuePair<string, Type>("Store",typeof(StorePage)),
+            new KeyValuePair<string, Type>("History",typeof(HistoryPage)),
+            new KeyValuePair<string, Type>("AppUpdate", typeof(AppUpdatePage)),
+            new KeyValuePair<string, Type>("WinGet", typeof(WinGetPage)),
+            new KeyValuePair<string, Type>("UWPApp", typeof(UWPAppPage)),
+            new KeyValuePair<string, Type>("Download", typeof(DownloadPage)),
+            new KeyValuePair<string, Type>("Web",null ),
+            new KeyValuePair<string, Type>("About", typeof(AboutPage)),
+            new KeyValuePair<string, Type>("Settings", typeof(SettingsPage))
         };
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -185,7 +157,6 @@ namespace GetStoreApp.Views.Windows
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
-            PaneDisplayMode = Bounds.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftMinimal;
 
             // 标题栏设置
             SetTitleBar(AppTitlebar);
@@ -242,10 +213,12 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
+        #region 第一部分：窗口类事件
+
         /// <summary>
         /// 窗口激活状态发生变化的事件
         /// </summary>
-        public void OnActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
+        private void OnActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
         {
             if (Program.ApplicationRoot.IsAppRunning && SystemBackdrop is not null)
             {
@@ -266,11 +239,10 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 窗体大小发生改变时的事件
+        /// 窗口大小发生改变时的事件
         /// </summary>
-        public void OnSizeChanged(object sender, Microsoft.UI.Xaml.WindowSizeChangedEventArgs args)
+        private void OnSizeChanged(object sender, Microsoft.UI.Xaml.WindowSizeChangedEventArgs args)
         {
-            PaneDisplayMode = args.Size.Width > 768 ? NavigationViewPaneDisplayMode.Left : NavigationViewPaneDisplayMode.LeftCompact;
             if (TitlebarMenuFlyout.IsOpen)
             {
                 TitlebarMenuFlyout.Hide();
@@ -282,68 +254,14 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        /// <summary>
-        /// 窗口关闭
-        /// </summary>
-        public void OnCloseClicked(object sender, RoutedEventArgs args)
-        {
-            Program.ApplicationRoot.Dispose();
-        }
+        #endregion 第一部分：窗口类事件
 
-        /// <summary>
-        /// 窗口最大化
-        /// </summary>
-        public void OnMaximizeClicked(object sender, RoutedEventArgs args)
-        {
-            MaximizeOrRestore();
-        }
-
-        /// <summary>
-        /// 窗口最小化
-        /// </summary>
-        public void OnMinimizeClicked(object sender, RoutedEventArgs args)
-        {
-            Minimize();
-        }
-
-        /// <summary>
-        /// 窗口移动
-        /// </summary>
-        public void OnMoveClicked(object sender, RoutedEventArgs args)
-        {
-            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
-            if (menuItem.Tag is not null)
-            {
-                ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
-            }
-        }
-
-        /// <summary>
-        /// 窗口还原
-        /// </summary>
-        public void OnRestoreClicked(object sender, RoutedEventArgs args)
-        {
-            MaximizeOrRestore();
-        }
-
-        /// <summary>
-        /// 窗口大小
-        /// </summary>
-        public void OnSizeClicked(object sender, RoutedEventArgs args)
-        {
-            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
-            if (menuItem.Tag is not null)
-            {
-                ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
-            }
-        }
+        #region 第二部分：窗口辅助类（AppWindow）挂载的事件
 
         /// <summary>
         /// 窗口位置变化发生的事件
         /// </summary>
-        public void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
+        private void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
         {
             // 窗口位置发生变化
             if (args.DidPositionChange)
@@ -363,14 +281,14 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 关闭窗口之后关闭其他服务
         /// </summary>
-        public async void OnAppWindowClosing(object sender, AppWindowClosingEventArgs args)
+        private async void OnAppWindowClosing(object sender, AppWindowClosingEventArgs args)
         {
             args.Cancel = true;
 
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
             if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
             {
-                (sender as MainWindow).Show();
+                Show();
 
                 // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
                 ContentDialogResult result = await ContentDialogHelper.ShowAsync(new ClosingWindowDialog(), Content as FrameworkElement);
@@ -395,26 +313,71 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
+        #endregion 第二部分：窗口辅助类（AppWindow）挂载的事件
+
+        #region 第三部分：窗口右键菜单事件
+
         /// <summary>
-        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
+        /// 窗口还原
         /// </summary>
-        private void OnColorValuesChanged(UISettings sender, object args)
+        private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-            {
-                if (ThemeService.AppTheme.SelectedValue == ThemeService.ThemeList[0].SelectedValue)
-                {
-                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
-                    {
-                        WindowTheme = ElementTheme.Light;
-                    }
-                    else
-                    {
-                        WindowTheme = ElementTheme.Dark;
-                    }
-                }
-            });
+            MaximizeOrRestore();
         }
+
+        /// <summary>
+        /// 窗口移动
+        /// </summary>
+        private void OnMoveClicked(object sender, RoutedEventArgs args)
+        {
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
+            if (menuItem.Tag is not null)
+            {
+                ((MenuFlyout)menuItem.Tag).Hide();
+                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
+            }
+        }
+
+        /// <summary>
+        /// 窗口大小
+        /// </summary>
+        private void OnSizeClicked(object sender, RoutedEventArgs args)
+        {
+            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
+            if (menuItem.Tag is not null)
+            {
+                ((MenuFlyout)menuItem.Tag).Hide();
+                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
+            }
+        }
+
+        /// <summary>
+        /// 窗口最小化
+        /// </summary>
+        private void OnMinimizeClicked(object sender, RoutedEventArgs args)
+        {
+            Minimize();
+        }
+
+        /// <summary>
+        /// 窗口最大化
+        /// </summary>
+        private void OnMaximizeClicked(object sender, RoutedEventArgs args)
+        {
+            MaximizeOrRestore();
+        }
+
+        /// <summary>
+        /// 窗口关闭
+        /// </summary>
+        private void OnCloseClicked(object sender, RoutedEventArgs args)
+        {
+            Program.ApplicationRoot.Dispose();
+        }
+
+        #endregion 第三部分：窗口右键菜单事件
+
+        #region 第四部分：窗口内容挂载的事件
 
         /// <summary>
         /// 应用主题变化时设置标题栏按钮的颜色
@@ -428,12 +391,12 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 按下 Alt + Space 键时，导航控件返回到上一页
         /// </summary>
-        public void OnKeyDown(object sender, KeyRoutedEventArgs args)
+        private void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
             if (args.Key == VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
             {
                 UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
-                if (uwpAppPage is not null && uwpAppPage.BreadDataList.Count is 2)
+                if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)
                 {
                     uwpAppPage.BackToAppList();
                 }
@@ -444,37 +407,91 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
+        #endregion 第四部分：窗口内容挂载的事件
+
+        #region 第五部分：导航控件及其内容挂载的事件
+
         /// <summary>
-        /// 导航完成后发生
+        /// 当后退按钮收到交互（如单击或点击）时发生
         /// </summary>
-        public void OnFrameNavigated(object sender, NavigationEventArgs args)
+        private void OnBackRequestedClicked(object sender, RoutedEventArgs args)
         {
-            Type CurrentPageType = NavigationService.GetCurrentPageType();
-            SelectedItem = NavigationService.NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
-            IsBackEnabled = NavigationService.CanGoBack();
+            UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
+            if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)
+            {
+                uwpAppPage.BackToAppList();
+            }
+            else
+            {
+                NavigationService.NavigationFrom();
+            }
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
-        public void OnFrameNavigationFailed(object sender, NavigationFailedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            throw new ApplicationException(string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName));
+            // 导航控件加载完成后初始化内容
+
+            NavigationView navigationView = sender as NavigationView;
+            if (navigationView is not null)
+            {
+                foreach (object item in navigationView.MenuItems)
+                {
+                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
+                    if (navigationViewItem is not null)
+                    {
+                        int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
+
+                        NavigationService.NavigationItemList.Add(new NavigationModel()
+                        {
+                            NavigationTag = PageList[TagIndex].Key,
+                            NavigationItem = navigationViewItem,
+                            NavigationPage = PageList[TagIndex].Value,
+                        });
+                    }
+                }
+
+                foreach (object item in navigationView.FooterMenuItems)
+                {
+                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
+                    if (navigationViewItem is not null)
+                    {
+                        int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
+
+                        NavigationService.NavigationItemList.Add(new NavigationModel()
+                        {
+                            NavigationTag = PageList[TagIndex].Key,
+                            NavigationItem = navigationViewItem,
+                            NavigationPage = PageList[TagIndex].Value,
+                        });
+                    }
+                }
+
+                SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
+                NavigationService.NavigateTo(typeof(StorePage));
+                if (DesktopLaunchService.InitializePage != typeof(StorePage))
+                {
+                    NavigationService.NavigateTo(DesktopLaunchService.InitializePage);
+                }
+                IsBackEnabled = NavigationService.CanGoBack();
+            }
         }
 
         /// <summary>
         /// 当菜单中的项收到交互（如单击或点击）时发生
         /// </summary>
-        public void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             NavigationViewItemBase navigationViewItem = args.InvokedItemContainer;
             if (navigationViewItem.Tag is not null)
             {
-                NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == Convert.ToString(navigationViewItem.Tag));
+                NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == PageList[Convert.ToInt32(navigationViewItem.Tag)].Key);
 
                 if (SelectedItem != navigationItem.NavigationItem)
                 {
-                    if (navigationItem.NavigationItem.Tag.ToString() is "Web")
+                    if (PageList[Convert.ToInt32(navigationItem.NavigationItem.Tag)].Key is "Web")
                     {
                         NavigationViewItem OriginalSelectedItem = SelectedItem;
 
@@ -521,72 +538,49 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
+        /// 导航完成后发生
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            // 导航控件加载完成后初始化内容
-
-            NavigationView navigationView = sender as NavigationView;
-            if (navigationView is not null)
-            {
-                foreach (object item in navigationView.MenuItems)
-                {
-                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
-                    if (navigationViewItem is not null)
-                    {
-                        string Tag = Convert.ToString(navigationViewItem.Tag);
-
-                        NavigationService.NavigationItemList.Add(new NavigationModel()
-                        {
-                            NavigationTag = Tag,
-                            NavigationItem = navigationViewItem,
-                            NavigationPage = PageDict[Tag],
-                        });
-                    }
-                }
-
-                foreach (object item in navigationView.FooterMenuItems)
-                {
-                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
-                    if (navigationViewItem is not null)
-                    {
-                        string Tag = Convert.ToString(navigationViewItem.Tag);
-
-                        NavigationService.NavigationItemList.Add(new NavigationModel()
-                        {
-                            NavigationTag = Tag,
-                            NavigationItem = navigationViewItem,
-                            NavigationPage = PageDict[Tag],
-                        });
-                    }
-                }
-
-                SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
-                NavigationService.NavigateTo(typeof(StorePage));
-                if (DesktopLaunchService.InitializePage != typeof(StorePage))
-                {
-                    NavigationService.NavigateTo(DesktopLaunchService.InitializePage);
-                }
-                IsBackEnabled = NavigationService.CanGoBack();
-            }
+            Type CurrentPageType = NavigationService.GetCurrentPageType();
+            SelectedItem = NavigationService.NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
+            IsBackEnabled = NavigationService.CanGoBack();
         }
 
         /// <summary>
-        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// 导航失败时发生
         /// </summary>
-        public void OnBackRequestedClicked(object sender, RoutedEventArgs args)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
-            UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
-            if (uwpAppPage is not null && uwpAppPage.BreadDataList.Count is 2)
-            {
-                uwpAppPage.BackToAppList();
-            }
-            else
-            {
-                NavigationService.NavigationFrom();
-            }
+            throw new ApplicationException(string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName));
         }
+
+        #endregion 第五部分：导航控件及其内容挂载的事件
+
+        #region 第六部分：自定义事件
+
+        /// <summary>
+        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
+        /// </summary>
+        private void OnColorValuesChanged(UISettings sender, object args)
+        {
+            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+            {
+                if (ThemeService.AppTheme.SelectedValue == ThemeService.ThemeList[0].SelectedValue)
+                {
+                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                    {
+                        WindowTheme = ElementTheme.Light;
+                    }
+                    else
+                    {
+                        WindowTheme = ElementTheme.Dark;
+                    }
+                }
+            });
+        }
+
+        #endregion 第六部分：自定义事件
 
         /// <summary>
         /// 属性值发生变化时通知更改
@@ -595,6 +589,8 @@ namespace GetStoreApp.Views.Windows
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #region 第七部分：窗口属性设置
 
         /// <summary>
         /// 设置应用的背景色
@@ -657,7 +653,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 应用背景色设置跟随系统发生变化时，修改控件的背景值
         /// </summary>
-        public void SetWindowBackground()
+        private void SetWindowBackground()
         {
             if (SystemBackdrop is null)
             {
@@ -754,6 +750,14 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
+        /// 设置窗口的置顶状态
+        /// </summary>
+        public void SetTopMost(bool isAlwaysOnTop)
+        {
+            Presenter.IsAlwaysOnTop = isAlwaysOnTop;
+        }
+
+        /// <summary>
         /// 获取窗口属性
         /// </summary>
         private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
@@ -782,6 +786,10 @@ namespace GetStoreApp.Views.Windows
                 return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
             }
         }
+
+        #endregion 第七部分：窗口属性设置
+
+        #region 第八部分：窗口过程
 
         /// <summary>
         /// 应用主窗口消息处理
@@ -988,5 +996,7 @@ namespace GetStoreApp.Views.Windows
             }
             return User32Library.CallWindowProc(oldInputNonClientPointerSourceWndProc, hWnd, Msg, wParam, lParam);
         }
+
+        #endregion 第八部分：窗口过程
     }
 }

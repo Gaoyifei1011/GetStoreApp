@@ -26,28 +26,25 @@ using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
 
-namespace GetStoreApp.UI.Pages
+namespace GetStoreApp.UI.Controls.UWPApp
 {
     /// <summary>
-    /// 应用信息列表页面
+    /// 应用信息列表控件
     /// </summary>
-    public sealed partial class AppListPage : Page, INotifyPropertyChanged
+    public sealed partial class AppListControl : Grid, INotifyPropertyChanged
     {
-        private string Unknown { get; } = ResourceService.GetLocalized("UWPApp/Unknown");
-
-        private string Yes { get; } = ResourceService.GetLocalized("UWPApp/Yes");
-
-        private string No { get; } = ResourceService.GetLocalized("UWPApp/No");
-
         private readonly object AppShortListObject = new object();
 
-        private bool isInitialized = false;
+        private string Unknown = ResourceService.GetLocalized("UWPApp/Unknown");
+        private string Yes = ResourceService.GetLocalized("UWPApp/Yes");
+        private string No = ResourceService.GetLocalized("UWPApp/No");
 
+        private bool isInitialized = false;
         private bool needToRefreshData = false;
 
         private AutoResetEvent autoResetEvent;
 
-        private PackageManager PackageManager { get; } = new PackageManager();
+        private PackageManager PackageManager = new PackageManager();
 
         public string SearchText { get; set; } = string.Empty;
 
@@ -131,39 +128,21 @@ namespace GetStoreApp.UI.Pages
 
         private List<Package> MatchResultList;
 
-        public ObservableCollection<PackageModel> UwpAppDataList { get; } = new ObservableCollection<PackageModel>();
+        private ObservableCollection<PackageModel> UwpAppDataCollection { get; } = new ObservableCollection<PackageModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public AppListPage()
+        public AppListControl()
         {
             InitializeComponent();
         }
 
-        /// <summary>
-        /// 本地化应用管理记录数量统计信息
-        /// </summary>
-        public string LocalizeUWPAppCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("UWPApp/PackageEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/PackageCountInfo"), count);
-            }
-        }
-
-        public bool IsSelected(Enum value, Enum comparedValue)
-        {
-            return value.HasFlag(comparedValue);
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 获取应用安装包
         /// </summary>
-        public void OnGetPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnGetPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
@@ -176,7 +155,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 打开应用
         /// </summary>
-        public void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
@@ -199,7 +178,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 打开应用缓存目录
         /// </summary>
-        public void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
@@ -223,7 +202,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 打开应用安装目录
         /// </summary>
-        public void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
@@ -246,7 +225,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 打开应用清单文件
         /// </summary>
-        public void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
             if (package is not null)
@@ -272,7 +251,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 打开商店
         /// </summary>
-        public void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
@@ -295,13 +274,13 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 卸载应用
         /// </summary>
-        public void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
             if (package is not null)
             {
-                foreach (PackageModel packageItem in UwpAppDataList)
+                foreach (PackageModel packageItem in UwpAppDataCollection)
                 {
                     if (packageItem.Package.Id.FullName == package.Id.FullName)
                     {
@@ -330,13 +309,13 @@ namespace GetStoreApp.UI.Pages
                                 {
                                     lock (AppShortListObject)
                                     {
-                                        foreach (PackageModel pacakgeItem in UwpAppDataList)
+                                        foreach (PackageModel pacakgeItem in UwpAppDataCollection)
                                         {
                                             if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                             {
                                                 ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
 
-                                                UwpAppDataList.Remove(pacakgeItem);
+                                                UwpAppDataCollection.Remove(pacakgeItem);
                                                 break;
                                             }
                                         }
@@ -353,7 +332,7 @@ namespace GetStoreApp.UI.Pages
                                 {
                                     lock (AppShortListObject)
                                     {
-                                        foreach (PackageModel pacakgeItem in UwpAppDataList)
+                                        foreach (PackageModel pacakgeItem in UwpAppDataCollection)
                                         {
                                             if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                             {
@@ -390,7 +369,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 查看应用信息
         /// </summary>
-        public void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             PackageModel packageItem = args.Parameter as PackageModel;
             UWPAppPage uwpAppPage = NavigationService.NavigationFrame.Content as UWPAppPage;
@@ -532,11 +511,11 @@ namespace GetStoreApp.UI.Pages
                                 AppListEntry = appListEntryItem
                             });
                         }
-                        packageDict["AppListEntryList"] = appListEntryList;
+                        packageDict["AppListEntryCollection"] = appListEntryList;
                     }
                     catch
                     {
-                        packageDict["AppListEntryList"] = new List<AppListEntry>();
+                        packageDict["AppListEntryCollection"] = new List<AppListEntry>();
                     }
 
                     try
@@ -571,11 +550,11 @@ namespace GetStoreApp.UI.Pages
                         }
 
                         dependenciesList = dependenciesList.OrderBy(item => item.DisplayName).ToList();
-                        packageDict["DependenciesList"] = dependenciesList;
+                        packageDict["DependenciesCollection"] = dependenciesList;
                     }
                     catch
                     {
-                        packageDict["DependenciesList"] = new List<PackageModel>();
+                        packageDict["DependenciesCollection"] = new List<PackageModel>();
                     }
 
                     DispatcherQueue.TryEnqueue(() =>
@@ -586,10 +565,14 @@ namespace GetStoreApp.UI.Pages
             }
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：应用列表控件——挂载的事件
+
         /// <summary>
         /// 初始化已安装应用信息
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (!isInitialized)
             {
@@ -603,7 +586,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 显示排序规则
         /// </summary>
-        public void OnSortClicked(object sender, RoutedEventArgs args)
+        private void OnSortClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
@@ -611,7 +594,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        public void OnSortWayClicked(object sender, RoutedEventArgs args)
+        private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
@@ -624,7 +607,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
-        public void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
@@ -637,7 +620,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 显示过滤规则
         /// </summary>
-        public void OnFilterClicked(object sender, RoutedEventArgs args)
+        private void OnFilterClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
@@ -645,7 +628,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 根据过滤方式对列表进行过滤
         /// </summary>
-        public void OnFilterWayClicked(object sender, RoutedEventArgs args)
+        private void OnFilterWayClicked(object sender, RoutedEventArgs args)
         {
             IsFramework = !IsFramework;
             needToRefreshData = true;
@@ -654,7 +637,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 根据签名规则进行过滤
         /// </summary>
-        public void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
+        private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
             ToggleButton toggleButton = sender as ToggleButton;
             if (toggleButton is not null)
@@ -675,7 +658,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 刷新数据
         /// </summary>
-        public void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList = null;
             IsLoadedCompleted = false;
@@ -688,7 +671,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 浮出菜单关闭后更新数据
         /// </summary>
-        public void OnClosed(object sender, object args)
+        private void OnClosed(object sender, object args)
         {
             if (needToRefreshData)
             {
@@ -698,12 +681,34 @@ namespace GetStoreApp.UI.Pages
             needToRefreshData = false;
         }
 
+        #endregion 第二部分：应用列表控件——挂载的事件
+
         /// <summary>
         /// 属性值发生变化时通知更改
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 本地化应用管理记录数量统计信息
+        /// </summary>
+        public string LocalizeUWPAppCountInfo(int count)
+        {
+            if (count is 0)
+            {
+                return ResourceService.GetLocalized("UWPApp/PackageEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("UWPApp/PackageCountInfo"), count);
+            }
+        }
+
+        public bool IsSelected(Enum value, Enum comparedValue)
+        {
+            return value.HasFlag(comparedValue);
         }
 
         /// <summary>
@@ -734,7 +739,7 @@ namespace GetStoreApp.UI.Pages
             lock (AppShortListObject)
             {
                 IsLoadedCompleted = false;
-                UwpAppDataList.Clear();
+                UwpAppDataCollection.Clear();
             }
 
             Task.Run(() =>
@@ -860,7 +865,7 @@ namespace GetStoreApp.UI.Pages
                         {
                             foreach (PackageModel packageItem in packageList)
                             {
-                                UwpAppDataList.Add(packageItem);
+                                UwpAppDataCollection.Add(packageItem);
                             }
                         }
 
@@ -880,7 +885,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 获取应用包是否为框架包
         /// </summary>
-        public static bool GetIsFramework(Package package)
+        public bool GetIsFramework(Package package)
         {
             try
             {
@@ -895,7 +900,7 @@ namespace GetStoreApp.UI.Pages
         /// <summary>
         /// 获取应用包的入口数
         /// </summary>
-        public static int GetAppListEntriesCount(Package package)
+        public int GetAppListEntriesCount(Package package)
         {
             try
             {

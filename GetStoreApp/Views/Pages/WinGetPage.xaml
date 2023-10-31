@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
+    xmlns:navigation="using:GetStoreApp.Views.CustomControls.Navigation"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     x:Name="WinGetRoot"
@@ -17,157 +18,187 @@
     </Page.Resources>
 
     <Grid Padding="0">
-        <Pivot
-            x:Name="WinGetPivot"
-            Margin="0,15,0,0"
-            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}"
-            Loaded="{x:Bind OnLoaded}"
-            Style="{StaticResource PivotStyle}">
 
-            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" Style="{StaticResource PivotItemStyle}">
-                <wc:SearchAppsControl x:Name="SearchApps" />
-            </PivotItem>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" Style="{StaticResource PivotItemStyle}">
-                <wc:InstalledAppsControl />
-            </PivotItem>
+        <Grid
+            Grid.Row="0"
+            Margin="20,0,30,3"
+            ColumnSpacing="5">
 
-            <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" Style="{StaticResource PivotItemStyle}">
-                <wc:UpgradableAppsControl x:Name="UpgradableApps" />
-            </PivotItem>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <Pivot.RightHeader>
-                <StackPanel Orientation="Horizontal" Spacing="5">
-                    <Button
-                        x:Name="ControlPanel"
-                        x:Load="{x:Bind WinGetPivot.SelectedIndex.Equals(1), Mode=OneWay}"
-                        Click="{x:Bind OnControlPanelClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanel')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}" />
+            <navigation:Segmented
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectionChanged}"
+                SelectionMode="Single"
+                Style="{StaticResource PivotSegmentedStyle}">
+                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" FontSize="18" />
+                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" FontSize="18" />
+                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" FontSize="18" />
+            </navigation:Segmented>
 
-                    <Button VerticalAlignment="Center">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" />
-                                <InfoBadge
-                                    Margin="5,0,0,0"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsList.Count), Mode=OneWay}"
-                                    Value="{x:Bind InstallingAppsList.Count, Mode=OneWay}" />
-                            </StackPanel>
-                        </Button.Content>
+            <Button
+                x:Name="ControlPanel"
+                Grid.Column="1"
+                x:Load="{x:Bind SelectedIndex.Equals(1), Mode=OneWay}"
+                Click="{x:Bind OnControlPanelClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanel')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}" />
 
-                        <Button.Flyout>
-                            <Flyout
-                                FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
-                                Placement="Bottom"
-                                ShouldConstrainToRootBounds="False"
-                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+            <Button Grid.Column="2" VerticalAlignment="Center">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" />
+                        <InfoBadge
+                            Margin="5,0,0,0"
+                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsCollection.Count), Mode=OneWay}"
+                            Value="{x:Bind InstallingAppsCollection.Count, Mode=OneWay}" />
+                    </StackPanel>
+                </Button.Content>
 
-                                <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot}">
-                                    <Grid
-                                        Width="300"
-                                        Height="100"
-                                        Padding="20"
-                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstallingAppsList.Count), Mode=OneWay}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallingAppsListEmpty')}"
-                                            TextAlignment="Center"
-                                            TextWrapping="WrapWholeWords" />
-                                    </Grid>
-                                    <ListView
-                                        Width="300"
-                                        Height="200"
-                                        ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                                        ItemsSource="{x:Bind InstallingAppsList, Mode=OneWay}"
-                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                        ScrollViewer.HorizontalScrollMode="Disabled"
-                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                        ScrollViewer.VerticalScrollMode="Enabled"
-                                        SelectionMode="None"
-                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsList.Count), Mode=OneWay}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="model:InstallingAppsModel">
-                                                <Grid
-                                                    Height="60"
-                                                    Margin="2,0"
-                                                    Padding="16,12"
-                                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                    BorderThickness="1"
-                                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                                    ToolTipService.ToolTip="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}">
+                <Button.Flyout>
+                    <Flyout
+                        FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
+                        Placement="Bottom"
+                        ShouldConstrainToRootBounds="False"
+                        SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
 
+                        <Grid x:Name="TaskManagerFlyout" DataContext="{x:Bind WinGetRoot}">
+                            <Grid
+                                Width="300"
+                                Height="100"
+                                Padding="20"
+                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstallingAppsCollection.Count), Mode=OneWay}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallingAppsListEmpty')}"
+                                    TextAlignment="Center"
+                                    TextWrapping="WrapWholeWords" />
+                            </Grid>
+                            <ListView
+                                Width="300"
+                                Height="200"
+                                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+                                ItemsSource="{x:Bind InstallingAppsCollection, Mode=OneWay}"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                ScrollViewer.HorizontalScrollMode="Disabled"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                ScrollViewer.VerticalScrollMode="Enabled"
+                                SelectionMode="None"
+                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsCollection.Count), Mode=OneWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:InstallingAppsModel">
+                                        <Grid
+                                            Height="60"
+                                            Margin="2,0"
+                                            Padding="16,12"
+                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource ControlCornerRadius}"
+                                            ToolTipService.ToolTip="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0" VerticalAlignment="Center">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Grid.Row="0" Margin="0,0,0,5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
 
-                                                    <Grid Grid.Column="0" VerticalAlignment="Center">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="Auto" />
-                                                            <RowDefinition Height="Auto" />
-                                                        </Grid.RowDefinitions>
-
-                                                        <Grid Grid.Row="0" Margin="0,0,0,5">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                            </Grid.ColumnDefinitions>
-
-                                                            <TextBlock
-                                                                Grid.Column="0"
-                                                                MinWidth="50"
-                                                                VerticalAlignment="Center"
-                                                                FontSize="16"
-                                                                Text="{x:Bind AppName}"
-                                                                TextAlignment="Left" />
-
-                                                            <TextBlock
-                                                                Grid.Column="1"
-                                                                MinWidth="50"
-                                                                VerticalAlignment="Center"
-                                                                FontSize="16"
-                                                                Text="{x:Bind GetDownloadProgress(DownloadProgress), Mode=OneWay}"
-                                                                TextAlignment="Right" />
-                                                        </Grid>
-
-                                                        <ProgressBar
-                                                            Grid.Row="1"
-                                                            IsIndeterminate="{x:Bind IsDownloading(InstallProgressState), Mode=OneWay}"
-                                                            Value="{x:Bind DownloadProgress, Mode=OneWay}" />
-                                                    </Grid>
-
-                                                    <MenuFlyoutItem
-                                                        Grid.Column="1"
-                                                        Margin="10,0,0,0"
-                                                        HorizontalAlignment="Center"
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        MinWidth="50"
                                                         VerticalAlignment="Center"
-                                                        Command="{StaticResource CancelInstallCommand}"
-                                                        CommandParameter="{x:Bind AppID}"
-                                                        Style="{StaticResource ButtonNormalMenuItemStyle}"
-                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstall')}">
+                                                        FontSize="16"
+                                                        Text="{x:Bind AppName}"
+                                                        TextAlignment="Left" />
 
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon FontSize="16" Glyph="&#xE711;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        MinWidth="50"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        Text="{x:Bind GetDownloadProgress(DownloadProgress), Mode=OneWay}"
+                                                        TextAlignment="Right" />
                                                 </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                </StackPanel>
-            </Pivot.RightHeader>
+
+                                                <ProgressBar
+                                                    Grid.Row="1"
+                                                    IsIndeterminate="{x:Bind IsDownloading(InstallProgressState), Mode=OneWay}"
+                                                    Value="{x:Bind DownloadProgress, Mode=OneWay}" />
+                                            </Grid>
+
+                                            <MenuFlyoutItem
+                                                Grid.Column="1"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Command="{StaticResource CancelInstallCommand}"
+                                                CommandParameter="{x:Bind AppID}"
+                                                Style="{StaticResource ButtonNormalMenuItemStyle}"
+                                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstall')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon FontSize="16" Glyph="&#xE711;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+
+        <Pivot
+            x:Name="WinGetPivot"
+            Grid.Row="1"
+            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}"
+            Loaded="{x:Bind OnLoaded}"
+            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+            Style="{StaticResource PivotStyle}">
+
+            <PivotItem Margin="0">
+                <wc:SearchAppsControl x:Name="SearchApps" />
+            </PivotItem>
+
+            <PivotItem Margin="0">
+                <wc:InstalledAppsControl />
+            </PivotItem>
+
+            <PivotItem Margin="0">
+                <wc:UpgradableAppsControl x:Name="UpgradableApps" />
+            </PivotItem>
         </Pivot>
 
         <!--  WinGet 程序包不存在提示内容  -->
         <Grid
             x:Name="InitializeFailed"
+            Grid.Row="0"
+            Grid.RowSpan="2"
             Padding="20,0"
             HorizontalAlignment="Center"
             x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:True)}">

@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Pivot.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ScrollBar.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/Segmented.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/SplitButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

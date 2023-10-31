@@ -124,7 +124,7 @@
     <value>Open App settings</value>
   </data>
   <data name="AppVersion" xml:space="preserve">
-    <value>Application Version: {0}.{1}.{2}.{3}</value>
+    <value>Application Version: {0}</value>
   </data>
   <data name="Backdrop" xml:space="preserve">
     <value>Backdrop settings instructions</value>

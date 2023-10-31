@@ -31,13 +31,11 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
-        private AppNaviagtionArgs SettingNavigationArgs { get; set; } = AppNaviagtionArgs.None;
+        private bool CanUseMicaBackdrop = InfoHelper.SystemVersion.Build >= 22000;
+        private bool IsOfficialVersionExisted = WinGetService.IsOfficialVersionExisted;
+        private bool IsDevVersionExisted = WinGetService.IsDevVersionExisted;
 
-        public bool CanUseMicaBackdrop { get; set; } = InfoHelper.SystemVersion.Build >= 22000;
-
-        public bool IsOfficialVersionExisted { get; set; } = WinGetService.IsOfficialVersionExisted;
-
-        public bool IsDevVersionExisted { get; set; } = WinGetService.IsDevVersionExisted;
+        private AppNaviagtionArgs SettingNavigationArgs = AppNaviagtionArgs.None;
 
         private GroupOptionsModel _theme = ThemeService.AppTheme;
 
@@ -234,19 +232,19 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public List<GroupOptionsModel> ThemeList { get; } = ThemeService.ThemeList;
+        private List<GroupOptionsModel> ThemeList { get; } = ThemeService.ThemeList;
 
-        public List<GroupOptionsModel> BackdropList { get; } = BackdropService.BackdropList;
+        private List<GroupOptionsModel> BackdropList { get; } = BackdropService.BackdropList;
 
-        public List<GroupOptionsModel> LanguageList { get; } = LanguageService.LanguageList;
+        private List<GroupOptionsModel> LanguageList { get; } = LanguageService.LanguageList;
 
-        public List<GroupOptionsModel> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
+        private List<GroupOptionsModel> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
 
-        public List<GroupOptionsModel> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
+        private List<GroupOptionsModel> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
 
-        public List<GroupOptionsModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
+        private List<GroupOptionsModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
 
-        public List<GroupOptionsModel> InstallModeList { get; } = InstallModeService.InstallModeList;
+        private List<GroupOptionsModel> InstallModeList { get; } = InstallModeService.InstallModeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -294,6 +292,8 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #region 第一部分：重写父类事件
+
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
@@ -307,26 +307,14 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        /// <summary>
-        /// 判断两个版本是否共同存在
-        /// </summary>
-        public bool IsBothVersionExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
-        {
-            return isOfficialVersionExisted && isDevVersionExisted;
-        }
+        #endregion 第一部分：重写父类事件
 
-        /// <summary>
-        /// 判断 WinGet 程序包是否存在
-        /// </summary>
-        public bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
-        {
-            return isOfficialVersionExisted || isDevVersionExisted;
-        }
+        #region 第二部分：设置页面——挂载的事件
 
         /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             double CurrentScrollPosition = SettingsScroll.VerticalOffset;
             Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
@@ -345,7 +333,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开重启应用确认的窗口对话框
         /// </summary>
-        public async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
+        private async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new RestartAppsDialog(), this);
         }
@@ -353,7 +341,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置说明
         /// </summary>
-        public void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
+        private void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
@@ -361,7 +349,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开系统主题设置
         /// </summary>
-        public async void OnSystemThemeSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnSystemThemeSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         }
@@ -369,7 +357,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 主题修改设置
         /// </summary>
-        public void OnThemeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -383,7 +371,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 背景色修改设置
         /// </summary>
-        public void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
+        private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -397,7 +385,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开系统背景色设置
         /// </summary>
-        public async void OnSystemBackdropSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnSystemBackdropSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:easeofaccess-visualeffects"));
         }
@@ -405,7 +393,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开系统通知设置
         /// </summary>
-        public async void OnSystemNotificationSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnSystemNotificationSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:notifications"));
         }
@@ -413,7 +401,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开系统语言设置
         /// </summary>
-        public async void OnSystemLanguageSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnSystemLanguageSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:regionlanguage-languageoptions"));
         }
@@ -421,7 +409,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 微软商店页面“历史记录”显示数目修改
         /// </summary>
-        public void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
+        private void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -434,7 +422,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// WinGet 程序包安装方式设置
         /// </summary>
-        public void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -447,7 +435,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开 WinGet 程序包设置
         /// </summary>
-        public void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
+        private void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {
@@ -480,7 +468,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开文件存放目录
         /// </summary>
-        public async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
         }
@@ -488,7 +476,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 修改下载目录
         /// </summary>
-        public async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
+        private async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
         {
             MenuFlyoutItem item = sender as MenuFlyoutItem;
             if (item.Tag is not null)
@@ -542,7 +530,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 修改同时下载文件数
         /// </summary>
-        public void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -555,7 +543,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 修改下载文件的方式
         /// </summary>
-        public void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -568,7 +556,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用安装方式设置
         /// </summary>
-        public void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -581,7 +569,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 清理应用内使用的所有痕迹
         /// </summary>
-        public async void OnTraceCleanupClicked(object sender, RoutedEventArgs args)
+        private async void OnTraceCleanupClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new TraceCleanupPromptDialog(), this);
         }
@@ -589,7 +577,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 实验功能设置
         /// </summary>
-        public async void OnConfigClicked(object sender, RoutedEventArgs args)
+        private async void OnConfigClicked(object sender, RoutedEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new ExperimentalConfigDialog(), this);
         }
@@ -597,7 +585,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开日志文件夹
         /// </summary>
-        public async void OnOpenLogFolderClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenLogFolderClicked(object sender, RoutedEventArgs args)
         {
             await LogService.OpenLogFolderAsync();
         }
@@ -605,7 +593,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 清除所有日志记录
         /// </summary>
-        public void OnClearClicked(object sender, RoutedEventArgs args)
+        private void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = LogService.ClearLog();
             new LogCleanNotification(this, result).Show();
@@ -614,7 +602,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 开关按钮切换时修改相应设置
         /// </summary>
-        public void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
+        private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -627,7 +615,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 是否开启应用窗口置顶
         /// </summary>
-        public void OnTopMostToggled(object sender, RoutedEventArgs args)
+        private void OnTopMostToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -641,7 +629,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置是否开启应用通知
         /// </summary>
-        public void OnNotificationToggled(object sender, RoutedEventArgs args)
+        private void OnNotificationToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -654,7 +642,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置是否过滤加密包文件
         /// </summary>
-        public void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
+        private void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -667,7 +655,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置是否过滤包块映射文件
         /// </summary>
-        public void OnBlockMapToggled(object sender, RoutedEventArgs args)
+        private void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -680,7 +668,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 当两个版本共存时，设置是否优先使用开发版本
         /// </summary>
-        public void OnWinGetConfigToggled(object sender, RoutedEventArgs args)
+        private void OnWinGetConfigToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -693,7 +681,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 当应用未启用背景色设置时，自动关闭始终显示背景色设置
         /// </summary>
-        public void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
+        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -703,12 +691,30 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第二部分：设置页面——挂载的事件
+
         /// <summary>
         /// 属性值发生变化时通知更改
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 判断两个版本是否共同存在
+        /// </summary>
+        private bool IsBothVersionExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
+        {
+            return isOfficialVersionExisted && isDevVersionExisted;
+        }
+
+        /// <summary>
+        /// 判断 WinGet 程序包是否存在
+        /// </summary>
+        private bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
+        {
+            return isOfficialVersionExisted || isDevVersionExisted;
         }
 
         private string LocalizeDisplayNumber(GroupOptionsModel selectedBackdrop)

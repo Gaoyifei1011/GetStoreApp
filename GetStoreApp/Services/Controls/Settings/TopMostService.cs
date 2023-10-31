@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void SetAppTopMost()
         {
-            Program.ApplicationRoot.MainWindow.Presenter.IsAlwaysOnTop = TopMostValue;
+            Program.ApplicationRoot.MainWindow.SetTopMost(TopMostValue);
         }
     }
 }

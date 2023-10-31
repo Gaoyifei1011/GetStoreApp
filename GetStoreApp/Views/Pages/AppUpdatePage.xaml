@@ -37,7 +37,7 @@
 
             <TextBlock
                 Grid.Column="0"
-                FontSize="26"
+                FontSize="22"
                 Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Title')}" />
 
             <Button
@@ -86,7 +86,7 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeAppUpdateCountInfo(AppUpdateDataList.Count), Mode=OneWay}" />
+                Text="{x:Bind LocalizeAppUpdateCountInfo(AppUpdateCollection.Count), Mode=OneWay}" />
 
             <StackPanel
                 Grid.Column="4"
@@ -165,7 +165,7 @@
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppUpdateDataList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppUpdateCollection.Count), Mode=OneWay}">
 
                 <TextBlock
                     Margin="0,10,0,10"
@@ -186,13 +186,13 @@
                 Grid.Row="1"
                 Padding="30,0,30,30"
                 ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                ItemsSource="{x:Bind AppUpdateDataList, Mode=OneWay}"
+                ItemsSource="{x:Bind AppUpdateCollection, Mode=OneWay}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.HorizontalScrollMode="Disabled"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollMode="Enabled"
                 SelectionMode="None"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateDataList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="appUpdate:AppUpdateModel">

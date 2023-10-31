@@ -192,7 +192,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == upgradableApps.AppID)
                                                     {
@@ -212,7 +212,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == upgradableApps.AppID)
                                                     {
@@ -235,7 +235,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == upgradableApps.AppID)
                                                     {
@@ -256,7 +256,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == upgradableApps.AppID)
                                                     {
@@ -276,7 +276,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         {
                                             lock (WinGetInstance.InstallingAppsObject)
                                             {
-                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsList)
+                                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
                                                     if (installingItem.AppID == upgradableApps.AppID)
                                                     {
@@ -301,7 +301,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             lock (WinGetInstance.InstallingAppsObject)
                             {
-                                WinGetInstance.InstallingAppsList.Add(new InstallingAppsModel()
+                                WinGetInstance.InstallingAppsCollection.Add(new InstallingAppsModel()
                                 {
                                     AppID = upgradableApps.AppID,
                                     AppName = upgradableApps.AppName,
@@ -366,11 +366,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 // 完成任务后从任务管理中删除任务
                                 lock (WinGetInstance.InstallingAppsObject)
                                 {
-                                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                     {
                                         if (installingAppsItem.AppID == upgradableApps.AppID)
                                         {
-                                            WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
+                                            WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
                                             break;
                                         }
                                     }
@@ -411,11 +411,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 // 应用升级失败，将当前任务状态修改为可升级状态
                                 lock (WinGetInstance.InstallingAppsObject)
                                 {
-                                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                     {
                                         if (installingAppsItem.AppID == upgradableApps.AppID)
                                         {
-                                            WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
+                                            WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
                                             break;
                                         }
                                     }
@@ -449,11 +449,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 应用升级失败，将当前任务状态修改为可升级状态
                             lock (WinGetInstance.InstallingAppsObject)
                             {
-                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
                                     if (installingAppsItem.AppID == upgradableApps.AppID)
                                     {
-                                        WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
                                         break;
                                     }
                                 }
@@ -484,11 +484,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             // 应用升级失败，从任务管理列表中移除当前任务
                             lock (WinGetInstance.InstallingAppsObject)
                             {
-                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
                                     if (installingAppsItem.AppID == upgradableApps.AppID)
                                     {
-                                        WinGetInstance.InstallingAppsList.Remove(installingAppsItem);
+                                        WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
                                         break;
                                     }
                                 }
@@ -604,7 +604,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     foreach (MatchResult matchItem in MatchResultList)
                     {
                         bool isUpgrading = false;
-                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsList)
+                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                         {
                             if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
                             {

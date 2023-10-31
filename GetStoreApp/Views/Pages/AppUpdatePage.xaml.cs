@@ -28,32 +28,20 @@ namespace GetStoreApp.Views.Pages
         private static readonly object AppUpdateDataListLock = new object();
 
         private static string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
-
         private static string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
-
         private static string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
-
         private static string Downloading = ResourceService.GetLocalized("AppUpdate/Downloading");
-
         private static string Error = ResourceService.GetLocalized("AppUpdate/Error");
-
         private static string Installing = ResourceService.GetLocalized("AppUpdate/Installing");
-
         private static string InstallingSubInformation = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
-
         private static string Paused = ResourceService.GetLocalized("AppUpdate/Paused");
-
         private static string Pending = ResourceService.GetLocalized("AppUpdate/Pending");
-
         private static string ReadyToDownload = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
-
         private static string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
-
         private static string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
 
-        private AppInstallManager AppInstallManager { get; } = new AppInstallManager();
-
-        private PackageManager PackageManager { get; } = new PackageManager();
+        private AppInstallManager AppInstallManager = new AppInstallManager();
+        private PackageManager PackageManager = new PackageManager();
 
         private Dictionary<string, AppInstallItem> AppInstallingDict = new Dictionary<string, AppInstallItem>();
 
@@ -96,9 +84,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public List<Package> PackageDataList { get; set; }
+        private List<Package> PackageList;
 
-        public ObservableCollection<AppUpdateModel> AppUpdateDataList { get; } = new ObservableCollection<AppUpdateModel>();
+        private ObservableCollection<AppUpdateModel> AppUpdateCollection { get; } = new ObservableCollection<AppUpdateModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -107,10 +95,12 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+
         /// <summary>
         /// 更新选定的应用
         /// </summary>
-        public void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string packageFamilyName = args.Parameter as string;
 
@@ -119,7 +109,7 @@ namespace GetStoreApp.Views.Pages
                 Task.Run(async () =>
                 {
                     AppInstallItem appInstallItem = null;
-                    foreach (AppUpdateModel appUpdateItem in AppUpdateDataList)
+                    foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                     {
                         if (appUpdateItem.PackageFamilyName == packageFamilyName)
                         {
@@ -154,7 +144,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 取消下载
         /// </summary>
-        public void OnCancelExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCancelExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string packageFamilyName = args.Parameter as string;
 
@@ -182,7 +172,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         lock (AppUpdateDataListLock)
                         {
-                            foreach (AppUpdateModel appUpdateItem in AppUpdateDataList)
+                            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                             {
                                 if (appUpdateItem.PackageFamilyName == packageFamilyName)
                                 {
@@ -199,10 +189,14 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：商店应用更新页面——挂载的事件
+
         /// <summary>
         /// 打开微软商店并更新微软商店应用
         /// </summary>
-        public async void OnOpenStoreClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenStoreClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
         }
@@ -210,7 +204,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置当前系统的预览体验计划
         /// </summary>
-        public async void OnWIPSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnWIPSettingsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsinsider"));
         }
@@ -218,7 +212,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查商店应用更新
         /// </summary>
-        public void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
+        private void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
             IsLoadedCompleted = false;
 
@@ -231,16 +225,16 @@ namespace GetStoreApp.Views.Pages
                 updateOptions.AllowForcedAppRestart = false;
                 IReadOnlyList<AppInstallItem> upgradableAppsList = await AppInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
                 List<AppUpdateModel> appUpdateList = new List<AppUpdateModel>();
-                PackageDataList = PackageManager.FindPackagesForUser(string.Empty).ToList();
+                PackageList = PackageManager.FindPackagesForUser(string.Empty).ToList();
 
-                if (PackageDataList is not null)
+                if (PackageList is not null)
                 {
                     foreach (AppInstallItem upgradableApps in upgradableAppsList)
                     {
-                        // 判断是否已经添加到 AppUpdateDataList 中，没有则添加
-                        if (!AppUpdateDataList.Any(item => item.PackageFamilyName == upgradableApps.PackageFamilyName))
+                        // 判断是否已经添加到 AppUpdateCollection 中，没有则添加
+                        if (!AppUpdateCollection.Any(item => item.PackageFamilyName == upgradableApps.PackageFamilyName))
                         {
-                            Package package = PackageDataList.FirstOrDefault(item => item.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase));
+                            Package package = PackageList.FirstOrDefault(item => item.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase));
                             if (package is not null)
                             {
                                 AppInstallStatus appInstallStatus = upgradableApps.GetCurrentStatus();
@@ -274,7 +268,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (AppUpdateModel appUpdateItem in appUpdateList)
                             {
-                                AppUpdateDataList.Add(appUpdateItem);
+                                AppUpdateCollection.Add(appUpdateItem);
                             }
                         }
 
@@ -287,11 +281,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 更新所有应用
         /// </summary>
-        public void OnUpdateAllClicked(object sender, RoutedEventArgs args)
+        private void OnUpdateAllClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(async () =>
             {
-                foreach (AppUpdateModel appUpdateItem in AppUpdateDataList)
+                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                 {
                     if (!appUpdateItem.IsUpdating)
                     {
@@ -308,7 +302,7 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                foreach (AppUpdateModel appUpdateItem in AppUpdateDataList)
+                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                 {
                     AppInstallItem appInstallItem = await AppInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
 
@@ -326,9 +320,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 当前应用安装完成时发生的事件
         /// </summary>
-        public void OnAppInstallItemCompleted(AppInstallItem sender, object args)
+        private void OnAppInstallItemCompleted(AppInstallItem sender, object args)
         {
-            foreach (AppUpdateModel appUpdateItem in AppUpdateDataList)
+            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
             {
                 if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
                 {
@@ -345,18 +339,18 @@ namespace GetStoreApp.Views.Pages
             {
                 lock (AppUpdateDataListLock)
                 {
-                    foreach (AppUpdateModel appUpdateItem in AppUpdateDataList)
+                    foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                     {
                         if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
                         {
                             try
                             {
-                                AppUpdateDataList.Remove(appUpdateItem);
+                                AppUpdateCollection.Remove(appUpdateItem);
                                 break;
                             }
                             catch (Exception e)
                             {
-                                LogService.WriteLog(LoggingLevel.Warning, "AppUpdateDataList remove items failed", e);
+                                LogService.WriteLog(LoggingLevel.Warning, "AppUpdateCollection remove items failed", e);
                             }
                         }
                     }
@@ -364,12 +358,16 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
+        #endregion 第二部分：商店应用更新页面——挂载的事件
+
+        #region 第三部分：自定义事件
+
         /// <summary>
         /// 当前应用的安装状态发生更改时的事件
         /// </summary>
-        public void OnAppInstallItemStatausChanged(AppInstallItem sender, object args)
+        private void OnAppInstallItemStatausChanged(AppInstallItem sender, object args)
         {
-            foreach (AppUpdateModel appUpdateItem in AppUpdateDataList)
+            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
             {
                 if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
                 {
@@ -406,6 +404,16 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第三部分：自定义事件
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
         /// 本地化应用更新数量统计信息
         /// </summary>
@@ -419,14 +427,6 @@ namespace GetStoreApp.Views.Pages
             {
                 return string.Format(ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo"), count);
             }
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>

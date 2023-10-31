@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using System;
 
 namespace GetStoreApp.Helpers.Converters
 {
@@ -10,6 +11,11 @@ namespace GetStoreApp.Helpers.Converters
         public static bool StringCompareReverseConvert(string value, string comparedValue)
         {
             return !value.Equals(comparedValue);
+        }
+
+        public static Uri UriConvert(object uri)
+        {
+            return new Uri(uri.ToString());
         }
 
         /// <summary>

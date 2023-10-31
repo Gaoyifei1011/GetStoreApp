@@ -5,28 +5,43 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dc="using:GetStoreApp.UI.Controls.Download"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigation="using:GetStoreApp.Views.CustomControls.Navigation"
     xmlns:root="using:GetStoreApp.Services.Root"
     mc:Ignorable="d">
 
-    <Pivot
-        Margin="0,15,0,0"
-        SelectionChanged="{x:Bind OnSelectionChanged}"
-        Style="{StaticResource PivotStyle}">
+    <Grid Padding="0">
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" Style="{StaticResource PivotItemStyle}">
-            <dc:DownloadingControl x:Name="Downloading" />
-        </PivotItem>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('Download/Unfinished')}" Style="{StaticResource PivotItemStyle}">
-            <dc:UnfinishedControl x:Name="Unfinished" />
-        </PivotItem>
+        <Grid
+            Grid.Row="0"
+            Margin="20,0,30,3"
+            ColumnSpacing="5">
 
-        <PivotItem Header="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" Style="{StaticResource PivotItemStyle}">
-            <dc:CompletedControl x:Name="Completed" />
-        </PivotItem>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <Pivot.RightHeader>
-            <Button VerticalAlignment="Center" Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}">
+            <navigation:Segmented
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectionChanged}"
+                SelectionMode="Single"
+                Style="{StaticResource PivotSegmentedStyle}">
+                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" FontSize="18" />
+                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Download/Unfinished')}" FontSize="18" />
+                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" FontSize="18" />
+            </navigation:Segmented>
+
+            <Button
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Content="{x:Bind root:ResourceService.GetLocalized('Download/DownloadDescription')}">
 
                 <Button.Flyout>
                     <Flyout
@@ -75,6 +90,24 @@
                     </Flyout>
                 </Button.Flyout>
             </Button>
-        </Pivot.RightHeader>
-    </Pivot>
+        </Grid>
+
+        <Pivot
+            Grid.Row="1"
+            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+            Style="{StaticResource PivotStyle}">
+
+            <PivotItem Margin="0">
+                <dc:DownloadingControl x:Name="Downloading" />
+            </PivotItem>
+
+            <PivotItem Margin="0">
+                <dc:UnfinishedControl x:Name="Unfinished" />
+            </PivotItem>
+
+            <PivotItem Margin="0">
+                <dc:CompletedControl x:Name="Completed" />
+            </PivotItem>
+        </Pivot>
+    </Grid>
 </Page>

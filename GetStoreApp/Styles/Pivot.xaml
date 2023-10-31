@@ -1,9 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style
-        x:Key="PivotStyle"
-        BasedOn="{StaticResource DefaultPivotStyle}"
-        TargetType="Pivot">
+    <Style x:Key="PivotStyle" TargetType="Pivot">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="{ThemeResource PivotBackground}" />
@@ -222,7 +219,7 @@
                                 <PivotPanel x:Name="Panel" VerticalAlignment="Stretch">
                                     <Grid x:Name="PivotLayoutElement">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="0" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
@@ -403,13 +400,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style
-        x:Key="PivotItemStyle"
-        BasedOn="{StaticResource DefaultPivotItemStyle}"
-        TargetType="PivotItem">
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="0" />
     </Style>
 </ResourceDictionary>

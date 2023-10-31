@@ -13,6 +13,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Notifications;
+using GetStoreApp.Views.CustomControls.Navigation;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -38,22 +39,30 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class StorePage : Page, INotifyPropertyChanged
     {
-        // 临界区资源访问互斥锁
         private readonly object HistoryLiteDataListLock = new object();
-
         private readonly object ResultDataListObjectLock = new object();
 
-        private AppNaviagtionArgs StoreNavigationArgs { get; set; } = AppNaviagtionArgs.None;
+        private string SampleLink;
+        private string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
+        private string CategoryIdText = ResourceService.GetLocalized("Store/categoryId");
+        private string ResultCountInfo = ResourceService.GetLocalized("Store/ResultCountInfo");
 
-        private string SampleTitle { get; } = ResourceService.GetLocalized("Store/SampleTitle");
-
-        private string CategoryIdText { get; } = ResourceService.GetLocalized("Store/categoryId");
-
-        private string ResultCountInfo { get; } = ResourceService.GetLocalized("Store/ResultCountInfo");
-
-        private string SampleLink { get; set; }
+        private AppNaviagtionArgs StoreNavigationArgs = AppNaviagtionArgs.None;
 
         public GroupOptionsModel HistoryLiteItem { get; set; } = HistoryRecordService.HistoryLiteNum;
+
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
 
         private TypeModel _selectedType;
 
@@ -198,11 +207,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
-
-        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
-
-        private static List<string> SampleLinkList { get; } = new List<string>
+        private static List<string> SampleLinkList = new List<string>
         {
             "https://www.microsoft.com/store/productId/9NSWSBXN8K03",
             "9NKSQGP7F2NH",
@@ -210,11 +215,15 @@ namespace GetStoreApp.Views.Pages
             "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
         };
 
-        private List<StatusBarStateModel> StatusBarStateList { get; } = ResourceService.StatusBarStateList;
+        private List<StatusBarStateModel> StatusBarStateList = ResourceService.StatusBarStateList;
 
-        public ObservableCollection<HistoryModel> HistoryLiteDataList { get; } = new ObservableCollection<HistoryModel>();
+        public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
-        public ObservableCollection<ResultModel> ResultDataList { get; } = new ObservableCollection<ResultModel>();
+        public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
+
+        private ObservableCollection<HistoryModel> HistoryLiteCollection { get; } = new ObservableCollection<HistoryModel>();
+
+        private ObservableCollection<ResultModel> ResultCollection { get; } = new ObservableCollection<ResultModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -229,6 +238,8 @@ namespace GetStoreApp.Views.Pages
             LinkPlaceHolderText = SampleTitle + SampleLink;
             IsGettingLinks = false;
         }
+
+        #region 第一部分：重写父类事件
 
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
@@ -268,10 +279,14 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
+
         /// <summary>
         /// 复制到剪贴板
         /// </summary>
-        public void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             HistoryModel historyItem = args.Parameter as HistoryModel;
 
@@ -290,7 +305,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 填入到文本框
         /// </summary>
-        public void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             HistoryModel historyItem = args.Parameter as HistoryModel;
 
@@ -309,7 +324,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据设置存储的文件链接操作方式操作获取到的文件链接
         /// </summary>
-        public void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             ResultModel resultItem = args.Parameter as ResultModel;
             if (resultItem is not null)
@@ -466,7 +481,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制指定项目的链接
         /// </summary>
-        public void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string fileLink = args.Parameter as string;
 
@@ -480,7 +495,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制指定项目的内容
         /// </summary>
-        public void OnCopyContentExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyContentExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             ResultModel resultItem = args.Parameter as ResultModel;
             if (resultItem is not null)
@@ -497,10 +512,14 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第三部分：应用商店页面——挂载的事件
+
         /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (StoreNavigationArgs is AppNaviagtionArgs.Store)
             {
@@ -509,9 +528,24 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 分割控件选中项发生改变时引发的事件
+        /// </summary>
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (args.RemovedItems.Count > 0)
+            {
+                Segmented segmented = sender as Segmented;
+                if (segmented is not null)
+                {
+                    SelectedIndex = segmented.SelectedIndex;
+                }
+            }
+        }
+
+        /// <summary>
         /// 输入文本框内容发生改变时响应的事件
         /// </summary>
-        public void OnTextChanged(object sender, TextChangedEventArgs args)
+        private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
             LinkText = (sender as TextBox).Text;
         }
@@ -519,7 +553,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解应用具体的使用说明
         /// </summary>
-        public void OnUseInstructionClicked(object sender, RoutedEventArgs args)
+        private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
         }
@@ -527,7 +561,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 类型修改选择后修改样例文本
         /// </summary>
-        public void OnTypeSelectClicked(object sender, RoutedEventArgs args)
+        private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -543,7 +577,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 通道选择修改
         /// </summary>
-        public void OnChannelSelectClicked(object sender, RoutedEventArgs args)
+        private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
@@ -555,7 +589,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取链接
         /// </summary>
-        public void OnGetLinksClicked(object sender, RoutedEventArgs args)
+        private void OnGetLinksClicked(object sender, RoutedEventArgs args)
         {
             GetLinks();
         }
@@ -563,15 +597,15 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 查看全部
         /// </summary>
-        public void OnViewAllClicked(object sender, RoutedEventArgs args)
+        private void OnViewAllClicked(object sender, RoutedEventArgs args)
         {
             NavigationService.NavigateTo(typeof(HistoryPage), AppNaviagtionArgs.History);
         }
 
         /// <summary>
-        /// 复制CategoryID
+        /// 复制 CategoryID
         /// </summary>
-        public void OnCopyIDClicked(object sender, RoutedEventArgs args)
+        private void OnCopyIDClicked(object sender, RoutedEventArgs args)
         {
             CopyPasteHelper.CopyTextToClipBoard(CategoryId);
             new DataCopyNotification(this, DataCopyKind.ResultID).Show();
@@ -580,11 +614,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 进入多选模式
         /// </summary>
-        public void OnSelectClicked(object sender, RoutedEventArgs args)
+        private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             lock (ResultDataListObjectLock)
             {
-                foreach (ResultModel resultItem in ResultDataList)
+                foreach (ResultModel resultItem in ResultCollection)
                 {
                     resultItem.IsSelectMode = true;
                     resultItem.IsSelected = false;
@@ -597,11 +631,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 全选
         /// </summary>
-        public void OnSelectAllClicked(object sender, RoutedEventArgs args)
+        private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             lock (ResultDataListObjectLock)
             {
-                foreach (ResultModel resultItem in ResultDataList)
+                foreach (ResultModel resultItem in ResultCollection)
                 {
                     resultItem.IsSelected = true;
                 }
@@ -611,11 +645,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 全部不选
         /// </summary>
-        public void OnSelectNoneClicked(object sender, RoutedEventArgs args)
+        private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             lock (ResultDataListObjectLock)
             {
-                foreach (ResultModel resultItem in ResultDataList)
+                foreach (ResultModel resultItem in ResultCollection)
                 {
                     resultItem.IsSelected = false;
                 }
@@ -625,7 +659,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 显示复制选项
         /// </summary>
-        public void OnCopyOptionsClicked(object sender, RoutedEventArgs args)
+        private void OnCopyOptionsClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as MenuFlyoutItem);
         }
@@ -633,11 +667,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制选定项目的内容
         /// </summary>
-        public void OnCopySelectedClicked(object sender, RoutedEventArgs args)
+        private void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {
-                List<ResultModel> selectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
+                List<ResultModel> selectedResultDataList = ResultCollection.Where(item => item.IsSelected is true).ToList();
 
                 // 内容为空时显示空提示对话框
                 if (selectedResultDataList.Count is 0)
@@ -672,11 +706,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制选定项目的链接
         /// </summary>
-        public void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
+        private void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {
-                List<ResultModel> selectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
+                List<ResultModel> selectedResultDataList = ResultCollection.Where(item => item.IsSelected is true).ToList();
 
                 // 内容为空时显示空提示对话框
                 if (selectedResultDataList.Count is 0)
@@ -706,7 +740,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 下载选定项目
         /// </summary>
-        public void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -726,7 +760,7 @@ namespace GetStoreApp.Views.Pages
 
             Task.Run(async () =>
             {
-                List<ResultModel> selectedResultDataList = ResultDataList.Where(item => item.IsSelected is true).ToList();
+                List<ResultModel> selectedResultDataList = ResultCollection.Where(item => item.IsSelected is true).ToList();
 
                 // 内容为空时显示空提示对话框
                 if (selectedResultDataList.Count is 0)
@@ -823,7 +857,7 @@ namespace GetStoreApp.Views.Pages
                         // 显示下载任务创建成功消息
                         new DownloadCreateNotification(this, IsDownloadSuccessfully).Show();
 
-                        foreach (ResultModel resultItem in ResultDataList)
+                        foreach (ResultModel resultItem in ResultCollection)
                         {
                             resultItem.IsSelectMode = false;
                         }
@@ -845,12 +879,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 退出多选模式
         /// </summary>
-        public void OnCancelClicked(object sender, RoutedEventArgs args)
+        private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             lock (ResultDataListObjectLock)
             {
                 IsSelectMode = false;
-                foreach (ResultModel resultItem in ResultDataList)
+                foreach (ResultModel resultItem in ResultCollection)
                 {
                     resultItem.IsSelectMode = false;
                 }
@@ -860,7 +894,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public void OnItemClicked(object sender, ItemClickEventArgs args)
+        private void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             ResultModel resultItem = args.ClickedItem as ResultModel;
 
@@ -868,8 +902,8 @@ namespace GetStoreApp.Views.Pages
             {
                 lock (ResultDataListObjectLock)
                 {
-                    int ClickedIndex = ResultDataList.IndexOf(resultItem);
-                    ResultDataList[ClickedIndex].IsSelected = !ResultDataList[ClickedIndex].IsSelected;
+                    int ClickedIndex = ResultCollection.IndexOf(resultItem);
+                    ResultCollection[ClickedIndex].IsSelected = !ResultCollection[ClickedIndex].IsSelected;
                 }
             }
         }
@@ -881,6 +915,8 @@ namespace GetStoreApp.Views.Pages
         {
             await Launcher.LaunchUriAsync(new Uri(((sender as HyperlinkButton).DataContext as ResultModel).FileLink));
         }
+
+        #endregion 第三部分：应用商店页面——挂载的事件
 
         /// <summary>
         /// 属性值发生变化时通知更改
@@ -904,11 +940,11 @@ namespace GetStoreApp.Views.Pages
                 {
                     lock (HistoryLiteDataListLock)
                     {
-                        HistoryLiteDataList.Clear();
+                        HistoryLiteCollection.Clear();
                         Task.Delay(10);
                         foreach (HistoryModel historyItem in HistoryRawList)
                         {
-                            HistoryLiteDataList.Add(historyItem);
+                            HistoryLiteCollection.Add(historyItem);
                         }
                     }
                 });
@@ -978,11 +1014,11 @@ namespace GetStoreApp.Views.Pages
 
                     lock (ResultDataListObjectLock)
                     {
-                        ResultDataList.Clear();
+                        ResultCollection.Clear();
                         foreach (ResultModel resultItem in resultDataList)
                         {
                             resultItem.IsSelected = false;
-                            ResultDataList.Add(resultItem);
+                            ResultCollection.Add(resultItem);
                             Task.Delay(1);
                         }
                     }

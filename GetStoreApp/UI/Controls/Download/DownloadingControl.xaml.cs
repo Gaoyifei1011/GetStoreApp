@@ -422,9 +422,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 当有信息处于更新状态中时，暂停其他操作
             lock (DownloadingNowLock) IsUpdatingNow = true;
 
-            ObservableCollection<BackgroundModel> DownloadingList = DownloadSchedulerService.DownloadingList;
-
-            foreach (BackgroundModel backgroundItem in DownloadingList)
+            foreach (BackgroundModel backgroundItem in DownloadSchedulerService.DownloadingList)
             {
                 try
                 {

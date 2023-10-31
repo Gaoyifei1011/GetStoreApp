@@ -135,7 +135,7 @@ namespace GetStoreApp
 
             if (IsWindowMaximized.HasValue && IsWindowMaximized.Value is true)
             {
-                MainWindow.Presenter.Maximize();
+                MainWindow.MaximizeOrRestore();
             }
             else
             {

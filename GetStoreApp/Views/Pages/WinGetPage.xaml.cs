@@ -1,4 +1,5 @@
 using GetStoreApp.Models.Controls.WinGet;
+using GetStoreApp.Views.CustomControls.Navigation;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
@@ -35,9 +36,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public ObservableCollection<InstallingAppsModel> InstallingAppsList = new ObservableCollection<InstallingAppsModel>();
+        public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = new Dictionary<string, CancellationTokenSource>();
 
-        public Dictionary<string, CancellationTokenSource> InstallingStateDict = new Dictionary<string, CancellationTokenSource>();
+        public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = new ObservableCollection<InstallingAppsModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,26 +47,12 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        /// <summary>
-        /// 判断 WinGet 程序包是否存在
-        /// </summary>
-        public bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted, bool needReverseValue)
-        {
-            bool result = isOfficialVersionExisted || isDevVersionExisted;
-            if (needReverseValue)
-            {
-                return !result;
-            }
-            else
-            {
-                return result;
-            }
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 取消下载
         /// </summary>
-        public void OnCancelInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCancelInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
             if (appId is not null)
@@ -84,10 +71,29 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：WinGet 程序包页面——挂载的事件
+
+        /// <summary>
+        /// 分割控件选中项发生改变时引发的事件
+        /// </summary>
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (args.RemovedItems.Count > 0)
+            {
+                Segmented segmented = sender as Segmented;
+                if (segmented is not null)
+                {
+                    SelectedIndex = segmented.SelectedIndex;
+                }
+            }
+        }
+
         /// <summary>
         /// 初始化 WinGet 程序包
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             SearchApps.WinGetInstance = this;
             UpgradableApps.WinGetInstance = this;
@@ -96,7 +102,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开控制面板的程序与功能
         /// </summary>
-        public void OnControlPanelClicked(object sender, RoutedEventArgs args)
+        private void OnControlPanelClicked(object sender, RoutedEventArgs args)
         {
             Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
             WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
@@ -126,7 +132,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解更多有关 WinGet 程序包的描述信息
         /// </summary>
-        public async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
+        private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager/"));
         }
@@ -134,7 +140,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 从微软商店中下载 WinGet 程序包管理器
         /// </summary>
-        public async void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
+        private async void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/ProductId=9NBLGGH4NNS1"));
         }
@@ -142,10 +148,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 从Github中下载 WinGet 程序包管理器
         /// </summary>
-        public async void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
+        private async void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
         }
+
+        #endregion 第二部分：WinGet 程序包页面——挂载的事件
 
         /// <summary>
         /// 属性值发生变化时通知更改
@@ -153,6 +161,22 @@ namespace GetStoreApp.Views.Pages
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 判断 WinGet 程序包是否存在
+        /// </summary>
+        private bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted, bool needReverseValue)
+        {
+            bool result = isOfficialVersionExisted || isDevVersionExisted;
+            if (needReverseValue)
+            {
+                return !result;
+            }
+            else
+            {
+                return result;
+            }
         }
     }
 }

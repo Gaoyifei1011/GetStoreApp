@@ -1,21 +1,41 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Window;
+using GetStoreApp.Views.CustomControls.Navigation;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// 下载页面
     /// </summary>
-    public sealed partial class DownloadPage : Page
+    public sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+
+            set
+            {
+                _selectedIndex = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public DownloadPage()
         {
             InitializeComponent();
         }
+
+        #region 第一部分：重写父类事件
 
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
@@ -31,26 +51,32 @@ namespace GetStoreApp.Views.Pages
             DownloadSchedulerService.DownloadingList.CollectionChanged -= Completed.OnDownloadingListItemsChanged;
         }
 
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：下载页面——挂载的事件
+
         /// <summary>
         /// 下载透视控件选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
         /// </summary>
-        public async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             if (args.RemovedItems.Count > 0)
             {
-                Pivot pivot = sender as Pivot;
-                if (pivot is not null)
+                Segmented segmented = sender as Segmented;
+
+                if (segmented is not null)
                 {
-                    if (pivot.SelectedIndex is 0)
+                    SelectedIndex = segmented.SelectedIndex;
+                    if (segmented.SelectedIndex is 0)
                     {
                         await Downloading.StartDownloadingTimerAsync();
                     }
-                    else if (pivot.SelectedIndex is 1)
+                    else if (segmented.SelectedIndex is 1)
                     {
                         Downloading.StopDownloadingTimer(false);
                         await Unfinished.GetUnfinishedDataListAsync();
                     }
-                    else if (pivot.SelectedIndex is 2)
+                    else if (segmented.SelectedIndex is 2)
                     {
                         Downloading.StopDownloadingTimer(false);
                         await Completed.GetCompletedDataListAsync();
@@ -62,7 +88,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开应用“下载设置”
         /// </summary>
-        public void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
             DownloadFlyout.Hide();
             NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
@@ -71,10 +97,20 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解更多下载管理说明
         /// </summary>
-        public void OnLearnMoreClicked(object sender, RoutedEventArgs args)
+        private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
             DownloadFlyout.Hide();
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+        }
+
+        #endregion 第二部分：下载页面——挂载的事件
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
