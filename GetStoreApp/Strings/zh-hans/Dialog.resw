@@ -174,12 +174,6 @@
   <data name="DeleteTitle" xml:space="preserve">
     <value>删除记录</value>
   </data>
-  <data name="DesktopAppsContent1" xml:space="preserve">
-    <value>微软在最新的 Microsoft Store 中将应用分成两类应用，一类是商店应用，安装、更新依赖商店的服务；另一类是传统桌面应用，这类应用的安装是独立安装的，更新时在应用内部更新，商店只提供应用安装包的下载服务。</value>
-  </data>
-  <data name="DesktopAppsContent2" xml:space="preserve">
-    <value>微软在传统桌面应用的详细介绍页中添加了说明。如下图所示，如若在应用标题下方出现一排小字，文字内容是"由某开发商提供和更新"时，说明该应用就是传统桌面应用。</value>
-  </data>
   <data name="DesktopStartupArgsDescription1" xml:space="preserve">
     <value>桌面应用可以通过输入参数选定好想要获取的类型、通道名称，填入相应的链接，方便快速获取</value>
   </data>
@@ -290,9 +284,6 @@
   </data>
   <data name="Reason" xml:space="preserve">
     <value>异常原因：</value>
-  </data>
-  <data name="RecognizeDesktopApps" xml:space="preserve">
-    <value>如何识别传统桌面应用?</value>
   </data>
   <data name="Redownload" xml:space="preserve">
     <value>重新下载</value>

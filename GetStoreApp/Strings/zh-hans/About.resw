@@ -157,13 +157,7 @@
     <value>数据存储</value>
   </data>
   <data name="DataStorageDescription" xml:space="preserve">
-    <value>应用的数据存储现在已经切换为XML存储方式，不再是之前的数据库二进制存储文件了。这意味着您可以使用文本工具来访问数据存储文件（未加密），在访问数据存储文件时，请不要随意修改数据存储文件的任何内容。</value>
-  </data>
-  <data name="DesktopApps" xml:space="preserve">
-    <value>传统桌面应用不能获取</value>
-  </data>
-  <data name="DesktopAppsDescription" xml:space="preserve">
-    <value>微软已经允许在最新的 Microsoft Store 中发布传统桌面应用。这些应用程序的安装包通常为 .EXE 或 .MSI 格式，而非商店中的 .MSIX 或 .APPX 格式。这一类型的应用程序是不能通过该应用自动抓取的。</value>
+    <value>应用的数据是以XML文档方式方式存储的，您可以在本地目录中访问。在访问数据存储文件时，请不要随意修改数据存储文件的任何内容。因修改文件内容而造成应用无法启动时，请重置应用。</value>
   </data>
   <data name="DesktopLaunch" xml:space="preserve">
     <value>桌面程序参数</value>
@@ -299,9 +293,6 @@
   </data>
   <data name="ProjectHomePage" xml:space="preserve">
     <value>项目主页</value>
-  </data>
-  <data name="RecognizeDesktopApps" xml:space="preserve">
-    <value>如何识别传统桌面应用?</value>
   </data>
   <data name="Reference" xml:space="preserve">
     <value>项目引用（按英文首字母排序）</value>

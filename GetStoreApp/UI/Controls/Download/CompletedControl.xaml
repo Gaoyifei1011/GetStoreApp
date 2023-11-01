@@ -383,7 +383,7 @@
                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}">
 
                                         <Button.Content>
-                                            <FontIcon FontSize="14" Glyph="&#xE8da;" />
+                                            <FontIcon FontSize="14" Glyph="&#xEC50;" />
                                         </Button.Content>
                                     </Button>
                                 </StackPanel>

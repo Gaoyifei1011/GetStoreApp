@@ -903,9 +903,14 @@ namespace GetStoreApp.Views.Windows
                                 StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
                                 if (storePage is not null)
                                 {
-                                    storePage.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.TypeList[0] : storePage.TypeList[Convert.ToInt32(startupArgs[0])];
-                                    storePage.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.ChannelList[3] : storePage.ChannelList[Convert.ToInt32(startupArgs[1])];
-                                    storePage.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                                    storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
+                                    storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
+                                    storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+
+                                    if (storePage.SelectedIndex is not 0)
+                                    {
+                                        storePage.SelectedIndex = 0;
+                                    }
                                 }
                             }
 

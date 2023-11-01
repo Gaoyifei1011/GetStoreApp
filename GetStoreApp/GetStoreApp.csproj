@@ -91,6 +91,8 @@
 
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
+    <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
+    <None Remove="UI\Controls\Store\SearchControl.xaml" />
     
     <None Remove="UI\Controls\UWPApp\AppInfoControl.xaml" />
     <None Remove="UI\Controls\UWPApp\AppListControl.xaml" />
@@ -101,7 +103,6 @@
 
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
-    <None Remove="UI\Dialogs\About\DesktopAppsDialog.xaml" />
     <None Remove="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\About\LicenseDialog.xaml" />
 
@@ -169,13 +170,15 @@
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
+
+    <Page Update="UI\Controls\Store\SearchControl.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Controls\Store\QueryLinksControl.xaml" Generator="MSBuild:Compile" />
     
     <Page Update="UI\Controls\UWPApp\AppInfoControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\UWPApp\AppListControl.xaml" Generator="MSBuild:Compile" />    
 
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\About\DesktopAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\LicenseDialog.xaml" Generator="MSBuild:Compile" />
 

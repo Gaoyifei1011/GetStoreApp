@@ -289,14 +289,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 区分传统桌面应用
-        /// </summary>
-        private async void OnRecognizeClicked(object sender, RoutedEventArgs args)
-        {
-            await ContentDialogHelper.ShowAsync(new DesktopAppsDialog(), this);
-        }
-
-        /// <summary>
         /// 系统信息
         /// </summary>
         private async void OnSystemInformationClicked(object sender, RoutedEventArgs args)

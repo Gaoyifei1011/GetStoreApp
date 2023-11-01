@@ -174,12 +174,6 @@
   <data name="DeleteTitle" xml:space="preserve">
     <value>Delete record</value>
   </data>
-  <data name="DesktopAppsContent1" xml:space="preserve">
-    <value>Microsoft divides the app into two categories of apps in the latest Microsoft Store, one is the Store app, installing and updating the services that depend on the Store; The other type is the classical desktop application, the installation of this type of application is installed independently, when updating, it is updated inside the application, and the store only provides the download service of the application installation package.</value>
-  </data>
-  <data name="DesktopAppsContent2" xml:space="preserve">
-    <value>Microsoft has added instructions to the detail page of traditional desktop apps. As shown in the following figure, if a row of small print appears below the app title and the text content is "provided and updated by a developer", the application is a traditional desktop application.</value>
-  </data>
   <data name="DesktopStartupArgsDescription1" xml:space="preserve">
     <value>The desktop application can select the type and channel name you want to get through input parameters, and fill in the corresponding links to facilitate and quickly obtain</value>
   </data>
@@ -290,9 +284,6 @@
   </data>
   <data name="Reason" xml:space="preserve">
     <value>Exception reason: </value>
-  </data>
-  <data name="RecognizeDesktopApps" xml:space="preserve">
-    <value>How to recognize traditional desktop apps?</value>
   </data>
   <data name="Redownload" xml:space="preserve">
     <value>Re-download</value>

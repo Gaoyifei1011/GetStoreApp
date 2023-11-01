@@ -543,28 +543,6 @@
                                 Margin="0,0,0,10"
                                 FontSize="15"
                                 FontWeight="Normal"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopApps')}"
-                                TextAlignment="Left" />
-                            <TextBlock
-                                Margin="0,0,0,5"
-                                Padding="0,0,2,0"
-                                FontSize="13.5"
-                                FontWeight="Normal"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopAppsDescription')}"
-                                TextAlignment="Justify"
-                                TextWrapping="Wrap" />
-
-                            <HyperlinkButton
-                                Margin="-5,0,10,0"
-                                Padding="5"
-                                Click="{x:Bind OnRecognizeClicked}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/RecognizeDesktopApps')}" />
-                            <MenuFlyoutSeparator Margin="0,0,0,8" />
-
-                            <TextBlock
-                                Margin="0,0,0,10"
-                                FontSize="15"
-                                FontWeight="Normal"
                                 Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorage')}"
                                 TextAlignment="Left" />
                             <TextBlock

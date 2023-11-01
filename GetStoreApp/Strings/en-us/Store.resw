@@ -180,9 +180,6 @@
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
-  <data name="DownloadApps" xml:space="preserve">
-    <value>Download apps</value>
-  </data>
   <data name="DownloadSelected" xml:space="preserve">
     <value>Download the selected item</value>
   </data>
@@ -218,6 +215,9 @@
   </data>
   <data name="OptionsToolTip" xml:space="preserve">
     <value>Select the options you want to use</value>
+  </data>
+  <data name="QueryLinks" xml:space="preserve">
+    <value>Query links</value>
   </data>
   <data name="Recent" xml:space="preserve">
     <value>Recently used items</value>

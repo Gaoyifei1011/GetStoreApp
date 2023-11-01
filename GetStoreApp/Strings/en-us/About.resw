@@ -157,13 +157,7 @@
     <value>Data storage</value>
   </data>
   <data name="DataStorageDescription" xml:space="preserve">
-    <value>The application's data store has now been switched to XML storage instead of database binary storage. This means that you can use text tools to access the datastore file (unencrypted), and do not feel free to modify anything in the datastore file while accessing it.</value>
-  </data>
-  <data name="DesktopApps" xml:space="preserve">
-    <value>Traditional desktop apps</value>
-  </data>
-  <data name="DesktopAppsDescription" xml:space="preserve">
-    <value>Microsoft has allowed the release of traditional desktop apps in the latest Microsoft Store. The installation packages for these applications are typically in .EXE or .MSI format, rather than the . MSIX or . APPX format. This type of application cannot be crawled automatically through the app.</value>
+    <value>The app's data is stored as an XML document that you can access in your local directory. When accessing a datastore file, do not arbitrarily modify any of the contents of the datastore file. If the app fails to launch due to modification of the file contents, reset the app.</value>
   </data>
   <data name="DesktopLaunch" xml:space="preserve">
     <value>Desktop program parameters</value>
@@ -299,9 +293,6 @@
   </data>
   <data name="ProjectHomePage" xml:space="preserve">
     <value>Project home page</value>
-  </data>
-  <data name="RecognizeDesktopApps" xml:space="preserve">
-    <value>How to recognize traditional desktop apps?</value>
   </data>
   <data name="Reference" xml:space="preserve">
     <value>Project references (Sort by alphabetical order)</value>
