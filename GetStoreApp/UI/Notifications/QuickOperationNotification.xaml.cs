@@ -46,7 +46,7 @@ namespace GetStoreApp.UI.Notifications
             IsPinnedSuccessfully = isPinnedSuccessfully;
         }
 
-        public bool ControlLoad(QuickOperationKind operationType, bool isPinnedSuccessfully, string controlName)
+        private bool ControlLoad(QuickOperationKind operationType, bool isPinnedSuccessfully, string controlName)
         {
             if (controlName is "DesktopShortcutSuccess" && operationType is QuickOperationKind.Desktop && isPinnedSuccessfully)
             {

@@ -59,7 +59,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeSearchAppsCountInfo(SearchAppsDataList.Count), Mode=OneWay}" />
+            Text="{x:Bind LocalizeSearchAppsCountInfo(SearchAppsCollection.Count), Mode=OneWay}" />
 
         <AutoSuggestBox
             Grid.Column="4"
@@ -179,7 +179,7 @@
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchAppsDataList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchAppsCollection.Count), Mode=OneWay}">
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
@@ -191,13 +191,13 @@
                 Grid.Row="1"
                 Padding="30,0,30,30"
                 ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-                ItemsSource="{x:Bind SearchAppsDataList, Mode=OneWay}"
+                ItemsSource="{x:Bind SearchAppsCollection, Mode=OneWay}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.HorizontalScrollMode="Disabled"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollMode="Enabled"
                 SelectionMode="None"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchAppsDataList.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchAppsCollection.Count), Mode=OneWay}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="winget:SearchAppsModel">

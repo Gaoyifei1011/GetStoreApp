@@ -10,11 +10,9 @@ namespace GetStoreApp.UI.Notifications
     /// </summary>
     public sealed partial class DataCopyNotification : InAppNotification
     {
-        private DataCopyKind DataCopyType { get; }
-
-        private bool IsMultiSelected { get; }
-
-        private int Count { get; }
+        private bool IsMultiSelected;
+        private int Count;
+        private DataCopyKind DataCopyType;
 
         public DataCopyNotification(FrameworkElement element, DataCopyKind copyType, bool isMultiSelected = false, int count = 0) : base(element)
         {

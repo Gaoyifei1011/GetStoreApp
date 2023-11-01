@@ -9,7 +9,7 @@ namespace GetStoreApp.UI.Dialogs.WinGet
     /// </summary>
     public sealed partial class RebootDialog : ContentDialog
     {
-        public string RebootContent { get; set; }
+        private string RebootContent;
 
         public RebootDialog(WinGetOptionKind options, string appName)
         {

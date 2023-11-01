@@ -14,13 +14,11 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class RequestService
     {
-        private static string SelectedType { get; set; }
+        private static string SelectedType;
+        private static string SelectedChannel;
+        private static string LinkText;
 
-        private static string SelectedChannel { get; set; }
-
-        private static string LinkText { get; set; }
-
-        private static List<string> TypeList { get; } = new List<string>()
+        private static List<string> TypeList = new List<string>()
         {
             "url",
             "ProductId",
@@ -28,7 +26,7 @@ namespace GetStoreApp.Services.Shell
             "CategoryId"
         };
 
-        private static List<string> ChannelList { get; } = new List<string>()
+        private static List<string> ChannelList = new List<string>()
         {
             "WIF",
             "WIS",
@@ -131,23 +129,23 @@ namespace GetStoreApp.Services.Shell
             int SerialNumberColumnLength = (SerialNumberHeaderLength > "1".Length ? SerialNumberHeaderLength : "1".Length) + 3;
             int FileNameColumnLength = (FileNameHeaderLength > NoneLength ? FileNameHeaderLength : NoneLength) + 3;
 
-            ConsoleHelper.Write(ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.Write(Environment.NewLine);
             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ResultCollection"));
 
             // 打印标题
             ConsoleHelper.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
             ConsoleHelper.Write(FileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - FileNameHeaderLength));
-            ConsoleHelper.Write(FileSizeHeader + ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.Write(FileSizeHeader + Environment.NewLine);
 
             // 打印标题与内容的分割线
             ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, SerialNumberHeaderLength).PadRight(SerialNumberColumnLength));
             ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileNameHeaderLength).PadRight(FileNameColumnLength));
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + Environment.NewLine);
 
             // 输出内容
             ConsoleHelper.Write("1" + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - 1));
             ConsoleHelper.Write(None + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - NoneLength));
-            ConsoleHelper.Write(None + ConsoleLaunchService.LineBreaks);
+            ConsoleHelper.Write(None + Environment.NewLine);
         }
     }
 }

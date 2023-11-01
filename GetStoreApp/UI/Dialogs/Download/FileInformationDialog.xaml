@@ -73,25 +73,6 @@
                 TextWrapping="Wrap" />
         </Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="0"
-                Margin="0,0,0,5"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSHA1')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="0,0,0,5"
-                Text="{x:Bind FileSHA1}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-        </Grid>
-
         <StackPanel
             x:Name="FileChecking"
             x:Load="{x:Bind FileCheckState.Equals(x:False), Mode=OneWay}"
@@ -116,13 +97,13 @@
             <TextBlock
                 Grid.Column="0"
                 Margin="0,0,0,5"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckFileSHA1')}"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSHA1')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
             <TextBlock
                 Grid.Column="1"
                 Margin="0,0,0,5"
-                Text="{x:Bind CheckFileSHA1, Mode=OneWay}"
+                Text="{x:Bind FileSHA1, Mode=OneWay}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
         </Grid>

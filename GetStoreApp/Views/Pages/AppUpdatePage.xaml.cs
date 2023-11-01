@@ -25,7 +25,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
-        private static readonly object AppUpdateDataListLock = new object();
+        private static readonly object AppUpdateLock = new object();
 
         private static string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
         private static string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
@@ -115,7 +115,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (AppUpdateDataListLock)
+                                lock (AppUpdateLock)
                                 {
                                     appUpdateItem.AppInstallState = AppInstallState.Pending;
                                     appUpdateItem.IsUpdating = true;
@@ -170,7 +170,7 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (AppUpdateDataListLock)
+                        lock (AppUpdateLock)
                         {
                             foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                             {
@@ -264,7 +264,7 @@ namespace GetStoreApp.Views.Pages
                     // 只添加未有的项
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (AppUpdateDataListLock)
+                        lock (AppUpdateLock)
                         {
                             foreach (AppUpdateModel appUpdateItem in appUpdateList)
                             {
@@ -291,7 +291,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (AppUpdateDataListLock)
+                            lock (AppUpdateLock)
                             {
                                 appUpdateItem.AppInstallState = AppInstallState.Pending;
                                 appUpdateItem.IsUpdating = true;
@@ -337,7 +337,7 @@ namespace GetStoreApp.Views.Pages
 
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (AppUpdateDataListLock)
+                lock (AppUpdateLock)
                 {
                     foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                     {
@@ -377,7 +377,7 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (AppUpdateDataListLock)
+                        lock (AppUpdateLock)
                         {
                             appUpdateItem.AppInstallState = appInstallStatus.InstallState;
                             appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;

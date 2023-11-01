@@ -17,13 +17,9 @@ namespace GetStoreApp.UI.Dialogs.Download
     /// </summary>
     public sealed partial class FileInformationDialog : ContentDialog, INotifyPropertyChanged
     {
-        public string FileName { get; set; }
-
-        public string FilePath { get; set; }
-
-        public string FileSize { get; set; }
-
-        public string FileSHA1 { get; set; }
+        private string FileName;
+        private string FilePath;
+        private string FileSize;
 
         private bool _fileCheckState = false;
 
@@ -38,15 +34,15 @@ namespace GetStoreApp.UI.Dialogs.Download
             }
         }
 
-        private string _checkFileSHA1;
+        private string _fileSHA1;
 
-        public string CheckFileSHA1
+        public string FileSHA1
         {
-            get { return _checkFileSHA1; }
+            get { return _fileSHA1; }
 
             set
             {
-                _checkFileSHA1 = value;
+                _fileSHA1 = value;
                 OnPropertyChanged();
             }
         }
@@ -59,13 +55,12 @@ namespace GetStoreApp.UI.Dialogs.Download
             FileName = completedItem.FileName;
             FilePath = completedItem.FilePath;
             FileSize = StringConverterHelper.DownloadSizeFormat(completedItem.TotalSize);
-            FileSHA1 = completedItem.FileSHA1;
             Task.Run(async () =>
             {
                 string fileShA1 = await IOHelper.GetFileSHA1Async(FilePath);
-                Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    CheckFileSHA1 = fileShA1;
+                    FileSHA1 = fileShA1;
                     FileCheckState = true;
                 });
             });
@@ -74,7 +69,7 @@ namespace GetStoreApp.UI.Dialogs.Download
         /// <summary>
         /// 复制文件信息
         /// </summary>
-        public void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
@@ -85,7 +80,6 @@ namespace GetStoreApp.UI.Dialogs.Download
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/CheckFileSHA1") + CheckFileSHA1);
 
                 DispatcherQueue.TryEnqueue(() =>
                 {

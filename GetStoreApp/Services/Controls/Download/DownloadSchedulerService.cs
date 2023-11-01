@@ -18,24 +18,19 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class DownloadSchedulerService
     {
-        // 临界区资源访问互斥锁
         private static readonly object DownloadSchedulerLock = new object();
-
         private static readonly object IsNetWorkConnectedLock = new object();
 
-        // 标志信息是否在更新中
         private static bool IsUpdatingNow = false;
-
         private static bool IsNetWorkConnected = true;
 
-        // 下载调度器
-        private static ThreadPoolTimer DownloadSchedulerTimer { get; set; }
+        private static ThreadPoolTimer DownloadSchedulerTimer;
 
         // 下载中任务列表（带通知）
-        public static ObservableCollection<BackgroundModel> DownloadingList { get; } = new ObservableCollection<BackgroundModel>();
+        public static ObservableCollection<BackgroundModel> DownloadingCollection { get; } = new ObservableCollection<BackgroundModel>();
 
         // 等待下载任务列表（带通知）
-        public static ObservableCollection<BackgroundModel> WaitingList { get; } = new ObservableCollection<BackgroundModel>();
+        public static ObservableCollection<BackgroundModel> WaitingCollection { get; } = new ObservableCollection<BackgroundModel>();
 
         /// <summary>
         /// 先获取当前网络状态信息，然后初始化下载监控任务
@@ -85,7 +80,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 数据库添加成功后添加等待下载任务
                 if (AddResult)
                 {
-                    WaitingList.Add(backgroundItem);
+                    WaitingCollection.Add(backgroundItem);
                     Result = true;
                 }
             }
@@ -97,7 +92,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 数据库更新成功后添加等待下载任务
                 if (UpdateResult)
                 {
-                    WaitingList.Add(backgroundItem);
+                    WaitingCollection.Add(backgroundItem);
                     Result = true;
                 }
             }
@@ -123,7 +118,7 @@ namespace GetStoreApp.Services.Controls.Download
             // 数据库添加成功后添加等待下载任务
             if (UpdateResult)
             {
-                WaitingList.Add(downloadItem);
+                WaitingCollection.Add(downloadItem);
             }
 
             // 信息更新完毕时，退出写模式，让其他线程执行操作
@@ -148,7 +143,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 try
                 {
-                    WaitingList.Remove(WaitingList.First(item => item.DownloadKey == downloadKey));
+                    WaitingCollection.Remove(WaitingCollection.First(item => item.DownloadKey == downloadKey));
                     Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                 }
                 catch (Exception e)
@@ -168,7 +163,7 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        DownloadingList.Remove(DownloadingList.First(item => item.DownloadKey == downloadKey));
+                        DownloadingCollection.Remove(DownloadingCollection.First(item => item.DownloadKey == downloadKey));
                         Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                     }
                     catch (Exception e)
@@ -199,7 +194,7 @@ namespace GetStoreApp.Services.Controls.Download
             lock (DownloadSchedulerLock) IsUpdatingNow = true;
 
             // 从正在下载列表中暂停所有正在下载任务
-            foreach (BackgroundModel backgroundItem in DownloadingList)
+            foreach (BackgroundModel backgroundItem in DownloadingCollection)
             {
                 // 从下载进程中移除正在下载的任务
                 (bool, string) DeleteResult = await Aria2Service.PauseAsync(backgroundItem.GID);
@@ -219,7 +214,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
 
             // 从等待下载列表中暂停所有等待下载任务
-            foreach (BackgroundModel backgroundItem in WaitingList)
+            foreach (BackgroundModel backgroundItem in WaitingCollection)
             {
                 try
                 {
@@ -233,8 +228,8 @@ namespace GetStoreApp.Services.Controls.Download
             }
 
             // 清空所有正在下载和等待下载的列表内容
-            while (DownloadingList.Count > 0) DownloadingList.RemoveAt(0);
-            while (WaitingList.Count > 0) WaitingList.RemoveAt(0);
+            while (DownloadingCollection.Count > 0) DownloadingCollection.RemoveAt(0);
+            while (WaitingCollection.Count > 0) WaitingCollection.RemoveAt(0);
 
             // 信息更新完毕时，退出写模式，让其他线程执行操作
             lock (DownloadSchedulerLock) IsUpdatingNow = false;
@@ -256,10 +251,10 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 try
                 {
-                    List<BackgroundModel> waitingList = WaitingList.Where(item => item.DownloadKey == downloadKey).ToList();
+                    List<BackgroundModel> waitingList = WaitingCollection.Where(item => item.DownloadKey == downloadKey).ToList();
                     foreach (BackgroundModel backgroundItem in waitingList)
                     {
-                        WaitingList.Remove(backgroundItem);
+                        WaitingCollection.Remove(backgroundItem);
                     }
 
                     Result = await DownloadXmlService.DeleteAsync(downloadKey);
@@ -281,10 +276,10 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        List<BackgroundModel> downloadingList = DownloadingList.Where(item => item.DownloadKey == downloadKey).ToList();
+                        List<BackgroundModel> downloadingList = DownloadingCollection.Where(item => item.DownloadKey == downloadKey).ToList();
                         foreach (BackgroundModel backgroundItem in downloadingList)
                         {
-                            DownloadingList.Remove(backgroundItem);
+                            DownloadingCollection.Remove(backgroundItem);
                         }
 
                         Result = await DownloadXmlService.DeleteAsync(downloadKey);
@@ -349,7 +344,7 @@ namespace GetStoreApp.Services.Controls.Download
                         }
 
                         // 发送通知
-                        if (DownloadingList.Any() || WaitingList.Any())
+                        if (DownloadingCollection.Any() || WaitingCollection.Any())
                         {
                             ToastNotificationService.Show(NotificationKind.DownloadAborted, "DownloadingNow");
                         }
@@ -382,10 +377,10 @@ namespace GetStoreApp.Services.Controls.Download
         private static async Task ScheduledAddTaskAsync()
         {
             // 如果仍然存在等待下载的任务，并且当前正在下载的数量并未到达阈值时，开始下载
-            while (WaitingList.Count > 0 && DownloadingList.Count < DownloadOptionsService.DownloadItem)
+            while (WaitingCollection.Count > 0 && DownloadingCollection.Count < DownloadOptionsService.DownloadItem)
             {
                 // 获取列表中的第一个元素
-                BackgroundModel DownloadItem = WaitingList.FirstOrDefault();
+                BackgroundModel DownloadItem = WaitingCollection.FirstOrDefault();
 
                 (bool, string) AddResult = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
 
@@ -393,17 +388,17 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        List<BackgroundModel> downloadingList = WaitingList.Where(item => item.DownloadKey == DownloadItem.DownloadKey).ToList();
+                        List<BackgroundModel> downloadingList = WaitingCollection.Where(item => item.DownloadKey == DownloadItem.DownloadKey).ToList();
                         foreach (BackgroundModel backgroundItem in downloadingList)
                         {
-                            WaitingList.Remove(backgroundItem);
+                            WaitingCollection.Remove(backgroundItem);
                         }
 
                         // 将当前任务的下载状态标记为正在下载状态
                         DownloadItem.DownloadFlag = 3;
                         DownloadItem.GID = AddResult.Item2;
 
-                        DownloadingList.Add(DownloadItem);
+                        DownloadingCollection.Add(DownloadItem);
 
                         await DownloadXmlService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
                     }
@@ -418,11 +413,11 @@ namespace GetStoreApp.Services.Controls.Download
                     try
                     {
                         DownloadItem.DownloadFlag = 0;
-                        for (int index = 0; index < WaitingList.Count; index++)
+                        for (int index = 0; index < WaitingCollection.Count; index++)
                         {
-                            if (DownloadItem.DownloadKey == WaitingList[index].DownloadKey)
+                            if (DownloadItem.DownloadKey == WaitingCollection[index].DownloadKey)
                             {
-                                WaitingList.RemoveAt(index);
+                                WaitingCollection.RemoveAt(index);
                                 break;
                             }
                         }
@@ -444,10 +439,10 @@ namespace GetStoreApp.Services.Controls.Download
         private static async Task ScheduledUpdateStatusAsync()
         {
             // 当下载队列中仍然还存在下载任务时，更新正在下载的任务信息
-            if (DownloadingList.Count > 0)
+            if (DownloadingCollection.Count > 0)
             {
                 // 先更新下载的任务信息
-                foreach (BackgroundModel downloadItem in DownloadingList)
+                foreach (BackgroundModel downloadItem in DownloadingCollection)
                 {
                     (bool, string, double, double, double) TellStatusResult = await Aria2Service.TellStatusAsync(downloadItem.GID);
 
@@ -498,16 +493,16 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 正在下载列表中删除掉不是处于下载状态的任务
-                List<BackgroundModel> downloadingList = DownloadingList.Where(item => item.DownloadFlag is not 3).ToList();
+                List<BackgroundModel> downloadingList = DownloadingCollection.Where(item => item.DownloadFlag is not 3).ToList();
                 foreach (BackgroundModel backgroundItem in downloadingList)
                 {
-                    DownloadingList.Remove(backgroundItem);
+                    DownloadingCollection.Remove(backgroundItem);
                 }
 
-                BadgeNotificationService.Show(DownloadingList.Count + WaitingList.Count);
+                BadgeNotificationService.Show(DownloadingCollection.Count + WaitingCollection.Count);
 
                 // 下载完成后发送通知
-                if (DownloadingList.Count is 0 && WaitingList.Count is 0)
+                if (DownloadingCollection.Count is 0 && WaitingCollection.Count is 0)
                 {
                     ToastNotificationService.Show(NotificationKind.DownloadCompleted);
                 }

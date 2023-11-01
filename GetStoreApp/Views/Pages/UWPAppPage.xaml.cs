@@ -1,8 +1,8 @@
-using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -42,9 +42,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public ObservableCollection<BreadModel> BreadCollection { get; } = new ObservableCollection<BreadModel>()
+        public ObservableCollection<DictionaryEntry> BreadCollection { get; } = new ObservableCollection<DictionaryEntry>()
         {
-            new BreadModel(){ DisplayName = ResourceService.GetLocalized("UWPApp/AppList"), InternalName = "AppList" },
+            new DictionaryEntry(){ Key = ResourceService.GetLocalized("UWPApp/AppList"), Value = "AppList" },
         };
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -69,10 +69,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            BreadModel breadItem = args.Item as BreadModel;
+            DictionaryEntry breadItem = (DictionaryEntry)args.Item;
             if (BreadCollection.Count is 2)
             {
-                if (breadItem is not null && breadItem.InternalName.Equals(BreadCollection[0].InternalName, StringComparison.OrdinalIgnoreCase))
+                if (breadItem.Value.Equals(BreadCollection[0].Value))
                 {
                     BackToAppList();
                 }
@@ -122,10 +122,10 @@ namespace GetStoreApp.Views.Pages
             if (packageInstance is not null)
             {
                 AppInfo.InitializeAppInfo(packageInstance);
-                BreadCollection.Add(new BreadModel()
+                BreadCollection.Add(new DictionaryEntry()
                 {
-                    DisplayName = ResourceService.GetLocalized("UWPApp/AppInformation"),
-                    InternalName = "AppInformation"
+                    Key = ResourceService.GetLocalized("UWPApp/AppInformation"),
+                    Value = "AppInformation"
                 });
             }
         }

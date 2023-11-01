@@ -272,7 +272,7 @@
                             BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                             BorderThickness="1"
                             CornerRadius="{StaticResource ControlCornerRadius}"
-                            ItemsSource="{x:Bind ReferenceList}"
+                            ItemsSource="{x:Bind ReferenceDict}"
                             SelectionMode="None">
 
                             <GridView.ItemContainerStyle>
@@ -811,7 +811,7 @@
                                 BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                                 BorderThickness="1"
                                 CornerRadius="{StaticResource ControlCornerRadius}"
-                                ItemsSource="{x:Bind ThanksList}"
+                                ItemsSource="{x:Bind ThanksDict}"
                                 SelectionMode="None">
 
                                 <GridView.ItemContainerStyle>

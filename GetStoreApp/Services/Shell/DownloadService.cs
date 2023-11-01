@@ -21,7 +21,6 @@ namespace GetStoreApp.Services.Shell
         private static bool IsFileDownloading = false;
 
         public static STARTUPINFO DownloadProcessStartupInfo;
-
         public static PROCESS_INFORMATION DownloadProcessInformation;
 
         /// <summary>

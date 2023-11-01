@@ -4,7 +4,6 @@ using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Controls.History;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
@@ -20,6 +19,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -49,7 +49,7 @@ namespace GetStoreApp.Views.Pages
 
         private AppNaviagtionArgs StoreNavigationArgs = AppNaviagtionArgs.None;
 
-        public GroupOptionsModel HistoryLiteItem { get; set; } = HistoryRecordService.HistoryLiteNum;
+        public DictionaryEntry HistoryLiteItem { get; set; } = HistoryRecordService.HistoryLiteNum;
 
         private int _selectedIndex;
 
@@ -260,7 +260,7 @@ namespace GetStoreApp.Views.Pages
                 StoreNavigationArgs = AppNaviagtionArgs.None;
             }
 
-            if (HistoryLiteItem != HistoryRecordService.HistoryLiteNum)
+            if (HistoryLiteItem.Value != HistoryRecordService.HistoryLiteNum.Value)
             {
                 HistoryLiteItem = HistoryRecordService.HistoryLiteNum;
             }
@@ -347,7 +347,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     AutoResetEvent autoResetEvent = new AutoResetEvent(false);
                     // 使用应用内提供的下载方式
-                    if (DownloadOptionsService.DownloadMode.SelectedValue == DownloadOptionsService.DownloadModeList[0].SelectedValue)
+                    if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[0].Value)
                     {
                         string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
 
@@ -468,7 +468,7 @@ namespace GetStoreApp.Views.Pages
                     }
 
                     // 使用浏览器下载
-                    else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
+                    else if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[1].Value)
                     {
                         await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
                     }
@@ -774,7 +774,7 @@ namespace GetStoreApp.Views.Pages
                 };
 
                 // 使用应用内提供的下载方式
-                if (DownloadOptionsService.DownloadMode.SelectedValue == DownloadOptionsService.DownloadModeList[0].SelectedValue)
+                if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[0].Value)
                 {
                     List<BackgroundModel> duplicatedList = new List<BackgroundModel>();
 
@@ -866,7 +866,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 // 使用浏览器下载
-                else if (DownloadOptionsService.DownloadMode == DownloadOptionsService.DownloadModeList[1])
+                else if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[1].Value)
                 {
                     foreach (ResultModel resultItem in selectedResultDataList)
                     {
@@ -934,7 +934,7 @@ namespace GetStoreApp.Views.Pages
             Task.Run(async () =>
             {
                 // 获取数据库的原始记录数据
-                List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(Convert.ToInt32(HistoryLiteItem.SelectedValue));
+                List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(Convert.ToInt32(HistoryLiteItem.Value));
 
                 DispatcherQueue.TryEnqueue(() =>
                 {

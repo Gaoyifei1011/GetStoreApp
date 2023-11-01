@@ -43,7 +43,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
         }
 
-        public List<TraceCleanupModel> TraceCleanupList { get; set; } = new List<TraceCleanupModel>();
+        private List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -55,35 +55,19 @@ namespace GetStoreApp.UI.Dialogs.Settings
             {
                 traceCleanupItem.IsSelected = false;
                 traceCleanupItem.IsCleanFailed = false;
-                traceCleanupItem.PropertyChanged += OnTraceCleanupPropertyChanged;
+                traceCleanupItem.PropertyChanged += (sender, args) =>
+                {
+                    IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
+                };
 
                 TraceCleanupList.Add(traceCleanupItem);
-            }
-        }
-
-        public bool IsButtonEnabled(bool isSelected, bool isCleaning)
-        {
-            if (isCleaning)
-            {
-                return false;
-            }
-            else
-            {
-                if (isSelected)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
             }
         }
 
         /// <summary>
         /// 痕迹清理
         /// </summary>
-        public void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
@@ -104,9 +88,23 @@ namespace GetStoreApp.UI.Dialogs.Settings
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void OnTraceCleanupPropertyChanged(object sender, PropertyChangedEventArgs args)
+        private bool IsButtonEnabled(bool isSelected, bool isCleaning)
         {
-            IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
+            if (isCleaning)
+            {
+                return false;
+            }
+            else
+            {
+                if (isSelected)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         /// <summary>

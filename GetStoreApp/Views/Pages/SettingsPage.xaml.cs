@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
@@ -13,6 +12,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -37,9 +37,9 @@ namespace GetStoreApp.Views.Pages
 
         private AppNaviagtionArgs SettingNavigationArgs = AppNaviagtionArgs.None;
 
-        private GroupOptionsModel _theme = ThemeService.AppTheme;
+        private DictionaryEntry _theme = ThemeService.AppTheme;
 
-        public GroupOptionsModel Theme
+        public DictionaryEntry Theme
         {
             get { return _theme; }
 
@@ -50,9 +50,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GroupOptionsModel _backdrop = BackdropService.AppBackdrop;
+        private DictionaryEntry _backdrop = BackdropService.AppBackdrop;
 
-        public GroupOptionsModel Backdrop
+        public DictionaryEntry Backdrop
         {
             get { return _backdrop; }
 
@@ -76,9 +76,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GroupOptionsModel _appLanguage = LanguageService.AppLanguage;
+        private DictionaryEntry _appLanguage = LanguageService.AppLanguage;
 
-        public GroupOptionsModel AppLanguage
+        public DictionaryEntry AppLanguage
         {
             get { return _appLanguage; }
 
@@ -115,9 +115,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GroupOptionsModel _historyLiteItem = HistoryRecordService.HistoryLiteNum;
+        private DictionaryEntry _historyLiteItem = HistoryRecordService.HistoryLiteNum;
 
-        public GroupOptionsModel HistoryLiteItem
+        public DictionaryEntry HistoryLiteItem
         {
             get { return _historyLiteItem; }
 
@@ -167,9 +167,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GroupOptionsModel _winGetInstallMode = WinGetConfigService.WinGetInstallMode;
+        private DictionaryEntry _winGetInstallMode = WinGetConfigService.WinGetInstallMode;
 
-        public GroupOptionsModel WinGetInstallMode
+        public DictionaryEntry WinGetInstallMode
         {
             get { return _winGetInstallMode; }
 
@@ -206,9 +206,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GroupOptionsModel _downloadMode = DownloadOptionsService.DownloadMode;
+        private DictionaryEntry _downloadMode = DownloadOptionsService.DownloadMode;
 
-        public GroupOptionsModel DownloadMode
+        public DictionaryEntry DownloadMode
         {
             get { return _downloadMode; }
 
@@ -219,9 +219,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private GroupOptionsModel _installMode = InstallModeService.InstallMode;
+        private DictionaryEntry _installMode = InstallModeService.InstallMode;
 
-        public GroupOptionsModel InstallMode
+        public DictionaryEntry InstallMode
         {
             get { return _installMode; }
 
@@ -232,19 +232,19 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<GroupOptionsModel> ThemeList { get; } = ThemeService.ThemeList;
+        private List<DictionaryEntry> ThemeList { get; } = ThemeService.ThemeList;
 
-        private List<GroupOptionsModel> BackdropList { get; } = BackdropService.BackdropList;
+        private List<DictionaryEntry> BackdropList { get; } = BackdropService.BackdropList;
 
-        private List<GroupOptionsModel> LanguageList { get; } = LanguageService.LanguageList;
+        private List<DictionaryEntry> LanguageList { get; } = LanguageService.LanguageList;
 
-        private List<GroupOptionsModel> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
+        private List<DictionaryEntry> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
 
-        private List<GroupOptionsModel> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
+        private List<DictionaryEntry> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
 
-        private List<GroupOptionsModel> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
+        private List<DictionaryEntry> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
 
-        private List<GroupOptionsModel> InstallModeList { get; } = InstallModeService.InstallModeList;
+        private List<DictionaryEntry> InstallModeList { get; } = InstallModeService.InstallModeList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -254,15 +254,15 @@ namespace GetStoreApp.Views.Pages
 
             for (int index = 0; index < LanguageList.Count; index++)
             {
-                GroupOptionsModel languageItem = LanguageList[index];
+                DictionaryEntry languageItem = LanguageList[index];
                 ToggleMenuFlyoutItem toggleMenuFlyoutItem = new ToggleMenuFlyoutItem()
                 {
-                    Text = languageItem.DisplayMember,
+                    Text = languageItem.Key.ToString(),
                     Style = ResourceDictionaryHelper.MenuFlyoutResourceDict["ToggleMenuFlyoutItemStyle"] as Style,
                     Tag = index
                 };
 
-                if (AppLanguage.SelectedValue == LanguageList[index].SelectedValue)
+                if (AppLanguage.Value.Equals(LanguageList[index].Value))
                 {
                     toggleMenuFlyoutItem.IsChecked = true;
                 }
@@ -281,7 +281,7 @@ namespace GetStoreApp.Views.Pages
                     int selectedIndex = Convert.ToInt32((sender as ToggleMenuFlyoutItem).Tag);
                     (LanguageFlyout.Items[selectedIndex] as ToggleMenuFlyoutItem).IsChecked = true;
 
-                    if (AppLanguage.SelectedValue != LanguageList[selectedIndex].SelectedValue)
+                    if (AppLanguage.Value.ToString() != LanguageList[selectedIndex].Value.ToString())
                     {
                         AppLanguage = LanguageList[selectedIndex];
                         LanguageService.SetLanguage(AppLanguage);
@@ -717,21 +717,21 @@ namespace GetStoreApp.Views.Pages
             return isOfficialVersionExisted || isDevVersionExisted;
         }
 
-        private string LocalizeDisplayNumber(GroupOptionsModel selectedBackdrop)
+        private string LocalizeDisplayNumber(DictionaryEntry selectedBackdrop)
         {
-            int index = BackdropList.FindIndex(item => item.SelectedValue.Equals(selectedBackdrop.SelectedValue));
+            int index = BackdropList.FindIndex(item => item.Value.Equals(selectedBackdrop.Value));
 
             if (index is 0)
             {
-                return selectedBackdrop.DisplayMember;
+                return selectedBackdrop.Key.ToString();
             }
             else if (index is 1 || index is 2)
             {
-                return ResourceService.GetLocalized("Settings/Mica") + " " + selectedBackdrop.DisplayMember;
+                return ResourceService.GetLocalized("Settings/Mica") + " " + selectedBackdrop.Key.ToString();
             }
             else if (index is 3 || index is 4 || index is 5)
             {
-                return ResourceService.GetLocalized("Settings/DesktopAcrylic") + " " + selectedBackdrop.DisplayMember;
+                return ResourceService.GetLocalized("Settings/DesktopAcrylic") + " " + selectedBackdrop.Key.ToString();
             }
             else
             {

@@ -19,17 +19,14 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class Aria2Service
     {
-        private static string Aria2FilePath { get; } = Path.Combine(InfoHelper.AppInstalledLocation, "Mile.Aria2.exe");
+        private static bool IsAria2ProcessRunning = false;
+
+        private static string Aria2FilePath = Path.Combine(InfoHelper.AppInstalledLocation, "Mile.Aria2.exe");
+        private static string Aria2Arguments;
+        private static string DefaultAria2Arguments = "-c --file-allocation=none --max-concurrent-downloads=3 --max-connection-per-server=5 --min-split-size=10M --split=5 --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 -D";
+        private static string RPCServerLink = "http://127.0.0.1:6300/jsonrpc";
 
         public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
-
-        private static string Aria2Arguments { get; set; }
-
-        private static string DefaultAria2Arguments { get; } = "-c --file-allocation=none --max-concurrent-downloads=3 --max-connection-per-server=5 --min-split-size=10M --split=5 --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 -D";
-
-        private static string RPCServerLink { get; } = "http://127.0.0.1:6300/jsonrpc";
-
-        private static bool IsAria2ProcessRunning = false;
 
         /// <summary>
         /// 初始化Aria2配置文件

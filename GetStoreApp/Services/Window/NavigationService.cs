@@ -11,11 +11,11 @@ namespace GetStoreApp.Services.Window
     /// </summary>
     public static class NavigationService
     {
+        private static DrillInNavigationTransitionInfo NavigationTransition = new DrillInNavigationTransitionInfo();
+
         public static Frame NavigationFrame { get; set; }
 
-        private static DrillInNavigationTransitionInfo NavigationTransition { get; } = new DrillInNavigationTransitionInfo();
-
-        public static List<NavigationModel> NavigationItemList { get; set; } = new List<NavigationModel>();
+        public static List<NavigationModel> NavigationItemList { get; private set; } = new List<NavigationModel>();
 
         /// <summary>
         /// 页面向前导航

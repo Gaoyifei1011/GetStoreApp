@@ -279,7 +279,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 复制应用入口的应用程序用户模型 ID
         /// </summary>
-        public void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string aumid = args.Parameter as string;
 
@@ -293,7 +293,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 复制依赖包信息
         /// </summary>
-        public void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
             if (package is not null)
@@ -324,7 +324,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 复制依赖包名称
         /// </summary>
-        public void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string displayName = args.Parameter as string;
             if (displayName is not null)
@@ -337,7 +337,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 启动对应入口的应用
         /// </summary>
-        public void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
             Task.Run(async () =>
@@ -356,7 +356,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 打开安装目录
         /// </summary>
-        public void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
@@ -379,7 +379,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 打开商店
         /// </summary>
-        public void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
 
@@ -402,7 +402,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 固定应用到桌面
         /// </summary>
-        public void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Task.Run(() =>
             {
@@ -433,7 +433,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 固定应用入口到开始“屏幕”
         /// </summary>
-        public void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
 
@@ -467,7 +467,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 固定应用入口到任务栏
         /// </summary>
-        public void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
             string actualTheme = ActualTheme.ToString();
@@ -511,7 +511,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 复制应用信息
         /// </summary>
-        public void OnCopyClicked(object sender, RoutedEventArgs args)
+        private void OnCopyClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {

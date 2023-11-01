@@ -14,16 +14,13 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ConsoleLaunchService
     {
-        // 换行符
-        public static string LineBreaks = "\r\n";
-
         // 行分隔符
-        public static char RowSplitCharacter = ' ';
+        public static char RowSplitCharacter { get; } = ' ';
 
         // 列分隔符
-        public static char ColumnSplitCharacter = '-';
+        public static char ColumnSplitCharacter { get; } = '-';
 
-        public static bool IsAppRunning = true;
+        public static bool IsAppRunning { get; private set; } = true;
 
         private static List<string> ConsoleLaunchArgs;
 
@@ -50,7 +47,7 @@ namespace GetStoreApp.Services.Root
             InitializeRequestContent();
             await RequestService.GetLinksAsync();
 
-            ConsoleHelper.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
+            ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
         }
 
         /// <summary>
@@ -58,7 +55,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static bool OnConsoleCtrlHandler(int dwCtrlType)
         {
-            ConsoleHelper.WriteLine(LineBreaks + ResourceService.GetLocalized("Console/ApplicationExit"));
+            ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
             ConsoleHelper.IsExited = true;
             IsAppRunning = false;
             DownloadService.StopDownloadFile();
@@ -77,9 +74,9 @@ namespace GetStoreApp.Services.Root
                 InfoHelper.AppVersion.Minor,
                 InfoHelper.AppVersion.Build,
                 InfoHelper.AppVersion.Revision
-                ) + LineBreaks);
+                ) + Environment.NewLine);
             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + LineBreaks);
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + Environment.NewLine);
         }
 
         /// <summary>

@@ -31,13 +31,12 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object InstalledAppsDataListObject = new object();
+        private readonly object InstalledAppsLock = new object();
 
         private bool isInitialized = false;
 
         private AutoResetEvent autoResetEvent;
-
-        private PackageManager InstalledAppsManager { get; set; }
+        private PackageManager InstalledAppsManager;
 
         private bool _isLoadedCompleted = false;
 
@@ -106,7 +105,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         private List<MatchResult> MatchResultList;
 
-        public ObservableCollection<InstalledAppsModel> InstalledAppsDataList { get; set; } = new ObservableCollection<InstalledAppsModel>();
+        private ObservableCollection<InstalledAppsModel> InstalledAppsCollection { get; } = new ObservableCollection<InstalledAppsModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -115,25 +114,12 @@ namespace GetStoreApp.UI.Controls.WinGet
             InitializeComponent();
         }
 
-        /// <summary>
-        /// 本地化应用数量统计信息
-        /// </summary>
-        public string LocalizeInstalledAppsCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("WinGet/InstalledAppsCountEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo"), count);
-            }
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 复制卸载命令
         /// </summary>
-        public void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
             if (appId is not null)
@@ -148,7 +134,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 卸载应用
         /// </summary>
-        public void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
 
@@ -215,15 +201,15 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (InstalledAppsDataListObject)
+                                lock (InstalledAppsLock)
                                 {
                                     // 从已安装应用列表中移除已卸载完成的应用
-                                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsDataList)
+                                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsCollection)
                                     {
                                         if (installedAppsItem.AppID == installedApps.AppID)
                                         {
-                                            InstalledAppsDataList.Remove(installedAppsItem);
-                                            IsInstalledAppsEmpty = InstalledAppsDataList.Count is 0;
+                                            InstalledAppsCollection.Remove(installedAppsItem);
+                                            IsInstalledAppsEmpty = InstalledAppsCollection.Count is 0;
                                             break;
                                         }
                                     }
@@ -251,10 +237,14 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：已安装应用控件——挂载的事件
+
         /// <summary>
         /// 初始化已安装应用信息
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (!isInitialized)
             {
@@ -276,7 +266,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 显示排序规则
         /// </summary>
-        public void OnSortClicked(object sender, RoutedEventArgs args)
+        private void OnSortClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
@@ -284,7 +274,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        public void OnSortWayClicked(object sender, RoutedEventArgs args)
+        private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
@@ -297,7 +287,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
-        public void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
@@ -310,7 +300,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 更新已安装应用数据
         /// </summary>
-        public void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList = null;
             IsLoadedCompleted = false;
@@ -322,7 +312,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        public void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
@@ -333,7 +323,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        public void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null)
@@ -345,12 +335,29 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        #endregion 第二部分：已安装应用控件——挂载的事件
+
         /// <summary>
         /// 属性值发生变化时通知更改
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 本地化应用数量统计信息
+        /// </summary>
+        private string LocalizeInstalledAppsCountInfo(int count)
+        {
+            if (count is 0)
+            {
+                return ResourceService.GetLocalized("WinGet/InstalledAppsCountEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo"), count);
+            }
         }
 
         /// <summary>
@@ -390,9 +397,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void InitializeData(bool hasSearchText = false)
         {
-            lock (InstalledAppsDataListObject)
+            lock (InstalledAppsLock)
             {
-                InstalledAppsDataList.Clear();
+                InstalledAppsCollection.Clear();
             }
 
             Task.Run(() =>
@@ -465,11 +472,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (InstalledAppsDataListObject)
+                        lock (InstalledAppsLock)
                         {
                             foreach (InstalledAppsModel installedApps in installedAppsList)
                             {
-                                InstalledAppsDataList.Add(installedApps);
+                                InstalledAppsCollection.Add(installedApps);
                             }
                             IsInstalledAppsEmpty = MatchResultList.Count is 0;
                             IsLoadedCompleted = true;
@@ -480,7 +487,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (InstalledAppsDataListObject)
+                        lock (InstalledAppsLock)
                         {
                             IsInstalledAppsEmpty = true;
                             IsLoadedCompleted = true;

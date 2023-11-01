@@ -34,9 +34,11 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class CompletedControl : Grid, INotifyPropertyChanged
     {
-        private readonly object CompletedDataListLock = new object();
+        private readonly object CompletedLock = new object();
 
         private bool isUpdatingNow = false;
+
+        public int SelectedIndex { get; set; } = 0;
 
         private bool _isSelectMode = false;
 
@@ -51,7 +53,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
-        public ObservableCollection<CompletedModel> CompletedDataList { get; } = new ObservableCollection<CompletedModel>();
+        private ObservableCollection<CompletedModel> CompletedCollection { get; } = new ObservableCollection<CompletedModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -60,28 +62,15 @@ namespace GetStoreApp.UI.Controls.Download
             InitializeComponent();
 
             // 订阅事件
-            DownloadSchedulerService.DownloadingList.CollectionChanged += OnDownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingCollection.CollectionChanged += OnDownloadingListItemsChanged;
         }
 
-        /// <summary>
-        /// 本地化已下载完成数量统计信息
-        /// </summary>
-        public string LocalizeCompletedCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("Download/CompletedEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("Download/CompletedCountInfo"), count);
-            }
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 删除当前任务
         /// </summary>
-        public async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
             if (completedItem is not null)
@@ -97,18 +86,18 @@ namespace GetStoreApp.UI.Controls.Download
                 if (DeleteResult)
                 {
                     while (isUpdatingNow) await Task.Delay(50);
-                    lock (CompletedDataListLock) isUpdatingNow = true;
+                    lock (CompletedLock) isUpdatingNow = true;
 
                     try
                     {
-                        CompletedDataList.Remove(completedItem);
+                        CompletedCollection.Remove(completedItem);
                     }
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                     }
 
-                    lock (CompletedDataListLock) isUpdatingNow = false;
+                    lock (CompletedLock) isUpdatingNow = false;
                 }
             }
         }
@@ -116,7 +105,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 删除当前任务（包括文件）
         /// </summary>
-        public async void OnDeleteWithFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnDeleteWithFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
             if (completedItem is not null)
@@ -146,18 +135,18 @@ namespace GetStoreApp.UI.Controls.Download
                 if (DeleteResult)
                 {
                     while (isUpdatingNow) await Task.Delay(50);
-                    lock (CompletedDataListLock) isUpdatingNow = true;
+                    lock (CompletedLock) isUpdatingNow = true;
 
                     try
                     {
-                        CompletedDataList.Remove(completedItem);
+                        CompletedCollection.Remove(completedItem);
                     }
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                     }
 
-                    lock (CompletedDataListLock) isUpdatingNow = false;
+                    lock (CompletedLock) isUpdatingNow = false;
                 }
             }
         }
@@ -165,7 +154,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 查看文件信息
         /// </summary>
-        public async void OnFileInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnFileInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
 
@@ -178,7 +167,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 安装应用
         /// </summary>
-        public async void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
             if (completedItem is not null)
@@ -190,29 +179,29 @@ namespace GetStoreApp.UI.Controls.Download
                     {
                         StorageFile CompletedFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
 
-                        if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[0].SelectedValue)
+                        if (InstallModeService.InstallMode.Value.Equals(InstallModeService.InstallModeList[0].Value))
                         {
                             await Launcher.LaunchFileAsync(CompletedFile);
                         }
 
                         // 直接安装
-                        else if (InstallModeService.InstallMode.SelectedValue == InstallModeService.InstallModeList[1].SelectedValue)
+                        else if (InstallModeService.InstallMode.Value.Equals(InstallModeService.InstallModeList[1].Value))
                         {
                             // 标记安装状态
                             try
                             {
-                                int InstallIndex = CompletedDataList.IndexOf(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
+                                int InstallIndex = CompletedCollection.IndexOf(CompletedCollection.First(item => item.DownloadKey == completedItem.DownloadKey));
 
-                                if (InstallIndex is not -1 && InstallIndex < CompletedDataList.Count)
+                                if (InstallIndex is not -1 && InstallIndex < CompletedCollection.Count)
                                 {
-                                    CompletedDataList[InstallIndex].IsInstalling = true;
+                                    CompletedCollection[InstallIndex].IsInstalling = true;
 
                                     PackageManager packageManager = new PackageManager();
 
                                     // 更新安装进度
                                     Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
                                     {
-                                        CompletedDataList[InstallIndex].InstallValue = installProgress.percentage;
+                                        CompletedCollection[InstallIndex].InstallValue = installProgress.percentage;
                                     });
 
                                     try
@@ -225,7 +214,7 @@ namespace GetStoreApp.UI.Controls.Download
                                     // 安装失败显示失败信息
                                     catch (Exception e)
                                     {
-                                        CompletedDataList[InstallIndex].InstallError = true;
+                                        CompletedCollection[InstallIndex].InstallError = true;
                                         // 显示安装失败通知
                                         ToastNotificationService.Show(NotificationKind.InstallApp, "Error", CompletedFile.Name, e.Message);
                                     }
@@ -233,8 +222,8 @@ namespace GetStoreApp.UI.Controls.Download
                                     finally
                                     {
                                         await Task.Delay(500);
-                                        CompletedDataList[InstallIndex].IsInstalling = false;
-                                        CompletedDataList[InstallIndex].InstallError = false;
+                                        CompletedCollection[InstallIndex].IsInstalling = false;
+                                        CompletedCollection[InstallIndex].InstallError = false;
                                     }
                                 }
                             }
@@ -257,7 +246,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 打开当前项目存储的文件夹
         /// </summary>
-        public async void OnOpenItemFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnOpenItemFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string filePath = args.Parameter as string;
             if (filePath is not null)
@@ -291,7 +280,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 共享文件
         /// </summary>
-        public void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
 
@@ -304,7 +293,7 @@ namespace GetStoreApp.UI.Controls.Download
                         Task.Run(async () =>
                         {
                             List<StorageFile> selectedFileList = new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) };
-                            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                            DispatcherQueue.TryEnqueue(() =>
                             {
                                 CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
                                 new DataCopyNotification(this, DataCopyKind.ShareFile, false).Show();
@@ -337,10 +326,14 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：已下载完成控件——挂载的事件
+
         /// <summary>
         /// 打开默认保存的文件夹
         /// </summary>
-        public async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         }
@@ -348,57 +341,57 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 进入多选模式
         /// </summary>
-        public async void OnSelectClicked(object sender, RoutedEventArgs args)
+        private async void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedDataListLock) isUpdatingNow = true;
+            lock (CompletedLock) isUpdatingNow = true;
 
-            foreach (CompletedModel completedItem in CompletedDataList)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelectMode = true;
                 completedItem.IsSelected = false;
             }
 
             IsSelectMode = true;
-            lock (CompletedDataListLock) isUpdatingNow = false;
+            lock (CompletedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 全部选择
         /// </summary>
-        public async void OnSelectAllClicked(object sender, RoutedEventArgs args)
+        private async void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedDataListLock) isUpdatingNow = true;
+            lock (CompletedLock) isUpdatingNow = true;
 
-            foreach (CompletedModel completedItem in CompletedDataList)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelected = true;
             }
 
-            lock (CompletedDataListLock) isUpdatingNow = false;
+            lock (CompletedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         ///  全部不选
         /// </summary>
-        public async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
+        private async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedDataListLock) isUpdatingNow = true;
+            lock (CompletedLock) isUpdatingNow = true;
 
-            foreach (CompletedModel completedItem in CompletedDataList)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelected = false;
             }
 
-            lock (CompletedDataListLock) isUpdatingNow = false;
+            lock (CompletedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 显示删除选项浮出控件
         /// </summary>
-        public void OnDeleteOptionsClicked(object sender, RoutedEventArgs args)
+        private void OnDeleteOptionsClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
@@ -406,11 +399,11 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 删除选中的任务
         /// </summary>
-        public async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
+        private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
-            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected is true))
+            foreach (CompletedModel completedItem in CompletedCollection.Where(item => item.IsSelected is true))
             {
                 SelectedCompletedDataList.Add(new BackgroundModel
                 {
@@ -443,9 +436,9 @@ namespace GetStoreApp.UI.Controls.Download
                 bool DeleteSelectedResult = await DownloadXmlService.DeleteSelectedAsync(SelectedCompletedDataList);
 
                 while (isUpdatingNow) await Task.Delay(50);
-                lock (CompletedDataListLock) isUpdatingNow = true;
+                lock (CompletedLock) isUpdatingNow = true;
 
-                foreach (CompletedModel completedItem in CompletedDataList)
+                foreach (CompletedModel completedItem in CompletedCollection)
                 {
                     completedItem.IsSelectMode = false;
                 }
@@ -454,7 +447,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     try
                     {
-                        CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                        CompletedCollection.Remove(CompletedCollection.First(item => item.DownloadKey == backgroundItem.DownloadKey));
                     }
                     catch (Exception e)
                     {
@@ -463,18 +456,18 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                 }
 
-                lock (CompletedDataListLock) isUpdatingNow = false;
+                lock (CompletedLock) isUpdatingNow = false;
             }
         }
 
         /// <summary>
         /// 删除选中的任务（包括文件）
         /// </summary>
-        public async void OnDeleteSelectedWithFileClicked(object sender, RoutedEventArgs args)
+        private async void OnDeleteSelectedWithFileClicked(object sender, RoutedEventArgs args)
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
-            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected is true))
+            foreach (CompletedModel completedItem in CompletedCollection.Where(item => item.IsSelected is true))
             {
                 SelectedCompletedDataList.Add(new BackgroundModel
                 {
@@ -506,9 +499,9 @@ namespace GetStoreApp.UI.Controls.Download
                 IsSelectMode = false;
 
                 while (isUpdatingNow) await Task.Delay(50);
-                lock (CompletedDataListLock) isUpdatingNow = true;
+                lock (CompletedLock) isUpdatingNow = true;
 
-                foreach (CompletedModel completedItem in CompletedDataList)
+                foreach (CompletedModel completedItem in CompletedCollection)
                 {
                     completedItem.IsSelectMode = false;
                 }
@@ -535,7 +528,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                         if (DeleteResult)
                         {
-                            CompletedDataList.Remove(CompletedDataList.First(item => item.DownloadKey == completedItem.DownloadKey));
+                            CompletedCollection.Remove(CompletedCollection.First(item => item.DownloadKey == completedItem.DownloadKey));
                         }
                     }
                     catch (Exception e)
@@ -545,18 +538,18 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                 }
 
-                lock (CompletedDataListLock) isUpdatingNow = false;
+                lock (CompletedLock) isUpdatingNow = false;
             }
         }
 
         /// <summary>
         /// 分享选中的文件
         /// </summary>
-        public async void OnShareSelectedFileClicked(object sender, RoutedEventArgs args)
+        private async void OnShareSelectedFileClicked(object sender, RoutedEventArgs args)
         {
             List<BackgroundModel> SelectedCompletedDataList = new List<BackgroundModel>();
 
-            foreach (CompletedModel completedItem in CompletedDataList.Where(item => item.IsSelected is true))
+            foreach (CompletedModel completedItem in CompletedCollection.Where(item => item.IsSelected is true))
             {
                 SelectedCompletedDataList.Add(new BackgroundModel
                 {
@@ -584,7 +577,7 @@ namespace GetStoreApp.UI.Controls.Download
                         {
                             SelectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
                         }
-                        Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                        DispatcherQueue.TryEnqueue(() =>
                         {
                             CopyPasteHelper.CopyFilesToClipBoard(SelectedFileList);
                             new DataCopyNotification(this, DataCopyKind.ShareFile, true, SelectedFileList.Count).Show();
@@ -625,10 +618,10 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 退出多选模式
         /// </summary>
-        public void OnCancelClicked(object sender, RoutedEventArgs args)
+        private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
-            foreach (CompletedModel completedItem in CompletedDataList)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelectMode = false;
             }
@@ -637,59 +630,90 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public async void OnItemClicked(object sender, ItemClickEventArgs args)
+        private async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             CompletedModel completedItem = (CompletedModel)args.ClickedItem;
-            int ClickedIndex = CompletedDataList.IndexOf(completedItem);
+            int ClickedIndex = CompletedCollection.IndexOf(completedItem);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedDataListLock) isUpdatingNow = true;
+            lock (CompletedLock) isUpdatingNow = true;
 
-            if (ClickedIndex >= 0 && ClickedIndex < CompletedDataList.Count)
+            if (ClickedIndex >= 0 && ClickedIndex < CompletedCollection.Count)
             {
-                CompletedDataList[ClickedIndex].IsSelected = !CompletedDataList[ClickedIndex].IsSelected;
+                CompletedCollection[ClickedIndex].IsSelected = !CompletedCollection[ClickedIndex].IsSelected;
             }
 
-            lock (CompletedDataListLock) isUpdatingNow = false;
+            lock (CompletedLock) isUpdatingNow = false;
         }
+
+        #endregion 第二部分：已下载完成控件——挂载的事件
+
+        #region 第三部分：自定义事件
 
         /// <summary>
         /// 订阅事件，下载中列表内容有完成项目时通知UI更改
         /// </summary>
         public void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (args.Action is NotifyCollectionChangedAction.Remove)
+            if (SelectedIndex is 2)
             {
-                foreach (object item in args.OldItems)
+                if (args.Action is NotifyCollectionChangedAction.Remove)
                 {
-                    BackgroundModel backgroundItem = item as BackgroundModel;
-                    if (backgroundItem is not null)
+                    foreach (object item in args.OldItems)
                     {
-                        if (backgroundItem.DownloadFlag is 4)
+                        BackgroundModel backgroundItem = item as BackgroundModel;
+                        if (backgroundItem is not null)
                         {
-                            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
+                            if (backgroundItem.DownloadFlag is 4)
                             {
-                                while (isUpdatingNow) await Task.Delay(50);
-                                lock (CompletedDataListLock) isUpdatingNow = true;
-
-                                BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
-
-                                CompletedDataList.Add(new CompletedModel
+                                DispatcherQueue.TryEnqueue(async () =>
                                 {
-                                    DownloadKey = item.DownloadKey,
-                                    FileName = item.FileName,
-                                    FileLink = item.FileLink,
-                                    FilePath = item.FilePath,
-                                    FileSHA1 = item.FileSHA1,
-                                    TotalSize = item.TotalSize,
-                                    DownloadFlag = item.DownloadFlag
-                                });
+                                    while (isUpdatingNow) await Task.Delay(50);
+                                    lock (CompletedLock) isUpdatingNow = true;
 
-                                lock (CompletedDataListLock) isUpdatingNow = false;
-                            });
+                                    BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+
+                                    CompletedCollection.Add(new CompletedModel
+                                    {
+                                        DownloadKey = item.DownloadKey,
+                                        FileName = item.FileName,
+                                        FileLink = item.FileLink,
+                                        FilePath = item.FilePath,
+                                        TotalSize = item.TotalSize,
+                                        DownloadFlag = item.DownloadFlag
+                                    });
+
+                                    lock (CompletedLock) isUpdatingNow = false;
+                                });
+                            }
                         }
                     }
                 }
+            }
+        }
+
+        #endregion 第三部分：自定义事件
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 本地化已下载完成数量统计信息
+        /// </summary>
+        private string LocalizeCompletedCountInfo(int count)
+        {
+            if (count is 0)
+            {
+                return ResourceService.GetLocalized("Download/CompletedEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("Download/CompletedCountInfo"), count);
             }
         }
 
@@ -701,34 +725,25 @@ namespace GetStoreApp.UI.Controls.Download
             List<BackgroundModel> DownloadRawList = await DownloadXmlService.QueryWithFlagAsync(4);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedDataListLock) isUpdatingNow = true;
+            lock (CompletedLock) isUpdatingNow = true;
 
-            CompletedDataList.Clear();
+            CompletedCollection.Clear();
 
             foreach (BackgroundModel downloadRawData in DownloadRawList)
             {
-                CompletedDataList.Add(new CompletedModel
+                CompletedCollection.Add(new CompletedModel
                 {
                     DownloadKey = downloadRawData.DownloadKey,
                     FileName = downloadRawData.FileName,
                     FileLink = downloadRawData.FileLink,
                     FilePath = downloadRawData.FilePath,
-                    FileSHA1 = downloadRawData.FileSHA1,
                     TotalSize = downloadRawData.TotalSize,
                     DownloadFlag = downloadRawData.DownloadFlag
                 });
                 await Task.Delay(1);
             }
 
-            lock (CompletedDataListLock) isUpdatingNow = false;
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            lock (CompletedLock) isUpdatingNow = false;
         }
     }
 }

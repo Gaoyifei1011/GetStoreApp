@@ -8,11 +8,10 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class AlwaysShowBackdropService
     {
-        private static string SettingsKey { get; } = ConfigKey.AlwaysShowBackdropKey;
-
         private static bool DefaultAlwaysShowBackdropValue = false;
+        private static string SettingsKey = ConfigKey.AlwaysShowBackdropKey;
 
-        public static bool AlwaysShowBackdropValue { get; set; }
+        public static bool AlwaysShowBackdropValue { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的始终显示背景色值

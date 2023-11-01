@@ -9,11 +9,11 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class NetWorkMonitorService
     {
-        private static string SettingsKey { get; } = ConfigKey.NetWorkMonitorKey;
+        private static string SettingsKey = ConfigKey.NetWorkMonitorKey;
 
-        private static bool DefaultNetWorkMonitorValue { get; } = true;
+        private static bool DefaultNetWorkMonitorValue = true;
 
-        public static bool NetWorkMonitorValue { get; set; }
+        public static bool NetWorkMonitorValue { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的网络监控开启值

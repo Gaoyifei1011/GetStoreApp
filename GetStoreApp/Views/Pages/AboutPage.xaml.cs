@@ -33,23 +33,23 @@ namespace GetStoreApp.Views.Pages
         private string AppVersion = string.Format(ResourceService.GetLocalized("About/AppVersion"), InfoHelper.AppVersion.ToString());
 
         //项目引用信息
-        private List<DictionaryEntry> ReferenceList { get; } = new List<DictionaryEntry>()
+        private Hashtable ReferenceDict { get; } = new Hashtable()
         {
-            new DictionaryEntry(){ Key = "Microsoft.Windows.CsWinRT",Value = "https://github.com/microsoft/cswinrt"},
-            new DictionaryEntry(){ Key = "Microsoft.WindowsAppSDK",Value = "https://github.com/microsoft/windowsappsdk"},
-            new DictionaryEntry(){ Key = "Microsoft.WindowsPackageManager.ComInterop",Value = "https://github.com/microsoft/winget-cli"},
-            new DictionaryEntry(){ Key = "Mile.Aria2",Value = "https://github.com/ProjectMile/Mile.Aria2"},
+            { "Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"},
+            { "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"},
+            { "Microsoft.WindowsPackageManager.ComInterop","https://github.com/microsoft/winget-cli"},
+            { "Mile.Aria2", "https://github.com/ProjectMile/Mile.Aria2"},
         };
 
         //项目感谢者信息
-        private List<DictionaryEntry> ThanksList { get; } = new List<DictionaryEntry>()
+        private Hashtable ThanksDict { get; } = new Hashtable()
         {
-            new DictionaryEntry(){ Key = "AndromedaMelody",Value = "https://github.com/AndromedaMelody" },
-            new DictionaryEntry(){ Key = "cnbluefire",Value = "https://github.com/cnbluefire" },
-            new DictionaryEntry(){ Key = "飞翔",Value = "https://fionlen.azurewebsites.net" },
-            new DictionaryEntry(){ Key = "MouriNaruto",Value = "https://github.com/MouriNaruto" },
-            new DictionaryEntry(){ Key = "TaylorShi",Value = "https://github.com/TaylorShi" },
-            new DictionaryEntry(){ Key = "wherewhere",Value = "https://github.com/wherewhere" },
+            { "AndromedaMelody","https://github.com/AndromedaMelody" },
+            { "cnbluefire","https://github.com/cnbluefire" },
+            { "飞翔","https://fionlen.azurewebsites.net" },
+            { "MouriNaruto","https://github.com/MouriNaruto" },
+            { "TaylorShi","https://github.com/TaylorShi" },
+            { "wherewhere","https://github.com/wherewhere" },
         };
 
         public AboutPage()

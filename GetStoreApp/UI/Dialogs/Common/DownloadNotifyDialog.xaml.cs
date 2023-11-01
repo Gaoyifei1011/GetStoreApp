@@ -9,7 +9,7 @@ namespace GetStoreApp.UI.Dialogs.Common
     /// </summary>
     public sealed partial class DownloadNotifyDialog : ContentDialog
     {
-        public string DownloadNotifyContent { get; set; }
+        private string DownloadNotifyContent;
 
         public DownloadNotifyDialog(DuplicatedDataKind duplicatedDataInfo)
         {

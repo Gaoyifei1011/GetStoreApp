@@ -102,7 +102,7 @@ namespace GetStoreApp
         /// <summary>
         /// 处理应用程序未知异常处理
         /// </summary>
-        public void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+        private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
 

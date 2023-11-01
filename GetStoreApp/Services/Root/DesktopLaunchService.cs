@@ -21,10 +21,9 @@ namespace GetStoreApp.Services.Root
     public static class DesktopLaunchService
     {
         private static IActivatedEventArgs ActivatedEventArgs;
+        private static MessageKind SendMessageType = MessageKind.None;
 
         private static List<string> DesktopLaunchArgs;
-
-        private static MessageKind SendMessageType = MessageKind.None;
 
         // 应用启动时使用的参数
         public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()

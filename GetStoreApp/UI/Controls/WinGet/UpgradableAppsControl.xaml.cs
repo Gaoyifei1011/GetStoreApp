@@ -32,15 +32,13 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class UpgradableAppsControl : Grid, INotifyPropertyChanged
     {
-        private PackageManager UpgradableAppsManager { get; set; }
-
-        private readonly object UpgradableAppsDataListObject = new object();
-
-        internal WinGetPage WinGetInstance;
+        private readonly object UpgradableAppsLock = new object();
 
         private bool isInitialized = false;
 
         private AutoResetEvent autoResetEvent;
+        private PackageManager UpgradableAppsManager;
+        private WinGetPage WinGetInstance;
 
         private bool _isLoadedCompleted = false;
 
@@ -70,7 +68,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         private List<MatchResult> MatchResultList;
 
-        public ObservableCollection<UpgradableAppsModel> UpgradableAppsDataList { get; } = new ObservableCollection<UpgradableAppsModel>();
+        private ObservableCollection<UpgradableAppsModel> UpgradableAppsCollection { get; } = new ObservableCollection<UpgradableAppsModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -79,25 +77,12 @@ namespace GetStoreApp.UI.Controls.WinGet
             InitializeComponent();
         }
 
-        /// <summary>
-        /// 本地化应用数量统计信息
-        /// </summary>
-        public string LocalizeUpgradableAppsCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("WinGet/UpgradableAppsCountEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo"), count);
-            }
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 复制升级命令
         /// </summary>
-        public void OnCopyUpgradeTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyUpgradeTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
             if (appId is not null)
@@ -112,7 +97,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 使用命令安装
         /// </summary>
-        public void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
             if (appId is not null)
@@ -149,7 +134,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 应用升级
         /// </summary>
-        public void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             UpgradableAppsModel upgradableApps = args.Parameter as UpgradableAppsModel;
             if (upgradableApps is not null)
@@ -161,10 +146,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (UpgradableAppsDataListObject)
+                            lock (UpgradableAppsLock)
                             {
                                 // 禁用当前应用的可升级状态
-                                foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
+                                foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                                 {
                                     if (upgradableAppsItem.AppID == upgradableApps.AppID)
                                     {
@@ -177,7 +162,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         InstallOptions installOptions = WinGetService.CreateInstallOptions();
 
-                        installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.SelectedValue);
+                        installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.Value.ToString());
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
                         // 更新升级进度
@@ -377,15 +362,15 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                                 }
 
-                                lock (UpgradableAppsDataListObject)
+                                lock (UpgradableAppsLock)
                                 {
                                     // 从升级列表中移除已升级完成的任务
-                                    foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
+                                    foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                                     {
                                         if (upgradableAppsItem.AppID == upgradableApps.AppID)
                                         {
-                                            UpgradableAppsDataList.Remove(upgradableAppsItem);
-                                            IsUpgradableAppsEmpty = UpgradableAppsDataList.Count is 0;
+                                            UpgradableAppsCollection.Remove(upgradableAppsItem);
+                                            IsUpgradableAppsEmpty = UpgradableAppsCollection.Count is 0;
                                             break;
                                         }
                                     }
@@ -396,10 +381,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (UpgradableAppsDataListObject)
+                                lock (UpgradableAppsLock)
                                 {
                                     // 应用升级失败，将当前任务状态修改为可升级状态
-                                    foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
+                                    foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                                     {
                                         if (upgradableAppsItem.AppID == upgradableApps.AppID)
                                         {
@@ -433,10 +418,10 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (UpgradableAppsDataListObject)
+                            lock (UpgradableAppsLock)
                             {
                                 // 应用升级失败，将当前任务状态修改为可升级状态
-                                foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
+                                foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                                 {
                                     if (upgradableAppsItem.AppID == upgradableApps.AppID)
                                     {
@@ -468,10 +453,10 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (UpgradableAppsDataListObject)
+                            lock (UpgradableAppsLock)
                             {
                                 // 应用升级失败，从任务管理列表中移除当前任务
-                                foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsDataList)
+                                foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                                 {
                                     if (upgradableAppsItem.AppID == upgradableApps.AppID)
                                     {
@@ -502,10 +487,14 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：可升级应用控件——挂载的事件
+
         /// <summary>
         /// 初始化可升级应用信息
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (!isInitialized)
             {
@@ -527,7 +516,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 更新可升级应用数据
         /// </summary>
-        public void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList = null;
             IsLoadedCompleted = false;
@@ -535,12 +524,34 @@ namespace GetStoreApp.UI.Controls.WinGet
             InitializeData();
         }
 
+        #endregion 第二部分：可升级应用控件——挂载的事件
+
         /// <summary>
         /// 属性值发生变化时通知更改
         /// </summary>
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 本地化应用数量统计信息
+        /// </summary>
+        private string LocalizeUpgradableAppsCountInfo(int count)
+        {
+            if (count is 0)
+            {
+                return ResourceService.GetLocalized("WinGet/UpgradableAppsCountEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo"), count);
+            }
+        }
+
+        public void InitializeWingetInstance(WinGetPage wingetInstance)
+        {
+            WinGetInstance = wingetInstance;
         }
 
         /// <summary>
@@ -587,9 +598,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void InitializeData()
         {
-            lock (UpgradableAppsDataListObject)
+            lock (UpgradableAppsLock)
             {
-                UpgradableAppsDataList.Clear();
+                UpgradableAppsCollection.Clear();
             }
 
             Task.Run(() =>
@@ -626,11 +637,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (UpgradableAppsDataListObject)
+                        lock (UpgradableAppsLock)
                         {
                             foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsList)
                             {
-                                UpgradableAppsDataList.Add(upgradableAppsItem);
+                                UpgradableAppsCollection.Add(upgradableAppsItem);
                             }
                         }
 

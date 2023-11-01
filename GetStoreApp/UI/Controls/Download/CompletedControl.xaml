@@ -60,7 +60,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeCompletedCountInfo(CompletedDataList.Count), Mode=OneWay}" />
+            Text="{x:Bind LocalizeCompletedCountInfo(CompletedCollection.Count), Mode=OneWay}" />
 
         <StackPanel
             x:Name="NormalMode"
@@ -85,7 +85,7 @@
 
             <MenuFlyoutItem
                 Click="{x:Bind OnSelectClicked}"
-                IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedDataList.Count), Mode=OneWay}"
+                IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedCollection.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
@@ -184,7 +184,7 @@
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
         CornerRadius="{StaticResource ControlCornerRadius}"
-        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(CompletedDataList.Count), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(CompletedCollection.Count), Mode=OneWay}">
         <TextBlock
             Margin="0,10"
             VerticalAlignment="Center"
@@ -198,13 +198,13 @@
         IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
         ItemClick="{x:Bind OnItemClicked}"
         ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-        ItemsSource="{x:Bind CompletedDataList, Mode=OneWay}"
+        ItemsSource="{x:Bind CompletedCollection, Mode=OneWay}"
         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
         ScrollViewer.HorizontalScrollMode="Disabled"
         ScrollViewer.VerticalScrollBarVisibility="Auto"
         ScrollViewer.VerticalScrollMode="Enabled"
         SelectionMode="None"
-        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedDataList.Count), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}">
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="download:CompletedModel">

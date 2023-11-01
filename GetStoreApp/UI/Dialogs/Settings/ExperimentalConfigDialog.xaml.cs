@@ -17,9 +17,9 @@ namespace GetStoreApp.UI.Dialogs.Settings
     /// </summary>
     public sealed partial class ExperimentalConfigDialog : ContentDialog, INotifyPropertyChanged
     {
-        private DispatcherTimer DisplayTimer = new DispatcherTimer();
-
         private int CountDown = 0;
+
+        private DispatcherTimer DisplayTimer = new DispatcherTimer();
 
         private bool _isMessageVisable = false;
 
@@ -55,9 +55,21 @@ namespace GetStoreApp.UI.Dialogs.Settings
         }
 
         /// <summary>
+        /// 关闭对话框时关闭计时器
+        /// </summary>
+        private void OnClosed(object sender, ContentDialogClosedEventArgs args)
+        {
+            DisplayTimer.Tick -= DisplayTimerTick;
+            if (DisplayTimer.IsEnabled)
+            {
+                DisplayTimer.Stop();
+            }
+        }
+
+        /// <summary>
         /// 打开对话框时初始化计时器
         /// </summary>
-        public void OnOpened(object sender, ContentDialogOpenedEventArgs args)
+        private void OnOpened(object sender, ContentDialogOpenedEventArgs args)
         {
             DisplayTimer.Tick += DisplayTimerTick;
             DisplayTimer.Interval = new TimeSpan(0, 0, 1);
@@ -66,7 +78,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 下载文件时“网络状态监控”开启设置
         /// </summary>
-        public void OnToggled(object sender, RoutedEventArgs args)
+        private void OnToggled(object sender, RoutedEventArgs args)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
@@ -79,7 +91,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 打开配置文件目录
         /// </summary>
-        public void OnOpenConfigFileClicked(object sender, RoutedEventArgs args)
+        private void OnOpenConfigFileClicked(object sender, RoutedEventArgs args)
         {
             if (Aria2Service.Aria2ConfPath is not null)
             {
@@ -114,7 +126,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 还原默认值
         /// </summary>
-        public void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
@@ -133,14 +145,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
         }
 
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private void DisplayTimerTick(object sender, object args)
         {
             if (CountDown > 0)
@@ -152,6 +156,14 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 IsMessageVisable = false;
                 DisplayTimer.Stop();
             }
+        }
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

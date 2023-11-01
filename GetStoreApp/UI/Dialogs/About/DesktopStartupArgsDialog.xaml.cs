@@ -10,11 +10,10 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class DesktopStartupArgsDialog : ContentDialog
     {
-        public string SampleShort { get; } = @"GetStoreApp.exe ""https://www.microsoft.com/store/productId/9WZDNCRFJBMP""";
+        private string SampleShort = @"GetStoreApp.exe ""https://www.microsoft.com/store/productId/9WZDNCRFJBMP""";
+        private string SampleFull = @"GetStoreApp.exe -t ""pid"" -c ""rt"" ""9WZDNCRFJBMP""";
 
-        public string SampleFull { get; } = @"GetStoreApp.exe -t ""pid"" -c ""rt"" ""9WZDNCRFJBMP""";
-
-        public List<StartupArgsModel> DesktopStartupArgsList { get; } = new List<StartupArgsModel>
+        private List<StartupArgsModel> DesktopStartupArgsList { get; } = new List<StartupArgsModel>
         {
             new StartupArgsModel(){ArgumentName = ResourceService.GetLocalized("Dialog/Type") ,Argument="-t; --type",IsRequired=ResourceService.GetLocalized("Dialog/No"),ArgumentContent=@"""url"",""pid"",""pfn"",""cid"""},
             new StartupArgsModel(){ArgumentName = ResourceService.GetLocalized("Dialog/Channel"),Argument="-c; --channel",IsRequired=ResourceService.GetLocalized("Dialog/No"),ArgumentContent=@"""wif"",""wis"",""rp"",""rt"""},

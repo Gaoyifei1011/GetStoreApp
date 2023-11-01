@@ -1,27 +1,28 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
 
 namespace GetStoreApp.Views.CustomControls.Navigation
 {
+    /// <summary>
+    /// 等距面板
+    /// </summary>
     public partial class EqualPanel : Panel
     {
-        private double _maxItemWidth = 0;
-        private double _maxItemHeight = 0;
-        private int _visibleItemsCount = 0;
+        private double maxItemWidth = 0;
+        private double maxItemHeight = 0;
+        private int visibleItemsCount = 0;
 
         public double Spacing
         {
             get { return (double)GetValue(SpacingProperty); }
+
             set { SetValue(SpacingProperty, value); }
         }
 
-        /// <summary>
-        /// Identifies the Spacing dependency property.
-        /// </summary>
-        /// <returns>The identifier for the <see cref="Spacing"/> dependency property.</returns>
         public static readonly DependencyProperty SpacingProperty = DependencyProperty.Register(
             nameof(Spacing),
             typeof(double),
@@ -35,33 +36,33 @@ namespace GetStoreApp.Views.CustomControls.Navigation
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            _maxItemWidth = 0;
-            _maxItemHeight = 0;
+            maxItemWidth = 0;
+            maxItemHeight = 0;
 
-            var elements = Children.Where(static e => e.Visibility == Visibility.Visible);
-            _visibleItemsCount = elements.Count();
+            IEnumerable<UIElement> elements = Children.Where(static e => e.Visibility == Visibility.Visible);
+            visibleItemsCount = elements.Count();
 
             foreach (var child in elements)
             {
                 child.Measure(availableSize);
-                _maxItemWidth = Math.Max(_maxItemWidth, child.DesiredSize.Width);
-                _maxItemHeight = Math.Max(_maxItemHeight, child.DesiredSize.Height);
+                maxItemWidth = Math.Max(maxItemWidth, child.DesiredSize.Width);
+                maxItemHeight = Math.Max(maxItemHeight, child.DesiredSize.Height);
             }
 
-            if (_visibleItemsCount > 0)
+            if (visibleItemsCount > 0)
             {
-                // Return equal widths based on the widest item
-                // In very specific edge cases the AvailableWidth might be infinite resulting in a crash.
-                if (HorizontalAlignment != HorizontalAlignment.Stretch || double.IsInfinity(availableSize.Width))
+                // 根据最宽的项返回相等的宽度
+                // 在非常特定的边缘情况下，AvailableWidth 可能是无限的，从而导致崩溃。
+                if (HorizontalAlignment is not HorizontalAlignment.Stretch || double.IsInfinity(availableSize.Width))
                 {
-                    return new Size((_maxItemWidth * _visibleItemsCount) + (Spacing * (_visibleItemsCount - 1)), _maxItemHeight);
+                    return new Size((maxItemWidth * visibleItemsCount) + (Spacing * (visibleItemsCount - 1)), maxItemHeight);
                 }
                 else
                 {
-                    // Equal columns based on the available width, adjust for spacing
-                    double totalWidth = availableSize.Width - (Spacing * (_visibleItemsCount - 1));
-                    _maxItemWidth = totalWidth / _visibleItemsCount;
-                    return new Size(availableSize.Width, _maxItemHeight);
+                    // 根据可用宽度相等列，调整间距
+                    double totalWidth = availableSize.Width - (Spacing * (visibleItemsCount - 1));
+                    maxItemWidth = totalWidth / visibleItemsCount;
+                    return new Size(availableSize.Width, maxItemHeight);
                 }
             }
             else
@@ -74,17 +75,17 @@ namespace GetStoreApp.Views.CustomControls.Navigation
         {
             double x = 0;
 
-            // Check if there's more width available - if so, recalculate (e.g. whenever Grid.Column is set to Auto)
-            if (finalSize.Width > _visibleItemsCount * _maxItemWidth + (Spacing * (_visibleItemsCount - 1)))
+            // 检查是否有更多宽度可用 - 如果有，请重新计算
+            if (finalSize.Width > visibleItemsCount * maxItemWidth + (Spacing * (visibleItemsCount - 1)))
             {
                 MeasureOverride(finalSize);
             }
 
-            var elements = Children.Where(static e => e.Visibility == Visibility.Visible);
+            IEnumerable<UIElement> elements = Children.Where(static e => e.Visibility == Visibility.Visible);
             foreach (var child in elements)
             {
-                child.Arrange(new Rect(x, 0, _maxItemWidth, _maxItemHeight));
-                x += _maxItemWidth + Spacing;
+                child.Arrange(new Rect(x, 0, maxItemWidth, maxItemHeight));
+                x += maxItemWidth + Spacing;
             }
             return finalSize;
         }
@@ -94,7 +95,7 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             InvalidateMeasure();
         }
 
-        private static void OnSpacingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSpacingChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
             var panel = (EqualPanel)d;
             panel.InvalidateMeasure();

@@ -12,13 +12,11 @@ namespace GetStoreApp.Views.CustomControls.Notifications
     /// </summary>
     public class InAppNotification : ContentControl
     {
-        private Popup popup = new Popup();
-
         private Grid gridRoot;
-
         private Storyboard popupIn;
-
         private Storyboard popupOut;
+
+        private Popup popup = new Popup();
 
         public int Duration
         {
@@ -51,6 +49,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         {
             DefaultStyleKey = typeof(InAppNotification);
             Style = ResourceDictionaryHelper.InAppNotificationResourceDict["InAppNotificationStyle"] as Style;
+
             if (element is not null)
             {
                 XamlRoot = element.XamlRoot;
@@ -67,37 +66,37 @@ namespace GetStoreApp.Views.CustomControls.Notifications
             base.OnApplyTemplate();
 
             gridRoot = GetTemplateChild("GridRoot") as Grid;
-            gridRoot.Loaded += NotificationLoaded;
-            gridRoot.Unloaded += NotificationUnLoaded;
+            gridRoot.Loaded += OnGridRootLoaded;
+            gridRoot.Unloaded += OnGridRootUnLoaded;
 
             popupIn = GetTemplateChild("PopupIn") as Storyboard;
-            popupIn.Completed += PopupInCompleted;
+            popupIn.Completed += OnPopupInCompleted;
 
             popupOut = GetTemplateChild("PopupOut") as Storyboard;
-            popupOut.Completed += PopupOutCompleted;
+            popupOut.Completed += OnPopupOutCompleted;
         }
 
         /// <summary>
         /// 控件加载完成后显示动画，动态设置控件位置
         /// </summary>
-        public void NotificationLoaded(object sender, RoutedEventArgs args)
+        private void OnGridRootLoaded(object sender, RoutedEventArgs args)
         {
             popupIn.Begin();
-            XamlRoot.Changed += NotificationPlaceChanged;
+            XamlRoot.Changed += OnNotificationPlaceChanged;
         }
 
         /// <summary>
         /// 控件卸载时移除相应的事件
         /// </summary>
-        private void NotificationUnLoaded(object sender, RoutedEventArgs args)
+        private void OnGridRootUnLoaded(object sender, RoutedEventArgs args)
         {
-            XamlRoot.Changed -= NotificationPlaceChanged;
+            XamlRoot.Changed -= OnNotificationPlaceChanged;
         }
 
         /// <summary>
         /// 窗口大小调整时修改应用内通知的相对位置
         /// </summary>
-        private void NotificationPlaceChanged(XamlRoot sender, XamlRootChangedEventArgs args)
+        private void OnNotificationPlaceChanged(XamlRoot sender, XamlRootChangedEventArgs args)
         {
             SetPopUpPlacement();
         }
@@ -105,7 +104,7 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         /// <summary>
         /// 应用内通知加载动画演示完成时发生
         /// </summary>
-        private async void PopupInCompleted(object sender, object args)
+        private async void OnPopupInCompleted(object sender, object args)
         {
             await Task.Delay(Duration);
             popupOut.Begin();
@@ -114,12 +113,12 @@ namespace GetStoreApp.Views.CustomControls.Notifications
         /// <summary>
         /// 应用内通知加载动画卸载完成时发生，关闭控件
         /// </summary>
-        public void PopupOutCompleted(object sender, object args)
+        private void OnPopupOutCompleted(object sender, object args)
         {
-            gridRoot.Loaded -= NotificationLoaded;
-            gridRoot.Unloaded -= NotificationUnLoaded;
-            popupIn.Completed -= PopupInCompleted;
-            popupOut.Completed -= PopupOutCompleted;
+            gridRoot.Loaded -= OnGridRootLoaded;
+            gridRoot.Unloaded -= OnGridRootUnLoaded;
+            popupIn.Completed -= OnPopupInCompleted;
+            popupOut.Completed -= OnPopupOutCompleted;
             popup.IsOpen = false;
         }
 

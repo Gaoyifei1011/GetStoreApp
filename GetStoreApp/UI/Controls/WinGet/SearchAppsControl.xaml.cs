@@ -32,17 +32,15 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class SearchAppsControl : Grid, INotifyPropertyChanged
     {
-        private PackageManager SearchAppsManager { get; set; }
-
-        private readonly object SearchAppsDataListObject = new object();
-
-        internal WinGetPage WinGetInstance;
-
-        private string cachedSearchText;
+        private readonly object SearchAppsLock = new object();
 
         private bool isInitialized = false;
 
+        private string cachedSearchText;
+
         private AutoResetEvent autoResetEvent;
+        private PackageManager SearchAppsManager;
+        private WinGetPage WinGetInstance;
 
         private bool _notSearched = true;
 
@@ -85,7 +83,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         private List<MatchResult> MatchResultList;
 
-        public ObservableCollection<SearchAppsModel> SearchAppsDataList { get; set; } = new ObservableCollection<SearchAppsModel>();
+        private ObservableCollection<SearchAppsModel> SearchAppsCollection { get; } = new ObservableCollection<SearchAppsModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -94,44 +92,12 @@ namespace GetStoreApp.UI.Controls.WinGet
             InitializeComponent();
         }
 
-        /// <summary>
-        /// 本地化应用数量统计信息
-        /// </summary>
-        public string LocalizeSearchAppsCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("WinGet/SearchedAppsCountEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo"), count);
-            }
-        }
-
-        public bool IsSearchBoxEnabled(bool notSearched, bool isSearchCompleted)
-        {
-            if (notSearched)
-            {
-                return true;
-            }
-            else
-            {
-                if (isSearchCompleted)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 复制安装命令
         /// </summary>
-        public void OnCopyInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
             if (appId is not null)
@@ -146,7 +112,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 安装应用
         /// </summary>
-        public void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             SearchAppsModel searchApps = args.Parameter as SearchAppsModel;
             if (searchApps is not null)
@@ -158,10 +124,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsDataListObject)
+                            lock (SearchAppsLock)
                             {
                                 // 禁用当前应用的可安装状态
-                                foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                                foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                                 {
                                     if (searchAppsItem.AppID == searchApps.AppID)
                                     {
@@ -174,7 +140,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         InstallOptions installOptions = WinGetService.CreateInstallOptions();
 
-                        installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.SelectedValue);
+                        installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.Value.ToString());
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
                         // 更新安装进度
@@ -365,10 +331,10 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsDataListObject)
+                            lock (SearchAppsLock)
                             {
                                 // 应用安装失败，将当前任务状态修改为可安装状态
-                                foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                                foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                                 {
                                     if (searchAppsItem.AppID == searchApps.AppID)
                                     {
@@ -400,10 +366,10 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsDataListObject)
+                            lock (SearchAppsLock)
                             {
                                 // 应用安装失败，将当前任务状态修改为可安装状态
-                                foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                                foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                                 {
                                     if (searchAppsItem.AppID == searchApps.AppID)
                                     {
@@ -435,10 +401,10 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsDataListObject)
+                            lock (SearchAppsLock)
                             {
                                 // 应用安装失败，将当前任务状态修改为可安装状态
-                                foreach (SearchAppsModel searchAppsItem in SearchAppsDataList)
+                                foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                                 {
                                     if (searchAppsItem.AppID == searchApps.AppID)
                                     {
@@ -472,7 +438,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 使用命令安装
         /// </summary>
-        public void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
             if (appId is not null)
@@ -506,10 +472,14 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：搜索应用控件——挂载的事件
+
         /// <summary>
         /// 初始化搜索应用内容
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (!isInitialized)
             {
@@ -532,7 +502,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 更新已安装应用数据
         /// </summary>
-        public async void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList = null;
             IsSearchCompleted = false;
@@ -549,7 +519,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        public async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
@@ -562,10 +532,59 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        #endregion 第二部分：搜索应用控件——挂载的事件
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 本地化应用数量统计信息
+        /// </summary>
+        private string LocalizeSearchAppsCountInfo(int count)
+        {
+            if (count is 0)
+            {
+                return ResourceService.GetLocalized("WinGet/SearchedAppsCountEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo"), count);
+            }
+        }
+
+        private bool IsSearchBoxEnabled(bool notSearched, bool isSearchCompleted)
+        {
+            if (notSearched)
+            {
+                return true;
+            }
+            else
+            {
+                if (isSearchCompleted)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public void InitializeWingetInstance(WinGetPage wingetInstance)
+        {
+            WinGetInstance = wingetInstance;
+        }
+
         /// <summary>
         /// 搜索应用
         /// </summary>
-        public void GetSearchApps()
+        private void GetSearchApps()
         {
             try
             {
@@ -606,11 +625,11 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        public void InitializeData()
+        private void InitializeData()
         {
-            lock (SearchAppsDataListObject)
+            lock (SearchAppsLock)
             {
-                SearchAppsDataList.Clear();
+                SearchAppsCollection.Clear();
             }
 
             Task.Run(() =>
@@ -648,11 +667,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (SearchAppsDataListObject)
+                        lock (SearchAppsLock)
                         {
                             foreach (SearchAppsModel searchAppsItem in searchAppsList)
                             {
-                                SearchAppsDataList.Add(searchAppsItem);
+                                SearchAppsCollection.Add(searchAppsItem);
                             }
                         }
 
@@ -667,14 +686,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                     });
                 }
             });
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

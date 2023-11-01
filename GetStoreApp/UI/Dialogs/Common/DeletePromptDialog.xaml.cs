@@ -9,7 +9,7 @@ namespace GetStoreApp.UI.Dialogs.Common
     /// </summary>
     public sealed partial class DeletePromptDialog : ContentDialog
     {
-        public string DeleteContent { get; set; }
+        private string DeleteContent;
 
         public DeletePromptDialog(DeleteKind deletePrompt)
         {

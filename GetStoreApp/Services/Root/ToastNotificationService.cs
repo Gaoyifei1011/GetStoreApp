@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ToastNotificationService
     {
-        private static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
+        private static ToastNotifier AppToastNotifier = ToastNotificationManager.CreateToastNotifier();
 
         /// <summary>
         /// 处理应用通知

@@ -9,15 +9,14 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class LinkFilterService
     {
-        private static string EncryptedPackageSettingsKey { get; } = ConfigKey.EncryptedPackageFilterKey;
+        private static string EncryptedPackageSettingsKey = ConfigKey.EncryptedPackageFilterKey;
+        private static string BlockMapSettingsKey = ConfigKey.BlockMapFilterKey;
 
-        private static string BlockMapSettingsKey { get; } = ConfigKey.BlockMapFilterKey;
+        private static bool DefaultLinkFilterValue = true;
 
-        private static bool DefaultLinkFilterValue { get; } = true;
+        public static bool EncryptedPackageFilterValue { get; private set; }
 
-        public static bool EncryptedPackageFilterValue { get; set; }
-
-        public static bool BlockMapFilterValue { get; set; }
+        public static bool BlockMapFilterValue { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值

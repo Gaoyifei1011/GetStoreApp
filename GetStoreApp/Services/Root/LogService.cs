@@ -13,11 +13,11 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class LogService
     {
+        private static bool IsInitialized = false;
+
         private static string unknown = "unknown";
 
-        private static bool IsInitialized { get; set; } = false;
-
-        private static StorageFolder LogFolder { get; set; }
+        private static StorageFolder LogFolder;
 
         /// <summary>
         /// 初始化日志记录
@@ -48,7 +48,13 @@ namespace GetStoreApp.Services.Root
                     {
                         File.AppendAllText(
                             Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logLevel), logBuilder)
+                            string.Format("{0}\t{1}:{2}{3}{4}{5}",
+                                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                "LogLevel",
+                                Convert.ToString(logLevel),
+                                Environment.NewLine,
+                                logBuilder,
+                                Environment.NewLine)
                             );
                     });
                 }
@@ -86,7 +92,13 @@ namespace GetStoreApp.Services.Root
 
                         File.AppendAllText(
                             Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logLevel), exceptionBuilder.ToString())
+                            string.Format("{0}\t{1}:{2}{3}{4}{5}",
+                                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                "LogLevel",
+                                Convert.ToString(logLevel),
+                                Environment.NewLine,
+                                exceptionBuilder.ToString(),
+                                Environment.NewLine)
                             );
                     });
                 }

@@ -9,11 +9,11 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class TopMostService
     {
-        private static string SettingsKey { get; } = ConfigKey.TopMostKey;
+        private static string SettingsKey = ConfigKey.TopMostKey;
 
-        private static bool DefaultTopMostValue { get; } = false;
+        private static bool DefaultTopMostValue = false;
 
-        public static bool TopMostValue { get; set; }
+        public static bool TopMostValue { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的窗口置顶值

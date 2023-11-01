@@ -21,7 +21,7 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class AppInformationDialog : ContentDialog, INotifyPropertyChanged
     {
-        private string FileVersionProperty { get; } = "System.FileVersion";
+        private string FileVersionProperty = "System.FileVersion";
 
         private List<string> PropertyNamesList => new List<string> { FileVersionProperty };
 
@@ -87,7 +87,7 @@ namespace GetStoreApp.UI.Dialogs.About
         /// <summary>
         /// 复制应用信息
         /// </summary>
-        public void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
@@ -110,7 +110,7 @@ namespace GetStoreApp.UI.Dialogs.About
         /// <summary>
         /// 初始化应用信息
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             Task.Run(async () =>
             {

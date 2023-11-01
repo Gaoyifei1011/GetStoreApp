@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -11,13 +11,13 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class InstallModeService
     {
-        private static string SettingsKey { get; } = ConfigKey.InstallModeKey;
+        private static string SettingsKey = ConfigKey.InstallModeKey;
 
-        public static GroupOptionsModel DefaultInstallMode { get; set; }
+        private static DictionaryEntry DefaultInstallMode;
 
-        public static GroupOptionsModel InstallMode { get; set; }
+        public static DictionaryEntry InstallMode { get; private set; }
 
-        public static List<GroupOptionsModel> InstallModeList { get; set; }
+        public static List<DictionaryEntry> InstallModeList { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装方式值
@@ -26,7 +26,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             InstallModeList = ResourceService.InstallModeList;
 
-            DefaultInstallMode = InstallModeList.Find(item => item.SelectedValue.Equals("AppInstall", StringComparison.OrdinalIgnoreCase));
+            DefaultInstallMode = InstallModeList.Find(item => item.Value.ToString().Equals("AppInstall", StringComparison.OrdinalIgnoreCase));
 
             InstallMode = GetInstallMode();
         }
@@ -34,27 +34,27 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的应用安装方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static GroupOptionsModel GetInstallMode()
+        private static DictionaryEntry GetInstallMode()
         {
-            string installMode = ConfigService.ReadSetting<string>(SettingsKey);
+            object installMode = ConfigService.ReadSetting<object>(SettingsKey);
 
-            if (string.IsNullOrEmpty(installMode))
+            if (installMode is null)
             {
                 SetInstallMode(DefaultInstallMode);
-                return InstallModeList.Find(item => item.SelectedValue.Equals(DefaultInstallMode.SelectedValue, StringComparison.OrdinalIgnoreCase));
+                return InstallModeList.Find(item => item.Value.Equals(DefaultInstallMode.Value));
             }
 
-            return InstallModeList.Find(item => item.SelectedValue.Equals(installMode, StringComparison.OrdinalIgnoreCase));
+            return InstallModeList.Find(item => item.Value.Equals(installMode));
         }
 
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的应用安装方式值
         /// </summary>
-        public static void SetInstallMode(GroupOptionsModel installMode)
+        public static void SetInstallMode(DictionaryEntry installMode)
         {
             InstallMode = installMode;
 
-            ConfigService.SaveSetting(SettingsKey, installMode.SelectedValue);
+            ConfigService.SaveSetting(SettingsKey, installMode.Value);
         }
     }
 }

@@ -132,9 +132,6 @@
   <data name="Channel" xml:space="preserve">
     <value>通道</value>
   </data>
-  <data name="CheckFileSHA1" xml:space="preserve">
-    <value>校验得到的文件SHA1值：</value>
-  </data>
   <data name="CheckingFile" xml:space="preserve">
     <value>文件正在校验中，请稍候</value>
   </data>

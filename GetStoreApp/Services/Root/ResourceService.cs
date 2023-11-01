@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Properties;
@@ -8,6 +7,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
@@ -19,17 +19,15 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ResourceService
     {
-        private static bool IsInitialized { get; set; } = false;
+        private static bool IsInitialized = false;
 
-        private static GroupOptionsModel DefaultAppLanguage { get; set; }
+        private static DictionaryEntry DefaultAppLanguage;
+        private static DictionaryEntry CurrentAppLanguage;
 
-        private static GroupOptionsModel CurrentAppLanguage { get; set; }
+        private static ResourceContext DefaultResourceContext = new ResourceContext();
+        private static ResourceContext CurrentResourceContext = new ResourceContext();
 
-        private static ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
-
-        private static ResourceContext CurrentResourceContext { get; set; } = new ResourceContext();
-
-        private static ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap;
+        private static ResourceMap ResourceMap = ResourceManager.Current.MainResourceMap;
 
         public static List<TypeModel> TypeList { get; } = new List<TypeModel>();
 
@@ -37,32 +35,32 @@ namespace GetStoreApp.Services.Root
 
         public static List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
 
-        public static List<GroupOptionsModel> BackdropList { get; } = new List<GroupOptionsModel>();
+        public static List<DictionaryEntry> BackdropList { get; } = new List<DictionaryEntry>();
 
-        public static List<GroupOptionsModel> DownloadModeList { get; } = new List<GroupOptionsModel>();
+        public static List<DictionaryEntry> DownloadModeList { get; } = new List<DictionaryEntry>();
 
-        public static List<GroupOptionsModel> HistoryLiteNumList { get; } = new List<GroupOptionsModel>();
+        public static List<DictionaryEntry> HistoryLiteNumList { get; } = new List<DictionaryEntry>();
 
-        public static List<GroupOptionsModel> InstallModeList { get; } = new List<GroupOptionsModel>();
+        public static List<DictionaryEntry> InstallModeList { get; } = new List<DictionaryEntry>();
 
-        public static List<GroupOptionsModel> ThemeList { get; } = new List<GroupOptionsModel>();
+        public static List<DictionaryEntry> ThemeList { get; } = new List<DictionaryEntry>();
 
         public static List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
 
-        public static List<GroupOptionsModel> WinGetInstallModeList { get; } = new List<GroupOptionsModel>();
+        public static List<DictionaryEntry> WinGetInstallModeList { get; } = new List<DictionaryEntry>();
 
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
         /// <param name="defaultAppLanguage">默认语言名称</param>
         /// <param name="currentAppLanguage">当前语言名称</param>
-        public static void InitializeResource(GroupOptionsModel defaultAppLanguage, GroupOptionsModel currentAppLanguage)
+        public static void InitializeResource(DictionaryEntry defaultAppLanguage, DictionaryEntry currentAppLanguage)
         {
             DefaultAppLanguage = defaultAppLanguage;
             CurrentAppLanguage = currentAppLanguage;
 
-            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.SelectedValue;
-            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.SelectedValue;
+            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.Value.ToString();
+            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.Value.ToString();
 
             IsInitialized = true;
         }
@@ -192,40 +190,40 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeBackdropList()
         {
-            BackdropList.Add(new GroupOptionsModel
+            BackdropList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/BackdropDefault"),
-                SelectedValue = nameof(SystemBackdropTheme.Default)
+                Key = GetLocalized("Settings/BackdropDefault"),
+                Value = nameof(SystemBackdropTheme.Default)
             });
 
-            BackdropList.Add(new GroupOptionsModel
+            BackdropList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/BackdropMica"),
-                SelectedValue = nameof(MicaKind) + nameof(MicaKind.Base)
+                Key = GetLocalized("Settings/BackdropMica"),
+                Value = nameof(MicaKind) + nameof(MicaKind.Base)
             });
 
-            BackdropList.Add(new GroupOptionsModel
+            BackdropList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/BackdropMicaAlt"),
-                SelectedValue = nameof(MicaKind) + nameof(MicaKind.BaseAlt)
+                Key = GetLocalized("Settings/BackdropMicaAlt"),
+                Value = nameof(MicaKind) + nameof(MicaKind.BaseAlt)
             });
 
-            BackdropList.Add(new GroupOptionsModel
+            BackdropList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/BackdropAcrylic"),
-                SelectedValue = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default)
+                Key = GetLocalized("Settings/BackdropAcrylic"),
+                Value = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default)
             });
 
-            BackdropList.Add(new GroupOptionsModel
+            BackdropList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/BackdropAcrylicBase"),
-                SelectedValue = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base)
+                Key = GetLocalized("Settings/BackdropAcrylicBase"),
+                Value = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base)
             });
 
-            BackdropList.Add(new GroupOptionsModel
+            BackdropList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/BackdropAcrylicThin"),
-                SelectedValue = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)
+                Key = GetLocalized("Settings/BackdropAcrylicThin"),
+                Value = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)
             });
         }
 
@@ -234,15 +232,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeDownloadModeList()
         {
-            DownloadModeList.Add(new GroupOptionsModel
+            DownloadModeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/DownloadInApp"),
-                SelectedValue = "DownloadInApp"
+                Key = GetLocalized("Settings/DownloadInApp"),
+                Value = "DownloadInApp"
             });
-            DownloadModeList.Add(new GroupOptionsModel
+            DownloadModeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/DownloadWithBrowser"),
-                SelectedValue = "DownloadWithBrowser"
+                Key = GetLocalized("Settings/DownloadWithBrowser"),
+                Value = "DownloadWithBrowser"
             });
         }
 
@@ -251,15 +249,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeHistoryLiteNumList()
         {
-            HistoryLiteNumList.Add(new GroupOptionsModel
+            HistoryLiteNumList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/HistoryLite3Items"),
-                SelectedValue = "3"
+                Key = GetLocalized("Settings/HistoryLite3Items"),
+                Value = "3"
             });
-            HistoryLiteNumList.Add(new GroupOptionsModel
+            HistoryLiteNumList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/HistoryLite5Items"),
-                SelectedValue = "5"
+                Key = GetLocalized("Settings/HistoryLite5Items"),
+                Value = "5"
             });
         }
 
@@ -268,15 +266,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeInstallModeList()
         {
-            InstallModeList.Add(new GroupOptionsModel
+            InstallModeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/AppInstall"),
-                SelectedValue = "AppInstall"
+                Key = GetLocalized("Settings/AppInstall"),
+                Value = "AppInstall"
             });
-            InstallModeList.Add(new GroupOptionsModel
+            InstallModeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/CodeInstall"),
-                SelectedValue = "CodeInstall"
+                Key = GetLocalized("Settings/CodeInstall"),
+                Value = "CodeInstall"
             });
         }
 
@@ -285,20 +283,20 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeThemeList()
         {
-            ThemeList.Add(new GroupOptionsModel
+            ThemeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/ThemeDefault"),
-                SelectedValue = nameof(ElementTheme.Default)
+                Key = GetLocalized("Settings/ThemeDefault"),
+                Value = nameof(ElementTheme.Default)
             });
-            ThemeList.Add(new GroupOptionsModel
+            ThemeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/ThemeLight"),
-                SelectedValue = nameof(ElementTheme.Light)
+                Key = GetLocalized("Settings/ThemeLight"),
+                Value = nameof(ElementTheme.Light)
             });
-            ThemeList.Add(new GroupOptionsModel
+            ThemeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/ThemeDark"),
-                SelectedValue = nameof(ElementTheme.Dark)
+                Key = GetLocalized("Settings/ThemeDark"),
+                Value = nameof(ElementTheme.Dark)
             });
         }
 
@@ -338,15 +336,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeWinGetInstallModeList()
         {
-            WinGetInstallModeList.Add(new GroupOptionsModel
+            WinGetInstallModeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/InteractiveInstall"),
-                SelectedValue = nameof(PackageInstallMode.Interactive),
+                Key = GetLocalized("Settings/InteractiveInstall"),
+                Value = nameof(PackageInstallMode.Interactive),
             });
-            WinGetInstallModeList.Add(new GroupOptionsModel
+            WinGetInstallModeList.Add(new DictionaryEntry
             {
-                DisplayMember = GetLocalized("Settings/SlientInstall"),
-                SelectedValue = nameof(PackageInstallMode.Silent),
+                Key = GetLocalized("Settings/SlientInstall"),
+                Value = nameof(PackageInstallMode.Silent),
             });
         }
 
@@ -363,14 +361,14 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.SelectedValue), currentResourceException);
+                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.Value), currentResourceException);
                     try
                     {
                         return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.SelectedValue), defaultResourceException);
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.Value), defaultResourceException);
                         return resource;
                     }
                 }

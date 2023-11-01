@@ -15,7 +15,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 重启应用
         /// </summary>
-        public void OnRestartAppsClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void OnRestartAppsClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             Program.ApplicationRoot.Restart();
         }

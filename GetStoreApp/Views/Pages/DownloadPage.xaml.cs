@@ -40,15 +40,42 @@ namespace GetStoreApp.Views.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            await Downloading.StartDownloadingTimerAsync();
+            Downloading.SelectedIndex = SelectedIndex;
+            Unfinished.SelectedIndex = SelectedIndex;
+            Completed.SelectedIndex = SelectedIndex;
+
+            if (SelectedIndex is 0)
+            {
+                await Downloading.StartDownloadingTimerAsync();
+            }
+            else if (SelectedIndex is 1)
+            {
+                await Unfinished.GetUnfinishedDataListAsync();
+            }
+            else
+            {
+                await Completed.GetCompletedDataListAsync();
+            }
+
+            // 订阅事件
+            Downloading.DownloadingTimer.Tick += Downloading.DownloadInfoTimerTick;
+            DownloadSchedulerService.DownloadingCollection.CollectionChanged += Downloading.OnDownloadingListItemsChanged;
+            DownloadSchedulerService.WaitingCollection.CollectionChanged += Downloading.OnWaitingListItemsChanged;
+            DownloadSchedulerService.DownloadingCollection.CollectionChanged += Unfinished.OnDownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingCollection.CollectionChanged += Completed.OnDownloadingListItemsChanged;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs args)
         {
             base.OnNavigatingFrom(args);
-            Downloading.StopDownloadingTimer(true);
-            DownloadSchedulerService.DownloadingList.CollectionChanged -= Unfinished.OnDownloadingListItemsChanged;
-            DownloadSchedulerService.DownloadingList.CollectionChanged -= Completed.OnDownloadingListItemsChanged;
+            Downloading.StopDownloadingTimer();
+
+            // 取消订阅事件
+            Downloading.DownloadingTimer.Tick -= Downloading.DownloadInfoTimerTick;
+            DownloadSchedulerService.DownloadingCollection.CollectionChanged -= Downloading.OnDownloadingListItemsChanged;
+            DownloadSchedulerService.WaitingCollection.CollectionChanged -= Downloading.OnWaitingListItemsChanged;
+            DownloadSchedulerService.DownloadingCollection.CollectionChanged -= Unfinished.OnDownloadingListItemsChanged;
+            DownloadSchedulerService.DownloadingCollection.CollectionChanged -= Completed.OnDownloadingListItemsChanged;
         }
 
         #endregion 第一部分：重写父类事件
@@ -67,18 +94,22 @@ namespace GetStoreApp.Views.Pages
                 if (segmented is not null)
                 {
                     SelectedIndex = segmented.SelectedIndex;
+                    Downloading.SelectedIndex = segmented.SelectedIndex;
+                    Unfinished.SelectedIndex = segmented.SelectedIndex;
+                    Completed.SelectedIndex = segmented.SelectedIndex;
+
                     if (segmented.SelectedIndex is 0)
                     {
                         await Downloading.StartDownloadingTimerAsync();
                     }
                     else if (segmented.SelectedIndex is 1)
                     {
-                        Downloading.StopDownloadingTimer(false);
+                        Downloading.StopDownloadingTimer();
                         await Unfinished.GetUnfinishedDataListAsync();
                     }
                     else if (segmented.SelectedIndex is 2)
                     {
-                        Downloading.StopDownloadingTimer(false);
+                        Downloading.StopDownloadingTimer();
                         await Completed.GetCompletedDataListAsync();
                     }
                 }

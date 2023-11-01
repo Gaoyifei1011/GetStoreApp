@@ -132,9 +132,6 @@
   <data name="Channel" xml:space="preserve">
     <value>Channel</value>
   </data>
-  <data name="CheckFileSHA1" xml:space="preserve">
-    <value>The SHA1 value of the verified file: </value>
-  </data>
   <data name="CheckingFile" xml:space="preserve">
     <value>Please wait while the file is being validated</value>
   </data>

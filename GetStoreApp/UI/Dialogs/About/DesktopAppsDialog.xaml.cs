@@ -9,7 +9,7 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class DesktopAppsDialog : ContentDialog
     {
-        private BitmapImage DesktopAppsImage { get; } = new BitmapImage();
+        private BitmapImage DesktopAppsImage = new BitmapImage();
 
         public DesktopAppsDialog()
         {

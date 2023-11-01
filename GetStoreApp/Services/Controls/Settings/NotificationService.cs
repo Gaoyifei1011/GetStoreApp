@@ -9,11 +9,11 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class NotificationService
     {
-        private static string SettingsKey { get; } = ConfigKey.NotificationKey;
+        private static string SettingsKey = ConfigKey.NotificationKey;
 
-        private static bool DefaultAppNotification { get; } = true;
+        private static bool DefaultAppNotification = true;
 
-        public static bool AppNotification { get; set; }
+        public static bool AppNotification { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用通知显示值

@@ -98,7 +98,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 应用主题发生变化时修改应用的背景色
         /// </summary>
-        public void OnActualThemeChanged(FrameworkElement sender, object args)
+        private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetTitleBarColor(ActualTheme);
         }
@@ -106,7 +106,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 控件加载完成时初始化控件位置
         /// </summary>
-        public void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             SetTitleBarColor(ActualTheme);
 
@@ -131,7 +131,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 窗口关闭
         /// </summary>
-        public void OnCloseClicked(object sender, RoutedEventArgs args)
+        private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
             Program.ApplicationRoot.Dispose();
         }
@@ -139,7 +139,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 窗口最大化
         /// </summary>
-        public void OnMaximizeClicked(object sender, RoutedEventArgs args)
+        private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
             Program.MainWindow.WindowState = FormWindowState.Maximized;
         }
@@ -147,7 +147,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 窗口最小化
         /// </summary>
-        public void OnMinimizeClicked(object sender, RoutedEventArgs args)
+        private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
             Program.MainWindow.WindowState = FormWindowState.Minimized;
         }
@@ -155,7 +155,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 窗口移动
         /// </summary>
-        public void OnMoveClicked(object sender, RoutedEventArgs args)
+        private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
@@ -168,7 +168,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 窗口还原
         /// </summary>
-        public void OnRestoreClicked(object sender, RoutedEventArgs args)
+        private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
             Program.MainWindow.WindowState = FormWindowState.Normal;
         }
@@ -176,7 +176,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 窗口大小
         /// </summary>
-        public void OnSizeClicked(object sender, RoutedEventArgs args)
+        private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
@@ -189,7 +189,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 网页后退
         /// </summary>
-        public void OnBrowserBackClicked(object sender, RoutedEventArgs args)
+        private void OnBrowserBackClicked(object sender, RoutedEventArgs args)
         {
             if (RuntimeHelper.IsWebView2Installed)
             {
@@ -216,7 +216,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 网页前进
         /// </summary>
-        public void OnBrowserForwardClicked(object sender, RoutedEventArgs args)
+        private void OnBrowserForwardClicked(object sender, RoutedEventArgs args)
         {
             if (RuntimeHelper.IsWebView2Installed)
             {
@@ -243,7 +243,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 网页刷新
         /// </summary>
-        public void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             if (RuntimeHelper.IsWebView2Installed)
             {
@@ -259,7 +259,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// WebView2 ：打开下载窗口
         /// Winform WebBrowser ：打开系统下载文件夹
         /// </summary>
-        public void OnDownloadClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
             if (RuntimeHelper.IsWebView2Installed)
             {
@@ -283,7 +283,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 显示浮出控件
         /// </summary>
-        public void OnMoreClicked(object sender, RoutedEventArgs args)
+        private void OnMoreClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
@@ -291,7 +291,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 在浏览器中打开
         /// </summary>
-        public void OnOpenWithBrowserClicked(object sender, RoutedEventArgs args)
+        private void OnOpenWithBrowserClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {
@@ -302,7 +302,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 打开缓存文件夹
         /// </summary>
-        public void OnOpenCacheFolderClicked(object sender, RoutedEventArgs args)
+        private void OnOpenCacheFolderClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(() =>
             {
@@ -327,7 +327,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         ///  清理网页缓存
         /// </summary>
-        public void OnClearWebCacheClicked(object sender, RoutedEventArgs args)
+        private void OnClearWebCacheClicked(object sender, RoutedEventArgs args)
         {
             Task.Run(async () =>
             {
@@ -349,7 +349,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// <summary>
         /// 设置标题栏按钮的颜色
         /// </summary>
-        public void SetTitleBarColor(ElementTheme theme)
+        private void SetTitleBarColor(ElementTheme theme)
         {
             AppWindowTitleBar titleBar = Program.MainWindow.AppWindow.TitleBar;
 

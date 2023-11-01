@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -10,13 +10,13 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class HistoryRecordService
     {
-        private static string HistoryLiteSettingsKey { get; } = ConfigKey.HistoryLiteNumKey;
+        private static string HistoryLiteSettingsKey = ConfigKey.HistoryLiteNumKey;
 
-        private static GroupOptionsModel DefaultHistoryLiteNum { get; set; }
+        private static DictionaryEntry DefaultHistoryLiteNum;
 
-        public static GroupOptionsModel HistoryLiteNum { get; set; }
+        public static DictionaryEntry HistoryLiteNum { get; set; }
 
-        public static List<GroupOptionsModel> HistoryLiteNumList { get; set; }
+        public static List<DictionaryEntry> HistoryLiteNumList { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的历史记录显示数量值
@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             HistoryLiteNumList = ResourceService.HistoryLiteNumList;
 
-            DefaultHistoryLiteNum = HistoryLiteNumList.Find(item => item.SelectedValue is "3");
+            DefaultHistoryLiteNum = HistoryLiteNumList.Find(item => item.Value.ToString() is "3");
 
             HistoryLiteNum = GetHistoryLiteNum();
         }
@@ -33,27 +33,27 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的微软商店页面历史记录显示的最多项目值，如果设置没有存储，使用默认值
         /// </summary>
-        private static GroupOptionsModel GetHistoryLiteNum()
+        private static DictionaryEntry GetHistoryLiteNum()
         {
-            string historyLiteNumValue = ConfigService.ReadSetting<string>(HistoryLiteSettingsKey);
+            object historyLiteNumValue = ConfigService.ReadSetting<object>(HistoryLiteSettingsKey);
 
-            if (string.IsNullOrEmpty(historyLiteNumValue))
+            if (historyLiteNumValue is null)
             {
                 SetHistoryLiteNum(DefaultHistoryLiteNum);
-                return HistoryLiteNumList.Find(item => item.SelectedValue == DefaultHistoryLiteNum.SelectedValue);
+                return HistoryLiteNumList.Find(item => item.Value.Equals(DefaultHistoryLiteNum.Value));
             }
 
-            return HistoryLiteNumList.Find(item => item.SelectedValue == historyLiteNumValue);
+            return HistoryLiteNumList.Find(item => item.Value.Equals(historyLiteNumValue));
         }
 
         /// <summary>
         /// 历史记录显示数量发生修改时修改设置存储的微软商店页面历史记录显示数量值
         /// </summary>
-        public static void SetHistoryLiteNum(GroupOptionsModel historyLiteNum)
+        public static void SetHistoryLiteNum(DictionaryEntry historyLiteNum)
         {
             HistoryLiteNum = historyLiteNum;
 
-            ConfigService.SaveSetting(HistoryLiteSettingsKey, historyLiteNum.SelectedValue);
+            ConfigService.SaveSetting(HistoryLiteSettingsKey, historyLiteNum.Value);
         }
     }
 }

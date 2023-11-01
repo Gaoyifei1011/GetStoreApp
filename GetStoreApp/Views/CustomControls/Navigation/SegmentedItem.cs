@@ -8,28 +8,26 @@ namespace GetStoreApp.Views.CustomControls.Navigation
     /// </summary>
     public partial class SegmentedItem : ListViewItem
     {
-        internal const string IconLeftState = "IconLeft";
-        internal const string IconOnlyState = "IconOnly";
-        internal const string ContentOnlyState = "ContentOnly";
-
-        private Border PART_Hover_Border;
+        private const string IconLeftState = "IconLeft";
+        private const string IconOnlyState = "IconOnly";
+        private const string ContentOnlyState = "ContentOnly";
 
         private Thickness LeftItemMargin = new Thickness(3, 3, 1, 3);
         private Thickness MiddleItemMargin = new Thickness(1, 3, 1, 3);
         private Thickness RightItemMargin = new Thickness(1, 3, 3, 3);
 
+        private Border PART_Hover_Border;
+
         /// <summary>
-        /// Gets or sets the icon.
+        /// 获取或设置图标
         /// </summary>
         public IconElement Icon
         {
-            get => (IconElement)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
+            get { return (IconElement)GetValue(IconProperty); }
+
+            set { SetValue(IconProperty, value); }
         }
 
-        /// <summary>
-        /// The backing <see cref="DependencyProperty"/> for the <see cref="Icon"/> property.
-        /// </summary>
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
             nameof(Icon),
             typeof(IconElement),
@@ -75,9 +73,14 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             ContentChanged();
         }
 
+        protected virtual void OnIconPropertyChanged(IconElement oldValue, IconElement newValue)
+        {
+            OnIconChanged();
+        }
+
         private void ContentChanged()
         {
-            if (Content != null)
+            if (Content is not null)
             {
                 VisualStateManager.GoToState(this, IconLeftState, true);
             }
@@ -85,11 +88,6 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             {
                 VisualStateManager.GoToState(this, IconOnlyState, true);
             }
-        }
-
-        protected virtual void OnIconPropertyChanged(IconElement oldValue, IconElement newValue)
-        {
-            OnIconChanged();
         }
 
         private void OnIconChanged()

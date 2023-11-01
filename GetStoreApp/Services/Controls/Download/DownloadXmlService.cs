@@ -16,25 +16,18 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class DownloadXmlService
     {
-        private const string DownloadItem = "DownloadItem";
-
-        private const string DownloadKey = "DownloadKey";
-
-        private const string FileName = "FileName";
-
-        private const string FileLink = "FileLink";
-
-        private const string FilePath = "FilePath";
-
-        private const string FileSHA1 = "FileSHA1";
-
-        private const string FileSize = "FileSize";
-
-        private const string DownloadFlag = "DownloadFlag";
-
         private static readonly object DownloadXmlFileLock = new object();
 
         private static bool isReadingAndWriting = false;
+
+        private const string DownloadItem = "DownloadItem";
+        private const string DownloadKey = "DownloadKey";
+        private const string FileName = "FileName";
+        private const string FileLink = "FileLink";
+        private const string FilePath = "FilePath";
+        private const string FileSHA1 = "FileSHA1";
+        private const string FileSize = "FileSize";
+        private const string DownloadFlag = "DownloadFlag";
 
         /// <summary>
         /// 检查是否有下载异常的记录，并将对应的下载状态值复原

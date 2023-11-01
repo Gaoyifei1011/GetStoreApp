@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
@@ -24,6 +23,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -129,7 +129,7 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private List<KeyValuePair<string, Type>> PageList { get; } = new List<KeyValuePair<string, Type>>()
+        private List<KeyValuePair<string, Type>> PageList = new List<KeyValuePair<string, Type>>()
         {
             new KeyValuePair<string, Type>("Store",typeof(StorePage)),
             new KeyValuePair<string, Type>("History",typeof(HistoryPage)),
@@ -286,7 +286,7 @@ namespace GetStoreApp.Views.Windows
             args.Cancel = true;
 
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-            if (DownloadSchedulerService.DownloadingList.Count > 0 || DownloadSchedulerService.WaitingList.Count > 0)
+            if (DownloadSchedulerService.DownloadingCollection.Count > 0 || DownloadSchedulerService.WaitingCollection.Count > 0)
             {
                 Show();
 
@@ -566,7 +566,7 @@ namespace GetStoreApp.Views.Windows
         {
             DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
             {
-                if (ThemeService.AppTheme.SelectedValue == ThemeService.ThemeList[0].SelectedValue)
+                if (ThemeService.AppTheme.Value == ThemeService.ThemeList[0].Value)
                 {
                     if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                     {
@@ -595,9 +595,9 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 设置应用的背景色
         /// </summary>
-        public void SetSystemBackdrop(GroupOptionsModel backdropItem)
+        public void SetSystemBackdrop(DictionaryEntry backdropItem)
         {
-            if (backdropItem.SelectedValue == BackdropService.BackdropList[1].SelectedValue)
+            if (backdropItem.Value == BackdropService.BackdropList[1].Value)
             {
                 SystemBackdrop = new MaterialBackdrop()
                 {
@@ -605,7 +605,7 @@ namespace GetStoreApp.Views.Windows
                     MicaBackdropKind = MicaKind.Base
                 };
             }
-            else if (backdropItem.SelectedValue == BackdropService.BackdropList[2].SelectedValue)
+            else if (backdropItem.Value == BackdropService.BackdropList[2].Value)
             {
                 SystemBackdrop = new MaterialBackdrop()
                 {
@@ -613,7 +613,7 @@ namespace GetStoreApp.Views.Windows
                     MicaBackdropKind = MicaKind.BaseAlt
                 };
             }
-            else if (backdropItem.SelectedValue == BackdropService.BackdropList[3].SelectedValue)
+            else if (backdropItem.Value == BackdropService.BackdropList[3].Value)
             {
                 SystemBackdrop = new MaterialBackdrop()
                 {
@@ -621,7 +621,7 @@ namespace GetStoreApp.Views.Windows
                     DesktopAcrylicBackdropKind = DesktopAcrylicKind.Default
                 };
             }
-            else if (backdropItem.SelectedValue == BackdropService.BackdropList[4].SelectedValue)
+            else if (backdropItem.Value == BackdropService.BackdropList[4].Value)
             {
                 SystemBackdrop = new MaterialBackdrop()
                 {
@@ -629,7 +629,7 @@ namespace GetStoreApp.Views.Windows
                     DesktopAcrylicBackdropKind = DesktopAcrylicKind.Base
                 };
             }
-            else if (backdropItem.SelectedValue == BackdropService.BackdropList[5].SelectedValue)
+            else if (backdropItem.Value == BackdropService.BackdropList[5].Value)
             {
                 SystemBackdrop = new MaterialBackdrop()
                 {

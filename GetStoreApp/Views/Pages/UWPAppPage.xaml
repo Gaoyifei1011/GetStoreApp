@@ -2,12 +2,12 @@
     x:Class="GetStoreApp.Views.Pages.UWPAppPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:collection="using:System.Collections"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:uc="using:GetStoreApp.UI.Controls.UWPApp"
-    xmlns:uwpApp="using:GetStoreApp.Models.Controls.UWPApp"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -31,16 +31,16 @@
 
             <BreadcrumbBar ItemClicked="{x:Bind OnItemClicked}" ItemsSource="{x:Bind BreadCollection, Mode=OneWay}">
                 <BreadcrumbBar.ItemTemplate>
-                    <DataTemplate x:DataType="uwpApp:BreadModel">
-                        <BreadcrumbBarItem AutomationProperties.Name="{Binding DisplayName}" Content="{Binding}">
+                    <DataTemplate x:DataType="collection:DictionaryEntry">
+                        <BreadcrumbBarItem Content="{Binding}">
                             <BreadcrumbBarItem.Resources>
                                 <x:Double x:Key="BreadcrumbBarChevronFontSize">16</x:Double>
                                 <Thickness x:Key="BreadcrumbBarChevronPadding">8,0</Thickness>
                             </BreadcrumbBarItem.Resources>
 
                             <BreadcrumbBarItem.ContentTemplate>
-                                <DataTemplate>
-                                    <TextBlock FontSize="18" Text="{Binding DisplayName}" />
+                                <DataTemplate x:DataType="collection:DictionaryEntry">
+                                    <TextBlock FontSize="18" Text="{x:Bind Key}" />
                                 </DataTemplate>
                             </BreadcrumbBarItem.ContentTemplate>
                         </BreadcrumbBarItem>

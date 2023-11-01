@@ -9,7 +9,7 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class CopyPasteHelper
     {
-        private static DataPackage DataPackage { get; } = new DataPackage();
+        private static DataPackage DataPackage = new DataPackage();
 
         /// <summary>
         /// 复制字符串内容到剪贴板

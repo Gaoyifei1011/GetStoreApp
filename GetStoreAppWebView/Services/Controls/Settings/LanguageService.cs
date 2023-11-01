@@ -12,13 +12,13 @@ namespace GetStoreAppWebView.Services.Controls.Settings
     /// </summary>
     public static class LanguageService
     {
-        private static string SettingsKey { get; } = ConfigKey.LanguageKey;
+        private static string SettingsKey = ConfigKey.LanguageKey;
 
         public static string DefaultAppLanguage { get; set; }
 
         public static string AppLanguage { get; set; }
 
-        private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
+        private static IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的语言值，如果设置值为空，设定默认的应用语言值

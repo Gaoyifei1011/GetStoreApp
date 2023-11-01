@@ -35,7 +35,13 @@ namespace GetStoreAppWebView.Views.Forms
 
         private double WindowDPI;
 
+        private IntPtr InputNonClientPointerSourceHandle;
+        private IntPtr UWPCoreHandle;
         private IContainer components = null;
+        private TitleControl TitleControl = new TitleControl();
+
+        private WNDPROC newInputNonClientPointerSourceWndProc = null;
+        private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
 
         public WindowsXamlHost MileXamlHost { get; } = new WindowsXamlHost();
 
@@ -43,16 +49,7 @@ namespace GetStoreAppWebView.Views.Forms
 
         public WebView2 WebView2 { get; }
 
-        public TitleControl TitleControl { get; } = new TitleControl();
-
-        private WNDPROC newInputNonClientPointerSourceWndProc = null;
-        private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
-
         public AppWindow AppWindow { get; }
-
-        private IntPtr InputNonClientPointerSourceHandle { get; }
-
-        public IntPtr UWPCoreHandle { get; }
 
         public MainForm()
         {

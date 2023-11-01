@@ -95,8 +95,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            SearchApps.WinGetInstance = this;
-            UpgradableApps.WinGetInstance = this;
+            SearchApps.InitializeWingetInstance(this);
+            UpgradableApps.InitializeWingetInstance(this);
         }
 
         /// <summary>

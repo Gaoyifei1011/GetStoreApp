@@ -9,17 +9,14 @@ namespace GetStoreAppWebView.Services.Root
     /// </summary>
     public static class ResourceService
     {
-        private static bool IsInitialized { get; set; } = false;
+        private static bool IsInitialized = false;
 
-        private static string DefaultAppLanguage { get; set; }
+        private static string DefaultAppLanguage;
+        private static string CurrentAppLanguage;
 
-        private static string CurrentAppLanguage { get; set; }
-
-        private static ResourceContext DefaultResourceContext { get; set; } = new ResourceContext();
-
-        private static ResourceContext CurrentResourceContext { get; set; } = new ResourceContext();
-
-        private static ResourceMap ResourceMap { get; } = ResourceManager.Current.MainResourceMap;
+        private static ResourceContext DefaultResourceContext = new ResourceContext();
+        private static ResourceContext CurrentResourceContext = new ResourceContext();
+        private static ResourceMap ResourceMap = ResourceManager.Current.MainResourceMap;
 
         /// <summary>
         /// 初始化应用本地化资源

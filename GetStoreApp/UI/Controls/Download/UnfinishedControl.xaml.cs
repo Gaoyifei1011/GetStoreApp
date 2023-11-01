@@ -27,10 +27,11 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class UnfinishedControl : Grid, INotifyPropertyChanged
     {
-        // 临界区资源访问互斥锁
-        private readonly object UnfinishedDataListLock = new object();
+        private readonly object UnfinishedLock = new object();
 
         private bool isUpdatingNow = false;
+
+        public int SelectedIndex { get; set; } = 0;
 
         private bool _isSelectMode = false;
 
@@ -45,37 +46,21 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
-        public ObservableCollection<UnfinishedModel> UnfinishedDataList { get; } = new ObservableCollection<UnfinishedModel>();
+        public ObservableCollection<UnfinishedModel> UnfinishedCollection { get; } = new ObservableCollection<UnfinishedModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public UnfinishedControl()
         {
             InitializeComponent();
-
-            // 订阅事件
-            DownloadSchedulerService.DownloadingList.CollectionChanged += OnDownloadingListItemsChanged;
         }
 
-        /// <summary>
-        /// 本地化未下载完成数量统计信息
-        /// </summary>
-        public string LocalizeUnfinishedCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("Download/UnfinishedEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("Download/UnfinishedCountInfo"), count);
-            }
-        }
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 继续下载当前任务
         /// </summary>
-        public async void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
             if (unfinishedItem is not null)
@@ -109,11 +94,11 @@ namespace GetStoreApp.UI.Controls.Download
                     if (ContinueResult)
                     {
                         while (isUpdatingNow) await Task.Delay(50);
-                        lock (UnfinishedDataListLock) isUpdatingNow = true;
+                        lock (UnfinishedLock) isUpdatingNow = true;
 
-                        UnfinishedDataList.Remove(unfinishedItem);
+                        UnfinishedCollection.Remove(unfinishedItem);
 
-                        lock (UnfinishedDataListLock) isUpdatingNow = false;
+                        lock (UnfinishedLock) isUpdatingNow = false;
                     }
                 }
             }
@@ -122,7 +107,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 删除当前任务
         /// </summary>
-        public async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
             if (unfinishedItem is not null)
@@ -155,7 +140,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                 // 删除记录
                 while (isUpdatingNow) await Task.Delay(50);
-                lock (UnfinishedDataListLock) isUpdatingNow = true;
+                lock (UnfinishedLock) isUpdatingNow = true;
 
                 try
                 {
@@ -163,7 +148,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                     if (DeleteResult)
                     {
-                        UnfinishedDataList.Remove(unfinishedItem);
+                        UnfinishedCollection.Remove(unfinishedItem);
                     }
                 }
                 catch (Exception e)
@@ -171,14 +156,18 @@ namespace GetStoreApp.UI.Controls.Download
                     LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
                 }
 
-                lock (UnfinishedDataListLock) isUpdatingNow = false;
+                lock (UnfinishedLock) isUpdatingNow = false;
             }
         }
+
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第二部分：未下载完成控件——挂载的事件
 
         /// <summary>
         /// 打开默认保存的文件夹
         /// </summary>
-        public async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         }
@@ -186,7 +175,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 继续下载全部任务
         /// </summary>
-        public async void OnContinueAllClicked(object sender, RoutedEventArgs args)
+        private async void OnContinueAllClicked(object sender, RoutedEventArgs args)
         {
             // 查看是否开启了网络监控服务
             if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -204,7 +193,7 @@ namespace GetStoreApp.UI.Controls.Download
 
             List<BackgroundModel> PauseList = new List<BackgroundModel>();
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.DownloadFlag is 2))
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection.Where(item => item.DownloadFlag is 2))
             {
                 PauseList.Add(new BackgroundModel
                 {
@@ -219,7 +208,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
+            lock (UnfinishedLock) isUpdatingNow = true;
 
             foreach (BackgroundModel unfinishedItem in PauseList)
             {
@@ -229,7 +218,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     try
                     {
-                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == unfinishedItem.DownloadKey));
+                        UnfinishedCollection.Remove(UnfinishedCollection.First(item => item.DownloadKey == unfinishedItem.DownloadKey));
                     }
                     catch (Exception e)
                     {
@@ -243,67 +232,67 @@ namespace GetStoreApp.UI.Controls.Download
                 }
             }
 
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
+            lock (UnfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 进入多选模式
         /// </summary>
-        public async void OnSelectClicked(object sender, RoutedEventArgs args)
+        private async void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
+            lock (UnfinishedLock) isUpdatingNow = true;
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelectMode = true;
                 unfinishedItem.IsSelected = false;
             }
 
             IsSelectMode = true;
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
+            lock (UnfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 全部选择
         /// </summary>
-        public async void OnSelectAllClicked(object sender, RoutedEventArgs args)
+        private async void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
+            lock (UnfinishedLock) isUpdatingNow = true;
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelected = true;
             }
 
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
+            lock (UnfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 全部不选
         /// </summary>
-        public async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
+        private async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
+            lock (UnfinishedLock) isUpdatingNow = true;
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelected = false;
             }
 
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
+            lock (UnfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 删除选中的任务
         /// </summary>
-        public async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
+        private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
             List<BackgroundModel> SelectedUnfinishedDataList = new List<BackgroundModel>();
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList.Where(item => item.IsSelected is true))
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection.Where(item => item.IsSelected is true))
             {
                 SelectedUnfinishedDataList.Add(new BackgroundModel
                 {
@@ -322,9 +311,9 @@ namespace GetStoreApp.UI.Controls.Download
             IsSelectMode = false;
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
+            lock (UnfinishedLock) isUpdatingNow = true;
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelectMode = false;
             }
@@ -364,7 +353,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                     if (DeleteResult)
                     {
-                        UnfinishedDataList.Remove(UnfinishedDataList.First(item => item.DownloadKey == backgroundItem.DownloadKey));
+                        UnfinishedCollection.Remove(UnfinishedCollection.First(item => item.DownloadKey == backgroundItem.DownloadKey));
                     }
                 }
                 catch (Exception e)
@@ -373,16 +362,16 @@ namespace GetStoreApp.UI.Controls.Download
                 }
             }
 
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
+            lock (UnfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 退出多选模式
         /// </summary>
-        public void OnCancelClicked(object sender, RoutedEventArgs args)
+        private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
-            foreach (UnfinishedModel unfinishedItem in UnfinishedDataList)
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelectMode = false;
             }
@@ -391,59 +380,91 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        public async void OnItemClicked(object sender, ItemClickEventArgs args)
+        private async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             UnfinishedModel resultItem = (UnfinishedModel)args.ClickedItem;
-            int ClickedIndex = UnfinishedDataList.IndexOf(resultItem);
+            int ClickedIndex = UnfinishedCollection.IndexOf(resultItem);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
+            lock (UnfinishedLock) isUpdatingNow = true;
 
-            if (ClickedIndex is not >= 0 && ClickedIndex < UnfinishedDataList.Count)
+            if (ClickedIndex is not >= 0 && ClickedIndex < UnfinishedCollection.Count)
             {
-                UnfinishedDataList[ClickedIndex].IsSelected = !UnfinishedDataList[ClickedIndex].IsSelected;
+                UnfinishedCollection[ClickedIndex].IsSelected = !UnfinishedCollection[ClickedIndex].IsSelected;
             }
 
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
+            lock (UnfinishedLock) isUpdatingNow = false;
         }
+
+        #endregion 第二部分：未下载完成控件——挂载的事件
+
+        #region 第三部分：自定义事件
 
         /// <summary>
         /// 订阅事件，下载中列表内容有暂停下载或下载失败的项目时通知UI更改
         /// </summary>
         public void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (args.Action is NotifyCollectionChangedAction.Remove)
+            if (SelectedIndex is 1)
             {
-                foreach (object item in args.OldItems)
+                if (args.Action is NotifyCollectionChangedAction.Remove)
                 {
-                    BackgroundModel backgroundItem = item as BackgroundModel;
-                    if (backgroundItem is not null)
+                    foreach (object item in args.OldItems)
                     {
-                        if (backgroundItem.DownloadFlag is 0 || backgroundItem.DownloadFlag is 2)
+                        BackgroundModel backgroundItem = item as BackgroundModel;
+                        if (backgroundItem is not null)
                         {
-                            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
+                            if (backgroundItem.DownloadFlag is 0 || backgroundItem.DownloadFlag is 2)
                             {
-                                while (isUpdatingNow) await Task.Delay(50);
-                                lock (UnfinishedDataListLock) isUpdatingNow = true;
-
-                                BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
-
-                                UnfinishedDataList.Add(new UnfinishedModel
+                                DispatcherQueue.TryEnqueue(async () =>
                                 {
-                                    DownloadKey = item.DownloadKey,
-                                    FileName = item.FileName,
-                                    FilePath = item.FilePath,
-                                    FileLink = item.FileLink,
-                                    FileSHA1 = item.FileSHA1,
-                                    TotalSize = item.TotalSize,
-                                    DownloadFlag = item.DownloadFlag
-                                });
+                                    while (isUpdatingNow) await Task.Delay(50);
+                                    lock (UnfinishedLock) isUpdatingNow = true;
 
-                                lock (UnfinishedDataListLock) isUpdatingNow = false;
-                            });
+                                    BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+
+                                    UnfinishedCollection.Add(new UnfinishedModel
+                                    {
+                                        DownloadKey = item.DownloadKey,
+                                        FileName = item.FileName,
+                                        FilePath = item.FilePath,
+                                        FileLink = item.FileLink,
+                                        FileSHA1 = item.FileSHA1,
+                                        TotalSize = item.TotalSize,
+                                        DownloadFlag = item.DownloadFlag
+                                    });
+
+                                    lock (UnfinishedLock) isUpdatingNow = false;
+                                });
+                            }
                         }
                     }
                 }
+            }
+        }
+
+        #endregion 第三部分：自定义事件
+
+        /// <summary>
+        /// 属性值发生变化时通知更改
+        /// </summary>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// 本地化未下载完成数量统计信息
+        /// </summary>
+        private string LocalizeUnfinishedCountInfo(int count)
+        {
+            if (count is 0)
+            {
+                return ResourceService.GetLocalized("Download/UnfinishedEmpty");
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("Download/UnfinishedCountInfo"), count);
             }
         }
 
@@ -453,17 +474,16 @@ namespace GetStoreApp.UI.Controls.Download
         public async Task GetUnfinishedDataListAsync()
         {
             List<BackgroundModel> FailureDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(0);
-
             List<BackgroundModel> PauseDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(2);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedDataListLock) isUpdatingNow = true;
+            lock (UnfinishedLock) isUpdatingNow = true;
 
-            UnfinishedDataList.Clear();
+            UnfinishedCollection.Clear();
 
             PauseDownloadRawList.ForEach(downloadItem =>
             {
-                UnfinishedDataList.Add(new UnfinishedModel
+                UnfinishedCollection.Add(new UnfinishedModel
                 {
                     DownloadKey = downloadItem.DownloadKey,
                     FileName = downloadItem.FileName,
@@ -477,7 +497,7 @@ namespace GetStoreApp.UI.Controls.Download
 
             FailureDownloadRawList.ForEach(async downloadItem =>
             {
-                UnfinishedDataList.Add(new UnfinishedModel
+                UnfinishedCollection.Add(new UnfinishedModel
                 {
                     DownloadKey = downloadItem.DownloadKey,
                     FileName = downloadItem.FileName,
@@ -490,15 +510,7 @@ namespace GetStoreApp.UI.Controls.Download
                 await Task.Delay(1);
             });
 
-            lock (UnfinishedDataListLock) isUpdatingNow = false;
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            lock (UnfinishedLock) isUpdatingNow = false;
         }
     }
 }

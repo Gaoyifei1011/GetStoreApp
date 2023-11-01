@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Helpers.Converters;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Windows.Globalization;
@@ -14,15 +14,15 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class LanguageService
     {
-        private static string SettingsKey { get; } = ConfigKey.LanguageKey;
+        private static string SettingsKey = ConfigKey.LanguageKey;
 
-        public static GroupOptionsModel DefaultAppLanguage { get; set; }
+        public static DictionaryEntry DefaultAppLanguage { get; private set; }
 
-        public static GroupOptionsModel AppLanguage { get; set; }
+        public static DictionaryEntry AppLanguage { get; private set; }
 
-        private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
+        private static IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
 
-        public static List<GroupOptionsModel> LanguageList { get; set; } = new List<GroupOptionsModel>();
+        public static List<DictionaryEntry> LanguageList { get; } = new List<DictionaryEntry>();
 
         /// <summary>
         /// 初始化应用语言信息列表
@@ -33,10 +33,10 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
 
-                LanguageList.Add(new GroupOptionsModel()
+                LanguageList.Add(new DictionaryEntry()
                 {
-                    DisplayMember = culture.NativeName,
-                    SelectedValue = culture.Name,
+                    Key = culture.NativeName,
+                    Value = culture.Name,
                 });
             }
         }
@@ -46,9 +46,9 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool IsExistsInLanguageList(string currentSystemLanguage)
         {
-            foreach (GroupOptionsModel languageItem in LanguageList)
+            foreach (DictionaryEntry languageItem in LanguageList)
             {
-                if (languageItem.SelectedValue == currentSystemLanguage)
+                if (languageItem.Value.ToString().Equals(currentSystemLanguage))
                 {
                     return true;
                 }
@@ -63,7 +63,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             InitializeLanguageList();
 
-            DefaultAppLanguage = LanguageList.Find(item => item.SelectedValue.Equals("en-US", StringComparison.OrdinalIgnoreCase));
+            DefaultAppLanguage = LanguageList.Find(item => item.Value.ToString().Equals("en-US", StringComparison.OrdinalIgnoreCase));
 
             AppLanguage = GetLanguage();
         }
@@ -71,14 +71,14 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的语言值，如果设置没有存储，使用默认值
         /// </summary>
-        private static GroupOptionsModel GetLanguage()
+        private static DictionaryEntry GetLanguage()
         {
-            string language = ConfigService.ReadSetting<string>(SettingsKey);
+            object language = ConfigService.ReadSetting<object>(SettingsKey);
 
             // 当前系统的语言值
             string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;
 
-            if (string.IsNullOrEmpty(language))
+            if (language is null)
             {
                 // 判断当前系统语言是否存在应用默认添加的语言列表中
                 bool result = IsExistsInLanguageList(CurrentSystemLanguage);
@@ -86,7 +86,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 // 如果存在，设置存储值和应用初次设置的语言为当前系统的语言
                 if (result)
                 {
-                    GroupOptionsModel currentSystemLanguage = LanguageList.Find(item => item.SelectedValue.Equals(CurrentSystemLanguage, StringComparison.OrdinalIgnoreCase));
+                    DictionaryEntry currentSystemLanguage = LanguageList.Find(item => item.Value.Equals(CurrentSystemLanguage));
                     SetLanguage(currentSystemLanguage);
                     return currentSystemLanguage;
                 }
@@ -95,22 +95,22 @@ namespace GetStoreApp.Services.Controls.Settings
                 else
                 {
                     SetLanguage(DefaultAppLanguage);
-                    return LanguageList.Find(item => item.SelectedValue.Equals(DefaultAppLanguage.SelectedValue, StringComparison.OrdinalIgnoreCase));
+                    return LanguageList.Find(item => item.Value.Equals(DefaultAppLanguage.Value));
                 }
             }
 
-            return LanguageList.Find(item => item.SelectedValue.Equals(language, StringComparison.OrdinalIgnoreCase));
+            return LanguageList.Find(item => item.Value.Equals(language));
         }
 
         /// <summary>
         /// 语言发生修改时修改设置存储的语言值
         /// </summary>
-        public static void SetLanguage(GroupOptionsModel language)
+        public static void SetLanguage(DictionaryEntry language)
         {
             AppLanguage = language;
 
-            ConfigService.SaveSetting(SettingsKey, language.SelectedValue);
-            StringConverterHelper.AppCulture = new CultureInfo(language.SelectedValue);
+            ConfigService.SaveSetting(SettingsKey, language.Value);
+            StringConverterHelper.AppCulture = new CultureInfo(language.Value.ToString());
         }
     }
 }

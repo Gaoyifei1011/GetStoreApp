@@ -10,13 +10,12 @@ namespace GetStoreApp.Views.CustomControls.Navigation
     /// </summary>
     public partial class Segmented : ListViewBase
     {
-        private int _internalSelectedIndex = -1;
-        private bool _hasLoaded = false;
+        private int internalSelectedIndex = -1;
+        private bool hasLoaded = false;
 
         public Segmented()
         {
             DefaultStyleKey = typeof(Segmented);
-
             RegisterPropertyChangedCallback(SelectedIndexProperty, OnSelectedIndexChanged);
         }
 
@@ -33,14 +32,19 @@ namespace GetStoreApp.Views.CustomControls.Navigation
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            if (!_hasLoaded)
+            if (!hasLoaded)
             {
-                SelectedIndex = _internalSelectedIndex;
-                _hasLoaded = true;
+                SelectedIndex = internalSelectedIndex;
+                hasLoaded = true;
             }
 
             PreviewKeyDown -= OnPreviewKeyDown;
             PreviewKeyDown += OnPreviewKeyDown;
+        }
+
+        protected override void OnItemsChanged(object e)
+        {
+            base.OnItemsChanged(e);
         }
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
@@ -52,16 +56,16 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             }
         }
 
-        private void OnPreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        private void OnPreviewKeyDown(object sender, KeyRoutedEventArgs args)
         {
-            switch (e.Key)
+            switch (args.Key)
             {
-                case VirtualKey.Left: e.Handled = MoveFocus(MoveDirection.Previous); break;
-                case VirtualKey.Right: e.Handled = MoveFocus(MoveDirection.Next); break;
+                case VirtualKey.Left: args.Handled = MoveFocus(false); break;
+                case VirtualKey.Right: args.Handled = MoveFocus(true); break;
             }
         }
 
-        private void OnSegmentedItemLoaded(object sender, RoutedEventArgs e)
+        private void OnSegmentedItemLoaded(object sender, RoutedEventArgs args)
         {
             if (sender is SegmentedItem segmentedItem)
             {
@@ -69,35 +73,31 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             }
         }
 
-        protected override void OnItemsChanged(object e)
-        {
-            base.OnItemsChanged(e);
-        }
-
-        private enum MoveDirection
-        {
-            Next,
-            Previous
-        }
-
         /// <summary>
-        /// Adjust the selected item and range based on keyboard input.
-        /// This is used to override the ListView behaviors for up/down arrow manipulation vs left/right for a horizontal control
+        /// 根据键盘输入调整所选项目和范围
+        /// 这用于重写向上/向下箭头操作的 ListView 行为与水平控件的左/右操作的 ListView 行为
         /// </summary>
-        /// <param name="direction">direction to move the selection</param>
-        /// <returns>True if the focus was moved, false otherwise</returns>
-        private bool MoveFocus(MoveDirection direction)
+        /// <param name="direction">移动选区的方向，向前移动为 true，否则为 false</param>
+        /// <returns>如果焦点已移动，则为 true，否则为 false</returns>
+        private bool MoveFocus(bool moveForward)
         {
             bool retVal = false;
-            var currentContainerItem = GetCurrentContainerItem();
+            SegmentedItem currentContainerItem = GetCurrentContainerItem();
 
             if (currentContainerItem != null)
             {
-                var currentItem = ItemFromContainer(currentContainerItem);
-                var previousIndex = Items.IndexOf(currentItem);
-                var index = previousIndex;
+                object currentItem = ItemFromContainer(currentContainerItem);
+                int previousIndex = Items.IndexOf(currentItem);
+                int index = previousIndex;
 
-                if (direction == MoveDirection.Previous)
+                if (moveForward == true)
+                {
+                    if (previousIndex < Items.Count - 1)
+                    {
+                        index += 1;
+                    }
+                }
+                else
                 {
                     if (previousIndex > 0)
                     {
@@ -108,15 +108,8 @@ namespace GetStoreApp.Views.CustomControls.Navigation
                         retVal = true;
                     }
                 }
-                else if (direction == MoveDirection.Next)
-                {
-                    if (previousIndex < Items.Count - 1)
-                    {
-                        index += 1;
-                    }
-                }
 
-                // Only do stuff if the index is actually changing
+                // 只有当索引实际发生变化时才做一些事情
                 if (index != previousIndex && ContainerFromIndex(index) is SegmentedItem newItem)
                 {
                     newItem.Focus(FocusState.Keyboard);
@@ -141,11 +134,9 @@ namespace GetStoreApp.Views.CustomControls.Navigation
 
         private void OnSelectedIndexChanged(DependencyObject sender, DependencyProperty dp)
         {
-            // This is a workaround for https://github.com/microsoft/microsoft-ui-xaml/issues/8257
-            if (_internalSelectedIndex == -1 && SelectedIndex > -1)
+            if (internalSelectedIndex == -1 && SelectedIndex > -1)
             {
-                // We catch the correct SelectedIndex and save it.
-                _internalSelectedIndex = SelectedIndex;
+                internalSelectedIndex = SelectedIndex;
             }
         }
     }

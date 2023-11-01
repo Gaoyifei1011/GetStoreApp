@@ -12,13 +12,13 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class XmlStorageService
     {
-        private static string HistoryXmlFileName { get; } = "HistoryRecords.xml.dat";
+        private static string HistoryXmlFileName = "HistoryRecords.xml.dat";
 
-        private static string DownloadXmlFileName { get; } = "DownloadRecords.xml.dat";
+        private static string DownloadXmlFileName = "DownloadRecords.xml.dat";
 
-        public static StorageFile HistoryXmlFile { get; set; }
+        public static StorageFile HistoryXmlFile { get; private set; }
 
-        public static StorageFile DownloadXmlFile { get; set; }
+        public static StorageFile DownloadXmlFile { get; private set; }
 
         public static async Task InitializeXmlFileAsync()
         {

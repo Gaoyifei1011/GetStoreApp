@@ -11,7 +11,6 @@ namespace GetStoreApp.Services.Root
         private static string badgeXmlString = "<badge value='{0}'/>";
 
         private static BadgeUpdater badgeUpdater = BadgeUpdateManager.CreateBadgeUpdaterForApplication();
-
         private static XmlDocument badgeDocument = new XmlDocument();
 
         /// <summary>

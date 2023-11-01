@@ -7,7 +7,7 @@ namespace GetStoreApp.Extensions.Console
     /// </summary>
     public static class CharExtension
     {
-        private static byte[] Lengths { get; } = Resources.Lengths;
+        private static byte[] Lengths = Resources.Lengths;
 
         /// <summary>
         /// 判断该字符在控制台显示的实际宽度是否大于1（速度更快版本）

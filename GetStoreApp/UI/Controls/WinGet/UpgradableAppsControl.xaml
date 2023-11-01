@@ -57,7 +57,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeUpgradableAppsCountInfo(UpgradableAppsDataList.Count), Mode=OneWay}" />
+            Text="{x:Bind LocalizeUpgradableAppsCountInfo(UpgradableAppsCollection.Count), Mode=OneWay}" />
 
         <StackPanel
             Grid.Column="4"
@@ -137,13 +137,13 @@
             Grid.Row="1"
             Padding="30,0,30,30"
             ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-            ItemsSource="{x:Bind UpgradableAppsDataList, Mode=OneWay}"
+            ItemsSource="{x:Bind UpgradableAppsCollection, Mode=OneWay}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.HorizontalScrollMode="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsDataList.Count), Mode=OneWay}">
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}">
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="winget:UpgradableAppsModel">

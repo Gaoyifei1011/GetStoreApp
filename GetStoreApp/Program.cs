@@ -21,7 +21,7 @@ namespace GetStoreApp
     /// </summary>
     public class Program
     {
-        private static bool IsDesktopProgram { get; set; } = true;
+        private static bool IsDesktopProgram = true;
 
         public static bool IsNeedAppLaunch { get; set; } = true;
 

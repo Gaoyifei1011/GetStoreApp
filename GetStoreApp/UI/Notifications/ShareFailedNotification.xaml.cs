@@ -35,7 +35,7 @@ namespace GetStoreApp.UI.Notifications
             Count = count;
         }
 
-        public void ShareSelectedFailedLoaded(object sender, RoutedEventArgs args)
+        private void ShareSelectedFailedLoaded(object sender, RoutedEventArgs args)
         {
             ShareSelectedFailed.Text = string.Format(ResourceService.GetLocalized("Notification/ShareSelectedFailed"), Count);
         }

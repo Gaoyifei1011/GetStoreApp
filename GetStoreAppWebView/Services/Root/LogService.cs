@@ -12,11 +12,10 @@ namespace GetStoreAppWebView.Services.Root
     /// </summary>
     public static class LogService
     {
+        private static bool IsInitialized = false;
+
         private static string unknown = "unknown";
-
-        private static bool IsInitialized { get; set; } = false;
-
-        private static string LogFolderPath { get; set; } = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs");
+        private static string LogFolderPath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs");
 
         /// <summary>
         /// 初始化日志记录

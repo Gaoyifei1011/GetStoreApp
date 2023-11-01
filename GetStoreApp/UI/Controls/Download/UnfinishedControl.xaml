@@ -55,7 +55,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeUnfinishedCountInfo(UnfinishedDataList.Count), Mode=OneWay}" />
+            Text="{x:Bind LocalizeUnfinishedCountInfo(UnfinishedCollection.Count), Mode=OneWay}" />
 
         <StackPanel
             x:Name="NormalMode"
@@ -80,7 +80,7 @@
 
             <MenuFlyoutItem
                 Click="{x:Bind OnContinueAllClicked}"
-                IsEnabled="{x:Bind sys:Convert.ToBoolean(UnfinishedDataList.Count), Mode=OneWay}"
+                IsEnabled="{x:Bind sys:Convert.ToBoolean(UnfinishedCollection.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAll')}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAllToolTip')}">
@@ -92,7 +92,7 @@
 
             <MenuFlyoutItem
                 Click="{x:Bind OnSelectClicked}"
-                IsEnabled="{x:Bind sys:Convert.ToBoolean(UnfinishedDataList.Count), Mode=OneWay}"
+                IsEnabled="{x:Bind sys:Convert.ToBoolean(UnfinishedCollection.Count), Mode=OneWay}"
                 Style="{StaticResource AppBarButtonMenuItemStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
@@ -165,7 +165,7 @@
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
         CornerRadius="{StaticResource ControlCornerRadius}"
-        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UnfinishedDataList.Count), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UnfinishedCollection.Count), Mode=OneWay}">
         <TextBlock
             Margin="0,10"
             VerticalAlignment="Center"
@@ -179,13 +179,13 @@
         IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
         ItemClick="{x:Bind OnItemClicked}"
         ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
-        ItemsSource="{x:Bind UnfinishedDataList, Mode=OneWay}"
+        ItemsSource="{x:Bind UnfinishedCollection, Mode=OneWay}"
         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
         ScrollViewer.HorizontalScrollMode="Disabled"
         ScrollViewer.VerticalScrollBarVisibility="Auto"
         ScrollViewer.VerticalScrollMode="Enabled"
         SelectionMode="None"
-        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UnfinishedDataList.Count), Mode=OneWay}">
+        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UnfinishedCollection.Count), Mode=OneWay}">
 
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="download:UnfinishedModel">

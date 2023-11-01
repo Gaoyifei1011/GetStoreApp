@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -12,13 +12,13 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class ThemeService
     {
-        private static string ThemeSettingsKey { get; } = ConfigKey.ThemeKey;
+        private static string ThemeSettingsKey = ConfigKey.ThemeKey;
 
-        private static GroupOptionsModel DefaultAppTheme { get; set; }
+        private static DictionaryEntry DefaultAppTheme;
 
-        public static GroupOptionsModel AppTheme { get; set; }
+        public static DictionaryEntry AppTheme { get; private set; }
 
-        public static List<GroupOptionsModel> ThemeList { get; set; }
+        public static List<DictionaryEntry> ThemeList { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             ThemeList = ResourceService.ThemeList;
 
-            DefaultAppTheme = ThemeList.Find(item => item.SelectedValue == nameof(ElementTheme.Default));
+            DefaultAppTheme = ThemeList.Find(item => item.Value.ToString().Equals(nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
 
             AppTheme = GetTheme();
         }
@@ -35,29 +35,29 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private static GroupOptionsModel GetTheme()
+        private static DictionaryEntry GetTheme()
         {
-            string theme = ConfigService.ReadSetting<string>(ThemeSettingsKey);
+            object theme = ConfigService.ReadSetting<object>(ThemeSettingsKey);
 
-            if (string.IsNullOrEmpty(theme))
+            if (theme is null)
             {
                 SetTheme(DefaultAppTheme);
                 return DefaultAppTheme;
             }
 
-            GroupOptionsModel selectedTheme = ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase));
+            DictionaryEntry selectedTheme = ThemeList.Find(item => item.Value.Equals(theme));
 
-            return selectedTheme is null ? DefaultAppTheme : ThemeList.Find(item => item.SelectedValue.Equals(theme, StringComparison.OrdinalIgnoreCase));
+            return selectedTheme.Key is null ? DefaultAppTheme : ThemeList.Find(item => item.Value.Equals(theme));
         }
 
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static void SetTheme(GroupOptionsModel theme)
+        public static void SetTheme(DictionaryEntry theme)
         {
             AppTheme = theme;
 
-            ConfigService.SaveSetting(ThemeSettingsKey, theme.SelectedValue);
+            ConfigService.SaveSetting(ThemeSettingsKey, theme.Value);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void SetWindowTheme()
         {
-            if (AppTheme.SelectedValue == ThemeList[0].SelectedValue)
+            if (AppTheme.Value.Equals(ThemeList[0].Value))
             {
                 if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                 {
@@ -78,7 +78,7 @@ namespace GetStoreApp.Services.Controls.Settings
             }
             else
             {
-                Program.ApplicationRoot.MainWindow.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.SelectedValue);
+                Program.ApplicationRoot.MainWindow.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.Value.ToString());
             }
         }
     }
