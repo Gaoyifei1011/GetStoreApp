@@ -114,7 +114,6 @@ namespace GetStoreApp.Services.Controls.Download
                     DownloadItemElement.SetAttribute(FileName, backgroundItem.FileName);
                     DownloadItemElement.SetAttribute(FileLink, backgroundItem.FileLink);
                     DownloadItemElement.SetAttribute(FilePath, backgroundItem.FilePath);
-                    DownloadItemElement.SetAttribute(FileSHA1, backgroundItem.FileSHA1);
                     DownloadItemElement.SetAttribute(FileSize, Convert.ToString(backgroundItem.TotalSize));
                     DownloadItemElement.SetAttribute(DownloadFlag, Convert.ToString(backgroundItem.DownloadFlag));
                     DownloadRootElement.AppendChild(DownloadItemElement);
@@ -277,7 +276,6 @@ namespace GetStoreApp.Services.Controls.Download
                                     FileName = downloadItemElement.Attributes.GetNamedItem(FileName).InnerText,
                                     FileLink = downloadItemElement.Attributes.GetNamedItem(FileLink).InnerText,
                                     FilePath = downloadItemElement.Attributes.GetNamedItem(FilePath).InnerText,
-                                    FileSHA1 = downloadItemElement.Attributes.GetNamedItem(FileSHA1).InnerText,
                                     TotalSize = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(FileSize).InnerText),
                                     DownloadFlag = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText)
                                 };
@@ -327,7 +325,6 @@ namespace GetStoreApp.Services.Controls.Download
                                 downloadRawModel.FileName = downloadItemElement.Attributes.GetNamedItem(FileName).InnerText;
                                 downloadRawModel.FileLink = downloadItemElement.Attributes.GetNamedItem(FileLink).InnerText;
                                 downloadRawModel.FilePath = downloadItemElement.Attributes.GetNamedItem(FilePath).InnerText;
-                                downloadRawModel.FileSHA1 = downloadItemElement.Attributes.GetNamedItem(FileSHA1).InnerText;
                                 downloadRawModel.TotalSize = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(FileSize).InnerText);
                                 downloadRawModel.DownloadFlag = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText);
                                 break;

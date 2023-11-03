@@ -374,7 +374,6 @@ namespace GetStoreApp.UI.Controls.Download
                                         FileName = downloadItem.FileName,
                                         FileLink = downloadItem.FileLink,
                                         FilePath = downloadItem.FilePath,
-                                        FileSHA1 = downloadItem.FileSHA1,
                                         TotalSize = downloadItem.TotalSize,
                                         DownloadFlag = downloadItem.DownloadFlag
                                     });
@@ -444,7 +443,6 @@ namespace GetStoreApp.UI.Controls.Download
                                     FileName = downloadItem.FileName,
                                     FileLink = downloadItem.FileLink,
                                     FilePath = downloadItem.FilePath,
-                                    FileSHA1 = downloadItem.FileSHA1,
                                     TotalSize = downloadItem.TotalSize,
                                     DownloadFlag = downloadItem.DownloadFlag
                                 });
@@ -552,7 +550,6 @@ namespace GetStoreApp.UI.Controls.Download
                     FileName = downloadItem.FileName,
                     FileLink = downloadItem.FileLink,
                     FilePath = downloadItem.FilePath,
-                    FileSHA1 = downloadItem.FileSHA1,
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
@@ -567,7 +564,6 @@ namespace GetStoreApp.UI.Controls.Download
                     FileName = downloadItem.FileName,
                     FileLink = downloadItem.FileLink,
                     FilePath = downloadItem.FilePath,
-                    FileSHA1 = downloadItem.FileSHA1,
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });

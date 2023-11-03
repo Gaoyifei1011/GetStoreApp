@@ -186,9 +186,6 @@
   <data name="FileName" xml:space="preserve">
     <value>File Name</value>
   </data>
-  <data name="FileSHA1" xml:space="preserve">
-    <value>File SHA-1</value>
-  </data>
   <data name="FileSize" xml:space="preserve">
     <value>File Size</value>
   </data>
@@ -206,9 +203,6 @@
   </data>
   <data name="Link" xml:space="preserve">
     <value>Link</value>
-  </data>
-  <data name="LinkExpireTime" xml:space="preserve">
-    <value>Link Expire Time</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>

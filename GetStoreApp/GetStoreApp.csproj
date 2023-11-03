@@ -66,6 +66,9 @@
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
+    <Content Remove="Assets\XML\cookie.xml" />
+    <Content Remove="Assets\XML\url.xml" />
+    <Content Remove="Assets\XML\wu.xml" />
 
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
 

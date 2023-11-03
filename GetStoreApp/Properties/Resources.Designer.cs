@@ -61,6 +61,19 @@ namespace GetStoreApp.Properties {
         }
         
         /// <summary>
+        ///   查找类似 &lt;Envelope xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;
+        ///	&lt;Header&gt;
+        ///		&lt;Action d3p1:mustUnderstand=&quot;1&quot; xmlns:d3p1=&quot;http://www.w3.org/2003/05/soap-envelope&quot; xmlns=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetCookie&lt;/Action&gt;
+        ///		&lt;MessageID xmlns=&quot;http://www.w3.org/2005/08/addressing&quot;&gt;urn:uuid:b9b43757-2247-4d7b-ae8f-a71ba8a22386&lt;/MessageID&gt;
+        ///		&lt; [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string cookie {
+            get {
+                return ResourceManager.GetString("cookie", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
         public static byte[] Lengths {
@@ -96,6 +109,40 @@ namespace GetStoreApp.Properties {
         public static string ResourcesInitializeFailed {
             get {
                 return ResourceManager.GetString("ResourcesInitializeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;s:Envelope
+        ///	xmlns:a=&quot;http://www.w3.org/2005/08/addressing&quot;
+        ///	xmlns:s=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;
+        ///	&lt;s:Header&gt;
+        ///		&lt;a:Action s:mustUnderstand=&quot;1&quot;&gt;http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/GetExtendedUpdateInfo2&lt;/a:Action&gt;
+        ///		&lt;a:MessageID&gt;urn:uuid:2cc99c2e-3b3e-4fb1-9e31-0cd30e6f43a0&lt;/a:MessageID&gt;
+        ///		&lt;a:To s:mustUnderstand=&quot;1&quot;&gt;https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured&lt;/a:To&gt;
+        ///		&lt;o:Security s:mustUnderstand=&quot;1&quot;
+        ///			xmlns:o=&quot;http://doc [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string url {
+            get {
+                return ResourceManager.GetString("url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 &lt;s:Envelope
+        ///	xmlns:a=&quot;http://www.w3.org/2005/08/addressing&quot;
+        ///	xmlns:s=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;
+        ///	&lt;s:Header&gt;
+        ///		&lt;a:Action s:mustUnderstand=&quot;1&quot;&gt;http://www.microsoft.com/SoftwareDistribution/Server/ClientWebService/SyncUpdates&lt;/a:Action&gt;
+        ///		&lt;a:MessageID&gt;urn:uuid:175df68c-4b91-41ee-b70b-f2208c65438e&lt;/a:MessageID&gt;
+        ///		&lt;a:To s:mustUnderstand=&quot;1&quot;&gt;https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx&lt;/a:To&gt;
+        ///		&lt;o:Security s:mustUnderstand=&quot;1&quot;
+        ///			xmlns:o=&quot;http://docs.oasis-open.org/ws [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        public static string wu {
+            get {
+                return ResourceManager.GetString("wu", resourceCulture);
             }
         }
     }

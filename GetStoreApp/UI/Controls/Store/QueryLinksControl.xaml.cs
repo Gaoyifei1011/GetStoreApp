@@ -300,7 +300,6 @@ namespace GetStoreApp.UI.Controls.Store
                             FileLink = resultItem.FileLink,
                             FilePath = DownloadFilePath,
                             TotalSize = 0,
-                            FileSHA1 = resultItem.FileSHA1,
                             DownloadFlag = 1
                         };
 
@@ -442,10 +441,9 @@ namespace GetStoreApp.UI.Controls.Store
             ResultModel resultItem = args.Parameter as ResultModel;
             if (resultItem is not null)
             {
-                string copyContent = string.Format("[\n{0}\n{1}\n{2}\n{3}\n]\n",
+                string copyContent = string.Format("[\n{0}\n{1}\n{2}\n]\n",
                     resultItem.FileName,
                     resultItem.FileLink,
-                    resultItem.FileSHA1,
                     resultItem.FileSize
                     );
 
@@ -595,10 +593,9 @@ namespace GetStoreApp.UI.Controls.Store
 
                 foreach (ResultModel resultItem in selectedResultDataList)
                 {
-                    stringBuilder.AppendLine(string.Format("[\n{0}\n{1}\n{2}\n{3}\n]",
+                    stringBuilder.AppendLine(string.Format("[\n{0}\n{1}\n{2}\n]",
                         resultItem.FileName,
                         resultItem.FileLink,
-                        resultItem.FileSHA1,
                         resultItem.FileSize)
                         );
                 }
@@ -699,7 +696,6 @@ namespace GetStoreApp.UI.Controls.Store
                             FileLink = resultItem.FileLink,
                             FilePath = DownloadFilePath,
                             TotalSize = 0,
-                            FileSHA1 = resultItem.FileSHA1,
                             DownloadFlag = 1
                         };
 
@@ -863,66 +859,89 @@ namespace GetStoreApp.UI.Controls.Store
 
             Task.Run(async () =>
             {
-                bool resultControlVisable;
                 string categoryId = string.Empty;
                 List<ResultModel> resultDataList = new List<ResultModel>();
 
                 // 记录当前选定的选项和填入的内容
-                int CurrentType = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
-                int CurrentChannel = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
-                string CurrentLink = LinkText;
+                int currentType = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
+                int currentChannel = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
+                string currentLink = LinkText;
 
-                // 生成请求的内容
-                string generateContent = GenerateContentHelper.GenerateRequestContent(
-                    SelectedType.InternalName,
-                    LinkText,
-                    SelectedChannel.InternalName);
+                // 解析链接对应的产品 ID
+                string productId = QueryLinksHelper.ParseRequestContent(LinkText);
 
-                // 获取网页反馈回的原始数据
-                RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+                string cookie = await QueryLinksHelper.GetCookieAsync();
 
-                // 检查服务器返回获取的状态
-                int state = HtmlRequestStateHelper.CheckRequestState(httpRequestData);
+                // 获取应用信息
+                Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
 
-                // 设置结果控件的显示状态
-                resultControlVisable = state is 1 or 2;
-
-                // 成功状态下解析数据
-                if (state is 1)
+                if (appInformationResult.Item1)
                 {
-                    HtmlParseHelper.InitializeParseData(httpRequestData);
-                    categoryId = HtmlParseHelper.HtmlParseCID();
-                    resultDataList = HtmlParseHelper.HtmlParseLinks();
-                    ResultListFilter(ref resultDataList);
-                    await UpdateHistoryAsync(CurrentType, CurrentChannel, CurrentLink);
-                }
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    IsGettingLinks = false;
-
-                    // 成功状态下更新历史记录
-                    if (state is 1)
+                    // 解析非商店应用数据
+                    if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                     {
-                        GetHistoryLiteDataList();
-                    }
-
-                    // 显示结果
-                    SetControlState(state);
-                    ResultControlVisable = resultControlVisable;
-                    CategoryId = categoryId;
-
-                    lock (ResultDataListObjectLock)
-                    {
-                        ResultCollection.Clear();
-                        foreach (ResultModel resultItem in resultDataList)
+                        List<ResultModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                        foreach (ResultModel nonAppxPackage in nonAppxPackagesList)
                         {
-                            resultItem.IsSelected = false;
-                            ResultCollection.Add(resultItem);
-                            Task.Delay(1);
+                            resultDataList.Add(nonAppxPackage);
                         }
                     }
-                });
+                    // 解析商店应用数据
+                    else
+                    {
+                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[currentChannel].InternalName);
+
+                        if (!string.IsNullOrEmpty(fileListXml))
+                        {
+                            List<ResultModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[currentChannel].InternalName);
+                            foreach (ResultModel appxPackage in appxPackagesList)
+                            {
+                                resultDataList.Add(appxPackage);
+                            }
+                        }
+                    }
+
+                    ResultListFilter(ref resultDataList);
+                    await UpdateHistoryAsync(currentType, currentChannel, currentLink);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsGettingLinks = false;
+
+                        if (resultDataList.Count > 0)
+                        {
+                            GetHistoryLiteDataList();
+
+                            // 显示结果
+                            SetControlState(1);
+                            ResultControlVisable = true;
+                            CategoryId = appInformationResult.Item2.CategoryID;
+
+                            lock (ResultDataListObjectLock)
+                            {
+                                ResultCollection.Clear();
+                                foreach (ResultModel resultItem in resultDataList)
+                                {
+                                    ResultCollection.Add(resultItem);
+                                    Task.Delay(1);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            SetControlState(2);
+                            ResultControlVisable = false;
+                        }
+                    });
+                }
+                else
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        SetControlState(3);
+                        ResultControlVisable = false;
+                    });
+                }
             });
         }
 

@@ -543,10 +543,8 @@
                     BorderThickness="1,0,1,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="4*" />
-                        <ColumnDefinition Width="1.2*" />
-                        <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
 
@@ -581,36 +579,8 @@
                     </TextBlock>
 
                     <TextBlock
-                        x:Name="LinkExpireTimeText"
-                        Grid.Column="2"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/LinkExpireTime')}" Visibility="{x:Bind LinkExpireTimeText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        x:Name="FileSHA1HeaderText"
-                        Grid.Column="3"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSHA1')}" Visibility="{x:Bind FileSHA1HeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
                         x:Name="FileSizeHeaderText"
-                        Grid.Column="4"
+                        Grid.Column="2"
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}"
@@ -623,7 +593,7 @@
                     </TextBlock>
 
                     <TextBlock
-                        Grid.Column="5"
+                        Grid.Column="3"
                         Grid.ColumnSpan="2"
                         Margin="10,0,0,0"
                         HorizontalAlignment="Stretch"
@@ -643,10 +613,8 @@
                         BorderThickness="1,0,1,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="4*" />
-                            <ColumnDefinition Width="1.2*" />
-                            <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="80" />
                         </Grid.ColumnDefinitions>
 
@@ -687,42 +655,8 @@
                         </HyperlinkButton>
 
                         <TextBlock
-                            x:Name="FileLinkExpireTimeText"
-                            Grid.Column="2"
-                            MinWidth="50"
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}"
-                            TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind converter:StringConverterHelper.GMTFormat(FileLinkExpireTime)}" Visibility="{Binding ElementName=FileLinkExpireTimeText, Path=IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-
-                        <TextBlock
-                            x:Name="FileSHA1Text"
-                            Grid.Column="3"
-                            MinWidth="50"
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{x:Bind FileSHA1}"
-                            TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind FileSHA1}" Visibility="{Binding ElementName=FileSHA1Text, Path=IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-
-                        <TextBlock
                             x:Name="FileSizeText"
-                            Grid.Column="4"
+                            Grid.Column="2"
                             MinWidth="50"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
@@ -738,7 +672,7 @@
                         </TextBlock>
 
                         <DropDownButton
-                            Grid.Column="5"
+                            Grid.Column="3"
                             Margin="10,0,0,0"
                             Padding="0"
                             HorizontalAlignment="Left"

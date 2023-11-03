@@ -71,8 +71,6 @@ namespace GetStoreApp.Helpers.Controls.Store
                         ResultModel resultData = new ResultModel();
                         resultData.FileLink = ResultDataListGroups[1].Value;
                         resultData.FileName = ResultDataListGroups[2].Value;
-                        resultData.FileLinkExpireTime = ResultDataListGroups[3].Value;
-                        resultData.FileSHA1 = ResultDataListGroups[4].Value;
                         resultData.FileSize = ResultDataListGroups[5].Value;
 
                         ResultDataList.Add(resultData);

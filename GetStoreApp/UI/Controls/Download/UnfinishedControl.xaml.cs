@@ -87,7 +87,6 @@ namespace GetStoreApp.UI.Controls.Download
                         FileName = unfinishedItem.FileName,
                         FileLink = unfinishedItem.FileLink,
                         FilePath = unfinishedItem.FilePath,
-                        FileSHA1 = unfinishedItem.FileSHA1,
                         TotalSize = unfinishedItem.TotalSize
                     });
 
@@ -201,7 +200,6 @@ namespace GetStoreApp.UI.Controls.Download
                     FileName = unfinishedItem.FileName,
                     FileLink = unfinishedItem.FileLink,
                     FilePath = unfinishedItem.FilePath,
-                    FileSHA1 = unfinishedItem.FileSHA1,
                     DownloadFlag = unfinishedItem.DownloadFlag,
                     TotalSize = unfinishedItem.TotalSize,
                 });
@@ -429,7 +427,6 @@ namespace GetStoreApp.UI.Controls.Download
                                         FileName = item.FileName,
                                         FilePath = item.FilePath,
                                         FileLink = item.FileLink,
-                                        FileSHA1 = item.FileSHA1,
                                         TotalSize = item.TotalSize,
                                         DownloadFlag = item.DownloadFlag
                                     });
@@ -489,7 +486,6 @@ namespace GetStoreApp.UI.Controls.Download
                     FileName = downloadItem.FileName,
                     FileLink = downloadItem.FileLink,
                     FilePath = downloadItem.FilePath,
-                    FileSHA1 = downloadItem.FileSHA1,
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });
@@ -503,7 +499,6 @@ namespace GetStoreApp.UI.Controls.Download
                     FileName = downloadItem.FileName,
                     FileLink = downloadItem.FileLink,
                     FilePath = downloadItem.FilePath,
-                    FileSHA1 = downloadItem.FileSHA1,
                     TotalSize = downloadItem.TotalSize,
                     DownloadFlag = downloadItem.DownloadFlag
                 });

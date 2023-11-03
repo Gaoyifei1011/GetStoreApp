@@ -108,14 +108,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// GMT时间与当地地区时间格式化
-        /// </summary>
-        public static string GMTFormat(string content)
-        {
-            return Convert.ToDateTime(content).ToLocalTime().ToString("G", AppCulture);
-        }
-
-        /// <summary>
         /// 安装进度文字提示格式化
         /// </summary>
         public static string InstallValueFormat(double content)
