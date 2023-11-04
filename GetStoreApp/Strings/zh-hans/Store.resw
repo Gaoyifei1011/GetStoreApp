@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppDescription" xml:space="preserve">
+    <value>应用描述：</value>
+  </data>
+  <data name="AppInformation" xml:space="preserve">
+    <value>应用信息</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>应用名称：</value>
+  </data>
+  <data name="AppPublisher" xml:space="preserve">
+    <value>发布者：</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -138,20 +150,17 @@
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
-  <data name="CopyContent" xml:space="preserve">
-    <value>复制内容</value>
+  <data name="CopyAppInformation" xml:space="preserve">
+    <value>复制应用信息</value>
   </data>
-  <data name="CopyContentToolTip" xml:space="preserve">
-    <value>复制内容到剪贴板</value>
+  <data name="CopyInformation" xml:space="preserve">
+    <value>复制信息</value>
   </data>
-  <data name="CopyID" xml:space="preserve">
-    <value>复制ID</value>
-  </data>
-  <data name="CopyIDToolTip" xml:space="preserve">
-    <value>复制CategoryID到剪贴板</value>
+  <data name="CopyInformationToolTip" xml:space="preserve">
+    <value>复制信息到剪贴板</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
-    <value>复制下载链接</value>
+    <value>复制链接</value>
   </data>
   <data name="CopyLinkToolTip" xml:space="preserve">
     <value>复制下载链接到剪贴板</value>
@@ -177,6 +186,9 @@
   <data name="CopyToolTip" xml:space="preserve">
     <value>复制选中的内容到剪贴板</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>下载</value>
   </data>
@@ -201,8 +213,17 @@
   <data name="HistoryLiteEmpty" xml:space="preserve">
     <value>历史记录空空如也</value>
   </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>了解更多</value>
+  </data>
   <data name="Link" xml:space="preserve">
     <value>链接</value>
+  </data>
+  <data name="OpenLink" xml:space="preserve">
+    <value>打开链接</value>
+  </data>
+  <data name="OpenLInkToolTip" xml:space="preserve">
+    <value>使用浏览器打开链接</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>选项</value>
@@ -275,11 +296,5 @@
   </data>
   <data name="UseInstructionToolTip" xml:space="preserve">
     <value>点击了解应用的具体使用方法</value>
-  </data>
-  <data name="ViewAll" xml:space="preserve">
-    <value>查看全部</value>
-  </data>
-  <data name="ViewAllToolTip" xml:space="preserve">
-    <value>查看所有的历史记录</value>
   </data>
 </root>

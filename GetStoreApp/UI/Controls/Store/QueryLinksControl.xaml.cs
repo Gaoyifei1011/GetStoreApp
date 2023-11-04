@@ -113,6 +113,19 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
+        private AppInfoModel _appInfoModel = new AppInfoModel();
+
+        public AppInfoModel AppInfoModel
+        {
+            get { return _appInfoModel; }
+
+            set
+            {
+                _appInfoModel = value;
+                OnPropertyChanged();
+            }
+        }
+
         private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
 
         public InfoBarSeverity InfoBarSeverity
@@ -161,19 +174,6 @@ namespace GetStoreApp.UI.Controls.Store
             set
             {
                 _resultCotnrolVisable = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string _categoryId;
-
-        public string CategoryId
-        {
-            get { return _categoryId; }
-
-            set
-            {
-                _categoryId = value;
                 OnPropertyChanged();
             }
         }
@@ -420,6 +420,19 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
+        /// 打开指定项目的链接
+        /// </summary>
+        private async void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            string fileLink = args.Parameter as string;
+
+            if (fileLink is not null)
+            {
+                await Launcher.LaunchUriAsync(new Uri(fileLink));
+            }
+        }
+
+        /// <summary>
         /// 复制指定项目的链接
         /// </summary>
         private void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -434,21 +447,21 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
-        /// 复制指定项目的内容
+        /// 复制指定项目的信息
         /// </summary>
-        private void OnCopyContentExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             ResultModel resultItem = args.Parameter as ResultModel;
             if (resultItem is not null)
             {
-                string copyContent = string.Format("[\n{0}\n{1}\n{2}\n]\n",
+                string copyInformation = string.Format("[\n{0}\n{1}\n{2}\n]\n",
                     resultItem.FileName,
                     resultItem.FileLink,
                     resultItem.FileSize
                     );
 
-                CopyPasteHelper.CopyTextToClipBoard(copyContent);
-                new DataCopyNotification(this, DataCopyKind.ResultContent, false).Show();
+                CopyPasteHelper.CopyTextToClipBoard(copyInformation);
+                new DataCopyNotification(this, DataCopyKind.ResultInformation, false).Show();
             }
         }
 
@@ -501,20 +514,28 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
-        /// 查看全部
+        /// 复制应用信息
         /// </summary>
-        private void OnViewAllClicked(object sender, RoutedEventArgs args)
+        private void OnCopyAppInformationClicked(object sender, RoutedEventArgs args)
         {
-            NavigationService.NavigateTo(typeof(HistoryPage), AppNaviagtionArgs.History);
+            StringBuilder appInformationBuilder = new StringBuilder();
+            appInformationBuilder.Append(ResourceService.GetLocalized("Store/AppName"));
+            appInformationBuilder.AppendLine(AppInfoModel.Name);
+            appInformationBuilder.Append(ResourceService.GetLocalized("Store/AppPublisher"));
+            appInformationBuilder.AppendLine(AppInfoModel.Publisher);
+            appInformationBuilder.AppendLine(ResourceService.GetLocalized("Store/AppDescription"));
+            appInformationBuilder.AppendLine(AppInfoModel.Description);
+
+            CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
+            new DataCopyNotification(this, DataCopyKind.AppInformation).Show();
         }
 
         /// <summary>
-        /// 复制 CategoryID
+        /// 查看应用更多信息
         /// </summary>
-        private void OnCopyIDClicked(object sender, RoutedEventArgs args)
+        private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            CopyPasteHelper.CopyTextToClipBoard(CategoryId);
-            new DataCopyNotification(this, DataCopyKind.ResultID).Show();
+            await Launcher.LaunchUriAsync(new Uri(string.Format("https://www.microsoft.com/store/productId/{0}", AppInfoModel.ProductID)));
         }
 
         /// <summary>
@@ -603,7 +624,7 @@ namespace GetStoreApp.UI.Controls.Store
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyKind.ResultContent, true, selectedResultDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyKind.ResultInformation, true, selectedResultDataList.Count).Show();
                 });
             });
         }
@@ -855,12 +876,12 @@ namespace GetStoreApp.UI.Controls.Store
             // 设置获取数据时的相关控件状态
             LinkText = string.IsNullOrEmpty(LinkText) ? SampleLink : LinkText;
             IsGettingLinks = true;
-            SetControlState(0);
+            SetControlState(InfoBarSeverity.Informational);
 
             Task.Run(async () =>
             {
                 string categoryId = string.Empty;
-                List<ResultModel> resultDataList = new List<ResultModel>();
+                List<ResultModel> resultList = new List<ResultModel>();
 
                 // 记录当前选定的选项和填入的内容
                 int currentType = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
@@ -883,7 +904,7 @@ namespace GetStoreApp.UI.Controls.Store
                         List<ResultModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
                         foreach (ResultModel nonAppxPackage in nonAppxPackagesList)
                         {
-                            resultDataList.Add(nonAppxPackage);
+                            resultList.Add(nonAppxPackage);
                         }
                     }
                     // 解析商店应用数据
@@ -896,31 +917,34 @@ namespace GetStoreApp.UI.Controls.Store
                             List<ResultModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[currentChannel].InternalName);
                             foreach (ResultModel appxPackage in appxPackagesList)
                             {
-                                resultDataList.Add(appxPackage);
+                                resultList.Add(appxPackage);
                             }
                         }
                     }
 
-                    ResultListFilter(ref resultDataList);
+                    ResultListFilter(ref resultList);
                     await UpdateHistoryAsync(currentType, currentChannel, currentLink);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         IsGettingLinks = false;
 
-                        if (resultDataList.Count > 0)
+                        if (resultList.Count > 0)
                         {
                             GetHistoryLiteDataList();
 
                             // 显示结果
-                            SetControlState(1);
+                            SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
-                            CategoryId = appInformationResult.Item2.CategoryID;
+                            AppInfoModel.Name = appInformationResult.Item2.Name;
+                            AppInfoModel.Publisher = appInformationResult.Item2.Publisher;
+                            AppInfoModel.Description = appInformationResult.Item2.Description;
+                            AppInfoModel.CategoryID = appInformationResult.Item2.CategoryID;
 
                             lock (ResultDataListObjectLock)
                             {
                                 ResultCollection.Clear();
-                                foreach (ResultModel resultItem in resultDataList)
+                                foreach (ResultModel resultItem in resultList)
                                 {
                                     ResultCollection.Add(resultItem);
                                     Task.Delay(1);
@@ -929,7 +953,7 @@ namespace GetStoreApp.UI.Controls.Store
                         }
                         else
                         {
-                            SetControlState(2);
+                            SetControlState(InfoBarSeverity.Warning);
                             ResultControlVisable = false;
                         }
                     });
@@ -938,7 +962,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        SetControlState(3);
+                        SetControlState(InfoBarSeverity.Error);
                         ResultControlVisable = false;
                     });
                 }
@@ -948,8 +972,10 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 设置控件的状态
         /// </summary>
-        private void SetControlState(int state)
+        private void SetControlState(InfoBarSeverity severity)
         {
+            int state = Convert.ToInt32(severity);
+
             InfoBarSeverity = StatusBarStateList[state].InfoBarSeverity;
             StateInfoText = StatusBarStateList[state].StateInfoText;
             StatePrRingActValue = StatusBarStateList[state].StatePrRingActValue;

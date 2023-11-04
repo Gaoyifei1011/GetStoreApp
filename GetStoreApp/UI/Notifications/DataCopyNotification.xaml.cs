@@ -78,7 +78,7 @@ namespace GetStoreApp.UI.Notifications
                         Content = ResourceService.GetLocalized("Notification/PackageInformationCopy");
                         break;
                     }
-                case DataCopyKind.ResultContent:
+                case DataCopyKind.ResultInformation:
                     {
                         if (IsMultiSelected)
                         {

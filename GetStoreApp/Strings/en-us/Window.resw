@@ -135,9 +135,6 @@
   <data name="Download" xml:space="preserve">
     <value>Download Management</value>
   </data>
-  <data name="History" xml:space="preserve">
-    <value>History Record</value>
-  </data>
   <data name="Maximize" xml:space="preserve">
     <value>Maximize</value>
   </data>

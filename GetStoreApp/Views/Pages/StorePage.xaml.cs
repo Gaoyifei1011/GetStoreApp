@@ -125,14 +125,6 @@ namespace GetStoreApp.Views.Pages
             NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
         }
 
-        /// <summary>
-        /// 单击右键直接打开网页
-        /// </summary>
-        public static async void OnButtonRightTapped(object sender, RoutedEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri(((sender as HyperlinkButton).DataContext as ResultModel).FileLink));
-        }
-
         #endregion 第二部分：应用商店页面——挂载的事件
 
         /// <summary>

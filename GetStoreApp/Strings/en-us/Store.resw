@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppDescription" xml:space="preserve">
+    <value>App description:</value>
+  </data>
+  <data name="AppInformation" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="AppPublisher" xml:space="preserve">
+    <value>Publisehr:</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -138,17 +150,14 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
-  <data name="CopyContent" xml:space="preserve">
-    <value>Copy content</value>
+  <data name="CopyAppInformation" xml:space="preserve">
+    <value>Copy app info</value>
   </data>
-  <data name="CopyContentToolTip" xml:space="preserve">
-    <value>Copy the contents to the clipboard</value>
+  <data name="CopyInformation" xml:space="preserve">
+    <value>Copy info</value>
   </data>
-  <data name="CopyID" xml:space="preserve">
-    <value>Copy ID</value>
-  </data>
-  <data name="CopyIDToolTip" xml:space="preserve">
-    <value>Copy the CategoryID to the clipboard</value>
+  <data name="CopyInformationToolTip" xml:space="preserve">
+    <value>Copy the information to the clipboard</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
     <value>Copy link</value>
@@ -177,6 +186,9 @@
   <data name="CopyToolTip" xml:space="preserve">
     <value>Copy the selected content to the clipboard</value>
   </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
@@ -201,8 +213,17 @@
   <data name="HistoryLiteEmpty" xml:space="preserve">
     <value>The history is empty</value>
   </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+  </data>
   <data name="Link" xml:space="preserve">
     <value>Link</value>
+  </data>
+  <data name="OpenLink" xml:space="preserve">
+    <value>Open link</value>
+  </data>
+  <data name="OpenLinkToolTip" xml:space="preserve">
+    <value>Use browser to open the link</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
@@ -275,11 +296,5 @@
   </data>
   <data name="UseInstructionToolTip" xml:space="preserve">
     <value>Click to learn how to use the app</value>
-  </data>
-  <data name="ViewAll" xml:space="preserve">
-    <value>View all</value>
-  </data>
-  <data name="ViewAllToolTip" xml:space="preserve">
-    <value>View all history records</value>
   </data>
 </root>

@@ -13,12 +13,12 @@
         FileInformation = 5,
         History = 6,
         PackageInformation = 7,
-        ResultContent = 8,
+        ResultInformation = 8,
         ResultID = 9,
         ResultLink = 10,
         ShareFile = 11,
-        WinGetSearchInstall = 12,
-        WinGetUnInstall = 13,
-        WinGetUpgradeInstall = 14,
+        WinGetSearchInstall = 13,
+        WinGetUnInstall = 14,
+        WinGetUpgradeInstall = 15,
     }
 }

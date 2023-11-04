@@ -136,7 +136,6 @@
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
-    <None Remove="Views\Pages\HistoryPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
     <None Remove="Views\Pages\UWPAppPage.xaml" />
@@ -212,7 +211,6 @@
     <Page Update="Views\Pages\AboutPage.xaml" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\HistoryPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\UWPAppPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />

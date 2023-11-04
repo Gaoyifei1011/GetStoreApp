@@ -70,13 +70,9 @@ namespace GetStoreApp
                     storeItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Store.png");
                     TaskbarJumpList.Items.Add(storeItem);
 
-                    JumpListItem historyItem = JumpListItem.CreateWithArguments("JumpList History", ResourceService.GetLocalized("Window/History"));
-                    historyItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/History.png");
-                    TaskbarJumpList.Items.Add(historyItem);
-
-                    JumpListItem downloadItem = JumpListItem.CreateWithArguments("JumpList Download", ResourceService.GetLocalized("Window/Download"));
-                    downloadItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Download.png");
-                    TaskbarJumpList.Items.Add(downloadItem);
+                    JumpListItem appUpdateItem = JumpListItem.CreateWithArguments("JumpList AppUpdate", ResourceService.GetLocalized("Window/AppUpdate"));
+                    appUpdateItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/AppUpdate.png");
+                    TaskbarJumpList.Items.Add(appUpdateItem);
 
                     TaskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
 
@@ -89,6 +85,10 @@ namespace GetStoreApp
                     TaskbarJumpList.Items.Add(uwpAppItem);
 
                     TaskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
+
+                    JumpListItem downloadItem = JumpListItem.CreateWithArguments("JumpList Download", ResourceService.GetLocalized("Window/Download"));
+                    downloadItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Download.png");
+                    TaskbarJumpList.Items.Add(downloadItem);
 
                     JumpListItem webItem = JumpListItem.CreateWithArguments("JumpList Web", ResourceService.GetLocalized("Window/Web"));
                     webItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Web.png");

@@ -115,14 +115,9 @@ namespace GetStoreApp.Services.Root
                 {
                     switch (DesktopLaunchArgs[1])
                     {
-                        case "History":
+                        case "AppUpdate":
                             {
-                                InitializePage = typeof(HistoryPage);
-                                break;
-                            }
-                        case "Download":
-                            {
-                                InitializePage = typeof(DownloadPage);
+                                InitializePage = typeof(AppUpdatePage);
                                 break;
                             }
                         case "WinGet":
@@ -135,6 +130,12 @@ namespace GetStoreApp.Services.Root
                                 InitializePage = typeof(UWPAppPage);
                                 break;
                             }
+                        case "Download":
+                            {
+                                InitializePage = typeof(DownloadPage);
+                                break;
+                            }
+
                         case "Web":
                             {
                                 Task.Run(async () =>

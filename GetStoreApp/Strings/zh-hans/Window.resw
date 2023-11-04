@@ -135,9 +135,6 @@
   <data name="Download" xml:space="preserve">
     <value>下载管理</value>
   </data>
-  <data name="History" xml:space="preserve">
-    <value>历史记录</value>
-  </data>
   <data name="Maximize" xml:space="preserve">
     <value>最大化</value>
   </data>

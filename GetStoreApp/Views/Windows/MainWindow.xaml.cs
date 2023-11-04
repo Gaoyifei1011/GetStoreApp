@@ -132,7 +132,6 @@ namespace GetStoreApp.Views.Windows
         private List<KeyValuePair<string, Type>> PageList = new List<KeyValuePair<string, Type>>()
         {
             new KeyValuePair<string, Type>("Store",typeof(StorePage)),
-            new KeyValuePair<string, Type>("History",typeof(HistoryPage)),
             new KeyValuePair<string, Type>("AppUpdate", typeof(AppUpdatePage)),
             new KeyValuePair<string, Type>("WinGet", typeof(WinGetPage)),
             new KeyValuePair<string, Type>("UWPApp", typeof(UWPAppPage)),
@@ -844,23 +843,38 @@ namespace GetStoreApp.Views.Windows
                             {
                                 if (startupArgs[1] is "Store" && NavigationService.GetCurrentPageType() != typeof(StorePage))
                                 {
-                                    NavigationService.NavigateTo(typeof(StorePage));
+                                    DispatcherQueue.TryEnqueue(() =>
+                                    {
+                                        NavigationService.NavigateTo(typeof(StorePage));
+                                    });
                                 }
-                                else if (startupArgs[1] is "History" && NavigationService.GetCurrentPageType() != typeof(HistoryPage))
+                                if (startupArgs[1] is "AppUpdate" && NavigationService.GetCurrentPageType() != typeof(AppUpdatePage))
                                 {
-                                    NavigationService.NavigateTo(typeof(HistoryPage));
-                                }
-                                else if (startupArgs[1] is "Download" && NavigationService.GetCurrentPageType() != typeof(DownloadPage))
-                                {
-                                    NavigationService.NavigateTo(typeof(DownloadPage));
+                                    DispatcherQueue.TryEnqueue(() =>
+                                    {
+                                        NavigationService.NavigateTo(typeof(AppUpdatePage));
+                                    });
                                 }
                                 else if (startupArgs[1] is "WinGet" && NavigationService.GetCurrentPageType() != typeof(WinGetPage))
                                 {
-                                    NavigationService.NavigateTo(typeof(WinGetPage));
+                                    DispatcherQueue.TryEnqueue(() =>
+                                    {
+                                        NavigationService.NavigateTo(typeof(WinGetPage));
+                                    });
                                 }
                                 else if (startupArgs[1] is "UWPApp" && NavigationService.GetCurrentPageType() != typeof(UWPAppPage))
                                 {
-                                    NavigationService.NavigateTo(typeof(UWPAppPage));
+                                    DispatcherQueue.TryEnqueue(() =>
+                                    {
+                                        NavigationService.NavigateTo(typeof(UWPAppPage));
+                                    });
+                                }
+                                else if (startupArgs[1] is "Download" && NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                                {
+                                    DispatcherQueue.TryEnqueue(() =>
+                                    {
+                                        NavigationService.NavigateTo(typeof(DownloadPage));
+                                    });
                                 }
                                 else if (startupArgs[1] is "Web")
                                 {
@@ -897,20 +911,23 @@ namespace GetStoreApp.Views.Windows
                             {
                                 if (NavigationService.GetCurrentPageType() != typeof(StorePage))
                                 {
-                                    NavigationService.NavigateTo(typeof(StorePage));
-                                }
-
-                                StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
-                                if (storePage is not null)
-                                {
-                                    storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
-                                    storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
-                                    storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
-
-                                    if (storePage.SelectedIndex is not 0)
+                                    DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        storePage.SelectedIndex = 0;
-                                    }
+                                        NavigationService.NavigateTo(typeof(StorePage));
+
+                                        StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                                        if (storePage is not null)
+                                        {
+                                            storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
+                                            storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
+                                            storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+
+                                            if (storePage.SelectedIndex is not 0)
+                                            {
+                                                storePage.SelectedIndex = 0;
+                                            }
+                                        }
+                                    });
                                 }
                             }
 

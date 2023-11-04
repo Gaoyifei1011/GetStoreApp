@@ -164,6 +164,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                         appInfoModel.Publisher = payLoadObject.GetNamedString("PublisherName");
                         appInfoModel.Description = payLoadObject.GetNamedString("Description");
                         appInfoModel.CategoryID = string.Empty;
+                        appInfoModel.ProductID = productId;
 
                         JsonArray skusArray = payLoadObject.GetNamedArray("Skus");
 
@@ -597,12 +598,15 @@ namespace GetStoreApp.Helpers.Controls.Store
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            string fileSizeResult = string.Empty;
+            string fileSizeResult = "0";
 
             try
             {
                 HttpClient httpClient = new HttpClient();
-                HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri(url)).AsTask(cancellationTokenSource.Token);
+
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Head, new Uri(url));
+
+                HttpResponseMessage responseMessage = await httpClient.SendRequestAsync(requestMessage).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)

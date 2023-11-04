@@ -186,25 +186,6 @@
 
                     <NavigationViewItem.Content>
                         <TextBlock
-                            x:Name="WindowHistoryText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/History')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/History.png" />
-                    </NavigationViewItem.Icon>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/History')}" Visibility="{x:Bind WindowHistoryText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItem Tag="2">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
                             x:Name="WindowAppUpdateText"
                             Text="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}"
                             TextTrimming="CharacterEllipsis"
@@ -222,7 +203,7 @@
 
                 <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                <NavigationViewItem Tag="3">
+                <NavigationViewItem Tag="2">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -241,7 +222,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="4">
+                <NavigationViewItem Tag="3">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -262,7 +243,7 @@
 
                 <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                <NavigationViewItem Tag="5">
+                <NavigationViewItem Tag="4">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -281,7 +262,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="6">
+                <NavigationViewItem Tag="5">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -302,7 +283,7 @@
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Tag="7">
+                <NavigationViewItem Tag="6">
 
                     <NavigationViewItem.Content>
                         <TextBlock
@@ -321,7 +302,7 @@
                     </ToolTipService.ToolTip>
                 </NavigationViewItem>
 
-                <NavigationViewItem Tag="8">
+                <NavigationViewItem Tag="7">
 
                     <NavigationViewItem.Content>
                         <TextBlock
