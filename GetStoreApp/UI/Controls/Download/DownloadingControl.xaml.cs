@@ -221,10 +221,10 @@ namespace GetStoreApp.UI.Controls.Download
             while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
             lock (DownloadingLock) isUpdatingNow = true;
 
-            List<DownloadingModel> SelectedDownloadingDataList = DownloadingCollection.Where(item => item.IsSelected is true).ToList();
+            List<DownloadingModel> selectedDownloadingDataList = DownloadingCollection.Where(item => item.IsSelected is true).ToList();
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedDownloadingDataList.Count is 0)
+            if (selectedDownloadingDataList.Count is 0)
             {
                 await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
@@ -237,7 +237,7 @@ namespace GetStoreApp.UI.Controls.Download
                 downloadingItem.IsSelectMode = false;
             }
 
-            SelectedDownloadingDataList.ForEach(async downloadingItem =>
+            selectedDownloadingDataList.ForEach(async downloadingItem =>
             {
                 bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
 

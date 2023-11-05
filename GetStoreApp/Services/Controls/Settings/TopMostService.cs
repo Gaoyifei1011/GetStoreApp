@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetTopMostValue()
         {
-            bool? topMostValue = ConfigService.ReadSetting<bool?>(SettingsKey);
+            bool? topMostValue = LocalSettingsService.ReadSetting<bool?>(SettingsKey);
 
             if (!topMostValue.HasValue)
             {
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             TopMostValue = topMostValue;
 
-            ConfigService.SaveSetting(SettingsKey, topMostValue);
+            LocalSettingsService.SaveSetting(SettingsKey, topMostValue);
         }
 
         /// <summary>

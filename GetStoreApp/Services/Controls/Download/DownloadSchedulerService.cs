@@ -51,6 +51,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
 
             DownloadSchedulerTimer = ThreadPoolTimer.CreatePeriodicTimer(DownloadSchedulerTimerElapsed, TimeSpan.FromSeconds(1));
+            BadgeNotificationService.Show(DownloadingCollection.Count + WaitingCollection.Count);
         }
 
         /// <summary>
@@ -382,7 +383,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 获取列表中的第一个元素
                 BackgroundModel DownloadItem = WaitingCollection.FirstOrDefault();
 
-                (bool, string) AddResult = await Aria2Service.AddUriAsync(DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
+                (bool, string) AddResult = await Aria2Service.AddUriAsync(DownloadItem.FileName, DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
 
                 if (AddResult.Item1 && DownloadItem is not null)
                 {

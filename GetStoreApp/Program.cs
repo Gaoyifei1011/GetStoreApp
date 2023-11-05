@@ -37,28 +37,28 @@ namespace GetStoreApp
             Resources.Culture = CultureInfo.CurrentCulture.Parent;
             if (!RuntimeHelper.IsMSIX)
             {
-                Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-                WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
-                WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
-                WinGetProcessStartupInfo.dwX = 0;
-                WinGetProcessStartupInfo.dwY = 0;
-                WinGetProcessStartupInfo.dwXSize = 0;
-                WinGetProcessStartupInfo.dwYSize = 0;
-                WinGetProcessStartupInfo.dwXCountChars = 500;
-                WinGetProcessStartupInfo.dwYCountChars = 500;
-                WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                WinGetProcessStartupInfo.cbReserved2 = 0;
-                WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                Kernel32Library.GetStartupInfo(out STARTUPINFO getStoreAppStartupInfo);
+                getStoreAppStartupInfo.lpReserved = IntPtr.Zero;
+                getStoreAppStartupInfo.lpDesktop = IntPtr.Zero;
+                getStoreAppStartupInfo.lpTitle = IntPtr.Zero;
+                getStoreAppStartupInfo.dwX = 0;
+                getStoreAppStartupInfo.dwY = 0;
+                getStoreAppStartupInfo.dwXSize = 0;
+                getStoreAppStartupInfo.dwYSize = 0;
+                getStoreAppStartupInfo.dwXCountChars = 500;
+                getStoreAppStartupInfo.dwYCountChars = 500;
+                getStoreAppStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                getStoreAppStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+                getStoreAppStartupInfo.cbReserved2 = 0;
+                getStoreAppStartupInfo.lpReserved2 = IntPtr.Zero;
+                getStoreAppStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                bool createResult = Kernel32Library.CreateProcess(null, "explorer.exe shell:AppsFolder\\Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+                bool createResult = Kernel32Library.CreateProcess(null, "explorer.exe shell:AppsFolder\\Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref getStoreAppStartupInfo, out PROCESS_INFORMATION getStoreAppInformation);
 
                 if (createResult)
                 {
-                    if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                    if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                    if (getStoreAppInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(getStoreAppInformation.hProcess);
+                    if (getStoreAppInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(getStoreAppInformation.hThread);
                 }
                 return;
             }
@@ -138,7 +138,7 @@ namespace GetStoreApp
                 ThemeService.InitializeTheme();
                 TopMostService.InitializeTopMostValue();
 
-                HistoryRecordService.InitializeHistoryRecord();
+                WebKernelService.InitializeWebKernel();
                 NotificationService.InitializeNotification();
                 WinGetConfigService.InitializeWinGetConfig();
 

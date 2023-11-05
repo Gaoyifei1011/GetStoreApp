@@ -37,7 +37,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetBackdrop()
         {
-            object backdrop = ConfigService.ReadSetting<object>(SettingsKey);
+            object backdrop = LocalSettingsService.ReadSetting<object>(SettingsKey);
 
             if (backdrop is null)
             {
@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppBackdrop = backdrop;
 
-            ConfigService.SaveSetting(SettingsKey, backdrop.Value);
+            LocalSettingsService.SaveSetting(SettingsKey, backdrop.Value);
         }
 
         /// <summary>

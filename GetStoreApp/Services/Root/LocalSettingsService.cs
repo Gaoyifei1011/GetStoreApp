@@ -3,21 +3,23 @@
 namespace GetStoreApp.Services.Root
 {
     /// <summary>
-    /// 设置选项配置服务
+    /// 应用本地设置服务
     /// </summary>
-    public static class ConfigService
+    public static class LocalSettingsService
     {
+        private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+
         /// <summary>
         /// 读取设置选项存储信息
         /// </summary>
         public static T ReadSetting<T>(string key)
         {
-            if (ApplicationData.Current.LocalSettings.Values[key] is null)
+            if (localSettingsContainer.Values[key] is null)
             {
                 return default;
             }
 
-            return (T)ApplicationData.Current.LocalSettings.Values[key];
+            return (T)localSettingsContainer.Values[key];
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void SaveSetting<T>(string key, T value)
         {
-            ApplicationData.Current.LocalSettings.Values[key] = value;
+            localSettingsContainer.Values[key] = value;
         }
     }
 }

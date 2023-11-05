@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetNotification()
         {
-            bool? appNotification = ConfigService.ReadSetting<bool?>(SettingsKey);
+            bool? appNotification = LocalSettingsService.ReadSetting<bool?>(SettingsKey);
 
             if (!appNotification.HasValue)
             {
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppNotification = appNotification;
 
-            ConfigService.SaveSetting(SettingsKey, appNotification);
+            LocalSettingsService.SaveSetting(SettingsKey, appNotification);
         }
     }
 }

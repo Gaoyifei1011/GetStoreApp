@@ -17,8 +17,6 @@
 
         public const string DownloadModeKey = "DownloadMode";
 
-        public const string HistoryLiteNumKey = "HistoryLiteNum";
-
         public const string InstallModeKey = "InstallMode";
 
         public const string IsWindowMaximizedKey = "IsWindowMaximized";
@@ -34,6 +32,8 @@
         public const string ThemeKey = "AppTheme";
 
         public const string TopMostKey = "TopMostValue";
+
+        public const string WebKernelKey = "WebKernel";
 
         public const string WindowWidthKey = "WindowWidth";
 

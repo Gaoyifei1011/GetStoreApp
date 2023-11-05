@@ -124,7 +124,7 @@
     <value>App information</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>Name:</value>
+    <value>App name:</value>
   </data>
   <data name="AppPublisher" xml:space="preserve">
     <value>Publisehr:</value>

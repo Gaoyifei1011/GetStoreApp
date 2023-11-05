@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetEncryptedPackageFilterValue()
         {
-            bool? encryptedPackageFilterValue = ConfigService.ReadSetting<bool?>(EncryptedPackageSettingsKey);
+            bool? encryptedPackageFilterValue = LocalSettingsService.ReadSetting<bool?>(EncryptedPackageSettingsKey);
 
             if (!encryptedPackageFilterValue.HasValue)
             {
@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetBlockMapFilterValue()
         {
-            bool? blockMapFilterValue = ConfigService.ReadSetting<bool?>(BlockMapSettingsKey);
+            bool? blockMapFilterValue = LocalSettingsService.ReadSetting<bool?>(BlockMapSettingsKey);
 
             if (!blockMapFilterValue.HasValue)
             {
@@ -67,7 +67,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             EncryptedPackageFilterValue = encryptedPackageFilterValue;
 
-            ConfigService.SaveSetting(EncryptedPackageSettingsKey, encryptedPackageFilterValue);
+            LocalSettingsService.SaveSetting(EncryptedPackageSettingsKey, encryptedPackageFilterValue);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             BlockMapFilterValue = blockMapFilterValue;
 
-            ConfigService.SaveSetting(BlockMapSettingsKey, blockMapFilterValue);
+            LocalSettingsService.SaveSetting(BlockMapSettingsKey, blockMapFilterValue);
         }
     }
 }

@@ -354,23 +354,21 @@
                             <ContentControl IsEnabled="{x:Bind io:File.Exists(FilePath)}">
 
                                 <StackPanel Orientation="Horizontal">
-                                    <ContentControl IsEnabled="{x:Bind converter:ValueCheckConverterHelper.InstallFileExistsCheck(FileName)}">
-                                        <Button
-                                            Width="32"
-                                            Height="32"
-                                            Margin="5,0,0,0"
-                                            Padding="0"
-                                            Command="{StaticResource InstallCommand}"
-                                            CommandParameter="{Binding}"
-                                            CornerRadius="{StaticResource ControlCornerRadius}"
-                                            IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}">
+                                    <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Command="{StaticResource InstallCommand}"
+                                        CommandParameter="{Binding}"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}">
 
-                                            <Button.Content>
-                                                <FontIcon FontSize="14" Glyph="&#xE710;" />
-                                            </Button.Content>
-                                        </Button>
-                                    </ContentControl>
+                                        <Button.Content>
+                                            <FontIcon FontSize="14" Glyph="&#xE710;" />
+                                        </Button.Content>
+                                    </Button>
 
                                     <Button
                                         Width="32"

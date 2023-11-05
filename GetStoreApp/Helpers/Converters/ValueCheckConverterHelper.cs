@@ -40,24 +40,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 安装文件按钮可用值检查
-        /// </summary>
-        public static bool InstallFileExistsCheck(string path)
-        {
-            if (path.EndsWith(".appx", StringComparison.OrdinalIgnoreCase) ||
-                path.EndsWith(".msix", StringComparison.OrdinalIgnoreCase) ||
-                path.EndsWith(".appxbundle", StringComparison.OrdinalIgnoreCase) ||
-                path.EndsWith(".msixbundle", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// 检测当前页面是否为应用列表页面
         /// </summary>
         public static Visibility IsAppListPageCheck(int count)

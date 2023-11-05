@@ -267,18 +267,6 @@
   <data name="General" xml:space="preserve">
     <value>General Options</value>
   </data>
-  <data name="HistoryLite" xml:space="preserve">
-    <value>The number of main page history item displays</value>
-  </data>
-  <data name="HistoryLite3Items" xml:space="preserve">
-    <value>3 items</value>
-  </data>
-  <data name="HistoryLite5Items" xml:space="preserve">
-    <value>5 items</value>
-  </data>
-  <data name="HistoryLiteDescription" xml:space="preserve">
-    <value>The maximum number of History entries displayed on a Microsoft Store page</value>
-  </data>
   <data name="InstallMode" xml:space="preserve">
     <value>Application install mode</value>
   </data>
@@ -449,6 +437,18 @@
   </data>
   <data name="UseDevFirstToolTip" xml:space="preserve">
     <value>When both versions exist, the development version is preferred (takes effect after restart)</value>
+  </data>
+  <data name="WebKernel" xml:space="preserve">
+    <value>Browser kernel selection</value>
+  </data>
+  <data name="WebKernelDescription" xml:space="preserve">
+    <value>Select the kernel used by the web browser to render the page</value>
+  </data>
+  <data name="WebKernelIE" xml:space="preserve">
+    <value>IE</value>
+  </data>
+  <data name="WebKernelWebView2" xml:space="preserve">
+    <value>WebView2</value>
   </data>
   <data name="WinGetConfig" xml:space="preserve">
     <value>WinGet config options</value>

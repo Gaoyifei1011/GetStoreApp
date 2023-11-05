@@ -52,20 +52,6 @@
                         Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                         Tag="1"
                         Text="{x:Bind TypeList[1].DisplayName}" />
-
-                    <ToggleMenuFlyoutItem
-                        Click="{x:Bind OnTypeSelectClicked}"
-                        IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[2].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                        Tag="2"
-                        Text="{x:Bind TypeList[2].DisplayName}" />
-
-                    <ToggleMenuFlyoutItem
-                        Click="{x:Bind OnTypeSelectClicked}"
-                        IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[3].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
-                        Tag="3"
-                        Text="{x:Bind TypeList[3].DisplayName}" />
                 </MenuFlyout>
             </DropDownButton.Flyout>
         </DropDownButton>
@@ -276,13 +262,13 @@
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="14"
-                                    Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
+                                    Text="{x:Bind HistoryType}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind HistoryType}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 

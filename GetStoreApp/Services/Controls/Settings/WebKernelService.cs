@@ -1,0 +1,59 @@
+﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Services.Root;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace GetStoreApp.Services.Controls.Settings
+{
+    /// <summary>
+    /// 网页浏览器内核选择设置服务
+    /// </summary>
+    public static class WebKernelService
+    {
+        private static string WebKernelSettingsKey = ConfigKey.WebKernelKey;
+
+        private static DictionaryEntry DefaultWebKernel;
+
+        public static DictionaryEntry WebKernel { get; set; }
+
+        public static List<DictionaryEntry> WebKernelList { get; private set; }
+
+        /// <summary>
+        /// 应用在初始化前获取设置存储的网页浏览器内核选择值
+        /// </summary>
+        public static void InitializeWebKernel()
+        {
+            WebKernelList = ResourceService.WebKernelList;
+
+            DefaultWebKernel = WebKernelList.Find(item => item.Value.ToString() is "WebView2");
+
+            WebKernel = GetWebKernel();
+        }
+
+        /// <summary>
+        /// 获取设置存储的网页浏览器内核选择值，如果设置没有存储，使用默认值
+        /// </summary>
+        private static DictionaryEntry GetWebKernel()
+        {
+            object webKernelValue = LocalSettingsService.ReadSetting<object>(WebKernelSettingsKey);
+
+            if (webKernelValue is null)
+            {
+                SetWebKernel(DefaultWebKernel);
+                return WebKernelList.Find(item => item.Value.Equals(DefaultWebKernel.Value));
+            }
+
+            return WebKernelList.Find(item => item.Value.Equals(webKernelValue));
+        }
+
+        /// <summary>
+        /// 历史记录显示数量发生修改时修改设置存储的微软商店页面历史记录显示数量值
+        /// </summary>
+        public static void SetWebKernel(DictionaryEntry webKernel)
+        {
+            WebKernel = webKernel;
+
+            LocalSettingsService.SaveSetting(WebKernelSettingsKey, webKernel.Value);
+        }
+    }
+}

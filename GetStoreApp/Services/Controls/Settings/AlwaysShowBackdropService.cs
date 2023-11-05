@@ -26,7 +26,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetAlwaysShowBackdropValue()
         {
-            bool? alwaysShowBackdropValue = ConfigService.ReadSetting<bool?>(SettingsKey);
+            bool? alwaysShowBackdropValue = LocalSettingsService.ReadSetting<bool?>(SettingsKey);
 
             if (!alwaysShowBackdropValue.HasValue)
             {
@@ -44,7 +44,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AlwaysShowBackdropValue = alwaysShowBackdropValue;
 
-            ConfigService.SaveSetting(SettingsKey, alwaysShowBackdropValue);
+            LocalSettingsService.SaveSetting(SettingsKey, alwaysShowBackdropValue);
         }
     }
 }

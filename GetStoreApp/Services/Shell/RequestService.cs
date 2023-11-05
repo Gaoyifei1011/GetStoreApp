@@ -22,8 +22,6 @@ namespace GetStoreApp.Services.Shell
         {
             "url",
             "ProductId",
-            "PackageFamilyName",
-            "CategoryId"
         };
 
         private static List<string> ChannelList = new List<string>()
@@ -61,19 +59,60 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static async Task GetLinksAsync()
         {
-            string generateContent = GenerateContentHelper.GenerateRequestContent(SelectedType, LinkText, SelectedChannel);
+            // 解析链接对应的产品 ID
+            string productId = SelectedType.Equals(TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
+
             bool RequestState = true;
 
             while (RequestState)
             {
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
 
-                // 获取网页反馈回的原始数据
-                RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+                string cookie = await QueryLinksHelper.GetCookieAsync();
+
+                List<ResultModel> resultList = new List<ResultModel>();
+                AppInfoModel appInfo = null;
+                int state = 0;
+
+                // 获取应用信息
+                Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+
+                if (appInformationResult.Item1)
+                {
+                    // 解析非商店应用数据
+                    if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
+                    {
+                        List<ResultModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                        foreach (ResultModel nonAppxPackage in nonAppxPackagesList)
+                        {
+                            resultList.Add(nonAppxPackage);
+                        }
+                        state = resultList.Count is 0 ? 2 : 1;
+                    }
+                    // 解析商店应用数据
+                    else
+                    {
+                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, SelectedChannel);
+
+                        if (!string.IsNullOrEmpty(fileListXml))
+                        {
+                            List<ResultModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, SelectedChannel);
+                            foreach (ResultModel appxPackage in appxPackagesList)
+                            {
+                                resultList.Add(appxPackage);
+                            }
+                            state = resultList.Count is 0 ? 2 : 1;
+                        }
+                    }
+
+                    appInfo = appInformationResult.Item2;
+                }
+                else
+                {
+                    state = 3;
+                }
 
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
-
-                int state = HtmlRequestStateHelper.CheckRequestState(httpRequestData);
 
                 switch (state)
                 {
@@ -83,7 +122,7 @@ namespace GetStoreApp.Services.Shell
                             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
                             ConsoleHelper.ResetTextColor();
                             RequestState = false;
-                            await ParseService.ParseDataAsync(httpRequestData);
+                            await ParseService.ParseDataAsync(appInfo, resultList);
                             break;
                         }
                     case 2:

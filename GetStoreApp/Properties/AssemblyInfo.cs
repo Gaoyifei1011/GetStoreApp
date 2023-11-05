@@ -7,11 +7,11 @@ using System.Runtime.Versioning;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("获取商店应用")]
-[assembly: AssemblyFileVersion("2.5.1101.0")]
-[assembly: AssemblyInformationalVersion("2.5.1101.0")]
+[assembly: AssemblyFileVersion("2.5.1105.0")]
+[assembly: AssemblyInformationalVersion("2.5.1105.0")]
 [assembly: AssemblyProduct("获取商店应用")]
 [assembly: AssemblyTitle("获取商店应用")]
-[assembly: AssemblyVersion("2.5.1101.0")]
+[assembly: AssemblyVersion("2.5.1105.0")]
 
 // 设置程序集对 COM 组件的访问权限
 [assembly: ComVisible(false)]

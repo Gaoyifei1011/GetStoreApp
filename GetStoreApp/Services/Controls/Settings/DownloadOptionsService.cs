@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static async Task<StorageFolder> GetFolderAsync()
         {
-            string folder = ConfigService.ReadSetting<string>(FolderSettingsKey);
+            string folder = LocalSettingsService.ReadSetting<string>(FolderSettingsKey);
 
             try
             {
@@ -84,7 +84,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static int GetItem()
         {
-            int? downloadItemValue = ConfigService.ReadSetting<int?>(DownloadItemSettingsKey);
+            int? downloadItemValue = LocalSettingsService.ReadSetting<int?>(DownloadItemSettingsKey);
 
             if (!downloadItemValue.HasValue)
             {
@@ -100,7 +100,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetMode()
         {
-            string downloadMode = ConfigService.ReadSetting<string>(DownloadModeSettingsKey);
+            string downloadMode = LocalSettingsService.ReadSetting<string>(DownloadModeSettingsKey);
 
             if (string.IsNullOrEmpty(downloadMode))
             {
@@ -118,7 +118,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DownloadFolder = downloadFolder;
 
-            ConfigService.SaveSetting(FolderSettingsKey, downloadFolder.Path);
+            LocalSettingsService.SaveSetting(FolderSettingsKey, downloadFolder.Path);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DownloadItem = downloadItem;
 
-            ConfigService.SaveSetting(DownloadItemSettingsKey, downloadItem);
+            LocalSettingsService.SaveSetting(DownloadItemSettingsKey, downloadItem);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DownloadMode = downloadMode;
 
-            ConfigService.SaveSetting(DownloadModeSettingsKey, downloadMode.Value);
+            LocalSettingsService.SaveSetting(DownloadModeSettingsKey, downloadMode.Value);
         }
 
         /// <summary>

@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppDescription" xml:space="preserve">
+    <value>App description:</value>
+  </data>
+  <data name="AppInformation" xml:space="preserve">
+    <value>App information：</value>
+  </data>
   <data name="ApplicationExit" xml:space="preserve">
     <value>The program is exiting...</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>App name:</value>
   </data>
   <data name="AskContinue" xml:space="preserve">
     <value>Do you want to try to get it again? (Make sure to input "Y", exit entering other characters)</value>
@@ -174,6 +183,9 @@
   <data name="ParameterError" xml:space="preserve">
     <value>The parameters you inputed are incorrect, please check the parameters you inputed</value>
   </data>
+  <data name="ProductIDSample" xml:space="preserve">
+    <value>ProductID sample: 9WZDNCRFJBMP</value>
+  </data>
   <data name="RequestError" xml:space="preserve">
     <value>An error occurred in fetching data from the servers of the Microsoft Store, please check your network before trying to get it again</value>
   </data>
@@ -205,6 +217,9 @@
     <value>GetStoreApp</value>
   </data>
   <data name="TypeInformation" xml:space="preserve">
-    <value>There are four types of acquisition apps:1. URL (link), 2.ProductID, 3.PackageFamilyName, 4.CategoryID</value>
+    <value>There are two types of acquisition apps:1. URL (link), 2.ProductID</value>
+  </data>
+  <data name="URLSample" xml:space="preserve">
+    <value>URL(link) sample: https://www.microsoft.com/store/productId/9WZDNCRFJBMP</value>
   </data>
 </root>

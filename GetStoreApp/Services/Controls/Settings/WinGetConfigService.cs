@@ -44,7 +44,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetUseDevVersion()
         {
-            bool? useDevVersion = ConfigService.ReadSetting<bool?>(WinGetConfigSettingsKey);
+            bool? useDevVersion = LocalSettingsService.ReadSetting<bool?>(WinGetConfigSettingsKey);
 
             if (!useDevVersion.HasValue)
             {
@@ -62,7 +62,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             UseDevVersion = useDevVersion;
 
-            ConfigService.SaveSetting(WinGetConfigSettingsKey, useDevVersion);
+            LocalSettingsService.SaveSetting(WinGetConfigSettingsKey, useDevVersion);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetWinGetInstallMode()
         {
-            object winGetInstallMode = ConfigService.ReadSetting<object>(WinGetInstallModeSettingsKey);
+            object winGetInstallMode = LocalSettingsService.ReadSetting<object>(WinGetInstallModeSettingsKey);
 
             if (winGetInstallMode is null)
             {
@@ -88,7 +88,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             WinGetInstallMode = winGetInstallMode;
 
-            ConfigService.SaveSetting(WinGetInstallModeSettingsKey, winGetInstallMode.Value);
+            LocalSettingsService.SaveSetting(WinGetInstallModeSettingsKey, winGetInstallMode.Value);
         }
     }
 }

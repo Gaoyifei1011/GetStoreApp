@@ -1,6 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.Store;
-using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.CustomControls.Navigation;
 using Microsoft.UI.Xaml;
@@ -60,11 +58,6 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 StoreNavigationArgs = AppNaviagtionArgs.None;
-            }
-
-            if (QueryLinks.HistoryLiteItem.Value != HistoryRecordService.HistoryLiteNum.Value)
-            {
-                QueryLinks.HistoryLiteItem = HistoryRecordService.HistoryLiteNum;
             }
 
             QueryLinks.GetHistoryLiteDataList();

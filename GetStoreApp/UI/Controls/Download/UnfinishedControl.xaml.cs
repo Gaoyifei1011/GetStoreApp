@@ -288,11 +288,11 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<BackgroundModel> SelectedUnfinishedDataList = new List<BackgroundModel>();
+            List<BackgroundModel> selectedUnfinishedDataList = new List<BackgroundModel>();
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedCollection.Where(item => item.IsSelected is true))
             {
-                SelectedUnfinishedDataList.Add(new BackgroundModel
+                selectedUnfinishedDataList.Add(new BackgroundModel
                 {
                     DownloadKey = unfinishedItem.DownloadKey,
                     FilePath = unfinishedItem.FilePath
@@ -300,7 +300,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 没有选中任何内容时显示空提示对话框
-            if (SelectedUnfinishedDataList.Count is 0)
+            if (selectedUnfinishedDataList.Count is 0)
             {
                 await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
                 return;
@@ -316,7 +316,7 @@ namespace GetStoreApp.UI.Controls.Download
                 unfinishedItem.IsSelectMode = false;
             }
 
-            foreach (BackgroundModel backgroundItem in SelectedUnfinishedDataList)
+            foreach (BackgroundModel backgroundItem in selectedUnfinishedDataList)
             {
                 // 删除下载文件
                 try

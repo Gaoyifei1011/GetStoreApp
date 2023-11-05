@@ -267,18 +267,6 @@
   <data name="General" xml:space="preserve">
     <value>常规选项</value>
   </data>
-  <data name="HistoryLite" xml:space="preserve">
-    <value>微软商店页面“历史记录”显示数目</value>
-  </data>
-  <data name="HistoryLite3Items" xml:space="preserve">
-    <value>3条</value>
-  </data>
-  <data name="HistoryLite5Items" xml:space="preserve">
-    <value>5条</value>
-  </data>
-  <data name="HistoryLiteDescription" xml:space="preserve">
-    <value>微软商店页面最多显示的“历史记录”条目数量</value>
-  </data>
   <data name="InstallMode" xml:space="preserve">
     <value>应用安装方式</value>
   </data>
@@ -449,6 +437,18 @@
   </data>
   <data name="UseDevFirstToolTip" xml:space="preserve">
     <value>当两个版本共同存在时，优先使用开发版本（重启后生效）</value>
+  </data>
+  <data name="WebKernel" xml:space="preserve">
+    <value>浏览器内核选择</value>
+  </data>
+  <data name="WebKernelDescription" xml:space="preserve">
+    <value>选择网页浏览器渲染页面使用的内核</value>
+  </data>
+  <data name="WebKernelIE" xml:space="preserve">
+    <value>IE</value>
+  </data>
+  <data name="WebKernelWebView2" xml:space="preserve">
+    <value>WebView2</value>
   </data>
   <data name="WinGetConfig" xml:space="preserve">
     <value>WinGet 配置选项</value>

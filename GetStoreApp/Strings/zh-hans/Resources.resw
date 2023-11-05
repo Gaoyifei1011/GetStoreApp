@@ -126,20 +126,14 @@
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
   </data>
-  <data name="CategoryID" xml:space="preserve">
-    <value>CategoryID</value>
-  </data>
   <data name="Fast" xml:space="preserve">
     <value>快速</value>
   </data>
   <data name="PackageDisplayName" xml:space="preserve">
     <value>获取商店应用</value>
   </data>
-  <data name="PackageFamilyName" xml:space="preserve">
-    <value>PackageFamilyName</value>
-  </data>
   <data name="ProductID" xml:space="preserve">
-    <value>ProductID</value>
+    <value>产品 ID</value>
   </data>
   <data name="ProtocolName" xml:space="preserve">
     <value>获取商店应用 桌面应用</value>

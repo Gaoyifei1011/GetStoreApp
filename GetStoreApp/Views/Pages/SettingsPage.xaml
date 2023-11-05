@@ -551,24 +551,24 @@
                         Grid.Column="0"
                         Margin="0,0,12,0"
                         FontSize="16"
-                        Glyph="&#xF738;" />
+                        Glyph="&#xE774;" />
 
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBlock
                             VerticalAlignment="Center"
                             Style="{StaticResource BodyTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLite')}" />
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernel')}" />
 
                         <TextBlock
-                            x:Name="HistoryLiteDescription"
+                            x:Name="WebKernelDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernelDescription')}"
                             TextTrimming="CharacterEllipsis"
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/HistoryLiteDescription')}" Visibility="{x:Bind HistoryLiteDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernelDescription')}" Visibility="{x:Bind WebKernelDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -576,20 +576,20 @@
                     <DropDownButton
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Content="{x:Bind HistoryLiteItem.Key, Mode=OneWay}">
+                        Content="{x:Bind WebKernelItem.Key, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryLiteSelectClicked}"
-                                    IsChecked="{x:Bind HistoryLiteItem.Value.Equals(HistoryLiteNumList[0].Value), Mode=OneWay}"
+                                    Click="{x:Bind OnWebKernelSelectClicked}"
+                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(HistoryLiteNumList[0].Value), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind sys:Convert.ToString(HistoryLiteNumList[0].Key)}" />
 
                                 <ToggleMenuFlyoutItem
-                                    Click="{x:Bind OnHistoryLiteSelectClicked}"
-                                    IsChecked="{x:Bind HistoryLiteItem.Value.Equals(HistoryLiteNumList[1].Value), Mode=OneWay}"
+                                    Click="{x:Bind OnWebKernelSelectClicked}"
+                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(HistoryLiteNumList[1].Value), Mode=OneWay}"
                                     Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind sys:Convert.ToString(HistoryLiteNumList[1].Key)}" />

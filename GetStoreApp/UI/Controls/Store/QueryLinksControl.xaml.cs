@@ -18,7 +18,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -45,8 +44,6 @@ namespace GetStoreApp.UI.Controls.Store
         private string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
         private string CategoryIdText = ResourceService.GetLocalized("Store/categoryId");
         private string ResultCountInfo = ResourceService.GetLocalized("Store/ResultCountInfo");
-
-        public DictionaryEntry HistoryLiteItem { get; set; } = HistoryRecordService.HistoryLiteNum;
 
         private TypeModel _selectedType;
 
@@ -195,8 +192,6 @@ namespace GetStoreApp.UI.Controls.Store
         {
             "https://www.microsoft.com/store/productId/9WZDNCRFJBMP",
             "9WZDNCRFJBMP",
-            "Microsoft.WindowsStore_8wekyb3d8bbwe",
-            "d58c3a5f-ca63-4435-842c-7814b5ff91b7"
         };
 
         private List<StatusBarStateModel> StatusBarStateList = ResourceService.StatusBarStateList;
@@ -851,7 +846,7 @@ namespace GetStoreApp.UI.Controls.Store
             Task.Run(async () =>
             {
                 // 获取数据库的原始记录数据
-                List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(Convert.ToInt32(HistoryLiteItem.Value));
+                List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(3);
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -889,7 +884,7 @@ namespace GetStoreApp.UI.Controls.Store
                 string currentLink = LinkText;
 
                 // 解析链接对应的产品 ID
-                string productId = QueryLinksHelper.ParseRequestContent(LinkText);
+                string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
 
                 string cookie = await QueryLinksHelper.GetCookieAsync();
 

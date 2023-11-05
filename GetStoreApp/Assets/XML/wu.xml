@@ -655,7 +655,7 @@
 				</FilterAppCategoryIds>
 				<TreatAppCategoryIdsAsInstalled>true</TreatAppCategoryIdsAsInstalled>
 				<AlsoPerformRegularSync>false</AlsoPerformRegularSync>
-				<ComputerSpec/>
+				<ComputerSpec />
 				<ExtendedUpdateInfoParameters>
 					<XmlUpdateFragmentTypes>
 						<XmlUpdateFragmentType>Extended</XmlUpdateFragmentType>
@@ -665,7 +665,7 @@
 					<SyncCurrentVersionOnly>false</SyncCurrentVersionOnly>
 					<DeviceAttributes>FlightRing={3};DeviceFamily=Windows.Desktop;</DeviceAttributes>
 					<CallerAttributes>Interactive=1;IsSeeker=0;</CallerAttributes>
-					<Products/>
+					<Products />
 				</ProductsParameters>
 			</parameters>
 		</SyncUpdates>

@@ -101,7 +101,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 添加下载任务
         /// </summary>
-        public static async Task<(bool, string)> AddUriAsync(string downloadLink, string folderPath)
+        public static async Task<(bool, string)> AddUriAsync(string fileName, string downloadLink, string folderPath)
         {
             // 添加超时设置（半分钟后停止获取）
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -128,6 +128,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 创建子参数Json字符串对象。
                 JsonObject SubParamObject = new JsonObject();
                 SubParamObject["dir"] = JsonValue.CreateStringValue(folderPath);
+                SubParamObject["out"] = JsonValue.CreateStringValue(fileName);
 
                 // 创建参数数组：
                 // 第一个参数为数组，是下载文件的Url

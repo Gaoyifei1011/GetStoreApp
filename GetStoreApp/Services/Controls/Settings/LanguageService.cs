@@ -73,7 +73,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetLanguage()
         {
-            object language = ConfigService.ReadSetting<object>(SettingsKey);
+            object language = LocalSettingsService.ReadSetting<object>(SettingsKey);
 
             // 当前系统的语言值
             string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;
@@ -109,7 +109,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppLanguage = language;
 
-            ConfigService.SaveSetting(SettingsKey, language.Value);
+            LocalSettingsService.SaveSetting(SettingsKey, language.Value);
             StringConverterHelper.AppCulture = new CultureInfo(language.Value.ToString());
         }
     }

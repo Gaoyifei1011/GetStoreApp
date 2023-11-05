@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Shell
                             if (ConsoleLaunchService.IsAppRunning)
                             {
                                 ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, IndexList.Count));
-                                DownloadFile(ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileLink);
+                                DownloadFile(ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileName, ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileLink);
                             }
                         }
                         ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
@@ -103,7 +103,7 @@ namespace GetStoreApp.Services.Shell
         /// <summary>
         /// 下载文件
         /// </summary>
-        private static unsafe void DownloadFile(string fileLink)
+        private static unsafe void DownloadFile(string fileName, string fileLink)
         {
             byte[] ReadBuff = new byte[101];
 
@@ -143,9 +143,9 @@ namespace GetStoreApp.Services.Shell
                 bool createResult = Kernel32Library.CreateProcess(
                     null,
                     string.Format(
-                        @"{0}\{1} --file-allocation=none -d ""{2}"" ""{3}""",
+                        @"{0}\{1} --file-allocation=none -d ""{2}"" -o""{3}"" ""{4}""",
                         InfoHelper.AppInstalledLocation, "Mile.Aria2.exe",
-                        DownloadOptionsService.DownloadFolder.Path, fileLink
+                        DownloadOptionsService.DownloadFolder.Path, fileName, fileLink
                         ),
                     IntPtr.Zero,
                     IntPtr.Zero,
@@ -176,6 +176,7 @@ namespace GetStoreApp.Services.Shell
 
                 if (hRead != IntPtr.Zero) Kernel32Library.CloseHandle(hRead);
                 IsFileDownloading = false;
+                ConsoleHelper.Write(Environment.NewLine);
             }
         }
 

@@ -127,11 +127,11 @@ namespace GetStoreApp
         /// </summary>
         public void ActivateWindow()
         {
-            bool? IsWindowMaximized = ConfigService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
-            int? WindowWidth = ConfigService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
-            int? WindowHeight = ConfigService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
-            int? WindowPositionXAxis = ConfigService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
-            int? WindowPositionYAxis = ConfigService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
+            bool? IsWindowMaximized = LocalSettingsService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
+            int? WindowWidth = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
+            int? WindowHeight = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
+            int? WindowPositionXAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
+            int? WindowPositionYAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
 
             if (IsWindowMaximized.HasValue && IsWindowMaximized.Value is true)
             {
@@ -186,11 +186,11 @@ namespace GetStoreApp
         /// </summary>
         private void SaveWindowInformation()
         {
-            ConfigService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.IsWindowMaximized);
-            ConfigService.SaveSetting(ConfigKey.WindowWidthKey, MainWindow.AppWindow.Size.Width);
-            ConfigService.SaveSetting(ConfigKey.WindowHeightKey, MainWindow.AppWindow.Size.Height);
-            ConfigService.SaveSetting(ConfigKey.WindowPositionXAxisKey, MainWindow.AppWindow.Position.X);
-            ConfigService.SaveSetting(ConfigKey.WindowPositionYAxisKey, MainWindow.AppWindow.Position.Y);
+            LocalSettingsService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.IsWindowMaximized);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowWidthKey, MainWindow.AppWindow.Size.Width);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowHeightKey, MainWindow.AppWindow.Size.Height);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionXAxisKey, MainWindow.AppWindow.Position.X);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionYAxisKey, MainWindow.AppWindow.Position.Y);
         }
 
         /// <summary>

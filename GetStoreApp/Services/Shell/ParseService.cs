@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.Console;
-using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Settings;
@@ -16,25 +15,21 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class ParseService
     {
-        private static string CategoryId = string.Empty;
-
         public static List<ResultModel> ResultDataList = new List<ResultModel>();
 
         /// <summary>
-        /// 解析或得到的数据
+        /// 解析得到的数据
         /// </summary>
-        public static async Task ParseDataAsync(RequestModel requestData)
+        public static async Task ParseDataAsync(AppInfoModel appInfo, List<ResultModel> resultList)
         {
             ResultDataList.Clear();
+            ResultListFilter(ref resultList);
+            foreach (ResultModel resultItem in resultList)
+            {
+                ResultDataList.Add(resultItem);
+            }
 
-            HtmlParseHelper.InitializeParseData(requestData);
-
-            CategoryId = HtmlParseHelper.HtmlParseCID();
-            ResultDataList = HtmlParseHelper.HtmlParseLinks();
-
-            ResultListFilter(ref ResultDataList);
-
-            PrintCategoryID();
+            PrintAppInformation(appInfo);
             PrintResultList();
             await DownloadService.QueryDownloadIndexAsync();
         }
@@ -42,12 +37,12 @@ namespace GetStoreApp.Services.Shell
         /// <summary>
         /// 按指定条件过滤数据
         /// </summary>
-        private static void ResultListFilter(ref List<ResultModel> resultDataList)
+        private static void ResultListFilter(ref List<ResultModel> resultList)
         {
             // 按要求过滤列表内容
             if (LinkFilterService.EncryptedPackageFilterValue)
             {
-                resultDataList.RemoveAll(item =>
+                resultList.RemoveAll(item =>
                 item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
                 item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
                 item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
@@ -57,16 +52,18 @@ namespace GetStoreApp.Services.Shell
 
             if (LinkFilterService.BlockMapFilterValue)
             {
-                resultDataList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                resultList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
             }
         }
 
         /// <summary>
-        /// 向控制台输出获取到CategoryID
+        /// 向控制台输出获取到的应用信息
         /// </summary>
-        private static void PrintCategoryID()
+        private static void PrintAppInformation(AppInfoModel appInfo)
         {
-            ConsoleHelper.Write(ResourceService.GetLocalized("Console/CategoryID") + CategoryId + Environment.NewLine);
+            ConsoleHelper.Write(ResourceService.GetLocalized("Console/AppName") + appInfo.Name + Environment.NewLine);
+            ConsoleHelper.Write(ResourceService.GetLocalized("Console/AppPublisher") + appInfo.Publisher + Environment.NewLine);
+            ConsoleHelper.Write(ResourceService.GetLocalized("Console/AppDescription") + Environment.NewLine + appInfo.Description + Environment.NewLine);
         }
 
         /// <summary>

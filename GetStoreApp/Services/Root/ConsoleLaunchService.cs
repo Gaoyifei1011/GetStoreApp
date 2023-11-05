@@ -93,6 +93,8 @@ namespace GetStoreApp.Services.Root
             {
                 // 选择类型
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/URLSample"));
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ProductIDSample"));
                 ConsoleHelper.Write(ResourceService.GetLocalized("Console/SelectType"));
                 int typeIndex;
                 try

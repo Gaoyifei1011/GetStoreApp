@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Root
 
         public static List<DictionaryEntry> DownloadModeList { get; } = new List<DictionaryEntry>();
 
-        public static List<DictionaryEntry> HistoryLiteNumList { get; } = new List<DictionaryEntry>();
+        public static List<DictionaryEntry> WebKernelList { get; } = new List<DictionaryEntry>();
 
         public static List<DictionaryEntry> InstallModeList { get; } = new List<DictionaryEntry>();
 
@@ -75,7 +75,7 @@ namespace GetStoreApp.Services.Root
             InitializeStatusBarStateList();
             InitializeBackdropList();
             InitializeDownloadModeList();
-            InitializeHistoryLiteNumList();
+            InitializeWebKernelList();
             InitializeInstallModeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
@@ -99,20 +99,6 @@ namespace GetStoreApp.Services.Root
                 DisplayName = GetLocalized("Resources/ProductID"),
                 InternalName = "ProductId",
                 ShortName = "pid"
-            });
-
-            TypeList.Add(new TypeModel
-            {
-                DisplayName = GetLocalized("Resources/PackageFamilyName"),
-                InternalName = "PackageFamilyName",
-                ShortName = "pfn"
-            });
-
-            TypeList.Add(new TypeModel
-            {
-                DisplayName = GetLocalized("Resources/CategoryID"),
-                InternalName = "CategoryId",
-                ShortName = "cid"
             });
         }
 
@@ -245,19 +231,19 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化微软商店页面历史记录显示数量信息列表
+        /// 初始化网页浏览器内核信息列表
         /// </summary>
-        private static void InitializeHistoryLiteNumList()
+        private static void InitializeWebKernelList()
         {
-            HistoryLiteNumList.Add(new DictionaryEntry
+            WebKernelList.Add(new DictionaryEntry
             {
-                Key = GetLocalized("Settings/HistoryLite3Items"),
-                Value = "3"
+                Key = GetLocalized("Settings/WebKernelIE"),
+                Value = "IE"
             });
-            HistoryLiteNumList.Add(new DictionaryEntry
+            WebKernelList.Add(new DictionaryEntry
             {
-                Key = GetLocalized("Settings/HistoryLite5Items"),
-                Value = "5"
+                Key = GetLocalized("Settings/WebKernelWebView2"),
+                Value = "WebView2"
             });
         }
 

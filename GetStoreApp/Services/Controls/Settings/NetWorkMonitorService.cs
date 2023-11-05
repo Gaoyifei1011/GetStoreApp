@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetNetWorkMonitorValue()
         {
-            bool? netWorkMonitorValue = ConfigService.ReadSetting<bool?>(SettingsKey);
+            bool? netWorkMonitorValue = LocalSettingsService.ReadSetting<bool?>(SettingsKey);
 
             if (!netWorkMonitorValue.HasValue)
             {
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             NetWorkMonitorValue = netWorkMonitorValue;
 
-            ConfigService.SaveSetting(SettingsKey, netWorkMonitorValue);
+            LocalSettingsService.SaveSetting(SettingsKey, netWorkMonitorValue);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             NetWorkMonitorValue = DefaultNetWorkMonitorValue;
 
-            ConfigService.SaveSetting(SettingsKey, DefaultNetWorkMonitorValue);
+            LocalSettingsService.SaveSetting(SettingsKey, DefaultNetWorkMonitorValue);
         }
     }
 }

@@ -115,15 +115,15 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private DictionaryEntry _historyLiteItem = HistoryRecordService.HistoryLiteNum;
+        private DictionaryEntry _webKernelItem = WebKernelService.WebKernel;
 
-        public DictionaryEntry HistoryLiteItem
+        public DictionaryEntry WebKernelItem
         {
-            get { return _historyLiteItem; }
+            get { return _webKernelItem; }
 
             set
             {
-                _historyLiteItem = value;
+                _webKernelItem = value;
                 OnPropertyChanged();
             }
         }
@@ -238,7 +238,7 @@ namespace GetStoreApp.Views.Pages
 
         private List<DictionaryEntry> LanguageList { get; } = LanguageService.LanguageList;
 
-        private List<DictionaryEntry> HistoryLiteNumList { get; } = HistoryRecordService.HistoryLiteNumList;
+        private List<DictionaryEntry> HistoryLiteNumList { get; } = WebKernelService.WebKernelList;
 
         private List<DictionaryEntry> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
 
@@ -407,15 +407,15 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 微软商店页面“历史记录”显示数目修改
+        /// 选择网页浏览器渲染网页使用的内核
         /// </summary>
-        private void OnHistoryLiteSelectClicked(object sender, RoutedEventArgs args)
+        private void OnWebKernelSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
             if (item.Tag is not null)
             {
-                HistoryLiteItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
-                HistoryRecordService.SetHistoryLiteNum(HistoryLiteItem);
+                WebKernelItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
+                WebKernelService.SetWebKernel(WebKernelItem);
             }
         }
 

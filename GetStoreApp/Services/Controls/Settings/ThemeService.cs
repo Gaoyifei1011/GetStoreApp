@@ -37,7 +37,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetTheme()
         {
-            object theme = ConfigService.ReadSetting<object>(ThemeSettingsKey);
+            object theme = LocalSettingsService.ReadSetting<object>(ThemeSettingsKey);
 
             if (theme is null)
             {
@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppTheme = theme;
 
-            ConfigService.SaveSetting(ThemeSettingsKey, theme.Value);
+            LocalSettingsService.SaveSetting(ThemeSettingsKey, theme.Value);
         }
 
         /// <summary>

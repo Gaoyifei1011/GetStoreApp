@@ -36,7 +36,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetInstallMode()
         {
-            object installMode = ConfigService.ReadSetting<object>(SettingsKey);
+            object installMode = LocalSettingsService.ReadSetting<object>(SettingsKey);
 
             if (installMode is null)
             {
@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             InstallMode = installMode;
 
-            ConfigService.SaveSetting(SettingsKey, installMode.Value);
+            LocalSettingsService.SaveSetting(SettingsKey, installMode.Value);
         }
     }
 }
