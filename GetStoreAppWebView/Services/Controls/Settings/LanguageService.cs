@@ -27,7 +27,7 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         {
             DefaultAppLanguage = AppLanguagesList.First(item => item.Equals("en-US", StringComparison.OrdinalIgnoreCase));
 
-            AppLanguage = ConfigService.ReadSetting<string>(SettingsKey);
+            AppLanguage = LocalSettingsService.ReadSetting<string>(SettingsKey);
 
             if (string.IsNullOrEmpty(AppLanguage))
             {

@@ -1,4 +1,5 @@
 ﻿using GetStoreAppWebView.Helpers.Root;
+using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Windowing;
 using Microsoft.Web.WebView2.Core;
@@ -110,7 +111,7 @@ namespace GetStoreAppWebView.Views.Controls
         {
             SetTitleBarColor(ActualTheme);
 
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 if (Program.MainWindow.WebView2 is not null)
                 {
@@ -191,7 +192,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnBrowserBackClicked(object sender, RoutedEventArgs args)
         {
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 if (Program.MainWindow.WebView2 is not null)
                 {
@@ -218,7 +219,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnBrowserForwardClicked(object sender, RoutedEventArgs args)
         {
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 if (Program.MainWindow.WebView2 is not null)
                 {
@@ -245,7 +246,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 Program.MainWindow.WebView2?.Reload();
             }
@@ -261,7 +262,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 if (Program.MainWindow.WebView2 is not null && Program.MainWindow.WebView2.CoreWebView2 is not null)
                 {
@@ -306,7 +307,7 @@ namespace GetStoreAppWebView.Views.Controls
         {
             Task.Run(() =>
             {
-                if (RuntimeHelper.IsWebView2Installed)
+                if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
                 {
                     if (Directory.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView")))
                     {
@@ -331,7 +332,7 @@ namespace GetStoreAppWebView.Views.Controls
         {
             Task.Run(async () =>
             {
-                if (RuntimeHelper.IsWebView2Installed)
+                if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
                 {
                     if (Program.MainWindow.WebView2 is not null && Program.MainWindow.WebView2.CoreWebView2 is not null)
                     {

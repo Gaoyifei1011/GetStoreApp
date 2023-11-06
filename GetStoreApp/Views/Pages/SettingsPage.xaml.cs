@@ -485,7 +485,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     case "AppCache":
                         {
-                            DownloadFolder = DownloadOptionsService.AppCacheFolder;
+                            DownloadFolder = DownloadOptionsService.DefaultDownloadFolder;
                             DownloadOptionsService.SetFolder(DownloadFolder);
                             break;
                         }

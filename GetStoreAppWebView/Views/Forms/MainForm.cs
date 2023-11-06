@@ -1,4 +1,5 @@
 ﻿using GetStoreAppWebView.Helpers.Root;
+using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Views.Controls;
 using GetStoreAppWebView.WindowsAPI.PInvoke.DwmApi;
@@ -69,7 +70,7 @@ namespace GetStoreAppWebView.Views.Forms
             MileXamlHost.Dock = DockStyle.Top;
             Controls.Add(MileXamlHost);
 
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 WebView2 = new WebView2();
                 WebView2.Source = new Uri("https://store.rg-adguard.net");
@@ -156,7 +157,7 @@ namespace GetStoreAppWebView.Views.Forms
         {
             base.OnFormClosing(args);
 
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 if (WebView2 is not null)
                 {
@@ -210,7 +211,7 @@ namespace GetStoreAppWebView.Views.Forms
             SetAppTheme();
             SetWindowBackdrop();
 
-            if (!RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 TitleControl.IsEnabled = true;
             }
@@ -276,7 +277,7 @@ namespace GetStoreAppWebView.Views.Forms
                 User32Library.SetWindowPos(UWPCoreHandle, IntPtr.Zero, 0, 0, Size.Width, Size.Height, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
             }
 
-            if (RuntimeHelper.IsWebView2Installed)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 if (WebView2 is not null)
                 {

@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 CleanKind.ActionCenter => ClearActionCenter(),
                 CleanKind.Download => await DownloadXmlService.ClearAsync(),
                 CleanKind.History => await HistoryXmlService.ClearAsync(),
-                CleanKind.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.AppCacheFolder),
+                CleanKind.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.DefaultDownloadFolder),
                 _ => true,
             };
         }

@@ -5,7 +5,7 @@ namespace GetStoreAppWebView.Services.Root
     /// <summary>
     /// 设置选项配置服务
     /// </summary>
-    public static class ConfigService
+    public static class LocalSettingsService
     {
         /// <summary>
         /// 读取设置选项存储信息

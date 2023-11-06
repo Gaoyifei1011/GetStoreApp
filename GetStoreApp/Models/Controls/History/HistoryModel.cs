@@ -48,6 +48,11 @@ namespace GetStoreApp.Models.Controls.History
         public string HistoryKey { get; set; }
 
         /// <summary>
+        /// 历史记录的应用名称
+        /// </summary>
+        public string HistoryAppName { get; set; }
+
+        /// <summary>
         /// 历史记录中包含的类型，数据库存储的原始名称
         /// </summary>
         public string HistoryType { get; set; }

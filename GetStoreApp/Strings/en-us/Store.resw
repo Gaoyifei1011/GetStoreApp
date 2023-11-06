@@ -129,14 +129,14 @@
   <data name="AppPublisher" xml:space="preserve">
     <value>Publisehr:</value>
   </data>
+  <data name="AppType" xml:space="preserve">
+    <value>AppType: {0}</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
-  </data>
-  <data name="CategoryId" xml:space="preserve">
-    <value>CategoryID:{0}</value>
   </data>
   <data name="Channel" xml:space="preserve">
     <value>Channel</value>
@@ -219,6 +219,9 @@
   <data name="Link" xml:space="preserve">
     <value>Link</value>
   </data>
+  <data name="NonPackagedApp" xml:space="preserve">
+    <value>Classic app</value>
+  </data>
   <data name="OpenLink" xml:space="preserve">
     <value>Open link</value>
   </data>
@@ -230,6 +233,9 @@
   </data>
   <data name="OptionsToolTip" xml:space="preserve">
     <value>Select the options you want to use</value>
+  </data>
+  <data name="PackagedApp" xml:space="preserve">
+    <value>Packaged app</value>
   </data>
   <data name="QueryLinks" xml:space="preserve">
     <value>Query links</value>

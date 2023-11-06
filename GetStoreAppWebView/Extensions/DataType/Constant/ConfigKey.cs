@@ -6,5 +6,7 @@
     public static class ConfigKey
     {
         public const string LanguageKey = "AppLanguage";
+
+        public const string WebKernelKey = "WebKernel";
     }
 }

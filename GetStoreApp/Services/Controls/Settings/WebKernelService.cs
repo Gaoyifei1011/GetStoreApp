@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Controls.Settings
             if (webKernelValue is null)
             {
                 SetWebKernel(DefaultWebKernel);
-                return WebKernelList.Find(item => item.Value.Equals(DefaultWebKernel.Value));
+                return DefaultWebKernel;
             }
 
             return WebKernelList.Find(item => item.Value.Equals(webKernelValue));

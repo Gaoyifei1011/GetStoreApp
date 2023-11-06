@@ -369,6 +369,7 @@
 
                     <TextBlock
                         Grid.Column="1"
+                        Margin="0,0,0,2"
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Store/AppInformation')}" />
 
@@ -420,7 +421,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="1"
-                        Text="{x:Bind AppInfoModel.Name, Mode=OneWay}"
+                        Text="{x:Bind AppInfo.Name, Mode=OneWay}"
                         TextAlignment="Justify"
                         TextWrapping="Wrap" />
 
@@ -432,7 +433,7 @@
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="1"
-                        Text="{x:Bind AppInfoModel.Publisher, Mode=OneWay}"
+                        Text="{x:Bind AppInfo.Publisher, Mode=OneWay}"
                         TextAlignment="Justify"
                         TextWrapping="Wrap" />
 
@@ -444,7 +445,7 @@
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="{x:Bind AppInfoModel.Description, Mode=OneWay}"
+                        Text="{x:Bind AppInfo.Description, Mode=OneWay}"
                         TextAlignment="Justify"
                         TextWrapping="Wrap" />
                 </Grid>
@@ -485,7 +486,7 @@
                 VerticalAlignment="Center"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ResultCollection.Count), Mode=OneWay}">
 
-                <TextBlock Text="{x:Bind sys:String.Format(CategoryIdText, AppInfoModel.CategoryID), Mode=OneWay}" Visibility="Collapsed" />
+                <TextBlock Text="{x:Bind LocalizeAppType(AppInfo.CategoryID), Mode=OneWay}" />
                 <TextBlock Text="{x:Bind sys:String.Format(ResultCountInfo, ResultCollection.Count), Mode=OneWay}" />
             </StackPanel>
 

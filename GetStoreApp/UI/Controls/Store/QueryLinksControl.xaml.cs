@@ -42,7 +42,6 @@ namespace GetStoreApp.UI.Controls.Store
 
         private string SampleLink;
         private string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
-        private string CategoryIdText = ResourceService.GetLocalized("Store/categoryId");
         private string ResultCountInfo = ResourceService.GetLocalized("Store/ResultCountInfo");
 
         private TypeModel _selectedType;
@@ -110,15 +109,15 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private AppInfoModel _appInfoModel = new AppInfoModel();
+        private AppInfoModel _appInfo = new AppInfoModel();
 
-        public AppInfoModel AppInfoModel
+        public AppInfoModel AppInfo
         {
-            get { return _appInfoModel; }
+            get { return _appInfo; }
 
             set
             {
-                _appInfoModel = value;
+                _appInfo = value;
                 OnPropertyChanged();
             }
         }
@@ -515,11 +514,11 @@ namespace GetStoreApp.UI.Controls.Store
         {
             StringBuilder appInformationBuilder = new StringBuilder();
             appInformationBuilder.Append(ResourceService.GetLocalized("Store/AppName"));
-            appInformationBuilder.AppendLine(AppInfoModel.Name);
+            appInformationBuilder.AppendLine(AppInfo.Name);
             appInformationBuilder.Append(ResourceService.GetLocalized("Store/AppPublisher"));
-            appInformationBuilder.AppendLine(AppInfoModel.Publisher);
+            appInformationBuilder.AppendLine(AppInfo.Publisher);
             appInformationBuilder.AppendLine(ResourceService.GetLocalized("Store/AppDescription"));
-            appInformationBuilder.AppendLine(AppInfoModel.Description);
+            appInformationBuilder.AppendLine(AppInfo.Description);
 
             CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
             new DataCopyNotification(this, DataCopyKind.AppInformation).Show();
@@ -530,7 +529,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri(string.Format("https://www.microsoft.com/store/productId/{0}", AppInfoModel.ProductID)));
+            await Launcher.LaunchUriAsync(new Uri(string.Format("https://www.microsoft.com/store/productId/{0}", AppInfo.ProductID)));
         }
 
         /// <summary>
@@ -839,6 +838,21 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
+        /// 本地化应用类型字符串
+        /// </summary>
+        private string LocalizeAppType(string categoryId)
+        {
+            if (string.IsNullOrEmpty(categoryId))
+            {
+                return string.Format(ResourceService.GetLocalized("Store/AppType"), ResourceService.GetLocalized("Store/NonPackagedApp"));
+            }
+            else
+            {
+                return string.Format(ResourceService.GetLocalized("Store/AppType"), ResourceService.GetLocalized("Store/PackagedApp"));
+            }
+        }
+
+        /// <summary>
         /// UI加载完成时/或者是数据库数据发生变化时，从数据库中异步加载数据
         /// </summary>
         public void GetHistoryLiteDataList()
@@ -931,10 +945,10 @@ namespace GetStoreApp.UI.Controls.Store
                             // 显示结果
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
-                            AppInfoModel.Name = appInformationResult.Item2.Name;
-                            AppInfoModel.Publisher = appInformationResult.Item2.Publisher;
-                            AppInfoModel.Description = appInformationResult.Item2.Description;
-                            AppInfoModel.CategoryID = appInformationResult.Item2.CategoryID;
+                            AppInfo.Name = appInformationResult.Item2.Name;
+                            AppInfo.Publisher = appInformationResult.Item2.Publisher;
+                            AppInfo.Description = appInformationResult.Item2.Description;
+                            AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
 
                             lock (ResultDataListObjectLock)
                             {
