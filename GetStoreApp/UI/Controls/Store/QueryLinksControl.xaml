@@ -166,13 +166,13 @@
                     VerticalAlignment="Center"
                     Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLiteEmpty')}"
                     TextAlignment="Center"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryLiteCollection.Count), Mode=OneWay}" />
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
 
                 <ListView
                     ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                    ItemsSource="{x:Bind HistoryLiteCollection, Mode=OneWay}"
+                    ItemsSource="{x:Bind HistoryCollection, Mode=OneWay}"
                     SelectionMode="None"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryLiteCollection.Count), Mode=OneWay}">
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
 
                     <ItemsControl.ItemContainerTransitions>
                         <TransitionCollection />
@@ -181,6 +181,7 @@
                     <ListView.Header>
                         <Grid Height="35" Padding="6,0,0,0">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="3*" />
@@ -188,36 +189,50 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
-                                x:Name="HistoryTypeHeaderText"
+                                x:Name="HistoryAppNameHeaderText"
                                 Grid.Column="0"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Type')}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryAppName')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Type')}" Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryAppName')}" Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                x:Name="HistoryTypeHeaderText"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryType')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryType')}" Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
                             <TextBlock
                                 x:Name="HistoryChannelHeaderText"
-                                Grid.Column="1"
+                                Grid.Column="2"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryChannel')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Channel')}" Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryChannel')}" Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
                             <TextBlock
                                 x:Name="HistoryLinkHeaderText"
-                                Grid.Column="2"
+                                Grid.Column="3"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Link')}"
@@ -230,7 +245,7 @@
                             </TextBlock>
 
                             <TextBlock
-                                Grid.Column="3"
+                                Grid.Column="4"
                                 Grid.ColumnSpan="2"
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Stretch"
@@ -248,6 +263,7 @@
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="0,1,0,0">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.5*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="3*" />
@@ -256,25 +272,42 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
-                                    x:Name="HistoryTypeText"
+                                    x:Name="HistoryAppNameText"
                                     Grid.Column="0"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="14"
-                                    Text="{x:Bind HistoryType}"
+                                    Text="{x:Bind HistoryAppName}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind HistoryType}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind HistoryAppName}" Visibility="{Binding ElementName=HistoryAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock
+                                    x:Name="HistoryTypeText"
+                                    Grid.Column="1"
+                                    MinWidth="50"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}"
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.TypeNameFormat(HistoryType)}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
                                 <TextBlock
                                     x:Name="HistoryChannelText"
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
@@ -291,7 +324,7 @@
 
                                 <TextBlock
                                     x:Name="HistoryLinkText"
-                                    Grid.Column="2"
+                                    Grid.Column="3"
                                     MinWidth="50"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center"
@@ -307,7 +340,7 @@
                                 </TextBlock>
 
                                 <HyperlinkButton
-                                    Grid.Column="3"
+                                    Grid.Column="4"
                                     Margin="10,0,0,0"
                                     Command="{StaticResource FillinCommand}"
                                     CommandParameter="{Binding}"
@@ -316,7 +349,7 @@
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/FillinToolTip')}" />
 
                                 <HyperlinkButton
-                                    Grid.Column="4"
+                                    Grid.Column="5"
                                     Command="{StaticResource CopyCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
@@ -718,12 +751,11 @@
 
                             <HyperlinkButton.Content>
                                 <TextBlock
-                                    x:Name="FileNameHyperlinkText"
                                     Text="{x:Bind FileName}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}" Visibility="{Binding ElementName=FileNameHyperlinkText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(FileName)}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </HyperlinkButton.Content>

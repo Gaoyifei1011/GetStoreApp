@@ -199,7 +199,7 @@ namespace GetStoreApp.UI.Controls.Store
 
         public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
-        private ObservableCollection<HistoryModel> HistoryLiteCollection { get; } = new ObservableCollection<HistoryModel>();
+        private ObservableCollection<HistoryModel> HistoryCollection { get; } = new ObservableCollection<HistoryModel>();
 
         private ObservableCollection<ResultModel> ResultCollection { get; } = new ObservableCollection<ResultModel>();
 
@@ -857,20 +857,20 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         public void GetHistoryLiteDataList()
         {
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 // 获取数据库的原始记录数据
-                List<HistoryModel> HistoryRawList = await HistoryXmlService.QueryAsync(3);
+                List<HistoryModel> historyRawList = HistoryService.GetQueryLinksData();
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     lock (HistoryLiteDataListLock)
                     {
-                        HistoryLiteCollection.Clear();
+                        HistoryCollection.Clear();
                         Task.Delay(10);
-                        foreach (HistoryModel historyItem in HistoryRawList)
+                        foreach (HistoryModel historyItem in historyRawList)
                         {
-                            HistoryLiteCollection.Add(historyItem);
+                            HistoryCollection.Add(historyItem);
                         }
                     }
                 });
@@ -932,7 +932,7 @@ namespace GetStoreApp.UI.Controls.Store
                     }
 
                     ResultListFilter(ref resultList);
-                    await UpdateHistoryAsync(currentType, currentChannel, currentLink);
+                    UpdateHistory(appInformationResult.Item2.Name, currentType, currentChannel, currentLink);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -993,18 +993,33 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 更新历史记录，包括主页历史记录内容、数据库中的内容和任务栏跳转列表中的内容
         /// </summary>
-        private async Task UpdateHistoryAsync(int currentType, int currentChannel, string currentLink)
+        private void UpdateHistory(string appName, int selectedType, int selectedChannel, string link)
         {
-            // 添加时间戳
-            long TimeStamp = GenerateTimeStamp();
-
-            await HistoryXmlService.AddAsync(new HistoryModel
+            Task.Run(() =>
             {
-                CreateTimeStamp = TimeStamp,
-                HistoryKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[currentType].InternalName, ChannelList[currentChannel].InternalName, currentLink),
-                HistoryType = TypeList[currentType].InternalName,
-                HistoryChannel = ChannelList[currentChannel].InternalName,
-                HistoryLink = currentLink
+                // 添加时间戳
+                long TimeStamp = GenerateTimeStamp();
+
+                List<HistoryModel> historyList = HistoryCollection.ToList();
+                HistoryModel historyItem = new HistoryModel()
+                {
+                    CreateTimeStamp = TimeStamp,
+                    HistoryKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link),
+                    HistoryAppName = appName,
+                    HistoryType = TypeList[selectedType].InternalName,
+                    HistoryChannel = ChannelList[selectedChannel].InternalName,
+                    HistoryLink = link
+                };
+                historyList.Insert(0, historyItem);
+                HistoryService.SaveQueryLinksData(historyList);
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (HistoryCollection.Count is 3)
+                    {
+                        HistoryCollection.RemoveAt(2);
+                    }
+                    HistoryCollection.Insert(0, historyItem);
+                });
             });
         }
 

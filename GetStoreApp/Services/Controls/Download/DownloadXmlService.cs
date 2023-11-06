@@ -11,7 +11,7 @@ using Windows.Foundation.Diagnostics;
 namespace GetStoreApp.Services.Controls.Download
 {
     /// <summary>
-    /// 文件内容为空时，先初始化文件内容。
+    /// 文件内容为空时，先初始化文件内容
     /// 下载记录数据库存储服务
     /// </summary>
     public static class DownloadXmlService

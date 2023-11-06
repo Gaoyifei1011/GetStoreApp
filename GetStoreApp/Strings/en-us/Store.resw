@@ -138,9 +138,6 @@
   <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
   </data>
-  <data name="Channel" xml:space="preserve">
-    <value>Channel</value>
-  </data>
   <data name="ClickToAccess" xml:space="preserve">
     <value>Click to access</value>
   </data>
@@ -210,8 +207,17 @@
   <data name="GetLinks" xml:space="preserve">
     <value>Get Links</value>
   </data>
+  <data name="HistoryAppName" xml:space="preserve">
+    <value>App name</value>
+  </data>
+  <data name="HistoryChannel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
   <data name="HistoryLiteEmpty" xml:space="preserve">
     <value>The history is empty</value>
+  </data>
+  <data name="HistoryType" xml:space="preserve">
+    <value>Type</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>Learn more</value>
@@ -288,11 +294,11 @@
   <data name="StatusInfoWelcome" xml:space="preserve">
     <value>Welcome to use GetStoreApp</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Microsoft Store</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>Type</value>
   </data>
   <data name="UnselectedToolTip" xml:space="preserve">
     <value>Not selected</value>

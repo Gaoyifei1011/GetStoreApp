@@ -21,7 +21,7 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 CleanKind.ActionCenter => ClearActionCenter(),
                 CleanKind.Download => await DownloadXmlService.ClearAsync(),
-                CleanKind.History => await HistoryXmlService.ClearAsync(),
+                CleanKind.History => HistoryService.ClearData(),
                 CleanKind.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.DefaultDownloadFolder),
                 _ => true,
             };

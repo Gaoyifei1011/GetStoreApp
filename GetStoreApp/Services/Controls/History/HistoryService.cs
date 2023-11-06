@@ -11,19 +11,19 @@ namespace GetStoreApp.Services.Controls.History
     public static class HistoryService
     {
         private const string QueryLinks = "QueryLinks";
-        private const string Search = "Search";
+        private const string SearchStore = "SearchStore";
 
         private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer queryLinksContainer;
         private static ApplicationDataContainer searchContainer;
 
         /// <summary>
-        /// 初始化历史理解存储服务
+        /// 初始化历史记录存储服务
         /// </summary>
         public static void Initialize()
         {
             queryLinksContainer = localSettingsContainer.CreateContainer(QueryLinks, ApplicationDataCreateDisposition.Always);
-            searchContainer = localSettingsContainer.CreateContainer(Search, ApplicationDataCreateDisposition.Always);
+            searchContainer = localSettingsContainer.CreateContainer(SearchStore, ApplicationDataCreateDisposition.Always);
         }
 
         /// <summary>
@@ -66,14 +66,15 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         public static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
         {
-            for (int index = 1; index <= 3; index++)
+            int endIndex = queryLinksHistoryList.Count > 3 ? 3 : queryLinksHistoryList.Count;
+            for (int index = 1; index <= endIndex; index++)
             {
                 string value = string.Format("{0}|{1}|{2}|{3}|{4}|{5}",
                     queryLinksHistoryList[index - 1].CreateTimeStamp,
-                    queryLinksHistoryList[index].HistoryKey,
-                    queryLinksHistoryList[index].HistoryAppName,
-                    queryLinksHistoryList[index].HistoryType,
-                    queryLinksHistoryList[index].HistoryChannel,
+                    queryLinksHistoryList[index - 1].HistoryKey,
+                    queryLinksHistoryList[index - 1].HistoryAppName,
+                    queryLinksHistoryList[index - 1].HistoryType,
+                    queryLinksHistoryList[index - 1].HistoryChannel,
                     queryLinksHistoryList[index - 1].HistoryLink
                     );
 
@@ -85,12 +86,20 @@ namespace GetStoreApp.Services.Controls.History
         /// <summary>
         /// 清除历史记录
         /// </summary>
-        public static void ClearData()
+        public static bool ClearData()
         {
-            for (int index = 1; index <= 3; index++)
+            try
             {
-                queryLinksContainer.Values.Remove(QueryLinks + index.ToString());
-                searchContainer.Values.Remove(Search + index.ToString());
+                for (int index = 1; index <= 3; index++)
+                {
+                    queryLinksContainer.Values.Remove(QueryLinks + index.ToString());
+                    searchContainer.Values.Remove(SearchStore + index.ToString());
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

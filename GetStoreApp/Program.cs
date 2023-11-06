@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Controls.Download;
+using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
@@ -128,6 +129,7 @@ namespace GetStoreApp
             {
                 // 初始化存储数据信息
                 await XmlStorageService.InitializeXmlFileAsync();
+                HistoryService.Initialize();
                 await DownloadXmlService.InitializeDownloadXmlAsync();
 
                 // 初始化应用配置信息

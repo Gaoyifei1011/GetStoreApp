@@ -78,7 +78,7 @@
                     <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
                 </PivotItem>
                 <PivotItem Margin="0">
-                    <sc:SearchControl x:Name="Search" x:FieldModifier="public" />
+                    <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
                 </PivotItem>
             </Pivot>
         </ScrollViewer>

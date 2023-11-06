@@ -12,42 +12,13 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class XmlStorageService
     {
-        private static string HistoryXmlFileName = "HistoryRecords.xml.dat";
-
         private static string DownloadXmlFileName = "DownloadRecords.xml.dat";
-
-        public static StorageFile HistoryXmlFile { get; private set; }
 
         public static StorageFile DownloadXmlFile { get; private set; }
 
         public static async Task InitializeXmlFileAsync()
         {
-            await InitializeHistoryXmlFileAsync();
             await InitializeDownloadXmlFileAsync();
-        }
-
-        /// <summary>
-        /// 历史记录存储文件不存在时，自动创建历史记录存储文件
-        /// </summary>
-        public static async Task InitializeHistoryXmlFileAsync()
-        {
-            try
-            {
-                if (File.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, HistoryXmlFileName)))
-                {
-                    HistoryXmlFile = await ApplicationData.Current.LocalFolder.GetFileAsync(HistoryXmlFileName);
-                }
-                else
-                {
-                    HistoryXmlFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(HistoryXmlFileName);
-                    await InitializeHistoryDataAsync();
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Critical, "Create history storage file failed.", e);
-                Environment.Exit(82);
-            }
         }
 
         /// <summary>
@@ -72,19 +43,6 @@ namespace GetStoreApp.Services.Root
                 LogService.WriteLog(LoggingLevel.Critical, "Create download storage file failed.", e);
                 Environment.Exit(82);
             }
-        }
-
-        /// <summary>
-        /// 初始化历史记录存储文件基础内容
-        /// </summary>
-        private static async Task InitializeHistoryDataAsync()
-        {
-            XmlDocument HistoryXmlDocument = new XmlDocument();
-            XmlElement HistoryElement = HistoryXmlDocument.CreateElement("HistoryRecords");
-            HistoryElement.SetAttribute("Description", "History Records Storage Data");
-            HistoryElement.SetAttribute("Warning", "Please do not modify the storage file arbitrarily, otherwise the application will crash abnormally");
-            HistoryXmlDocument.AppendChild(HistoryElement);
-            await HistoryXmlDocument.SaveToFileAsync(HistoryXmlFile);
         }
 
         /// <summary>

@@ -138,9 +138,6 @@
   <data name="CancelToolTip" xml:space="preserve">
     <value>退出多选模式</value>
   </data>
-  <data name="Channel" xml:space="preserve">
-    <value>通道</value>
-  </data>
   <data name="ClickToAccess" xml:space="preserve">
     <value>单击以访问</value>
   </data>
@@ -210,8 +207,17 @@
   <data name="GetLinks" xml:space="preserve">
     <value>获取链接</value>
   </data>
+  <data name="HistoryAppName" xml:space="preserve">
+    <value>应用名称</value>
+  </data>
+  <data name="HistoryChannel" xml:space="preserve">
+    <value>通道</value>
+  </data>
   <data name="HistoryLiteEmpty" xml:space="preserve">
     <value>历史记录空空如也</value>
+  </data>
+  <data name="HistoryType" xml:space="preserve">
+    <value>类型</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>了解更多</value>
@@ -290,9 +296,6 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>微软商店</value>
-  </data>
-  <data name="Type" xml:space="preserve">
-    <value>类型</value>
   </data>
   <data name="UnselectedToolTip" xml:space="preserve">
     <value>未选择</value>
