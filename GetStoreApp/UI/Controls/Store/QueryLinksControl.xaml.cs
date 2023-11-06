@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
-using GetStoreApp.Models.Controls.History;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
@@ -37,12 +36,12 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
     {
-        private readonly object HistoryLiteDataListLock = new object();
-        private readonly object ResultDataListObjectLock = new object();
+        private readonly object HistoryLock = new object();
+        private readonly object QueryLinksLock = new object();
 
         private string SampleLink;
         private string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
-        private string ResultCountInfo = ResourceService.GetLocalized("Store/ResultCountInfo");
+        private string QueryLinksCountInfo = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
 
         private TypeModel _selectedType;
 
@@ -96,15 +95,15 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isGettingLinks = false;
+        private bool _isQueryingLinks = false;
 
-        public bool IsGettingLinks
+        public bool IsQueryingLinks
         {
-            get { return _isGettingLinks; }
+            get { return _isQueryingLinks; }
 
             set
             {
-                _isGettingLinks = value;
+                _isQueryingLinks = value;
                 OnPropertyChanged();
             }
         }
@@ -148,15 +147,15 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _statePrRingActValue = false;
+        private bool _isRingActive = false;
 
-        public bool StatePrRingActValue
+        public bool IsRingActive
         {
-            get { return _statePrRingActValue; }
+            get { return _isRingActive; }
 
             set
             {
-                _statePrRingActValue = value;
+                _isRingActive = value;
                 OnPropertyChanged();
             }
         }
@@ -201,7 +200,7 @@ namespace GetStoreApp.UI.Controls.Store
 
         private ObservableCollection<HistoryModel> HistoryCollection { get; } = new ObservableCollection<HistoryModel>();
 
-        private ObservableCollection<ResultModel> ResultCollection { get; } = new ObservableCollection<ResultModel>();
+        private ObservableCollection<QueryLinksModel> QueryLinksCollection { get; } = new ObservableCollection<QueryLinksModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -228,7 +227,8 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (historyItem is not null)
             {
-                string copyContent = string.Format("{0}\t{1}\t{2}",
+                string copyContent = string.Format("{0}\t{1}\t{2}\t{3}",
+                    historyItem.HistoryAppName,
                     TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
                     ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
                     historyItem.HistoryLink);
@@ -262,8 +262,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            ResultModel resultItem = args.Parameter as ResultModel;
-            if (resultItem is not null)
+            QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
+            if (queryLinksItem is not null)
             {
                 // 查看是否开启了网络监控服务
                 if (NetWorkMonitorService.NetWorkMonitorValue)
@@ -285,13 +285,13 @@ namespace GetStoreApp.UI.Controls.Store
                     // 使用应用内提供的下载方式
                     if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[0].Value)
                     {
-                        string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
+                        string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
                         BackgroundModel backgroundItem = new BackgroundModel
                         {
-                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
-                            FileName = resultItem.FileName,
-                            FileLink = resultItem.FileLink,
+                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, DownloadFilePath),
+                            FileName = queryLinksItem.FileName,
+                            FileLink = queryLinksItem.FileLink,
                             FilePath = DownloadFilePath,
                             TotalSize = 0,
                             DownloadFlag = 1
@@ -405,7 +405,7 @@ namespace GetStoreApp.UI.Controls.Store
                     // 使用浏览器下载
                     else if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[1].Value)
                     {
-                        await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
+                        await Launcher.LaunchUriAsync(new Uri(queryLinksItem.FileLink));
                     }
 
                     autoResetEvent.Dispose();
@@ -445,13 +445,13 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            ResultModel resultItem = args.Parameter as ResultModel;
-            if (resultItem is not null)
+            QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
+            if (queryLinksItem is not null)
             {
                 string copyInformation = string.Format("[\n{0}\n{1}\n{2}\n]\n",
-                    resultItem.FileName,
-                    resultItem.FileLink,
-                    resultItem.FileSize
+                    queryLinksItem.FileName,
+                    queryLinksItem.FileLink,
+                    queryLinksItem.FileSize
                     );
 
                 CopyPasteHelper.CopyTextToClipBoard(copyInformation);
@@ -500,11 +500,11 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
-        /// 获取链接
+        /// 查询链接
         /// </summary>
-        private void OnGetLinksClicked(object sender, RoutedEventArgs args)
+        private void OnQueryLinksClicked(object sender, RoutedEventArgs args)
         {
-            GetLinks();
+            QueryLinks();
         }
 
         /// <summary>
@@ -537,12 +537,12 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
-            lock (ResultDataListObjectLock)
+            lock (QueryLinksLock)
             {
-                foreach (ResultModel resultItem in ResultCollection)
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
-                    resultItem.IsSelectMode = true;
-                    resultItem.IsSelected = false;
+                    queryLinksItem.IsSelectMode = true;
+                    queryLinksItem.IsSelected = false;
                 }
 
                 IsSelectMode = true;
@@ -554,11 +554,11 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            lock (ResultDataListObjectLock)
+            lock (QueryLinksLock)
             {
-                foreach (ResultModel resultItem in ResultCollection)
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
-                    resultItem.IsSelected = true;
+                    queryLinksItem.IsSelected = true;
                 }
             }
         }
@@ -568,11 +568,11 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            lock (ResultDataListObjectLock)
+            lock (QueryLinksLock)
             {
-                foreach (ResultModel resultItem in ResultCollection)
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
-                    resultItem.IsSelected = false;
+                    queryLinksItem.IsSelected = false;
                 }
             }
         }
@@ -592,10 +592,10 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<ResultModel> selectedResultDataList = ResultCollection.Where(item => item.IsSelected is true).ToList();
+                List<QueryLinksModel> selectedQueryLinksList = QueryLinksCollection.Where(item => item.IsSelected is true).ToList();
 
                 // 内容为空时显示空提示对话框
-                if (selectedResultDataList.Count is 0)
+                if (selectedQueryLinksList.Count is 0)
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
@@ -606,19 +606,19 @@ namespace GetStoreApp.UI.Controls.Store
 
                 StringBuilder stringBuilder = new StringBuilder();
 
-                foreach (ResultModel resultItem in selectedResultDataList)
+                foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
                     stringBuilder.AppendLine(string.Format("[\n{0}\n{1}\n{2}\n]",
-                        resultItem.FileName,
-                        resultItem.FileLink,
-                        resultItem.FileSize)
+                        queryLinksItem.FileName,
+                        queryLinksItem.FileLink,
+                        queryLinksItem.FileSize)
                         );
                 }
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyKind.ResultInformation, true, selectedResultDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyKind.ResultInformation, true, selectedQueryLinksList.Count).Show();
                 });
             });
         }
@@ -630,10 +630,10 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<ResultModel> selectedResultDataList = ResultCollection.Where(item => item.IsSelected is true).ToList();
+                List<QueryLinksModel> selectedQueryLinksList = QueryLinksCollection.Where(item => item.IsSelected is true).ToList();
 
                 // 内容为空时显示空提示对话框
-                if (selectedResultDataList.Count is 0)
+                if (selectedQueryLinksList.Count is 0)
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
@@ -644,15 +644,15 @@ namespace GetStoreApp.UI.Controls.Store
 
                 StringBuilder stringBuilder = new StringBuilder();
 
-                foreach (ResultModel resultItem in selectedResultDataList)
+                foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
-                    stringBuilder.AppendLine(string.Format("{0}", resultItem.FileLink));
+                    stringBuilder.AppendLine(string.Format("{0}", queryLinksItem.FileLink));
                 }
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyKind.ResultLink, true, selectedResultDataList.Count).Show();
+                    new DataCopyNotification(this, DataCopyKind.ResultLink, true, selectedQueryLinksList.Count).Show();
                 });
             });
         }
@@ -680,10 +680,10 @@ namespace GetStoreApp.UI.Controls.Store
 
             Task.Run(async () =>
             {
-                List<ResultModel> selectedResultDataList = ResultCollection.Where(item => item.IsSelected is true).ToList();
+                List<QueryLinksModel> selectedqueryLinksList = QueryLinksCollection.Where(item => item.IsSelected is true).ToList();
 
                 // 内容为空时显示空提示对话框
-                if (selectedResultDataList.Count is 0)
+                if (selectedqueryLinksList.Count is 0)
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
@@ -700,15 +700,15 @@ namespace GetStoreApp.UI.Controls.Store
 
                     bool IsDownloadSuccessfully = false;
 
-                    foreach (ResultModel resultItem in selectedResultDataList)
+                    foreach (QueryLinksModel queryLinksItem in selectedqueryLinksList)
                     {
-                        string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, resultItem.FileName);
+                        string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
                         BackgroundModel backgroundItem = new BackgroundModel
                         {
-                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(resultItem.FileName, DownloadFilePath),
-                            FileName = resultItem.FileName,
-                            FileLink = resultItem.FileLink,
+                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, DownloadFilePath),
+                            FileName = queryLinksItem.FileName,
+                            FileLink = queryLinksItem.FileLink,
                             FilePath = DownloadFilePath,
                             TotalSize = 0,
                             DownloadFlag = 1
@@ -776,9 +776,9 @@ namespace GetStoreApp.UI.Controls.Store
                         // 显示下载任务创建成功消息
                         new DownloadCreateNotification(this, IsDownloadSuccessfully).Show();
 
-                        foreach (ResultModel resultItem in ResultCollection)
+                        foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                         {
-                            resultItem.IsSelectMode = false;
+                            queryLinksItem.IsSelectMode = false;
                         }
                         IsSelectMode = false;
                     });
@@ -787,9 +787,9 @@ namespace GetStoreApp.UI.Controls.Store
                 // 使用浏览器下载
                 else if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[1].Value)
                 {
-                    foreach (ResultModel resultItem in selectedResultDataList)
+                    foreach (QueryLinksModel queryLinksItem in selectedqueryLinksList)
                     {
-                        await Launcher.LaunchUriAsync(new Uri(resultItem.FileLink));
+                        await Launcher.LaunchUriAsync(new Uri(queryLinksItem.FileLink));
                     }
                 }
             });
@@ -800,12 +800,12 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
-            lock (ResultDataListObjectLock)
+            lock (QueryLinksLock)
             {
                 IsSelectMode = false;
-                foreach (ResultModel resultItem in ResultCollection)
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
-                    resultItem.IsSelectMode = false;
+                    queryLinksItem.IsSelectMode = false;
                 }
             }
         }
@@ -815,14 +815,14 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnItemClicked(object sender, ItemClickEventArgs args)
         {
-            ResultModel resultItem = args.ClickedItem as ResultModel;
+            QueryLinksModel queryLinksItem = args.ClickedItem as QueryLinksModel;
 
-            if (resultItem is not null)
+            if (queryLinksItem is not null)
             {
-                lock (ResultDataListObjectLock)
+                lock (QueryLinksLock)
                 {
-                    int ClickedIndex = ResultCollection.IndexOf(resultItem);
-                    ResultCollection[ClickedIndex].IsSelected = !ResultCollection[ClickedIndex].IsSelected;
+                    int ClickedIndex = QueryLinksCollection.IndexOf(queryLinksItem);
+                    QueryLinksCollection[ClickedIndex].IsSelected = !QueryLinksCollection[ClickedIndex].IsSelected;
                 }
             }
         }
@@ -853,9 +853,9 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
-        /// UI加载完成时/或者是数据库数据发生变化时，从数据库中异步加载数据
+        /// 从本地数据存储中加载查询链接历史记录数据
         /// </summary>
-        public void GetHistoryLiteDataList()
+        public void GetQueryLinksHistoryData()
         {
             Task.Run(() =>
             {
@@ -864,7 +864,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (HistoryLiteDataListLock)
+                    lock (HistoryLock)
                     {
                         HistoryCollection.Clear();
                         Task.Delay(10);
@@ -880,22 +880,21 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 获取链接
         /// </summary>
-        public void GetLinks()
+        public void QueryLinks()
         {
             // 设置获取数据时的相关控件状态
             LinkText = string.IsNullOrEmpty(LinkText) ? SampleLink : LinkText;
-            IsGettingLinks = true;
+            IsQueryingLinks = true;
             SetControlState(InfoBarSeverity.Informational);
 
             Task.Run(async () =>
             {
-                string categoryId = string.Empty;
-                List<ResultModel> resultList = new List<ResultModel>();
+                List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
 
                 // 记录当前选定的选项和填入的内容
-                int currentType = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
-                int currentChannel = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
-                string currentLink = LinkText;
+                int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
+                int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
+                string link = LinkText;
 
                 // 解析链接对应的产品 ID
                 string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
@@ -910,38 +909,37 @@ namespace GetStoreApp.UI.Controls.Store
                     // 解析非商店应用数据
                     if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                     {
-                        List<ResultModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
-                        foreach (ResultModel nonAppxPackage in nonAppxPackagesList)
+                        List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                        foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                         {
-                            resultList.Add(nonAppxPackage);
+                            queryLinksList.Add(nonAppxPackage);
                         }
                     }
                     // 解析商店应用数据
                     else
                     {
-                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[currentChannel].InternalName);
+                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
 
                         if (!string.IsNullOrEmpty(fileListXml))
                         {
-                            List<ResultModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[currentChannel].InternalName);
-                            foreach (ResultModel appxPackage in appxPackagesList)
+                            List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[channelIndex].InternalName);
+                            foreach (QueryLinksModel appxPackage in appxPackagesList)
                             {
-                                resultList.Add(appxPackage);
+                                queryLinksList.Add(appxPackage);
                             }
                         }
                     }
 
-                    ResultListFilter(ref resultList);
-                    UpdateHistory(appInformationResult.Item2.Name, currentType, currentChannel, currentLink);
+                    ResultListFilter(ref queryLinksList);
+                    queryLinksList = queryLinksList.OrderBy(item => item.FileName).ToList();
+                    UpdateHistory(appInformationResult.Item2.Name, typeIndex, channelIndex, link);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        IsGettingLinks = false;
+                        IsQueryingLinks = false;
 
-                        if (resultList.Count > 0)
+                        if (queryLinksList.Count > 0)
                         {
-                            GetHistoryLiteDataList();
-
                             // 显示结果
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
@@ -950,12 +948,12 @@ namespace GetStoreApp.UI.Controls.Store
                             AppInfo.Description = appInformationResult.Item2.Description;
                             AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
 
-                            lock (ResultDataListObjectLock)
+                            lock (QueryLinksLock)
                             {
-                                ResultCollection.Clear();
-                                foreach (ResultModel resultItem in resultList)
+                                QueryLinksCollection.Clear();
+                                foreach (QueryLinksModel resultItem in queryLinksList)
                                 {
-                                    ResultCollection.Add(resultItem);
+                                    QueryLinksCollection.Add(resultItem);
                                     Task.Delay(1);
                                 }
                             }
@@ -971,6 +969,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
+                        IsQueryingLinks = false;
                         SetControlState(InfoBarSeverity.Error);
                         ResultControlVisable = false;
                     });
@@ -987,7 +986,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             InfoBarSeverity = StatusBarStateList[state].InfoBarSeverity;
             StateInfoText = StatusBarStateList[state].StateInfoText;
-            StatePrRingActValue = StatusBarStateList[state].StatePrRingActValue;
+            IsRingActive = StatusBarStateList[state].StatePrRingActValue;
         }
 
         /// <summary>
@@ -997,36 +996,62 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                // 添加时间戳
-                long TimeStamp = GenerateTimeStamp();
+                // 计算时间戳
+                long timeStamp = GenerateTimeStamp();
+                string historyKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link);
 
                 List<HistoryModel> historyList = HistoryCollection.ToList();
-                HistoryModel historyItem = new HistoryModel()
+                int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
+
+                // 不存在直接添加
+                if (index is -1)
                 {
-                    CreateTimeStamp = TimeStamp,
-                    HistoryKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link),
-                    HistoryAppName = appName,
-                    HistoryType = TypeList[selectedType].InternalName,
-                    HistoryChannel = ChannelList[selectedChannel].InternalName,
-                    HistoryLink = link
-                };
-                historyList.Insert(0, historyItem);
-                HistoryService.SaveQueryLinksData(historyList);
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    if (HistoryCollection.Count is 3)
+                    HistoryModel historyItem = new HistoryModel()
                     {
-                        HistoryCollection.RemoveAt(2);
-                    }
-                    HistoryCollection.Insert(0, historyItem);
-                });
+                        CreateTimeStamp = timeStamp,
+                        HistoryKey = historyKey,
+                        HistoryAppName = appName,
+                        HistoryType = TypeList[selectedType].InternalName,
+                        HistoryChannel = ChannelList[selectedChannel].InternalName,
+                        HistoryLink = link
+                    };
+
+                    historyList.Insert(0, historyItem);
+                    HistoryService.SaveQueryLinksData(historyList);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        lock (HistoryLock)
+                        {
+                            HistoryCollection.Insert(0, historyItem);
+                        }
+                    });
+                }
+                // 存在则修改原来项的时间戳，并调整顺序
+                else
+                {
+                    HistoryModel historyItem = historyList[index];
+                    historyItem.CreateTimeStamp = timeStamp;
+                    historyList.RemoveAt(index);
+                    historyList.Insert(0, historyItem);
+                    HistoryService.SaveQueryLinksData(historyList);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        lock (HistoryLock)
+                        {
+                            HistoryCollection.RemoveAt(index);
+                            HistoryCollection.Insert(0, historyItem);
+                        }
+                    });
+                }
             });
         }
 
         /// <summary>
         /// 按设置选项设置的内容过滤列表
         /// </summary>
-        private void ResultListFilter(ref List<ResultModel> resultDataList)
+        private void ResultListFilter(ref List<QueryLinksModel> resultDataList)
         {
             if (LinkFilterService.EncryptedPackageFilterValue)
             {

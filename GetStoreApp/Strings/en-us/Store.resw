@@ -213,7 +213,10 @@
   <data name="HistoryChannel" xml:space="preserve">
     <value>Channel</value>
   </data>
-  <data name="HistoryLiteEmpty" xml:space="preserve">
+  <data name="HistoryContent" xml:space="preserve">
+    <value>Input content</value>
+  </data>
+  <data name="HistoryEmpty" xml:space="preserve">
     <value>The history is empty</value>
   </data>
   <data name="HistoryType" xml:space="preserve">
@@ -246,23 +249,38 @@
   <data name="QueryLinks" xml:space="preserve">
     <value>Query links</value>
   </data>
+  <data name="QueryLinksCountInfo" xml:space="preserve">
+    <value>{0} results were queryed from the Microsoft Store</value>
+  </data>
+  <data name="QueryLinksEmpty" xml:space="preserve">
+    <value>No results have been searched, please check the link you entered and try again</value>
+  </data>
+  <data name="QueryLinksToolTip" xml:space="preserve">
+    <value>Query the download links for a specified app and its dependencies</value>
+  </data>
   <data name="Recent" xml:space="preserve">
     <value>Recently used items</value>
   </data>
-  <data name="ResultCountInfo" xml:space="preserve">
-    <value>{0} results were obtained from Microsoft Store servers</value>
-  </data>
   <data name="SampleTitle" xml:space="preserve">
-    <value>Sample Data:</value>
+    <value>For example:</value>
   </data>
   <data name="SearchApps" xml:space="preserve">
     <value>Search apps</value>
   </data>
+  <data name="SearchPlaceHolderText" xml:space="preserve">
+    <value>For example: Microsoft Corporation</value>
+  </data>
   <data name="SearchResult" xml:space="preserve">
     <value>Search Result</value>
   </data>
-  <data name="SearchResultEmpty" xml:space="preserve">
-    <value>No results have been searched, please check the link you entered and try again</value>
+  <data name="SearchStore" xml:space="preserve">
+    <value>Search apps</value>
+  </data>
+  <data name="SearchStoreCountInfo" xml:space="preserve">
+    <value>{0} results were searched from the Microsoft Store</value>
+  </data>
+  <data name="SearchStoreEmpty" xml:space="preserve">
+    <value>No results have been searched, please check the content you entered and try again</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
@@ -294,8 +312,14 @@
   <data name="StatusInfoWelcome" xml:space="preserve">
     <value>Welcome to use GetStoreApp</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
+  <data name="StoreAppLink" xml:space="preserve">
+    <value>App link</value>
+  </data>
+  <data name="StoreAppName" xml:space="preserve">
+    <value>App name</value>
+  </data>
+  <data name="StoreAppPublisher" xml:space="preserve">
+    <value>App publisher</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Microsoft Store</value>

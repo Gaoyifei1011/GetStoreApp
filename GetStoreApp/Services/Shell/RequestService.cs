@@ -70,7 +70,7 @@ namespace GetStoreApp.Services.Shell
 
                 string cookie = await QueryLinksHelper.GetCookieAsync();
 
-                List<ResultModel> resultList = new List<ResultModel>();
+                List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
                 AppInfoModel appInfo = null;
                 int state = 0;
 
@@ -82,12 +82,12 @@ namespace GetStoreApp.Services.Shell
                     // 解析非商店应用数据
                     if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                     {
-                        List<ResultModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
-                        foreach (ResultModel nonAppxPackage in nonAppxPackagesList)
+                        List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                        foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                         {
-                            resultList.Add(nonAppxPackage);
+                            queryLinksList.Add(nonAppxPackage);
                         }
-                        state = resultList.Count is 0 ? 2 : 1;
+                        state = queryLinksList.Count is 0 ? 2 : 1;
                     }
                     // 解析商店应用数据
                     else
@@ -96,12 +96,12 @@ namespace GetStoreApp.Services.Shell
 
                         if (!string.IsNullOrEmpty(fileListXml))
                         {
-                            List<ResultModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, SelectedChannel);
-                            foreach (ResultModel appxPackage in appxPackagesList)
+                            List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, SelectedChannel);
+                            foreach (QueryLinksModel appxPackage in appxPackagesList)
                             {
-                                resultList.Add(appxPackage);
+                                queryLinksList.Add(appxPackage);
                             }
-                            state = resultList.Count is 0 ? 2 : 1;
+                            state = queryLinksList.Count is 0 ? 2 : 1;
                         }
                     }
 
@@ -122,7 +122,7 @@ namespace GetStoreApp.Services.Shell
                             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
                             ConsoleHelper.ResetTextColor();
                             RequestState = false;
-                            await ParseService.ParseDataAsync(appInfo, resultList);
+                            await ParseService.ParseDataAsync(appInfo, queryLinksList);
                             break;
                         }
                     case 2:
@@ -169,7 +169,7 @@ namespace GetStoreApp.Services.Shell
             int FileNameColumnLength = (FileNameHeaderLength > NoneLength ? FileNameHeaderLength : NoneLength) + 3;
 
             ConsoleHelper.Write(Environment.NewLine);
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ResultCollection"));
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/FileInfoList"));
 
             // 打印标题
             ConsoleHelper.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));

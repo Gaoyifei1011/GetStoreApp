@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Shell
                     foreach (string indexItem in IndexList)
                     {
                         int index = Convert.ToInt32(indexItem);
-                        if (index > ParseService.ResultDataList.Count || index < 1)
+                        if (index > ParseService.QueryLinksList.Count || index < 1)
                         {
                             CheckResult = false;
                             break;
@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Shell
                             if (ConsoleLaunchService.IsAppRunning)
                             {
                                 ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, IndexList.Count));
-                                DownloadFile(ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileName, ParseService.ResultDataList[Convert.ToInt32(IndexItem) - 1].FileLink);
+                                DownloadFile(ParseService.QueryLinksList[Convert.ToInt32(IndexItem) - 1].FileName, ParseService.QueryLinksList[Convert.ToInt32(IndexItem) - 1].FileLink);
                             }
                         }
                         ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));

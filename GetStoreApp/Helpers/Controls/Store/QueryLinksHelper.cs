@@ -17,6 +17,9 @@ using Windows.Web.Http.Headers;
 
 namespace GetStoreApp.Helpers.Controls.Store
 {
+    /// <summary>
+    /// 查询链接辅助类
+    /// </summary>
     public static class QueryLinksHelper
     {
         private static string market = CultureInfo.InstalledUICulture.Name.Remove(0, 3).ToUpper();
@@ -69,16 +72,16 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder cookieResponseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new StringBuilder();
 
-                    cookieResponseBuilder.Append("Status Code:");
-                    cookieResponseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    cookieResponseBuilder.Append("Headers:");
-                    cookieResponseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    cookieResponseBuilder.Append("ResponseMessage:");
-                    cookieResponseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("Status Code:");
+                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
+                    responseBuilder.Append("Headers:");
+                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("ResponseMessage:");
+                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
 
-                    LogService.WriteLog(LoggingLevel.Information, "Cookie request successfully.", cookieResponseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Cookie request successfully.", responseBuilder);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -92,6 +95,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                     {
                         cookieResult = encryptedDataList[0].InnerText;
                     }
+                }
+                else
+                {
+                    httpClient.Dispose();
+                    responseMessage.Dispose();
                 }
             }
             // 捕捉因为网络失去链接获取信息时引发的异常
@@ -141,16 +149,16 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder cookieResponseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new StringBuilder();
 
-                    cookieResponseBuilder.Append("Status Code:");
-                    cookieResponseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    cookieResponseBuilder.Append("Headers:");
-                    cookieResponseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    cookieResponseBuilder.Append("ResponseMessage:");
-                    cookieResponseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("Status Code:");
+                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
+                    responseBuilder.Append("Headers:");
+                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("ResponseMessage:");
+                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
 
-                    LogService.WriteLog(LoggingLevel.Information, "App Information request successfully.", cookieResponseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "App Information request successfully.", responseBuilder);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -184,6 +192,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                             appInformationResult = new Tuple<bool, AppInfoModel>(true, appInfoModel);
                         }
                     }
+                }
+                else
+                {
+                    httpClient.Dispose();
+                    responseMessage.Dispose();
                 }
             }
 
@@ -244,22 +257,27 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder cookieResponseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new StringBuilder();
 
-                    cookieResponseBuilder.Append("Status Code:");
-                    cookieResponseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    cookieResponseBuilder.Append("Headers:");
-                    cookieResponseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    cookieResponseBuilder.Append("ResponseMessage:");
-                    cookieResponseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("Status Code:");
+                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
+                    responseBuilder.Append("Headers:");
+                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("ResponseMessage:");
+                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
 
-                    LogService.WriteLog(LoggingLevel.Information, "FileListXml request successfully.", cookieResponseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "FileListXml request successfully.", responseBuilder);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
                     responseMessage.Dispose();
 
                     fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
+                }
+                else
+                {
+                    httpClient.Dispose();
+                    responseMessage.Dispose();
                 }
             }
             // 捕捉因为网络失去链接获取信息时引发的异常
@@ -291,9 +309,9 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <param name="fileListXml">文件信息的字符串</param>
         /// <param name="ring">通道</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static List<ResultModel> GetAppxPackages(string fileListXml, string ring)
+        public static List<QueryLinksModel> GetAppxPackages(string fileListXml, string ring)
         {
-            List<ResultModel> appxPackagesList = new List<ResultModel>();
+            List<QueryLinksModel> appxPackagesList = new List<QueryLinksModel>();
 
             try
             {
@@ -347,7 +365,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                                 lock (appxPackagesLock)
                                 {
-                                    appxPackagesList.Add(new ResultModel()
+                                    appxPackagesList.Add(new QueryLinksModel()
                                     {
                                         FileName = fileName,
                                         FileLink = uri,
@@ -406,16 +424,16 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder cookieResponseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new StringBuilder();
 
-                    cookieResponseBuilder.Append("Status Code:");
-                    cookieResponseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    cookieResponseBuilder.Append("Headers:");
-                    cookieResponseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    cookieResponseBuilder.Append("ResponseMessage:");
-                    cookieResponseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("Status Code:");
+                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
+                    responseBuilder.Append("Headers:");
+                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("ResponseMessage:");
+                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
 
-                    LogService.WriteLog(LoggingLevel.Information, "Appx Url request successfully.", cookieResponseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Appx Url request successfully.", responseBuilder);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -434,6 +452,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                             break;
                         }
                     }
+                }
+                else
+                {
+                    httpClient.Dispose();
+                    responseMessage.Dispose();
                 }
             }
             // 捕捉因为网络失去链接获取信息时引发的异常
@@ -464,13 +487,13 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         /// <param name="productId">产品 ID</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static async Task<List<ResultModel>> GetNonAppxPackagesAsync(string productId)
+        public static async Task<List<QueryLinksModel>> GetNonAppxPackagesAsync(string productId)
         {
             // 添加超时设置（半分钟后停止获取）
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            List<ResultModel> nonAppxPackagesList = new List<ResultModel>();
+            List<QueryLinksModel> nonAppxPackagesList = new List<QueryLinksModel>();
 
             try
             {
@@ -482,16 +505,16 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder cookieResponseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new StringBuilder();
 
-                    cookieResponseBuilder.Append("Status Code:");
-                    cookieResponseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    cookieResponseBuilder.Append("Headers:");
-                    cookieResponseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    cookieResponseBuilder.Append("ResponseMessage:");
-                    cookieResponseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("Status Code:");
+                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
+                    responseBuilder.Append("Headers:");
+                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("ResponseMessage:");
+                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
 
-                    LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request successfully.", cookieResponseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request successfully.", responseBuilder);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -519,7 +542,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                             {
                                 lock (nonAppxPackagesLock)
                                 {
-                                    nonAppxPackagesList.Add(new ResultModel()
+                                    nonAppxPackagesList.Add(new QueryLinksModel()
                                     {
                                         FileName = installerUrl.Remove(installerUrl.LastIndexOf('.')).Remove(0, installerUrl.LastIndexOf('/') + 1),
                                         FileLink = installerUrl,
@@ -548,7 +571,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                                 lock (nonAppxPackagesLock)
                                 {
-                                    nonAppxPackagesList.Add(new ResultModel()
+                                    nonAppxPackagesList.Add(new QueryLinksModel()
                                     {
                                         FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
                                         FileLink = installerUrl,
@@ -564,6 +587,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                         countdownEvent.Wait();
                         countdownEvent.Dispose();
                     }
+                }
+                else
+                {
+                    httpClient.Dispose();
+                    responseMessage.Dispose();
                 }
             }
             // 捕捉因为网络失去链接获取信息时引发的异常
@@ -603,26 +631,29 @@ namespace GetStoreApp.Helpers.Controls.Store
             try
             {
                 HttpClient httpClient = new HttpClient();
-
                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Head, new Uri(url));
-
                 HttpResponseMessage responseMessage = await httpClient.SendRequestAsync(requestMessage).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder cookieResponseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new StringBuilder();
 
-                    cookieResponseBuilder.Append("Status Code:");
-                    cookieResponseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    cookieResponseBuilder.Append("Headers:");
-                    cookieResponseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    cookieResponseBuilder.Append("ResponseMessage:");
-                    cookieResponseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("Status Code:");
+                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
+                    responseBuilder.Append("Headers:");
+                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                    responseBuilder.Append("ResponseMessage:");
+                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
 
-                    LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request successfully.", cookieResponseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request successfully.", responseBuilder);
 
                     fileSizeResult = Convert.ToString(responseMessage.Content.Headers.ContentLength);
+                    httpClient.Dispose();
+                    responseMessage.Dispose();
+                }
+                else
+                {
                     httpClient.Dispose();
                     responseMessage.Dispose();
                 }

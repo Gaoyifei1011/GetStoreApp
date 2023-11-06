@@ -15,18 +15,18 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class ParseService
     {
-        public static List<ResultModel> ResultDataList = new List<ResultModel>();
+        public static List<QueryLinksModel> QueryLinksList = new List<QueryLinksModel>();
 
         /// <summary>
         /// 解析得到的数据
         /// </summary>
-        public static async Task ParseDataAsync(AppInfoModel appInfo, List<ResultModel> resultList)
+        public static async Task ParseDataAsync(AppInfoModel appInfo, List<QueryLinksModel> queryLinksList)
         {
-            ResultDataList.Clear();
-            ResultListFilter(ref resultList);
-            foreach (ResultModel resultItem in resultList)
+            QueryLinksList.Clear();
+            ResultListFilter(ref queryLinksList);
+            foreach (QueryLinksModel queryLinksItem in queryLinksList)
             {
-                ResultDataList.Add(resultItem);
+                QueryLinksList.Add(queryLinksItem);
             }
 
             PrintAppInformation(appInfo);
@@ -37,12 +37,12 @@ namespace GetStoreApp.Services.Shell
         /// <summary>
         /// 按指定条件过滤数据
         /// </summary>
-        private static void ResultListFilter(ref List<ResultModel> resultList)
+        private static void ResultListFilter(ref List<QueryLinksModel> queryLinksList)
         {
             // 按要求过滤列表内容
             if (LinkFilterService.EncryptedPackageFilterValue)
             {
-                resultList.RemoveAll(item =>
+                queryLinksList.RemoveAll(item =>
                 item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
                 item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
                 item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
@@ -52,7 +52,7 @@ namespace GetStoreApp.Services.Shell
 
             if (LinkFilterService.BlockMapFilterValue)
             {
-                resultList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -79,17 +79,17 @@ namespace GetStoreApp.Services.Shell
             int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);
             int FileSizeHeaderLength = CharExtension.GetStringDisplayLengthEx(FileSizeHeader);
 
-            int SerialNumberColumnLength = (SerialNumberHeaderLength > ResultDataList.Count.ToString().Length ? SerialNumberHeaderLength : ResultDataList.Count.ToString().Length) + 3;
+            int SerialNumberColumnLength = (SerialNumberHeaderLength > QueryLinksList.Count.ToString().Length ? SerialNumberHeaderLength : QueryLinksList.Count.ToString().Length) + 3;
 
             int FileNameContentMaxLength = 0;
-            foreach (ResultModel resultItem in ResultDataList.Where(resultItem => resultItem.FileName.Length > FileNameContentMaxLength))
+            foreach (QueryLinksModel queryLinksItem in QueryLinksList.Where(resultItem => resultItem.FileName.Length > FileNameContentMaxLength))
             {
-                FileNameContentMaxLength = resultItem.FileName.Length;
+                FileNameContentMaxLength = queryLinksItem.FileName.Length;
             }
             int FileNameColumnLength = ((FileNameHeaderLength > FileNameContentMaxLength) ? FileNameHeaderLength : FileNameContentMaxLength) + 3;
 
             ConsoleHelper.Write(Environment.NewLine);
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ResultCollection"));
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/QueryLinksCollection"));
 
             // 打印标题
             ConsoleHelper.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
@@ -102,11 +102,11 @@ namespace GetStoreApp.Services.Shell
             ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + Environment.NewLine);
 
             // 打印内容
-            for (int resultDataIndex = 0; resultDataIndex < ResultDataList.Count; resultDataIndex++)
+            for (int resultDataIndex = 0; resultDataIndex < QueryLinksList.Count; resultDataIndex++)
             {
                 ConsoleHelper.Write(Convert.ToString(resultDataIndex + 1) + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - Convert.ToString(resultDataIndex + 1).Length));
-                ConsoleHelper.Write(ResultDataList[resultDataIndex].FileName + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - ResultDataList[resultDataIndex].FileName.Length));
-                ConsoleHelper.Write(ResultDataList[resultDataIndex].FileSize + Environment.NewLine);
+                ConsoleHelper.Write(QueryLinksList[resultDataIndex].FileName + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - QueryLinksList[resultDataIndex].FileName.Length));
+                ConsoleHelper.Write(QueryLinksList[resultDataIndex].FileSize + Environment.NewLine);
             }
 
             ConsoleHelper.Write(Environment.NewLine);

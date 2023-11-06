@@ -33,7 +33,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
     /// </summary>
     public sealed partial class AppListControl : Grid, INotifyPropertyChanged
     {
-        private readonly object AppShortListObject = new object();
+        private readonly object UWPAppDataLock = new object();
 
         private string Unknown = ResourceService.GetLocalized("UWPApp/Unknown");
         private string Yes = ResourceService.GetLocalized("UWPApp/Yes");
@@ -284,7 +284,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     if (packageItem.Package.Id.FullName == package.Id.FullName)
                     {
-                        lock (AppShortListObject)
+                        lock (UWPAppDataLock)
                         {
                             packageItem.IsUnInstalling = true;
                             break;
@@ -307,7 +307,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             {
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
                                 {
-                                    lock (AppShortListObject)
+                                    lock (UWPAppDataLock)
                                     {
                                         foreach (PackageModel pacakgeItem in UwpAppDataCollection)
                                         {
@@ -330,7 +330,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
                                 {
-                                    lock (AppShortListObject)
+                                    lock (UWPAppDataLock)
                                     {
                                         foreach (PackageModel pacakgeItem in UwpAppDataCollection)
                                         {
@@ -736,7 +736,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         public void InitializeData(bool hasSearchText = false)
         {
-            lock (AppShortListObject)
+            lock (UWPAppDataLock)
             {
                 IsLoadedCompleted = false;
                 UwpAppDataCollection.Clear();
@@ -861,7 +861,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (AppShortListObject)
+                        lock (UWPAppDataLock)
                         {
                             foreach (PackageModel packageItem in packageList)
                             {

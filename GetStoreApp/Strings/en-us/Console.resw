@@ -150,6 +150,9 @@
   <data name="ExitPrompt" xml:space="preserve">
     <value>Are you sure want to quit?</value>
   </data>
+  <data name="FileInfoList" xml:space="preserve">
+    <value>File information list</value>
+  </data>
   <data name="FileName" xml:space="preserve">
     <value>File name</value>
   </data>
@@ -194,9 +197,6 @@
   </data>
   <data name="RequestSuccessfully" xml:space="preserve">
     <value>These links were successfully received from the servers of the Microsoft Store</value>
-  </data>
-  <data name="ResultDataList" xml:space="preserve">
-    <value>File information list</value>
   </data>
   <data name="SelectChannel" xml:space="preserve">
     <value>Please enter the channel you want to select (the default is production):</value>

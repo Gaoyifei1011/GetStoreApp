@@ -150,6 +150,9 @@
   <data name="ExitPrompt" xml:space="preserve">
     <value>您确定要退出吗？</value>
   </data>
+  <data name="FileInfoList" xml:space="preserve">
+    <value>文件信息列表</value>
+  </data>
   <data name="FileName" xml:space="preserve">
     <value>文件名称</value>
   </data>
@@ -194,9 +197,6 @@
   </data>
   <data name="RequestSuccessfully" xml:space="preserve">
     <value>已成功从微软商店的服务器中接收到这些链接</value>
-  </data>
-  <data name="ResultDataList" xml:space="preserve">
-    <value>文件信息列表</value>
   </data>
   <data name="SelectChannel" xml:space="preserve">
     <value>请输入您要选择的通道（默认选择正式版）：</value>

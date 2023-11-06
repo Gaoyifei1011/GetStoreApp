@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:history="using:GetStoreApp.Models.Controls.History"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
@@ -96,7 +95,7 @@
 
         <TextBox
             Grid.Column="2"
-            IsEnabled="{x:Bind IsGettingLinks.Equals(x:False), Mode=OneWay}"
+            IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
             PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
             Text="{x:Bind LinkText, Mode=OneWay}"
             TextChanged="{x:Bind OnTextChanged}" />
@@ -105,9 +104,9 @@
             Grid.Column="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
-            Click="{x:Bind OnGetLinksClicked}"
-            Content="{x:Bind root:ResourceService.GetLocalized('Store/GetLinks')}"
-            IsEnabled="{x:Bind IsGettingLinks.Equals(x:False), Mode=OneWay}"
+            Click="{x:Bind OnQueryLinksClicked}"
+            Content="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}"
+            IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
             Style="{StaticResource AccentButtonStyle}" />
     </Grid>
 
@@ -120,9 +119,9 @@
 
         <InfoBar.Content>
             <ProgressRing
-                IsActive="{x:Bind StatePrRingActValue, Mode=OneWay}"
+                IsActive="{x:Bind IsRingActive, Mode=OneWay}"
                 IsIndeterminate="True"
-                Visibility="{x:Bind StatePrRingActValue, Mode=OneWay}" />
+                Visibility="{x:Bind IsRingActive, Mode=OneWay}" />
         </InfoBar.Content>
     </InfoBar>
 
@@ -164,7 +163,7 @@
                 <TextBlock
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLiteEmpty')}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryEmpty')}"
                     TextAlignment="Center"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
 
@@ -256,7 +255,7 @@
                     </ListView.Header>
 
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="history:HistoryModel">
+                        <DataTemplate x:DataType="store:HistoryModel">
                             <Grid
                                 Height="35"
                                 Padding="6,0,0,0"
@@ -517,17 +516,17 @@
             <StackPanel
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ResultCollection.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
 
                 <TextBlock Text="{x:Bind LocalizeAppType(AppInfo.CategoryID), Mode=OneWay}" />
-                <TextBlock Text="{x:Bind sys:String.Format(ResultCountInfo, ResultCollection.Count), Mode=OneWay}" />
+                <TextBlock Text="{x:Bind sys:String.Format(QueryLinksCountInfo, QueryLinksCollection.Count), Mode=OneWay}" />
             </StackPanel>
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchResultEmpty')}"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(ResultCollection.Count), Mode=OneWay}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksEmpty')}"
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(QueryLinksCollection.Count), Mode=OneWay}" />
 
             <StackPanel
                 x:Name="NormalMode"
@@ -636,9 +635,9 @@
             IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
             ItemClick="{x:Bind OnItemClicked}"
             ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-            ItemsSource="{x:Bind ResultCollection, Mode=OneWay}"
+            ItemsSource="{x:Bind QueryLinksCollection, Mode=OneWay}"
             SelectionMode="None"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ResultCollection.Count), Mode=OneWay}">
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
 
             <ListView.Header>
                 <Grid
@@ -712,7 +711,7 @@
             </ListView.Header>
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="store:ResultModel">
+                <DataTemplate x:DataType="store:QueryLinksModel">
                     <Grid
                         Height="35"
                         Padding="6,0,0,0"

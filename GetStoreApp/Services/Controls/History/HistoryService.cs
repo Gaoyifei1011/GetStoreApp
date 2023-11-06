@@ -1,4 +1,4 @@
-﻿using GetStoreApp.Models.Controls.History;
+﻿using GetStoreApp.Models.Controls.Store;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;

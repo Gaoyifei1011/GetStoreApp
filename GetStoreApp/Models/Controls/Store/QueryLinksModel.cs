@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace GetStoreApp.Models.Controls.History
+namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
-    /// 历史记录数据模型
+    /// 查询链接返回结果的数据模型
     /// </summary>
-    public class HistoryModel : INotifyPropertyChanged
+    public class QueryLinksModel : INotifyPropertyChanged
     {
         /// <summary>
-        /// 在多选模式下，该行历史记录是否被选择的标志
+        /// 在多选模式下，该行信息是否被选择的标志
         /// </summary>
         private bool _isSelected;
 
@@ -24,6 +24,9 @@ namespace GetStoreApp.Models.Controls.History
             }
         }
 
+        /// <summary>
+        /// 是否处于多选模式
+        /// </summary>
         private bool _isSelectMode;
 
         public bool IsSelectMode
@@ -38,34 +41,19 @@ namespace GetStoreApp.Models.Controls.History
         }
 
         /// <summary>
-        /// 历史记录生成时对应的时间戳，本地存储时使用的是格林尼治标准时间（GMT+0）
+        /// 文件名称
         /// </summary>
-        public long CreateTimeStamp { get; set; }
+        public string FileName { get; set; }
 
         /// <summary>
-        /// 历史记录的索引键值
+        /// 文件下载链接
         /// </summary>
-        public string HistoryKey { get; set; }
+        public string FileLink { get; set; }
 
         /// <summary>
-        /// 历史记录的应用名称
+        /// 文件大小
         /// </summary>
-        public string HistoryAppName { get; set; }
-
-        /// <summary>
-        /// 历史记录中包含的类型，数据库存储的原始名称
-        /// </summary>
-        public string HistoryType { get; set; }
-
-        /// <summary>
-        /// 历史记录中包含的通道
-        /// </summary>
-        public string HistoryChannel { get; set; }
-
-        /// <summary>
-        /// 历史记录包含的链接
-        /// </summary>
-        public string HistoryLink { get; set; }
+        public string FileSize { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -60,7 +60,7 @@ namespace GetStoreApp.Views.Pages
                 StoreNavigationArgs = AppNaviagtionArgs.None;
             }
 
-            QueryLinks.GetHistoryLiteDataList();
+            QueryLinks.GetQueryLinksHistoryData();
         }
 
         /// <summary>
@@ -72,10 +72,11 @@ namespace GetStoreApp.Views.Pages
             {
                 if (SelectedIndex is 0)
                 {
-                    QueryLinks.GetLinks();
+                    QueryLinks.QueryLinks();
                 }
                 else if (SelectedIndex is 1)
                 {
+                    SearchStore.SearchStore();
                 }
             }
         }
