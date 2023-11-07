@@ -134,15 +134,15 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private string _stateInfoText = ResourceService.GetLocalized("Store/StatusInfoWelcome");
+        private string _queryLinksInfoText = ResourceService.GetLocalized("Store/Welcome");
 
-        public string StateInfoText
+        public string QueryLinksInfoText
         {
-            get { return _stateInfoText; }
+            get { return _queryLinksInfoText; }
 
             set
             {
-                _stateInfoText = value;
+                _queryLinksInfoText = value;
                 OnPropertyChanged();
             }
         }
@@ -192,7 +192,7 @@ namespace GetStoreApp.UI.Controls.Store
             "9WZDNCRFJBMP",
         };
 
-        private List<StatusBarStateModel> StatusBarStateList = ResourceService.StatusBarStateList;
+        private List<InfoBarModel> QueryLinksInfoList = ResourceService.QueryLinksInfoList;
 
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
@@ -510,7 +510,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 复制应用信息
         /// </summary>
-        private void OnCopyAppInformationClicked(object sender, RoutedEventArgs args)
+        private void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
         {
             StringBuilder appInformationBuilder = new StringBuilder();
             appInformationBuilder.Append(ResourceService.GetLocalized("Store/AppName"));
@@ -840,15 +840,15 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 本地化应用类型字符串
         /// </summary>
-        private string LocalizeAppType(string categoryId)
+        private string LocalizeQueryedAppType(string categoryId)
         {
             if (string.IsNullOrEmpty(categoryId))
             {
-                return string.Format(ResourceService.GetLocalized("Store/AppType"), ResourceService.GetLocalized("Store/NonPackagedApp"));
+                return string.Format(ResourceService.GetLocalized("Store/QueryedAppType"), ResourceService.GetLocalized("Store/NonPackagedApp"));
             }
             else
             {
-                return string.Format(ResourceService.GetLocalized("Store/AppType"), ResourceService.GetLocalized("Store/PackagedApp"));
+                return string.Format(ResourceService.GetLocalized("Store/QueryedAppType"), ResourceService.GetLocalized("Store/PackagedApp"));
             }
         }
 
@@ -859,8 +859,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                // 获取数据库的原始记录数据
-                List<HistoryModel> historyRawList = HistoryService.GetQueryLinksData();
+                List<HistoryModel> queryLinksHistoryList = HistoryService.GetQueryLinksData();
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -868,7 +867,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         HistoryCollection.Clear();
                         Task.Delay(10);
-                        foreach (HistoryModel historyItem in historyRawList)
+                        foreach (HistoryModel historyItem in queryLinksHistoryList)
                         {
                             HistoryCollection.Add(historyItem);
                         }
@@ -940,13 +939,14 @@ namespace GetStoreApp.UI.Controls.Store
 
                         if (queryLinksList.Count > 0)
                         {
-                            // 显示结果
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
+
                             AppInfo.Name = appInformationResult.Item2.Name;
                             AppInfo.Publisher = appInformationResult.Item2.Publisher;
                             AppInfo.Description = appInformationResult.Item2.Description;
                             AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
+                            AppInfo.ProductID = appInformationResult.Item2.ProductID;
 
                             lock (QueryLinksLock)
                             {
@@ -984,9 +984,9 @@ namespace GetStoreApp.UI.Controls.Store
         {
             int state = Convert.ToInt32(severity);
 
-            InfoBarSeverity = StatusBarStateList[state].InfoBarSeverity;
-            StateInfoText = StatusBarStateList[state].StateInfoText;
-            IsRingActive = StatusBarStateList[state].StatePrRingActValue;
+            InfoBarSeverity = QueryLinksInfoList[state].Severity;
+            QueryLinksInfoText = QueryLinksInfoList[state].Message;
+            IsRingActive = QueryLinksInfoList[state].PrRingActValue;
         }
 
         /// <summary>

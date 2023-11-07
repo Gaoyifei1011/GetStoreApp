@@ -42,16 +42,13 @@
 
     <Content Include="$(TargetDir)\WebView2Loader.dll" Link="WebView2Loader.dll" CopyToOutputDirectory="Always" />
 
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx" Generator="PublicResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
     
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2088.41" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="Mile.Xaml" Version="2.1.661" />
 
-    <Reference Include="Microsoft.UI.Windowing" HintPath="$(TargetDir)\Microsoft.UI.winmd" IsWinMDFile="true" />
+    <Reference Include="Microsoft.UI.Windowing" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0.18362\Microsoft.UI.winmd" IsWinMDFile="true" Private="false" />
     <Reference Include="Microsoft.Web.WebView2.Core" HintPath="$(TargetDir)\Microsoft.Web.WebView2.Core.dll" />
     <Reference Include="Microsoft.Web.WebView2.WinForms" HintPath="$(TargetDir)\Microsoft.Web.WebView2.WinForms.dll" />
   </ItemGroup>
@@ -60,6 +57,5 @@
     <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\lib\net45\Microsoft.Web.WebView2.Core.dll" DestinationFolder="$(TargetDir)" />
     <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\lib\net45\Microsoft.Web.WebView2.WinForms.dll" DestinationFolder="$(TargetDir)" />
     <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\runtimes\win-$(Platform)\native\WebView2Loader.dll" DestinationFolder="$(TargetDir)" />
-    <Copy SourceFiles="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0.18362\Microsoft.UI.winmd" DestinationFolder="$(TargetDir)" />
   </Target>
 </Project>

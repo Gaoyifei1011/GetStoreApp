@@ -61,6 +61,7 @@ namespace GetStoreApp.Views.Pages
             }
 
             QueryLinks.GetQueryLinksHistoryData();
+            SearchStore.GetSearchStoreHistoryData();
         }
 
         /// <summary>

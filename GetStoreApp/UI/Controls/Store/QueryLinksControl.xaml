@@ -113,7 +113,7 @@
     <InfoBar
         IsClosable="False"
         IsOpen="True"
-        Message="{x:Bind StateInfoText, Mode=OneWay}"
+        Message="{x:Bind QueryLinksInfoText, Mode=OneWay}"
         Severity="{x:Bind InfoBarSeverity, Mode=OneWay}"
         Style="{StaticResource DefaultInfoBarStyle}">
 
@@ -234,12 +234,12 @@
                                 Grid.Column="3"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Link')}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLink')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Link')}" Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLink')}" Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -344,8 +344,7 @@
                                     Command="{StaticResource FillinCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/FillinToolTip')}" />
+                                    Style="{StaticResource HyperlinkButtonStyle}" />
 
                                 <HyperlinkButton
                                     Grid.Column="5"
@@ -403,14 +402,14 @@
                         Grid.Column="1"
                         Margin="0,0,0,2"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/AppInformation')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryedAppInfo')}" />
 
                     <MenuFlyoutItem
                         Grid.Column="2"
                         Margin="0,0,5,0"
-                        Click="{x:Bind OnCopyAppInformationClicked}"
+                        Click="{x:Bind OnCopyQueryedAppInfoClicked}"
                         Style="{StaticResource AppBarButtonMenuItemStyle}"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyAppInformation')}">
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/CopyQueryedAppInfo')}">
 
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="&#xE8C8;" />
@@ -448,7 +447,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/AppName')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryedAppName')}" />
 
                     <TextBlock
                         Grid.Row="0"
@@ -460,7 +459,7 @@
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/AppPublisher')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryedAppPublisher')}" />
 
                     <TextBlock
                         Grid.Row="1"
@@ -472,7 +471,7 @@
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="0"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/AppDescription')}" />
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryedAppDescription')}" />
 
                     <TextBlock
                         Grid.Row="2"
@@ -509,7 +508,7 @@
             <TextBlock
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchResult')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryResult')}" />
 
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
@@ -518,7 +517,7 @@
                 VerticalAlignment="Center"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
 
-                <TextBlock Text="{x:Bind LocalizeAppType(AppInfo.CategoryID), Mode=OneWay}" />
+                <TextBlock Text="{x:Bind LocalizeQueryedAppType(AppInfo.CategoryID), Mode=OneWay}" />
                 <TextBlock Text="{x:Bind sys:String.Format(QueryLinksCountInfo, QueryLinksCollection.Count), Mode=OneWay}" />
             </StackPanel>
 

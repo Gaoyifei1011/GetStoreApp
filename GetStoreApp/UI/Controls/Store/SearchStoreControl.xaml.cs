@@ -1,5 +1,7 @@
 using GetStoreApp.Helpers.Controls.Store;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
@@ -11,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.System;
@@ -66,7 +69,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private string _stateInfoText = ResourceService.GetLocalized("Store/StatusInfoWelcome");
+        private string _stateInfoText = ResourceService.GetLocalized("Store/Welcome");
 
         public string StateInfoText
         {
@@ -118,6 +121,8 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
+        private List<InfoBarModel> SearchStoreInfoList = ResourceService.SearchStoreInfoList;
+
         private ObservableCollection<HistoryModel> HistoryCollection { get; } = new ObservableCollection<HistoryModel>();
 
         private ObservableCollection<SearchStoreModel> SearchStoreCollection { get; } = new ObservableCollection<SearchStoreModel>();
@@ -143,7 +148,7 @@ namespace GetStoreApp.UI.Controls.Store
                 StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
                 if (storePage is not null)
                 {
-                    SearchText = historyItem.HistoryAppName;
+                    SearchText = historyItem.HistoryContent;
                 }
             }
         }
@@ -219,49 +224,167 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
+        /// 从本地数据存储中加载搜索应用历史记录数据
+        /// </summary>
+        public void GetSearchStoreHistoryData()
+        {
+            Task.Run(() =>
+            {
+                List<HistoryModel> searchStoreHistoryList = HistoryService.GetSearchStoreData();
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    lock (HistoryLock)
+                    {
+                        HistoryCollection.Clear();
+                        Task.Delay(10);
+                        foreach (HistoryModel historyItem in searchStoreHistoryList)
+                        {
+                            HistoryCollection.Add(historyItem);
+                        }
+                    }
+                });
+            });
+        }
+
+        /// <summary>
         /// 搜索应用
         /// </summary>
         public void SearchStore()
         {
             SearchText = string.IsNullOrEmpty(SearchText) ? "Microsoft Corporation" : SearchText;
             IsSeachingStore = true;
-            // 设置InfoBar控件状态
+            SetControlState(InfoBarSeverity.Informational);
 
             Task.Run(async () =>
             {
                 string searchText = SearchText;
                 string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
+                Tuple<bool, List<SearchStoreModel>> searchStoreResult = await SearchStoreHelper.SerachStoreAppsAsync(generatedContent);
 
-                Tuple<bool, List<SearchStoreModel>> searchStoreResult = await SearchStoreHelper.SerachStoreAppsAsync(searchText);
-
+                // 获取成功
                 if (searchStoreResult.Item1)
                 {
-                    IsSeachingStore = false;
+                    UpdateHistory(searchText);
 
-                    if (searchStoreResult.Item2.Count is 0)
+                    // 搜索成功，有数据
+                    if (searchStoreResult.Item2.Count > 0)
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            // 设置InfoBar控件的状态
+                            IsSeachingStore = false;
+                            SetControlState(InfoBarSeverity.Success);
+                            ResultControlVisable = true;
+
+                            lock (SearchStoreLock)
+                            {
+                                SearchStoreCollection.Clear();
+                                foreach (SearchStoreModel searchStoreItem in searchStoreResult.Item2)
+                                {
+                                    SearchStoreCollection.Add(searchStoreItem);
+                                }
+                            }
+                        });
+                    }
+                    // 搜索成功，没有数据
+                    else
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            IsSeachingStore = false;
+                            SetControlState(InfoBarSeverity.Warning);
                             ResultControlVisable = false;
                         });
                     }
-                    else
-                    {
-                        // 设置InfoBar控件的状态
-                        ResultControlVisable = true;
-                    }
                 }
+                // 搜索失败
                 else
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         IsSeachingStore = false;
-                        // 设置InfoBar控件的状态
+                        SetControlState(InfoBarSeverity.Error);
                         ResultControlVisable = false;
                     });
                 }
             });
+        }
+
+        /// <summary>
+        /// 设置控件的状态
+        /// </summary>
+        private void SetControlState(InfoBarSeverity severity)
+        {
+            int state = Convert.ToInt32(severity);
+
+            InfoBarSeverity = SearchStoreInfoList[state].Severity;
+            StateInfoText = SearchStoreInfoList[state].Message;
+            IsRingActive = SearchStoreInfoList[state].PrRingActValue;
+        }
+
+        /// <summary>
+        /// 更新历史记录，包括主页历史记录内容、数据库中的内容和任务栏跳转列表中的内容
+        /// </summary>
+        private void UpdateHistory(string inputContent)
+        {
+            Task.Run(() =>
+            {
+                // 计算时间戳
+                long timeStamp = GenerateTimeStamp();
+                string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
+
+                List<HistoryModel> historyList = HistoryCollection.ToList();
+                int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
+
+                // 不存在直接添加
+                if (index is -1)
+                {
+                    HistoryModel historyItem = new HistoryModel()
+                    {
+                        CreateTimeStamp = timeStamp,
+                        HistoryKey = historyKey,
+                        HistoryContent = inputContent
+                    };
+
+                    historyList.Insert(0, historyItem);
+                    HistoryService.SaveSearchStoreData(historyList);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        lock (HistoryLock)
+                        {
+                            HistoryCollection.Insert(0, historyItem);
+                        }
+                    });
+                }
+                // 存在则修改原来项的时间戳，并调整顺序
+                else
+                {
+                    HistoryModel historyItem = historyList[index];
+                    historyItem.CreateTimeStamp = timeStamp;
+                    historyList.RemoveAt(index);
+                    historyList.Insert(0, historyItem);
+                    HistoryService.SaveSearchStoreData(historyList);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        lock (HistoryLock)
+                        {
+                            HistoryCollection.RemoveAt(index);
+                            HistoryCollection.Insert(0, historyItem);
+                        }
+                    });
+                }
+            });
+        }
+
+        /// <summary>
+        /// 生成时间戳
+        /// </summary>
+        private long GenerateTimeStamp()
+        {
+            TimeSpan TimeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
+            return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
     }
 }

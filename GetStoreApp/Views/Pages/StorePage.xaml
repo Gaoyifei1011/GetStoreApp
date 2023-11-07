@@ -53,7 +53,7 @@
                 </navigation:SegmentedItem.Icon>
             </navigation:SegmentedItem>
 
-            <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}" IsEnabled="False">
+            <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
                 <navigation:SegmentedItem.Icon>
                     <FontIcon Glyph="&#xE721;" />
                 </navigation:SegmentedItem.Icon>

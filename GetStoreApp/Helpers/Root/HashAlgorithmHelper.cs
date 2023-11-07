@@ -12,6 +12,14 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 拼接并生成唯一的历史记录MD5值
         /// </summary>
+        public static string GenerateHistoryKey(string inputContent)
+        {
+            return ComputeMD5String(inputContent);
+        }
+
+        /// <summary>
+        /// 拼接并生成唯一的历史记录MD5值
+        /// </summary>
         public static string GenerateHistoryKey(string typeName, string channelName, string currentLink)
         {
             string Content = string.Format("{0} {1} {2}", typeName, channelName, currentLink);

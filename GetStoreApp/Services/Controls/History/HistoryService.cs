@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Controls.History
 
         private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer queryLinksContainer;
-        private static ApplicationDataContainer searchContainer;
+        private static ApplicationDataContainer searchStoreContainer;
 
         /// <summary>
         /// 初始化历史记录存储服务
@@ -23,7 +23,7 @@ namespace GetStoreApp.Services.Controls.History
         public static void Initialize()
         {
             queryLinksContainer = localSettingsContainer.CreateContainer(QueryLinks, ApplicationDataCreateDisposition.Always);
-            searchContainer = localSettingsContainer.CreateContainer(SearchStore, ApplicationDataCreateDisposition.Always);
+            searchStoreContainer = localSettingsContainer.CreateContainer(SearchStore, ApplicationDataCreateDisposition.Always);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace GetStoreApp.Services.Controls.History
 
             for (int index = 1; index <= 3; index++)
             {
-                string queryLinksKey = queryLinksContainer + index.ToString();
+                string queryLinksKey = QueryLinks + index.ToString();
                 if (queryLinksContainer.Values.TryGetValue(queryLinksKey, out object value))
                 {
                     try
@@ -62,6 +62,38 @@ namespace GetStoreApp.Services.Controls.History
         }
 
         /// <summary>
+        /// 获取搜索应用历史记录数据
+        /// </summary>
+        public static List<HistoryModel> GetSearchStoreData()
+        {
+            List<HistoryModel> searchStoreHistoryList = new List<HistoryModel>();
+
+            for (int index = 1; index <= 3; index++)
+            {
+                string searchStoreKey = SearchStore + index.ToString();
+                if (searchStoreContainer.Values.TryGetValue(searchStoreKey, out object value))
+                {
+                    try
+                    {
+                        string[] searchStoreArray = Convert.ToString(value).Split('|');
+                        searchStoreHistoryList.Add(new HistoryModel()
+                        {
+                            CreateTimeStamp = Convert.ToInt64(searchStoreArray[0]),
+                            HistoryKey = searchStoreArray[1],
+                            HistoryContent = searchStoreArray[2]
+                        });
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            return searchStoreHistoryList;
+        }
+
+        /// <summary>
         /// 存储查询链接历史记录数据
         /// </summary>
         public static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
@@ -78,8 +110,24 @@ namespace GetStoreApp.Services.Controls.History
                     queryLinksHistoryList[index - 1].HistoryLink
                     );
 
-                string queryLinksKey = queryLinksContainer + index.ToString();
+                string queryLinksKey = QueryLinks + index.ToString();
                 queryLinksContainer.Values[queryLinksKey] = value;
+            }
+        }
+
+        public static void SaveSearchStoreData(List<HistoryModel> searchStoreHistoryList)
+        {
+            int endIndex = searchStoreHistoryList.Count > 3 ? 3 : searchStoreHistoryList.Count;
+            for (int index = 1; index <= endIndex; index++)
+            {
+                string value = string.Format("{0}|{1}|{2}",
+                    searchStoreHistoryList[index - 1].CreateTimeStamp,
+                    searchStoreHistoryList[index - 1].HistoryKey,
+                    searchStoreHistoryList[index - 1].HistoryContent
+                    );
+
+                string searchStoreKey = SearchStore + index.ToString();
+                searchStoreContainer.Values[searchStoreKey] = value;
             }
         }
 
@@ -93,7 +141,7 @@ namespace GetStoreApp.Services.Controls.History
                 for (int index = 1; index <= 3; index++)
                 {
                     queryLinksContainer.Values.Remove(QueryLinks + index.ToString());
-                    searchContainer.Values.Remove(SearchStore + index.ToString());
+                    searchStoreContainer.Values.Remove(SearchStore + index.ToString());
                 }
                 return true;
             }

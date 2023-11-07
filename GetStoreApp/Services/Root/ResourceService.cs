@@ -33,7 +33,9 @@ namespace GetStoreApp.Services.Root
 
         public static List<ChannelModel> ChannelList { get; } = new List<ChannelModel>();
 
-        public static List<StatusBarStateModel> StatusBarStateList { get; } = new List<StatusBarStateModel>();
+        public static List<InfoBarModel> QueryLinksInfoList { get; } = new List<InfoBarModel>();
+
+        public static List<InfoBarModel> SearchStoreInfoList { get; } = new List<InfoBarModel>();
 
         public static List<DictionaryEntry> BackdropList { get; } = new List<DictionaryEntry>();
 
@@ -72,7 +74,8 @@ namespace GetStoreApp.Services.Root
         {
             InitializeTypeList();
             InitializeChannelList();
-            InitializeStatusBarStateList();
+            InitializeQueryLinksInfoList();
+            InitializeSearchStoreInfoList();
             InitializeBackdropList();
             InitializeDownloadModeList();
             InitializeWebKernelList();
@@ -137,37 +140,72 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
-        /// 初始化状态栏信息列表
+        /// 初始化查询链接信息状态栏信息列表
         /// </summary>
-        private static void InitializeStatusBarStateList()
+        private static void InitializeQueryLinksInfoList()
         {
-            StatusBarStateList.Add(new StatusBarStateModel
+            QueryLinksInfoList.Add(new InfoBarModel
             {
-                InfoBarSeverity = InfoBarSeverity.Informational,
-                StateInfoText = GetLocalized("Store/StatusInfoGetting"),
-                StatePrRingActValue = true,
-                StatePrRingVisValue = true
+                Severity = InfoBarSeverity.Informational,
+                Message = GetLocalized("Store/QueryLinksInfoGetting"),
+                PrRingActValue = true,
+                PrRingVisValue = true
             });
-            StatusBarStateList.Add(new StatusBarStateModel
+            QueryLinksInfoList.Add(new InfoBarModel
             {
-                InfoBarSeverity = InfoBarSeverity.Success,
-                StateInfoText = GetLocalized("Store/StatusInfoSuccess"),
-                StatePrRingActValue = false,
-                StatePrRingVisValue = false
+                Severity = InfoBarSeverity.Success,
+                Message = GetLocalized("Store/QueryLinksInfoSuccess"),
+                PrRingActValue = false,
+                PrRingVisValue = false
             });
-            StatusBarStateList.Add(new StatusBarStateModel
+            QueryLinksInfoList.Add(new InfoBarModel
             {
-                InfoBarSeverity = InfoBarSeverity.Warning,
-                StateInfoText = GetLocalized("Store/StatusInfoWarning"),
-                StatePrRingActValue = false,
-                StatePrRingVisValue = false
+                Severity = InfoBarSeverity.Warning,
+                Message = GetLocalized("Store/QueryLinksInfoWarning"),
+                PrRingActValue = false,
+                PrRingVisValue = false
             });
-            StatusBarStateList.Add(new StatusBarStateModel
+            QueryLinksInfoList.Add(new InfoBarModel
             {
-                InfoBarSeverity = InfoBarSeverity.Error,
-                StateInfoText = GetLocalized("Store/StatusInfoError"),
-                StatePrRingActValue = false,
-                StatePrRingVisValue = false
+                Severity = InfoBarSeverity.Error,
+                Message = GetLocalized("Store/QueryLinksInfoError"),
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+        }
+
+        /// <summary>
+        /// 初始化查询链接信息状态栏信息列表
+        /// </summary>
+        private static void InitializeSearchStoreInfoList()
+        {
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Informational,
+                Message = GetLocalized("Store/SearchStoreInfoGetting"),
+                PrRingActValue = true,
+                PrRingVisValue = true
+            });
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Success,
+                Message = GetLocalized("Store/SearchStoreInfoSuccess"),
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Warning,
+                Message = GetLocalized("Store/SearchStoreInfoWarning"),
+                PrRingActValue = false,
+                PrRingVisValue = false
+            });
+            SearchStoreInfoList.Add(new InfoBarModel
+            {
+                Severity = InfoBarSeverity.Error,
+                Message = GetLocalized("Store/SearchStoreInfoError"),
+                PrRingActValue = false,
+                PrRingVisValue = false
             });
         }
 

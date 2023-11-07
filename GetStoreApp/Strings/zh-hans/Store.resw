@@ -117,38 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDescription" xml:space="preserve">
-    <value>应用描述：</value>
-  </data>
-  <data name="AppInformation" xml:space="preserve">
-    <value>应用信息</value>
-  </data>
-  <data name="AppName" xml:space="preserve">
-    <value>应用名称：</value>
-  </data>
-  <data name="AppPublisher" xml:space="preserve">
-    <value>发布者：</value>
-  </data>
-  <data name="AppType" xml:space="preserve">
-    <value>应用类型：{0}</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
   <data name="CancelToolTip" xml:space="preserve">
     <value>退出多选模式</value>
   </data>
-  <data name="ClickToAccess" xml:space="preserve">
-    <value>单击以访问</value>
-  </data>
   <data name="ClickToDownload" xml:space="preserve">
     <value>单击以下载</value>
   </data>
+  <data name="ClickToOpen" xml:space="preserve">
+    <value>单击以打开</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
-  </data>
-  <data name="CopyAppInformation" xml:space="preserve">
-    <value>复制应用信息</value>
   </data>
   <data name="CopyInformation" xml:space="preserve">
     <value>复制信息</value>
@@ -168,6 +150,9 @@
   <data name="CopyOptionsToolTip" xml:space="preserve">
     <value>单击显示复制选项</value>
   </data>
+  <data name="CopyQueryedAppInfo" xml:space="preserve">
+    <value>复制应用信息</value>
+  </data>
   <data name="CopySelectedContent" xml:space="preserve">
     <value>复制选中行内容</value>
   </data>
@@ -183,12 +168,6 @@
   <data name="CopyToolTip" xml:space="preserve">
     <value>复制选中的内容到剪贴板</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>描述</value>
-  </data>
-  <data name="Download" xml:space="preserve">
-    <value>下载</value>
-  </data>
   <data name="DownloadSelected" xml:space="preserve">
     <value>下载选中的项目</value>
   </data>
@@ -200,12 +179,6 @@
   </data>
   <data name="FillIn" xml:space="preserve">
     <value>填入</value>
-  </data>
-  <data name="FillinToolTip" xml:space="preserve">
-    <value>点击"填入"按钮后会在上面的文本输入框中填入链接，点击“获取链接”即可获取具体内容</value>
-  </data>
-  <data name="GetLinks" xml:space="preserve">
-    <value>获取链接</value>
   </data>
   <data name="HistoryAppName" xml:space="preserve">
     <value>应用名称</value>
@@ -219,14 +192,14 @@
   <data name="HistoryEmpty" xml:space="preserve">
     <value>历史记录空空如也</value>
   </data>
+  <data name="HistoryLink" xml:space="preserve">
+    <value>链接</value>
+  </data>
   <data name="HistoryType" xml:space="preserve">
     <value>类型</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>了解更多</value>
-  </data>
-  <data name="Link" xml:space="preserve">
-    <value>链接</value>
   </data>
   <data name="NonPackagedApp" xml:space="preserve">
     <value>传统应用</value>
@@ -246,6 +219,21 @@
   <data name="PackagedApp" xml:space="preserve">
     <value>打包应用</value>
   </data>
+  <data name="QueryedAppDescription" xml:space="preserve">
+    <value>应用描述：</value>
+  </data>
+  <data name="QueryedAppInfo" xml:space="preserve">
+    <value>应用信息</value>
+  </data>
+  <data name="QueryedAppName" xml:space="preserve">
+    <value>应用名称：</value>
+  </data>
+  <data name="QueryedAppPublisher" xml:space="preserve">
+    <value>发布者：</value>
+  </data>
+  <data name="QueryedAppType" xml:space="preserve">
+    <value>应用类型：{0}</value>
+  </data>
   <data name="QueryLinks" xml:space="preserve">
     <value>查询链接</value>
   </data>
@@ -255,8 +243,23 @@
   <data name="QueryLinksEmpty" xml:space="preserve">
     <value>没有搜索到任何结果，请检查您输入的链接后重试</value>
   </data>
+  <data name="QueryLinksInfoError" xml:space="preserve">
+    <value>从微软商店的服务器中查询链接时发生了错误</value>
+  </data>
+  <data name="QueryLinksInfoGetting" xml:space="preserve">
+    <value>正在从微软商店的服务器中进行查询，请稍候......</value>
+  </data>
+  <data name="QueryLinksInfoSuccess" xml:space="preserve">
+    <value>已成功从微软商店的服务器中查询到这些链接</value>
+  </data>
+  <data name="QueryLinksInfoWarning" xml:space="preserve">
+    <value>服务器返回的数据为空，请检查您输入的链接</value>
+  </data>
   <data name="QueryLinksToolTip" xml:space="preserve">
-    <value>查询指定应用及其依赖的下载链接</value>
+    <value>查询当前应用及其依赖的下载链接</value>
+  </data>
+  <data name="QueryResult" xml:space="preserve">
+    <value>查询结果</value>
   </data>
   <data name="Recent" xml:space="preserve">
     <value>最近使用的项目</value>
@@ -282,6 +285,18 @@
   <data name="SearchStoreEmpty" xml:space="preserve">
     <value>没有搜索到任何结果，请检查您输入的内容后重试</value>
   </data>
+  <data name="SearchStoreInfoError" xml:space="preserve">
+    <value>从微软商店的服务器中搜索应用时发生了错误</value>
+  </data>
+  <data name="SearchStoreInfoGetting" xml:space="preserve">
+    <value>正在从微软商店的服务器中进行搜索，请稍候......</value>
+  </data>
+  <data name="SearchStoreInfoSuccess" xml:space="preserve">
+    <value>已成功从微软商店的服务器中搜索到这些应用</value>
+  </data>
+  <data name="SearchStoreInfoWarning" xml:space="preserve">
+    <value>服务器返回的数据为空，请检查您输入的内容</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>选择</value>
   </data>
@@ -296,21 +311,6 @@
   </data>
   <data name="SelectToolTip" xml:space="preserve">
     <value>进入多选模式</value>
-  </data>
-  <data name="StatusInfoError" xml:space="preserve">
-    <value>从微软商店的服务器中获取数据发生了错误，点击右上角的”使用说明“按钮或跳转到”关于“页面寻找相应的解决方案</value>
-  </data>
-  <data name="StatusInfoGetting" xml:space="preserve">
-    <value>正在从微软商店的服务器中进行查询，请耐心等待......</value>
-  </data>
-  <data name="StatusInfoSuccess" xml:space="preserve">
-    <value>已成功从微软商店的服务器中接收到这些链接</value>
-  </data>
-  <data name="StatusInfoWarning" xml:space="preserve">
-    <value>服务器返回空数据。您可能没有输入正确的链接，或者服务不支持此产品的生成</value>
-  </data>
-  <data name="StatusInfoWelcome" xml:space="preserve">
-    <value>欢迎使用获取商店应用</value>
   </data>
   <data name="StoreAppLink" xml:space="preserve">
     <value>应用链接</value>
@@ -332,5 +332,8 @@
   </data>
   <data name="UseInstructionToolTip" xml:space="preserve">
     <value>点击了解应用的具体使用方法</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>欢迎使用获取商店应用</value>
   </data>
 </root>

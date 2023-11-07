@@ -26,7 +26,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static string AboutReferenceToolTipFormat(object content)
         {
-            return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("About/ReferenceToolTip"));
+            return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("About/ReferenceToolTip"));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static string AboutThanksToolTipFormat(object content)
         {
-            return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("About/ThanksToolTip"));
+            return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("About/ThanksToolTip"));
         }
 
         /// <summary>
@@ -45,6 +45,9 @@ namespace GetStoreApp.Helpers.Converters
             return ResourceService.ChannelList.Find(item => item.InternalName.Equals(content)).DisplayName;
         }
 
+        /// <summary>
+        /// 复选框状态文字提示
+        /// </summary>
         public static string CheckBoxToolTipFormat(bool isSelected, string content)
         {
             if (isSelected)
@@ -95,16 +98,21 @@ namespace GetStoreApp.Helpers.Converters
         {
             if (DownloadOptionsService.DownloadMode.Value.Equals(DownloadOptionsService.DownloadModeList[0].Value))
             {
-                return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("Store/ClickToDownload"));
+                return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToDownload"));
             }
             else if (DownloadOptionsService.DownloadMode.Value.Equals(DownloadOptionsService.DownloadModeList[1].Value))
             {
-                return string.Format("{0}\n{1}", content, ResourceService.GetLocalized("Store/ClickToAccess"));
+                return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToOpen"));
             }
             else
             {
                 return string.Empty;
             }
+        }
+
+        public static string AppLinkToolTipFormat(string content)
+        {
+            return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToOpen"));
         }
 
         /// <summary>

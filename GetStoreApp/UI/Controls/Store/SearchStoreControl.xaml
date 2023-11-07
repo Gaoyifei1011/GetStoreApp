@@ -177,8 +177,7 @@
                                     Command="{StaticResource FillinCommand}"
                                     CommandParameter="{Binding}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/FillinToolTip')}" />
+                                    Style="{StaticResource HyperlinkButtonStyle}" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -253,7 +252,7 @@
                         <ColumnDefinition Width="1.5*" />
                         <ColumnDefinition Width="1.5*" />
                         <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="80" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
@@ -321,7 +320,7 @@
                             <ColumnDefinition Width="1.5*" />
                             <ColumnDefinition Width="1.5*" />
                             <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="80" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
@@ -360,7 +359,7 @@
 
                         <HyperlinkButton
                             Grid.Column="2"
-                            Margin="10,0,0,0"
+                            Margin="10,0"
                             VerticalAlignment="Center"
                             Command="{StaticResource OpenLinkCommand}"
                             CommandParameter="{x:Bind StoreAppLink}"
@@ -372,7 +371,7 @@
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.FileNameToolTipFormat(StoreAppLink)}" />
+                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.AppLinkToolTipFormat(StoreAppLink)}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </HyperlinkButton.Content>

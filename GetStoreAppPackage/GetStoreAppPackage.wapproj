@@ -81,15 +81,14 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-  </ItemGroup>
-  <ItemGroup>
+
     <None Include="GetStoreAppPackage_SignKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
+
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
+  <!--将生成的文件放到应用包的根目录-->
   <Target Name="GetStoreAppStompSourceProjectForWapProject" BeforeTargets="_ConvertItems">
     <ItemGroup>
       <!--Stomp all "SourceProject" values for all incoming dependencies to flatten the package.-->
@@ -99,6 +98,17 @@
         <!--Blank the SourceProject here to vend all files into the root of the package.-->
         <SourceProject />
       </_FilteredNonWapProjProjectOutput>
+    </ItemGroup>
+  </Target>
+  <!--
+    Workaround for bug https://devdiv.visualstudio.com/DevDiv/_workitems/edit/1149545
+    
+    The appx packaging tasks default to including the .xr.xml file (which is for using reflection in .NET Native) when consuming nuget packages. Since
+    we aren't using .NET Native, we don't need these anymore.
+  -->
+  <Target Name="_RemoveXrXmlFromPayload" AfterTargets="_CalculateInputsForGenerateAppxPackageRecipe" Condition="'$(MSBuildProjectExtension)' == '.wapproj'">
+    <ItemGroup>
+      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="$([System.String]::new('%(Identity)').EndsWith('.xr.xml'))"/>
     </ItemGroup>
   </Target>
 </Project>

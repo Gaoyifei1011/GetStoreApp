@@ -3,28 +3,28 @@
 namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
-    /// 已下载完成文件信息数据模型
+    /// 应用信息状态栏数据模型
     /// </summary>
-    public class StatusBarStateModel
+    public class InfoBarModel
     {
         /// <summary>
         /// 信息状态栏严重程度值
         /// </summary>
-        public InfoBarSeverity InfoBarSeverity { get; set; }
+        public InfoBarSeverity Severity { get; set; }
 
         /// <summary>
         /// 信息状态栏文字内容
         /// </summary>
-        public string StateInfoText { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// 信息状态栏进度环显示值
         /// </summary>
-        public bool StatePrRingVisValue { get; set; }
+        public bool PrRingVisValue { get; set; }
 
         /// <summary>
         /// 信息状态栏进度环激活值
         /// </summary>
-        public bool StatePrRingActValue { get; set; }
+        public bool PrRingActValue { get; set; }
     }
 }

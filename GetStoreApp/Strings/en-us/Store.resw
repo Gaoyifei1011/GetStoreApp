@@ -117,38 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDescription" xml:space="preserve">
-    <value>App description:</value>
-  </data>
-  <data name="AppInformation" xml:space="preserve">
-    <value>App information</value>
-  </data>
-  <data name="AppName" xml:space="preserve">
-    <value>App name:</value>
-  </data>
-  <data name="AppPublisher" xml:space="preserve">
-    <value>Publisehr:</value>
-  </data>
-  <data name="AppType" xml:space="preserve">
-    <value>AppType: {0}</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
   </data>
-  <data name="ClickToAccess" xml:space="preserve">
-    <value>Click to access</value>
-  </data>
   <data name="ClickToDownload" xml:space="preserve">
     <value>Click to download</value>
   </data>
+  <data name="ClickToOpen" xml:space="preserve">
+    <value>Click to open</value>
+  </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
-  </data>
-  <data name="CopyAppInformation" xml:space="preserve">
-    <value>Copy app info</value>
   </data>
   <data name="CopyInformation" xml:space="preserve">
     <value>Copy info</value>
@@ -168,6 +150,9 @@
   <data name="CopyOptionsToolTip" xml:space="preserve">
     <value>Click Show Replication Options</value>
   </data>
+  <data name="CopyQueryedAppInfo" xml:space="preserve">
+    <value>Copy app info</value>
+  </data>
   <data name="CopySelectedContent" xml:space="preserve">
     <value>Copy the selected row content</value>
   </data>
@@ -183,12 +168,6 @@
   <data name="CopyToolTip" xml:space="preserve">
     <value>Copy the selected content to the clipboard</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description:</value>
-  </data>
-  <data name="Download" xml:space="preserve">
-    <value>Download</value>
-  </data>
   <data name="DownloadSelected" xml:space="preserve">
     <value>Download the selected item</value>
   </data>
@@ -200,12 +179,6 @@
   </data>
   <data name="FillIn" xml:space="preserve">
     <value>Fill in</value>
-  </data>
-  <data name="FillinToolTip" xml:space="preserve">
-    <value>Clicking the Fill button will fill in the link in the text input box above, and click "Get Links" to get the specific content</value>
-  </data>
-  <data name="GetLinks" xml:space="preserve">
-    <value>Get Links</value>
   </data>
   <data name="HistoryAppName" xml:space="preserve">
     <value>App name</value>
@@ -219,14 +192,14 @@
   <data name="HistoryEmpty" xml:space="preserve">
     <value>The history is empty</value>
   </data>
+  <data name="HistoryLink" xml:space="preserve">
+    <value>Link</value>
+  </data>
   <data name="HistoryType" xml:space="preserve">
     <value>Type</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>Learn more</value>
-  </data>
-  <data name="Link" xml:space="preserve">
-    <value>Link</value>
   </data>
   <data name="NonPackagedApp" xml:space="preserve">
     <value>Classic app</value>
@@ -246,6 +219,21 @@
   <data name="PackagedApp" xml:space="preserve">
     <value>Packaged app</value>
   </data>
+  <data name="QueryedAppDescription" xml:space="preserve">
+    <value>App description:</value>
+  </data>
+  <data name="QueryedAppInfo" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="QueryedAppName" xml:space="preserve">
+    <value>App name:</value>
+  </data>
+  <data name="QueryedAppPublisher" xml:space="preserve">
+    <value>Publisehr:</value>
+  </data>
+  <data name="QueryedAppType" xml:space="preserve">
+    <value>AppType: {0}</value>
+  </data>
   <data name="QueryLinks" xml:space="preserve">
     <value>Query links</value>
   </data>
@@ -255,8 +243,23 @@
   <data name="QueryLinksEmpty" xml:space="preserve">
     <value>No results have been searched, please check the link you entered and try again</value>
   </data>
+  <data name="QueryLinksInfoError" xml:space="preserve">
+    <value>An error occurred while querying the link from the Microsoft Store's servers</value>
+  </data>
+  <data name="QueryLinksInfoGetting" xml:space="preserve">
+    <value>Querying from Microsoft Store's servers, please wait...</value>
+  </data>
+  <data name="QueryLinksInfoSuccess" xml:space="preserve">
+    <value>These links have been successfully queried from the Microsoft Store's servers</value>
+  </data>
+  <data name="QueryLinksInfoWarning" xml:space="preserve">
+    <value>The data returned by the server is empty, please check the link you entered</value>
+  </data>
   <data name="QueryLinksToolTip" xml:space="preserve">
-    <value>Query the download links for a specified app and its dependencies</value>
+    <value>Query the download links for the current app and its dependencies</value>
+  </data>
+  <data name="QueryResult" xml:space="preserve">
+    <value>Query result</value>
   </data>
   <data name="Recent" xml:space="preserve">
     <value>Recently used items</value>
@@ -282,6 +285,18 @@
   <data name="SearchStoreEmpty" xml:space="preserve">
     <value>No results have been searched, please check the content you entered and try again</value>
   </data>
+  <data name="SearchStoreInfoError" xml:space="preserve">
+    <value>An error occurred while searching apps from the Microsoft Store's servers</value>
+  </data>
+  <data name="SearchStoreInfoGetting" xml:space="preserve">
+    <value>Searching from the Microsoft Store's servers, please wait...</value>
+  </data>
+  <data name="SearchStoreInfoSuccess" xml:space="preserve">
+    <value>These apps have been successfully searched from the Microsoft Store servers</value>
+  </data>
+  <data name="SearchStoreInfoWarning" xml:space="preserve">
+    <value>The data returned by the server is empty, please check what you entered</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
   </data>
@@ -296,21 +311,6 @@
   </data>
   <data name="SelectToolTip" xml:space="preserve">
     <value>Enter multi-select mode</value>
-  </data>
-  <data name="StatusInfoError" xml:space="preserve">
-    <value>An error occurred to get data from the servers in the Microsoft Store, click on the "Instructions for Use" button in the upper right corner or jump to the “About page” to find the appropriate solution</value>
-  </data>
-  <data name="StatusInfoGetting" xml:space="preserve">
-    <value>Queries are being made from the servers in the Microsoft Store, please be patient...</value>
-  </data>
-  <data name="StatusInfoSuccess" xml:space="preserve">
-    <value>The links were successfully received from the Microsoft Store server</value>
-  </data>
-  <data name="StatusInfoWarning" xml:space="preserve">
-    <value>The server returns empty data. You may not have entered the correct link, or the service may not support the generation of this product</value>
-  </data>
-  <data name="StatusInfoWelcome" xml:space="preserve">
-    <value>Welcome to use GetStoreApp</value>
   </data>
   <data name="StoreAppLink" xml:space="preserve">
     <value>App link</value>
@@ -332,5 +332,8 @@
   </data>
   <data name="UseInstructionToolTip" xml:space="preserve">
     <value>Click to learn how to use the app</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome to use GetStoreApp</value>
   </data>
 </root>
