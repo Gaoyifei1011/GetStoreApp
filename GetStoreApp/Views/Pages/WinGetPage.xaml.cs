@@ -1,4 +1,5 @@
 using GetStoreApp.Models.Controls.WinGet;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Views.CustomControls.Navigation;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -22,6 +23,8 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
         public readonly object InstallingAppsObject = new object();
+
+        private bool isInitialized;
 
         private int _selectedIndex;
 
@@ -59,6 +62,14 @@ namespace GetStoreApp.Views.Pages
             {
                 lock (InstallingAppsObject)
                 {
+                    foreach (InstallingAppsModel installingAppsItem in InstallingAppsCollection)
+                    {
+                        if (installingAppsItem.AppID == appId)
+                        {
+                            installingAppsItem.IsCanceling = true;
+                        }
+                    }
+
                     if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
                     {
                         if (!tokenSource.IsCancellationRequested)
@@ -91,12 +102,19 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 初始化 WinGet 程序包
+        /// 初始化 WinGet 程序包页面
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            SearchApps.InitializeWingetInstance(this);
-            UpgradableApps.InitializeWingetInstance(this);
+            if (IsWinGetExisted(WinGetService.IsOfficialVersionExisted, WinGetService.IsDevVersionExisted, false))
+            {
+                if (!isInitialized)
+                {
+                    SearchApps.InitializeWingetInstance(this);
+                    UpgradableApps.InitializeWingetInstance(this);
+                    isInitialized = true;
+                }
+            }
         }
 
         /// <summary>
@@ -177,6 +195,14 @@ namespace GetStoreApp.Views.Pages
             {
                 return result;
             }
+        }
+
+        /// <summary>
+        /// 确定当前选择的索引是否为目标控件
+        /// </summary>
+        private Visibility IsCurrentControl(int selectedIndex, int index)
+        {
+            return selectedIndex.Equals(index) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

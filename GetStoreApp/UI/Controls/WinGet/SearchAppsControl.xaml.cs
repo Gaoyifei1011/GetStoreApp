@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using Windows.System;
 
 namespace GetStoreApp.UI.Controls.WinGet
 {
@@ -496,6 +497,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     isInitialized = true;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 打开临时下载目录
+        /// </summary>
+        private async void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
+        {
+            string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
+            if (Directory.Exists(wingetTempPath))
+            {
+                await Launcher.LaunchFolderPathAsync(wingetTempPath);
+            }
+            else
+            {
+                await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
             }
         }
 

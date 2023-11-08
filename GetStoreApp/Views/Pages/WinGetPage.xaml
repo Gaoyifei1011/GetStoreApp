@@ -10,6 +10,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     x:Name="WinGetRoot"
+    Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -25,13 +26,14 @@
         </Grid.RowDefinitions>
 
         <Grid
+            x:Name="WinGetHeader"
             Grid.Row="0"
             Margin="20,0,30,3"
+            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}"
             ColumnSpacing="5">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
@@ -107,7 +109,7 @@
                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                             BorderThickness="1"
                                             CornerRadius="{StaticResource ControlCornerRadius}"
-                                            ToolTipService.ToolTip="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize), Mode=OneWay}">
+                                            ToolTipService.ToolTip="{x:Bind InstallToolTip(AppName, InstallProgressState, DownloadProgress, DownloadedFileSize, TotalFileSize, IsCanceling), Mode=OneWay}">
 
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
@@ -129,10 +131,12 @@
                                                     <TextBlock
                                                         Grid.Column="0"
                                                         MinWidth="50"
+                                                        Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
                                                         FontSize="16"
                                                         Text="{x:Bind AppName}"
-                                                        TextAlignment="Left" />
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis" />
 
                                                     <TextBlock
                                                         Grid.Column="1"
@@ -156,6 +160,7 @@
                                                 VerticalAlignment="Center"
                                                 Command="{StaticResource CancelInstallCommand}"
                                                 CommandParameter="{x:Bind AppID}"
+                                                IsEnabled="{x:Bind IsCanceling.Equals(x:False), Mode=OneWay}"
                                                 Style="{StaticResource ButtonNormalMenuItemStyle}"
                                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstall')}">
 
@@ -173,33 +178,22 @@
             </Button>
         </Grid>
 
-        <Pivot
-            x:Name="WinGetPivot"
+        <Grid
+            x:Name="WinGetContent"
             Grid.Row="1"
-            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}"
-            Loaded="{x:Bind OnLoaded}"
-            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-            Style="{StaticResource PivotStyle}">
+            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}">
 
-            <PivotItem Margin="0">
-                <wc:SearchAppsControl x:Name="SearchApps" />
-            </PivotItem>
-
-            <PivotItem Margin="0">
-                <wc:InstalledAppsControl />
-            </PivotItem>
-
-            <PivotItem Margin="0">
-                <wc:UpgradableAppsControl x:Name="UpgradableApps" />
-            </PivotItem>
-        </Pivot>
+            <wc:SearchAppsControl x:Name="SearchApps" Visibility="{x:Bind IsCurrentControl(SelectedIndex, 0), Mode=OneWay}" />
+            <wc:InstalledAppsControl x:Name="InstalledApps" Visibility="{x:Bind IsCurrentControl(SelectedIndex, 1), Mode=OneWay}" />
+            <wc:UpgradableAppsControl x:Name="UpgradableApps" Visibility="{x:Bind IsCurrentControl(SelectedIndex, 2), Mode=OneWay}" />
+        </Grid>
 
         <!--  WinGet 程序包不存在提示内容  -->
         <Grid
-            x:Name="InitializeFailed"
+            x:Name="WinGetLoadFailed"
             Grid.Row="0"
             Grid.RowSpan="2"
-            Padding="20,0"
+            Padding="30,0"
             HorizontalAlignment="Center"
             x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:True)}">
 

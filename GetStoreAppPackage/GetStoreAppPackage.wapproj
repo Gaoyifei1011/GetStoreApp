@@ -81,9 +81,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-
     <None Include="GetStoreAppPackage_SignKey.pfx" />
-
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
   </ItemGroup>
@@ -108,7 +106,7 @@
   -->
   <Target Name="_RemoveXrXmlFromPayload" AfterTargets="_CalculateInputsForGenerateAppxPackageRecipe" Condition="'$(MSBuildProjectExtension)' == '.wapproj'">
     <ItemGroup>
-      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="$([System.String]::new('%(Identity)').EndsWith('.xr.xml'))"/>
+      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="$([System.String]::new('%(Identity)').EndsWith('.xr.xml'))" />
     </ItemGroup>
   </Target>
 </Project>

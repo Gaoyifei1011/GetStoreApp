@@ -73,14 +73,16 @@
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
 
-            <Pivot SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}" Style="{StaticResource PivotStyle}">
-                <PivotItem Margin="0">
-                    <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
-                </PivotItem>
-                <PivotItem Margin="0">
-                    <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
-                </PivotItem>
-            </Pivot>
+            <Grid Padding="30,0">
+                <sc:QueryLinksControl
+                    x:Name="QueryLinks"
+                    x:FieldModifier="public"
+                    Visibility="{x:Bind IsCurrentControl(SelectedIndex, 0), Mode=OneWay}" />
+                <sc:SearchStoreControl
+                    x:Name="SearchStore"
+                    x:FieldModifier="public"
+                    Visibility="{x:Bind IsCurrentControl(SelectedIndex, 1), Mode=OneWay}" />
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Page>

@@ -195,9 +195,6 @@
   <data name="FullName" xml:space="preserve">
     <value>Full name</value>
   </data>
-  <data name="GetPackage" xml:space="preserve">
-    <value>Get app package</value>
-  </data>
   <data name="InstallDateToolTip" xml:space="preserve">
     <value>Installed date: {0}</value>
   </data>

@@ -93,22 +93,17 @@
             </Button>
         </Grid>
 
-        <Pivot
+        <dc:DownloadingControl
+            x:Name="Downloading"
             Grid.Row="1"
-            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-            Style="{StaticResource PivotStyle}">
-
-            <PivotItem Margin="0">
-                <dc:DownloadingControl x:Name="Downloading" />
-            </PivotItem>
-
-            <PivotItem Margin="0">
-                <dc:UnfinishedControl x:Name="Unfinished" />
-            </PivotItem>
-
-            <PivotItem Margin="0">
-                <dc:CompletedControl x:Name="Completed" />
-            </PivotItem>
-        </Pivot>
+            Visibility="{x:Bind IsCurrentControl(SelectedIndex, 0), Mode=OneWay}" />
+        <dc:UnfinishedControl
+            x:Name="Unfinished"
+            Grid.Row="1"
+            Visibility="{x:Bind IsCurrentControl(SelectedIndex, 1), Mode=OneWay}" />
+        <dc:CompletedControl
+            x:Name="Completed"
+            Grid.Row="1"
+            Visibility="{x:Bind IsCurrentControl(SelectedIndex, 2), Mode=OneWay}" />
     </Grid>
 </Page>

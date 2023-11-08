@@ -64,7 +64,19 @@
             Margin="4,0,10,0"
             VerticalAlignment="Center"
             Background="Transparent"
-            Orientation="Horizontal">
+            Orientation="Horizontal"
+            Spacing="2">
+
+            <MenuFlyoutItem
+                Click="{x:Bind OnOpenTempFolderClicked}"
+                Style="{StaticResource AppBarButtonMenuItemStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
+
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Glyph="&#xE8B7;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
 
             <MenuFlyoutItem
                 Click="{x:Bind OnRefreshClicked}"

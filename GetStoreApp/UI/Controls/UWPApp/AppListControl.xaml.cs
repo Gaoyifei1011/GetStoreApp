@@ -140,19 +140,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
-        /// 获取应用安装包
-        /// </summary>
-        private void OnGetPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
-            {
-                NavigationService.NavigateTo(typeof(StorePage), new object[] { AppNaviagtionArgs.Store, "PackageFamilyName", "Retail", package.Id.FamilyName });
-            }
-        }
-
-        /// <summary>
         /// 打开应用
         /// </summary>
         private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)

@@ -75,7 +75,7 @@
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE8b7;" />
+                        <FontIcon Glyph="&#xE8B7;" />
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
 

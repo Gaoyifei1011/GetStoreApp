@@ -71,17 +71,14 @@
                 Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppListPageCheck(BreadCollection.Count), Mode=OneWay}" />
         </Grid>
 
-        <Pivot
-            x:Name="UWPAppPivot"
+        <uc:AppListControl
+            x:Name="AppList"
             Grid.Row="1"
-            SelectedIndex="{x:Bind GetSelectedIndex(BreadCollection.Count), Mode=OneWay}"
-            Style="{StaticResource PivotStyle}">
-            <PivotItem Margin="0">
-                <uc:AppListControl x:Name="AppList" />
-            </PivotItem>
-            <PivotItem Margin="0">
-                <uc:AppInfoControl x:Name="AppInfo" />
-            </PivotItem>
-        </Pivot>
+            Visibility="{x:Bind IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}" />
+
+        <uc:AppInfoControl
+            x:Name="AppInfo"
+            Grid.Row="1"
+            Visibility="{x:Bind IsCurrentControl(BreadCollection.Count, 2), Mode=OneWay}" />
     </Grid>
 </Page>

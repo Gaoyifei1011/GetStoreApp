@@ -12,20 +12,14 @@ namespace GetStoreApp.Models.Controls.WinGet
     public class InstallingAppsModel : INotifyPropertyChanged
     {
         private static string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
-
         private static string InstallStateToolTip = ResourceService.GetLocalized("WinGet/InstallStateToolTip");
-
         private static string DownloadedProgressToolTip = ResourceService.GetLocalized("WinGet/DownloadedProgressToolTip");
-
         private static string QueuedToolTip = ResourceService.GetLocalized("WinGet/QueuedToolTip");
-
         private static string DownloadingToolTip = ResourceService.GetLocalized("WinGet/DownloadingToolTip");
-
         private static string InstallingToolTip = ResourceService.GetLocalized("WinGet/InstallingToolTip");
-
         private static string PostInstallToolTip = ResourceService.GetLocalized("WinGet/PostInstallToolTip");
-
         private static string FinishedToolTip = ResourceService.GetLocalized("WinGet/FinishedToolTip");
+        private static string CancelingToolTip = ResourceService.GetLocalized("WinGet/CancelingToolTip");
 
         /// <summary>
         /// 应用ID
@@ -85,6 +79,19 @@ namespace GetStoreApp.Models.Controls.WinGet
             }
         }
 
+        private bool _isCanceling;
+
+        public bool IsCanceling
+        {
+            get { return _isCanceling; }
+
+            set
+            {
+                _isCanceling = true;
+                OnPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// 安装状态
         /// </summary>
@@ -122,42 +129,50 @@ namespace GetStoreApp.Models.Controls.WinGet
         /// <summary>
         /// 添加安装任务的详细文字信息提示
         /// </summary>
-        public string InstallToolTip(string appName, PackageInstallProgressState installProgressState, double downloadProgress, string downloadedFileSize, string totalFileSize)
+        public string InstallToolTip(string appName, PackageInstallProgressState installProgressState, double downloadProgress, string downloadedFileSize, string totalFileSize, bool isCanceling)
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine(string.Format(AppNameToolTip, appName));
 
-            switch (installProgressState)
+            if (isCanceling)
             {
-                case PackageInstallProgressState.Queued:
-                    {
-                        builder.Append(string.Format(InstallStateToolTip, QueuedToolTip));
-                        break;
-                    }
-                case PackageInstallProgressState.Downloading:
-                    {
-                        builder.AppendLine(string.Format(InstallStateToolTip, DownloadingToolTip));
-                        builder.Append(string.Format(DownloadedProgressToolTip, downloadProgress));
-                        builder.Append(string.Format(",{0}/{1}", downloadedFileSize, totalFileSize));
-                        break;
-                    }
-                case PackageInstallProgressState.Installing:
-                    {
-                        builder.Append(string.Format(InstallStateToolTip, InstallingToolTip));
-                        break;
-                    }
-                case PackageInstallProgressState.PostInstall:
-                    {
-                        builder.Append(string.Format(InstallStateToolTip, PostInstallToolTip));
-                        break;
-                    }
-                case PackageInstallProgressState.Finished:
-                    {
-                        builder.Append(string.Format(InstallStateToolTip, FinishedToolTip));
-                        break;
-                    }
-                default: break;
+                builder.Append(string.Format(InstallStateToolTip, CancelingToolTip));
             }
+            else
+            {
+                switch (installProgressState)
+                {
+                    case PackageInstallProgressState.Queued:
+                        {
+                            builder.Append(string.Format(InstallStateToolTip, QueuedToolTip));
+                            break;
+                        }
+                    case PackageInstallProgressState.Downloading:
+                        {
+                            builder.AppendLine(string.Format(InstallStateToolTip, DownloadingToolTip));
+                            builder.Append(string.Format(DownloadedProgressToolTip, downloadProgress));
+                            builder.Append(string.Format(",{0}/{1}", downloadedFileSize, totalFileSize));
+                            break;
+                        }
+                    case PackageInstallProgressState.Installing:
+                        {
+                            builder.Append(string.Format(InstallStateToolTip, InstallingToolTip));
+                            break;
+                        }
+                    case PackageInstallProgressState.PostInstall:
+                        {
+                            builder.Append(string.Format(InstallStateToolTip, PostInstallToolTip));
+                            break;
+                        }
+                    case PackageInstallProgressState.Finished:
+                        {
+                            builder.Append(string.Format(InstallStateToolTip, FinishedToolTip));
+                            break;
+                        }
+                    default: break;
+                }
+            }
+
             return builder.ToString();
         }
 

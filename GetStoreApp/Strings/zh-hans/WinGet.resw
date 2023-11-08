@@ -132,6 +132,9 @@
   <data name="AppVersionToolTip" xml:space="preserve">
     <value>应用版本：{0}</value>
   </data>
+  <data name="CancelingToolTip" xml:space="preserve">
+    <value>取消中...</value>
+  </data>
   <data name="CancelInstall" xml:space="preserve">
     <value>取消安装</value>
   </data>
@@ -233,6 +236,12 @@
   </data>
   <data name="NotSearchedTip" xml:space="preserve">
     <value>快去获取想要安装的应用吧，您搜索到的应用将会显示在此处</value>
+  </data>
+  <data name="OpenTempFolder" xml:space="preserve">
+    <value>打开下载目录</value>
+  </data>
+  <data name="OpenTempFolderToolTip" xml:space="preserve">
+    <value>打开临时下载应用安装包的本地目录</value>
   </data>
   <data name="Operation" xml:space="preserve">
     <value>操作</value>

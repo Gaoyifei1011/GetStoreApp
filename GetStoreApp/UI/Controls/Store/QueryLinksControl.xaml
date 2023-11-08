@@ -8,7 +8,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
     xmlns:sys="using:System"
-    Margin="30,0"
     Padding="0,0,0,30"
     Spacing="3"
     mc:Ignorable="d">

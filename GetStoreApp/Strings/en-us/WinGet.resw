@@ -132,6 +132,9 @@
   <data name="AppVersionToolTIp" xml:space="preserve">
     <value>App version:{0}</value>
   </data>
+  <data name="CancelingToolTip" xml:space="preserve">
+    <value>Canceling...</value>
+  </data>
   <data name="CancelInstall" xml:space="preserve">
     <value>Cancel the installation</value>
   </data>
@@ -233,6 +236,12 @@
   </data>
   <data name="NotSearchedTip" xml:space="preserve">
     <value>Go ahead and get the apps you want to install. The apps you search for will be displayed here</value>
+  </data>
+  <data name="OpenTempFolder" xml:space="preserve">
+    <value>Open download folder</value>
+  </data>
+  <data name="OpenTempFolderToolTip" xml:space="preserve">
+    <value>Open the local directory where the app installation package was temporarily downloaded</value>
   </data>
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>

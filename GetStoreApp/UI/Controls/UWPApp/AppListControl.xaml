@@ -14,7 +14,6 @@
     mc:Ignorable="d">
 
     <Grid.Resources>
-        <XamlUICommand x:Name="GetPackageCommand" ExecuteRequested="{x:Bind OnGetPackageExecuteRequested}" />
         <XamlUICommand x:Name="OpenAppCommand" ExecuteRequested="{x:Bind OnOpenAppExecuteRequested}" />
         <XamlUICommand x:Name="OpenCacheFolderCommand" ExecuteRequested="{x:Bind OnOpenCacheFolderExecuteRequested}" />
         <XamlUICommand x:Name="OpenInstalledFolderCommand" ExecuteRequested="{x:Bind OnOpenInstalledFolderExecuteRequested}" />
@@ -432,13 +431,6 @@
                                                 CommandParameter="{x:Bind Package}"
                                                 Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
-
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource GetPackageCommand}"
-                                                CommandParameter="{x:Bind Package}"
-                                                Style="{StaticResource MenuFlyoutItemStyle}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/GetPackage')}"
                                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
 
                                             <MenuFlyoutItem

@@ -141,9 +141,12 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private int GetSelectedIndex(int count)
+        /// <summary>
+        /// 确定当前选择的索引是否为目标控件
+        /// </summary>
+        private Visibility IsCurrentControl(int selectedIndex, int index)
         {
-            return count - 1;
+            return selectedIndex.Equals(index) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

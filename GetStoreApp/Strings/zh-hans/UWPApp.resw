@@ -195,9 +195,6 @@
   <data name="FullName" xml:space="preserve">
     <value>完整名称</value>
   </data>
-  <data name="GetPackage" xml:space="preserve">
-    <value>获取安装包</value>
-  </data>
   <data name="InstallDateToolTip" xml:space="preserve">
     <value>安装日期：{0}</value>
   </data>

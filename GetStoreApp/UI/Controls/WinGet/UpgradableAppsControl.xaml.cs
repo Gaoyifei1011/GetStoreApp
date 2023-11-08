@@ -24,6 +24,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using Windows.System;
 
 namespace GetStoreApp.UI.Controls.WinGet
 {
@@ -514,6 +515,22 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
+        /// 打开临时下载目录
+        /// </summary>
+        private async void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
+        {
+            string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
+            if (Directory.Exists(wingetTempPath))
+            {
+                await Launcher.LaunchFolderPathAsync(wingetTempPath);
+            }
+            else
+            {
+                await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
+            }
+        }
+
+        /// <summary>
         /// 更新可升级应用数据
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
@@ -615,6 +632,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     foreach (MatchResult matchItem in MatchResultList)
                     {
                         bool isUpgrading = false;
+
                         foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                         {
                             if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)

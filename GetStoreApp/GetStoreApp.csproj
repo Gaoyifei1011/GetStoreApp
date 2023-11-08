@@ -77,13 +77,14 @@
     <Manifest Include="$(ApplicationManifest)" />
     
     <None Remove="Assets\LICENSE" />
+    
+    <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
     <None Remove="Styles\InAppNotification.xaml" />
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
-    <None Remove="Styles\Pivot.xaml" />
     <None Remove="Styles\ScrollBar.xaml" />
     <None Remove="Styles\Segmented.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
@@ -150,14 +151,14 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.5.1572" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.66" />
-    
-    <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
+
+    <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\Flyout.xaml" />
     <Page Update="Styles\HyperlinkButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\InAppNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\Pivot.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ScrollBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Segmented.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
