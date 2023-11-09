@@ -2,8 +2,6 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AnalysisLevel>latest</AnalysisLevel>
-    <ApplicationIcon>Assets\GetStoreApp.ico</ApplicationIcon>
-    <ApplicationManifest>App.manifest</ApplicationManifest>
     <AssemblyName>GetStoreApp</AssemblyName>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
@@ -36,6 +34,7 @@
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
+    <Win32Resource>GetStoreAppResource.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>
@@ -241,8 +240,6 @@
 
   <!--捆绑前对二进制文件进行后处理-->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
-    <!--修改 GetStoreApp.exe 的 InternalName 和 OriginalFileName-->
-    <Exec Command="$(ProjectDir)ResourceHacker.exe -open $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe -res $(ProjectDir)GetStoreAppVersion.res -action addoverwrite -mask VERSIONINFO -log console -save $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
     <!--对生成的 GetStoreApp.exe 文件进行数字签名-->
     <Exec Command="$(ProjectDir)signtool.exe sign /f $(SolutionDir)$(AssemblyName)Package\$(AssemblyName)Package_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
   </Target>
