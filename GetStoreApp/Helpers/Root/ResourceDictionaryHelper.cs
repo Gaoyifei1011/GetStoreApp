@@ -7,6 +7,8 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class ResourceDictionaryHelper
     {
+        public static ResourceDictionary WinUIResourceDict { get; private set; }
+
         public static ResourceDictionary DropDownButtonResourceDict { get; private set; }
 
         public static ResourceDictionary FlyoutResourceDict { get; private set; }
@@ -34,6 +36,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static void InitializeResourceDictionary()
         {
+            WinUIResourceDict = Application.Current.Resources.MergedDictionaries[0];
             DropDownButtonResourceDict = Application.Current.Resources.MergedDictionaries[1];
             FlyoutResourceDict = Application.Current.Resources.MergedDictionaries[2];
             HyperlinkButtonResourceDict = Application.Current.Resources.MergedDictionaries[3];

@@ -10,6 +10,7 @@
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
+    <MileXamlNoSunValleyXamlStyle>true</MileXamlNoSunValleyXamlStyle>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>

@@ -70,7 +70,7 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
 
-            <MenuFlyoutSeparator Width="200" />
+            <MenuFlyoutSeparator Width="200" Style="{StaticResource DefaultMenuFlyoutSeperatorStyle}" />
 
             <MenuFlyoutItem
                 Click="{x:Bind OnCloseClicked}"
@@ -219,17 +219,23 @@
                 </MenuFlyoutItem.Icon>
 
                 <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
+                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource DefaultMenuFlyoutPresenterStyle}" Placement="Bottom">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnOpenWithBrowserClicked}"
+                            Style="{StaticResource DefaultMenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE774;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutSeparator />
+                        <MenuFlyoutSeparator Style="{StaticResource DefaultMenuFlyoutSeperatorStyle}" />
 
-                        <MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnOpenCacheFolderClicked}"
+                            Style="{StaticResource DefaultMenuFlyoutItemStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE8b7;" />
@@ -239,6 +245,7 @@
                         <MenuFlyoutItem
                             Click="{x:Bind OnClearWebCacheClicked}"
                             IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                            Style="{StaticResource DefaultMenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
 
                             <MenuFlyoutItem.Icon>

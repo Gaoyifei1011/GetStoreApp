@@ -4,10 +4,34 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <!--  资源字典顺序发生变化时，需要修改 ResourceDictionaryHelper 静态类的资源字典顺序  -->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Mile.Xaml.Styles.SunValley.xbf" />
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <AcrylicBrush
+                        x:Key="AcrylicInAppFillColorDefaultBrush"
+                        BackgroundSource="Backdrop"
+                        FallbackColor="#2C2C2C"
+                        TintColor="#2C2C2C"
+                        TintLuminosityOpacity="0.96"
+                        TintOpacity="0.15" />
+                </ResourceDictionary>
 
+                <ResourceDictionary x:Key="Light">
+                    <AcrylicBrush
+                        x:Key="AcrylicInAppFillColorDefaultBrush"
+                        BackgroundSource="Backdrop"
+                        FallbackColor="#F9F9F9"
+                        TintColor="#FCFCFC"
+                        TintLuminosityOpacity="0.85"
+                        TintOpacity="0.0" />
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="AcrylicInAppFillColorDefaultBrush" Color="{ThemeResource SystemColorWindowColor}" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/Common.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

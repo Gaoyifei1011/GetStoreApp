@@ -77,6 +77,7 @@
     
     <None Remove="Assets\LICENSE" />
     
+    <None Remove="Styles\Common.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
@@ -150,9 +151,10 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.5.1572" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.66" />
-
+    
+    <Page Update="Styles\Common.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\Flyout.xaml" />
+    <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\HyperlinkButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\InAppNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
