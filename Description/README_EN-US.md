@@ -75,13 +75,13 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 
 | Project progress                                         | Development progress                                                                                               |
 | ---------------------------------------------------------| -------------------------------------------------------------------------------------------------------------------|
-| Microsoft Store link to get                              | Completed                                                                                                          |
-| WinGet package to get                                    | Completed                                                                                                          |
-| History (records used links)                             | Completed                                                                                                          |
-| Download the file from the generated link                | Completed                                                                                                          |
-| Deploy the app offline after the download is complete    | Completed                                                                                                          |
-| Access the web version of the docking download interface | Completed                                                                                                          |
-| Console applications (quickly download)                  | Completed                                                                                                          |
+| Get the store app link                                   | Completed                                                                                                          |
+| Search store app                                         | Completed                                                                                                          |
+| Check for store app updates                              | Completed                                                                                                          |
+| WinGet package manager                                   | Completed                                                                                                          |
+| Device application management                            | Completed                                                                                                          |
+| Download management                                      | Completed                                                                                                          |
+| Console applications                                     | Completed                                                                                                          |
 | Program performance optimization                         | Completed                                                                                                          |
 | Interface modernization                                  | Completed                                                                                                          |
 | Package management                                       | Completed                                                                                                          |
