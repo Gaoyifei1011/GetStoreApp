@@ -370,7 +370,14 @@
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind converter:StringConverterHelper.AppLinkToolTipFormat(StoreAppLink)}" />
+                                        <ToolTip>
+                                            <ToolTip.Content>
+                                                <StackPanel>
+                                                    <TextBlock Text="{x:Bind StoreAppLink}" />
+                                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Store/ClickToOpen')}" />
+                                                </StackPanel>
+                                            </ToolTip.Content>
+                                        </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </HyperlinkButton.Content>

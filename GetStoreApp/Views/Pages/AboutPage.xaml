@@ -288,8 +288,7 @@
                                         Width="320"
                                         Padding="5,8"
                                         HorizontalContentAlignment="Center"
-                                        NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}"
-                                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.AboutReferenceToolTipFormat(Key)}">
+                                        NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
 
                                         <HyperlinkButton.Content>
                                             <TextBlock
@@ -297,6 +296,17 @@
                                                 TextTrimming="CharacterEllipsis"
                                                 TextWrapping="NoWrap" />
                                         </HyperlinkButton.Content>
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <ToolTip.Content>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{x:Bind Key}" />
+                                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                    </StackPanel>
+                                                </ToolTip.Content>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
                                     </HyperlinkButton>
                                 </DataTemplate>
                             </GridView.ItemTemplate>
@@ -805,8 +815,7 @@
                                             Width="150"
                                             Padding="5,8"
                                             HorizontalContentAlignment="Center"
-                                            NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}"
-                                            ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.AboutThanksToolTipFormat(Key)}">
+                                            NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
 
                                             <HyperlinkButton.Content>
                                                 <TextBlock
@@ -814,6 +823,17 @@
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap" />
                                             </HyperlinkButton.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip>
+                                                    <ToolTip.Content>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{x:Bind Key}" />
+                                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                        </StackPanel>
+                                                    </ToolTip.Content>
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
                                         </HyperlinkButton>
                                     </DataTemplate>
                                 </GridView.ItemTemplate>

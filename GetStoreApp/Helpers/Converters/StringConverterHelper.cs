@@ -12,7 +12,7 @@ namespace GetStoreApp.Helpers.Converters
     /// </summary>
     public static class StringConverterHelper
     {
-        private static Dictionary<string, int> SpeedDict = new Dictionary<string, int>()
+        private static Dictionary<string, int> speedDict = new Dictionary<string, int>()
         {
             { "GB/s",1024*1024*1024 },
             { "MB/s",1024*1024 },
@@ -20,22 +20,6 @@ namespace GetStoreApp.Helpers.Converters
         };
 
         public static CultureInfo AppCulture { get; set; }
-
-        /// <summary>
-        /// 关于界面项目引用内容格式化
-        /// </summary>
-        public static string AboutReferenceToolTipFormat(object content)
-        {
-            return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("About/ReferenceToolTip"));
-        }
-
-        /// <summary>
-        /// 关于界面感谢介绍内容格式化
-        /// </summary>
-        public static string AboutThanksToolTipFormat(object content)
-        {
-            return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("About/ThanksToolTip"));
-        }
 
         /// <summary>
         /// UI字符串本地化（通道）格式化
@@ -52,11 +36,11 @@ namespace GetStoreApp.Helpers.Converters
         {
             if (isSelected)
             {
-                return ResourceService.GetLocalized(string.Format("/{0}/SelectedToolTip", content));
+                return ResourceService.GetLocalized(string.Format("{0}/SelectedToolTip", content));
             }
             else
             {
-                return ResourceService.GetLocalized(string.Format("/{0}/UnselectedToolTip", content));
+                return ResourceService.GetLocalized(string.Format("{0}/UnselectedToolTip", content));
             }
         }
 
@@ -73,17 +57,17 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static string DownloadSpeedFormat(double speed)
         {
-            if (speed / SpeedDict["GB/s"] >= 1)
+            if (speed / speedDict["GB/s"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(speed / SpeedDict["GB/s"], 2), "GB");
+                return string.Format("{0}{1}", Math.Round(speed / speedDict["GB/s"], 2), "GB");
             }
-            else if (speed / SpeedDict["MB/s"] >= 1)
+            else if (speed / speedDict["MB/s"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(speed / SpeedDict["MB/s"], 2), "MB");
+                return string.Format("{0}{1}", Math.Round(speed / speedDict["MB/s"], 2), "MB");
             }
-            else if (speed / SpeedDict["KB/s"] >= 1)
+            else if (speed / speedDict["KB/s"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(speed / SpeedDict["KB/s"], 2), "KB");
+                return string.Format("{0}{1}", Math.Round(speed / speedDict["KB/s"], 2), "KB");
             }
             else
             {
@@ -110,31 +94,12 @@ namespace GetStoreApp.Helpers.Converters
             }
         }
 
-        public static string AppLinkToolTipFormat(string content)
-        {
-            return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToOpen"));
-        }
-
         /// <summary>
         /// 安装进度文字提示格式化
         /// </summary>
         public static string InstallValueFormat(double content)
         {
             return string.Format(ResourceService.GetLocalized("Download/InstallValue"), content);
-        }
-
-        /// <summary>
-        /// UTC标准时间戳与当地地区时间转换内容格式化
-        /// </summary>
-        public static string TimeStampFormat(long rawDataTime)
-        {
-            DateTime EpochStartTime = new DateTime(1970, 1, 1, 0, 0, 0);
-
-            TimeSpan UtcOffset = DateTime.Now - DateTime.UtcNow;
-
-            DateTime CurrentTime = EpochStartTime.AddSeconds(rawDataTime + UtcOffset.TotalSeconds);
-
-            return CurrentTime.ToString("G", AppCulture);
         }
 
         /// <summary>
@@ -176,6 +141,9 @@ namespace GetStoreApp.Helpers.Converters
             }
         }
 
+        /// <summary>
+        /// 应用管理描述信息格式化
+        /// </summary>
         public static string UwpAppToolTipFormat(string content, string type)
         {
             if (type is "DisplayName")

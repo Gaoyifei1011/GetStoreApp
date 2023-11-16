@@ -23,6 +23,7 @@
         <MenuFlyout
             x:Name="TitlebarMenuFlyout"
             x:FieldModifier="public"
+            MenuFlyoutPresenterStyle="{StaticResource WinUI2MenuFlyoutPresenterStyle}"
             Placement="BottomEdgeAlignedLeft">
 
             <MenuFlyoutItem
@@ -70,7 +71,7 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
 
-            <MenuFlyoutSeparator Width="200" Style="{StaticResource DefaultMenuFlyoutSeperatorStyle}" />
+            <MenuFlyoutSeparator Width="200" Style="{StaticResource WinUI2MenuFlyoutSeperatorStyle}" />
 
             <MenuFlyoutItem
                 Click="{x:Bind OnCloseClicked}"
@@ -219,10 +220,10 @@
                 </MenuFlyoutItem.Icon>
 
                 <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource DefaultMenuFlyoutPresenterStyle}" Placement="Bottom">
+                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource WinUI2MenuFlyoutPresenterStyle}" Placement="Bottom">
                         <MenuFlyoutItem
                             Click="{x:Bind OnOpenWithBrowserClicked}"
-                            Style="{StaticResource DefaultMenuFlyoutItemStyle}"
+                            Style="{StaticResource WinUI2MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
 
                             <MenuFlyoutItem.Icon>
@@ -230,11 +231,11 @@
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutSeparator Style="{StaticResource DefaultMenuFlyoutSeperatorStyle}" />
+                        <MenuFlyoutSeparator Style="{StaticResource WinUI2MenuFlyoutSeperatorStyle}" />
 
                         <MenuFlyoutItem
                             Click="{x:Bind OnOpenCacheFolderClicked}"
-                            Style="{StaticResource DefaultMenuFlyoutItemStyle}"
+                            Style="{StaticResource WinUI2MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
 
                             <MenuFlyoutItem.Icon>
@@ -245,7 +246,7 @@
                         <MenuFlyoutItem
                             Click="{x:Bind OnClearWebCacheClicked}"
                             IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
-                            Style="{StaticResource DefaultMenuFlyoutItemStyle}"
+                            Style="{StaticResource WinUI2MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
 
                             <MenuFlyoutItem.Icon>
