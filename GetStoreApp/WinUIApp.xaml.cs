@@ -151,7 +151,7 @@ namespace GetStoreApp
             }
 
             MainWindow.AppWindow.SetIcon("Assets/Logo.ico");
-            MainWindow.AppWindow.Show();
+            MainWindow.Activate();
         }
 
         /// <summary>

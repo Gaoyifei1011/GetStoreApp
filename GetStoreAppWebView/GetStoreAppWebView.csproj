@@ -46,7 +46,7 @@
     <EmbeddedResource Update="Properties\Resources.resx" Generator="PublicResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
     
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="Mile.Xaml" Version="2.1.661" />
 
     <Reference Include="Microsoft.UI.Windowing" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0.18362\Microsoft.UI.winmd" IsWinMDFile="true" Private="false" />

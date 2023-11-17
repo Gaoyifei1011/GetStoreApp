@@ -5,8 +5,7 @@
     /// </summary>
     public enum DeleteKind
     {
-        History = 0,
-        Download = 1,
-        DownloadWithFile = 2
+        Download = 0,
+        DownloadWithFile = 1
     }
 }

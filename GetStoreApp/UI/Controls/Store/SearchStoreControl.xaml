@@ -113,7 +113,7 @@
                         <Grid Height="35" Padding="6,0,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="65" />
+                                <ColumnDefinition Width="85" />
                             </Grid.ColumnDefinitions>
 
                             <TextBlock
@@ -150,7 +150,7 @@
                                 BorderThickness="0,1,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="65" />
+                                    <ColumnDefinition Width="85" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock
@@ -251,7 +251,7 @@
                         <ColumnDefinition Width="1.5*" />
                         <ColumnDefinition Width="1.5*" />
                         <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="95" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock
@@ -319,7 +319,7 @@
                             <ColumnDefinition Width="1.5*" />
                             <ColumnDefinition Width="1.5*" />
                             <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="95" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock

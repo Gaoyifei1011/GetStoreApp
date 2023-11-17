@@ -15,7 +15,6 @@ namespace GetStoreApp.UI.Dialogs.Common
         {
             switch (deletePrompt)
             {
-                case DeleteKind.History: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
                 case DeleteKind.Download: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
                 case DeleteKind.DownloadWithFile: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
             }

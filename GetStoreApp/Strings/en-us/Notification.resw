@@ -151,8 +151,8 @@
     <value>&lt;toast launch="action=OpenApp"&gt;
   &lt;visual&gt;
     &lt;binding template="ToastGeneric"&gt;
-      &lt;text&gt;The app is in offline mode&lt;/text&gt;
-      &lt;text&gt;The network connection is abnormal, the tasks that are currently being downloaded have all been paused, please make sure that your network is connected before trying to download.&lt;/text&gt;
+      &lt;text&gt;Download completed&lt;/text&gt;
+      &lt;text&gt;All tasks has downloaded completed&lt;/text&gt;
     &lt;/binding&gt;
   &lt;/visual&gt;
   &lt;actions&gt;

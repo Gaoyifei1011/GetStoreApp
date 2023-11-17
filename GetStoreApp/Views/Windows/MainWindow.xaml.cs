@@ -30,6 +30,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Graphics.Display;
@@ -824,8 +825,8 @@ namespace GetStoreApp.Views.Windows
                     {
                         COPYDATASTRUCT copyDataStruct = Marshal.PtrToStructure<COPYDATASTRUCT>(lParam);
 
-                        // 没有任何命令参数，正常启动，应用可能被重复启动
-                        if (copyDataStruct.dwData is 1)
+                        // 正常启动
+                        if ((ActivationKind)copyDataStruct.dwData is ActivationKind.Launch)
                         {
                             Show();
 
@@ -834,8 +835,9 @@ namespace GetStoreApp.Views.Windows
                                 await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
                             });
                         }
-                        // 获取应用的命令参数
-                        else if (copyDataStruct.dwData is 2)
+                        // 正常启动或从共享启动处启动，应用可能会附带启动参数
+                        else if ((ActivationKind)copyDataStruct.dwData is ActivationKind.CommandLineLaunch ||
+                            (ActivationKind)copyDataStruct.dwData is ActivationKind.ShareTarget)
                         {
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
 
@@ -909,32 +911,32 @@ namespace GetStoreApp.Views.Windows
                             }
                             else if (startupArgs.Length is 3)
                             {
-                                if (NavigationService.GetCurrentPageType() != typeof(StorePage))
+                                DispatcherQueue.TryEnqueue(() =>
                                 {
-                                    DispatcherQueue.TryEnqueue(() =>
+                                    if (NavigationService.GetCurrentPageType() != typeof(StorePage))
                                     {
                                         NavigationService.NavigateTo(typeof(StorePage));
+                                    }
 
-                                        StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
-                                        if (storePage is not null)
+                                    StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                                    if (storePage is not null)
+                                    {
+                                        storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
+                                        storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
+                                        storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+
+                                        if (storePage.SelectedIndex is not 0)
                                         {
-                                            storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
-                                            storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
-                                            storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
-
-                                            if (storePage.SelectedIndex is not 0)
-                                            {
-                                                storePage.SelectedIndex = 0;
-                                            }
+                                            storePage.SelectedIndex = 0;
                                         }
-                                    });
-                                }
+                                    }
+                                });
                             }
 
                             Show();
                         }
-                        // 处理通知启动的内容
-                        else if (copyDataStruct.dwData is 3)
+                        // 处理应用通知启动
+                        else if ((ActivationKind)copyDataStruct.dwData is ActivationKind.ToastNotification)
                         {
                             Task.Run(async () =>
                             {

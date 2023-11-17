@@ -152,7 +152,7 @@
   &lt;visual&gt;
     &lt;binding template="ToastGeneric"&gt;
       &lt;text&gt;下载完成&lt;/text&gt;
-      &lt;text&gt;所有任务都已经下载完成。&lt;/text&gt;
+      &lt;text&gt;所有任务都已经下载完成&lt;/text&gt;
     &lt;/binding&gt;
   &lt;/visual&gt;
   &lt;actions&gt;

@@ -20,8 +20,8 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class DesktopLaunchService
     {
-        private static IActivatedEventArgs ActivatedEventArgs;
-        private static MessageKind SendMessageType = MessageKind.None;
+        private static IActivatedEventArgs activatedEventArgs;
+        private static ActivationKind activationKind = ActivationKind.Launch;
 
         private static List<string> DesktopLaunchArgs;
 
@@ -41,8 +41,8 @@ namespace GetStoreApp.Services.Root
         public static async Task InitializeLaunchAsync(string[] args)
         {
             DesktopLaunchArgs = args.ToList();
-            ActivatedEventArgs = AppInstance.GetActivatedEventArgs();
-            await ParseStartupKindAsync(ActivatedEventArgs is null ? ActivationKind.Launch : ActivatedEventArgs.Kind);
+            activatedEventArgs = AppInstance.GetActivatedEventArgs();
+            await ParseStartupKindAsync(activatedEventArgs is null ? ActivationKind.Launch : activatedEventArgs.Kind);
             await DealLaunchArgsAsync();
         }
 
@@ -51,114 +51,95 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task ParseStartupKindAsync(ActivationKind kind)
         {
-            switch (kind)
+            // 使用共享目标方式启动
+            if (kind is ActivationKind.ShareTarget)
             {
-                // 正常方式启动（包括命令行）
-                case ActivationKind.Launch:
-                    {
-                        ParseLaunchArgs();
-                        break;
-                    }
-                // 使用共享目标方式启动
-                case ActivationKind.ShareTarget:
-                    {
-                        SendMessageType = MessageKind.Information;
-                        ShareOperation shareOperation = (ActivatedEventArgs as ShareTargetActivatedEventArgs).ShareOperation;
-                        shareOperation.ReportCompleted();
-                        LaunchArgs["Link"] = Convert.ToString(await shareOperation.Data.GetUriAsync());
-                        break;
-                    }
-                // 从系统通知处启动
-                case ActivationKind.ToastNotification:
-                    {
-                        SendMessageType = MessageKind.Notification;
-                        break;
-                    }
-                // 其他方式
-                default:
-                    {
-                        ParseLaunchArgs();
-                        break;
-                    }
+                activationKind = ActivationKind.ShareTarget;
+                ShareOperation shareOperation = (activatedEventArgs as ShareTargetActivatedEventArgs).ShareOperation;
+                shareOperation.ReportCompleted();
+                LaunchArgs["Link"] = Convert.ToString(await shareOperation.Data.GetUriAsync());
             }
-        }
-
-        /// <summary>
-        /// 解析启动命令参数
-        /// </summary>
-        private static void ParseLaunchArgs()
-        {
-            if (DesktopLaunchArgs.Count is 0)
+            // 系统通知处启动
+            else if (kind is ActivationKind.ToastNotification)
             {
-                SendMessageType = MessageKind.Normal;
-                return;
+                activationKind = ActivationKind.ToastNotification;
             }
-            else if (DesktopLaunchArgs.Count is 1)
-            {
-                if (DesktopLaunchArgs[0] is "Restart")
-                {
-                    SendMessageType = MessageKind.None;
-                    return;
-                }
-                else
-                {
-                    SendMessageType = MessageKind.Information;
-                    LaunchArgs["Link"] = DesktopLaunchArgs[0];
-                }
-            }
+            // 其他启动方式
             else
             {
-                SendMessageType = MessageKind.Information;
+                activationKind = kind;
 
-                // 跳转列表启动的参数
-                if (DesktopLaunchArgs[0] is "JumpList")
+                // 无参数，正常启动
+                if (DesktopLaunchArgs.Count is 0)
                 {
-                    switch (DesktopLaunchArgs[1])
+                    activationKind = ActivationKind.Launch;
+                    return;
+                }
+                // 一个参数，可能为重新启动，或者是只输入了链接
+                else if (DesktopLaunchArgs.Count is 1)
+                {
+                    if (DesktopLaunchArgs[0] is "Restart")
                     {
-                        case "AppUpdate":
-                            {
-                                InitializePage = typeof(AppUpdatePage);
-                                break;
-                            }
-                        case "WinGet":
-                            {
-                                InitializePage = typeof(WinGetPage);
-                                break;
-                            }
-                        case "UWPApp":
-                            {
-                                InitializePage = typeof(UWPAppPage);
-                                break;
-                            }
-                        case "Download":
-                            {
-                                InitializePage = typeof(DownloadPage);
-                                break;
-                            }
-
-                        case "Web":
-                            {
-                                Task.Run(async () =>
-                                {
-                                    await Launcher.LaunchUriAsync((new Uri("https://store.rg-adguard.net/")));
-                                });
-                                break;
-                            }
+                        activationKind = ActivationKind.CommandLineLaunch;
+                        return;
+                    }
+                    else
+                    {
+                        activationKind = ActivationKind.CommandLineLaunch;
+                        LaunchArgs["Link"] = DesktopLaunchArgs[0];
                     }
                 }
-
-                // 正常启动的参数
+                // 多个参数，可能为跳转列表启动或者控制台输入了参数
                 else
                 {
-                    if (DesktopLaunchArgs.Count % 2 is not 0) return;
+                    activationKind = ActivationKind.CommandLineLaunch;
 
-                    int TypeNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                    int ChannelNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                    int LinkIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                    // 跳转列表启动的参数
+                    if (DesktopLaunchArgs[0] is "JumpList")
+                    {
+                        switch (DesktopLaunchArgs[1])
+                        {
+                            case "AppUpdate":
+                                {
+                                    InitializePage = typeof(AppUpdatePage);
+                                    break;
+                                }
+                            case "WinGet":
+                                {
+                                    InitializePage = typeof(WinGetPage);
+                                    break;
+                                }
+                            case "UWPApp":
+                                {
+                                    InitializePage = typeof(UWPAppPage);
+                                    break;
+                                }
+                            case "Download":
+                                {
+                                    InitializePage = typeof(DownloadPage);
+                                    break;
+                                }
+                            case "Web":
+                                {
+                                    await Launcher.LaunchUriAsync((new Uri("https://store.rg-adguard.net/")));
+                                    break;
+                                }
+                        }
+                    }
 
-                    LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                    LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : DesktopLaunchArgs[LinkIndex + 1];
+                    // 命令行启动带参数
+                    else
+                    {
+                        if (DesktopLaunchArgs.Count % 2 is not 0) return;
+
+                        int typeNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                        int channelNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                        int linkIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+
+                        LaunchArgs["TypeName"] = typeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[typeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        LaunchArgs["ChannelName"] = channelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[channelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        LaunchArgs["Link"] = linkIndex is -1 ? LaunchArgs["Link"] : DesktopLaunchArgs[linkIndex + 1];
+                    }
                 }
             }
         }
@@ -168,53 +149,65 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task DealLaunchArgsAsync()
         {
-            if (SendMessageType is MessageKind.None)
+            // 正常启动
+            if (activationKind is ActivationKind.Launch)
             {
                 return;
             }
-            else if (SendMessageType is MessageKind.Normal || SendMessageType is MessageKind.Information)
+            // 命令参数启动或者共享目标启动
+            else if (activationKind is ActivationKind.CommandLineLaunch || activationKind is ActivationKind.ShareTarget)
             {
-                bool isExisted = false;
-
-                string sendData;
-                if (DesktopLaunchArgs.Count is 2 && DesktopLaunchArgs[0] is "JumpList")
+                // 重新启动
+                if (DesktopLaunchArgs.Count > 0 && DesktopLaunchArgs[0] is "Restart")
                 {
-                    sendData = string.Join(" ", DesktopLaunchArgs);
+                    return;
                 }
+                // 带命令参数启动
                 else
                 {
-                    sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
+                    bool isExisted = false;
+
+                    string sendData;
+                    if (DesktopLaunchArgs.Count is 2 && DesktopLaunchArgs[0] is "JumpList")
+                    {
+                        sendData = string.Join(" ", DesktopLaunchArgs);
+                    }
+                    else
+                    {
+                        sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
+                    }
+
+                    // 向主实例发送数据
+                    COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
+                    copyDataStruct.dwData = (IntPtr)activationKind;
+                    copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
+                    copyDataStruct.lpData = sendData;
+
+                    List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
+
+                    foreach (IntPtr hwnd in hwndList)
+                    {
+                        isExisted = true;
+                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
+                        Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
+                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
+                        Marshal.FreeHGlobal(ptrCopyDataStruct);
+                        User32Library.SetForegroundWindow(hwnd);
+                    }
+
+                    // 然后退出实例并停止
+                    Program.IsNeedAppLaunch = !isExisted;
                 }
-
-                // 向主实例发送数据
-                COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                copyDataStruct.dwData = (IntPtr)SendMessageType;
-                copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
-                copyDataStruct.lpData = sendData;
-
-                List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
-
-                foreach (IntPtr hwnd in hwndList)
-                {
-                    isExisted = true;
-                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
-                    Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
-                    User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                    Marshal.FreeHGlobal(ptrCopyDataStruct);
-                    User32Library.SetForegroundWindow(hwnd);
-                }
-
-                // 然后退出实例并停止
-                Program.IsNeedAppLaunch = !isExisted;
             }
-            else if (SendMessageType is MessageKind.Notification)
+            // 应用通知启动
+            else if (activationKind is ActivationKind.ToastNotification)
             {
                 bool isExisted = false;
                 string sendData = DesktopLaunchArgs[0];
 
                 // 向主实例发送数据
                 COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                copyDataStruct.dwData = (IntPtr)SendMessageType;
+                copyDataStruct.dwData = (IntPtr)activationKind;
                 copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
                 copyDataStruct.lpData = sendData;
 

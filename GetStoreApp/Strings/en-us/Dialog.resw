@@ -168,9 +168,6 @@
   <data name="DeleteDownloadWithFile" xml:space="preserve">
     <value>The selected download records (including files) will be permanently deleted. This operation cannot be undone. Please exercise caution.</value>
   </data>
-  <data name="DeleteHistory" xml:space="preserve">
-    <value>The selected history records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
-  </data>
   <data name="DeleteTitle" xml:space="preserve">
     <value>Delete record</value>
   </data>
@@ -259,7 +256,7 @@
     <value>Link</value>
   </data>
   <data name="LinkContent" xml:space="preserve">
-    <value>Need to input the correlative content</value>
+    <value>[Need to input the correlative content]</value>
   </data>
   <data name="LocalFile" xml:space="preserve">
     <value>Locally created files</value>

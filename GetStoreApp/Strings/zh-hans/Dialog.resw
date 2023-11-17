@@ -168,9 +168,6 @@
   <data name="DeleteDownloadWithFile" xml:space="preserve">
     <value>选定的下载记录（包括文件）将被永久删除，该操作不可撤销，请谨慎操作。</value>
   </data>
-  <data name="DeleteHistory" xml:space="preserve">
-    <value>选定的历史记录将被永久删除，该操作不可撤销，请谨慎操作。</value>
-  </data>
   <data name="DeleteTitle" xml:space="preserve">
     <value>删除记录</value>
   </data>
@@ -259,7 +256,7 @@
     <value>链接</value>
   </data>
   <data name="LinkContent" xml:space="preserve">
-    <value>需输入相应内容</value>
+    <value>[需输入相应内容]</value>
   </data>
   <data name="LocalFile" xml:space="preserve">
     <value>本地创建的文件</value>
