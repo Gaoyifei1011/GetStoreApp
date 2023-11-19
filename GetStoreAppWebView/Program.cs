@@ -11,7 +11,7 @@ using Windows.Foundation.Diagnostics;
 namespace GetStoreAppWebView
 {
     /// <summary>
-    /// 获取商店应用 网页浏览器
+    /// 网页浏览器
     /// </summary>
     public static class Program
     {
@@ -31,16 +31,16 @@ namespace GetStoreAppWebView
                 return;
             }
 
-            InitializeProgramResources();
+            InitializeResources();
 
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             Application.ApplicationExit += OnApplicationExit;
             Application.ThreadException += OnThreadException;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
-            ApplicationRoot = new App();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            ApplicationRoot = new App();
             MainWindow = new MainForm();
             Application.Run(MainWindow);
         }
@@ -59,7 +59,6 @@ namespace GetStoreAppWebView
         private static void OnThreadException(object sender, ThreadExceptionEventArgs args)
         {
             LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
-            ApplicationRoot.Dispose();
         }
 
         /// <summary>
@@ -74,7 +73,7 @@ namespace GetStoreAppWebView
         /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
-        private static void InitializeProgramResources()
+        private static void InitializeResources()
         {
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);

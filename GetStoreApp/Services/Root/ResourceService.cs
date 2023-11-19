@@ -2,7 +2,6 @@
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Properties;
-using Microsoft.Management.Deployment;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

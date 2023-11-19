@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;

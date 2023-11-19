@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Services.Root;
-using Microsoft.Management.Deployment;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;

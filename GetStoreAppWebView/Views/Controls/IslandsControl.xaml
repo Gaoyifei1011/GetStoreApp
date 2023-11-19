@@ -1,5 +1,5 @@
 ﻿<Grid
-    x:Class="GetStoreAppWebView.Views.Controls.TitleControl"
+    x:Class="GetStoreAppWebView.Views.Controls.IslandsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreAppWebView.Helpers.Converters"
@@ -15,6 +15,7 @@
     <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
     <!--  标题栏右键菜单  -->
@@ -23,7 +24,6 @@
         <MenuFlyout
             x:Name="TitlebarMenuFlyout"
             x:FieldModifier="public"
-            MenuFlyoutPresenterStyle="{StaticResource WinUI2MenuFlyoutPresenterStyle}"
             Placement="BottomEdgeAlignedLeft">
 
             <MenuFlyoutItem
@@ -71,7 +71,7 @@
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
 
-            <MenuFlyoutSeparator Width="200" Style="{StaticResource WinUI2MenuFlyoutSeperatorStyle}" />
+            <MenuFlyoutSeparator Width="200" />
 
             <MenuFlyoutItem
                 Click="{x:Bind OnCloseClicked}"
@@ -220,23 +220,17 @@
                 </MenuFlyoutItem.Icon>
 
                 <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout MenuFlyoutPresenterStyle="{StaticResource WinUI2MenuFlyoutPresenterStyle}" Placement="Bottom">
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnOpenWithBrowserClicked}"
-                            Style="{StaticResource WinUI2MenuFlyoutItemStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE774;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
 
-                        <MenuFlyoutSeparator Style="{StaticResource WinUI2MenuFlyoutSeperatorStyle}" />
+                        <MenuFlyoutSeparator />
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnOpenCacheFolderClicked}"
-                            Style="{StaticResource WinUI2MenuFlyoutItemStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
+                        <MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
 
                             <MenuFlyoutItem.Icon>
                                 <FontIcon Glyph="&#xE8b7;" />
@@ -246,7 +240,6 @@
                         <MenuFlyoutItem
                             Click="{x:Bind OnClearWebCacheClicked}"
                             IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
-                            Style="{StaticResource WinUI2MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
 
                             <MenuFlyoutItem.Icon>
@@ -258,4 +251,14 @@
             </MenuFlyoutItem>
         </StackPanel>
     </Grid>
+
+    <WebView2
+        x:Name="webView2"
+        Grid.Row="2"
+        x:Load="{x:Bind IsLoadWebView2}"
+        CoreProcessFailed="{x:Bind OnCoreProcessFailed}"
+        CoreWebView2Initialized="{x:Bind OnCoreWebView2Initialized}"
+        NavigationCompleted="{x:Bind OnNavigationCompleted}"
+        NavigationStarting="{x:Bind OnNavigationStarting}"
+        Source="https://store.rg-adguard.net" />
 </Grid>

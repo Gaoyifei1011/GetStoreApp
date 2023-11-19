@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
-using Microsoft.Management.Deployment;
 using System;
 using System.Collections;
 using System.Collections.Generic;

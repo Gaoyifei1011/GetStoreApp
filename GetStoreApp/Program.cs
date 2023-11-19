@@ -66,7 +66,7 @@ namespace GetStoreApp
 
             IsDesktopProgram = GetAppExecuteMode(args);
 
-            InitializeProgramResourcesAsync().Wait();
+            InitializeResourcesAsync().Wait();
 
             // 以桌面应用程序方式正常启动
             if (IsDesktopProgram)
@@ -113,7 +113,7 @@ namespace GetStoreApp
         /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
-        private static async Task InitializeProgramResourcesAsync()
+        private static async Task InitializeResourcesAsync()
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
             await LogService.InitializeAsync();

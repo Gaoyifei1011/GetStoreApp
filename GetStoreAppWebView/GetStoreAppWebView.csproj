@@ -5,8 +5,8 @@
     <ApplicationManifest>App.manifest</ApplicationManifest>
     <AssemblyName>GetStoreAppWebView</AssemblyName>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
-    <DisableXbfLineInfo>False</DisableXbfLineInfo>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
@@ -14,12 +14,13 @@
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win7-x86;win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <StartupObject>GetStoreAppWebView.Program</StartupObject>
     <TargetFramework>net481</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
     <UseWindowsForms>true</UseWindowsForms>
+    <WindowsAppSDKVerifyWinrtRuntimeVersion>false</WindowsAppSDKVerifyWinrtRuntimeVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -41,22 +42,22 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
 
-    <Content Include="$(TargetDir)\WebView2Loader.dll" Link="WebView2Loader.dll" CopyToOutputDirectory="Always" />
-
     <EmbeddedResource Update="Properties\Resources.resx" Generator="PublicResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
-    
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2151.40" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" GeneratePathProperty="true" IncludeAssets="none" ExcludeAssets="all" PrivateAssets="all" />
-    <PackageReference Include="Mile.Xaml" Version="2.1.661" />
 
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.2428" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" GeneratePathProperty="true" />
+    
+    <Reference Include="Microsoft.UI.Xaml" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0\Microsoft.UI.Xaml.winmd" IsWinMDFile="true" Private="false" />
+    <Reference Include="Microsoft.Web.WebView2.Core" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0\Microsoft.Web.WebView2.Core.winmd" IsWinMDFile="true" Private="false" />
     <Reference Include="Microsoft.UI.Windowing" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0.18362\Microsoft.UI.winmd" IsWinMDFile="true" Private="false" />
-    <Reference Include="Microsoft.Web.WebView2.Core" HintPath="$(TargetDir)\Microsoft.Web.WebView2.Core.dll" />
-    <Reference Include="Microsoft.Web.WebView2.WinForms" HintPath="$(TargetDir)\Microsoft.Web.WebView2.WinForms.dll" />
   </ItemGroup>
 
-  <Target Name="CopyFilesToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\lib\net45\Microsoft.Web.WebView2.Core.dll" DestinationFolder="$(TargetDir)" />
-    <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\lib\net45\Microsoft.Web.WebView2.WinForms.dll" DestinationFolder="$(TargetDir)" />
-    <Copy SourceFiles="$(PkgMicrosoft_Web_WebView2)\runtimes\win-$(Platform)\native\WebView2Loader.dll" DestinationFolder="$(TargetDir)" />
+  <Target Name="TryBuild" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <_UsingCSWinRT>false</_UsingCSWinRT>
+    </PropertyGroup>
+    <ItemGroup>
+      <XamlFeatureControlFlags Remove="UsingCSWinRT" />
+    </ItemGroup>
   </Target>
 </Project>
