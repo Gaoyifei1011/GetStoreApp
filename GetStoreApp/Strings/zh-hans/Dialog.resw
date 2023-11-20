@@ -390,4 +390,7 @@
   <data name="WindowsUIVersion" xml:space="preserve">
     <value>Windows UI 版本</value>
   </data>
+  <data name="WebView2SDKVersion" xml:space="preserve">
+    <value>WebView2 SDK 版本：</value>
+  </data>
 </root>

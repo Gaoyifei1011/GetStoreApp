@@ -355,7 +355,7 @@
     <value>Windows App SDK version：</value>
   </data>
   <data name="WinUI3Version" xml:space="preserve">
-    <value>WinUI 3 version：</value>
+    <value>WinUI 3 version:</value>
   </data>
   <data name="ActionCenter" xml:space="preserve">
     <value>Application notification in action center</value>
@@ -389,5 +389,8 @@
   </data>
   <data name="WindowsUIVersion" xml:space="preserve">
     <value>Windows UI version:</value>
+  </data>
+  <data name="WebView2SDKVersion" xml:space="preserve">
+    <value>WebView2 SDK Version:</value>
   </data>
 </root>

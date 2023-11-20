@@ -66,6 +66,25 @@
             <TextBlock
                 Grid.Column="0"
                 Margin="0,0,0,5"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WebView2SDKVersion')}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,0,0,5"
+                Text="{x:Bind WebView2SDKVersion, Mode=OneWay}"
+                TextAlignment="DetectFromContent"
+                TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid Margin="0,0,0,3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Margin="0,0,0,5"
                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsUIVersion')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />

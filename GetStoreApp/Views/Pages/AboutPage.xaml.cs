@@ -35,12 +35,11 @@ namespace GetStoreApp.Views.Pages
         //项目引用信息
         private Hashtable ReferenceDict { get; } = new Hashtable()
         {
-            { "Microsoft.Web.WebView2","https://aka.ms/webview"},
             { "Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"},
+            { "Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL"},
             { "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"},
             { "Microsoft.WindowsPackageManager.ComInterop","https://github.com/microsoft/winget-cli"},
             { "Mile.Aria2", "https://github.com/ProjectMile/Mile.Aria2"},
-            { "Mile.Xaml", "https://github.com/ProjectMile/Mile.Xaml"},
         };
 
         //项目感谢者信息

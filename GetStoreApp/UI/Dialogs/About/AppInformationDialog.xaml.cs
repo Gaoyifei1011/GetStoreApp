@@ -77,6 +77,19 @@ namespace GetStoreApp.UI.Dialogs.About
             }
         }
 
+        private string _webView2SDKVersion;
+
+        public string WebView2SDKVersion
+        {
+            get { return _webView2SDKVersion; }
+
+            set
+            {
+                _webView2SDKVersion = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public AppInformationDialog()
@@ -97,6 +110,7 @@ namespace GetStoreApp.UI.Dialogs.About
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2SDKVersion") + WebView2SDKVersion);
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -146,6 +160,25 @@ namespace GetStoreApp.UI.Dialogs.About
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 WinUI3Version = string.Empty;
+                            });
+                        }
+
+                        // WebView2 SDK 版本信息
+                        try
+                        {
+                            StorageFile WebView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
+                            IDictionary<string, object> WebView2CoreFileProperties = await WebView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                WebView2SDKVersion = WebView2CoreFileProperties[FileVersionProperty] is not null ? Convert.ToString(WebView2CoreFileProperties[FileVersionProperty]) : string.Empty;
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Get WebView2 SDK version failed.", e);
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                WebView2SDKVersion = string.Empty;
                             });
                         }
                     }

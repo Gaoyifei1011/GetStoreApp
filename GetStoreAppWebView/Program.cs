@@ -2,6 +2,7 @@ using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Views.Forms;
+using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -39,6 +40,11 @@ namespace GetStoreAppWebView
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
 
             Application.SetCompatibleTextRenderingDefault(false);
+
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
+            {
+                Environment.SetEnvironmentVariable("WEBVIEW2_USE_VISUAL_HOSTING_FOR_OWNED_WINDOWS", "1");
+            }
 
             ApplicationRoot = new App();
             MainWindow = new MainForm();

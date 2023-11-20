@@ -162,8 +162,8 @@ namespace GetStoreApp.Views.Windows
             SetTitleBar(AppTitlebar);
             SetTitleBarColor((Content as FrameworkElement).ActualTheme);
 
-            // 在桌面应用中创建 CoreWindow
-            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "DesktopWindowXamlSource", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, Handle, typeof(ICoreWindow).GUID, out IntPtr obj);
+            // 在 WinUI3 桌面应用中创建 CoreWindow
+            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, Handle, typeof(ICoreWindow).GUID, out IntPtr obj);
             UWPCoreWindow = CoreWindow.FromAbi(obj);
             DisplayInformation = DisplayInformation.GetForCurrentView();
 
@@ -191,7 +191,7 @@ namespace GetStoreApp.Views.Windows
             // 设置 CoreWindow 窗口的样式
             if (UWPCoreWindow is not null)
             {
-                UWPCoreHandle = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, typeof(CoreWindow).FullName, "DesktopWindowXamlSource");
+                UWPCoreHandle = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, typeof(CoreWindow).FullName, "GetStoreAppCoreWindow");
 
                 if (UWPCoreHandle != IntPtr.Zero)
                 {

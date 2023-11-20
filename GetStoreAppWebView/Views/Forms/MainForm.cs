@@ -2,15 +2,15 @@
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Views.Controls;
+using GetStoreAppWebView.WindowsAPI.PInvoke.Comctl32;
 using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
+using Microsoft.UI.Content;
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -33,6 +33,8 @@ namespace GetStoreAppWebView.Views.Forms
 
         private WNDPROC newInputNonClientPointerSourceWndProc = null;
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
+
+        private SUBCLASSPROC desktopSourceSubClassProc;
 
         public double WindowDPI { get; private set; }
 
@@ -98,8 +100,8 @@ namespace GetStoreAppWebView.Views.Forms
             DesktopWindowXamlSource.Content = IslandsControl;
             DesktopWindowXamlSource.SystemBackdrop = new MicaBackdrop();
 
-            subClassProc = new SUBCLASSPROC(OnSubClassProc);
-            SetWindowSubclass((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value, subClassProc, 100, IntPtr.Zero);
+            desktopSourceSubClassProc = new SUBCLASSPROC(OnDesktopSourceSubClassProc);
+            Comctl32Library.SetWindowSubclass((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value, desktopSourceSubClassProc, 100, IntPtr.Zero);
 
             InputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
 
@@ -116,6 +118,10 @@ namespace GetStoreAppWebView.Views.Forms
             {
                 IslandsControl.InitializeWebBrowser();
             }
+            else
+            {
+                DesktopWindowXamlSource.SiteBridge.ResizePolicy = ContentSizePolicy.ResizeContentToParentWindow;
+            }
 
             DesktopWindowXamlSource.SiteBridge.Show();
         }
@@ -126,19 +132,7 @@ namespace GetStoreAppWebView.Views.Forms
         protected override void OnMove(EventArgs args)
         {
             base.OnMove(args);
-            if (IslandsControl is not null && IslandsControl.XamlRoot is not null)
-            {
-                IReadOnlyList<Popup> PopupRoot = VisualTreeHelper.GetOpenPopupsForXamlRoot(IslandsControl.XamlRoot);
-                foreach (Popup popup in PopupRoot)
-                {
-                    // 关闭菜单浮出控件
-                    if (popup.Child as MenuFlyoutPresenter is not null)
-                    {
-                        popup.IsOpen = false;
-                        break;
-                    }
-                }
-            }
+            IslandsControl?.CloseDownloadDialog();
         }
 
         /// <summary>
@@ -149,13 +143,17 @@ namespace GetStoreAppWebView.Views.Forms
             base.OnSizeChanged(args);
             IslandsControl.IsWindowMaximized = WindowState == FormWindowState.Maximized;
 
-            if (DesktopWindowXamlSource.SiteBridge is not null)
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0] && DesktopWindowXamlSource.SiteBridge is not null)
             {
                 User32Library.SetWindowPos((IntPtr)Program.MainWindow.DesktopWindowXamlSource.SiteBridge.WindowId.Value,
                   IntPtr.Zero, 0, 0, ClientSize.Width, Convert.ToInt32(IslandsControl.ActualHeight * Program.MainWindow.WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
-            }
 
-            IslandsControl.ChangeSize(ClientSize.Width, ClientSize.Height);
+                IslandsControl.ChangeSize(ClientSize.Width, ClientSize.Height);
+            }
+            else
+            {
+                IslandsControl.CloseDownloadDialog();
+            }
         }
 
         /// <summary>
@@ -260,24 +258,17 @@ namespace GetStoreAppWebView.Views.Forms
             return User32Library.CallWindowProc(oldInputNonClientPointerSourceWndProc, hWnd, Msg, wParam, lParam);
         }
 
-        private const uint WM_ERASEBKGND = 0x14;
-        private const uint WM_NCPAINT = 0x85;
-
-        [DllImport("comctl32.dll")]
-        private static extern bool SetWindowSubclass(IntPtr hWnd, SUBCLASSPROC pfnSubclass, uint uIdSubclass, IntPtr dwRefData);
-
-        [DllImport("comctl32.dll")]
-        private static extern IntPtr DefSubclassProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
-
-        private delegate IntPtr SUBCLASSPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData);
-
-        SUBCLASSPROC subClassProc;
-
-        private IntPtr OnSubClassProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
+        /// <summary>
+        /// WinUI 3 Islands 子窗口消息处理
+        /// </summary>
+        private IntPtr OnDesktopSourceSubClassProc(IntPtr hWnd, WindowMessage uMsg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
-            if (uMsg == WM_ERASEBKGND || uMsg == WM_NCPAINT) return IntPtr.Zero;
+            if (uMsg == WindowMessage.WM_ERASEBKGND || uMsg == WindowMessage.WM_NCPAINT)
+            {
+                return IntPtr.Zero;
+            }
 
-            return DefSubclassProc(hWnd, uMsg, wParam, lParam);
+            return Comctl32Library.DefSubclassProc(hWnd, uMsg, wParam, lParam);
         }
     }
 }

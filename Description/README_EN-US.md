@@ -6,7 +6,7 @@
 
 ### Application brief introduction
 
-The Microsoft Store provides a distribution, download, and update channel for apps that are already on the shelves. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This has plagued some users who never use a Microsoft account and whose apps must rely on store downloads. The app uses the acquisition interface provided by store.rg-adguard.net, bypassing the official App Download Channel provided by the Microsoft Store. Users can download the required app installation packages offline for standalone deployment.
+The Microsoft Store provides a distribution, download, and update channel for apps that are already on the shelves. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This has plagued some users who never use a Microsoft account and whose apps must rely on store downloads. The app uses the acquisition interface provided by Microsoft Store, bypassing the official App Download Channel provided by the Microsoft Store. Users can download the required app installation packages offline for standalone deployment.
 
 ------
 
@@ -112,12 +112,11 @@ All the content of the program has been developed
 
 ### Project References (Sort by alphabetical order)
 
-> * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
+> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
-> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
 
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [Auxiliary Tools](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;

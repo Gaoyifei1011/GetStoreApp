@@ -546,13 +546,21 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         public void ChangeSize(int clientWidth, int clientHeight)
         {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
+            if (WebBrowser is not null)
             {
-                if (WebBrowser is not null)
-                {
-                    WebBrowser.Location = new Point(0, Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
-                    WebBrowser.Size = new Size(clientWidth, clientHeight - Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
-                }
+                WebBrowser.Location = new Point(0, Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
+                WebBrowser.Size = new Size(clientWidth, clientHeight - Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
+            }
+        }
+
+        /// <summary>
+        /// 窗口移动或调整大小时关闭下载框
+        /// </summary>
+        public void CloseDownloadDialog()
+        {
+            if (webView2 is not null && webView2.CoreWebView2 is not null && webView2.CoreWebView2.IsDefaultDownloadDialogOpen)
+            {
+                webView2.CoreWebView2.CloseDefaultDownloadDialog();
             }
         }
 

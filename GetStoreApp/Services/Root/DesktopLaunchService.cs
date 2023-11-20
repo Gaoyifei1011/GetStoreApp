@@ -1,8 +1,10 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,7 +12,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
-using Windows.System;
 
 namespace GetStoreApp.Services.Root
 {
@@ -120,7 +121,30 @@ namespace GetStoreApp.Services.Root
                                 }
                             case "Web":
                                 {
-                                    await Launcher.LaunchUriAsync((new Uri("https://store.rg-adguard.net/")));
+                                    Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
+                                    WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
+                                    WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
+                                    WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
+                                    WinGetProcessStartupInfo.dwX = 0;
+                                    WinGetProcessStartupInfo.dwY = 0;
+                                    WinGetProcessStartupInfo.dwXSize = 0;
+                                    WinGetProcessStartupInfo.dwYSize = 0;
+                                    WinGetProcessStartupInfo.dwXCountChars = 500;
+                                    WinGetProcessStartupInfo.dwYCountChars = 500;
+                                    WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                    WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+                                    WinGetProcessStartupInfo.cbReserved2 = 0;
+                                    WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                                    WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+
+                                    bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+
+                                    if (createResult)
+                                    {
+                                        if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
+                                        if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                                    }
+                                    Environment.Exit(0);
                                     break;
                                 }
                         }

@@ -13,7 +13,7 @@
 
 ### 应用简介
 
-微软商店提供了对已上架商店应用的分发，下载和更新通道。但是在最新的微软商店中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。因此我开发了这一款获取商店应用的桌面应用 ，该应用使用了 store.rg-adguard.net 提供的获取接口，绕开了微软商店官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。
+微软商店提供了对已上架商店应用的分发，下载和更新通道。但是在最新的微软商店中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。因此我开发了这一款获取商店应用的桌面应用 ，该应用使用了微软商店提供的获取接口，绕开了微软商店官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。
 
 ------
 
@@ -118,12 +118,11 @@
 
 ### 项目引用（按英文首字母排序）
 
-> * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
+> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
-> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
 
 [学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [辅助工具](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;

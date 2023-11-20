@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using GetStoreApp.WindowsAPI.PInvoke.Winrtact;
+using Microsoft.Management.Deployment;
 using System;
 using System.Threading.Tasks;
 
