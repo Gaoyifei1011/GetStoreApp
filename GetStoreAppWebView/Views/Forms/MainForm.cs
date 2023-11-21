@@ -73,6 +73,7 @@ namespace GetStoreAppWebView.Views.Forms
         {
             base.OnDpiChanged(args);
             WindowDPI = ((double)args.DeviceDpiNew) / 96;
+            MinimumSize = new Size(Convert.ToInt32(windowWidth * WindowDPI), Convert.ToInt32(windowHeight * WindowDPI));
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace GetStoreAppWebView.Views.Forms
 
             DesktopWindowXamlSource.Initialize(windowId);
             DesktopWindowXamlSource.Content = IslandsControl;
-            DesktopWindowXamlSource.SystemBackdrop = new MicaBackdrop();
+            DesktopWindowXamlSource.SystemBackdrop = InfoHelper.SystemVersion.Build >= 22000 ? new MicaBackdrop() : new DesktopAcrylicBackdrop();
 
             desktopSourceSubClassProc = new SUBCLASSPROC(OnDesktopSourceSubClassProc);
             Comctl32Library.SetWindowSubclass((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value, desktopSourceSubClassProc, 100, IntPtr.Zero);
@@ -243,13 +244,14 @@ namespace GetStoreAppWebView.Views.Forms
                     {
                         if (IslandsControl is not null && IslandsControl.XamlRoot is not null)
                         {
-                            Point ms = MousePosition;
+                            Point clientPoint = PointToClient(MousePosition);
+
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
                             options.ShowMode = FlyoutShowMode.Standard;
                             options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                                new Windows.Foundation.Point((ms.X - Location.X - 8) / WindowDPI, (ms.Y - Location.Y) / WindowDPI) :
-                                new Windows.Foundation.Point(ms.X - Location.X - 8, ms.Y - Location.Y);
+                                new Windows.Foundation.Point(clientPoint.X / WindowDPI, clientPoint.Y / WindowDPI) :
+                                new Windows.Foundation.Point(clientPoint.X, clientPoint.Y);
                             IslandsControl.TitlebarMenuFlyout.ShowAt(null, options);
                         }
                         return IntPtr.Zero;

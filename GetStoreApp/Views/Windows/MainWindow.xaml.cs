@@ -14,6 +14,7 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.UI.Content;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -62,6 +63,8 @@ namespace GetStoreApp.Views.Windows
         public CoreWindow UWPCoreWindow { get; }
 
         public DisplayInformation DisplayInformation { get; }
+
+        public ContentCoordinateConverter ContentCoordinateConverter { get; }
 
         public IntPtr Handle { get; }
 
@@ -157,6 +160,7 @@ namespace GetStoreApp.Views.Windows
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
+            ContentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(Win32Interop.GetWindowIdFromWindow(Handle));
 
             // 标题栏设置
             SetTitleBar(AppTitlebar);
@@ -1005,13 +1009,14 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (DisplayInformation is not null)
                         {
-                            PointInt32 pt = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
+                            PointInt32 screenPoint = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
+                            Point localPoint = ContentCoordinateConverter.ConvertScreenToLocal(screenPoint);
 
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.ShowMode = FlyoutShowMode.Standard;
                             options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                            new Point((pt.X - AppWindow.Position.X - 8) / DisplayInformation.RawPixelsPerViewPixel, (pt.Y - AppWindow.Position.Y) / DisplayInformation.RawPixelsPerViewPixel) :
-                            new Point(pt.X - AppWindow.Position.X - 8, pt.Y - AppWindow.Position.Y);
+                            new Point(localPoint.X / DisplayInformation.RawPixelsPerViewPixel, localPoint.Y / DisplayInformation.RawPixelsPerViewPixel) :
+                            new Point(localPoint.X, localPoint.Y);
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
                         }

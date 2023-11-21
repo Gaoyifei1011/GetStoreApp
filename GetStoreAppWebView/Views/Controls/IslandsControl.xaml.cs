@@ -564,6 +564,9 @@ namespace GetStoreAppWebView.Views.Controls
             }
         }
 
+        /// <summary>
+        /// 初始化 Winform WebBrowser控件
+        /// </summary>
         public void InitializeWebBrowser()
         {
             WebBrowser = new WebBrowser();
