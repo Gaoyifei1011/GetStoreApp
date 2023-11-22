@@ -202,7 +202,7 @@ namespace GetStoreAppWebView.Views.Forms
                         if (sysCommand is SystemCommand.SC_MOUSEMENU || sysCommand is SystemCommand.SC_KEYMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
-                            options.Position = new Windows.Foundation.Point(0, 0);
+                            options.Position = new Windows.Foundation.Point(0, 45);
                             options.ShowMode = FlyoutShowMode.Standard;
                             IslandsControl.TitlebarMenuFlyout.ShowAt(null, options);
                             return;
