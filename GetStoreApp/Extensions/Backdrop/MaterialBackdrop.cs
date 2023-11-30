@@ -12,15 +12,24 @@ namespace GetStoreApp.Extensions.Backdrop
     /// </summary>
     public sealed class MaterialBackdrop : SystemBackdrop
     {
+        private bool isMicaBackdrop;
+        private readonly MicaKind micaBackdropKind;
+        private readonly DesktopAcrylicKind desktopAcrylicBackdropKind;
         private ISystemBackdropControllerWithTargets systemBackdropController;
 
         public SystemBackdropConfiguration BackdropConfiguration { get; private set; }
 
-        public bool IsMicaBackdrop { get; set; }
+        public MaterialBackdrop(MicaKind micaKind)
+        {
+            isMicaBackdrop = true;
+            micaBackdropKind = micaKind;
+        }
 
-        public MicaKind MicaBackdropKind { get; set; }
-
-        public DesktopAcrylicKind DesktopAcrylicBackdropKind { get; set; }
+        public MaterialBackdrop(DesktopAcrylicKind desktopAcrylicKind)
+        {
+            isMicaBackdrop = false;
+            desktopAcrylicBackdropKind = desktopAcrylicKind;
+        }
 
         /// <summary>
         /// 当此对象附加到有效容器时调用
@@ -34,16 +43,16 @@ namespace GetStoreApp.Extensions.Backdrop
                 throw new ApplicationException(ResourceService.GetLocalized("Resources/SystemBackdropControllerInitializeFailed"));
             }
 
-            if (IsMicaBackdrop)
+            if (isMicaBackdrop)
             {
-                systemBackdropController = new MicaController() { Kind = MicaBackdropKind };
+                systemBackdropController = new MicaController() { Kind = micaBackdropKind };
                 systemBackdropController.AddSystemBackdropTarget(connectedTarget);
                 BackdropConfiguration = GetDefaultSystemBackdropConfiguration(connectedTarget, xamlRoot);
                 systemBackdropController.SetSystemBackdropConfiguration(BackdropConfiguration);
             }
             else
             {
-                systemBackdropController = new DesktopAcrylicController() { Kind = DesktopAcrylicBackdropKind };
+                systemBackdropController = new DesktopAcrylicController() { Kind = desktopAcrylicBackdropKind };
                 systemBackdropController.AddSystemBackdropTarget(connectedTarget);
                 BackdropConfiguration = GetDefaultSystemBackdropConfiguration(connectedTarget, xamlRoot);
                 systemBackdropController.SetSystemBackdropConfiguration(BackdropConfiguration);

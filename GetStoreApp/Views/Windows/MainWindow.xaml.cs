@@ -603,43 +603,23 @@ namespace GetStoreApp.Views.Windows
         {
             if (backdropItem.Value == BackdropService.BackdropList[1].Value)
             {
-                SystemBackdrop = new MaterialBackdrop()
-                {
-                    IsMicaBackdrop = true,
-                    MicaBackdropKind = MicaKind.Base
-                };
+                SystemBackdrop = new MaterialBackdrop(MicaKind.Base);
             }
             else if (backdropItem.Value == BackdropService.BackdropList[2].Value)
             {
-                SystemBackdrop = new MaterialBackdrop()
-                {
-                    IsMicaBackdrop = true,
-                    MicaBackdropKind = MicaKind.BaseAlt
-                };
+                SystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
             }
             else if (backdropItem.Value == BackdropService.BackdropList[3].Value)
             {
-                SystemBackdrop = new MaterialBackdrop()
-                {
-                    IsMicaBackdrop = false,
-                    DesktopAcrylicBackdropKind = DesktopAcrylicKind.Default
-                };
+                SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
             }
             else if (backdropItem.Value == BackdropService.BackdropList[4].Value)
             {
-                SystemBackdrop = new MaterialBackdrop()
-                {
-                    IsMicaBackdrop = false,
-                    DesktopAcrylicBackdropKind = DesktopAcrylicKind.Base
-                };
+                SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
             }
             else if (backdropItem.Value == BackdropService.BackdropList[5].Value)
             {
-                SystemBackdrop = new MaterialBackdrop()
-                {
-                    IsMicaBackdrop = false,
-                    DesktopAcrylicBackdropKind = DesktopAcrylicKind.Thin
-                };
+                SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
             }
             else
             {

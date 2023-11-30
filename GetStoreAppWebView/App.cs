@@ -18,15 +18,13 @@ namespace GetStoreAppWebView
     {
         private bool isDisposed;
 
-        private List<IXamlMetadataProvider> providers;
+        private List<IXamlMetadataProvider> providers = new List<IXamlMetadataProvider>()
+        {
+            new XamlControlsXamlMetaDataProvider()
+        };
 
         public App()
         {
-            providers = new List<IXamlMetadataProvider>
-            {
-                new XamlControlsXamlMetaDataProvider(),
-            };
-
             DispatcherQueueController.CreateOnCurrentThread();
             WindowsXamlManager.InitializeForCurrentThread();
 
