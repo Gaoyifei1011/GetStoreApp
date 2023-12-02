@@ -137,11 +137,6 @@ namespace GetStoreAppWebView.Views.Controls
                 User32Library.SetWindowPos((IntPtr)(Program.WPFApp.MainWindow as MainWindow).DesktopWindowXamlSource.SiteBridge.WindowId.Value,
   IntPtr.Zero, 0, 0, (int)(ActualWidth * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), Convert.ToInt32(ActualHeight * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
             }
-            else
-            {
-                User32Library.SetWindowPos((IntPtr)(Program.WPFApp.MainWindow as MainWindow).DesktopWindowXamlSource.SiteBridge.WindowId.Value,
-    IntPtr.Zero, 0, 0, (int)(ActualWidth * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), Convert.ToInt32((Program.WPFApp.MainWindow as MainWindow).RenderSize.Height * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
-            }
         }
 
         /// <summary>
