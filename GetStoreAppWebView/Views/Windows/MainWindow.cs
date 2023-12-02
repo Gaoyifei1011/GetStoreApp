@@ -12,24 +12,22 @@ using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Interop;
 
-namespace GetStoreAppWebView.Views.Forms
+namespace GetStoreAppWebView.Views.Windows
 {
     /// <summary>
-    /// 应用主界面
+    /// 应用主窗口
     /// </summary>
-    public class MainForm : Form
+    public class MainWindow : Window
     {
-        private int windowWidth = 1000;
-        private int windowHeight = 700;
-
-        private IContainer components = new Container();
         private IntPtr InputNonClientPointerSourceHandle;
         private IslandsControl IslandsControl = new IslandsControl();
+
+        private WNDPROC newMainWindowWndProc = null;
+        private IntPtr oldMainWindowWndProc = IntPtr.Zero;
 
         private WNDPROC newInputNonClientPointerSourceWndProc = null;
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
@@ -38,60 +36,54 @@ namespace GetStoreAppWebView.Views.Forms
 
         public double WindowDPI { get; private set; }
 
+        public IntPtr Handle { get; private set; }
+
         public AppWindow AppWindow { get; private set; }
 
         public DesktopWindowXamlSource DesktopWindowXamlSource { get; private set; } = new DesktopWindowXamlSource();
 
-        public MainForm()
+        public MainWindow()
         {
             AllowDrop = false;
-            AutoScaleMode = AutoScaleMode.Font;
-            Icon = Icon.ExtractAssociatedIcon(Process.GetCurrentProcess().MainModule.FileName);
-            WindowDPI = ((double)DeviceDpi) / 96;
-            MinimumSize = new Size(Convert.ToInt32(windowWidth * WindowDPI), Convert.ToInt32(windowHeight * WindowDPI));
-            Size = new Size(Convert.ToInt32(windowWidth * WindowDPI), Convert.ToInt32(windowHeight * WindowDPI));
-            StartPosition = FormStartPosition.CenterParent;
-            Text = ResourceService.GetLocalized("WebView/Title");
-        }
-
-        /// <summary>
-        /// 处置由主窗体占用的资源
-        /// </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components is not null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
+            Height = MinHeight = 700;
+            Width = MinWidth = 1000;
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+            VerticalAlignment = VerticalAlignment.Stretch;
+            Title = ResourceService.GetLocalized("WebView/Title");
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         /// <summary>
         /// 设备的每英寸像素 (PPI) 显示更改修改后触发的事件
         /// </summary>
-        protected override void OnDpiChanged(DpiChangedEventArgs args)
+        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
         {
-            base.OnDpiChanged(args);
-            WindowDPI = ((double)args.DeviceDpiNew) / 96;
-            MinimumSize = new Size(Convert.ToInt32(windowWidth * WindowDPI), Convert.ToInt32(windowHeight * WindowDPI));
+            base.OnDpiChanged(oldDpi, newDpi);
+            WindowDPI = newDpi.PixelsPerDip;
         }
 
         /// <summary>
         /// 关闭窗口时释放资源
         /// </summary>
-        protected override void OnFormClosing(FormClosingEventArgs args)
+        protected override void OnClosing(CancelEventArgs args)
         {
-            base.OnFormClosing(args);
+            base.OnClosing(args);
             IslandsControl.CloseWindow();
         }
 
         /// <summary>
-        /// 窗口句柄创建完成后引发的事件
+        /// 引发此事件以支持与 Win32 的互操作
         /// </summary>
-
-        protected override void OnHandleCreated(EventArgs args)
+        protected override void OnSourceInitialized(EventArgs args)
         {
-            base.OnHandleCreated(args);
+            base.OnSourceInitialized(args);
+
+            Handle = new WindowInteropHelper(this).Handle;
+            WindowDPI = System.Drawing.Graphics.FromHwnd(Handle).DpiX / 96;
+
+            // 为应用主窗口添加窗口过程
+            newMainWindowWndProc = new WNDPROC(WindowWndProc);
+            oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
 
             WindowId windowId = new WindowId() { Value = (ulong)Handle };
             AppWindow = AppWindow.GetFromWindowId(windowId);
@@ -109,7 +101,7 @@ namespace GetStoreAppWebView.Views.Forms
             if (InputNonClientPointerSourceHandle != IntPtr.Zero)
             {
                 int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
-                SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, (IntPtr)(style & ~(int)WindowStyle.WS_SYSMENU));
+                SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, (IntPtr)(style & ~(int)WindowsAPI.PInvoke.User32.WindowStyle.WS_SYSMENU));
 
                 newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
                 oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(InputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
@@ -125,36 +117,6 @@ namespace GetStoreAppWebView.Views.Forms
             }
 
             DesktopWindowXamlSource.SiteBridge.Show();
-        }
-
-        /// <summary>
-        /// 窗体移动时关闭浮出窗口
-        /// </summary>
-        protected override void OnMove(EventArgs args)
-        {
-            base.OnMove(args);
-            IslandsControl?.CloseDownloadDialog();
-        }
-
-        /// <summary>
-        /// 窗口大小改变时发生的事件
-        /// </summary>
-        protected override void OnSizeChanged(EventArgs args)
-        {
-            base.OnSizeChanged(args);
-            IslandsControl.IsWindowMaximized = WindowState == FormWindowState.Maximized;
-
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0] && DesktopWindowXamlSource.SiteBridge is not null)
-            {
-                User32Library.SetWindowPos((IntPtr)Program.MainWindow.DesktopWindowXamlSource.SiteBridge.WindowId.Value,
-                  IntPtr.Zero, 0, 0, ClientSize.Width, Convert.ToInt32(IslandsControl.ActualHeight * Program.MainWindow.WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
-
-                IslandsControl.ChangeSize(ClientSize.Width, ClientSize.Height);
-            }
-            else
-            {
-                IslandsControl.CloseDownloadDialog();
-            }
         }
 
         /// <summary>
@@ -188,39 +150,59 @@ namespace GetStoreAppWebView.Views.Forms
         }
 
         /// <summary>
-        /// 处理 Windows 消息
+        /// 应用主窗口消息处理
         /// </summary>
-        protected override void WndProc(ref Message m)
+        private IntPtr WindowWndProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
         {
-            switch (m.Msg)
+            switch (Msg)
             {
-                // 选择窗口右键菜单的条目时接收到的消息
-                case (int)WindowMessage.WM_SYSCOMMAND:
+                case WindowMessage.WM_SIZE:
                     {
-                        SystemCommand sysCommand = (SystemCommand)(m.WParam.ToInt32() & 0xFFF0);
+                        IslandsControl.IsWindowMaximized = WindowState == WindowState.Maximized;
+
+                        if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0] && DesktopWindowXamlSource.SiteBridge is not null)
+                        {
+                            User32Library.SetWindowPos((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value,
+                              IntPtr.Zero, 0, 0, lParam.ToInt32() & 0xFFFF, Convert.ToInt32(IslandsControl.ActualHeight * WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
+                        }
+                        else
+                        {
+                            IslandsControl.CloseDownloadDialog();
+                        }
+                        break;
+                    }
+                case WindowMessage.WM_MOVE:
+                    {
+                        IslandsControl?.CloseDownloadDialog();
+                        break;
+                    }
+                // 选择窗口右键菜单的条目时接收到的消息
+                case WindowMessage.WM_SYSCOMMAND:
+                    {
+                        SystemCommand sysCommand = (SystemCommand)(wParam.ToInt32() & 0xFFF0);
 
                         if (sysCommand is SystemCommand.SC_MOUSEMENU || sysCommand is SystemCommand.SC_KEYMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
-                            options.Position = new Windows.Foundation.Point(0, 45);
+                            options.Position = new global::Windows.Foundation.Point(0, 45);
                             options.ShowMode = FlyoutShowMode.Standard;
                             IslandsControl.TitlebarMenuFlyout.ShowAt(null, options);
-                            return;
+                            return IntPtr.Zero;
                         }
                         break;
                     }
                 // 任务栏窗口右键点击后的消息
-                case (int)WindowMessage.WM_SYSMENU:
+                case WindowMessage.WM_SYSMENU:
                     {
-                        if (WindowState is FormWindowState.Minimized)
+                        if (WindowState is WindowState.Minimized)
                         {
-                            WindowState = FormWindowState.Normal;
+                            WindowState = WindowState.Normal;
                         }
                         break;
                     }
             }
 
-            base.WndProc(ref m);
+            return User32Library.CallWindowProc(oldMainWindowWndProc, hWnd, Msg, wParam, lParam);
         }
 
         /// <summary>
@@ -244,14 +226,36 @@ namespace GetStoreAppWebView.Views.Forms
                     {
                         if (IslandsControl is not null && IslandsControl.XamlRoot is not null)
                         {
-                            Point clientPoint = PointToClient(MousePosition);
+                            Point screenPoint = new Point(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
+                            RECT rect = new RECT();
+                            User32Library.GetWindowRect(Handle, ref rect);
 
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Placement = FlyoutPlacementMode.BottomEdgeAlignedLeft;
                             options.ShowMode = FlyoutShowMode.Standard;
-                            options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                                new Windows.Foundation.Point(clientPoint.X / WindowDPI, clientPoint.Y / WindowDPI) :
-                                new Windows.Foundation.Point(clientPoint.X, clientPoint.Y);
+                            if (InfoHelper.SystemVersion.Build >= 22000)
+                            {
+                                if (WindowState is WindowState.Maximized)
+                                {
+                                    options.Position = new global::Windows.Foundation.Point((screenPoint.X - rect.Left - 8) / WindowDPI, (screenPoint.Y - rect.Top - 8) / WindowDPI);
+                                }
+                                else
+                                {
+                                    options.Position = new global::Windows.Foundation.Point((screenPoint.X - rect.Left - 8) / WindowDPI, (screenPoint.Y - rect.Top) / WindowDPI);
+                                }
+                            }
+                            else
+                            {
+                                if (WindowState is WindowState.Maximized)
+                                {
+                                    options.Position = new global::Windows.Foundation.Point(screenPoint.X - rect.Left - 8, screenPoint.Y - rect.Top);
+                                }
+                                else
+                                {
+                                    options.Position = new global::Windows.Foundation.Point(screenPoint.X - rect.Left - 8, screenPoint.Y - rect.Top - 8);
+                                }
+                            }
+
                             IslandsControl.TitlebarMenuFlyout.ShowAt(null, options);
                         }
                         return IntPtr.Zero;

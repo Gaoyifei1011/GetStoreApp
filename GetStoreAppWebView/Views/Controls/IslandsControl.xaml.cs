@@ -1,6 +1,7 @@
 ﻿using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
+using GetStoreAppWebView.Views.Windows;
 using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -11,12 +12,12 @@ using Microsoft.Web.WebView2.Core;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows.Navigation;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
@@ -29,7 +30,7 @@ namespace GetStoreAppWebView.Views.Controls
     {
         private bool IsLoadWebView2 = false;
 
-        public WebBrowser WebBrowser { get; private set; }
+        public System.Windows.Controls.WebBrowser WebBrowser { get; private set; }
 
         private bool _isWindowMaximized;
 
@@ -128,18 +129,18 @@ namespace GetStoreAppWebView.Views.Controls
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
             SetIslandsColor(ActualTheme);
-
-            User32Library.SetWindowPos((IntPtr)Program.MainWindow.DesktopWindowXamlSource.SiteBridge.WindowId.Value,
-                IntPtr.Zero, 0, 0, Program.MainWindow.ClientSize.Width, Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI), SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
-
+            Debug.WriteLine((Program.WPFApp.MainWindow as MainWindow).WindowDPI);
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 IsEnabled = true;
-                if (WebBrowser is not null)
-                {
-                    WebBrowser.Location = new Point(0, Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
-                    WebBrowser.Size = new Size(Program.MainWindow.ClientSize.Width, Program.MainWindow.ClientSize.Height - Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
-                }
+                WebBrowser.Margin = new System.Windows.Thickness(0, ActualHeight, 0, 0);
+                User32Library.SetWindowPos((IntPtr)(Program.WPFApp.MainWindow as MainWindow).DesktopWindowXamlSource.SiteBridge.WindowId.Value,
+  IntPtr.Zero, 0, 0, (int)(ActualWidth * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), Convert.ToInt32(ActualHeight * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
+            }
+            else
+            {
+                User32Library.SetWindowPos((IntPtr)(Program.WPFApp.MainWindow as MainWindow).DesktopWindowXamlSource.SiteBridge.WindowId.Value,
+    IntPtr.Zero, 0, 0, (int)(ActualWidth * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), Convert.ToInt32((Program.WPFApp.MainWindow as MainWindow).RenderSize.Height * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
             }
         }
 
@@ -148,7 +149,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.Dispose();
+            Program.WPFApp.Dispose();
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            Program.MainWindow.WindowState = FormWindowState.Maximized;
+            (Program.WPFApp.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Maximized;
         }
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            Program.MainWindow.WindowState = FormWindowState.Minimized;
+            (Program.WPFApp.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Minimized;
         }
 
         /// <summary>
@@ -176,7 +177,7 @@ namespace GetStoreAppWebView.Views.Controls
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Program.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, IntPtr.Zero);
+                User32Library.SendMessage((Program.WPFApp.MainWindow as MainWindow).Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, IntPtr.Zero);
             }
         }
 
@@ -185,7 +186,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            Program.MainWindow.WindowState = FormWindowState.Normal;
+            (Program.WPFApp.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Normal;
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace GetStoreAppWebView.Views.Controls
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Program.MainWindow.Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, IntPtr.Zero);
+                User32Library.SendMessage((Program.WPFApp.MainWindow as MainWindow).Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, IntPtr.Zero);
             }
         }
 
@@ -260,7 +261,7 @@ namespace GetStoreAppWebView.Views.Controls
 
         /// <summary>
         /// WebView2 ：打开下载窗口
-        /// Winform WebBrowser ：打开系统下载文件夹
+        /// WPF WebBrowser ：打开系统下载文件夹
         /// </summary>
         private void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
@@ -369,8 +370,8 @@ namespace GetStoreAppWebView.Views.Controls
 
             LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", processFailedBuilder);
 
-            MessageBox.Show(ResourceService.GetLocalized("WebView/WebViewProcessFailedContent"), ResourceService.GetLocalized("WebView/WebViewProcessFailedTitle"), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Program.ApplicationRoot.Dispose();
+            System.Windows.MessageBox.Show(ResourceService.GetLocalized("WebView/WebViewProcessFailedContent"), ResourceService.GetLocalized("WebView/WebViewProcessFailedTitle"), System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            Program.WPFApp.Dispose();
         }
 
         /// <summary>
@@ -397,7 +398,7 @@ namespace GetStoreAppWebView.Views.Controls
         private void OnNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             IsLoading = false;
-            Program.MainWindow.Text = string.Format("{0} - {1}", webView2.CoreWebView2.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
+            Program.WPFApp.MainWindow.Title = string.Format("{0} - {1}", webView2.CoreWebView2.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
         }
 
         /// <summary>
@@ -426,31 +427,22 @@ namespace GetStoreAppWebView.Views.Controls
         }
 
         /// <summary>
-        /// Winform WebBrowser : 当前页面对应的链接发生改变时触发这一事件
+        /// WPF WebBrowser : 当前页面对应的链接发生改变时触发这一事件
         /// </summary>
-        private void OnNavigated(object sender, WebBrowserNavigatedEventArgs args)
+        private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            Program.MainWindow.Text = string.Format("{0} - {1}", WebBrowser.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
+            Program.WPFApp.MainWindow.Title = string.Format("{0} - {1}", WebBrowser.InvokeScript("eval", "document.title").ToString(), ResourceService.GetLocalized("WebView/Title"));
             CanGoBack = WebBrowser.CanGoBack;
             CanGoForward = WebBrowser.CanGoForward;
             IsLoading = false;
         }
 
         /// <summary>
-        /// Winform WebBrowser : 当前页面对应的链接发生改变时触发这一事件
+        /// WPF WebBrowser : 当前页面对应的链接发生改变时触发这一事件
         /// </summary>
-        private void OnNavigating(object sender, WebBrowserNavigatingEventArgs args)
+        private void OnNavigating(object sender, NavigatingCancelEventArgs args)
         {
             IsLoading = true;
-        }
-
-        /// <summary>
-        /// Winform WebBrowser : 捕捉打开新窗口事件，并禁止弹窗
-        /// </summary>
-        private void OnNewWindow(object sender, CancelEventArgs args)
-        {
-            args.Cancel = true;
-            WebBrowser.Navigate(WebBrowser.StatusText.ToString());
         }
 
         /// <summary>
@@ -458,7 +450,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void SetIslandsColor(ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = Program.MainWindow.AppWindow.TitleBar;
+            AppWindowTitleBar titleBar = (Program.WPFApp.MainWindow as MainWindow).AppWindow.TitleBar;
 
             titleBar.BackgroundColor = Colors.Transparent;
             titleBar.ForegroundColor = Colors.Transparent;
@@ -469,33 +461,23 @@ namespace GetStoreAppWebView.Views.Controls
             {
                 titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.Black;
-                titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(20, 0, 0, 0);
+                titleBar.ButtonHoverBackgroundColor = global::Windows.UI.Color.FromArgb(20, 0, 0, 0);
                 titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(30, 0, 0, 0);
+                titleBar.ButtonPressedBackgroundColor = global::Windows.UI.Color.FromArgb(30, 0, 0, 0);
                 titleBar.ButtonPressedForegroundColor = Colors.Black;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.Black;
-
-                if (InfoHelper.SystemVersion.Build < 22621)
-                {
-                    Program.MainWindow.BackColor = Color.FromArgb(255, 240, 243, 249);
-                }
             }
             else
             {
                 titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(20, 255, 255, 255);
+                titleBar.ButtonHoverBackgroundColor = global::Windows.UI.Color.FromArgb(20, 255, 255, 255);
                 titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(30, 255, 255, 255);
+                titleBar.ButtonPressedBackgroundColor = global::Windows.UI.Color.FromArgb(30, 255, 255, 255);
                 titleBar.ButtonPressedForegroundColor = Colors.White;
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
-
-                if (InfoHelper.SystemVersion.Build < 22621)
-                {
-                    Program.MainWindow.BackColor = Color.FromArgb(255, 20, 20, 20);
-                }
             }
         }
 
@@ -512,12 +494,11 @@ namespace GetStoreAppWebView.Views.Controls
                     {
                         WebBrowser.Navigated -= OnNavigated;
                         WebBrowser.Navigating -= OnNavigating;
-                        WebBrowser.NewWindow -= OnNewWindow;
                         WebBrowser.Dispose();
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Winform WebBrowser unloaded failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, "WPF WebBrowser unloaded failed", e);
                     }
                 }
             }
@@ -542,18 +523,6 @@ namespace GetStoreAppWebView.Views.Controls
         }
 
         /// <summary>
-        /// 窗口大小改变时触发的事件
-        /// </summary>
-        public void ChangeSize(int clientWidth, int clientHeight)
-        {
-            if (WebBrowser is not null)
-            {
-                WebBrowser.Location = new Point(0, Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
-                WebBrowser.Size = new Size(clientWidth, clientHeight - Convert.ToInt32(ActualHeight * Program.MainWindow.WindowDPI));
-            }
-        }
-
-        /// <summary>
         /// 窗口移动或调整大小时关闭下载框
         /// </summary>
         public void CloseDownloadDialog()
@@ -565,20 +534,28 @@ namespace GetStoreAppWebView.Views.Controls
         }
 
         /// <summary>
-        /// 初始化 Winform WebBrowser控件
+        /// 初始化 WPF WebBrowser控件
         /// </summary>
         public void InitializeWebBrowser()
         {
-            WebBrowser = new WebBrowser();
-            WebBrowser.Url = new Uri("https://store.rg-adguard.net");
-            Program.MainWindow.Controls.Add(WebBrowser);
-            WebBrowser.ScriptErrorsSuppressed = true;
-            WebBrowser.AllowWebBrowserDrop = false;
-            WebBrowser.Location = new Point(0, 0);
-            WebBrowser.Size = new Size(Program.MainWindow.ClientSize.Width, Program.MainWindow.ClientSize.Height);
+            WebBrowser = new System.Windows.Controls.WebBrowser();
+            WebBrowser.Source = new Uri("https://store.rg-adguard.net");
+            Program.WPFApp.MainWindow.Content = WebBrowser;
+            SuppressScriptErrors(WebBrowser, true);
+            WebBrowser.AllowDrop = false;
             WebBrowser.Navigating += OnNavigating;
             WebBrowser.Navigated += OnNavigated;
-            WebBrowser.NewWindow += OnNewWindow;
+        }
+
+        public void SuppressScriptErrors(System.Windows.Controls.WebBrowser wb, bool Hide)
+        {
+            FieldInfo fiComWebBrowser = typeof(System.Windows.Controls.WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (fiComWebBrowser == null) return;
+
+            object objComWebBrowser = fiComWebBrowser.GetValue(wb);
+            if (objComWebBrowser == null) return;
+
+            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
         }
 
         /// <summary>

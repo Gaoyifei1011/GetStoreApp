@@ -12,18 +12,16 @@ using Windows.Foundation.Diagnostics;
 namespace GetStoreAppWebView
 {
     /// <summary>
-    /// 网页浏览器程序
+    /// 表示 WinUI 3 Islands 当前应用程序及其可用服务
     /// </summary>
-    public class App : Application, IXamlMetadataProvider, IDisposable
+    public class WinUIApp : Application, IXamlMetadataProvider
     {
-        private bool isDisposed;
-
         private List<IXamlMetadataProvider> providers = new List<IXamlMetadataProvider>()
         {
             new XamlControlsXamlMetaDataProvider()
         };
 
-        public App()
+        public WinUIApp()
         {
             DispatcherQueueController.CreateOnCurrentThread();
             WindowsXamlManager.InitializeForCurrentThread();
@@ -63,15 +61,6 @@ namespace GetStoreAppWebView
         }
 
         /// <summary>
-        /// 释放资源
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// 应用程序启动时的资源
         /// </summary>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -87,28 +76,7 @@ namespace GetStoreAppWebView
         {
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
-            Dispose();
-        }
-
-        ~App()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    isDisposed = true;
-                    Program.MainWindow.Close();
-                    Environment.Exit(0);
-                }
-            }
+            Program.WPFApp.Dispose();
         }
     }
 }

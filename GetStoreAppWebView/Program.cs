@@ -1,13 +1,8 @@
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
-using GetStoreAppWebView.Views.Forms;
-using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
 using System;
 using System.Diagnostics;
-using System.Threading;
-using System.Windows.Forms;
-using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView
 {
@@ -16,9 +11,9 @@ namespace GetStoreAppWebView
     /// </summary>
     public static class Program
     {
-        public static App ApplicationRoot { get; private set; }
+        public static WinUIApp WinUIApp { get; private set; }
 
-        public static MainForm MainWindow { get; private set; }
+        public static WPFApp WPFApp { get; private set; }
 
         /// <summary>
         /// 应用程序的主入口点
@@ -34,46 +29,14 @@ namespace GetStoreAppWebView
 
             InitializeResources();
 
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            Application.ApplicationExit += OnApplicationExit;
-            Application.ThreadException += OnThreadException;
-            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-
-            Application.SetCompatibleTextRenderingDefault(false);
-
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 Environment.SetEnvironmentVariable("WEBVIEW2_USE_VISUAL_HOSTING_FOR_OWNED_WINDOWS", "1");
             }
 
-            ApplicationRoot = new App();
-            MainWindow = new MainForm();
-            Application.Run(MainWindow);
-        }
-
-        /// <summary>
-        /// 在应用程序即将关闭时发生
-        /// </summary>
-        private static void OnApplicationExit(object sender, EventArgs args)
-        {
-            ApplicationRoot.Dispose();
-        }
-
-        /// <summary>
-        /// 处理 Windows 窗体 UI 线程异常
-        /// </summary>
-        private static void OnThreadException(object sender, ThreadExceptionEventArgs args)
-        {
-            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
-        }
-
-        /// <summary>
-        /// 处理 Windows 窗体非 UI 线程异常
-        /// </summary>
-        private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
-        {
-            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
-            ApplicationRoot.Dispose();
+            WinUIApp = new WinUIApp();
+            WPFApp = new WPFApp();
+            WPFApp.Run();
         }
 
         /// <summary>

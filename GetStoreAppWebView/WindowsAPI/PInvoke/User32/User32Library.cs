@@ -56,6 +56,16 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         public static extern int GetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex);
 
         /// <summary>
+        /// 检索指定窗口的边框的尺寸。 尺寸以相对于屏幕左上角的屏幕坐标提供。
+        /// </summary>
+        /// <param name="hWnd">窗口的句柄。</param>
+        /// <param name="lpRect">指向 RECT 结构的指针，该结构接收窗口左上角和右下角的屏幕坐标。</param>
+        /// <returns></returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, EntryPoint = "GetWindowRect", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+
+        /// <summary>
         /// 将指定的消息发送到窗口或窗口。SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
         /// </summary>
         /// <param name="hWnd">
