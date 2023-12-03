@@ -67,28 +67,28 @@
             Orientation="Horizontal"
             Spacing="2">
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnOpenTempFolderClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE8B7;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnRefreshClicked}"
                 IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE72C;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </StackPanel>
     </Grid>
 

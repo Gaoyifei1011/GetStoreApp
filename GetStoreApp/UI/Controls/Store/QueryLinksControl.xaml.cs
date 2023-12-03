@@ -14,7 +14,6 @@ using GetStoreApp.UI.Notifications;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
@@ -575,14 +574,6 @@ namespace GetStoreApp.UI.Controls.Store
                     queryLinksItem.IsSelected = false;
                 }
             }
-        }
-
-        /// <summary>
-        /// 显示复制选项
-        /// </summary>
-        private void OnCopyOptionsClicked(object sender, RoutedEventArgs args)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as MenuFlyoutItem);
         }
 
         /// <summary>

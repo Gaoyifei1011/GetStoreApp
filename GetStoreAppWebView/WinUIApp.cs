@@ -66,6 +66,7 @@ namespace GetStoreAppWebView
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml") });
+            Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/AppBarButton.xaml") });
             Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/MenuFlyout.xaml") });
         }
 

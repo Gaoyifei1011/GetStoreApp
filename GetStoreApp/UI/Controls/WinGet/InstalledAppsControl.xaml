@@ -84,18 +84,17 @@
             Background="Transparent"
             Orientation="Horizontal">
 
-            <MenuFlyoutItem
-                Click="{x:Bind OnSortClicked}"
+            <AppBarButton
                 IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SortToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE8CB;" />
-                </MenuFlyoutItem.Icon>
+                </AppBarButton.Icon>
 
-                <FlyoutBase.AttachedFlyout>
+                <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutSubItem
                             Height="32"
@@ -137,20 +136,20 @@
                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
                         </MenuFlyoutSubItem>
                     </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
-            </MenuFlyoutItem>
+                </AppBarButton.Flyout>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnRefreshClicked}"
                 IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE72C;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </StackPanel>
     </Grid>
 

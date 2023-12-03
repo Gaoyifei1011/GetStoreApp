@@ -9,6 +9,7 @@
             <!--  资源字典顺序发生变化时，需要修改 ResourceDictionaryHelper 静态类的资源字典顺序  -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/AppBarButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/DropDownButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Flyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />

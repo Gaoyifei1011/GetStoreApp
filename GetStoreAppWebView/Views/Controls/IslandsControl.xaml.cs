@@ -7,7 +7,6 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.ComponentModel;
@@ -277,14 +276,6 @@ namespace GetStoreAppWebView.Views.Controls
                     });
                 }
             }
-        }
-
-        /// <summary>
-        /// 显示浮出控件
-        /// </summary>
-        private void OnMoreClicked(object sender, RoutedEventArgs args)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
 
         /// <summary>

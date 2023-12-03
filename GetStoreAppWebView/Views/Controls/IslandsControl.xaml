@@ -127,37 +127,37 @@
             Orientation="Horizontal"
             Spacing="2">
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnBrowserBackClicked}"
                 IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Back')}">
+                Label="{x:Bind root:ResourceService.GetLocalized('WebView/Back')}"
+                Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE72b;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnBrowserForwardClicked}"
                 IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Forward')}">
+                Label="{x:Bind root:ResourceService.GetLocalized('WebView/Forward')}"
+                Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE72a;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnRefreshClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Refresh')}">
+                Label="{x:Bind root:ResourceService.GetLocalized('WebView/Refresh')}"
+                Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE72c;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </StackPanel>
 
         <Grid
@@ -199,27 +199,24 @@
             Orientation="Horizontal"
             Spacing="2">
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnDownloadClicked}"
                 IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Download')}">
+                Label="{x:Bind root:ResourceService.GetLocalized('WebView/Download')}"
+                Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE896;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
-                Click="{x:Bind OnMoreClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WebView/More')}">
+            <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WebView/More')}" Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE712;" />
-                </MenuFlyoutItem.Icon>
+                </AppBarButton.Icon>
 
-                <FlyoutBase.AttachedFlyout>
+                <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
 
@@ -247,8 +244,8 @@
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                     </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
-            </MenuFlyoutItem>
+                </AppBarButton.Flyout>
+            </AppBarButton>
         </StackPanel>
     </Grid>
 

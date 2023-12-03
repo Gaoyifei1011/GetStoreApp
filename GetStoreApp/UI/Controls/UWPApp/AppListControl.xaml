@@ -72,18 +72,17 @@
             Orientation="Horizontal"
             Spacing="2">
 
-            <MenuFlyoutItem
-                Click="{x:Bind OnSortClicked}"
+            <AppBarButton
                 IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Sort')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('UWPApp/Sort')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE8CB;" />
-                </MenuFlyoutItem.Icon>
+                </AppBarButton.Icon>
 
-                <FlyoutBase.AttachedFlyout>
+                <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutSubItem
                             Height="32"
@@ -132,21 +131,20 @@
                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortByInstalledDate')}" />
                         </MenuFlyoutSubItem>
                     </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
-            </MenuFlyoutItem>
+                </AppBarButton.Flyout>
+            </AppBarButton>
 
-            <MenuFlyoutItem
-                Click="{x:Bind OnFilterClicked}"
+            <AppBarButton
                 IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Filter')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('UWPApp/Filter')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/FilterToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE71c;" />
-                </MenuFlyoutItem.Icon>
+                </AppBarButton.Icon>
 
-                <FlyoutBase.AttachedFlyout>
+                <AppBarButton.Flyout>
                     <Flyout
                         Closed="{x:Bind OnClosed}"
                         FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
@@ -233,20 +231,20 @@
                             </Grid>
                         </StackPanel>
                     </Flyout>
-                </FlyoutBase.AttachedFlyout>
-            </MenuFlyoutItem>
+                </AppBarButton.Flyout>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnRefreshClicked}"
                 IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Refresh')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('UWPApp/Refresh')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/RefreshToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE72c;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </StackPanel>
     </Grid>
 

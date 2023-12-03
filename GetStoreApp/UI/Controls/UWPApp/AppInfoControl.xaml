@@ -48,16 +48,16 @@
                             VerticalAlignment="Center"
                             Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/AppInformation')}" />
 
-                        <MenuFlyoutItem
+                        <AppBarButton
                             Grid.Column="2"
                             Click="{x:Bind OnCopyClicked}"
-                            Style="{StaticResource AppBarButtonMenuItemStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Copy')}">
+                            Label="{x:Bind root:ResourceService.GetLocalized('UWPApp/Copy')}"
+                            Style="{StaticResource AppBarButtonStyle}">
 
-                            <MenuFlyoutItem.Icon>
+                            <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE8C8;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
                     </Grid>
                 </Expander.Header>
 

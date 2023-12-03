@@ -10,7 +10,6 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
@@ -261,14 +260,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                 GetInstalledApps();
                 InitializeData();
             }
-        }
-
-        /// <summary>
-        /// 显示排序规则
-        /// </summary>
-        private void OnSortClicked(object sender, RoutedEventArgs args)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
 
         /// <summary>

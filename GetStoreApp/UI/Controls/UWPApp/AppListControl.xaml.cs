@@ -571,14 +571,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         }
 
         /// <summary>
-        /// 显示排序规则
-        /// </summary>
-        private void OnSortClicked(object sender, RoutedEventArgs args)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
-        }
-
-        /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
@@ -602,14 +594,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 SelectedRule = (AppSortRuleKind)toggleMenuFlyoutItem.Tag;
                 InitializeData();
             }
-        }
-
-        /// <summary>
-        /// 显示过滤规则
-        /// </summary>
-        private void OnFilterClicked(object sender, RoutedEventArgs args)
-        {
-            FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
         }
 
         /// <summary>

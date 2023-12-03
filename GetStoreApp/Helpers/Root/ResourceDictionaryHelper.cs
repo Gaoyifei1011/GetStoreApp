@@ -9,6 +9,8 @@ namespace GetStoreApp.Helpers.Root
     {
         public static ResourceDictionary WinUIResourceDict { get; private set; }
 
+        public static ResourceDictionary AppbarButtonResourceDict { get; private set; }
+
         public static ResourceDictionary DropDownButtonResourceDict { get; private set; }
 
         public static ResourceDictionary FlyoutResourceDict { get; private set; }
@@ -37,16 +39,17 @@ namespace GetStoreApp.Helpers.Root
         public static void InitializeResourceDictionary()
         {
             WinUIResourceDict = Application.Current.Resources.MergedDictionaries[0];
-            DropDownButtonResourceDict = Application.Current.Resources.MergedDictionaries[1];
-            FlyoutResourceDict = Application.Current.Resources.MergedDictionaries[2];
-            HyperlinkButtonResourceDict = Application.Current.Resources.MergedDictionaries[3];
-            InAppNotificationResourceDict = Application.Current.Resources.MergedDictionaries[4];
-            InfoBarResourceDict = Application.Current.Resources.MergedDictionaries[5];
-            ListViewResourceDict = Application.Current.Resources.MergedDictionaries[6];
-            MenuFlyoutResourceDict = Application.Current.Resources.MergedDictionaries[7];
-            ScrollBarResourceDict = Application.Current.Resources.MergedDictionaries[8];
-            SegmentedResourceDict = Application.Current.Resources.MergedDictionaries[9];
-            SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[10];
+            AppbarButtonResourceDict = Application.Current.Resources.MergedDictionaries[1];
+            DropDownButtonResourceDict = Application.Current.Resources.MergedDictionaries[2];
+            FlyoutResourceDict = Application.Current.Resources.MergedDictionaries[3];
+            HyperlinkButtonResourceDict = Application.Current.Resources.MergedDictionaries[4];
+            InAppNotificationResourceDict = Application.Current.Resources.MergedDictionaries[5];
+            InfoBarResourceDict = Application.Current.Resources.MergedDictionaries[6];
+            ListViewResourceDict = Application.Current.Resources.MergedDictionaries[7];
+            MenuFlyoutResourceDict = Application.Current.Resources.MergedDictionaries[8];
+            ScrollBarResourceDict = Application.Current.Resources.MergedDictionaries[9];
+            SegmentedResourceDict = Application.Current.Resources.MergedDictionaries[10];
+            SplitButtonResourceDict = Application.Current.Resources.MergedDictionaries[11];
         }
     }
 }

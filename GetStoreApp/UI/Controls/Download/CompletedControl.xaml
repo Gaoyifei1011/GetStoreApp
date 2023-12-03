@@ -72,28 +72,28 @@
             Orientation="Horizontal"
             Spacing="2">
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnOpenFolderClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE8b7;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnSelectClicked}"
                 IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedCollection.Count), Mode=OneWay}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE762;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </StackPanel>
 
         <StackPanel
@@ -106,37 +106,36 @@
             Orientation="Horizontal"
             Spacing="2">
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnSelectAllClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
+                Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
+                Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE8b3;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnSelectNoneClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
+                Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
+                Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE8e6;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
-                Click="{x:Bind OnDeleteOptionsClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}"
+            <AppBarButton
+                Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptionsToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE74d;" />
-                </MenuFlyoutItem.Icon>
+                </AppBarButton.Icon>
 
-                <FlyoutBase.AttachedFlyout>
+                <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem
                             Click="{x:Bind OnDeleteSelectedClicked}"
@@ -150,29 +149,29 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}" />
                     </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
-            </MenuFlyoutItem>
+                </AppBarButton.Flyout>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnShareSelectedFileClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
+                Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}"
+                Style="{StaticResource AppBarButtonStyle}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE72d;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
-            <MenuFlyoutItem
+            <AppBarButton
                 Click="{x:Bind OnCancelClicked}"
-                Style="{StaticResource AppBarButtonMenuItemStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
+                Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
+                Style="{StaticResource AppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
 
-                <MenuFlyoutItem.Icon>
+                <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE711;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </StackPanel>
     </Grid>
 
