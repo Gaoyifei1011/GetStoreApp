@@ -138,14 +138,16 @@
                 <AppBarButton.Flyout>
                     <MenuFlyout Placement="Bottom">
                         <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
                             Click="{x:Bind OnDeleteSelectedClicked}"
-                            Style="{StaticResource MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}" />
 
                         <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
                             Click="{x:Bind OnDeleteSelectedWithFileClicked}"
-                            Style="{StaticResource MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}" />
                     </MenuFlyout>
@@ -401,27 +403,30 @@
                                 <Button.Flyout>
                                     <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
                                             Command="{StaticResource DeleteCommand}"
                                             CommandParameter="{Binding}"
-                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}"
                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}" />
 
                                         <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
                                             Command="{StaticResource DeleteWithFileCommand}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind io:File.Exists(FilePath)}"
-                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}"
                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}" />
 
                                         <MenuFlyoutSeparator />
 
                                         <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
                                             Command="{StaticResource ShareFileCommand}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind io:File.Exists(FilePath)}"
-                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                             <MenuFlyoutItem.Icon>
@@ -430,10 +435,11 @@
                                         </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
                                             Command="{StaticResource FileInformationCommand}"
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind io:File.Exists(FilePath)}"
-                                            Style="{StaticResource MenuFlyoutItemStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 
                                             <MenuFlyoutItem.Icon>

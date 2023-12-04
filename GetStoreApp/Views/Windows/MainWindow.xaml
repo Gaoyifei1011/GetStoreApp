@@ -20,7 +20,7 @@
         <Grid
             x:Name="AppTitlebar"
             Height="45"
-            Margin="13,0,0,0"
+            Margin="45,0,0,0"
             VerticalAlignment="Top"
             x:FieldModifier="public">
 
@@ -121,9 +121,10 @@
         </Grid>
 
         <NavigationView
-            Margin="0,30,0,0"
+            AlwaysShowHeader="True"
+            BackRequested="{x:Bind OnBackRequested}"
             Canvas.ZIndex="0"
-            IsBackButtonVisible="Collapsed"
+            IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="False"
             IsSettingsVisible="False"
@@ -136,31 +137,8 @@
             <NavigationView.Resources>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
                 <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
+                <Thickness x:Key="NavigationViewContentMargin">0,30,0,0</Thickness>
             </NavigationView.Resources>
-
-            <NavigationView.PaneHeader>
-                <StackPanel
-                    Margin="8,10,0,0"
-                    Orientation="Horizontal"
-                    Spacing="8">
-
-                    <MenuFlyoutItem
-                        Click="{x:Bind OnBackRequestedClicked}"
-                        IsEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
-                        Style="{StaticResource ButtonLargeMenuItemStyle}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Window/Back')}">
-
-                        <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="&#xE973;" />
-                        </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontWeight="SemiBold"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Window/NavigationViewTitle')}" />
-                </StackPanel>
-            </NavigationView.PaneHeader>
 
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="0">

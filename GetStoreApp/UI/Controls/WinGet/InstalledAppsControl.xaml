@@ -102,16 +102,18 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortWay')}">
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortWayClicked}"
                                 IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="True"
                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortWayClicked}"
                                 IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="False"
                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
                         </MenuFlyoutSubItem>
@@ -122,16 +124,18 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortRule')}">
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortRuleClicked}"
                                 IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortRuleClicked}"
                                 IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
                         </MenuFlyoutSubItem>
@@ -308,9 +312,10 @@
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <MenuFlyout Placement="Bottom">
                                             <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
                                                 Command="{StaticResource CopyUnInstallTextCommand}"
                                                 CommandParameter="{x:Bind AppID}"
-                                                Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
 
                                                 <MenuFlyoutItem.Icon>

@@ -126,9 +126,6 @@
   <data name="AppUpdate" xml:space="preserve">
     <value>应用更新</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>返回</value>
-  </data>
   <data name="Close" xml:space="preserve">
     <value>关闭</value>
   </data>
@@ -146,9 +143,6 @@
   </data>
   <data name="NavigationFailed" xml:space="preserve">
     <value>页面{0}导航失败</value>
-  </data>
-  <data name="NavigationViewTitle" xml:space="preserve">
-    <value>导航</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>还原</value>

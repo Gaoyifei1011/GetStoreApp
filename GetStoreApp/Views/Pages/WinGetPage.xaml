@@ -153,21 +153,26 @@
                                                     Value="{x:Bind DownloadProgress, Mode=OneWay}" />
                                             </Grid>
 
-                                            <MenuFlyoutItem
+                                            <Button
                                                 Grid.Column="1"
+                                                Width="Auto"
+                                                Height="Auto"
                                                 Margin="10,0,0,0"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Command="{StaticResource CancelInstallCommand}"
                                                 CommandParameter="{x:Bind AppID}"
                                                 IsEnabled="{x:Bind IsCanceling.Equals(x:False), Mode=OneWay}"
-                                                Style="{StaticResource ButtonNormalMenuItemStyle}"
+                                                Style="{StaticResource AlternateCloseButtonStyle}"
                                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelInstall')}">
 
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon FontSize="16" Glyph="&#xE711;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
+                                                <Button.Content>
+                                                    <FontIcon
+                                                        Margin="4"
+                                                        FontSize="16"
+                                                        Glyph="&#xE711;" />
+                                                </Button.Content>
+                                            </Button>
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

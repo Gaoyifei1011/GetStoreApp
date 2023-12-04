@@ -416,22 +416,6 @@ namespace GetStoreApp.Views.Windows
         #region 第五部分：导航控件及其内容挂载的事件
 
         /// <summary>
-        /// 当后退按钮收到交互（如单击或点击）时发生
-        /// </summary>
-        private void OnBackRequestedClicked(object sender, RoutedEventArgs args)
-        {
-            UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
-            if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)
-            {
-                uwpAppPage.BackToAppList();
-            }
-            else
-            {
-                NavigationService.NavigationFrom();
-            }
-        }
-
-        /// <summary>
         /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
@@ -480,6 +464,22 @@ namespace GetStoreApp.Views.Windows
                     NavigationService.NavigateTo(DesktopLaunchService.InitializePage);
                 }
                 IsBackEnabled = NavigationService.CanGoBack();
+            }
+        }
+
+        /// <summary>
+        /// 当后退按钮收到交互（如单击或点击）时发生
+        /// </summary>
+        private void OnBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
+        {
+            UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
+            if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)
+            {
+                uwpAppPage.BackToAppList();
+            }
+            else
+            {
+                NavigationService.NavigationFrom();
             }
         }
 

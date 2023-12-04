@@ -134,23 +134,26 @@
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnThemeSelectClicked}"
                                     IsChecked="{x:Bind Theme.Value.Equals(ThemeList[0].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind sys:Convert.ToString(ThemeList[0].Key)}" />
 
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnThemeSelectClicked}"
                                     IsChecked="{x:Bind Theme.Value.Equals(ThemeList[1].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind sys:Convert.ToString(ThemeList[1].Key)}" />
 
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnThemeSelectClicked}"
                                     IsChecked="{x:Bind Theme.Value.Equals(ThemeList[2].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="2"
                                     Text="{x:Bind sys:Convert.ToString(ThemeList[2].Key)}" />
                             </MenuFlyout>
@@ -216,9 +219,10 @@
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[0].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind sys:Convert.ToString(BackdropList[0].Key)}" />
 
@@ -229,16 +233,18 @@
                                     Visibility="{x:Bind CanUseMicaBackdrop}">
 
                                     <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
                                         IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[1].Value), Mode=OneWay}"
-                                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="1"
                                         Text="{x:Bind sys:Convert.ToString(BackdropList[1].Key)}" />
 
                                     <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
                                         IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[2].Value), Mode=OneWay}"
-                                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="2"
                                         Text="{x:Bind sys:Convert.ToString(BackdropList[2].Key)}" />
                                 </MenuFlyoutSubItem>
@@ -250,23 +256,26 @@
                                     Visibility="{x:Bind CanUseMicaBackdrop}">
 
                                     <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
                                         IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[3].Value), Mode=OneWay}"
-                                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="3"
                                         Text="{x:Bind sys:Convert.ToString(BackdropList[3].Key)}" />
 
                                     <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
                                         IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[4].Value), Mode=OneWay}"
-                                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="4"
                                         Text="{x:Bind sys:Convert.ToString(BackdropList[4].Key)}" />
 
                                     <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
                                         IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[5].Value), Mode=OneWay}"
-                                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                         Tag="5"
                                         Text="{x:Bind sys:Convert.ToString(BackdropList[5].Key)}" />
                                 </MenuFlyoutSubItem>
@@ -581,16 +590,18 @@
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnWebKernelSelectClicked}"
                                     IsChecked="{x:Bind WebKernelItem.Value.Equals(HistoryLiteNumList[0].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind sys:Convert.ToString(HistoryLiteNumList[0].Key)}" />
 
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnWebKernelSelectClicked}"
                                     IsChecked="{x:Bind WebKernelItem.Value.Equals(HistoryLiteNumList[1].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind sys:Convert.ToString(HistoryLiteNumList[1].Key)}" />
                             </MenuFlyout>
@@ -930,16 +941,18 @@
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <ToggleMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnWinGetInstallModeSelectClicked}"
                                                     IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[0].Value), Mode=OneWay}"
-                                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                                     Tag="0"
                                                     Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[0].Key)}" />
 
                                                 <ToggleMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnWinGetInstallModeSelectClicked}"
                                                     IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[1].Value), Mode=OneWay}"
-                                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                                     Tag="1"
                                                     Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[1].Key)}" />
                                             </MenuFlyout>
@@ -1070,28 +1083,32 @@
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnChangeFolderClicked}"
-                                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Tag="AppCache"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}" />
 
                                                 <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnChangeFolderClicked}"
-                                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Tag="Download"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
 
                                                 <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnChangeFolderClicked}"
-                                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Tag="Desktop"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}" />
 
                                                 <MenuFlyoutSeparator />
 
                                                 <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnChangeFolderClicked}"
-                                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Tag="Custom"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
                                             </MenuFlyout>
@@ -1136,23 +1153,26 @@
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <ToggleMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnDownloadItemSelectClicked}"
                                                     IsChecked="{x:Bind DownloadItem.Equals(1), Mode=OneWay}"
-                                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                                     Tag="1"
                                                     Text="1" />
 
                                                 <ToggleMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnDownloadItemSelectClicked}"
                                                     IsChecked="{x:Bind DownloadItem.Equals(2), Mode=OneWay}"
-                                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                                     Tag="2"
                                                     Text="2" />
 
                                                 <ToggleMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnDownloadItemSelectClicked}"
                                                     IsChecked="{x:Bind DownloadItem.Equals(3), Mode=OneWay}"
-                                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                                     Tag="3"
                                                     Text="3" />
                                             </MenuFlyout>
@@ -1197,16 +1217,18 @@
                                         <DropDownButton.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <ToggleMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnDownloadModeSelectClicked}"
                                                     IsChecked="{x:Bind DownloadMode.Value.Equals(DownloadModeList[0].Value), Mode=OneWay}"
-                                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                                     Tag="0"
                                                     Text="{x:Bind sys:Convert.ToString(DownloadModeList[0].Key)}" />
 
                                                 <ToggleMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Click="{x:Bind OnDownloadModeSelectClicked}"
                                                     IsChecked="{x:Bind DownloadMode.Value.Equals(DownloadModeList[1].Value), Mode=OneWay}"
-                                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                                     Tag="1"
                                                     Text="{x:Bind sys:Convert.ToString(DownloadModeList[1].Key)}" />
                                             </MenuFlyout>
@@ -1288,16 +1310,18 @@
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnInstallModeSelectClicked}"
                                     IsChecked="{x:Bind InstallMode.Value.Equals(InstallModeList[0].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="0"
                                     Text="{x:Bind sys:Convert.ToString(InstallModeList[0].Key)}" />
 
                                 <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
                                     Click="{x:Bind OnInstallModeSelectClicked}"
                                     IsChecked="{x:Bind InstallMode.Value.Equals(InstallModeList[1].Value), Mode=OneWay}"
-                                    Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                     Tag="1"
                                     Text="{x:Bind sys:Convert.ToString(InstallModeList[1].Key)}" />
                             </MenuFlyout>

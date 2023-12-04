@@ -239,9 +239,10 @@
                             <basicInput:ExtendedSplitButton.Flyout>
                                 <MenuFlyout Placement="Bottom">
                                     <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
                                         Command="{StaticResource CopyUpgradeTextCommand}"
                                         CommandParameter="{x:Bind AppID}"
-                                        Style="{StaticResource MenuFlyoutItemStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
 
                                         <MenuFlyoutItem.Icon>
@@ -250,9 +251,10 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
                                         Command="{StaticResource InstallWithCmdCommand}"
                                         CommandParameter="{x:Bind AppID}"
-                                        Style="{StaticResource MenuFlyoutItemStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
 
                                         <MenuFlyoutItem.Icon>

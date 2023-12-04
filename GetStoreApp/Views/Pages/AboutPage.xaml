@@ -55,34 +55,39 @@
                     <MenuFlyout Placement="Bottom">
 
                         <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
                             Click="{x:Bind OnPinToDesktopClicked}"
-                            Style="{StaticResource MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktop')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktopToolTip')}" />
 
                         <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
                             Click="{x:Bind OnPinToStartScreenClicked}"
-                            Style="{StaticResource MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}" />
 
                         <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
                             Click="{x:Bind OnPinToTaskbarClicked}"
-                            Style="{StaticResource MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}" />
 
                         <MenuFlyoutSeparator />
 
                         <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
                             Click="{x:Bind OnShowReleaseNotesClicked}"
-                            Style="{StaticResource MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotesToolTip')}" />
 
                         <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
                             Click="{x:Bind OnShowLicenseClicked}"
-                            Style="{StaticResource MenuFlyoutItemStyle}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowLicenseToolTip')}" />
                     </MenuFlyout>

@@ -258,7 +258,8 @@ namespace GetStoreApp.Views.Pages
                 ToggleMenuFlyoutItem toggleMenuFlyoutItem = new ToggleMenuFlyoutItem()
                 {
                     Text = languageItem.Key.ToString(),
-                    Style = ResourceDictionaryHelper.MenuFlyoutResourceDict["ToggleMenuFlyoutItemStyle"] as Style,
+                    Height = 32,
+                    Padding = new Thickness(11, 0, 11, 0),
                     Tag = index
                 };
 

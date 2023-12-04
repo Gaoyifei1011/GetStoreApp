@@ -90,16 +90,18 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortWay')}">
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortWayClicked}"
                                 IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="True"
                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortIncrease')}" />
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortWayClicked}"
                                 IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="False"
                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortDecrease')}" />
                         </MenuFlyoutSubItem>
@@ -110,23 +112,26 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortRule')}">
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortRuleClicked}"
                                 IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortByDisplayName')}" />
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortRuleClicked}"
                                 IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortByPublisher')}" />
 
                             <ToggleMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnSortRuleClicked}"
                                 IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
-                                Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                                 Tag="{x:Bind enum:AppSortRuleKind.InstallDate}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/SortByInstalledDate')}" />
                         </MenuFlyoutSubItem>
@@ -418,47 +423,53 @@
                                     <basicInput:ExtendedSplitButton.Flyout>
                                         <MenuFlyout Placement="Bottom">
                                             <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
                                                 Command="{StaticResource OpenAppCommand}"
                                                 CommandParameter="{x:Bind Package}"
-                                                Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenApp')}"
                                                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCount)}" />
 
                                             <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
                                                 Command="{StaticResource OpenStoreCommand}"
                                                 CommandParameter="{x:Bind Package}"
-                                                Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
                                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
 
                                             <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
                                                 Command="{StaticResource OpenManifestCommand}"
                                                 CommandParameter="{x:Bind Package}"
-                                                Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenManifest')}" />
 
                                             <MenuFlyoutSubItem
                                                 Height="32"
-                                                Padding="11,0,11,0"
+                                                Padding="11,0"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenFolder')}">
 
                                                 <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Command="{StaticResource OpenInstalledFolderCommand}"
                                                     CommandParameter="{x:Bind Package}"
-                                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenInstalledFolder')}" />
 
                                                 <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
                                                     Command="{StaticResource OpenCacheFolderCommand}"
                                                     CommandParameter="{x:Bind Package}"
-                                                    Style="{StaticResource MenuFlyoutItemStyle}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenCacheFolder')}" />
                                             </MenuFlyoutSubItem>
 
                                             <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
                                                 Command="{StaticResource UnInstallCommand}"
                                                 CommandParameter="{x:Bind Package}"
-                                                Style="{StaticResource MenuFlyoutItemStyle}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}"
                                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemAppCheck(SignatureKind)}" />
                                         </MenuFlyout>

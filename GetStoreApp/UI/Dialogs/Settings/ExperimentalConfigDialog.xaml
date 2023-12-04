@@ -86,6 +86,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <FontIcon
@@ -100,17 +101,22 @@
                 Style="{StaticResource BodyTextBlockStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFile')}" />
 
-            <MenuFlyoutItem
+            <Button
                 Grid.Column="2"
+                Width="Auto"
+                Height="Auto"
+                VerticalAlignment="Center"
                 controlExtensions:CursorHelper.Cursor="Hand"
                 Click="{x:Bind OnOpenConfigFileClicked}"
-                Style="{StaticResource ButtonLargeMenuItemStyle}"
+                Style="{StaticResource AlternateCloseButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFolder')}">
-
-                <MenuFlyoutItem.Icon>
-                    <FontIcon Glyph="&#xE8a7;" />
-                </MenuFlyoutItem.Icon>
-            </MenuFlyoutItem>
+                <Button.Content>
+                    <FontIcon
+                        Margin="4"
+                        FontSize="16"
+                        Glyph="&#xE8a7;" />
+                </Button.Content>
+            </Button>
         </Grid>
 
         <NavigationViewItemSeparator />

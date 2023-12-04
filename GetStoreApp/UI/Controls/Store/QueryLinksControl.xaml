@@ -38,16 +38,18 @@
             <DropDownButton.Flyout>
                 <MenuFlyout Placement="Bottom">
                     <ToggleMenuFlyoutItem
+                        Height="32"
+                        Padding="11,0"
                         Click="{x:Bind OnTypeSelectClicked}"
                         IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[0].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                         Tag="0"
                         Text="{x:Bind TypeList[0].DisplayName}" />
 
                     <ToggleMenuFlyoutItem
+                        Height="32"
+                        Padding="11,0"
                         Click="{x:Bind OnTypeSelectClicked}"
                         IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[1].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                         Tag="1"
                         Text="{x:Bind TypeList[1].DisplayName}" />
                 </MenuFlyout>
@@ -62,30 +64,34 @@
             <DropDownButton.Flyout>
                 <MenuFlyout Placement="Bottom">
                     <ToggleMenuFlyoutItem
+                        Height="32"
+                        Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[0].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                         Tag="0"
                         Text="{x:Bind ChannelList[0].DisplayName}" />
 
                     <ToggleMenuFlyoutItem
+                        Height="32"
+                        Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[1].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                         Tag="1"
                         Text="{x:Bind ChannelList[1].DisplayName}" />
 
                     <ToggleMenuFlyoutItem
+                        Height="32"
+                        Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[2].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                         Tag="2"
                         Text="{x:Bind ChannelList[2].DisplayName}" />
 
                     <ToggleMenuFlyoutItem
+                        Height="32"
+                        Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[3].InternalName), Mode=OneWay}"
-                        Style="{StaticResource ToggleMenuFlyoutItemStyle}"
                         Tag="3"
                         Text="{x:Bind ChannelList[3].DisplayName}" />
                 </MenuFlyout>
@@ -590,14 +596,16 @@
                     <AppBarButton.Flyout>
                         <MenuFlyout Placement="Bottom">
                             <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnCopySelectedLinkClicked}"
-                                Style="{StaticResource MenuFlyoutItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}" />
 
                             <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
                                 Click="{x:Bind OnCopySelectedClicked}"
-                                Style="{StaticResource MenuFlyoutItemStyle}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}" />
                         </MenuFlyout>

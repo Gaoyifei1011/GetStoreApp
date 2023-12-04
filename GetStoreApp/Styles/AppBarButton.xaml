@@ -64,7 +64,7 @@
                             <TextBlock
                                 x:Name="TextLabel"
                                 Grid.Column="1"
-                                Margin="8,0,2,0"
+                                Margin="8,0,0,0"
                                 VerticalAlignment="Center"
                                 AutomationProperties.AccessibilityView="Raw"
                                 FontFamily="{TemplateBinding FontFamily}"

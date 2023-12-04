@@ -126,9 +126,6 @@
   <data name="AppUpdate" xml:space="preserve">
     <value>App Update</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
-  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -146,9 +143,6 @@
   </data>
   <data name="NavigationFailed" xml:space="preserve">
     <value>Page {0} navigation failed</value>
-  </data>
-  <data name="NavigationViewTitle" xml:space="preserve">
-    <value>Navigation</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
