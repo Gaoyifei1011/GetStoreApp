@@ -7,7 +7,7 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
@@ -344,7 +344,7 @@ namespace GetStoreApp.UI.Controls.Download
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
-                                new DataCopyNotification(this, DataCopyKind.ShareFile, false).Show();
+                                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, false));
                             });
                         });
                     }
@@ -368,7 +368,7 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    new ShareFailedNotification(this, false).Show();
+                    TeachingTipHelper.Show(new ShareFailedTip(false));
                     LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
                 }
             }
@@ -623,7 +623,7 @@ namespace GetStoreApp.UI.Controls.Download
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             CopyPasteHelper.CopyFilesToClipBoard(SelectedFileList);
-                            new DataCopyNotification(this, DataCopyKind.ShareFile, true, SelectedFileList.Count).Show();
+                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, true, SelectedFileList.Count));
                         });
                     }
                     else
@@ -655,7 +655,7 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    new ShareFailedNotification(this, true, selectedCompletedDataList.Count).Show();
+                    TeachingTipHelper.Show(new ShareFailedTip(true, selectedCompletedDataList.Count));
                     LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
                 }
             });

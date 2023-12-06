@@ -4,9 +4,9 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput">
 
-    <Style BasedOn="{StaticResource ExtendedSplitButtonStyle}" TargetType="basicInput:ExtendedSplitButton" />
+    <Style BasedOn="{StaticResource DefaultExtendedSplitButtonStyle}" TargetType="basicInput:ExtendedSplitButton" />
 
-    <Style x:Key="ExtendedSplitButtonStyle" TargetType="basicInput:ExtendedSplitButton">
+    <Style x:Key="DefaultExtendedSplitButtonStyle" TargetType="basicInput:ExtendedSplitButton">
         <Setter Property="Background" Value="{ThemeResource SplitButtonBackground}" />
         <Setter Property="Foreground" Value="{ThemeResource SplitButtonForeground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource SplitButtonBorderBrush}" />

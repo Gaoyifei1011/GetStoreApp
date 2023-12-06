@@ -1,9 +1,10 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -85,7 +86,7 @@ namespace GetStoreApp.UI.Dialogs.Download
                 {
                     CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    new DataCopyNotification(this, DataCopyKind.FileInformation).Show();
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.FileInformation));
                 });
             });
         }

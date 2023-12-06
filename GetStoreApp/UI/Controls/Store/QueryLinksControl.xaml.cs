@@ -10,7 +10,7 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -233,7 +233,7 @@ namespace GetStoreApp.UI.Controls.Store
                     historyItem.HistoryLink);
                 CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                new DataCopyNotification(this, DataCopyKind.History, false).Show();
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.History, false));
             }
         }
 
@@ -272,7 +272,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         if (!checkFailed)
                         {
-                            new NetWorkErrorNotification(this).Show();
+                            TeachingTipHelper.Show(new NetWorkErrorTip());
                             return;
                         }
                     }
@@ -306,8 +306,9 @@ namespace GetStoreApp.UI.Controls.Store
                                     bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        new DownloadCreateNotification(this, AddResult).Show();
+                                        TeachingTipHelper.Show(new DownloadCreateTip(AddResult));
                                     });
+
                                     break;
                                 }
 
@@ -341,7 +342,7 @@ namespace GetStoreApp.UI.Controls.Store
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             DispatcherQueue.TryEnqueue(() =>
                                             {
-                                                new DownloadCreateNotification(this, AddResult).Show();
+                                                TeachingTipHelper.Show(new DownloadCreateTip(AddResult));
                                             });
                                         }
                                     }
@@ -385,7 +386,7 @@ namespace GetStoreApp.UI.Controls.Store
                                             bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             DispatcherQueue.TryEnqueue(() =>
                                             {
-                                                new DownloadCreateNotification(this, AddResult).Show();
+                                                TeachingTipHelper.Show(new DownloadCreateTip(AddResult));
                                             });
                                         }
                                     }
@@ -435,7 +436,7 @@ namespace GetStoreApp.UI.Controls.Store
             if (fileLink is not null)
             {
                 CopyPasteHelper.CopyTextToClipBoard(fileLink);
-                new DataCopyNotification(this, DataCopyKind.ResultLink, false).Show();
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, false));
             }
         }
 
@@ -454,7 +455,7 @@ namespace GetStoreApp.UI.Controls.Store
                     );
 
                 CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                new DataCopyNotification(this, DataCopyKind.ResultInformation, false).Show();
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, false));
             }
         }
 
@@ -520,7 +521,7 @@ namespace GetStoreApp.UI.Controls.Store
             appInformationBuilder.AppendLine(AppInfo.Description);
 
             CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
-            new DataCopyNotification(this, DataCopyKind.AppInformation).Show();
+            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation));
         }
 
         /// <summary>
@@ -609,7 +610,7 @@ namespace GetStoreApp.UI.Controls.Store
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyKind.ResultInformation, true, selectedQueryLinksList.Count).Show();
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, true, selectedQueryLinksList.Count));
                 });
             });
         }
@@ -643,7 +644,7 @@ namespace GetStoreApp.UI.Controls.Store
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyKind.ResultLink, true, selectedQueryLinksList.Count).Show();
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, true, selectedQueryLinksList.Count));
                 });
             });
         }
@@ -661,7 +662,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     if (!checkFailed)
                     {
-                        new NetWorkErrorNotification(this).Show();
+                        TeachingTipHelper.Show(new NetWorkErrorTip());
                         return;
                     }
                 }
@@ -765,7 +766,7 @@ namespace GetStoreApp.UI.Controls.Store
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         // 显示下载任务创建成功消息
-                        new DownloadCreateNotification(this, IsDownloadSuccessfully).Show();
+                        TeachingTipHelper.Show(new DownloadCreateTip(IsDownloadSuccessfully));
 
                         foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                         {

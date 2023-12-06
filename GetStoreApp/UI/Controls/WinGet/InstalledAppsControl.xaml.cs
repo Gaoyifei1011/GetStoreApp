@@ -4,7 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
@@ -126,7 +126,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 string copyContent = string.Format("winget uninstall {0}", appId);
                 CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                new DataCopyNotification(this, DataCopyKind.WinGetUnInstall).Show();
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetUnInstall));
             }
         }
 

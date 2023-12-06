@@ -1,35 +1,26 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.CustomControls.Notifications;
-using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.UI.Notifications
+namespace GetStoreApp.UI.TeachingTips
 {
     /// <summary>
     /// 数据复制应用内通知
     /// </summary>
-    public sealed partial class DataCopyNotification : InAppNotification
+    public sealed partial class DataCopyTip : TeachingTip
     {
-        private bool IsMultiSelected;
-        private int Count;
-        private DataCopyKind DataCopyType;
-
-        public DataCopyNotification(FrameworkElement element, DataCopyKind copyType, bool isMultiSelected = false, int count = 0) : base(element)
+        public DataCopyTip(DataCopyKind dataCopyKind, bool isMultiSelected = false, int count = 0)
         {
             InitializeComponent();
-            DataCopyType = copyType;
-            IsMultiSelected = isMultiSelected;
-            Count = count;
-
-            InitializeContent();
+            InitializeContent(dataCopyKind, isMultiSelected, count);
         }
 
         /// <summary>
         /// 初始化内容
         /// </summary>
-        private void InitializeContent()
+        private void InitializeContent(DataCopyKind dataCopyKind, bool isMultiSelected, int count)
         {
-            switch (DataCopyType)
+            switch (dataCopyKind)
             {
                 case DataCopyKind.AppInformation:
                     {
@@ -63,9 +54,9 @@ namespace GetStoreApp.UI.Notifications
                     }
                 case DataCopyKind.History:
                     {
-                        if (IsMultiSelected)
+                        if (isMultiSelected)
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), Count);
+                            Content = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), count);
                         }
                         else
                         {
@@ -80,9 +71,9 @@ namespace GetStoreApp.UI.Notifications
                     }
                 case DataCopyKind.ResultInformation:
                     {
-                        if (IsMultiSelected)
+                        if (isMultiSelected)
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), Count);
+                            Content = string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), count);
                         }
                         else
                         {
@@ -97,9 +88,9 @@ namespace GetStoreApp.UI.Notifications
                     }
                 case DataCopyKind.ResultLink:
                     {
-                        if (IsMultiSelected)
+                        if (isMultiSelected)
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), Count);
+                            Content = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count);
                         }
                         else
                         {
@@ -109,9 +100,9 @@ namespace GetStoreApp.UI.Notifications
                     }
                 case DataCopyKind.ShareFile:
                     {
-                        if (IsMultiSelected)
+                        if (isMultiSelected)
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), Count);
+                            Content = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), count);
                         }
                         else
                         {

@@ -81,7 +81,6 @@
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
     <None Remove="Styles\HyperlinkButton.xaml" />
-    <None Remove="Styles\InAppNotification.xaml" />
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
@@ -121,15 +120,15 @@
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
 
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
-
-    <None Remove="UI\Notifications\DataCopyNotification.xaml" />
-    <None Remove="UI\Notifications\DownloadCreateNotification.xaml" />
-    <None Remove="UI\Notifications\FolderPickerNotification.xaml" />
-    <None Remove="UI\Notifications\LanguageChangeNotification.xaml" />
-    <None Remove="UI\Notifications\LogCleanNotification.xaml" />
-    <None Remove="UI\Notifications\NetWorkErrorNotification.xaml" />
-    <None Remove="UI\Notifications\QuickOperationNotification.xaml" />
-    <None Remove="UI\Notifications\ShareFailedNotification.xaml" />
+    
+    <None Remove="UI\TeachingTips\DataCopyTip.xaml" />
+    <None Remove="UI\TeachingTips\DownloadCreateTip.xaml" />
+    <None Remove="UI\TeachingTips\FolderPickerTip.xaml" />
+    <None Remove="UI\TeachingTips\LanguageChangeTip.xaml" />
+    <None Remove="UI\TeachingTips\LogCleanTip.xaml" />
+    <None Remove="UI\TeachingTips\NetWorkErrorTip.xaml" />
+    <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
+    <None Remove="UI\TeachingTips\ShareFailedTip.xaml" />
 
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
@@ -156,7 +155,6 @@
     <Page Update="Styles\DropDownButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\HyperlinkButton.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\InAppNotification.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
@@ -197,14 +195,14 @@
 
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
 
-    <Page Update="UI\Notifications\DataCopyNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\DownloadCreateNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\FolderPickerNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\LanguageChangeNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\LogCleanNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\NetWorkErrorNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\QuickOperationNotification.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Notifications\ShareFailedNotification.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\DataCopyTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\DownloadCreateTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\FolderPickerTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\LanguageChangeTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\LogCleanTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\NetWorkErrorTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\QuickOperationTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\ShareFailedTip.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="Views\Pages\AboutPage.xaml" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" Generator="MSBuild:Compile" />

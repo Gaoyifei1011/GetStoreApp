@@ -1,8 +1,9 @@
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -286,7 +287,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
             if (aumid is not null)
             {
                 CopyPasteHelper.CopyTextToClipBoard(aumid);
-                new DataCopyNotification(this, DataCopyKind.AppUserModelId).Show();
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppUserModelId));
             }
         }
 
@@ -310,7 +311,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
-                            new DataCopyNotification(this, DataCopyKind.DependencyInformation).Show();
+                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyInformation));
                         });
                     }
                     catch (Exception e)
@@ -330,7 +331,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
             if (displayName is not null)
             {
                 CopyPasteHelper.CopyTextToClipBoard(displayName);
-                new DataCopyNotification(this, DataCopyKind.DependencyName).Show();
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyName));
             }
         }
 
@@ -424,7 +425,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        new QuickOperationNotification(this, QuickOperationKind.Desktop, IsPinnedSuccessfully).Show();
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, IsPinnedSuccessfully));
                     });
                 }
             });
@@ -457,7 +458,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            new QuickOperationNotification(this, QuickOperationKind.StartScreen, IsPinnedSuccessfully).Show();
+                            TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, IsPinnedSuccessfully));
                         });
                     }
                 });
@@ -538,7 +539,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
-                    new DataCopyNotification(this, DataCopyKind.PackageInformation).Show();
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.PackageInformation));
                 });
             });
         }

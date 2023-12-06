@@ -43,7 +43,6 @@ namespace GetStoreApp
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-            ResourceDictionaryHelper.InitializeResourceDictionary();
 
             MainWindow = new MainWindow();
             IsAppLaunched = true;

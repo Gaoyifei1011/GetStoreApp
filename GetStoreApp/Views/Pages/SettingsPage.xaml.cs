@@ -5,7 +5,7 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Settings;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
@@ -286,7 +286,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         AppLanguage = LanguageList[selectedIndex];
                         LanguageService.SetLanguage(AppLanguage);
-                        new LanguageChangeNotification(this).Show();
+                        TeachingTipHelper.Show(new LanguageChangeTip());
                     }
                 };
                 LanguageFlyout.Items.Add(toggleMenuFlyoutItem);
@@ -520,7 +520,7 @@ namespace GetStoreApp.Views.Pages
                             }
                             catch (Exception)
                             {
-                                new FolderPickerNotification(this).Show();
+                                TeachingTipHelper.Show(new FolderPickerTip());
                             }
                             break;
                         }
@@ -597,7 +597,7 @@ namespace GetStoreApp.Views.Pages
         private void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = LogService.ClearLog();
-            new LogCleanNotification(this, result).Show();
+            TeachingTipHelper.Show(new LogCleanTip(result));
         }
 
         /// <summary>

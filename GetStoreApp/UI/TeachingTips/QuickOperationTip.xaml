@@ -1,0 +1,18 @@
+<TeachingTip
+    x:Class="GetStoreApp.UI.TeachingTips.QuickOperationTip"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+    IsLightDismissEnabled="False"
+    PlacementMargin="0,20,0,0"
+    PreferredPlacement="Bottom"
+    Style="{StaticResource TeachingTipStyle}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <TextBlock x:Name="QuickOperationSuccess" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />
+        <TextBlock x:Name="QuickOperationFailed" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+    </Grid>
+</TeachingTip>

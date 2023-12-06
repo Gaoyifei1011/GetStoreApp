@@ -4,7 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.About;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -132,7 +132,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        new QuickOperationNotification(this, QuickOperationKind.Desktop, IsCreatedSuccessfully).Show();
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, IsCreatedSuccessfully));
                     });
                 }
             });
@@ -168,7 +168,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        new QuickOperationNotification(this, QuickOperationKind.StartScreen, IsPinnedSuccessfully).Show();
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, IsPinnedSuccessfully));
                     });
                 }
             });
@@ -203,7 +203,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        new QuickOperationNotification(this, QuickOperationKind.Taskbar, IsPinnedSuccessfully).Show();
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Taskbar, IsPinnedSuccessfully));
                     });
                 }
             });

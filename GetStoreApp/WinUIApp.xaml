@@ -6,20 +6,19 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!--  资源字典顺序发生变化时，需要修改 ResourceDictionaryHelper 静态类的资源字典顺序  -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/AppBarButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/DropDownButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Flyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/InAppNotification.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ScrollBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Segmented.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/SplitButton.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/TeachingTip.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

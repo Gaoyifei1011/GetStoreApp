@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Helpers.Root;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.Views.CustomControls.BasicInput
@@ -12,7 +11,6 @@ namespace GetStoreApp.Views.CustomControls.BasicInput
         public ExtendedSplitButton()
         {
             DefaultStyleKey = typeof(ExtendedSplitButton);
-            Style = ResourceDictionaryHelper.SplitButtonResourceDict["ExtendedSplitButtonStyle"] as Style;
         }
 
         public bool IsPrimaryButtonEnabled

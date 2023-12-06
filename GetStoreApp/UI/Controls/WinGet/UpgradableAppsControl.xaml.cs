@@ -5,7 +5,7 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -91,7 +91,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 string copyContent = string.Format("winget install {0}", appId);
                 CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                new DataCopyNotification(this, DataCopyKind.WinGetUpgradeInstall).Show();
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetUpgradeInstall));
             }
         }
 

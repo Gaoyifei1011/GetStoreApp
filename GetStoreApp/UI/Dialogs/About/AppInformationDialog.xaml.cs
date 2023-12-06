@@ -1,7 +1,8 @@
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -116,7 +117,7 @@ namespace GetStoreApp.UI.Dialogs.About
                 {
                     CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    new DataCopyNotification(this, DataCopyKind.AppInformation).Show();
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation));
                 });
             });
         }

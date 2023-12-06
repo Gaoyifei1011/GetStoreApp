@@ -5,7 +5,7 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
-using GetStoreApp.UI.Notifications;
+using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -73,7 +73,7 @@ namespace GetStoreApp.UI.Controls.Download
                     {
                         if (!checkFailed)
                         {
-                            new NetWorkErrorNotification(this).Show();
+                            TeachingTipHelper.Show(new NetWorkErrorTip());
                             return;
                         }
                     }
@@ -184,7 +184,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     if (!checkFailed)
                     {
-                        new NetWorkErrorNotification(this).Show();
+                        TeachingTipHelper.Show(new NetWorkErrorTip());
                         return;
                     }
                 }
