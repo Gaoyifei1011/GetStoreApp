@@ -21,41 +21,31 @@ namespace GetStoreApp.UI.TeachingTips
         /// </summary>
         private void InitializeContent(QuickOperationKind quickOperationKind, bool isPinnedSuccessfully)
         {
+            QuickOperationSuccess.Visibility = isPinnedSuccessfully ? Visibility.Visible : Visibility.Collapsed;
+            QuickOperationFailed.Visibility = isPinnedSuccessfully ? Visibility.Collapsed : Visibility.Visible;
             if (quickOperationKind is QuickOperationKind.Desktop && isPinnedSuccessfully)
             {
                 QuickOperationSuccess.Text = ResourceService.GetLocalized("Notification/DesktopShortcutSuccessfully");
-                QuickOperationSuccess.Visibility = Visibility.Visible;
-                QuickOperationFailed.Visibility = Visibility.Collapsed;
             }
             else if (quickOperationKind is QuickOperationKind.Desktop && !isPinnedSuccessfully)
             {
                 QuickOperationFailed.Text = ResourceService.GetLocalized("Notification/DesktopShortFailed");
-                QuickOperationSuccess.Visibility = Visibility.Collapsed;
-                QuickOperationFailed.Visibility = Visibility.Visible;
             }
             else if (quickOperationKind is QuickOperationKind.StartScreen && isPinnedSuccessfully)
             {
                 QuickOperationSuccess.Text = ResourceService.GetLocalized("Notification/StartScreenSuccessfully");
-                QuickOperationSuccess.Visibility = Visibility.Visible;
-                QuickOperationFailed.Visibility = Visibility.Collapsed;
             }
             else if (quickOperationKind is QuickOperationKind.StartScreen && !isPinnedSuccessfully)
             {
                 QuickOperationFailed.Text = ResourceService.GetLocalized("Notification/StartScreenFailed");
-                QuickOperationSuccess.Visibility = Visibility.Collapsed;
-                QuickOperationFailed.Visibility = Visibility.Visible;
             }
             else if (quickOperationKind is QuickOperationKind.Taskbar && isPinnedSuccessfully)
             {
                 QuickOperationSuccess.Text = ResourceService.GetLocalized("Notification/TaskbarSuccessfully");
-                QuickOperationSuccess.Visibility = Visibility.Visible;
-                QuickOperationFailed.Visibility = Visibility.Collapsed;
             }
             else if (quickOperationKind is QuickOperationKind.Taskbar && !isPinnedSuccessfully)
             {
                 QuickOperationFailed.Text = ResourceService.GetLocalized("Notification/TaskbarFailed");
-                QuickOperationSuccess.Visibility = Visibility.Collapsed;
-                QuickOperationFailed.Visibility = Visibility.Visible;
             }
         }
     }

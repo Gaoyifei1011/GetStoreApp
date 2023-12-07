@@ -1,4 +1,3 @@
-using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.TeachingTips
@@ -11,7 +10,6 @@ namespace GetStoreApp.UI.TeachingTips
         public FolderPickerTip()
         {
             InitializeComponent();
-            Content = ResourceService.GetLocalized("Notification/FolderPickerFailed");
         }
     }
 }

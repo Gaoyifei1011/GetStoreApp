@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.TeachingTips
 {
@@ -11,7 +10,6 @@ namespace GetStoreApp.UI.TeachingTips
         public NetWorkErrorTip()
         {
             InitializeComponent();
-            Content = ResourceService.GetLocalized("Notification/NetWorkError");
         }
     }
 }
