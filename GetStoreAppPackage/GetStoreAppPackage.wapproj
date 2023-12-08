@@ -34,7 +34,7 @@
   </PropertyGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
   <PropertyGroup>
-    <AssetTargetFallback>net8.0-windows10.0.22621.0;net481</AssetTargetFallback>
+    <AssetTargetFallback>$(AssetTargetFallback);net8.0-windows10.0.22621.0;net481;native</AssetTargetFallback>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundleAutoResourcePackageQualifiers>DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
@@ -84,6 +84,7 @@
     <None Include="GetStoreAppPackage_SignKey.pfx" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
+    <ProjectReference Include="..\WinUICoreAppHook\WinUICoreAppHook.vcxproj" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <!--将生成的文件放到应用包的根目录-->
