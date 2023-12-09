@@ -38,7 +38,7 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 应用启动后执行其他操作
+        /// 启动应用程序时调用，初始化应用主窗口
         /// </summary>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {

@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "获取商店应用 (单项目 MSIX(已废弃))": {
+    "网页浏览器": {
       "commandName": "MsixPackage",
       "nativeDebugging": true
     }

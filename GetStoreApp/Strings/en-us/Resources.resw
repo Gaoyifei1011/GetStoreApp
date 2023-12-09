@@ -148,9 +148,12 @@
     <value>URL(Link)</value>
   </data>
   <data name="ProtocolName" xml:space="preserve">
-    <value>GetStoreApp Desktop App</value>
+    <value>Taskbar Pinner</value>
   </data>
   <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
     <value>The app's sytstem backdrop controller failed to initialize</value>
+  </data>
+  <data name="TaskbarPinner" xml:space="preserve">
+    <value>Taskbar Pinner</value>
   </data>
 </root>

@@ -495,7 +495,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
                                 DisplayName = appListEntryItem.DisplayInfo.DisplayName,
                                 Description = appListEntryItem.DisplayInfo.Description,
                                 AppUserModelId = appListEntryItem.AppUserModelId,
-                                AppListEntry = appListEntryItem
+                                AppListEntry = appListEntryItem,
+                                PackageFullName = packageItem.Package.Id.FullName
                             });
                         }
                         packageDict["AppListEntryCollection"] = appListEntryList;

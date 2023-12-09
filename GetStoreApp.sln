@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWebView", "GetSt
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinUICoreAppHook", "WinUICoreAppHook\WinUICoreAppHook.vcxproj", "{106B6D40-B277-4F9B-B601-D183AE637520}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskbarPinner", "TaskbarPinner\TaskbarPinner.csproj", "{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -93,6 +95,18 @@ Global
 		{106B6D40-B277-4F9B-B601-D183AE637520}.Release|x64.Build.0 = Release|x64
 		{106B6D40-B277-4F9B-B601-D183AE637520}.Release|x86.ActiveCfg = Release|Win32
 		{106B6D40-B277-4F9B-B601-D183AE637520}.Release|x86.Build.0 = Release|Win32
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Debug|ARM64.Build.0 = Debug|ARM64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Debug|x64.ActiveCfg = Debug|x64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Debug|x64.Build.0 = Debug|x64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Debug|x86.ActiveCfg = Debug|x86
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Debug|x86.Build.0 = Debug|x86
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Release|ARM64.ActiveCfg = Release|ARM64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Release|ARM64.Build.0 = Release|ARM64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Release|x64.ActiveCfg = Release|x64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Release|x64.Build.0 = Release|x64
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Release|x86.ActiveCfg = Release|x86
+		{B98C8831-33B6-4CFF-846E-3AB1272DFD6A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

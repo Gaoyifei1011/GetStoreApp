@@ -24,9 +24,6 @@ mono_crash.*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -80,6 +77,7 @@ StyleCopReport.xml
 *.iobj
 *.pch
 *.pdb
+!detours.pdb
 *.ipdb
 *.pgc
 *.pgd

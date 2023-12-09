@@ -136,7 +136,7 @@
     <value>产品 ID</value>
   </data>
   <data name="ProtocolName" xml:space="preserve">
-    <value>获取商店应用 桌面应用</value>
+    <value>任务栏固定辅助程序</value>
   </data>
   <data name="Retail" xml:space="preserve">
     <value>正式版</value>
@@ -149,6 +149,9 @@
   </data>
   <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
     <value>应用的背景色控制器初始化失败</value>
+  </data>
+  <data name="TaskbarPinner" xml:space="preserve">
+    <value>任务栏固定程序</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL（链接）</value>

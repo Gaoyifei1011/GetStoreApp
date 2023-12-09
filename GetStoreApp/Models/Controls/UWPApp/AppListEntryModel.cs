@@ -26,5 +26,10 @@ namespace GetStoreApp.Models.Controls.UWPApp
         /// 应用程序入口
         /// </summary>
         public AppListEntry AppListEntry { get; set; }
+
+        /// <summary>
+        /// 包的全名
+        /// </summary>
+        public string PackageFullName { get; set; }
     }
 }

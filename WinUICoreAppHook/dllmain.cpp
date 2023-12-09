@@ -9,9 +9,9 @@
 #if defined(_M_AMD64)
 #pragma comment(lib, "./Detours/x64/detours.lib")
 #elif defined(_M_ARM64)
-#pragma comment(lib, "../Detours/ARM64/detours.lib")
+#pragma comment(lib, "./Detours/ARM64/detours.lib")
 #elif defined(_M_IX86)
-#pragma comment(lib, "../Detours/X86/detours.lib")
+#pragma comment(lib, "./detours/x86/detours.lib")
 #endif
 
 std::mutex xamlKeyMtx;

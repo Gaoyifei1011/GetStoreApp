@@ -175,7 +175,30 @@ namespace GetStoreApp.Services.Root
             // 正常启动
             if (activationKind is ActivationKind.Launch)
             {
-                return;
+                bool isExisted = false;
+
+                string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
+
+                // 向主实例发送数据
+                COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
+                copyDataStruct.dwData = (IntPtr)activationKind;
+                copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
+                copyDataStruct.lpData = sendData;
+
+                List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
+
+                foreach (IntPtr hwnd in hwndList)
+                {
+                    isExisted = true;
+                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
+                    Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
+                    User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
+                    Marshal.FreeHGlobal(ptrCopyDataStruct);
+                    User32Library.SetForegroundWindow(hwnd);
+                }
+
+                // 然后退出实例并停止
+                Program.IsNeedAppLaunch = !isExisted;
             }
             // 命令参数启动或者共享目标启动
             else if (activationKind is ActivationKind.CommandLineLaunch || activationKind is ActivationKind.ShareTarget)

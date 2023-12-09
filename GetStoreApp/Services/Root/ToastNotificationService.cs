@@ -195,15 +195,6 @@ namespace GetStoreApp.Services.Root
                             AppToastNotifier.Show(notificaiton);
                             break;
                         }
-                    case NotificationKind.PinToTaskbarTip:
-                        {
-                            XmlDocument notificationDocument = new XmlDocument();
-                            string content = string.Format(ResourceService.GetLocalized("Notification/PinToTaskbarTip"), notificationContent[0]);
-                            notificationDocument.LoadXml(content);
-                            ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
-                            break;
-                        }
                     // UWP 应用卸载成功通知
                     case NotificationKind.UWPUnInstallSuccessfully:
                         {

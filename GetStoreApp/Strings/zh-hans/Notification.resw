@@ -252,17 +252,6 @@
   <data name="PackageInformationCopy" xml:space="preserve">
     <value>应用包信息已成功复制到剪贴板</value>
   </data>
-  <data name="PinToTaskbarTip" xml:space="preserve">
-    <value>&lt;toast launch="action=OpenApp"&gt;
-    &lt;visual&gt;
-        &lt;binding template='ToastGeneric'&gt;
-            &lt;text&gt;任务栏固定提示&lt;/text&gt;
-            &lt;text&gt;由于系统限制，暂不支持桌面应用固定任务栏。应用现在已经固定到开始“屏幕”，您可以按照图片上的提示进行操作。&lt;/text&gt;
-            &lt;image placement='hero' src='ms-appx:///Assets/Images/{0}/PinToTaskbarTip.png'/&gt;
-        &lt;/binding&gt;
-    &lt;/visual&gt;
-&lt;/toast&gt;</value>
-  </data>
   <data name="ResultContentCopy" xml:space="preserve">
     <value>该条下载记录已成功复制到剪贴板</value>
   </data>

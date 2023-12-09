@@ -12,7 +12,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="3.0.1207.0" />
+    Version="3.0.1209.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -63,6 +63,20 @@
         </uap5:Extension>
       </Extensions>
     </Application>
+
+    <Application Id="TaskbarPinner"
+      Executable="TaskbarPinner.exe"
+      EntryPoint="TaskbarPinner.App">
+      <uap:VisualElements
+        DisplayName="ms-resource:TaskbarPinner"
+        Description="ms-resource:TaskbarPinner"
+        BackgroundColor="transparent"
+        AppListEntry="none"
+        Square150x150Logo="Assets\TaskbarPinner\TaskbarPinner.png"
+        Square44x44Logo="Assets\TaskbarPinner\TaskbarPinnerSmall.png">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+    </Application>
   </Applications>
 
   <Extensions>
@@ -78,6 +92,7 @@
     <Capability Name="internetClient" />
     <rescap:Capability Name="broadFileSystemAccess" />
     <rescap:Capability Name="packageManagement" />
+    <rescap:Capability Name="packageQuery" />
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
 </Package>
