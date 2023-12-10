@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using TaskbarPinner.Services.Root;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
@@ -19,19 +20,20 @@ namespace TaskbarPinner
     {
         private string tempFilePath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "GetStoreAppTemp.txt");
 
+        public CoreApplicationView CoreApplicationView { get; } = CoreApplication.GetCurrentView();
+
         public App()
         {
             InitializeComponent();
+            CoreApplicationView.Activated += OnActivated;
         }
 
         /// <summary>
-        /// 启动应用程序时调用，初始化应用内容
+        /// 在通过常规启动之外的某种方式激活应用程序时调用，初始化应用内容
         /// </summary>
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        private async void OnActivated(CoreApplicationView sender, IActivatedEventArgs args)
         {
-            base.OnLaunched(args);
-
-            if (File.Exists(tempFilePath))
+            if (args.Kind is ActivationKind.Protocol && File.Exists(tempFilePath))
             {
                 try
                 {

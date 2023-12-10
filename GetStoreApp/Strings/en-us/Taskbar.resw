@@ -124,7 +124,7 @@
     <value>Failed to pin app to taskbar</value>
   </data>
   <data name="TaskbarPinFailedContent1" xml:space="preserve">
-    <value>Failed to pin app to taskbar may include several reasons:</value>
+    <value>Possible reasons and solutions for failing to pin app to taskbar:</value>
   </data>
   <data name="TaskbarPinFailedContent2" xml:space="preserve">
     <value>1. You may manually reject a fixed request. When the number of rejected requests is too many, it will not pop up automatically</value>

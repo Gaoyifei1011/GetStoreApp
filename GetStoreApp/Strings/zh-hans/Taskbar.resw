@@ -124,7 +124,7 @@
     <value>应用固定到任务栏失败</value>
   </data>
   <data name="TaskbarPinFailedContent1" xml:space="preserve">
-    <value>应用固定到任务栏失败可能包含以下几个原因：</value>
+    <value>应用固定到任务栏失败可能的原因和解决方案：</value>
   </data>
   <data name="TaskbarPinFailedContent2" xml:space="preserve">
     <value>1.您可能手动拒绝了固定的请求，当拒绝次数过多时，就不会再主动弹出</value>

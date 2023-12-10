@@ -50,6 +50,12 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
+        <uap:Extension Category="windows.protocol" Executable="TaskbarPinner.exe" EntryPoint="TaskbarPinner.App">
+          <uap:Protocol Name="taskbarpinner">
+            <uap:DisplayName>ms-resource:ProtocolName</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+
         <uap:Extension Category="windows.shareTarget" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
           <uap:ShareTarget>
             <uap:DataFormat>Uri</uap:DataFormat>
@@ -62,20 +68,6 @@
           </uap5:AppExecutionAlias>
         </uap5:Extension>
       </Extensions>
-    </Application>
-
-    <Application Id="TaskbarPinner"
-      Executable="TaskbarPinner.exe"
-      EntryPoint="TaskbarPinner.App">
-      <uap:VisualElements
-        DisplayName="ms-resource:TaskbarPinner"
-        Description="ms-resource:TaskbarPinner"
-        BackgroundColor="transparent"
-        AppListEntry="none"
-        Square150x150Logo="Assets\TaskbarPinner\TaskbarPinner.png"
-        Square44x44Logo="Assets\TaskbarPinner\TaskbarPinnerSmall.png">
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
-      </uap:VisualElements>
     </Application>
   </Applications>
 

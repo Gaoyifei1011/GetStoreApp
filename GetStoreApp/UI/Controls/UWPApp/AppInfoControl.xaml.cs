@@ -4,8 +4,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -15,7 +13,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -475,7 +472,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
             string actualTheme = ActualTheme.ToString();
 
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 if (appListEntryItem is not null)
                 {
@@ -484,29 +481,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                         string tempFilePath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "GetStoreAppTemp.txt");
                         File.WriteAllText(tempFilePath, string.Format("{0}{1}{2}", appListEntryItem.PackageFullName, Environment.NewLine, appListEntryItem.AppUserModelId));
 
-                        Kernel32Library.GetStartupInfo(out STARTUPINFO taskbarPinnerStartupInfo);
-                        taskbarPinnerStartupInfo.lpReserved = IntPtr.Zero;
-                        taskbarPinnerStartupInfo.lpDesktop = IntPtr.Zero;
-                        taskbarPinnerStartupInfo.lpTitle = IntPtr.Zero;
-                        taskbarPinnerStartupInfo.dwX = 0;
-                        taskbarPinnerStartupInfo.dwY = 0;
-                        taskbarPinnerStartupInfo.dwXSize = 0;
-                        taskbarPinnerStartupInfo.dwYSize = 0;
-                        taskbarPinnerStartupInfo.dwXCountChars = 500;
-                        taskbarPinnerStartupInfo.dwYCountChars = 500;
-                        taskbarPinnerStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                        taskbarPinnerStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                        taskbarPinnerStartupInfo.cbReserved2 = 0;
-                        taskbarPinnerStartupInfo.lpReserved2 = IntPtr.Zero;
-                        taskbarPinnerStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                        bool createResult = Kernel32Library.CreateProcess(null, "explorer.exe shell:AppsFolder\\Gaoyifei1011.GetStoreApp_pystbwmrmew8c!TaskbarPinner", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref taskbarPinnerStartupInfo, out PROCESS_INFORMATION getStoreAppInformation);
-
-                        if (createResult)
-                        {
-                            if (getStoreAppInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(getStoreAppInformation.hProcess);
-                            if (getStoreAppInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(getStoreAppInformation.hThread);
-                        }
+                        await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"));
                     }
                     catch (Exception e)
                     {
