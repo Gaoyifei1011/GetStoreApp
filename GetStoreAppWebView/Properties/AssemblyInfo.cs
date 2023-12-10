@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("网页浏览器")]
-[assembly: AssemblyFileVersion("3.0.1209.0")]
-[assembly: AssemblyInformationalVersion("3.0.1209.0")]
+[assembly: AssemblyFileVersion("3.0.1210.0")]
+[assembly: AssemblyInformationalVersion("3.0.1210.0")]
 [assembly: AssemblyProduct("网页浏览器")]
 [assembly: AssemblyTitle("网页浏览器")]
-[assembly: AssemblyVersion("3.0.1209.0")]
+[assembly: AssemblyVersion("3.0.1210.0")]
 
 // 设置程序集对 COM 组件的访问权限
 [assembly: ComVisible(false)]

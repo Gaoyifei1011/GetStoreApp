@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("任务栏固定辅助程序")]
-[assembly: AssemblyFileVersion("3.0.1209.0")]
-[assembly: AssemblyInformationalVersion("3.0.1209.0")]
+[assembly: AssemblyFileVersion("3.0.1210.0")]
+[assembly: AssemblyInformationalVersion("3.0.1210.0")]
 [assembly: AssemblyProduct("任务栏固定辅助程序")]
 [assembly: AssemblyTitle("任务栏固定辅助程序")]
-[assembly: AssemblyVersion("3.0.1209.0")]
+[assembly: AssemblyVersion("3.0.1210.0")]
 
 // 设置程序集对 COM 组件的访问权限
 [assembly: ComVisible(false)]
