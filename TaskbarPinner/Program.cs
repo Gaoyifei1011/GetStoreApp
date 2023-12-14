@@ -1,8 +1,6 @@
-﻿using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using System;
 using System.Diagnostics;
-using System.Threading;
 using TaskbarPinner.Helpers.Root;
 using TaskbarPinner.Services.Controls.Settings;
 using TaskbarPinner.Services.Root;
@@ -32,12 +30,7 @@ namespace TaskbarPinner
 
             InitializeResources();
 
-            Application.Start((param) =>
-            {
-                DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
-                SynchronizationContext.SetSynchronizationContext(context);
-                App = new App();
-            });
+            Application.Start((param) => new App());
         }
 
         /// <summary>
