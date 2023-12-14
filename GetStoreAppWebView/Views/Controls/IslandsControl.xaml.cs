@@ -128,7 +128,7 @@ namespace GetStoreAppWebView.Views.Controls
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
             SetIslandsColor(ActualTheme);
-            Debug.WriteLine((Program.WPFApp.MainWindow as MainWindow).WindowDPI);
+
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 IsEnabled = true;

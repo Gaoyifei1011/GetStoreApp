@@ -8,10 +8,10 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -246,7 +246,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (historyItem is not null)
             {
-                StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
                 if (storePage is not null)
                 {
                     SelectedType = TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType));
@@ -350,7 +350,7 @@ namespace GetStoreApp.UI.Controls.Store
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            NavigationService.NavigateTo(typeof(DownloadPage));
+                                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
                                         });
                                     }
                                     break;
@@ -394,7 +394,7 @@ namespace GetStoreApp.UI.Controls.Store
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            NavigationService.NavigateTo(typeof(DownloadPage));
+                                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
                                         });
                                     }
                                     break;
@@ -758,7 +758,7 @@ namespace GetStoreApp.UI.Controls.Store
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                NavigationService.NavigateTo(typeof(DownloadPage));
+                                MainWindow.Current.NavigateTo(typeof(DownloadPage));
                             });
                         }
                     }

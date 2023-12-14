@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Window;
 using GetStoreApp.Views.CustomControls.Navigation;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -122,7 +122,7 @@ namespace GetStoreApp.Views.Pages
         private void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
             DownloadFlyout.Hide();
-            NavigationService.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace GetStoreApp.Views.Pages
         private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
             DownloadFlyout.Hide();
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+            MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
         #endregion 第二部分：下载页面——挂载的事件

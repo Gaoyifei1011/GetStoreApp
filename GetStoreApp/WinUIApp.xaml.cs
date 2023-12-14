@@ -19,19 +19,15 @@ namespace GetStoreApp
     /// <summary>
     /// 获取商店应用程序
     /// </summary>
-    public partial class App : Application, IDisposable
+    public partial class WinUIApp : Application, IDisposable
     {
         private bool isDisposed;
 
         public bool IsAppRunning { get; set; } = true;
 
-        public bool IsAppLaunched { get; set; } = false;
+        private MainWindow MainWindow { get; set; }
 
-        public MainWindow MainWindow { get; private set; }
-
-        public JumpList TaskbarJumpList { get; private set; }
-
-        public App()
+        public WinUIApp()
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
@@ -45,7 +41,6 @@ namespace GetStoreApp
             base.OnLaunched(args);
 
             MainWindow = new MainWindow();
-            IsAppLaunched = true;
             ActivateWindow();
 
             InitializeJumpList();
@@ -61,7 +56,7 @@ namespace GetStoreApp
             {
                 Task.Run(async () =>
                 {
-                    TaskbarJumpList = await JumpList.LoadCurrentAsync();
+                    JumpList TaskbarJumpList = await JumpList.LoadCurrentAsync();
                     TaskbarJumpList.Items.Clear();
                     TaskbarJumpList.SystemGroupKind = JumpListSystemGroupKind.None;
 
@@ -235,7 +230,7 @@ namespace GetStoreApp
             GC.SuppressFinalize(this);
         }
 
-        ~App()
+        ~WinUIApp()
         {
             Dispose(false);
         }
@@ -250,11 +245,11 @@ namespace GetStoreApp
                 if (disposing)
                 {
                     IsAppRunning = false;
-                    if (RuntimeHelper.IsElevated && MainWindow.Handle != IntPtr.Zero)
+                    if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
                     {
                         CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
                         changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
-                        User32Library.ChangeWindowMessageFilterEx(MainWindow.Handle, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
+                        User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
                     }
                     SaveWindowInformation();
                     DownloadSchedulerService.CloseDownloadScheduler();

@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Window;
 using GetStoreApp.Views.CustomControls.Navigation;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -117,7 +117,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
+            MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
         }
 
         #endregion 第二部分：应用商店页面——挂载的事件

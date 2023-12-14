@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Settings;
-using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
@@ -93,11 +93,11 @@ namespace GetStoreApp.Services.Root
                 }
                 else
                 {
-                    Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
                     {
-                        if (NavigationService.GetCurrentPageType() != typeof(StorePage))
+                        if (MainWindow.Current.GetCurrentPageType() != typeof(StorePage))
                         {
-                            NavigationService.NavigateTo(typeof(StorePage));
+                            MainWindow.Current.NavigateTo(typeof(StorePage));
                         }
                     });
                 }
@@ -110,11 +110,11 @@ namespace GetStoreApp.Services.Root
                 }
                 else
                 {
-                    Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
                     {
-                        if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                        if (MainWindow.Current.GetCurrentPageType() != typeof(DownloadPage))
                         {
-                            NavigationService.NavigateTo(typeof(DownloadPage));
+                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
                         }
                     });
                 }

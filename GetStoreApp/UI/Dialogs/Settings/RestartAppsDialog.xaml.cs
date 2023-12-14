@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Dialogs.Settings
 {
@@ -17,7 +18,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void OnRestartAppsClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Program.ApplicationRoot.Restart();
+            (Application.Current as WinUIApp).Restart();
         }
     }
 }

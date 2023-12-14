@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Composition.SystemBackdrops;
 using System;
 using System.Collections;
@@ -65,7 +66,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void SetAppBackdrop()
         {
-            Program.ApplicationRoot.MainWindow.SetSystemBackdrop(AppBackdrop);
+            MainWindow.Current.SetSystemBackdrop(AppBackdrop);
         }
     }
 }

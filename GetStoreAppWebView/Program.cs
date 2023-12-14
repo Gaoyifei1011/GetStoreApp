@@ -9,7 +9,7 @@ namespace GetStoreAppWebView
     /// <summary>
     /// 网页浏览器
     /// </summary>
-    public static class Program
+    public class Program
     {
         public static WinUIApp WinUIApp { get; private set; }
 

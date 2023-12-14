@@ -3,9 +3,9 @@ using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
@@ -344,7 +344,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
         {
-            NavigationService.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+            MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace GetStoreApp.Views.Pages
                             try
                             {
                                 FolderPicker folderPicker = new FolderPicker();
-                                InitializeWithWindow.Initialize(folderPicker, Program.ApplicationRoot.MainWindow.Handle);
+                                InitializeWithWindow.Initialize(folderPicker, (IntPtr)MainWindow.Current.AppWindow.Id.Value);
                                 folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
 
                                 StorageFolder downloadFolder = await folderPicker.PickSingleFolderAsync();

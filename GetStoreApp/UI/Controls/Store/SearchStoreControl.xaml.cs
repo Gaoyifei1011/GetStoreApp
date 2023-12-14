@@ -3,8 +3,8 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -144,7 +144,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (historyItem is not null)
             {
-                StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
                 if (storePage is not null)
                 {
                     SearchText = historyItem.HistoryContent;
@@ -174,7 +174,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (appLink is not null)
             {
-                StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
                 if (storePage is not null)
                 {
                     storePage.QueryLinks.SelectedType = storePage.QueryLinks.TypeList[0];

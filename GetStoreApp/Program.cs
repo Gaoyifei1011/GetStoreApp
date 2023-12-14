@@ -26,9 +26,6 @@ namespace GetStoreApp
 
         public static bool IsNeedAppLaunch { get; set; } = true;
 
-        // 应用程序实例
-        public static App ApplicationRoot { get; private set; }
-
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
@@ -82,11 +79,10 @@ namespace GetStoreApp
                     {
                         DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                         SynchronizationContext.SetSynchronizationContext(context);
-                        ApplicationRoot = new App();
+                        WinUIApp app = new WinUIApp();
                     });
                 }
             }
-
             // 以控制台程序方式启动
             else
             {
@@ -103,7 +99,7 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 检查命令参数是否以桌面方式启动
+        /// 检查应用启动方式
         /// </summary>
         private static bool GetAppExecuteMode(string[] args)
         {

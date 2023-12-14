@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections;
@@ -69,16 +70,16 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 if (Application.Current.RequestedTheme is ApplicationTheme.Light)
                 {
-                    Program.ApplicationRoot.MainWindow.WindowTheme = ElementTheme.Light;
+                    MainWindow.Current.WindowTheme = ElementTheme.Light;
                 }
                 else
                 {
-                    Program.ApplicationRoot.MainWindow.WindowTheme = ElementTheme.Dark;
+                    MainWindow.Current.WindowTheme = ElementTheme.Dark;
                 }
             }
             else
             {
-                Program.ApplicationRoot.MainWindow.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.Value.ToString());
+                MainWindow.Current.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.Value.ToString());
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Views.Windows;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
@@ -15,20 +16,20 @@ namespace GetStoreApp.Helpers.Controls.Extensions
         /// </summary>
         public static void Show(TeachingTip teachingTip, int duration = 2000)
         {
-            Program.ApplicationRoot.MainWindow.DispatcherQueue.TryEnqueue(async () =>
+            MainWindow.Current.DispatcherQueue.TryEnqueue(async () =>
             {
                 teachingTip.Name = "TeachingTip" + Guid.NewGuid().ToString();
-                (Program.ApplicationRoot.MainWindow.Content as Grid).Children.Add(teachingTip);
+                (MainWindow.Current.Content as Grid).Children.Add(teachingTip);
                 teachingTip.IsOpen = true;
                 teachingTip.Closed += (sender, args) =>
                 {
                     try
                     {
-                        foreach (UIElement item in (Program.ApplicationRoot.MainWindow.Content as Grid).Children)
+                        foreach (UIElement item in (MainWindow.Current.Content as Grid).Children)
                         {
                             if ((item as FrameworkElement).Name == teachingTip.Name)
                             {
-                                (Program.ApplicationRoot.MainWindow.Content as Grid).Children.Remove(item);
+                                (MainWindow.Current.Content as Grid).Children.Remove(item);
                                 break;
                             }
                         }

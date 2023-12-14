@@ -6,7 +6,6 @@ using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
@@ -22,6 +21,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections;
@@ -39,7 +39,6 @@ using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using WinRT.Interop;
 
 namespace GetStoreApp.Views.Windows
 {
@@ -57,16 +56,17 @@ namespace GetStoreApp.Views.Windows
         private WNDPROC newInputNonClientPointerSourceWndProc = null;
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
 
-        private OverlappedPresenter Presenter;
+        private ContentCoordinateConverter contentCoordinateConverter;
+        private DisplayInformation displayInformation;
+        private OverlappedPresenter overlappedPresenter;
+        private DrillInNavigationTransitionInfo navigationTransitionInfo = new DrillInNavigationTransitionInfo();
         private UISettings AppUISettings = new UISettings();
 
-        public CoreWindow UWPCoreWindow { get; }
+        public new CoreWindow CoreWindow { get; }
 
-        public DisplayInformation DisplayInformation { get; }
+        public new static MainWindow Current { get; private set; }
 
-        public ContentCoordinateConverter ContentCoordinateConverter { get; }
-
-        public IntPtr Handle { get; }
+        private static List<NavigationModel> NavigationItemList { get; } = new List<NavigationModel>();
 
         private bool _isWindowMaximized;
 
@@ -149,27 +149,26 @@ namespace GetStoreApp.Views.Windows
 
         public MainWindow()
         {
+            Current = this;
             InitializeComponent();
 
             // 窗口部分初始化
-            Handle = WindowNative.GetWindowHandle(this);
-            NavigationService.NavigationFrame = WindowFrame;
-            Presenter = AppWindow.Presenter as OverlappedPresenter;
+            overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
-            IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
-            ContentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(Win32Interop.GetWindowIdFromWindow(Handle));
+            IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
             // 标题栏设置
             SetTitleBar(AppTitlebar);
             SetTitleBarColor((Content as FrameworkElement).ActualTheme);
 
             // 在 WinUI3 桌面应用中创建 CoreWindow
-            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, Handle, typeof(ICoreWindow).GUID, out IntPtr obj);
-            UWPCoreWindow = CoreWindow.FromAbi(obj);
-            DisplayInformation = DisplayInformation.GetForCurrentView();
+            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, (IntPtr)AppWindow.Id.Value, typeof(ICoreWindow).GUID, out IntPtr obj);
+            CoreWindow = CoreWindow.FromAbi(obj);
+            displayInformation = DisplayInformation.GetForCurrentView();
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -178,32 +177,32 @@ namespace GetStoreApp.Views.Windows
 
             // 为应用主窗口添加窗口过程
             newMainWindowWndProc = new WNDPROC(WindowWndProc);
-            oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
+            oldMainWindowWndProc = SetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
 
             // 为非工作区的窗口设置相应的窗口样式，添加窗口过程
-            IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
+            IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx((IntPtr)AppWindow.Id.Value, IntPtr.Zero, "InputNonClientPointerSource", null);
 
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
-                int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
-                SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
+                int style = GetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE);
+                SetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
 
                 newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
                 oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
             }
 
             // 设置 CoreWindow 窗口的样式
-            if (UWPCoreWindow is not null)
+            if (CoreWindow is not null)
             {
                 UWPCoreHandle = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, typeof(CoreWindow).FullName, "GetStoreAppCoreWindow");
 
                 if (UWPCoreHandle != IntPtr.Zero)
                 {
-                    long style = GetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_STYLE);
+                    long style = GetWindowLongAuto((IntPtr)UWPCoreHandle, WindowLongIndexFlags.GWL_STYLE);
                     style &= ~(long)WindowStyle.WS_POPUP;
                     SetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW));
                     SetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW);
-                    User32Library.SetParent(UWPCoreHandle, Handle);
+                    User32Library.SetParent(UWPCoreHandle, (IntPtr)AppWindow.Id.Value);
                 }
             }
 
@@ -212,7 +211,7 @@ namespace GetStoreApp.Views.Windows
             {
                 CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
                 changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
-                User32Library.ChangeWindowMessageFilterEx(Handle, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
+                User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
                 ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
             }
         }
@@ -224,7 +223,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
         {
-            if (Program.ApplicationRoot.IsAppRunning && SystemBackdrop is not null)
+            if ((Application.Current as WinUIApp).IsAppRunning && SystemBackdrop is not null)
             {
                 MaterialBackdrop materialBackdrop = SystemBackdrop as MaterialBackdrop;
 
@@ -252,9 +251,9 @@ namespace GetStoreApp.Views.Windows
                 TitlebarMenuFlyout.Hide();
             }
 
-            if (Presenter is not null)
+            if (overlappedPresenter is not null)
             {
-                IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
+                IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             }
         }
 
@@ -275,9 +274,9 @@ namespace GetStoreApp.Views.Windows
                     TitlebarMenuFlyout.Hide();
                 }
 
-                if (Presenter is not null)
+                if (overlappedPresenter is not null)
                 {
-                    IsWindowMaximized = Presenter.State is OverlappedPresenterState.Maximized;
+                    IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
                 }
             }
         }
@@ -300,20 +299,20 @@ namespace GetStoreApp.Views.Windows
                 if (result is ContentDialogResult.Primary)
                 {
                     AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
-                    Program.ApplicationRoot.Dispose();
+                    (Application.Current as WinUIApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
                 {
-                    if (NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                    if (GetCurrentPageType() != typeof(DownloadPage))
                     {
-                        NavigationService.NavigateTo(typeof(DownloadPage));
+                        NavigateTo(typeof(DownloadPage));
                     }
                 }
             }
             else
             {
                 AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
-                Program.ApplicationRoot.Dispose();
+                (Application.Current as WinUIApp).Dispose();
             }
         }
 
@@ -338,7 +337,7 @@ namespace GetStoreApp.Views.Windows
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
+                User32Library.SendMessage((IntPtr)AppWindow.Id.Value, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
             }
         }
 
@@ -351,7 +350,7 @@ namespace GetStoreApp.Views.Windows
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage(Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
+                User32Library.SendMessage((IntPtr)AppWindow.Id.Value, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
         }
 
@@ -376,7 +375,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            Program.ApplicationRoot.Dispose();
+            (Application.Current as WinUIApp).Dispose();
         }
 
         #endregion 第三部分：窗口右键菜单事件
@@ -406,7 +405,7 @@ namespace GetStoreApp.Views.Windows
                 }
                 else
                 {
-                    NavigationService.NavigationFrom();
+                    NavigationFrom();
                 }
             }
         }
@@ -432,7 +431,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
 
-                        NavigationService.NavigationItemList.Add(new NavigationModel()
+                        NavigationItemList.Add(new NavigationModel()
                         {
                             NavigationTag = PageList[TagIndex].Key,
                             NavigationItem = navigationViewItem,
@@ -448,7 +447,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
 
-                        NavigationService.NavigationItemList.Add(new NavigationModel()
+                        NavigationItemList.Add(new NavigationModel()
                         {
                             NavigationTag = PageList[TagIndex].Key,
                             NavigationItem = navigationViewItem,
@@ -457,13 +456,13 @@ namespace GetStoreApp.Views.Windows
                     }
                 }
 
-                SelectedItem = NavigationService.NavigationItemList[0].NavigationItem;
-                NavigationService.NavigateTo(typeof(StorePage));
+                SelectedItem = NavigationItemList[0].NavigationItem;
+                NavigateTo(typeof(StorePage));
                 if (DesktopLaunchService.InitializePage != typeof(StorePage))
                 {
-                    NavigationService.NavigateTo(DesktopLaunchService.InitializePage);
+                    NavigateTo(DesktopLaunchService.InitializePage);
                 }
-                IsBackEnabled = NavigationService.CanGoBack();
+                IsBackEnabled = CanGoBack();
             }
         }
 
@@ -479,7 +478,7 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                NavigationService.NavigationFrom();
+                NavigationFrom();
             }
         }
 
@@ -491,7 +490,7 @@ namespace GetStoreApp.Views.Windows
             NavigationViewItemBase navigationViewItem = args.InvokedItemContainer;
             if (navigationViewItem.Tag is not null)
             {
-                NavigationModel navigationItem = NavigationService.NavigationItemList.Find(item => item.NavigationTag == PageList[Convert.ToInt32(navigationViewItem.Tag)].Key);
+                NavigationModel navigationItem = NavigationItemList.Find(item => item.NavigationTag == PageList[Convert.ToInt32(navigationViewItem.Tag)].Key);
 
                 if (SelectedItem != navigationItem.NavigationItem)
                 {
@@ -535,7 +534,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     else
                     {
-                        NavigationService.NavigateTo(navigationItem.NavigationPage);
+                        NavigateTo(navigationItem.NavigationPage);
                     }
                 }
             }
@@ -546,9 +545,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            Type CurrentPageType = NavigationService.GetCurrentPageType();
-            SelectedItem = NavigationService.NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
-            IsBackEnabled = NavigationService.CanGoBack();
+            Type CurrentPageType = GetCurrentPageType();
+            SelectedItem = NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
+            IsBackEnabled = CanGoBack();
         }
 
         /// <summary>
@@ -697,17 +696,17 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void Show()
         {
-            if (Presenter.State is OverlappedPresenterState.Maximized)
+            if (overlappedPresenter.State is OverlappedPresenterState.Maximized)
             {
-                Presenter.Maximize();
+                overlappedPresenter.Maximize();
             }
             else
             {
-                Presenter.Restore();
+                overlappedPresenter.Restore();
             }
 
             AppWindow.MoveInZOrderAtTop();
-            User32Library.SetForegroundWindow(Handle);
+            User32Library.SetForegroundWindow((IntPtr)AppWindow.Id.Value);
         }
 
         /// <summary>
@@ -715,13 +714,13 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void MaximizeOrRestore()
         {
-            if (Presenter.State is OverlappedPresenterState.Maximized)
+            if (overlappedPresenter.State is OverlappedPresenterState.Maximized)
             {
-                Presenter.Restore();
+                overlappedPresenter.Restore();
             }
             else
             {
-                Presenter.Maximize();
+                overlappedPresenter.Maximize();
             }
         }
 
@@ -730,7 +729,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void Minimize()
         {
-            Presenter.Minimize();
+            overlappedPresenter.Minimize();
         }
 
         /// <summary>
@@ -738,7 +737,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void SetTopMost(bool isAlwaysOnTop)
         {
-            Presenter.IsAlwaysOnTop = isAlwaysOnTop;
+            overlappedPresenter.IsAlwaysOnTop = isAlwaysOnTop;
         }
 
         /// <summary>
@@ -794,11 +793,11 @@ namespace GetStoreApp.Views.Windows
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
-                        if (DisplayInformation is not null)
+                        if (displayInformation is not null)
                         {
                             MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                            minMaxInfo.ptMinTrackSize.X = (int)(960 * DisplayInformation.RawPixelsPerViewPixel);
-                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * DisplayInformation.RawPixelsPerViewPixel);
+                            minMaxInfo.ptMinTrackSize.X = (int)(960 * displayInformation.RawPixelsPerViewPixel);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * displayInformation.RawPixelsPerViewPixel);
                             Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         }
 
@@ -827,39 +826,39 @@ namespace GetStoreApp.Views.Windows
 
                             if (startupArgs.Length is 2)
                             {
-                                if (startupArgs[1] is "Store" && NavigationService.GetCurrentPageType() != typeof(StorePage))
+                                if (startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
                                 {
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        NavigationService.NavigateTo(typeof(StorePage));
+                                        NavigateTo(typeof(StorePage));
                                     });
                                 }
-                                if (startupArgs[1] is "AppUpdate" && NavigationService.GetCurrentPageType() != typeof(AppUpdatePage))
+                                if (startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
                                 {
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        NavigationService.NavigateTo(typeof(AppUpdatePage));
+                                        NavigateTo(typeof(AppUpdatePage));
                                     });
                                 }
-                                else if (startupArgs[1] is "WinGet" && NavigationService.GetCurrentPageType() != typeof(WinGetPage))
+                                else if (startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
                                 {
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        NavigationService.NavigateTo(typeof(WinGetPage));
+                                        NavigateTo(typeof(WinGetPage));
                                     });
                                 }
-                                else if (startupArgs[1] is "UWPApp" && NavigationService.GetCurrentPageType() != typeof(UWPAppPage))
+                                else if (startupArgs[1] is "UWPApp" && GetCurrentPageType() != typeof(UWPAppPage))
                                 {
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        NavigationService.NavigateTo(typeof(UWPAppPage));
+                                        NavigateTo(typeof(UWPAppPage));
                                     });
                                 }
-                                else if (startupArgs[1] is "Download" && NavigationService.GetCurrentPageType() != typeof(DownloadPage))
+                                else if (startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
                                 {
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        NavigationService.NavigateTo(typeof(DownloadPage));
+                                        NavigateTo(typeof(DownloadPage));
                                     });
                                 }
                                 else if (startupArgs[1] is "Web")
@@ -897,12 +896,12 @@ namespace GetStoreApp.Views.Windows
                             {
                                 DispatcherQueue.TryEnqueue(() =>
                                 {
-                                    if (NavigationService.GetCurrentPageType() != typeof(StorePage))
+                                    if (GetCurrentPageType() != typeof(StorePage))
                                     {
-                                        NavigationService.NavigateTo(typeof(StorePage));
+                                        NavigateTo(typeof(StorePage));
                                     }
 
-                                    StorePage storePage = NavigationService.NavigationFrame.Content as StorePage;
+                                    StorePage storePage = WindowFrame.Content as StorePage;
                                     if (storePage is not null)
                                     {
                                         storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
@@ -958,9 +957,9 @@ namespace GetStoreApp.Views.Windows
                 // 任务栏窗口右键点击后的消息
                 case WindowMessage.WM_SYSMENU:
                     {
-                        if (Presenter.State is OverlappedPresenterState.Minimized)
+                        if (overlappedPresenter.State is OverlappedPresenterState.Minimized)
                         {
-                            Presenter.Restore();
+                            overlappedPresenter.Restore();
                         }
                         break;
                     }
@@ -987,15 +986,15 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONDOWN:
                     {
-                        if (DisplayInformation is not null)
+                        if (displayInformation is not null)
                         {
                             PointInt32 screenPoint = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
-                            Point localPoint = ContentCoordinateConverter.ConvertScreenToLocal(screenPoint);
+                            Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
 
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.ShowMode = FlyoutShowMode.Standard;
                             options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                            new Point(localPoint.X / DisplayInformation.RawPixelsPerViewPixel, localPoint.Y / DisplayInformation.RawPixelsPerViewPixel) :
+                            new Point(localPoint.X / displayInformation.RawPixelsPerViewPixel, localPoint.Y / displayInformation.RawPixelsPerViewPixel) :
                             new Point(localPoint.X, localPoint.Y);
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
@@ -1007,5 +1006,52 @@ namespace GetStoreApp.Views.Windows
         }
 
         #endregion 第八部分：窗口过程
+
+        #region 窗口导航方法
+
+        /// <summary>
+        /// 页面向前导航
+        /// </summary>
+        public void NavigateTo(Type navigationPageType, object parameter = null)
+        {
+            if (NavigationItemList.Exists(item => item.NavigationPage == navigationPageType))
+            {
+                WindowFrame.Navigate(NavigationItemList.Find(item => item.NavigationPage == navigationPageType).NavigationPage, parameter, navigationTransitionInfo);
+            }
+        }
+
+        /// <summary>
+        /// 页面向后导航
+        /// </summary>
+        public void NavigationFrom()
+        {
+            if (WindowFrame.CanGoBack)
+            {
+                WindowFrame.GoBack();
+            }
+        }
+
+        /// <summary>
+        /// 获取当前导航到的页
+        /// </summary>
+        public Type GetCurrentPageType()
+        {
+            return WindowFrame.CurrentSourcePageType;
+        }
+
+        /// <summary>
+        /// 检查当前页面是否能向后导航
+        /// </summary>
+        public bool CanGoBack()
+        {
+            return WindowFrame.CanGoBack;
+        }
+
+        public object GetFrameContent()
+        {
+            return WindowFrame.Content;
+        }
+
+        #endregion 窗口导航方法
     }
 }

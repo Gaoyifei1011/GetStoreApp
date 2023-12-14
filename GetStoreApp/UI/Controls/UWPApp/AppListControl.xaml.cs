@@ -2,8 +2,8 @@ using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Services.Window;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -359,7 +359,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             PackageModel packageItem = args.Parameter as PackageModel;
-            UWPAppPage uwpAppPage = NavigationService.NavigationFrame.Content as UWPAppPage;
+            UWPAppPage uwpAppPage = MainWindow.Current.GetFrameContent() as UWPAppPage;
 
             if (packageItem is not null && uwpAppPage is not null)
             {

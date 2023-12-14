@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
 using System;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -54,7 +55,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void SetAppTopMost()
         {
-            Program.ApplicationRoot.MainWindow.SetTopMost(TopMostValue);
+            MainWindow.Current.SetTopMost(TopMostValue);
         }
     }
 }
