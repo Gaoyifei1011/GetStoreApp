@@ -28,6 +28,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -1014,9 +1015,10 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void NavigateTo(Type navigationPageType, object parameter = null)
         {
-            if (NavigationItemList.Exists(item => item.NavigationPage == navigationPageType))
+            NavigationModel navigationItem = NavigationItemList.FirstOrDefault(item => item.NavigationPage == navigationPageType);
+            if (navigationItem is not null)
             {
-                WindowFrame.Navigate(NavigationItemList.Find(item => item.NavigationPage == navigationPageType).NavigationPage, parameter, navigationTransitionInfo);
+                WindowFrame.Navigate(navigationItem.NavigationPage, parameter, navigationTransitionInfo);
             }
         }
 

@@ -25,7 +25,7 @@ namespace GetStoreApp
 
         public bool IsAppRunning { get; set; } = true;
 
-        private MainWindow MainWindow { get; set; }
+        private Window Window { get; set; }
 
         public WinUIApp()
         {
@@ -39,10 +39,8 @@ namespace GetStoreApp
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
-
-            MainWindow = new MainWindow();
+            Window = new MainWindow();
             ActivateWindow();
-
             InitializeJumpList();
             Startup();
         }
@@ -129,13 +127,13 @@ namespace GetStoreApp
 
             if (IsWindowMaximized.HasValue && IsWindowMaximized.Value is true)
             {
-                MainWindow.MaximizeOrRestore();
+                MainWindow.Current.MaximizeOrRestore();
             }
             else
             {
                 if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
                 {
-                    MainWindow.AppWindow.MoveAndResize(new RectInt32(
+                    MainWindow.Current.AppWindow.MoveAndResize(new RectInt32(
                         WindowPositionXAxis.Value,
                         WindowPositionYAxis.Value,
                         WindowWidth.Value,
@@ -144,8 +142,8 @@ namespace GetStoreApp
                 }
             }
 
-            MainWindow.AppWindow.SetIcon("Assets/Logo.ico");
-            MainWindow.Activate();
+            MainWindow.Current.AppWindow.SetIcon("Assets/Logo.ico");
+            MainWindow.Current.Activate();
         }
 
         /// <summary>
@@ -180,11 +178,11 @@ namespace GetStoreApp
         /// </summary>
         private void SaveWindowInformation()
         {
-            LocalSettingsService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.IsWindowMaximized);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowWidthKey, MainWindow.AppWindow.Size.Width);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowHeightKey, MainWindow.AppWindow.Size.Height);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionXAxisKey, MainWindow.AppWindow.Position.X);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionYAxisKey, MainWindow.AppWindow.Position.Y);
+            LocalSettingsService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.Current.IsWindowMaximized);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowWidthKey, MainWindow.Current.AppWindow.Size.Width);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowHeightKey, MainWindow.Current.AppWindow.Size.Height);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionXAxisKey, MainWindow.Current.AppWindow.Position.X);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionYAxisKey, MainWindow.Current.AppWindow.Position.Y);
         }
 
         /// <summary>
@@ -192,7 +190,7 @@ namespace GetStoreApp
         /// </summary>
         public void Restart()
         {
-            MainWindow.AppWindow.Hide();
+            MainWindow.Current.AppWindow.Hide();
 
             Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
             WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;

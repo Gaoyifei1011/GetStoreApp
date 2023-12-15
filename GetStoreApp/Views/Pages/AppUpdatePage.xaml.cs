@@ -248,7 +248,12 @@ namespace GetStoreApp.Views.Pages
                                     PublisherName = package.PublisherDisplayName,
                                     InstallInformation = installInformation,
                                     InstallSubInformation = installSubInformation,
-                                    IsUpdating = false,
+                                    IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
+                                        appInstallStatus.InstallState is AppInstallState.Error ||
+                                        appInstallStatus.InstallState is AppInstallState.Paused ||
+                                        appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
+                                        appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
+                                        appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired),
                                     PackageFamilyName = upgradableApps.PackageFamilyName,
                                     PercentComplete = appInstallStatus.PercentComplete,
                                     ProductId = upgradableApps.ProductId
@@ -383,21 +388,12 @@ namespace GetStoreApp.Views.Pages
                             appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
                             appUpdateItem.InstallInformation = installInformation;
                             appUpdateItem.InstallSubInformation = installSubInformation;
-
-                            if (appInstallStatus.InstallState is AppInstallState.Canceled ||
+                            appUpdateItem.IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
                                 appInstallStatus.InstallState is AppInstallState.Error ||
                                 appInstallStatus.InstallState is AppInstallState.Paused ||
                                 appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
                                 appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
-                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired
-                                )
-                            {
-                                appUpdateItem.IsUpdating = false;
-                            }
-                            else
-                            {
-                                appUpdateItem.IsUpdating = true;
-                            }
+                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired);
                         }
                     });
                 }
