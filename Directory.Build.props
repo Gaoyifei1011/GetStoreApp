@@ -14,7 +14,7 @@
     <TargetFrameworkMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCoreApp,Version=v8.0</TargetFrameworkMoniker>
     <NuGetTargetMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCoreApp,Version=v8.0</NuGetTargetMoniker>
     <!--如果不指定这一行，那么arm64平台会找不到RID而失败-->
-    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">win;win-x86;win-x64;win-arm;win-arm64;win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">win;win-x86;win-x64;win-arm;win-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <!--从兼容性考虑，继续向上搜索 Directory.Build.props-->

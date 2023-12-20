@@ -21,7 +21,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections;
@@ -60,7 +59,6 @@ namespace GetStoreApp.Views.Windows
         private ContentCoordinateConverter contentCoordinateConverter;
         private DisplayInformation displayInformation;
         private OverlappedPresenter overlappedPresenter;
-        private DrillInNavigationTransitionInfo navigationTransitionInfo = new DrillInNavigationTransitionInfo();
         private UISettings AppUISettings = new UISettings();
 
         public new CoreWindow CoreWindow { get; }
@@ -1018,7 +1016,7 @@ namespace GetStoreApp.Views.Windows
             NavigationModel navigationItem = NavigationItemList.FirstOrDefault(item => item.NavigationPage == navigationPageType);
             if (navigationItem is not null)
             {
-                WindowFrame.Navigate(navigationItem.NavigationPage, parameter, navigationTransitionInfo);
+                WindowFrame.Navigate(navigationItem.NavigationPage, parameter);
             }
         }
 

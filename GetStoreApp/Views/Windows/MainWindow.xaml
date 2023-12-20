@@ -306,7 +306,9 @@
                 NavigationFailed="{x:Bind OnNavigationFailed}">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
-                        <NavigationThemeTransition />
+                        <NavigationThemeTransition>
+                            <DrillInNavigationTransitionInfo />
+                        </NavigationThemeTransition>
                     </TransitionCollection>
                 </Frame.ContentTransitions>
             </Frame>
