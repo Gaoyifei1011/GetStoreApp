@@ -12,7 +12,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="3.0.1220.0" />
+    Version="3.0.1222.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -50,7 +50,7 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.protocol" Executable="TaskbarPinner.exe" EntryPoint="TaskbarPinner.App">
+        <uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="GetStoreApp.App">
           <uap:Protocol Name="taskbarpinner">
             <uap:DisplayName>ms-resource:ProtocolName</uap:DisplayName>
           </uap:Protocol>

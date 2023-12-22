@@ -20,8 +20,8 @@ namespace GetStoreApp.Services.Shell
     {
         private static bool IsFileDownloading = false;
 
-        public static STARTUPINFO DownloadProcessStartupInfo;
-        public static PROCESS_INFORMATION DownloadProcessInformation;
+        public static STARTUPINFO DownloadStartupInfo;
+        public static PROCESS_INFORMATION DownloadInformation;
 
         /// <summary>
         /// 下载相应的文件
@@ -107,9 +107,6 @@ namespace GetStoreApp.Services.Shell
         {
             byte[] ReadBuff = new byte[101];
 
-            DownloadProcessStartupInfo = new STARTUPINFO();
-            DownloadProcessInformation = new PROCESS_INFORMATION();
-
             SECURITY_ATTRIBUTES DownloadSecurityAttributes = new SECURITY_ATTRIBUTES();
             DownloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
             DownloadSecurityAttributes.bInheritHandle = true;
@@ -122,23 +119,23 @@ namespace GetStoreApp.Services.Shell
                 IntPtr Handle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
                 Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, hWrite);
 
-                Kernel32Library.GetStartupInfo(out DownloadProcessStartupInfo);
-                DownloadProcessStartupInfo.lpReserved = IntPtr.Zero;
-                DownloadProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                DownloadProcessStartupInfo.lpTitle = IntPtr.Zero;
-                DownloadProcessStartupInfo.dwX = 0;
-                DownloadProcessStartupInfo.dwY = 0;
-                DownloadProcessStartupInfo.dwXSize = 0;
-                DownloadProcessStartupInfo.dwYSize = 0;
-                DownloadProcessStartupInfo.dwXCountChars = 500;
-                DownloadProcessStartupInfo.dwYCountChars = 500;
-                DownloadProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW | STARTF.STARTF_USESTDHANDLES;
-                DownloadProcessStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                DownloadProcessStartupInfo.cbReserved2 = 0;
-                DownloadProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                DownloadProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                DownloadProcessStartupInfo.hStdError = hWrite;
-                DownloadProcessStartupInfo.hStdOutput = hWrite;
+                Kernel32Library.GetStartupInfo(out STARTUPINFO downloadStartupInfo);
+                downloadStartupInfo.lpReserved = IntPtr.Zero;
+                downloadStartupInfo.lpDesktop = IntPtr.Zero;
+                downloadStartupInfo.lpTitle = IntPtr.Zero;
+                downloadStartupInfo.dwX = 0;
+                downloadStartupInfo.dwY = 0;
+                downloadStartupInfo.dwXSize = 0;
+                downloadStartupInfo.dwYSize = 0;
+                downloadStartupInfo.dwXCountChars = 500;
+                downloadStartupInfo.dwYCountChars = 500;
+                downloadStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW | STARTF.STARTF_USESTDHANDLES;
+                downloadStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                downloadStartupInfo.cbReserved2 = 0;
+                downloadStartupInfo.lpReserved2 = IntPtr.Zero;
+                downloadStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                downloadStartupInfo.hStdError = hWrite;
+                downloadStartupInfo.hStdOutput = hWrite;
 
                 bool createResult = Kernel32Library.CreateProcess(
                     null,
@@ -153,8 +150,8 @@ namespace GetStoreApp.Services.Shell
                     CreateProcessFlags.CREATE_NO_WINDOW,
                     IntPtr.Zero,
                     null,
-                    ref DownloadProcessStartupInfo,
-                    out DownloadProcessInformation
+                    ref downloadStartupInfo,
+                    out PROCESS_INFORMATION downloadInformation
                     );
 
                 IsFileDownloading = true;
@@ -169,8 +166,8 @@ namespace GetStoreApp.Services.Shell
                         ConsoleHelper.Write(Encoding.UTF8.GetString(ReadBuff));
                     }
 
-                    if (DownloadProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(DownloadProcessInformation.hProcess);
-                    if (DownloadProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(DownloadProcessInformation.hThread);
+                    if (downloadInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(downloadInformation.hProcess);
+                    if (downloadInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(downloadInformation.hThread);
                     Kernel32Library.CloseHandle(hRead);
                 }
 
@@ -195,9 +192,9 @@ namespace GetStoreApp.Services.Shell
         {
             if (IsFileDownloading)
             {
-                if (DownloadProcessInformation.dwProcessId is not 0)
+                if (DownloadInformation.dwProcessId is not 0)
                 {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, DownloadProcessInformation.dwProcessId);
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, DownloadInformation.dwProcessId);
                     if (hProcess != IntPtr.Zero)
                     {
                         Kernel32Library.TerminateProcess(hProcess, 0);

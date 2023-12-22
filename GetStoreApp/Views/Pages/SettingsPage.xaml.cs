@@ -440,28 +440,28 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(() =>
             {
-                Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetSettingsStartupInfo);
-                WinGetSettingsStartupInfo.lpReserved = IntPtr.Zero;
-                WinGetSettingsStartupInfo.lpDesktop = IntPtr.Zero;
-                WinGetSettingsStartupInfo.lpTitle = IntPtr.Zero;
-                WinGetSettingsStartupInfo.dwX = 0;
-                WinGetSettingsStartupInfo.dwY = 0;
-                WinGetSettingsStartupInfo.dwXSize = 0;
-                WinGetSettingsStartupInfo.dwYSize = 0;
-                WinGetSettingsStartupInfo.dwXCountChars = 500;
-                WinGetSettingsStartupInfo.dwYCountChars = 500;
-                WinGetSettingsStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                WinGetSettingsStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                WinGetSettingsStartupInfo.cbReserved2 = 0;
-                WinGetSettingsStartupInfo.lpReserved2 = IntPtr.Zero;
+                Kernel32Library.GetStartupInfo(out STARTUPINFO wingetSettingsStartupInfo);
+                wingetSettingsStartupInfo.lpReserved = IntPtr.Zero;
+                wingetSettingsStartupInfo.lpDesktop = IntPtr.Zero;
+                wingetSettingsStartupInfo.lpTitle = IntPtr.Zero;
+                wingetSettingsStartupInfo.dwX = 0;
+                wingetSettingsStartupInfo.dwY = 0;
+                wingetSettingsStartupInfo.dwXSize = 0;
+                wingetSettingsStartupInfo.dwYSize = 0;
+                wingetSettingsStartupInfo.dwXCountChars = 500;
+                wingetSettingsStartupInfo.dwYCountChars = 500;
+                wingetSettingsStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                wingetSettingsStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                wingetSettingsStartupInfo.cbReserved2 = 0;
+                wingetSettingsStartupInfo.lpReserved2 = IntPtr.Zero;
 
-                WinGetSettingsStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", "winget.exe", "settings"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref WinGetSettingsStartupInfo, out PROCESS_INFORMATION WinGetSettingsProcessInformation);
+                wingetSettingsStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", "winget.exe", "settings"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref wingetSettingsStartupInfo, out PROCESS_INFORMATION winGetSettingsInformation);
 
                 if (createResult)
                 {
-                    if (WinGetSettingsProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hProcess);
-                    if (WinGetSettingsProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetSettingsProcessInformation.hThread);
+                    if (winGetSettingsInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(winGetSettingsInformation.hProcess);
+                    if (winGetSettingsInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(winGetSettingsInformation.hThread);
                 }
             });
         }

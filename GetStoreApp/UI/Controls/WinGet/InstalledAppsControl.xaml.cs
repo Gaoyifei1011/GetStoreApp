@@ -172,28 +172,28 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
-                                    RebootStartupInfo.lpReserved = IntPtr.Zero;
-                                    RebootStartupInfo.lpDesktop = IntPtr.Zero;
-                                    RebootStartupInfo.lpTitle = IntPtr.Zero;
-                                    RebootStartupInfo.dwX = 0;
-                                    RebootStartupInfo.dwY = 0;
-                                    RebootStartupInfo.dwXSize = 0;
-                                    RebootStartupInfo.dwYSize = 0;
-                                    RebootStartupInfo.dwXCountChars = 500;
-                                    RebootStartupInfo.dwYCountChars = 500;
-                                    RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                    RebootStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                                    RebootStartupInfo.cbReserved2 = 0;
-                                    RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+                                    Kernel32Library.GetStartupInfo(out STARTUPINFO shutdownStartupInfo);
+                                    shutdownStartupInfo.lpReserved = IntPtr.Zero;
+                                    shutdownStartupInfo.lpDesktop = IntPtr.Zero;
+                                    shutdownStartupInfo.lpTitle = IntPtr.Zero;
+                                    shutdownStartupInfo.dwX = 0;
+                                    shutdownStartupInfo.dwY = 0;
+                                    shutdownStartupInfo.dwXSize = 0;
+                                    shutdownStartupInfo.dwYSize = 0;
+                                    shutdownStartupInfo.dwXCountChars = 500;
+                                    shutdownStartupInfo.dwYCountChars = 500;
+                                    shutdownStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                    shutdownStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                                    shutdownStartupInfo.cbReserved2 = 0;
+                                    shutdownStartupInfo.lpReserved2 = IntPtr.Zero;
 
-                                    RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                                    shutdownStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref shutdownStartupInfo, out PROCESS_INFORMATION shutdownInformation);
 
                                     if (createResult)
                                     {
-                                        if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                        if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        if (shutdownInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hProcess);
+                                        if (shutdownInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hThread);
                                     }
                                 }
                             }

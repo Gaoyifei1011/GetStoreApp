@@ -79,7 +79,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 	当用户单击该样式时，使用此样式创建的顶级窗口不会成为前台窗口。 当用户最小化或关闭前台窗口时，系统不会将此窗口引入前台。
         /// 不应通过编程访问或通过辅助技术（如讲述人）通过键盘导航激活窗口。
-        /// 若要激活窗口，请使用 SetActiveWindow 或 <see cref="User32Library.SetForegroundWindow"> 函数。
+        /// 若要激活窗口，请使用 SetActiveWindow 或 SetForegroundWindow 函数。
         /// 默认情况下，该窗口不会显示在任务栏上。 若要强制窗口显示在任务栏上，请使用 <see cref="WS_EX_APPWINDOW"> 样式。
         /// </summary>
         WS_EX_NOACTIVATE = 0x08000000,

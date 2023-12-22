@@ -122,28 +122,28 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnControlPanelClicked(object sender, RoutedEventArgs args)
         {
-            Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-            WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
-            WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
-            WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
-            WinGetProcessStartupInfo.dwX = 0;
-            WinGetProcessStartupInfo.dwY = 0;
-            WinGetProcessStartupInfo.dwXSize = 0;
-            WinGetProcessStartupInfo.dwYSize = 0;
-            WinGetProcessStartupInfo.dwXCountChars = 500;
-            WinGetProcessStartupInfo.dwYCountChars = 500;
-            WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-            WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-            WinGetProcessStartupInfo.cbReserved2 = 0;
-            WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-            WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+            Kernel32Library.GetStartupInfo(out STARTUPINFO wingetStartupInfo);
+            wingetStartupInfo.lpReserved = IntPtr.Zero;
+            wingetStartupInfo.lpDesktop = IntPtr.Zero;
+            wingetStartupInfo.lpTitle = IntPtr.Zero;
+            wingetStartupInfo.dwX = 0;
+            wingetStartupInfo.dwY = 0;
+            wingetStartupInfo.dwXSize = 0;
+            wingetStartupInfo.dwYSize = 0;
+            wingetStartupInfo.dwXCountChars = 500;
+            wingetStartupInfo.dwYCountChars = 500;
+            wingetStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+            wingetStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+            wingetStartupInfo.cbReserved2 = 0;
+            wingetStartupInfo.lpReserved2 = IntPtr.Zero;
+            wingetStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-            bool createResult = Kernel32Library.CreateProcess(null, "control.exe appwiz.cpl", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+            bool createResult = Kernel32Library.CreateProcess(null, "control.exe appwiz.cpl", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref wingetStartupInfo, out PROCESS_INFORMATION wingetInformation);
 
             if (createResult)
             {
-                if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                if (wingetInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hProcess);
+                if (wingetInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hThread);
             }
         }
 

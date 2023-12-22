@@ -1,8 +1,0 @@
-﻿{
-  "profiles": {
-    "任务栏固定程序": {
-      "commandName": "MsixPackage",
-      "nativeDebugging": true
-    }
-  }
-}

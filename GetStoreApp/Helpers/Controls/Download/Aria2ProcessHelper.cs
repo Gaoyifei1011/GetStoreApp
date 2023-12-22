@@ -12,9 +12,7 @@ namespace GetStoreApp.Helpers.Controls.Download
     /// </summary>
     public static class Aria2ProcessHelper
     {
-        private static STARTUPINFO Aria2ProcessStartupInfo;
-
-        private static PROCESS_INFORMATION Aria2ProcessInformation;
+        private static PROCESS_INFORMATION Aria2Information;
 
         /// <summary>
         /// 让Aria2以RPC方式启动，并让其在后台运行
@@ -23,23 +21,23 @@ namespace GetStoreApp.Helpers.Controls.Download
         {
             try
             {
-                Kernel32Library.GetStartupInfo(out Aria2ProcessStartupInfo);
-                Aria2ProcessStartupInfo.lpReserved = IntPtr.Zero;
-                Aria2ProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                Aria2ProcessStartupInfo.lpTitle = IntPtr.Zero;
-                Aria2ProcessStartupInfo.dwX = 0;
-                Aria2ProcessStartupInfo.dwY = 0;
-                Aria2ProcessStartupInfo.dwXSize = 0;
-                Aria2ProcessStartupInfo.dwYSize = 0;
-                Aria2ProcessStartupInfo.dwXCountChars = 500;
-                Aria2ProcessStartupInfo.dwYCountChars = 500;
-                Aria2ProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                Aria2ProcessStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                Aria2ProcessStartupInfo.cbReserved2 = 0;
-                Aria2ProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                Aria2ProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                Kernel32Library.GetStartupInfo(out STARTUPINFO Aria2StartupInfo);
+                Aria2StartupInfo.lpReserved = IntPtr.Zero;
+                Aria2StartupInfo.lpDesktop = IntPtr.Zero;
+                Aria2StartupInfo.lpTitle = IntPtr.Zero;
+                Aria2StartupInfo.dwX = 0;
+                Aria2StartupInfo.dwY = 0;
+                Aria2StartupInfo.dwXSize = 0;
+                Aria2StartupInfo.dwYSize = 0;
+                Aria2StartupInfo.dwXCountChars = 500;
+                Aria2StartupInfo.dwYCountChars = 500;
+                Aria2StartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                Aria2StartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                Aria2StartupInfo.cbReserved2 = 0;
+                Aria2StartupInfo.lpReserved2 = IntPtr.Zero;
+                Aria2StartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2ProcessStartupInfo, out Aria2ProcessInformation);
+                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2StartupInfo, out Aria2Information);
             }
             catch (Exception e)
             {
@@ -55,17 +53,17 @@ namespace GetStoreApp.Helpers.Controls.Download
         {
             try
             {
-                if (Aria2ProcessInformation.dwProcessId is not 0)
+                if (Aria2Information.dwProcessId is not 0)
                 {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, Aria2ProcessInformation.dwProcessId);
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, Aria2Information.dwProcessId);
                     if (hProcess != IntPtr.Zero)
                     {
                         Kernel32Library.TerminateProcess(hProcess, 0);
                     }
                     Kernel32Library.CloseHandle(hProcess);
                 }
-                if (Aria2ProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2ProcessInformation.hProcess);
-                if (Aria2ProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2ProcessInformation.hThread);
+                if (Aria2Information.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2Information.hProcess);
+                if (Aria2Information.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2Information.hThread);
             }
             catch (Exception e)
             {
@@ -94,7 +92,7 @@ namespace GetStoreApp.Helpers.Controls.Download
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref ProcessEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref ProcessEntry32))
                 {
-                    if (ProcessEntry32.th32ProcessID == Aria2ProcessInformation.dwProcessId)
+                    if (ProcessEntry32.th32ProcessID == Aria2Information.dwProcessId)
                     {
                         SearchResult = true;
                     }

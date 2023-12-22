@@ -28,9 +28,9 @@ namespace GetStoreApp.Services.Root
         // 应用启动时使用的参数
         public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
         {
-            {"TypeName",-1 },
-            {"ChannelName",-1 },
-            {"Link",null},
+            {"TypeName", -1 },
+            {"ChannelName", -1 },
+            {"Link", null},
         };
 
         public static Type InitializePage { get; set; } = typeof(StorePage);
@@ -121,28 +121,28 @@ namespace GetStoreApp.Services.Root
                                 }
                             case "Web":
                                 {
-                                    Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-                                    WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
-                                    WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                                    WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
-                                    WinGetProcessStartupInfo.dwX = 0;
-                                    WinGetProcessStartupInfo.dwY = 0;
-                                    WinGetProcessStartupInfo.dwXSize = 0;
-                                    WinGetProcessStartupInfo.dwYSize = 0;
-                                    WinGetProcessStartupInfo.dwXCountChars = 500;
-                                    WinGetProcessStartupInfo.dwYCountChars = 500;
-                                    WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                    WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                                    WinGetProcessStartupInfo.cbReserved2 = 0;
-                                    WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                                    WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                    Kernel32Library.GetStartupInfo(out STARTUPINFO webViewStartupInfo);
+                                    webViewStartupInfo.lpReserved = IntPtr.Zero;
+                                    webViewStartupInfo.lpDesktop = IntPtr.Zero;
+                                    webViewStartupInfo.lpTitle = IntPtr.Zero;
+                                    webViewStartupInfo.dwX = 0;
+                                    webViewStartupInfo.dwY = 0;
+                                    webViewStartupInfo.dwXSize = 0;
+                                    webViewStartupInfo.dwYSize = 0;
+                                    webViewStartupInfo.dwXCountChars = 500;
+                                    webViewStartupInfo.dwYCountChars = 500;
+                                    webViewStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                    webViewStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+                                    webViewStartupInfo.cbReserved2 = 0;
+                                    webViewStartupInfo.lpReserved2 = IntPtr.Zero;
+                                    webViewStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                                    bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+                                    bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref webViewStartupInfo, out PROCESS_INFORMATION webViewInformation);
 
                                     if (createResult)
                                     {
-                                        if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                                        if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                                        if (webViewInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hProcess);
+                                        if (webViewInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hThread);
                                     }
                                     Environment.Exit(0);
                                     break;
@@ -194,7 +194,6 @@ namespace GetStoreApp.Services.Root
                     Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
                     User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
                     Marshal.FreeHGlobal(ptrCopyDataStruct);
-                    User32Library.SetForegroundWindow(hwnd);
                 }
 
                 // 然后退出实例并停止
@@ -238,7 +237,6 @@ namespace GetStoreApp.Services.Root
                         Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
                         User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
                         Marshal.FreeHGlobal(ptrCopyDataStruct);
-                        User32Library.SetForegroundWindow(hwnd);
                     }
 
                     // 然后退出实例并停止

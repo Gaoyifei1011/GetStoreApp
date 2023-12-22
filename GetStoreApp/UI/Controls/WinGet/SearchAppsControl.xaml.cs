@@ -299,28 +299,28 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    Kernel32Library.GetStartupInfo(out STARTUPINFO RebootStartupInfo);
-                                    RebootStartupInfo.lpReserved = IntPtr.Zero;
-                                    RebootStartupInfo.lpDesktop = IntPtr.Zero;
-                                    RebootStartupInfo.lpTitle = IntPtr.Zero;
-                                    RebootStartupInfo.dwX = 0;
-                                    RebootStartupInfo.dwY = 0;
-                                    RebootStartupInfo.dwXSize = 0;
-                                    RebootStartupInfo.dwYSize = 0;
-                                    RebootStartupInfo.dwXCountChars = 500;
-                                    RebootStartupInfo.dwYCountChars = 500;
-                                    RebootStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                    RebootStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                                    RebootStartupInfo.cbReserved2 = 0;
-                                    RebootStartupInfo.lpReserved2 = IntPtr.Zero;
+                                    Kernel32Library.GetStartupInfo(out STARTUPINFO shutdownStartupInfo);
+                                    shutdownStartupInfo.lpReserved = IntPtr.Zero;
+                                    shutdownStartupInfo.lpDesktop = IntPtr.Zero;
+                                    shutdownStartupInfo.lpTitle = IntPtr.Zero;
+                                    shutdownStartupInfo.dwX = 0;
+                                    shutdownStartupInfo.dwY = 0;
+                                    shutdownStartupInfo.dwXSize = 0;
+                                    shutdownStartupInfo.dwYSize = 0;
+                                    shutdownStartupInfo.dwXCountChars = 500;
+                                    shutdownStartupInfo.dwYCountChars = 500;
+                                    shutdownStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                                    shutdownStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                                    shutdownStartupInfo.cbReserved2 = 0;
+                                    shutdownStartupInfo.lpReserved2 = IntPtr.Zero;
 
-                                    RebootStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref RebootStartupInfo, out PROCESS_INFORMATION RebootProcessInformation);
+                                    shutdownStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref shutdownStartupInfo, out PROCESS_INFORMATION shutdownInformation);
 
                                     if (createResult)
                                     {
-                                        if (RebootProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hProcess);
-                                        if (RebootProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(RebootProcessInformation.hThread);
+                                        if (shutdownInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hProcess);
+                                        if (shutdownInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hThread);
                                     }
                                 }
                             }
@@ -446,28 +446,28 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(() =>
                 {
-                    Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-                    WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
-                    WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                    WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
-                    WinGetProcessStartupInfo.dwX = 0;
-                    WinGetProcessStartupInfo.dwY = 0;
-                    WinGetProcessStartupInfo.dwXSize = 0;
-                    WinGetProcessStartupInfo.dwYSize = 0;
-                    WinGetProcessStartupInfo.dwXCountChars = 500;
-                    WinGetProcessStartupInfo.dwYCountChars = 500;
-                    WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                    WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
-                    WinGetProcessStartupInfo.cbReserved2 = 0;
-                    WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                    WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                    Kernel32Library.GetStartupInfo(out STARTUPINFO wingetStartupInfo);
+                    wingetStartupInfo.lpReserved = IntPtr.Zero;
+                    wingetStartupInfo.lpDesktop = IntPtr.Zero;
+                    wingetStartupInfo.lpTitle = IntPtr.Zero;
+                    wingetStartupInfo.dwX = 0;
+                    wingetStartupInfo.dwY = 0;
+                    wingetStartupInfo.dwXSize = 0;
+                    wingetStartupInfo.dwYSize = 0;
+                    wingetStartupInfo.dwXCountChars = 500;
+                    wingetStartupInfo.dwYCountChars = 500;
+                    wingetStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                    wingetStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
+                    wingetStartupInfo.cbReserved2 = 0;
+                    wingetStartupInfo.lpReserved2 = IntPtr.Zero;
+                    wingetStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref wingetStartupInfo, out PROCESS_INFORMATION wingetInformation);
 
                     if (createResult)
                     {
-                        if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                        if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                        if (wingetInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hProcess);
+                        if (wingetInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hThread);
                     }
                 });
             }

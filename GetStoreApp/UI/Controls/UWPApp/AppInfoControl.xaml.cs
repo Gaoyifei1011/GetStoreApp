@@ -1,3 +1,4 @@
+using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
@@ -11,14 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 using Windows.System;
 using Windows.UI.StartScreen;
 
@@ -478,9 +477,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     try
                     {
-                        string tempFilePath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "GetStoreAppTemp.txt");
-                        File.WriteAllText(tempFilePath, string.Format("{0}{1}{2}", appListEntryItem.PackageFullName, Environment.NewLine, appListEntryItem.AppUserModelId));
-
+                        ResultService.SaveResult(ConfigKey.TaskbarPinInfoKey, string.Format("{0} {1}", appListEntryItem.PackageFullName, appListEntryItem.AppUserModelId));
                         await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"));
                     }
                     catch (Exception e)

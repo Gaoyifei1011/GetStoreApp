@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
+using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
@@ -7,6 +8,7 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -26,6 +28,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -35,6 +38,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Graphics.Display;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -173,6 +177,7 @@ namespace GetStoreApp.Views.Windows
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
             AppUISettings.ColorValuesChanged += OnColorValuesChanged;
+            ApplicationData.Current.DataChanged += OnDataChanged;
 
             // 为应用主窗口添加窗口过程
             newMainWindowWndProc = new WNDPROC(WindowWndProc);
@@ -222,7 +227,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
         {
-            if ((Application.Current as WinUIApp).IsAppRunning && SystemBackdrop is not null)
+            if (SystemBackdrop is not null)
             {
                 MaterialBackdrop materialBackdrop = SystemBackdrop as MaterialBackdrop;
 
@@ -298,6 +303,7 @@ namespace GetStoreApp.Views.Windows
                 if (result is ContentDialogResult.Primary)
                 {
                     AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
+                    ApplicationData.Current.DataChanged -= OnDataChanged;
                     (Application.Current as WinUIApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
@@ -311,6 +317,7 @@ namespace GetStoreApp.Views.Windows
             else
             {
                 AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
+                ApplicationData.Current.DataChanged -= OnDataChanged;
                 (Application.Current as WinUIApp).Dispose();
             }
         }
@@ -324,7 +331,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            MaximizeOrRestore();
+            overlappedPresenter.Restore();
         }
 
         /// <summary>
@@ -358,7 +365,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            Minimize();
+            overlappedPresenter.Minimize();
         }
 
         /// <summary>
@@ -366,7 +373,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            MaximizeOrRestore();
+            overlappedPresenter.Maximize();
         }
 
         /// <summary>
@@ -495,41 +502,41 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (PageList[Convert.ToInt32(navigationItem.NavigationItem.Tag)].Key is "Web")
                     {
-                        NavigationViewItem OriginalSelectedItem = SelectedItem;
+                        Debug.WriteLine(SelectedItem.Tag.ToString());
+                        NavigationViewItem originalSelectedItem = SelectedItem;
 
                         if (!isInvoked)
                         {
-                            Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-                            WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
-                            WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                            WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
-                            WinGetProcessStartupInfo.dwX = 0;
-                            WinGetProcessStartupInfo.dwY = 0;
-                            WinGetProcessStartupInfo.dwXSize = 0;
-                            WinGetProcessStartupInfo.dwYSize = 0;
-                            WinGetProcessStartupInfo.dwXCountChars = 500;
-                            WinGetProcessStartupInfo.dwYCountChars = 500;
-                            WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                            WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                            WinGetProcessStartupInfo.cbReserved2 = 0;
-                            WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                            WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                            Kernel32Library.GetStartupInfo(out STARTUPINFO webViewStartupInfo);
+                            webViewStartupInfo.lpReserved = IntPtr.Zero;
+                            webViewStartupInfo.lpDesktop = IntPtr.Zero;
+                            webViewStartupInfo.lpTitle = IntPtr.Zero;
+                            webViewStartupInfo.dwX = 0;
+                            webViewStartupInfo.dwY = 0;
+                            webViewStartupInfo.dwXSize = 0;
+                            webViewStartupInfo.dwYSize = 0;
+                            webViewStartupInfo.dwXCountChars = 500;
+                            webViewStartupInfo.dwYCountChars = 500;
+                            webViewStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                            webViewStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+                            webViewStartupInfo.cbReserved2 = 0;
+                            webViewStartupInfo.lpReserved2 = IntPtr.Zero;
+                            webViewStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                            bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+                            bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref webViewStartupInfo, out PROCESS_INFORMATION webViewInformation);
 
                             if (createResult)
                             {
                                 isInvoked = true;
-                                if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                                if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                                if (webViewInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hProcess);
+                                if (webViewInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hThread);
                             }
                         }
                         else
                         {
                             isInvoked = false;
                         }
-
-                        SelectedItem = OriginalSelectedItem;
+                        SelectedItem = originalSelectedItem;
                     }
                     else
                     {
@@ -579,6 +586,17 @@ namespace GetStoreApp.Views.Windows
                         WindowTheme = ElementTheme.Dark;
                     }
                 }
+            });
+        }
+
+        /// <summary>
+        /// 同步漫游应用程序数据时发生的事件
+        /// </summary>
+        private void OnDataChanged(ApplicationData sender, object args)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Taskbar, ResultService.ReadResult<bool>(ConfigKey.TaskbarPinnedResultKey)));
             });
         }
 
@@ -693,42 +711,38 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 显示窗口
         /// </summary>
-        public void Show()
+        public void Show(bool isFirstActivate = false)
         {
-            if (overlappedPresenter.State is OverlappedPresenterState.Maximized)
+            if (isFirstActivate)
             {
-                overlappedPresenter.Maximize();
-            }
-            else
-            {
-                overlappedPresenter.Restore();
+                bool? IsWindowMaximized = LocalSettingsService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
+                int? WindowWidth = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
+                int? WindowHeight = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
+                int? WindowPositionXAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
+                int? WindowPositionYAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
+
+                if (IsWindowMaximized.HasValue && IsWindowMaximized.Value is true)
+                {
+                    overlappedPresenter.Maximize();
+                }
+                else
+                {
+                    if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
+                    {
+                        AppWindow.MoveAndResize(new RectInt32(
+                            WindowPositionXAxis.Value,
+                            WindowPositionYAxis.Value,
+                            WindowWidth.Value,
+                            WindowHeight.Value
+                            ));
+                    }
+                }
+
+                AppWindow.SetIcon("Assets/Logo.ico");
             }
 
-            AppWindow.MoveInZOrderAtTop();
             User32Library.SetForegroundWindow((IntPtr)AppWindow.Id.Value);
-        }
-
-        /// <summary>
-        /// 最大化窗口
-        /// </summary>
-        public void MaximizeOrRestore()
-        {
-            if (overlappedPresenter.State is OverlappedPresenterState.Maximized)
-            {
-                overlappedPresenter.Restore();
-            }
-            else
-            {
-                overlappedPresenter.Maximize();
-            }
-        }
-
-        /// <summary>
-        /// 最小化窗口
-        /// </summary>
-        public void Minimize()
-        {
-            overlappedPresenter.Minimize();
+            Activate();
         }
 
         /// <summary>
@@ -737,6 +751,18 @@ namespace GetStoreApp.Views.Windows
         public void SetTopMost(bool isAlwaysOnTop)
         {
             overlappedPresenter.IsAlwaysOnTop = isAlwaysOnTop;
+        }
+
+        /// <summary>
+        /// 关闭窗口时保存窗口的大小和位置信息
+        /// </summary>
+        public void SaveWindowInformation()
+        {
+            LocalSettingsService.SaveSetting(ConfigKey.IsWindowMaximizedKey, IsWindowMaximized);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowWidthKey, AppWindow.Size.Width);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowHeightKey, AppWindow.Size.Height);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionXAxisKey, AppWindow.Position.X);
+            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionYAxisKey, AppWindow.Position.Y);
         }
 
         /// <summary>
@@ -858,36 +884,6 @@ namespace GetStoreApp.Views.Windows
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
                                         NavigateTo(typeof(DownloadPage));
-                                    });
-                                }
-                                else if (startupArgs[1] is "Web")
-                                {
-                                    Task.Run(() =>
-                                    {
-                                        Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-                                        WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
-                                        WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                                        WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
-                                        WinGetProcessStartupInfo.dwX = 0;
-                                        WinGetProcessStartupInfo.dwY = 0;
-                                        WinGetProcessStartupInfo.dwXSize = 0;
-                                        WinGetProcessStartupInfo.dwYSize = 0;
-                                        WinGetProcessStartupInfo.dwXCountChars = 500;
-                                        WinGetProcessStartupInfo.dwYCountChars = 500;
-                                        WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                        WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                                        WinGetProcessStartupInfo.cbReserved2 = 0;
-                                        WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                                        WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                                        bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
-
-                                        if (createResult)
-                                        {
-                                            isInvoked = true;
-                                            if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                                            if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
-                                        }
                                     });
                                 }
                             }

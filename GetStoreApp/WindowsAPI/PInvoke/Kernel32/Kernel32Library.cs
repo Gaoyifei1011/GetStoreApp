@@ -25,6 +25,19 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial bool AllocConsole();
 
         /// <summary>
+        /// 检索一个值，该值指示进程是使用基于 CoreWindow 的窗口模型还是基于 HWND 的窗口模型。 可以使用 值来决定如何注册窗口状态更改通知 (大小更改、可见性更改等 ) 。
+        /// </summary>
+        /// <param name="processToken">标识进程的访问令牌的句柄。</param>
+        /// <param name="policy">指向 AppPolicyWindowingModel 枚举类型的变量的指针。 当函数成功返回时，变量包含一个枚举常量值，该值指示所标识进程的窗口化模型。</param>
+        /// <returns>
+        /// 如果函数成功，该函数将返回ERROR_SUCCESS。
+        /// 如果找不到进程令牌的已知窗口模型策略，该函数将引发STATUS_ASSERTION_FAILURE异常并返回ERROR_NOT_FOUND。
+        /// 如果 processToken 或 policy 为 null，则该函数返回ERROR_INVALID_PARAMETER。
+        /// </returns>
+        [LibraryImport(Kernel32, EntryPoint = "AppPolicyGetWindowingModel", SetLastError = false)]
+        public static partial int AppPolicyGetWindowingModel(IntPtr processToken, out AppPolicyWindowingModel policy);
+
+        /// <summary>
         /// 将调用进程附加到指定进程的控制台作为客户端应用程序
         /// </summary>
         /// <param name="dwProcessId">
@@ -191,6 +204,21 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>返回值是当前进程的伪句柄。</returns>
         [LibraryImport(Kernel32, EntryPoint = "GetCurrentProcess", SetLastError = false)]
         public static partial IntPtr GetCurrentProcess();
+
+        /// <summary>
+        /// 将指定的打包模块及其依赖项加载到调用进程的地址空间中
+        /// </summary>
+        /// <param name="libraryName">
+        /// 要加载的打包模块的文件名。 该模块可以是 (.dll文件) 的库模块，也可以是) (.exe文件的可执行模块。
+        /// 如果此参数指定模块名称而不指定路径，并且省略文件扩展名，则函数会将默认库扩展.dll追加到模块名称。 若要防止函数将.dll追加到模块名称，请在模块名称字符串中包含尾随点字符 (.) 。
+        /// 如果此参数指定路径，则函数将搜索该路径来查找模块。 路径不能是绝对路径，也不能是路径中包含“..”的相对路径。 指定路径时，请务必使用反斜杠 (\) ，而不是使用 /) (正斜杠。 有关路径的详细信息，请参阅 命名文件、路径和命名空间。
+        /// 如果指定的模块已在进程中加载，则函数将返回已加载模块的句柄。 模块必须最初是从进程的包依赖项关系图加载的。
+        /// 如果加载指定的模块导致系统加载其他关联的模块，则该函数首先搜索已加载的模块，然后搜索进程的包依赖项关系图。
+        /// </param>
+        /// <param name="reserved">此参数为保留参数。 它必须为 0。</param>
+        /// <returns>如果函数成功，则返回值是已加载模块的句柄。如果函数失败，则返回值为 NULL。</returns>
+        [LibraryImport(Kernel32, EntryPoint = "LoadPackagedLibrary", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial IntPtr LoadPackagedLibrary([MarshalAs(UnmanagedType.LPWStr)] string libraryName, int reserved = 0);
 
         /// <summary>
         /// 打开现有的本地进程对象。

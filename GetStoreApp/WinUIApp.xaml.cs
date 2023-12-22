@@ -10,8 +10,13 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
-using Windows.Graphics;
+using Windows.Management.Deployment;
+using Windows.Storage;
+using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 
 namespace GetStoreApp
@@ -23,26 +28,96 @@ namespace GetStoreApp
     {
         private bool isDisposed;
 
-        public bool IsAppRunning { get; set; } = true;
-
-        private Window Window { get; set; }
+        public Window Window { get; private set; }
 
         public WinUIApp()
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
+
+            if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_Universal)
+            {
+                CoreApplication.GetCurrentView().Activated += OnActivated;
+            }
         }
 
         /// <summary>
         /// 启动应用程序时调用，初始化应用主窗口
         /// </summary>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
             Window = new MainWindow();
-            ActivateWindow();
+            MainWindow.Current.Show(true);
             InitializeJumpList();
-            Startup();
+            ConfigApp();
+        }
+
+        /// <summary>
+        /// 处理应用程序未知异常处理
+        /// </summary>
+        private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
+        {
+            args.Handled = true;
+
+            // 系统背景色弹出的异常，不进行处理
+            if (args.Exception.HResult is -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "System backdrop config warning.", args.Exception);
+                return;
+            }
+            // 处理其他异常
+            else
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
+
+                // 退出应用
+                Dispose();
+            }
+        }
+
+        /// <summary>
+        /// 在通过常规启动之外的某种方式激活应用程序时调用，初始化应用内容
+        /// </summary>
+        private async void OnActivated(CoreApplicationView sender, IActivatedEventArgs args)
+        {
+            string taskbarInfo = ResultService.ReadResult<string>(ConfigKey.TaskbarPinInfoKey);
+            if (args.Kind is ActivationKind.Protocol && !string.IsNullOrEmpty(taskbarInfo))
+            {
+                try
+                {
+                    string[] taskbarInfoContents = taskbarInfo.Split(' ');
+
+                    if (taskbarInfoContents.Length is 2)
+                    {
+                        PackageManager packageManager = new PackageManager();
+                        Package package = packageManager.FindPackageForUser(string.Empty, taskbarInfoContents[0]);
+
+                        if (package is not null)
+                        {
+                            foreach (AppListEntry applistItem in package.GetAppListEntries())
+                            {
+                                if (applistItem.AppUserModelId.Equals(taskbarInfoContents[1]))
+                                {
+                                    bool pinResult = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
+                                    ResultService.SaveResult(ConfigKey.TaskbarPinnedResultKey, pinResult);
+                                    ApplicationData.Current.SignalDataChanged();
+                                }
+                            }
+                        }
+                    }
+
+                    ResultService.SaveResult(ConfigKey.TaskbarPinInfoKey, "");
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed", e);
+                    ResultService.SaveResult(ConfigKey.TaskbarPinnedResultKey, false);
+                    ApplicationData.Current.SignalDataChanged();
+                }
+            }
+
+            Exit();
         }
 
         /// <summary>
@@ -92,64 +167,9 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 处理应用程序未知异常处理
-        /// </summary>
-        private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
-        {
-            args.Handled = true;
-
-            // 系统背景色弹出的异常，不进行处理
-            if (args.Exception.HResult is -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "System backdrop config warning.", args.Exception);
-                return;
-            }
-            // 处理其他异常
-            else
-            {
-                LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
-
-                // 退出应用
-                Dispose();
-            }
-        }
-
-        /// <summary>
-        /// 窗口激活前进行配置
-        /// </summary>
-        public void ActivateWindow()
-        {
-            bool? IsWindowMaximized = LocalSettingsService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
-            int? WindowWidth = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
-            int? WindowHeight = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
-            int? WindowPositionXAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
-            int? WindowPositionYAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
-
-            if (IsWindowMaximized.HasValue && IsWindowMaximized.Value is true)
-            {
-                MainWindow.Current.MaximizeOrRestore();
-            }
-            else
-            {
-                if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
-                {
-                    MainWindow.Current.AppWindow.MoveAndResize(new RectInt32(
-                        WindowPositionXAxis.Value,
-                        WindowPositionYAxis.Value,
-                        WindowWidth.Value,
-                        WindowHeight.Value
-                        ));
-                }
-            }
-
-            MainWindow.Current.AppWindow.SetIcon("Assets/Logo.ico");
-            MainWindow.Current.Activate();
-        }
-
-        /// <summary>
         /// 窗口激活后配置其他设置
         /// </summary>
-        public void Startup()
+        private void ConfigApp()
         {
             // 设置应用主题
             ThemeService.SetWindowTheme();
@@ -174,46 +194,34 @@ namespace GetStoreApp
         }
 
         /// <summary>
-        /// 关闭窗口时保存窗口的大小和位置信息
-        /// </summary>
-        private void SaveWindowInformation()
-        {
-            LocalSettingsService.SaveSetting(ConfigKey.IsWindowMaximizedKey, MainWindow.Current.IsWindowMaximized);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowWidthKey, MainWindow.Current.AppWindow.Size.Width);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowHeightKey, MainWindow.Current.AppWindow.Size.Height);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionXAxisKey, MainWindow.Current.AppWindow.Position.X);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionYAxisKey, MainWindow.Current.AppWindow.Position.Y);
-        }
-
-        /// <summary>
         /// 重启应用
         /// </summary>
         public void Restart()
         {
             MainWindow.Current.AppWindow.Hide();
 
-            Kernel32Library.GetStartupInfo(out STARTUPINFO WinGetProcessStartupInfo);
-            WinGetProcessStartupInfo.lpReserved = IntPtr.Zero;
-            WinGetProcessStartupInfo.lpDesktop = IntPtr.Zero;
-            WinGetProcessStartupInfo.lpTitle = IntPtr.Zero;
-            WinGetProcessStartupInfo.dwX = 0;
-            WinGetProcessStartupInfo.dwY = 0;
-            WinGetProcessStartupInfo.dwXSize = 0;
-            WinGetProcessStartupInfo.dwYSize = 0;
-            WinGetProcessStartupInfo.dwXCountChars = 500;
-            WinGetProcessStartupInfo.dwYCountChars = 500;
-            WinGetProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-            WinGetProcessStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-            WinGetProcessStartupInfo.cbReserved2 = 0;
-            WinGetProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-            WinGetProcessStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+            Kernel32Library.GetStartupInfo(out STARTUPINFO restartStartupInfo);
+            restartStartupInfo.lpReserved = IntPtr.Zero;
+            restartStartupInfo.lpDesktop = IntPtr.Zero;
+            restartStartupInfo.lpTitle = IntPtr.Zero;
+            restartStartupInfo.dwX = 0;
+            restartStartupInfo.dwY = 0;
+            restartStartupInfo.dwXSize = 0;
+            restartStartupInfo.dwYSize = 0;
+            restartStartupInfo.dwXCountChars = 500;
+            restartStartupInfo.dwYCountChars = 500;
+            restartStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+            restartStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
+            restartStartupInfo.cbReserved2 = 0;
+            restartStartupInfo.lpReserved2 = IntPtr.Zero;
+            restartStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-            bool createResult = Kernel32Library.CreateProcess(null, "GetStoreApp.exe Restart", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref WinGetProcessStartupInfo, out PROCESS_INFORMATION WinGetProcessInformation);
+            bool createResult = Kernel32Library.CreateProcess(null, "GetStoreApp.exe Restart", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref restartStartupInfo, out PROCESS_INFORMATION restartInformation);
 
             if (createResult)
             {
-                if (WinGetProcessInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hProcess);
-                if (WinGetProcessInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(WinGetProcessInformation.hThread);
+                if (restartInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(restartInformation.hProcess);
+                if (restartInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(restartInformation.hThread);
             }
 
             Dispose();
@@ -238,21 +246,18 @@ namespace GetStoreApp
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
-            if (!isDisposed)
+            if (!isDisposed && disposing)
             {
-                if (disposing)
+                if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
                 {
-                    IsAppRunning = false;
-                    if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
-                    {
-                        CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
-                        changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
-                        User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
-                    }
-                    SaveWindowInformation();
-                    DownloadSchedulerService.CloseDownloadScheduler();
-                    Aria2Service.CloseAria2();
+                    CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
+                    changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
+                    User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
                 }
+
+                MainWindow.Current.SaveWindowInformation();
+                DownloadSchedulerService.CloseDownloadScheduler();
+                Aria2Service.CloseAria2();
 
                 isDisposed = true;
             }

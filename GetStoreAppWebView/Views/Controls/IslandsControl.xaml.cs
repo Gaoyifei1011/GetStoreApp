@@ -533,15 +533,18 @@ namespace GetStoreAppWebView.Views.Controls
             WebBrowser.Navigated += OnNavigated;
         }
 
-        public void SuppressScriptErrors(System.Windows.Controls.WebBrowser wb, bool Hide)
+        /// <summary>
+        /// 禁止 WebBrowser控件显示脚本错误消息对话框
+        /// </summary>
+        public void SuppressScriptErrors(System.Windows.Controls.WebBrowser webBrowser, bool Hide)
         {
             FieldInfo fiComWebBrowser = typeof(System.Windows.Controls.WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
             if (fiComWebBrowser == null) return;
 
-            object objComWebBrowser = fiComWebBrowser.GetValue(wb);
+            object objComWebBrowser = fiComWebBrowser.GetValue(webBrowser);
             if (objComWebBrowser == null) return;
 
-            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
+            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, [Hide]);
         }
 
         /// <summary>
