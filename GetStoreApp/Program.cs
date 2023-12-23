@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
 using Windows.Management.Deployment;
 using WinRT;
 
@@ -42,7 +43,15 @@ namespace GetStoreApp
                 {
                     if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
                     {
-                        package.GetAppListEntries()[0].LaunchAsync().AsTask().Wait();
+                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
+                        foreach (AppListEntry appListEntry in appListEntryList)
+                        {
+                            if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
+                            {
+                                appListEntry.LaunchAsync().AsTask().Wait();
+                                return;
+                            }
+                        }
                     }
                 }
                 return;
@@ -93,10 +102,8 @@ namespace GetStoreApp
             else if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_Universal)
             {
                 Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_MULTITHREADED);
-                Kernel32Library.LoadPackagedLibrary("WinUICoreAppHook.dll");
                 InitializeResourcesAsync(false).Wait();
-                Application.Start((param) => new WinUIApp());
-                Ole32Library.CoUninitialize();
+                CoreApplication.Run(new Views.Windows.FrameworkViewSource());
             }
         }
 

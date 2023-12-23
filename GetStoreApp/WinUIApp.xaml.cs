@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
@@ -10,13 +9,7 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Deployment;
-using Windows.Storage;
-using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 
 namespace GetStoreApp
@@ -34,11 +27,6 @@ namespace GetStoreApp
         {
             InitializeComponent();
             UnhandledException += OnUnhandledException;
-
-            if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_Universal)
-            {
-                CoreApplication.GetCurrentView().Activated += OnActivated;
-            }
         }
 
         /// <summary>
@@ -74,50 +62,6 @@ namespace GetStoreApp
                 // 退出应用
                 Dispose();
             }
-        }
-
-        /// <summary>
-        /// 在通过常规启动之外的某种方式激活应用程序时调用，初始化应用内容
-        /// </summary>
-        private async void OnActivated(CoreApplicationView sender, IActivatedEventArgs args)
-        {
-            string taskbarInfo = ResultService.ReadResult<string>(ConfigKey.TaskbarPinInfoKey);
-            if (args.Kind is ActivationKind.Protocol && !string.IsNullOrEmpty(taskbarInfo))
-            {
-                try
-                {
-                    string[] taskbarInfoContents = taskbarInfo.Split(' ');
-
-                    if (taskbarInfoContents.Length is 2)
-                    {
-                        PackageManager packageManager = new PackageManager();
-                        Package package = packageManager.FindPackageForUser(string.Empty, taskbarInfoContents[0]);
-
-                        if (package is not null)
-                        {
-                            foreach (AppListEntry applistItem in package.GetAppListEntries())
-                            {
-                                if (applistItem.AppUserModelId.Equals(taskbarInfoContents[1]))
-                                {
-                                    bool pinResult = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
-                                    ResultService.SaveResult(ConfigKey.TaskbarPinnedResultKey, pinResult);
-                                    ApplicationData.Current.SignalDataChanged();
-                                }
-                            }
-                        }
-                    }
-
-                    ResultService.SaveResult(ConfigKey.TaskbarPinInfoKey, "");
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed", e);
-                    ResultService.SaveResult(ConfigKey.TaskbarPinnedResultKey, false);
-                    ApplicationData.Current.SignalDataChanged();
-                }
-            }
-
-            Exit();
         }
 
         /// <summary>

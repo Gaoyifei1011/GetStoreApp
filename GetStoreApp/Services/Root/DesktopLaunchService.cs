@@ -285,9 +285,9 @@ namespace GetStoreApp.Services.Root
         private static List<IntPtr> FindExistedWindowHandle(string processName)
         {
             List<IntPtr> hwndList = new List<IntPtr>();
-            List<uint> GetStoreAppProcessPIDList = ProcessHelper.GetProcessPIDByName(processName);
+            List<uint> processPidList = ProcessHelper.GetProcessPidByName(processName);
 
-            if (GetStoreAppProcessPIDList.Count > 0)
+            if (processPidList.Count > 0)
             {
                 IntPtr hwnd = IntPtr.Zero;
                 do
@@ -300,9 +300,9 @@ namespace GetStoreApp.Services.Root
 
                         if (processId is not 0)
                         {
-                            foreach (uint ProcessID in GetStoreAppProcessPIDList)
+                            foreach (uint processPid in processPidList)
                             {
-                                if (ProcessID == processId)
+                                if (processPid.Equals(processId))
                                 {
                                     hwndList.Add(hwnd);
                                 }

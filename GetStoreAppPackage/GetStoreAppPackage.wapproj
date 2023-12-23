@@ -84,7 +84,6 @@
     <None Include="GetStoreAppPackage_SignKey.pfx" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
-    <ProjectReference Include="..\WinUICoreAppHook\WinUICoreAppHook.vcxproj" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <!--将生成的文件放到应用包的根目录-->
