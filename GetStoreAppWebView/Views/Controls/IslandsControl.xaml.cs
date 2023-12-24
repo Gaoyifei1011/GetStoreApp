@@ -133,8 +133,8 @@ namespace GetStoreAppWebView.Views.Controls
             {
                 IsEnabled = true;
                 WebBrowser.Margin = new System.Windows.Thickness(0, ActualHeight, 0, 0);
-                User32Library.SetWindowPos((IntPtr)(Program.WPFApp.MainWindow as MainWindow).DesktopWindowXamlSource.SiteBridge.WindowId.Value,
-  IntPtr.Zero, 0, 0, (int)(ActualWidth * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), Convert.ToInt32(ActualHeight * (Program.WPFApp.MainWindow as MainWindow).WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
+                User32Library.SetWindowPos((IntPtr)(System.Windows.Application.Current.MainWindow as MainWindow).DesktopWindowXamlSource.SiteBridge.WindowId.Value,
+  IntPtr.Zero, 0, 0, (int)(ActualWidth * (System.Windows.Application.Current.MainWindow as MainWindow).WindowDPI), Convert.ToInt32(ActualHeight * (System.Windows.Application.Current.MainWindow as MainWindow).WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
             }
         }
 
@@ -143,7 +143,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            Program.WPFApp.Dispose();
+            (System.Windows.Application.Current as WPFApp).Dispose();
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            (Program.WPFApp.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Maximized;
+            (System.Windows.Application.Current.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Maximized;
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            (Program.WPFApp.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Minimized;
+            (System.Windows.Application.Current.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Minimized;
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace GetStoreAppWebView.Views.Controls
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage((Program.WPFApp.MainWindow as MainWindow).Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, IntPtr.Zero);
+                User32Library.SendMessage((System.Windows.Application.Current.MainWindow as MainWindow).Handle, WindowMessage.WM_SYSCOMMAND, 0xF010, IntPtr.Zero);
             }
         }
 
@@ -180,7 +180,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            (Program.WPFApp.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Normal;
+            (System.Windows.Application.Current.MainWindow as MainWindow).WindowState = System.Windows.WindowState.Normal;
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace GetStoreAppWebView.Views.Controls
             if (menuItem.Tag is not null)
             {
                 ((MenuFlyout)menuItem.Tag).Hide();
-                User32Library.SendMessage((Program.WPFApp.MainWindow as MainWindow).Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, IntPtr.Zero);
+                User32Library.SendMessage((System.Windows.Application.Current.MainWindow as MainWindow).Handle, WindowMessage.WM_SYSCOMMAND, 0xF000, IntPtr.Zero);
             }
         }
 
@@ -357,7 +357,7 @@ namespace GetStoreAppWebView.Views.Controls
             LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", processFailedBuilder);
 
             System.Windows.MessageBox.Show(ResourceService.GetLocalized("WebView/WebViewProcessFailedContent"), ResourceService.GetLocalized("WebView/WebViewProcessFailedTitle"), System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            Program.WPFApp.Dispose();
+            (System.Windows.Application.Current as WPFApp).Dispose();
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace GetStoreAppWebView.Views.Controls
         private void OnNavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             IsLoading = false;
-            Program.WPFApp.MainWindow.Title = string.Format("{0} - {1}", webView2.CoreWebView2.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
+            System.Windows.Application.Current.MainWindow.Title = string.Format("{0} - {1}", webView2.CoreWebView2.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            Program.WPFApp.MainWindow.Title = string.Format("{0} - {1}", WebBrowser.InvokeScript("eval", "document.title").ToString(), ResourceService.GetLocalized("WebView/Title"));
+            System.Windows.Application.Current.MainWindow.Title = string.Format("{0} - {1}", WebBrowser.InvokeScript("eval", "document.title").ToString(), ResourceService.GetLocalized("WebView/Title"));
             CanGoBack = WebBrowser.CanGoBack;
             CanGoForward = WebBrowser.CanGoForward;
             IsLoading = false;
@@ -436,7 +436,7 @@ namespace GetStoreAppWebView.Views.Controls
         /// </summary>
         private void SetIslandsColor(ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = (Program.WPFApp.MainWindow as MainWindow).AppWindow.TitleBar;
+            AppWindowTitleBar titleBar = (System.Windows.Application.Current.MainWindow as MainWindow).AppWindow.TitleBar;
 
             titleBar.BackgroundColor = Colors.Transparent;
             titleBar.ForegroundColor = Colors.Transparent;
@@ -526,7 +526,7 @@ namespace GetStoreAppWebView.Views.Controls
         {
             WebBrowser = new System.Windows.Controls.WebBrowser();
             WebBrowser.Source = new Uri("https://store.rg-adguard.net");
-            Program.WPFApp.MainWindow.Content = WebBrowser;
+            System.Windows.Application.Current.MainWindow.Content = WebBrowser;
             SuppressScriptErrors(WebBrowser, true);
             WebBrowser.AllowDrop = false;
             WebBrowser.Navigating += OnNavigating;

@@ -11,10 +11,6 @@ namespace GetStoreAppWebView
     /// </summary>
     public class Program
     {
-        public static WinUIApp WinUIApp { get; private set; }
-
-        public static WPFApp WPFApp { get; private set; }
-
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
@@ -34,9 +30,8 @@ namespace GetStoreAppWebView
                 Environment.SetEnvironmentVariable("WEBVIEW2_USE_VISUAL_HOSTING_FOR_OWNED_WINDOWS", "1");
             }
 
-            WinUIApp = new WinUIApp();
-            WPFApp = new WPFApp();
-            WPFApp.Run();
+            new WinUIApp();
+            new WPFApp().Run();
         }
 
         /// <summary>

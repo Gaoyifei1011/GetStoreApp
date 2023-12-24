@@ -5,8 +5,6 @@ using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.XamlTypeInfo;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView
@@ -16,10 +14,7 @@ namespace GetStoreAppWebView
     /// </summary>
     public class WinUIApp : Application, IXamlMetadataProvider
     {
-        private List<IXamlMetadataProvider> providers = new List<IXamlMetadataProvider>()
-        {
-            new XamlControlsXamlMetaDataProvider()
-        };
+        private static XamlControlsXamlMetaDataProvider xamlMetaDataProvider = null;
 
         public WinUIApp()
         {
@@ -31,33 +26,17 @@ namespace GetStoreAppWebView
 
         public IXamlType GetXamlType(Type type)
         {
-            foreach (var provider in providers)
-            {
-                IXamlType result = provider.GetXamlType(type);
-                if (result is not null)
-                {
-                    return result;
-                }
-            }
-            return null;
+            return xamlMetaDataProvider.GetXamlType(type);
         }
 
         public IXamlType GetXamlType(string fullName)
         {
-            foreach (var provider in providers)
-            {
-                IXamlType result = provider.GetXamlType(fullName);
-                if (result is not null)
-                {
-                    return result;
-                }
-            }
-            return null;
+            return xamlMetaDataProvider.GetXamlType(fullName);
         }
 
         public XmlnsDefinition[] GetXmlnsDefinitions()
         {
-            return providers.SelectMany(p => p.GetXmlnsDefinitions()).ToArray();
+            return xamlMetaDataProvider.GetXmlnsDefinitions();
         }
 
         /// <summary>
@@ -65,6 +44,9 @@ namespace GetStoreAppWebView
         /// </summary>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            XamlControlsXamlMetaDataProvider.Initialize();
+            xamlMetaDataProvider = new XamlControlsXamlMetaDataProvider();
+
             Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml") });
             Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/AppBarButton.xaml") });
             Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/MenuFlyout.xaml") });
@@ -77,7 +59,7 @@ namespace GetStoreAppWebView
         {
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
-            Program.WPFApp.Dispose();
+            (System.Windows.Application.Current as WPFApp).Dispose();
         }
     }
 }

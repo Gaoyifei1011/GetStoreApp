@@ -120,6 +120,15 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
+        /// 窗口状态发生改变时触发的事件
+        /// </summary>
+        protected override void OnStateChanged(EventArgs args)
+        {
+            base.OnStateChanged(args);
+            IslandsControl.IsWindowMaximized = WindowState is WindowState.Maximized;
+        }
+
+        /// <summary>
         /// 获取指定窗口的属性
         /// </summary>
         private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
@@ -158,8 +167,6 @@ namespace GetStoreAppWebView.Views.Windows
             {
                 case WindowMessage.WM_SIZE:
                     {
-                        IslandsControl.IsWindowMaximized = WindowState == WindowState.Maximized;
-
                         if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0] && DesktopWindowXamlSource.SiteBridge is not null)
                         {
                             User32Library.SetWindowPos((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value,
