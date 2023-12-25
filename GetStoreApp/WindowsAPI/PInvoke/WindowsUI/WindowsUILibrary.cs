@@ -5,6 +5,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.WindowsUI
 {
     public static partial class WindowsUILibrary
     {
+        private const string WindowsUI = "Windows.UI.dll";
+
         /// <summary>
         /// 在桌面应用中创建 CoreWindow
         /// </summary>
@@ -19,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.WindowsUI
         /// <param name="riid">CoreWindow 类对应 COM 组件中的接口</param>
         /// <param name="ppv">创建 CoreWindow 返回的对象</param>
         /// <returns>创建 CoreWindow 的结果</returns>
-        [LibraryImport("Windows.UI.dll", EntryPoint = "#1500", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(WindowsUI, EntryPoint = "#1500", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
         public static partial int PrivateCreateCoreWindow(WINDOW_TYPE WindowType, string pWindowTitle, int X, int Y, int uWidth, int uHeight, int dwAttributes, IntPtr hOwnerWindow, Guid riid, out IntPtr ppv);
     }
 }

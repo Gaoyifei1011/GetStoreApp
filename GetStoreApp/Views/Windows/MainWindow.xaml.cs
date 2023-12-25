@@ -52,7 +52,6 @@ namespace GetStoreApp.Views.Windows
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private bool isInvoked = false;
-        private IntPtr UWPCoreHandle;
 
         private WNDPROC newMainWindowWndProc = null;
         private IntPtr oldMainWindowWndProc = IntPtr.Zero;
@@ -65,7 +64,9 @@ namespace GetStoreApp.Views.Windows
         private OverlappedPresenter overlappedPresenter;
         private UISettings AppUISettings = new UISettings();
 
-        public new CoreWindow CoreWindow { get; }
+        private new CoreWindow CoreWindow { get; }
+
+        public AppWindow CoreAppWindow { get; }
 
         public new static MainWindow Current { get; private set; }
 
@@ -198,15 +199,15 @@ namespace GetStoreApp.Views.Windows
             // 设置 CoreWindow 窗口的样式
             if (CoreWindow is not null)
             {
-                UWPCoreHandle = User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, typeof(CoreWindow).FullName, "GetStoreAppCoreWindow");
+                CoreAppWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, typeof(CoreWindow).FullName, "GetStoreAppCoreWindow")));
 
-                if (UWPCoreHandle != IntPtr.Zero)
+                if (CoreAppWindow is not null)
                 {
-                    long style = GetWindowLongAuto((IntPtr)UWPCoreHandle, WindowLongIndexFlags.GWL_STYLE);
+                    long style = GetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE);
                     style &= ~(long)WindowStyle.WS_POPUP;
-                    SetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW));
-                    SetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(UWPCoreHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW);
-                    User32Library.SetParent(UWPCoreHandle, (IntPtr)AppWindow.Id.Value);
+                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW));
+                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW);
+                    User32Library.SetParent((IntPtr)CoreAppWindow.Id.Value, (IntPtr)AppWindow.Id.Value);
                 }
             }
 
@@ -809,9 +810,9 @@ namespace GetStoreApp.Views.Windows
                 // 窗口大小发生更改后的消息
                 case WindowMessage.WM_SIZE:
                     {
-                        if (UWPCoreHandle != IntPtr.Zero)
+                        if (CoreAppWindow.Id.Value is not 0)
                         {
-                            User32Library.SetWindowPos(UWPCoreHandle, 0, 0, 0, lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16, SetWindowPosFlags.SWP_NOMOVE | SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOREDRAW | SetWindowPosFlags.SWP_NOZORDER);
+                            CoreAppWindow.Resize(new SizeInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16));
                         }
                         break;
                     }
