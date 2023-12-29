@@ -205,8 +205,8 @@ namespace GetStoreApp.Views.Windows
                 {
                     long style = GetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE);
                     style &= ~(long)WindowStyle.WS_POPUP;
-                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW));
-                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW);
+                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW | (long)WindowStyle.WS_VISIBLE));
+                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW | (int)WindowStyleEx.WS_EX_TRANSPARENT);
                     User32Library.SetParent((IntPtr)CoreAppWindow.Id.Value, (IntPtr)AppWindow.Id.Value);
                 }
             }
@@ -810,7 +810,7 @@ namespace GetStoreApp.Views.Windows
                 // 窗口大小发生更改后的消息
                 case WindowMessage.WM_SIZE:
                     {
-                        if (CoreAppWindow.Id.Value is not 0)
+                        if (CoreAppWindow is not null && CoreAppWindow.Id.Value is not 0)
                         {
                             CoreAppWindow.Resize(new SizeInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16));
                         }
