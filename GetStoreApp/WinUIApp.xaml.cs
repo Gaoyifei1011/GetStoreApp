@@ -206,7 +206,7 @@ namespace GetStoreApp
                 isDisposed = true;
             }
 
-            Environment.Exit(0);
+            Exit();
         }
     }
 }

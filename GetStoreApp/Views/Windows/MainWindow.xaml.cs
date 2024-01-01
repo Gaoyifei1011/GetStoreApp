@@ -228,22 +228,26 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
         {
-            if (SystemBackdrop is not null)
+            try
             {
-                MaterialBackdrop materialBackdrop = SystemBackdrop as MaterialBackdrop;
-
-                if (materialBackdrop is not null && materialBackdrop.BackdropConfiguration is not null)
+                if (Visible && SystemBackdrop is not null)
                 {
-                    if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
+                    MaterialBackdrop materialBackdrop = SystemBackdrop as MaterialBackdrop;
+
+                    if (materialBackdrop is not null && materialBackdrop.BackdropConfiguration is not null)
                     {
-                        materialBackdrop.BackdropConfiguration.IsInputActive = true;
-                    }
-                    else
-                    {
-                        materialBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
+                        if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
+                        {
+                            materialBackdrop.BackdropConfiguration.IsInputActive = true;
+                        }
+                        else
+                        {
+                            materialBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
+                        }
                     }
                 }
             }
+            catch (Exception) { }
         }
 
         /// <summary>
