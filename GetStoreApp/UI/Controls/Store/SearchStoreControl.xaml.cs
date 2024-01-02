@@ -344,6 +344,11 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         lock (HistoryLock)
                         {
+                            if (HistoryCollection.Count is 3)
+                            {
+                                HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
+                            }
+
                             HistoryCollection.Insert(0, historyItem);
                         }
                     });

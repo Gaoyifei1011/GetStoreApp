@@ -98,7 +98,8 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         public static void SaveQueryLinksData(List<HistoryModel> queryLinksHistoryList)
         {
-            int endIndex = queryLinksHistoryList.Count > 3 ? 3 : queryLinksHistoryList.Count;
+            int endIndex = queryLinksHistoryList.Count >= 3 ? 3 : queryLinksHistoryList.Count;
+
             for (int index = 1; index <= endIndex; index++)
             {
                 string value = string.Format("{0}|{1}|{2}|{3}|{4}|{5}",

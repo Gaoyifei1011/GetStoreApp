@@ -7,17 +7,17 @@ using System.Runtime.Versioning;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright ©2022-2023 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("获取商店应用")]
-[assembly: AssemblyFileVersion("3.2.101.0")]
-[assembly: AssemblyInformationalVersion("3.2.101.0")]
+[assembly: AssemblyFileVersion("3.2.102.0")]
+[assembly: AssemblyInformationalVersion("3.2.102.0")]
 [assembly: AssemblyProduct("获取商店应用")]
 [assembly: AssemblyTitle("获取商店应用")]
-[assembly: AssemblyVersion("3.2.101.0")]
+[assembly: AssemblyVersion("3.2.102.0")]
 
 // 设置程序集对 COM 组件的访问权限
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("57f65c2b-222a-4b38-8750-db83838e030b")]
+[assembly: Guid("57F65C2B-222A-4B38-8750-DB83838E030B")]
 
 // 应用程序默认区域性的资源控制器设置
 [assembly: NeutralResourcesLanguage("en-us")]
