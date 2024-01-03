@@ -216,6 +216,9 @@
   <data name="HeaderDescription" xml:space="preserve">
     <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
   </data>
+  <data name="HelpTranslate" xml:space="preserve">
+    <value>Help translate app</value>
+  </data>
   <data name="InstallMode" xml:space="preserve">
     <value>Insall mode instructions</value>
   </data>

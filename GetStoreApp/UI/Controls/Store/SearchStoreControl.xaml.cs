@@ -256,8 +256,6 @@ namespace GetStoreApp.UI.Controls.Store
                 // 获取成功
                 if (searchStoreResult.Item1)
                 {
-                    UpdateHistory(searchText);
-
                     // 搜索成功，有数据
                     if (searchStoreResult.Item2.Count > 0)
                     {
@@ -266,6 +264,7 @@ namespace GetStoreApp.UI.Controls.Store
                             IsSeachingStore = false;
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
+                            UpdateHistory(searchText);
 
                             lock (SearchStoreLock)
                             {

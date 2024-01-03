@@ -252,8 +252,7 @@
                                 <MenuFlyoutSubItem
                                     Height="32"
                                     Padding="11,0,11,0"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopAcrylic')}"
-                                    Visibility="{x:Bind CanUseMicaBackdrop}">
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopAcrylic')}">
 
                                     <ToggleMenuFlyoutItem
                                         Height="32"

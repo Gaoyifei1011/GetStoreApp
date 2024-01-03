@@ -923,7 +923,6 @@ namespace GetStoreApp.UI.Controls.Store
 
                     ResultListFilter(ref queryLinksList);
                     queryLinksList = queryLinksList.OrderBy(item => item.FileName).ToList();
-                    UpdateHistory(appInformationResult.Item2.Name, typeIndex, channelIndex, link);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -931,6 +930,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                         if (queryLinksList.Count > 0)
                         {
+                            UpdateHistory(appInformationResult.Item2.Name, typeIndex, channelIndex, link);
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
 

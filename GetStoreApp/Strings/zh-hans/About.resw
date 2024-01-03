@@ -216,6 +216,9 @@
   <data name="HeaderDescription" xml:space="preserve">
     <value>欢迎大家下载获取商店应用，祝您使用愉快</value>
   </data>
+  <data name="HelpTranslate" xml:space="preserve">
+    <value>帮助翻译应用</value>
+  </data>
   <data name="InstallMode" xml:space="preserve">
     <value>应用安装方式说明</value>
   </data>

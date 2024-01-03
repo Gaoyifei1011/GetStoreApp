@@ -235,6 +235,14 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 帮助翻译应用
+        /// </summary>
+        private async void OnHelpTranslateClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
+        }
+
+        /// <summary>
         /// 项目主页
         /// </summary>
         private async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)

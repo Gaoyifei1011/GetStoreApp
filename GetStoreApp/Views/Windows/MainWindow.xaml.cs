@@ -42,7 +42,6 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
-using Windows.UI.ViewManagement;
 
 namespace GetStoreApp.Views.Windows
 {
@@ -62,7 +61,6 @@ namespace GetStoreApp.Views.Windows
         private ContentCoordinateConverter contentCoordinateConverter;
         private DisplayInformation displayInformation;
         private OverlappedPresenter overlappedPresenter;
-        private UISettings AppUISettings = new UISettings();
 
         private new CoreWindow CoreWindow { get; }
 
@@ -177,7 +175,6 @@ namespace GetStoreApp.Views.Windows
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
-            AppUISettings.ColorValuesChanged += OnColorValuesChanged;
             ApplicationData.Current.DataChanged += OnDataChanged;
 
             // 为应用主窗口添加窗口过程
@@ -307,7 +304,6 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
-                    AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
                     ApplicationData.Current.DataChanged -= OnDataChanged;
                     (Application.Current as WinUIApp).Dispose();
                 }
@@ -321,7 +317,6 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                AppUISettings.ColorValuesChanged -= OnColorValuesChanged;
                 ApplicationData.Current.DataChanged -= OnDataChanged;
                 (Application.Current as WinUIApp).Dispose();
             }
@@ -574,27 +569,6 @@ namespace GetStoreApp.Views.Windows
         #region 第六部分：自定义事件
 
         /// <summary>
-        /// 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-        /// </summary>
-        private void OnColorValuesChanged(UISettings sender, object args)
-        {
-            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
-            {
-                if (ThemeService.AppTheme.Value == ThemeService.ThemeList[0].Value)
-                {
-                    if (Application.Current.RequestedTheme is ApplicationTheme.Light)
-                    {
-                        WindowTheme = ElementTheme.Light;
-                    }
-                    else
-                    {
-                        WindowTheme = ElementTheme.Dark;
-                    }
-                }
-            });
-        }
-
-        /// <summary>
         /// 同步漫游应用程序数据时发生的事件
         /// </summary>
         private void OnDataChanged(ApplicationData sender, object args)
@@ -831,6 +805,22 @@ namespace GetStoreApp.Views.Windows
                             Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         }
 
+                        break;
+                    }
+                // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
+                case WindowMessage.WM_SETTINGCHANGE:
+                    {
+                        if (ThemeService.AppTheme.Value == ThemeService.ThemeList[0].Value)
+                        {
+                            if (Application.Current.RequestedTheme is ApplicationTheme.Light)
+                            {
+                                WindowTheme = ElementTheme.Light;
+                            }
+                            else
+                            {
+                                WindowTheme = ElementTheme.Dark;
+                            }
+                        }
                         break;
                     }
                 // 窗口接收其他数据消息

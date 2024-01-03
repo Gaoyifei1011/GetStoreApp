@@ -59,21 +59,36 @@
                             Padding="11,0"
                             Click="{x:Bind OnPinToDesktopClicked}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktop')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktopToolTip')}" />
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktopToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE70A;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
 
                         <MenuFlyoutItem
                             Height="32"
                             Padding="11,0"
                             Click="{x:Bind OnPinToStartScreenClicked}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}" />
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE8FC;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
 
                         <MenuFlyoutItem
                             Height="32"
                             Padding="11,0"
                             Click="{x:Bind OnPinToTaskbarClicked}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}" />
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE75B;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
 
                         <MenuFlyoutSeparator />
 
@@ -90,6 +105,19 @@
                             Click="{x:Bind OnShowLicenseClicked}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}"
                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowLicenseToolTip')}" />
+
+                        <MenuFlyoutSeparator />
+
+                        <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
+                            Click="{x:Bind OnHelpTranslateClicked}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/HelpTranslate')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xF2B7;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
                     </MenuFlyout>
                 </DropDownButton.Flyout>
             </DropDownButton>
