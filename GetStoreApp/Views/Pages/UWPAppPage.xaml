@@ -29,7 +29,11 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <BreadcrumbBar ItemClicked="{x:Bind OnItemClicked}" ItemsSource="{x:Bind BreadCollection, Mode=OneWay}">
+            <BreadcrumbBar
+                VerticalAlignment="Center"
+                ItemClicked="{x:Bind OnItemClicked}"
+                ItemsSource="{x:Bind BreadCollection, Mode=OneWay}">
+
                 <BreadcrumbBar.ItemTemplate>
                     <DataTemplate x:DataType="collection:DictionaryEntry">
                         <BreadcrumbBarItem Content="{Binding}">

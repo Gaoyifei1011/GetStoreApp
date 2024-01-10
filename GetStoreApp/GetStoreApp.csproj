@@ -74,9 +74,9 @@
     <EmbeddedResource Update="Properties\Resources.resx" Generator="PublicResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
 
     <Manifest Include="$(ApplicationManifest)" />
-    
+
     <None Remove="Assets\LICENSE" />
-    
+
     <None Remove="Styles\AppbarButton.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
@@ -90,16 +90,16 @@
 
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
-    
+
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
     <None Remove="UI\Controls\Store\SearchStoreControl.xaml" />
-    
+
     <None Remove="UI\Controls\UWPApp\AppInfoControl.xaml" />
     <None Remove="UI\Controls\UWPApp\AppListControl.xaml" />
 
     <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
-    <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />    
+    <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
 
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
@@ -120,7 +120,7 @@
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
 
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
-    
+
     <None Remove="UI\TeachingTips\DataCopyTip.xaml" />
     <None Remove="UI\TeachingTips\DownloadCreateTip.xaml" />
     <None Remove="UI\TeachingTips\FolderPickerTip.xaml" />
@@ -147,8 +147,8 @@
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
 
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.4" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.5.1572" GeneratePathProperty="true" IncludeAssets="none" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.10091-preview" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Styles\AppBarButton.xaml" Generator="MSBuild:Compile" />
@@ -171,9 +171,9 @@
 
     <Page Update="UI\Controls\Store\QueryLinksControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Store\SearchStoreControl.xaml" Generator="MSBuild:Compile" />
-    
+
     <Page Update="UI\Controls\UWPApp\AppInfoControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\UWPApp\AppListControl.xaml" Generator="MSBuild:Compile" />    
+    <Page Update="UI\Controls\UWPApp\AppListControl.xaml" Generator="MSBuild:Compile" />
 
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
@@ -215,7 +215,7 @@
     <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />
 
     <Page Remove="WinUIApp.xaml" />
-    
+
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />

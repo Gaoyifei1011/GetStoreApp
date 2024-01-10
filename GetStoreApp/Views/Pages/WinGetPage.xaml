@@ -89,6 +89,7 @@
                                     TextAlignment="Center"
                                     TextWrapping="WrapWholeWords" />
                             </Grid>
+
                             <ListView
                                 Width="300"
                                 Height="200"
