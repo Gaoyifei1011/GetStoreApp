@@ -22,7 +22,7 @@ namespace GetStoreApp.UI.TeachingTips
         {
             if (cleanResult)
             {
-                LogCleanSuccess.Text = ResourceService.GetLocalized("Notification/LogCleanSuccessfull");
+                LogCleanSuccess.Text = ResourceService.GetLocalized("Notification/LogCleanSuccessfully");
                 LogCleanSuccess.Visibility = Visibility.Visible;
                 LogCleanFailed.Visibility = Visibility.Collapsed;
             }
