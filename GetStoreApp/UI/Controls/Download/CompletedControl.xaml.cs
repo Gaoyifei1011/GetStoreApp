@@ -343,8 +343,8 @@ namespace GetStoreApp.UI.Controls.Download
                             List<StorageFile> selectedFileList = new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) };
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
-                                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, false));
+                                bool copyResult = CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
+                                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, copyResult, false));
                             });
                         });
                     }
@@ -622,8 +622,8 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            CopyPasteHelper.CopyFilesToClipBoard(SelectedFileList);
-                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, true, SelectedFileList.Count));
+                            bool copyResult = CopyPasteHelper.CopyFilesToClipBoard(SelectedFileList);
+                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, copyResult, true, SelectedFileList.Count));
                         });
                     }
                     else

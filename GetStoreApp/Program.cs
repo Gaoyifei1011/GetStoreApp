@@ -4,8 +4,8 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.Combase;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
@@ -31,6 +31,7 @@ namespace GetStoreApp
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
+        [STAThread]
         public static void Main(string[] args)
         {
             Resources.Culture = CultureInfo.CurrentCulture.Parent;
@@ -57,10 +58,10 @@ namespace GetStoreApp
                 return;
             }
 
-            // Win32 基于 HWND 的传统桌面应用
+            // Win32 基于 HWND 的传统桌面应用 / 控制台应用
             if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_ClassicDesktop)
             {
-                Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_APARTMENTTHREADED);
+                CombaseLibrary.RoInitialize(RO_INIT_TYPE.RO_INIT_SINGLETHREADED);
                 bool isDesktopProgram = GetAppExecuteMode(args);
 
                 InitializeResourcesAsync(isDesktopProgram).Wait();
@@ -96,14 +97,15 @@ namespace GetStoreApp
                     Kernel32Library.FreeConsole();
                 }
 
-                Ole32Library.CoUninitialize();
+                CombaseLibrary.RoUninitialize();
             }
             // UWP CoreApplication 应用
             else if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_Universal)
             {
-                Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_MULTITHREADED);
+                CombaseLibrary.RoInitialize(RO_INIT_TYPE.RO_INIT_MULTITHREADED);
                 InitializeResourcesAsync(false).Wait();
                 CoreApplication.Run(new Views.Windows.FrameworkViewSource());
+                CombaseLibrary.RoUninitialize();
             }
         }
 

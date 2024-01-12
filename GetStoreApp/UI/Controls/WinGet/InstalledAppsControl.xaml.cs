@@ -124,9 +124,9 @@ namespace GetStoreApp.UI.Controls.WinGet
             if (appId is not null)
             {
                 string copyContent = string.Format("winget uninstall {0}", appId);
-                CopyPasteHelper.CopyTextToClipBoard(copyContent);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetUnInstall));
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetUnInstall, copyResult));
             }
         }
 

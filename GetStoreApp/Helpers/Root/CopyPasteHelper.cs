@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using GetStoreApp.Services.Root;
+using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
 namespace GetStoreApp.Helpers.Root
@@ -14,21 +17,39 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 复制字符串内容到剪贴板
         /// </summary>
-        public static void CopyTextToClipBoard(string content)
+        public static bool CopyTextToClipBoard(string content)
         {
-            DataPackage.RequestedOperation = DataPackageOperation.Copy;
-            DataPackage.SetText(content);
-            Clipboard.SetContent(DataPackage);
+            try
+            {
+                DataPackage.RequestedOperation = DataPackageOperation.Copy;
+                DataPackage.SetText(content);
+                Clipboard.SetContent(DataPackage);
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Copy text to clipboard failed", e);
+                return false;
+            }
         }
 
         /// <summary>
         /// 复制字符串文件到剪贴板
         /// </summary>
-        public static void CopyFilesToClipBoard(IEnumerable<IStorageItem> files)
+        public static bool CopyFilesToClipBoard(IEnumerable<IStorageItem> files)
         {
-            DataPackage.RequestedOperation = DataPackageOperation.Copy;
-            DataPackage.SetStorageItems(files);
-            Clipboard.SetContent(DataPackage);
+            try
+            {
+                DataPackage.RequestedOperation = DataPackageOperation.Copy;
+                DataPackage.SetStorageItems(files);
+                Clipboard.SetContent(DataPackage);
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Copy files to clipboard failed", e);
+                return false;
+            }
         }
     }
 }

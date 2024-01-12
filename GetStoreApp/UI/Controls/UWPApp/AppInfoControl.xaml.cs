@@ -284,8 +284,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             if (aumid is not null)
             {
-                CopyPasteHelper.CopyTextToClipBoard(aumid);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppUserModelId));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(aumid);
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppUserModelId, copyResult));
             }
         }
 
@@ -308,8 +308,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
-                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyInformation));
+                            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
+                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
                         });
                     }
                     catch (Exception e)
@@ -328,8 +328,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
             string displayName = args.Parameter as string;
             if (displayName is not null)
             {
-                CopyPasteHelper.CopyTextToClipBoard(displayName);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyName));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(displayName);
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyName, copyResult));
             }
         }
 
@@ -521,8 +521,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.PackageInformation));
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
                 });
             });
         }

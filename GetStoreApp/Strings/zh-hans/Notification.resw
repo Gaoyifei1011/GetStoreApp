@@ -135,6 +135,9 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>检查网络连接</value>
   </data>
+  <data name="CopyToClipboardFailed" xml:space="preserve">
+    <value>复制内容到剪贴板失败，请检查剪贴板的访问权限</value>
+  </data>
   <data name="DependencyInformationCopy" xml:space="preserve">
     <value>依赖包信息已成功复制到剪贴板</value>
   </data>

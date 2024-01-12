@@ -231,9 +231,9 @@ namespace GetStoreApp.UI.Controls.Store
                     TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
                     ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
                     historyItem.HistoryLink);
-                CopyPasteHelper.CopyTextToClipBoard(copyContent);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.History, false));
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.History, copyResult, false));
             }
         }
 
@@ -435,8 +435,8 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (fileLink is not null)
             {
-                CopyPasteHelper.CopyTextToClipBoard(fileLink);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, false));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileLink);
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, copyResult, false));
             }
         }
 
@@ -454,8 +454,8 @@ namespace GetStoreApp.UI.Controls.Store
                     queryLinksItem.FileSize
                     );
 
-                CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, false));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, false));
             }
         }
 
@@ -520,8 +520,8 @@ namespace GetStoreApp.UI.Controls.Store
             appInformationBuilder.AppendLine(ResourceService.GetLocalized("Store/AppDescription"));
             appInformationBuilder.AppendLine(AppInfo.Description);
 
-            CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
-            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation));
+            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
+            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
         }
 
         /// <summary>
@@ -609,8 +609,8 @@ namespace GetStoreApp.UI.Controls.Store
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, true, selectedQueryLinksList.Count));
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
                 });
             });
         }
@@ -643,8 +643,8 @@ namespace GetStoreApp.UI.Controls.Store
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, true, selectedQueryLinksList.Count));
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
                 });
             });
         }

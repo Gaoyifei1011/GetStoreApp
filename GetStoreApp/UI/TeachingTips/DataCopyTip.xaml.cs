@@ -9,122 +9,129 @@ namespace GetStoreApp.UI.TeachingTips
     /// </summary>
     public sealed partial class DataCopyTip : TeachingTip
     {
-        public DataCopyTip(DataCopyKind dataCopyKind, bool isMultiSelected = false, int count = 0)
+        public DataCopyTip(DataCopyKind dataCopyKind, bool isSuccessfully = false, bool isMultiSelected = false, int count = 0)
         {
             InitializeComponent();
-            InitializeContent(dataCopyKind, isMultiSelected, count);
+            InitializeContent(dataCopyKind, isSuccessfully, isMultiSelected, count);
         }
 
         /// <summary>
         /// 初始化内容
         /// </summary>
-        private void InitializeContent(DataCopyKind dataCopyKind, bool isMultiSelected, int count)
+        private void InitializeContent(DataCopyKind dataCopyKind, bool isSuccessfully, bool isMultiSelected, int count)
         {
-            switch (dataCopyKind)
+            if (isSuccessfully)
             {
-                case DataCopyKind.AppInformation:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/AppInformationCopy");
-                        break;
-                    }
-                case DataCopyKind.AppUserModelId:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/AppUserModelIdCopy");
-                        break;
-                    }
-                case DataCopyKind.DependencyName:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/DependencyNameCopy");
-                        break;
-                    }
-                case DataCopyKind.DependencyInformation:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/DependencyInformationCopy");
-                        break;
-                    }
-                case DataCopyKind.Exception:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/ExceptionCopy");
-                        break;
-                    }
-                case DataCopyKind.FileInformation:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/FileInformationCopy");
-                        break;
-                    }
-                case DataCopyKind.History:
-                    {
-                        if (isMultiSelected)
+                switch (dataCopyKind)
+                {
+                    case DataCopyKind.AppInformation:
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), count);
+                            Content = ResourceService.GetLocalized("Notification/AppInformationCopy");
+                            break;
                         }
-                        else
+                    case DataCopyKind.AppUserModelId:
                         {
-                            Content = ResourceService.GetLocalized("Notification/HistoryCopy");
+                            Content = ResourceService.GetLocalized("Notification/AppUserModelIdCopy");
+                            break;
                         }
-                        break;
-                    }
-                case DataCopyKind.PackageInformation:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/PackageInformationCopy");
-                        break;
-                    }
-                case DataCopyKind.ResultInformation:
-                    {
-                        if (isMultiSelected)
+                    case DataCopyKind.DependencyName:
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), count);
+                            Content = ResourceService.GetLocalized("Notification/DependencyNameCopy");
+                            break;
                         }
-                        else
+                    case DataCopyKind.DependencyInformation:
                         {
-                            Content = ResourceService.GetLocalized("Notification/ResultContentCopy");
+                            Content = ResourceService.GetLocalized("Notification/DependencyInformationCopy");
+                            break;
                         }
-                        break;
-                    }
-                case DataCopyKind.ResultID:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/ResultIDCopy");
-                        break;
-                    }
-                case DataCopyKind.ResultLink:
-                    {
-                        if (isMultiSelected)
+                    case DataCopyKind.Exception:
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count);
+                            Content = ResourceService.GetLocalized("Notification/ExceptionCopy");
+                            break;
                         }
-                        else
+                    case DataCopyKind.FileInformation:
                         {
-                            Content = ResourceService.GetLocalized("Notification/ResultLinkCopy");
+                            Content = ResourceService.GetLocalized("Notification/FileInformationCopy");
+                            break;
                         }
-                        break;
-                    }
-                case DataCopyKind.ShareFile:
-                    {
-                        if (isMultiSelected)
+                    case DataCopyKind.History:
                         {
-                            Content = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), count);
+                            if (isMultiSelected)
+                            {
+                                Content = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), count);
+                            }
+                            else
+                            {
+                                Content = ResourceService.GetLocalized("Notification/HistoryCopy");
+                            }
+                            break;
                         }
-                        else
+                    case DataCopyKind.PackageInformation:
                         {
-                            Content = ResourceService.GetLocalized("Notification/ShareFileCopy");
+                            Content = ResourceService.GetLocalized("Notification/PackageInformationCopy");
+                            break;
                         }
-                        break;
-                    }
-                case DataCopyKind.WinGetSearchInstall:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/SearchInstallCopy");
-                        break;
-                    }
-                case DataCopyKind.WinGetUnInstall:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/UnInstallCopy");
-                        break;
-                    }
-                case DataCopyKind.WinGetUpgradeInstall:
-                    {
-                        Content = ResourceService.GetLocalized("Notification/UpgradeInstallCopy");
-                        break;
-                    }
+                    case DataCopyKind.ResultInformation:
+                        {
+                            if (isMultiSelected)
+                            {
+                                Content = string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), count);
+                            }
+                            else
+                            {
+                                Content = ResourceService.GetLocalized("Notification/ResultContentCopy");
+                            }
+                            break;
+                        }
+                    case DataCopyKind.ResultID:
+                        {
+                            Content = ResourceService.GetLocalized("Notification/ResultIDCopy");
+                            break;
+                        }
+                    case DataCopyKind.ResultLink:
+                        {
+                            if (isMultiSelected)
+                            {
+                                Content = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count);
+                            }
+                            else
+                            {
+                                Content = ResourceService.GetLocalized("Notification/ResultLinkCopy");
+                            }
+                            break;
+                        }
+                    case DataCopyKind.ShareFile:
+                        {
+                            if (isMultiSelected)
+                            {
+                                Content = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), count);
+                            }
+                            else
+                            {
+                                Content = ResourceService.GetLocalized("Notification/ShareFileCopy");
+                            }
+                            break;
+                        }
+                    case DataCopyKind.WinGetSearchInstall:
+                        {
+                            Content = ResourceService.GetLocalized("Notification/SearchInstallCopy");
+                            break;
+                        }
+                    case DataCopyKind.WinGetUnInstall:
+                        {
+                            Content = ResourceService.GetLocalized("Notification/UnInstallCopy");
+                            break;
+                        }
+                    case DataCopyKind.WinGetUpgradeInstall:
+                        {
+                            Content = ResourceService.GetLocalized("Notification/UpgradeInstallCopy");
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                Content = ResourceService.GetLocalized("Notification/CopyToClipboardFailed");
             }
         }
     }

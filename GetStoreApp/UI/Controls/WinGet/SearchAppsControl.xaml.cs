@@ -104,9 +104,9 @@ namespace GetStoreApp.UI.Controls.WinGet
             if (appId is not null)
             {
                 string copyContent = string.Format("winget install {0}", appId);
-                CopyPasteHelper.CopyTextToClipBoard(copyContent);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetSearchInstall));
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
             }
         }
 

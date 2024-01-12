@@ -84,9 +84,9 @@ namespace GetStoreApp.UI.Dialogs.Download
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.FileInformation));
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
                 });
             });
         }

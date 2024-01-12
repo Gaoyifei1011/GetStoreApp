@@ -135,6 +135,9 @@
   <data name="CheckNetWorkConnection" xml:space="preserve">
     <value>Check the network connection</value>
   </data>
+  <data name="CopyToClipboardFailed" xml:space="preserve">
+    <value>Failed to copy the content to the clipboard. Please check the access permission of the clipboard</value>
+  </data>
   <data name="DependencyInformationCopy" xml:space="preserve">
     <value>The dependency name was successfully copied to the clipboard</value>
   </data>

@@ -964,6 +964,18 @@ namespace GetStoreApp.Views.Windows
         {
             switch (Msg)
             {
+                // 处理自定义标题栏窗口最大化时，窗口顶部标题栏还可以修改窗口大小的问题
+                case WindowMessage.WM_NCHITTEST:
+                    {
+                        if (overlappedPresenter.State is OverlappedPresenterState.Maximized)
+                        {
+                            if (lParam.ToInt32() >> 16 < 4)
+                            {
+                                return 2;  // HTCAPTION （在标题栏中）
+                            }
+                        }
+                        break;
+                    }
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {

@@ -115,9 +115,9 @@ namespace GetStoreApp.UI.Dialogs.About
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation));
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
                 });
             });
         }
