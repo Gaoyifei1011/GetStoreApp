@@ -1,5 +1,6 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.TeachingTips
@@ -22,81 +23,84 @@ namespace GetStoreApp.UI.TeachingTips
         {
             if (isSuccessfully)
             {
+                CopySuccess.Visibility = Visibility.Visible;
+                CopyFailed.Visibility = Visibility.Collapsed;
+
                 switch (dataCopyKind)
                 {
                     case DataCopyKind.AppInformation:
                         {
-                            Content = ResourceService.GetLocalized("Notification/AppInformationCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/AppInformationCopy");
                             break;
                         }
                     case DataCopyKind.AppUserModelId:
                         {
-                            Content = ResourceService.GetLocalized("Notification/AppUserModelIdCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/AppUserModelIdCopy");
                             break;
                         }
                     case DataCopyKind.DependencyName:
                         {
-                            Content = ResourceService.GetLocalized("Notification/DependencyNameCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/DependencyNameCopy");
                             break;
                         }
                     case DataCopyKind.DependencyInformation:
                         {
-                            Content = ResourceService.GetLocalized("Notification/DependencyInformationCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/DependencyInformationCopy");
                             break;
                         }
                     case DataCopyKind.Exception:
                         {
-                            Content = ResourceService.GetLocalized("Notification/ExceptionCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/ExceptionCopy");
                             break;
                         }
                     case DataCopyKind.FileInformation:
                         {
-                            Content = ResourceService.GetLocalized("Notification/FileInformationCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/FileInformationCopy");
                             break;
                         }
                     case DataCopyKind.History:
                         {
                             if (isMultiSelected)
                             {
-                                Content = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), count);
+                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), count);
                             }
                             else
                             {
-                                Content = ResourceService.GetLocalized("Notification/HistoryCopy");
+                                CopySuccess.Text = ResourceService.GetLocalized("Notification/HistoryCopy");
                             }
                             break;
                         }
                     case DataCopyKind.PackageInformation:
                         {
-                            Content = ResourceService.GetLocalized("Notification/PackageInformationCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/PackageInformationCopy");
                             break;
                         }
                     case DataCopyKind.ResultInformation:
                         {
                             if (isMultiSelected)
                             {
-                                Content = string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), count);
+                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), count);
                             }
                             else
                             {
-                                Content = ResourceService.GetLocalized("Notification/ResultContentCopy");
+                                CopySuccess.Text = ResourceService.GetLocalized("Notification/ResultContentCopy");
                             }
                             break;
                         }
                     case DataCopyKind.ResultID:
                         {
-                            Content = ResourceService.GetLocalized("Notification/ResultIDCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/ResultIDCopy");
                             break;
                         }
                     case DataCopyKind.ResultLink:
                         {
                             if (isMultiSelected)
                             {
-                                Content = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count);
+                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count);
                             }
                             else
                             {
-                                Content = ResourceService.GetLocalized("Notification/ResultLinkCopy");
+                                CopySuccess.Text = ResourceService.GetLocalized("Notification/ResultLinkCopy");
                             }
                             break;
                         }
@@ -104,34 +108,36 @@ namespace GetStoreApp.UI.TeachingTips
                         {
                             if (isMultiSelected)
                             {
-                                Content = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), count);
+                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), count);
                             }
                             else
                             {
-                                Content = ResourceService.GetLocalized("Notification/ShareFileCopy");
+                                CopySuccess.Text = ResourceService.GetLocalized("Notification/ShareFileCopy");
                             }
                             break;
                         }
                     case DataCopyKind.WinGetSearchInstall:
                         {
-                            Content = ResourceService.GetLocalized("Notification/SearchInstallCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/SearchInstallCopy");
                             break;
                         }
                     case DataCopyKind.WinGetUnInstall:
                         {
-                            Content = ResourceService.GetLocalized("Notification/UnInstallCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/UnInstallCopy");
                             break;
                         }
                     case DataCopyKind.WinGetUpgradeInstall:
                         {
-                            Content = ResourceService.GetLocalized("Notification/UpgradeInstallCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/UpgradeInstallCopy");
                             break;
                         }
                 }
             }
             else
             {
-                Content = ResourceService.GetLocalized("Notification/CopyToClipboardFailed");
+                CopySuccess.Visibility = Visibility.Collapsed;
+                CopyFailed.Visibility = Visibility.Visible;
+                CopyFailed.Text = ResourceService.GetLocalized("Notification/CopyToClipboardFailed");
             }
         }
     }

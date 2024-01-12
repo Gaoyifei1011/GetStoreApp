@@ -233,14 +233,22 @@
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Providers.Projection" />
   </ItemGroup>
 
+  <!-- 复制 Microsoft.WindowsPackageManager.ComInterop 所需要的文件到输出根目录 -->
   <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
     <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
     <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\runtimes\win10-$(Platform)\native\winrtact.dll" DestinationFolder="$(TargetDir)" />
   </Target>
 
-  <!--捆绑前对二进制文件进行后处理-->
+  <!-- 捆绑前对二进制文件进行后处理 -->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
-    <!--对生成的 GetStoreApp.exe 文件进行数字签名-->
+    <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->
     <Exec Command="$(ProjectDir)signtool.exe sign /f $(SolutionDir)$(AssemblyName)Package\$(AssemblyName)Package_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
+  </Target>
+
+  <!-- 不要复制本机引导文件 -->
+  <Target Name="_RemoveWasdkBootstrapDll" BeforeTargets="ResolveReferences">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
+    </ItemGroup>
   </Target>
 </Project>

@@ -4,8 +4,8 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.PInvoke.Combase;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
@@ -61,7 +61,6 @@ namespace GetStoreApp
             // Win32 基于 HWND 的传统桌面应用 / 控制台应用
             if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_ClassicDesktop)
             {
-                CombaseLibrary.RoInitialize(RO_INIT_TYPE.RO_INIT_SINGLETHREADED);
                 bool isDesktopProgram = GetAppExecuteMode(args);
 
                 InitializeResourcesAsync(isDesktopProgram).Wait();
@@ -96,16 +95,15 @@ namespace GetStoreApp
                     ConsoleLaunchService.InitializeLaunchAsync(args).Wait();
                     Kernel32Library.FreeConsole();
                 }
-
-                CombaseLibrary.RoUninitialize();
             }
             // UWP CoreApplication 应用
             else if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_Universal)
             {
-                CombaseLibrary.RoInitialize(RO_INIT_TYPE.RO_INIT_MULTITHREADED);
+                Ole32Library.CoUninitialize();
+                Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_MULTITHREADED);
                 InitializeResourcesAsync(false).Wait();
                 CoreApplication.Run(new Views.Windows.FrameworkViewSource());
-                CombaseLibrary.RoUninitialize();
+                Ole32Library.CoUninitialize();
             }
         }
 

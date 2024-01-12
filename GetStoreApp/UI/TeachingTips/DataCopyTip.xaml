@@ -4,9 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Foreground="{ThemeResource SystemFillColorSuccessBrush}"
     IsLightDismissEnabled="False"
     PlacementMargin="0,20,0,0"
     PreferredPlacement="Bottom"
     Style="{StaticResource TeachingTipStyle}"
-    mc:Ignorable="d" />
+    mc:Ignorable="d">
+
+    <Grid>
+        <TextBlock x:Name="CopySuccess" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />
+        <TextBlock x:Name="CopyFailed" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+    </Grid>
+</TeachingTip>
