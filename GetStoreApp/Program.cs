@@ -99,6 +99,7 @@ namespace GetStoreApp
             // UWP CoreApplication 应用
             else if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_Universal)
             {
+                // WinUI 3 UWP 模式下，必须需要使用多线程公寓模型启动，所以必须卸载 STAThreadAttribute 属性默认初始化的单线程公寓模型，然后将其初始化为多线程公寓模型
                 Ole32Library.CoUninitialize();
                 Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_MULTITHREADED);
                 InitializeResourcesAsync(false).Wait();
