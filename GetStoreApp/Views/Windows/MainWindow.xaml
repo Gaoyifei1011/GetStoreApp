@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    Title="{x:Bind root:ResourceService.GetLocalized('Resources/AppDisplayName')}"
+    Title="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
     Activated="{x:Bind OnActivated}"
     SizeChanged="{x:Bind OnSizeChanged}"
     mc:Ignorable="d">

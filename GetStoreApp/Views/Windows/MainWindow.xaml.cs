@@ -68,8 +68,6 @@ namespace GetStoreApp.Views.Windows
 
         public new static MainWindow Current { get; private set; }
 
-        private static List<NavigationModel> NavigationItemList { get; } = new List<NavigationModel>();
-
         private bool _isWindowMaximized;
 
         public bool IsWindowMaximized
@@ -135,7 +133,7 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private List<KeyValuePair<string, Type>> PageList = new List<KeyValuePair<string, Type>>()
+        private List<KeyValuePair<string, Type>> PageList { get; } = new List<KeyValuePair<string, Type>>()
         {
             new KeyValuePair<string, Type>("Store",typeof(StorePage)),
             new KeyValuePair<string, Type>("AppUpdate", typeof(AppUpdatePage)),
@@ -146,6 +144,8 @@ namespace GetStoreApp.Views.Windows
             new KeyValuePair<string, Type>("About", typeof(AboutPage)),
             new KeyValuePair<string, Type>("Settings", typeof(SettingsPage))
         };
+
+        public List<NavigationModel> NavigationItemList { get; } = new List<NavigationModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -1009,7 +1009,7 @@ namespace GetStoreApp.Views.Windows
 
         #endregion 第八部分：窗口过程
 
-        #region 窗口导航方法
+        #region 第九部分：窗口导航方法
 
         /// <summary>
         /// 页面向前导航
@@ -1050,11 +1050,14 @@ namespace GetStoreApp.Views.Windows
             return WindowFrame.CanGoBack;
         }
 
+        /// <summary>
+        /// 获取当前导航控件内容对应的页面
+        /// </summary>
         public object GetFrameContent()
         {
             return WindowFrame.Content;
         }
 
-        #endregion 窗口导航方法
+        #endregion 第九部分：窗口导航方法
     }
 }

@@ -120,28 +120,28 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
+        private InfoBarSeverity _resultSeverity = InfoBarSeverity.Informational;
 
-        public InfoBarSeverity InfoBarSeverity
+        public InfoBarSeverity ResultSeverity
         {
-            get { return _infoSeverity; }
+            get { return _resultSeverity; }
 
             set
             {
-                _infoSeverity = value;
+                _resultSeverity = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _queryLinksInfoText = ResourceService.GetLocalized("Store/Welcome");
+        private string _stateInfoText = ResourceService.GetLocalized("Store/Welcome");
 
-        public string QueryLinksInfoText
+        public string StateInfoText
         {
-            get { return _queryLinksInfoText; }
+            get { return _stateInfoText; }
 
             set
             {
-                _queryLinksInfoText = value;
+                _stateInfoText = value;
                 OnPropertyChanged();
             }
         }
@@ -976,8 +976,8 @@ namespace GetStoreApp.UI.Controls.Store
         {
             int state = Convert.ToInt32(severity);
 
-            InfoBarSeverity = QueryLinksInfoList[state].Severity;
-            QueryLinksInfoText = QueryLinksInfoList[state].Message;
+            ResultSeverity = QueryLinksInfoList[state].Severity;
+            StateInfoText = QueryLinksInfoList[state].Message;
             IsRingActive = QueryLinksInfoList[state].PrRingActValue;
         }
 

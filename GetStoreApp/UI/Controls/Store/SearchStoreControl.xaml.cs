@@ -55,15 +55,15 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private InfoBarSeverity _infoSeverity = InfoBarSeverity.Informational;
+        private InfoBarSeverity _resultSeverity = InfoBarSeverity.Informational;
 
-        public InfoBarSeverity InfoBarSeverity
+        public InfoBarSeverity ResultSeverity
         {
-            get { return _infoSeverity; }
+            get { return _resultSeverity; }
 
             set
             {
-                _infoSeverity = value;
+                _resultSeverity = value;
                 OnPropertyChanged();
             }
         }
@@ -307,7 +307,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             int state = Convert.ToInt32(severity);
 
-            InfoBarSeverity = SearchStoreInfoList[state].Severity;
+            ResultSeverity = SearchStoreInfoList[state].Severity;
             StateInfoText = SearchStoreInfoList[state].Message;
             IsRingActive = SearchStoreInfoList[state].PrRingActValue;
         }

@@ -46,7 +46,7 @@
         IsClosable="False"
         IsOpen="True"
         Message="{x:Bind StateInfoText, Mode=OneWay}"
-        Severity="{x:Bind InfoBarSeverity, Mode=OneWay}"
+        Severity="{x:Bind ResultSeverity, Mode=OneWay}"
         Style="{StaticResource DefaultInfoBarStyle}">
 
         <InfoBar.Content>
