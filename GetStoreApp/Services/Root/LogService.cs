@@ -17,6 +17,8 @@ namespace GetStoreApp.Services.Root
 
         private static bool IsInitialized = false;
 
+        private static string logName = typeof(LogService).Assembly.GetName().Name;
+
         private static string unknown = "unknown";
 
         private static StorageFolder LogFolder;
@@ -51,7 +53,7 @@ namespace GetStoreApp.Services.Root
                         lock (logLock)
                         {
                             File.AppendAllText(
-                                Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
+                                Path.Combine(LogFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
                                 string.Format("{0}\t{1}:{2}{3}{4}{5}{6}{7}{8}",
                                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                                     "LogLevel",
@@ -101,7 +103,7 @@ namespace GetStoreApp.Services.Root
                         lock (logLock)
                         {
                             File.AppendAllText(
-                                Path.Combine(LogFolder.Path, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
+                                Path.Combine(LogFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
                                 string.Format("{0}\t{1}:{2}{3}{4}{5}",
                                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                                     "LogLevel",

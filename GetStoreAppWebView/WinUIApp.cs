@@ -24,16 +24,25 @@ namespace GetStoreAppWebView
             UnhandledException += OnUnhandledException;
         }
 
+        /// <summary>
+        /// 根据指定完整类型名称，实现对基础类型映射的 XAML 架构上下文访问。
+        /// </summary>
         public IXamlType GetXamlType(Type type)
         {
             return xamlMetaDataProvider.GetXamlType(type);
         }
 
+        /// <summary>
+        /// 根据指定完整类型名称，实现对基础类型映射的 XAML 架构上下文访问。
+        /// </summary>
         public IXamlType GetXamlType(string fullName)
         {
             return xamlMetaDataProvider.GetXamlType(fullName);
         }
 
+        /// <summary>
+        /// 获取应用于上下文的 XMLNS (XAML 命名空间) 定义集。
+        /// </summary>
         public XmlnsDefinition[] GetXmlnsDefinitions()
         {
             return xamlMetaDataProvider.GetXmlnsDefinitions();
