@@ -47,32 +47,6 @@ namespace GetStoreApp.Helpers.Controls.Download
         }
 
         /// <summary>
-        /// 应用程序关闭时，关闭Aria2下载进程
-        /// </summary>
-        public static void KillAria2Process()
-        {
-            try
-            {
-                if (Aria2Information.dwProcessId is not 0)
-                {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, Aria2Information.dwProcessId);
-                    if (hProcess != IntPtr.Zero)
-                    {
-                        Kernel32Library.TerminateProcess(hProcess, 0);
-                    }
-                    Kernel32Library.CloseHandle(hProcess);
-                }
-                if (Aria2Information.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2Information.hProcess);
-                if (Aria2Information.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(Aria2Information.hThread);
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, "Aria2 Process kill failed.", e);
-                return;
-            }
-        }
-
-        /// <summary>
         /// 判断Aria2进程是否存活
         /// </summary>
         public static bool IsAria2ProcessExisted()

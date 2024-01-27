@@ -201,7 +201,6 @@ namespace GetStoreApp
 
                 MainWindow.Current.SaveWindowInformation();
                 DownloadSchedulerService.CloseDownloadScheduler();
-                Aria2Service.CloseAria2();
 
                 isDisposed = true;
             }

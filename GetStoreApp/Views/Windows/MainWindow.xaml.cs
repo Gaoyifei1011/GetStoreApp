@@ -186,9 +186,6 @@ namespace GetStoreApp.Views.Windows
 
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
-                int style = GetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE);
-                SetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE, style & ~(int)WindowStyle.WS_SYSMENU);
-
                 newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
                 oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
             }
@@ -944,15 +941,6 @@ namespace GetStoreApp.Views.Windows
                         }
                         break;
                     }
-                // 任务栏窗口右键点击后的消息
-                case WindowMessage.WM_SYSMENU:
-                    {
-                        if (overlappedPresenter.State is OverlappedPresenterState.Minimized)
-                        {
-                            overlappedPresenter.Restore();
-                        }
-                        break;
-                    }
             }
             return User32Library.CallWindowProc(oldMainWindowWndProc, hWnd, Msg, wParam, lParam);
         }
@@ -985,8 +973,8 @@ namespace GetStoreApp.Views.Windows
                         }
                         break;
                     }
-                // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
-                case WindowMessage.WM_NCRBUTTONDOWN:
+                // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
+                case WindowMessage.WM_NCRBUTTONUP:
                     {
                         if (displayInformation is not null)
                         {

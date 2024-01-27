@@ -199,13 +199,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial IntPtr GetStdHandle(StdHandle nStdHandle);
 
         /// <summary>
-        /// 检索当前进程的伪句柄。
-        /// </summary>
-        /// <returns>返回值是当前进程的伪句柄。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "GetCurrentProcess", SetLastError = false)]
-        public static partial IntPtr GetCurrentProcess();
-
-        /// <summary>
         /// 打开现有的本地进程对象。
         /// </summary>
         /// <param name="dwDesiredAccess">

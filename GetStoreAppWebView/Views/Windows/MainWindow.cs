@@ -100,9 +100,6 @@ namespace GetStoreAppWebView.Views.Windows
 
             if (InputNonClientPointerSourceHandle != IntPtr.Zero)
             {
-                int style = GetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE);
-                SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_STYLE, (IntPtr)(style & ~(int)WindowsAPI.PInvoke.User32.WindowStyle.WS_SYSMENU));
-
                 newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
                 oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(InputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
             }
@@ -198,15 +195,6 @@ namespace GetStoreAppWebView.Views.Windows
                         }
                         break;
                     }
-                // 任务栏窗口右键点击后的消息
-                case WindowMessage.WM_SYSMENU:
-                    {
-                        if (WindowState is WindowState.Minimized)
-                        {
-                            WindowState = WindowState.Normal;
-                        }
-                        break;
-                    }
             }
 
             return User32Library.CallWindowProc(oldMainWindowWndProc, hWnd, Msg, wParam, lParam);
@@ -229,7 +217,7 @@ namespace GetStoreAppWebView.Views.Windows
                         break;
                     }
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
-                case WindowMessage.WM_NCRBUTTONDOWN:
+                case WindowMessage.WM_NCRBUTTONUP:
                     {
                         if (IslandsControl is not null && IslandsControl.XamlRoot is not null)
                         {

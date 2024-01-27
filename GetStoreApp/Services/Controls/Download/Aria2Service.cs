@@ -2,6 +2,9 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.IO;
 using System.Text;
@@ -19,11 +22,9 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class Aria2Service
     {
-        private static bool IsAria2ProcessRunning = false;
-
         private static string Aria2FilePath = Path.Combine(InfoHelper.AppInstalledLocation, "Mile.Aria2.exe");
         private static string Aria2Arguments;
-        private static string DefaultAria2Arguments = "-c --file-allocation=none --max-concurrent-downloads=3 --max-connection-per-server=5 --min-split-size=10M --split=5 --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 -D";
+        private static string DefaultAria2Arguments = "-c --file-allocation=none --max-concurrent-downloads=3 --max-connection-per-server=5 --min-split-size=10M --split=5 --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 --stop-with-process={0} -D";
         private static string RPCServerLink = "http://127.0.0.1:6300/jsonrpc";
 
         public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
@@ -33,6 +34,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void InitializeAria2Conf()
         {
+            User32Library.GetWindowThreadProcessId((IntPtr)MainWindow.Current.AppWindow.Id.Value, out uint processId);
             try
             {
                 // 原配置文件存在且新的配置文件不存在，拷贝到指定目录
@@ -45,13 +47,13 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 使用自定义的配置文件目录
-                Aria2Arguments = string.Format("--conf-path=\"{0}\" -D", Aria2ConfPath);
+                Aria2Arguments = string.Format("--conf-path=\"{0}\" --stop-with-process={1} -D", Aria2ConfPath, processId);
             }
             //  发生异常时，使用默认的参数
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "Aria2 config file save failed.", e);
-                Aria2Arguments = DefaultAria2Arguments;
+                Aria2Arguments = string.Format(DefaultAria2Arguments, processId);
             }
         }
 
@@ -60,18 +62,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void StartAria2Process()
         {
-            IsAria2ProcessRunning = Aria2ProcessHelper.RunAria2Process(Aria2FilePath, Aria2Arguments);
-        }
-
-        /// <summary>
-        /// 关闭Aria2进程
-        /// </summary>
-        public static void CloseAria2()
-        {
-            if (IsAria2ProcessRunning)
-            {
-                Aria2ProcessHelper.KillAria2Process();
-            }
+            Aria2ProcessHelper.RunAria2Process(Aria2FilePath, Aria2Arguments);
         }
 
         /// <summary>

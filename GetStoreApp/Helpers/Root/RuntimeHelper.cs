@@ -51,8 +51,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         private static void IsRunningElevated()
         {
-            IntPtr currentProcessHandle = Kernel32Library.GetCurrentProcess();
-            bool success = Advapi32Library.OpenProcessToken(currentProcessHandle, 0x0008, out IntPtr tokenHandle);
+            bool success = Advapi32Library.OpenProcessToken(-1, 0x0008, out IntPtr tokenHandle);
 
             TOKEN_ELEVATION_TYPE token_elevation_type = TOKEN_ELEVATION_TYPE.TokenElevationTypeDefault;
             uint tetSize = (uint)Marshal.SizeOf((int)token_elevation_type);
@@ -81,7 +80,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         private static void GetAppWindowingModel()
         {
-            bool success = Advapi32Library.OpenProcessToken(Kernel32Library.GetCurrentProcess(), 0x0008, out IntPtr tokenHandle);
+            bool success = Advapi32Library.OpenProcessToken(-1, 0x0008, out IntPtr tokenHandle);
             if (success)
             {
                 Kernel32Library.AppPolicyGetWindowingModel(tokenHandle, out AppPolicyWindowingModel model);
