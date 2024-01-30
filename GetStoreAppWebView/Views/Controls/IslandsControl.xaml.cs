@@ -272,7 +272,7 @@ namespace GetStoreAppWebView.Views.Controls
                 {
                     Task.Run(() =>
                     {
-                        Process.Start("explorer.exe", InfoHelper.UserDataPath.Downloads);
+                        Process.Start(InfoHelper.UserDataPath.Downloads);
                     });
                 }
             }
@@ -285,7 +285,7 @@ namespace GetStoreAppWebView.Views.Controls
         {
             Task.Run(() =>
             {
-                Process.Start("explorer.exe", "https://store.rg-adguard.net");
+                Process.Start("https://store.rg-adguard.net");
             });
         }
 
@@ -298,17 +298,17 @@ namespace GetStoreAppWebView.Views.Controls
             {
                 if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
                 {
-                    Process.Start("explorer.exe", Environment.GetFolderPath(Environment.SpecialFolder.InternetCache));
+                    Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache));
                 }
                 else
                 {
                     if (Directory.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView")))
                     {
-                        Process.Start("explorer.exe", Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView"));
+                        Process.Start(Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView"));
                     }
                     else
                     {
-                        Process.Start("explorer.exe", Path.Combine(ApplicationData.Current.LocalFolder.Path));
+                        Process.Start(Path.Combine(ApplicationData.Current.LocalFolder.Path));
                     }
                 }
             });

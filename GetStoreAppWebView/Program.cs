@@ -19,7 +19,7 @@ namespace GetStoreAppWebView
         {
             if (!RuntimeHelper.IsMSIX)
             {
-                Process.Start("explorer.exe", "explorer.exe shell:AppsFolder\\Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp");
+                Process.Start("explorer.exe", "shell:AppsFolder\\Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp");
                 return;
             }
 
