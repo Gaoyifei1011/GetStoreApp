@@ -5,6 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
+    xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:io="using:System.IO"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -269,9 +270,18 @@
                                 MinWidth="50"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}"
-                                TextAlignment="Left"
-                                ToolTipService.ToolTip="{x:Bind GetCompletedToolTip(TotalSize), Mode=OneWay}" />
+                                Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
+                                TextAlignment="Left">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/FileSizeToolTip')}" />
+                                            <TextBlock Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
                         </Grid>
 
                         <StackPanel Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">

@@ -1,5 +1,4 @@
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Pages;
@@ -936,7 +935,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         {
             try
             {
-                return package.InstalledDate.ToString("yyyy/MM/dd HH:mm", StringConverterHelper.AppCulture);
+                return package.InstalledDate.ToString("yyyy/MM/dd HH:mm");
             }
             catch
             {

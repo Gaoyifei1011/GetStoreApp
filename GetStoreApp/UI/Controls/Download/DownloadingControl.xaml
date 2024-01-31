@@ -5,6 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
+    xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
@@ -257,20 +258,38 @@
                                     MinWidth="50"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(FinishedSize), Mode=OneWay}"
+                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind GetDownloadingToolTip(FinishedSize,'FinishedSize'), Mode=OneWay}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}" />
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
+                                                <TextBlock Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
                                     Grid.Column="2"
                                     MinWidth="50"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind converter:StringConverterHelper.DownloadSizeFormat(TotalSize), Mode=OneWay}"
+                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind GetDownloadingToolTip(TotalSize,'TotalSize'), Mode=OneWay}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}" />
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/TotalSizeToolTip')}" />
+                                                <TextBlock Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
                                     Grid.Column="3"
@@ -279,8 +298,17 @@
                                     FontSize="16"
                                     Text="{x:Bind converter:StringConverterHelper.DownloadSpeedFormat(CurrentSpeed), Mode=OneWay}"
                                     TextAlignment="Left"
-                                    ToolTipService.ToolTip="{x:Bind GetDownloadingToolTip(CurrentSpeed,'CurrentSpeed'), Mode=OneWay}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}" />
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
+                                                <TextBlock Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(CurrentSpeed), Mode=OneWay}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </Grid>
 
                             <ProgressBar

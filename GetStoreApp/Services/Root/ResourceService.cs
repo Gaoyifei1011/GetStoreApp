@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Dialogs.Settings;
-using GetStoreApp.Properties;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
@@ -399,7 +398,8 @@ namespace GetStoreApp.Services.Root
             }
             else
             {
-                throw new ApplicationException(Resources.ResourcesInitializeFailed);
+                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new Exception());
+                return resource;
             }
         }
     }

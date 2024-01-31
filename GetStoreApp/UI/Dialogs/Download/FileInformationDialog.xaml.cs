@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
-using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
@@ -55,7 +54,7 @@ namespace GetStoreApp.UI.Dialogs.Download
             InitializeComponent();
             FileName = completedItem.FileName;
             FilePath = completedItem.FilePath;
-            FileSize = StringConverterHelper.DownloadSizeFormat(completedItem.TotalSize);
+            FileSize = FileSizeHelper.ConvertFileSizeToString(completedItem.TotalSize);
             Task.Run(async () =>
             {
                 string fileShA1 = await IOHelper.GetFileSHA1Async(FilePath);

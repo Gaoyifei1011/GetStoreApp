@@ -169,7 +169,7 @@
     <value>应用名称</value>
   </data>
   <data name="DisplayNameToolTip" xml:space="preserve">
-    <value>应用名称：{0}</value>
+    <value>应用名称：</value>
   </data>
   <data name="EntryDescription" xml:space="preserve">
     <value>入口描述</value>
@@ -196,7 +196,7 @@
     <value>完整名称</value>
   </data>
   <data name="InstallDateToolTip" xml:space="preserve">
-    <value>安装日期：{0}</value>
+    <value>安装日期：</value>
   </data>
   <data name="InstalledDate" xml:space="preserve">
     <value>安装日期</value>
@@ -310,7 +310,7 @@
     <value>发布者名称</value>
   </data>
   <data name="PublisherToolTip" xml:space="preserve">
-    <value>发布者：{0}</value>
+    <value>发布者：</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>
@@ -379,7 +379,7 @@
     <value>应用版本</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
-    <value>版本：{0}</value>
+    <value>版本：</value>
   </data>
   <data name="VertifyIsOK" xml:space="preserve">
     <value>是否完整</value>

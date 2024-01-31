@@ -1,6 +1,6 @@
-﻿using GetStoreAppWebView.Properties;
-using System;
+﻿using System;
 using Windows.ApplicationModel.Resources.Core;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView.Services.Root
 {
@@ -59,7 +59,8 @@ namespace GetStoreAppWebView.Services.Root
             }
             else
             {
-                throw new ApplicationException(Resources.ResourcesInitializeFailed);
+                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new Exception());
+                return resource;
             }
         }
     }

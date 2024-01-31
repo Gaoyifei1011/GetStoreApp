@@ -4,6 +4,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using System;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Extensions.Backdrop
 {
@@ -40,7 +41,8 @@ namespace GetStoreApp.Extensions.Backdrop
 
             if (systemBackdropController is not null)
             {
-                throw new ApplicationException(ResourceService.GetLocalized("Resources/SystemBackdropControllerInitializeFailed"));
+                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new Exception());
+                (Application.Current as WinUIApp).Dispose();
             }
 
             if (isMicaBackdrop)

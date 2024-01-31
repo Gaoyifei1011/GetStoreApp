@@ -1,9 +1,7 @@
-﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Services.Controls.Settings;
+﻿using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace GetStoreApp.Helpers.Converters
 {
@@ -18,8 +16,6 @@ namespace GetStoreApp.Helpers.Converters
             { "MB/s",1024*1024 },
             { "KB/s",1024 }
         };
-
-        public static CultureInfo AppCulture { get; set; }
 
         /// <summary>
         /// UI字符串本地化（通道）格式化
@@ -42,14 +38,6 @@ namespace GetStoreApp.Helpers.Converters
             {
                 return ResourceService.GetLocalized(string.Format("{0}/UnselectedToolTip", content));
             }
-        }
-
-        /// <summary>
-        /// 下载文件大小文字显示格式化
-        /// </summary>
-        public static string DownloadSizeFormat(double size)
-        {
-            return FileSizeHelper.ConvertFileSizeToString(size);
         }
 
         /// <summary>
@@ -108,64 +96,6 @@ namespace GetStoreApp.Helpers.Converters
         public static string TypeNameFormat(string content)
         {
             return ResourceService.TypeList.Find(item => item.InternalName.Equals(content)).DisplayName;
-        }
-
-        /// <summary>
-        /// WinGet 程序包描述信息格式化
-        /// </summary>
-        public static string WinGetAppsToolTipFormat(string content, string type)
-        {
-            if (type is "AppName")
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/AppNameToolTip"), content);
-            }
-            else if (type is "AppVersion")
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/AppVersionToolTip"), content);
-            }
-            else if (type is "AppPublisher")
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/AppPublisherToolTip"), content);
-            }
-            else if (type is "AppCurrentVersion")
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/AppCurrentVersionToolTip"), content);
-            }
-            else if (type is "AppNewestVersion")
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/AppNewestVersionToolTip"), content);
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// 应用管理描述信息格式化
-        /// </summary>
-        public static string UwpAppToolTipFormat(string content, string type)
-        {
-            if (type is "DisplayName")
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/DisplayNameToolTip"), content);
-            }
-            else if (type is "PublisherName")
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/PublisherToolTip"), content);
-            }
-            else if (type is "Version")
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/VersionToolTip"), content);
-            }
-            else if (type is "InstallDate")
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/InstallDateToolTip"), content);
-            }
-            else
-            {
-                return string.Empty;
-            }
         }
     }
 }

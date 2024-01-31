@@ -151,7 +151,7 @@
     <value>Continue downloading the current task</value>
   </data>
   <data name="CurrentSpeedToolTip" xml:space="preserve">
-    <value>Current speed: {0}</value>
+    <value>Current speed: </value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -229,10 +229,10 @@
     <value>The file does not exist</value>
   </data>
   <data name="FileSizeToolTip" xml:space="preserve">
-    <value>File size: {0}</value>
+    <value>File size: </value>
   </data>
   <data name="FinishedSizeToolTip" xml:space="preserve">
-    <value>Download completed: {0}</value>
+    <value>Download completed: </value>
   </data>
   <data name="InstallError" xml:space="preserve">
     <value>Install failed</value>
@@ -307,7 +307,7 @@
     <value>Download Management</value>
   </data>
   <data name="TotalSizeToolTip" xml:space="preserve">
-    <value>File size: {0}</value>
+    <value>File size: </value>
   </data>
   <data name="Unfinished" xml:space="preserve">
     <value>Unfinished</value>

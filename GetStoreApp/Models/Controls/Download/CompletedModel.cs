@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Helpers.Converters;
-using GetStoreApp.Services.Root;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.Download
@@ -10,8 +8,6 @@ namespace GetStoreApp.Models.Controls.Download
     /// </summary>
     public class CompletedModel : INotifyPropertyChanged
     {
-        private static string FileSizeToolTip = ResourceService.GetLocalized("Download/FileSizeToolTip");
-
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志
         /// </summary>
@@ -126,11 +122,6 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public string GetCompletedToolTip(double size)
-        {
-            return string.Format(FileSizeToolTip, StringConverterHelper.DownloadSizeFormat(size));
-        }
 
         /// <summary>
         /// 属性值发生变化时通知更改

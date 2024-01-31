@@ -36,6 +36,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
+using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.Graphics.Display;
 using Windows.Storage;
@@ -558,7 +559,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
-            throw new ApplicationException(string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName));
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            (Application.Current as WinUIApp).Dispose();
         }
 
         #endregion 第五部分：导航控件及其内容挂载的事件

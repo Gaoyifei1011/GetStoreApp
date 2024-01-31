@@ -104,15 +104,6 @@ namespace GetStoreApp.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Have you forgot to initialize app&apos;s resources? 的本地化字符串。
-        /// </summary>
-        public static string ResourcesInitializeFailed {
-            get {
-                return ResourceManager.GetString("ResourcesInitializeFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 &lt;s:Envelope
         ///	xmlns:a=&quot;http://www.w3.org/2005/08/addressing&quot;
         ///	xmlns:s=&quot;http://www.w3.org/2003/05/soap-envelope&quot;&gt;

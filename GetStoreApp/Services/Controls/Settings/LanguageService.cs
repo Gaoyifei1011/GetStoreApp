@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections;
@@ -110,7 +109,6 @@ namespace GetStoreApp.Services.Controls.Settings
             AppLanguage = language;
 
             LocalSettingsService.SaveSetting(SettingsKey, language.Value);
-            StringConverterHelper.AppCulture = new CultureInfo(language.Value.ToString());
         }
     }
 }

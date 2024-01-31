@@ -169,7 +169,7 @@
     <value>Display name</value>
   </data>
   <data name="DisplayNameToolTip" xml:space="preserve">
-    <value>App name: {0}</value>
+    <value>App name: </value>
   </data>
   <data name="EntryDescription" xml:space="preserve">
     <value>Entry description</value>
@@ -196,7 +196,7 @@
     <value>Full name</value>
   </data>
   <data name="InstallDateToolTip" xml:space="preserve">
-    <value>Installed date: {0}</value>
+    <value>Installed date: </value>
   </data>
   <data name="InstalledDate" xml:space="preserve">
     <value>Installed date</value>
@@ -310,7 +310,7 @@
     <value>Publisher name</value>
   </data>
   <data name="PublisherToolTip" xml:space="preserve">
-    <value>Publisher: {0}</value>
+    <value>Publisher: </value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
@@ -382,7 +382,7 @@
     <value>Package version</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
-    <value>Version: {0}</value>
+    <value>Version: </value>
   </data>
   <data name="VertifyIsOk" xml:space="preserve">
     <value>Is intact</value>

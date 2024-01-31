@@ -371,8 +371,17 @@
                                     Text="{x:Bind DisplayName}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(DisplayName,'DisplayName')}" />
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DisplayNameToolTip')}" />
+                                                <TextBlock Text="{x:Bind DisplayName}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
                                     Grid.Column="1"
@@ -383,8 +392,17 @@
                                     Text="{x:Bind PublisherName}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(PublisherName,'PublisherName')}" />
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PublisherNameToolTip')}" />
+                                                <TextBlock Text="{x:Bind PublisherName}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
                                     Grid.Column="2"
@@ -396,8 +414,17 @@
                                     Text="{x:Bind Version}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(Version,'Version')}" />
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/VersionToolTip')}" />
+                                                <TextBlock Text="{x:Bind Version}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <TextBlock
                                     Grid.Column="3"
@@ -409,8 +436,17 @@
                                     Text="{x:Bind InstallDate}"
                                     TextAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.UwpAppToolTipFormat(InstallDate,'InstallDate')}" />
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstallDateToolTip')}" />
+                                                <TextBlock Text="{x:Bind InstallDate}" />
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
 
                                 <basicInput:ExtendedSplitButton
                                     Grid.Column="4"
