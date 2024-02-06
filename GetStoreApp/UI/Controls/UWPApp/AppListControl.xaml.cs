@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,8 +41,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private bool needToRefreshData = false;
 
         private AutoResetEvent autoResetEvent;
-
-        private PackageManager PackageManager = new PackageManager();
+        private PackageManager packageManager = new PackageManager();
 
         public string SearchText { get; set; } = string.Empty;
 
@@ -125,7 +123,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
             }
         }
 
-        private List<Package> MatchResultList;
+        private List<Package> MatchResultList = new List<Package>();
 
         private ObservableCollection<PackageModel> UwpAppDataCollection { get; } = new ObservableCollection<PackageModel>();
 
@@ -282,7 +280,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     Task.Run(() =>
                     {
-                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = PackageManager.RemovePackageAsync(package.Id.FullName);
+                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = packageManager.RemovePackageAsync(package.Id.FullName);
 
                         ManualResetEvent uninstallCompletedEvent = new ManualResetEvent(false);
 
@@ -487,14 +485,15 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     try
                     {
                         List<AppListEntryModel> appListEntryList = new List<AppListEntryModel>();
-                        foreach (AppListEntry appListEntryItem in packageItem.Package.GetAppListEntries().ToList())
+                        IReadOnlyList<AppListEntry> appListEntriedsList = packageItem.Package.GetAppListEntries();
+                        for (int index = 0; index < appListEntriedsList.Count; index++)
                         {
                             appListEntryList.Add(new AppListEntryModel()
                             {
-                                DisplayName = appListEntryItem.DisplayInfo.DisplayName,
-                                Description = appListEntryItem.DisplayInfo.Description,
-                                AppUserModelId = appListEntryItem.AppUserModelId,
-                                AppListEntry = appListEntryItem,
+                                DisplayName = appListEntriedsList[index].DisplayInfo.DisplayName,
+                                Description = appListEntriedsList[index].DisplayInfo.Description,
+                                AppUserModelId = appListEntriedsList[index].AppUserModelId,
+                                AppListEntry = appListEntriedsList[index],
                                 PackageFullName = packageItem.Package.Id.FullName
                             });
                         }
@@ -512,21 +511,21 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                         if (dependcies.Count > 0)
                         {
-                            foreach (Package packageItem in dependcies.ToList())
+                            for (int index = 0; index < dependcies.Count; index++)
                             {
                                 try
                                 {
                                     dependenciesList.Add(new PackageModel()
                                     {
-                                        DisplayName = packageItem.DisplayName,
-                                        PublisherName = packageItem.PublisherDisplayName,
+                                        DisplayName = dependcies[index].DisplayName,
+                                        PublisherName = dependcies[index].PublisherDisplayName,
                                         Version = string.Format("{0}.{1}.{2}.{3}",
-                                            packageItem.Id.Version.Major,
-                                            packageItem.Id.Version.Minor,
-                                            packageItem.Id.Version.Build,
-                                            packageItem.Id.Version.Revision
+                                            dependcies[index].Id.Version.Major,
+                                            dependcies[index].Id.Version.Minor,
+                                            dependcies[index].Id.Version.Build,
+                                            dependcies[index].Id.Version.Revision
                                             ),
-                                        Package = packageItem
+                                        Package = dependcies[index]
                                     });
                                 }
                                 catch
@@ -536,7 +535,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             }
                         }
 
-                        dependenciesList = dependenciesList.OrderBy(item => item.DisplayName).ToList();
+                        dependenciesList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
                         packageDict["DependenciesCollection"] = dependenciesList;
                     }
                     catch
@@ -631,7 +630,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            MatchResultList = null;
+            MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
             Task.Delay(500);
@@ -690,14 +689,17 @@ namespace GetStoreApp.UI.Controls.UWPApp
             autoResetEvent ??= new AutoResetEvent(false);
             Task.Run(() =>
             {
-                MatchResultList = PackageManager.FindPackagesForUser(string.Empty).ToList();
-                if (MatchResultList is not null)
+                IEnumerable<Package> findResultList = packageManager.FindPackagesForUser(string.Empty);
+                foreach (Package packageItem in findResultList)
                 {
-                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                    {
-                        IsPackageEmpty = MatchResultList.Count is 0;
-                    });
+                    MatchResultList.Add(packageItem);
                 }
+
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                {
+                    IsPackageEmpty = MatchResultList.Count is 0;
+                });
+
                 autoResetEvent?.Set();
             });
         }
@@ -723,12 +725,18 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     // 备份数据
                     List<Package> backupList = MatchResultList;
-                    List<Package> appTypesList;
+                    List<Package> appTypesList = new List<Package>();
 
                     // 根据选项是否筛选包含框架包的数据
                     if (IsFramework)
                     {
-                        appTypesList = backupList.Where(item => item.IsFramework == IsFramework).ToList();
+                        foreach (Package packageItem in backupList)
+                        {
+                            if (packageItem.IsFramework == IsFramework)
+                            {
+                                appTypesList.Add(packageItem);
+                            }
+                        }
                     }
                     else
                     {
@@ -736,29 +744,28 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     }
 
                     List<Package> filteredList = new List<Package>();
-                    if (SignType.HasFlag(PackageSignKind.Store))
+                    foreach (Package packageItem in appTypesList)
                     {
-                        filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.Store));
-                    }
-
-                    if (SignType.HasFlag(PackageSignKind.System))
-                    {
-                        filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.System));
-                    }
-
-                    if (SignType.HasFlag(PackageSignKind.Enterprise))
-                    {
-                        filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.Enterprise));
-                    }
-
-                    if (SignType.HasFlag(PackageSignKind.Developer))
-                    {
-                        filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.Developer));
-                    }
-
-                    if (SignType.HasFlag(PackageSignKind.None))
-                    {
-                        filteredList.AddRange(appTypesList.Where(item => item.SignatureKind == PackageSignatureKind.None));
+                        if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && SignType.HasFlag(PackageSignKind.Store))
+                        {
+                            filteredList.Add(packageItem);
+                        }
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && SignType.HasFlag(PackageSignKind.System))
+                        {
+                            filteredList.Add(packageItem);
+                        }
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && SignType.HasFlag(PackageSignKind.Enterprise))
+                        {
+                            filteredList.Add(packageItem);
+                        }
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && SignType.HasFlag(PackageSignKind.Developer))
+                        {
+                            filteredList.Add(packageItem);
+                        }
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && SignType.HasFlag(PackageSignKind.None))
+                        {
+                            filteredList.Add(packageItem);
+                        }
                     }
 
                     // 对过滤后的列表数据进行排序
@@ -768,11 +775,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             {
                                 if (IsIncrease)
                                 {
-                                    filteredList = filteredList.OrderBy(item => item.DisplayName).ToList();
+                                    filteredList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
                                 }
                                 else
                                 {
-                                    filteredList = filteredList.OrderByDescending(item => item.DisplayName).ToList();
+                                    filteredList.Sort((item1, item2) => item2.DisplayName.CompareTo(item1.DisplayName));
                                 }
                                 break;
                             }
@@ -780,11 +787,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             {
                                 if (IsIncrease)
                                 {
-                                    filteredList = filteredList.OrderBy(item => item.PublisherDisplayName).ToList();
+                                    filteredList.Sort((item1, item2) => item1.PublisherDisplayName.CompareTo(item2.PublisherDisplayName));
                                 }
                                 else
                                 {
-                                    filteredList = filteredList.OrderByDescending(item => item.PublisherDisplayName).ToList();
+                                    filteredList.Sort((item1, item2) => item2.PublisherDisplayName.CompareTo(item1.PublisherDisplayName));
                                 }
                                 break;
                             }
@@ -792,11 +799,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             {
                                 if (IsIncrease)
                                 {
-                                    filteredList = filteredList.OrderBy(item => item.InstalledDate).ToList();
+                                    filteredList.Sort((item1, item2) => item1.InstalledDate.CompareTo(item2.InstalledDate));
                                 }
                                 else
                                 {
-                                    filteredList = filteredList.OrderByDescending(item => item.InstalledDate).ToList();
+                                    filteredList.Sort((item1, item2) => item2.InstalledDate.CompareTo(item1.InstalledDate));
                                 }
                                 break;
                             }
@@ -807,10 +814,13 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     // 根据搜索条件对搜索符合要求的数据
                     if (hasSearchText)
                     {
-                        filteredList = filteredList.Where(matchItem =>
-                                matchItem.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                                matchItem.Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                                matchItem.PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                        for (int index = filteredList.Count; index > 0; index++)
+                        {
+                            if (!(filteredList[index].DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                filteredList.RemoveAt(index);
+                            }
+                        }
                     }
 
                     foreach (Package packageItem in filteredList)

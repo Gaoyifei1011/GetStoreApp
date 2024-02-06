@@ -6,7 +6,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -114,10 +113,18 @@ namespace GetStoreApp.UI.Dialogs.Settings
         {
             Task.Run(async () =>
             {
-                List<CleanKind> SelectedCleanList = new List<CleanKind>(TraceCleanupList.Where(item => item.IsSelected is true).Select(item => item.InternalName));
+                List<CleanKind> selectedCleanList = new List<CleanKind>();
+
+                foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+                {
+                    if (traceCleanupItem.IsSelected is true)
+                    {
+                        selectedCleanList.Add(traceCleanupItem.InternalName);
+                    }
+                }
 
                 List<Tuple<CleanKind, bool>> cleanSuccessfullyDict = new List<Tuple<CleanKind, bool>>();
-                foreach (CleanKind cleanArgs in SelectedCleanList)
+                foreach (CleanKind cleanArgs in selectedCleanList)
                 {
                     // 清理并反馈回结果，修改相应的状态信息
                     bool cleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanArgs);
@@ -130,7 +137,14 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 {
                     foreach (Tuple<CleanKind, bool> cleanArgsTuple in cleanSuccessfullyDict)
                     {
-                        TraceCleanupList[TraceCleanupList.IndexOf(TraceCleanupList.First(item => item.InternalName == cleanArgsTuple.Item1))].IsCleanFailed = !cleanArgsTuple.Item2;
+                        foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+                        {
+                            if (traceCleanupItem.InternalName.Equals(cleanArgsTuple.Item1))
+                            {
+                                traceCleanupItem.IsCleanFailed = !cleanArgsTuple.Item2;
+                                break;
+                            }
+                        }
                     }
 
                     IsCleaning = false;

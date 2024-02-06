@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.System;
@@ -323,7 +322,12 @@ namespace GetStoreApp.UI.Controls.Store
                 long timeStamp = GenerateTimeStamp();
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
 
-                List<HistoryModel> historyList = HistoryCollection.ToList();
+                List<HistoryModel> historyList = new List<HistoryModel>();
+                foreach (HistoryModel historyItem in HistoryCollection)
+                {
+                    historyList.Add(historyItem);
+                }
+
                 int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加

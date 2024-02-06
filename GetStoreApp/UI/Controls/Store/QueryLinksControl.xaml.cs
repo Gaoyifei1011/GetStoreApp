@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -584,7 +583,15 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<QueryLinksModel> selectedQueryLinksList = QueryLinksCollection.Where(item => item.IsSelected is true).ToList();
+                List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
+
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                {
+                    if (queryLinksItem.IsSelected is true)
+                    {
+                        selectedQueryLinksList.Add(queryLinksItem);
+                    }
+                }
 
                 // 内容为空时显示空提示对话框
                 if (selectedQueryLinksList.Count is 0)
@@ -622,7 +629,15 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<QueryLinksModel> selectedQueryLinksList = QueryLinksCollection.Where(item => item.IsSelected is true).ToList();
+                List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
+
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                {
+                    if (queryLinksItem.IsSelected is true)
+                    {
+                        selectedQueryLinksList.Add(queryLinksItem);
+                    }
+                }
 
                 // 内容为空时显示空提示对话框
                 if (selectedQueryLinksList.Count is 0)
@@ -672,10 +687,18 @@ namespace GetStoreApp.UI.Controls.Store
 
             Task.Run(async () =>
             {
-                List<QueryLinksModel> selectedqueryLinksList = QueryLinksCollection.Where(item => item.IsSelected is true).ToList();
+                List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
+
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                {
+                    if (queryLinksItem.IsSelected is true)
+                    {
+                        selectedQueryLinksList.Add(queryLinksItem);
+                    }
+                }
 
                 // 内容为空时显示空提示对话框
-                if (selectedqueryLinksList.Count is 0)
+                if (selectedQueryLinksList.Count is 0)
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
@@ -692,7 +715,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                     bool IsDownloadSuccessfully = false;
 
-                    foreach (QueryLinksModel queryLinksItem in selectedqueryLinksList)
+                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                     {
                         string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
@@ -779,7 +802,7 @@ namespace GetStoreApp.UI.Controls.Store
                 // 使用浏览器下载
                 else if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[1].Value)
                 {
-                    foreach (QueryLinksModel queryLinksItem in selectedqueryLinksList)
+                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                     {
                         await Launcher.LaunchUriAsync(new Uri(queryLinksItem.FileLink));
                     }
@@ -922,7 +945,7 @@ namespace GetStoreApp.UI.Controls.Store
                     }
 
                     ResultListFilter(ref queryLinksList);
-                    queryLinksList = queryLinksList.OrderBy(item => item.FileName).ToList();
+                    queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -992,7 +1015,12 @@ namespace GetStoreApp.UI.Controls.Store
                 long timeStamp = GenerateTimeStamp();
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link);
 
-                List<HistoryModel> historyList = HistoryCollection.ToList();
+                List<HistoryModel> historyList = new List<HistoryModel>();
+                foreach (HistoryModel historyItem in HistoryCollection)
+                {
+                    historyList.Add(historyItem);
+                }
+
                 int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加

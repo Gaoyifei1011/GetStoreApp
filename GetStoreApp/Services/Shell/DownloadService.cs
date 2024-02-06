@@ -5,7 +5,6 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,26 +33,31 @@ namespace GetStoreApp.Services.Shell
 
                 try
                 {
-                    List<string> IndexList = ConsoleHelper.ReadLine().Split(',').ToList();
-                    bool CheckResult = true;
-                    foreach (string indexItem in IndexList)
+                    List<string> indexList = new List<string>();
+                    foreach (string item in ConsoleHelper.ReadLine().Split(','))
+                    {
+                        indexList.Add(item);
+                    }
+
+                    bool checkResult = true;
+                    foreach (string indexItem in indexList)
                     {
                         int index = Convert.ToInt32(indexItem);
                         if (index > ParseService.QueryLinksList.Count || index < 1)
                         {
-                            CheckResult = false;
+                            checkResult = false;
                             break;
                         }
                     }
 
-                    if (CheckResult)
+                    if (checkResult)
                     {
-                        for (int index = 0; index < IndexList.Count; index++)
+                        for (int index = 0; index < indexList.Count; index++)
                         {
-                            string IndexItem = IndexList[index];
+                            string IndexItem = indexList[index];
                             if (ConsoleLaunchService.IsAppRunning)
                             {
-                                ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, IndexList.Count));
+                                ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, indexList.Count));
                                 DownloadFile(ParseService.QueryLinksList[Convert.ToInt32(IndexItem) - 1].FileName, ParseService.QueryLinksList[Convert.ToInt32(IndexItem) - 1].FileLink);
                             }
                         }

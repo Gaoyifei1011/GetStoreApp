@@ -3,7 +3,6 @@ using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -22,7 +21,7 @@ namespace GetStoreApp.Services.Root
 
         public static bool IsAppRunning { get; private set; } = true;
 
-        private static List<string> ConsoleLaunchArgs;
+        private static List<string> ConsoleLaunchArgs = new List<string>();
 
         /// <summary>
         /// 应用启动时使用的参数
@@ -39,7 +38,10 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task InitializeLaunchAsync(string[] args)
         {
-            ConsoleLaunchArgs = args.ToList();
+            foreach (string item in args)
+            {
+                ConsoleLaunchArgs.Add(item);
+            }
             ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
             Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
 

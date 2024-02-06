@@ -7,9 +7,8 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
+using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -18,9 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -105,29 +102,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(() =>
                 {
-                    Kernel32Library.GetStartupInfo(out STARTUPINFO wingetStartupInfo);
-                    wingetStartupInfo.lpReserved = IntPtr.Zero;
-                    wingetStartupInfo.lpDesktop = IntPtr.Zero;
-                    wingetStartupInfo.lpTitle = IntPtr.Zero;
-                    wingetStartupInfo.dwX = 0;
-                    wingetStartupInfo.dwY = 0;
-                    wingetStartupInfo.dwXSize = 0;
-                    wingetStartupInfo.dwYSize = 0;
-                    wingetStartupInfo.dwXCountChars = 500;
-                    wingetStartupInfo.dwYCountChars = 500;
-                    wingetStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                    wingetStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
-                    wingetStartupInfo.cbReserved2 = 0;
-                    wingetStartupInfo.lpReserved2 = IntPtr.Zero;
-                    wingetStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref wingetStartupInfo, out PROCESS_INFORMATION wingetInformation);
-
-                    if (createResult)
-                    {
-                        if (wingetInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hProcess);
-                        if (wingetInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hThread);
-                    }
+                    ProcessStarter.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
                 });
             }
         }
@@ -321,29 +296,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    Kernel32Library.GetStartupInfo(out STARTUPINFO shutdownStartupInfo);
-                                    shutdownStartupInfo.lpReserved = IntPtr.Zero;
-                                    shutdownStartupInfo.lpDesktop = IntPtr.Zero;
-                                    shutdownStartupInfo.lpTitle = IntPtr.Zero;
-                                    shutdownStartupInfo.dwX = 0;
-                                    shutdownStartupInfo.dwY = 0;
-                                    shutdownStartupInfo.dwXSize = 0;
-                                    shutdownStartupInfo.dwYSize = 0;
-                                    shutdownStartupInfo.dwXCountChars = 500;
-                                    shutdownStartupInfo.dwYCountChars = 500;
-                                    shutdownStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                    shutdownStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                                    shutdownStartupInfo.cbReserved2 = 0;
-                                    shutdownStartupInfo.lpReserved2 = IntPtr.Zero;
-
-                                    shutdownStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref shutdownStartupInfo, out PROCESS_INFORMATION shutdownInformation);
-
-                                    if (createResult)
-                                    {
-                                        if (shutdownInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hProcess);
-                                        if (shutdownInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hThread);
-                                    }
+                                    ProcessStarter.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
                                 }
                             }
 
@@ -581,10 +534,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                 autoResetEvent ??= new AutoResetEvent(false);
                 Task.Run(async () =>
                 {
-                    List<PackageCatalogReference> packageCatalogReferences = UpgradableAppsManager.GetPackageCatalogs().ToList();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetService.CreateCreateCompositePackageCatalogOptions();
                     PackageCatalogReference searchCatalogReference = UpgradableAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
-                    foreach (PackageCatalogReference catalogReference in packageCatalogReferences)
+                    foreach (PackageCatalogReference catalogReference in UpgradableAppsManager.GetPackageCatalogs())
                     {
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
@@ -597,9 +549,14 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         FindPackagesResult findResult = await upgradableCatalog.FindPackagesAsync(findPackagesOptions);
-                        List<MatchResult> result = findResult.Matches.ToList();
 
-                        MatchResultList = findResult.Matches.ToList().Where(item => item.CatalogPackage.IsUpdateAvailable is true).ToList();
+                        foreach (MatchResult matchResultItem in findResult.Matches)
+                        {
+                            if (matchResultItem.CatalogPackage.IsUpdateAvailable is true)
+                            {
+                                MatchResultList.Add(matchResultItem);
+                            }
+                        }
                     }
                     autoResetEvent?.Set();
                 });

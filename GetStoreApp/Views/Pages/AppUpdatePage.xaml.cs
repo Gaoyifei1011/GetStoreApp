@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -83,8 +82,6 @@ namespace GetStoreApp.Views.Pages
                 OnPropertyChanged();
             }
         }
-
-        private List<Package> PackageList;
 
         private ObservableCollection<AppUpdateModel> AppUpdateCollection { get; } = new ObservableCollection<AppUpdateModel>();
 
@@ -225,17 +222,24 @@ namespace GetStoreApp.Views.Pages
                 updateOptions.AllowForcedAppRestart = false;
                 IReadOnlyList<AppInstallItem> upgradableAppsList = await AppInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
                 List<AppUpdateModel> appUpdateList = new List<AppUpdateModel>();
-                PackageList = PackageManager.FindPackagesForUser(string.Empty).ToList();
 
-                if (PackageList is not null)
+                foreach (AppInstallItem upgradableApps in upgradableAppsList)
                 {
-                    foreach (AppInstallItem upgradableApps in upgradableAppsList)
+                    // 判断是否已经添加到 AppUpdateCollection 中，没有则添加
+                    bool isExisted = false;
+                    foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                     {
-                        // 判断是否已经添加到 AppUpdateCollection 中，没有则添加
-                        if (!AppUpdateCollection.Any(item => item.PackageFamilyName == upgradableApps.PackageFamilyName))
+                        if (appUpdateItem.PackageFamilyName.Equals(upgradableApps.PackageFamilyName))
                         {
-                            Package package = PackageList.FirstOrDefault(item => item.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase));
-                            if (package is not null)
+                            isExisted = true;
+                        }
+                    }
+
+                    if (!isExisted)
+                    {
+                        foreach (Package packageItem in PackageManager.FindPackagesForUser(string.Empty))
+                        {
+                            if (packageItem.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                             {
                                 AppInstallStatus appInstallStatus = upgradableApps.GetCurrentStatus();
                                 string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus.PercentComplete);
@@ -244,8 +248,8 @@ namespace GetStoreApp.Views.Pages
                                 appUpdateList.Add(new AppUpdateModel()
                                 {
                                     AppInstallState = appInstallStatus.InstallState,
-                                    DisplayName = package.DisplayName,
-                                    PublisherName = package.PublisherDisplayName,
+                                    DisplayName = packageItem.DisplayName,
+                                    PublisherName = packageItem.PublisherDisplayName,
                                     InstallInformation = installInformation,
                                     InstallSubInformation = installSubInformation,
                                     IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
@@ -258,28 +262,25 @@ namespace GetStoreApp.Views.Pages
                                     PercentComplete = appInstallStatus.PercentComplete,
                                     ProductId = upgradableApps.ProductId
                                 });
-                            }
-                            else
-                            {
-                                continue;
+                                break;
                             }
                         }
                     }
-
-                    // 只添加未有的项
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        lock (AppUpdateLock)
-                        {
-                            foreach (AppUpdateModel appUpdateItem in appUpdateList)
-                            {
-                                AppUpdateCollection.Add(appUpdateItem);
-                            }
-                        }
-
-                        IsLoadedCompleted = true;
-                    });
                 }
+
+                // 只添加未有的项
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    lock (AppUpdateLock)
+                    {
+                        foreach (AppUpdateModel appUpdateItem in appUpdateList)
+                        {
+                            AppUpdateCollection.Add(appUpdateItem);
+                        }
+                    }
+
+                    IsLoadedCompleted = true;
+                });
             });
         }
 

@@ -5,7 +5,6 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Services.Shell
@@ -71,40 +70,43 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void PrintResultList()
         {
-            string SerialNumberHeader = ResourceService.GetLocalized("Console/SerialNumber");
-            string FileNameHeader = ResourceService.GetLocalized("Console/FileName");
-            string FileSizeHeader = ResourceService.GetLocalized("Console/FileSize");
+            string serialNumberHeader = ResourceService.GetLocalized("Console/SerialNumber");
+            string fileNameHeader = ResourceService.GetLocalized("Console/FileName");
+            string fileSizeHeader = ResourceService.GetLocalized("Console/FileSize");
 
-            int SerialNumberHeaderLength = CharExtension.GetStringDisplayLengthEx(SerialNumberHeader);
-            int FileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(FileNameHeader);
-            int FileSizeHeaderLength = CharExtension.GetStringDisplayLengthEx(FileSizeHeader);
+            int serialNumberHeaderLength = CharExtension.GetStringDisplayLengthEx(serialNumberHeader);
+            int fileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(fileNameHeader);
+            int fileSizeHeaderLength = CharExtension.GetStringDisplayLengthEx(fileSizeHeader);
 
-            int SerialNumberColumnLength = (SerialNumberHeaderLength > QueryLinksList.Count.ToString().Length ? SerialNumberHeaderLength : QueryLinksList.Count.ToString().Length) + 3;
+            int serialNumberColumnLength = (serialNumberHeaderLength > QueryLinksList.Count.ToString().Length ? serialNumberHeaderLength : QueryLinksList.Count.ToString().Length) + 3;
 
-            int FileNameContentMaxLength = 0;
-            foreach (QueryLinksModel queryLinksItem in QueryLinksList.Where(resultItem => resultItem.FileName.Length > FileNameContentMaxLength))
+            int fileNameContentMaxLength = 0;
+            foreach (QueryLinksModel queryLinksItem in QueryLinksList)
             {
-                FileNameContentMaxLength = queryLinksItem.FileName.Length;
+                if (queryLinksItem.FileName.Length > fileNameContentMaxLength)
+                {
+                    fileNameContentMaxLength = queryLinksItem.FileName.Length;
+                }
             }
-            int FileNameColumnLength = ((FileNameHeaderLength > FileNameContentMaxLength) ? FileNameHeaderLength : FileNameContentMaxLength) + 3;
+            int FileNameColumnLength = ((fileNameHeaderLength > fileNameContentMaxLength) ? fileNameHeaderLength : fileNameContentMaxLength) + 3;
 
             ConsoleHelper.Write(Environment.NewLine);
             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/QueryLinksCollection"));
 
             // 打印标题
-            ConsoleHelper.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
-            ConsoleHelper.Write(FileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - FileNameHeaderLength));
-            ConsoleHelper.Write(FileSizeHeader + Environment.NewLine);
+            ConsoleHelper.Write(serialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, serialNumberColumnLength - serialNumberHeaderLength));
+            ConsoleHelper.Write(fileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - fileNameHeaderLength));
+            ConsoleHelper.Write(fileSizeHeader + Environment.NewLine);
 
             // 打印标题与内容的分割线
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, SerialNumberHeaderLength).PadRight(SerialNumberColumnLength));
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileNameHeaderLength).PadRight(FileNameColumnLength));
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + Environment.NewLine);
+            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, serialNumberHeaderLength).PadRight(serialNumberColumnLength));
+            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, fileNameHeaderLength).PadRight(FileNameColumnLength));
+            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, fileSizeHeaderLength) + Environment.NewLine);
 
             // 打印内容
             for (int resultDataIndex = 0; resultDataIndex < QueryLinksList.Count; resultDataIndex++)
             {
-                ConsoleHelper.Write(Convert.ToString(resultDataIndex + 1) + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - Convert.ToString(resultDataIndex + 1).Length));
+                ConsoleHelper.Write(Convert.ToString(resultDataIndex + 1) + new string(ConsoleLaunchService.RowSplitCharacter, serialNumberColumnLength - Convert.ToString(resultDataIndex + 1).Length));
                 ConsoleHelper.Write(QueryLinksList[resultDataIndex].FileName + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - QueryLinksList[resultDataIndex].FileName.Length));
                 ConsoleHelper.Write(QueryLinksList[resultDataIndex].FileSize + Environment.NewLine);
             }

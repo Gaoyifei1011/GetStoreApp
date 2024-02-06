@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -63,48 +62,44 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 删除当前任务
         /// </summary>
-        private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
             if (downloadingItem is not null)
             {
-                // 有信息在更新时，等待操作
-                while (isUpdatingNow) await Task.Delay(50);
-                lock (DownloadingLock) isUpdatingNow = true;
-
-                bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
-
-                if (DeleteResult)
+                Task.Run(async () =>
                 {
-                    // 删除下载文件
-                    try
+                    bool deleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+
+                    if (deleteResult)
                     {
-                        if (File.Exists(downloadingItem.FilePath))
+                        // 删除下载文件
+                        try
                         {
-                            File.Delete(downloadingItem.FilePath);
+                            if (File.Exists(downloadingItem.FilePath))
+                            {
+                                File.Delete(downloadingItem.FilePath);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete downloading file failed.", e);
+                        }
+
+                        // 删除Aria2后缀下载信息记录文件
+                        try
+                        {
+                            if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
+                            {
+                                File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete downloading information file failed.", e);
                         }
                     }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading file failed.", e);
-                    }
-
-                    // 删除Aria2后缀下载信息记录文件
-                    try
-                    {
-                        if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
-                        {
-                            File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading information file failed.", e);
-                    }
-                }
-
-                // 信息更新完毕时，允许其他操作开始执行
-                lock (DownloadingLock) isUpdatingNow = false;
+                });
             }
         }
 
@@ -116,14 +111,7 @@ namespace GetStoreApp.UI.Controls.Download
             DownloadingModel downloadingItem = args.Parameter as DownloadingModel;
             if (downloadingItem is not null)
             {
-                // 有信息在更新时，等待操作
-                while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-                lock (DownloadingLock) isUpdatingNow = true;
-
                 await DownloadSchedulerService.PauseTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
-
-                // 信息更新完毕时，允许其他操作开始执行
-                lock (DownloadingLock) isUpdatingNow = false;
             }
         }
 
@@ -217,11 +205,14 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            // 有信息在更新时，等待操作
-            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingLock) isUpdatingNow = true;
-
-            List<DownloadingModel> selectedDownloadingDataList = DownloadingCollection.Where(item => item.IsSelected is true).ToList();
+            List<DownloadingModel> selectedDownloadingDataList = new List<DownloadingModel>();
+            foreach (DownloadingModel downloadingItem in selectedDownloadingDataList)
+            {
+                if (downloadingItem.IsSelected)
+                {
+                    selectedDownloadingDataList.Add(downloadingItem);
+                }
+            }
 
             // 没有选中任何内容时显示空提示对话框
             if (selectedDownloadingDataList.Count is 0)
@@ -230,6 +221,10 @@ namespace GetStoreApp.UI.Controls.Download
                 return;
             }
 
+            // 有信息在更新时，等待操作
+            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
+            lock (DownloadingLock) isUpdatingNow = true;
+
             IsSelectMode = false;
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
@@ -237,44 +232,50 @@ namespace GetStoreApp.UI.Controls.Download
                 downloadingItem.IsSelectMode = false;
             }
 
-            selectedDownloadingDataList.ForEach(async downloadingItem =>
-            {
-                bool DeleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
-
-                if (DeleteResult)
-                {
-                    // 删除下载文件
-                    try
-                    {
-                        if (File.Exists(downloadingItem.FilePath))
-                        {
-                            File.Delete(downloadingItem.FilePath);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading file failed.", e);
-                    }
-
-                    // 删除Aria2后缀下载信息记录文件
-                    try
-                    {
-                        if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
-                        {
-                            File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading information file failed.", e);
-                    }
-                }
-            });
-
             // 信息更新完毕时，允许其他操作开始执行
             lock (DownloadingLock) isUpdatingNow = false;
+
+            await Task.Run(() =>
+            {
+                selectedDownloadingDataList.ForEach(async downloadingItem =>
+                {
+                    bool deleteResult = await DownloadSchedulerService.DeleteTaskAsync(downloadingItem.DownloadKey, downloadingItem.GID, downloadingItem.DownloadFlag);
+
+                    if (deleteResult)
+                    {
+                        // 删除下载文件
+                        try
+                        {
+                            if (File.Exists(downloadingItem.FilePath))
+                            {
+                                File.Delete(downloadingItem.FilePath);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete downloading file failed.", e);
+                        }
+
+                        // 删除Aria2后缀下载信息记录文件
+                        try
+                        {
+                            if (File.Exists(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2")))
+                            {
+                                File.Delete(string.Format("{0}.{1}", downloadingItem.FilePath, "aria2"));
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete downloading information file failed.", e);
+                        }
+                    }
+                });
+            });
         }
 
+        /// <summary>
+        /// 取消进入选择模式
+        /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
             IsSelectMode = false;
@@ -294,11 +295,11 @@ namespace GetStoreApp.UI.Controls.Download
             lock (DownloadingLock) isUpdatingNow = true;
 
             DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
-            int ClickedIndex = DownloadingCollection.IndexOf(downloadingItem);
+            int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
 
-            if (ClickedIndex >= 0 && ClickedIndex < DownloadingCollection.Count)
+            if (clickedIndex >= 0 && clickedIndex < DownloadingCollection.Count)
             {
-                DownloadingCollection[ClickedIndex].IsSelected = !DownloadingCollection[ClickedIndex].IsSelected;
+                DownloadingCollection[clickedIndex].IsSelected = !DownloadingCollection[clickedIndex].IsSelected;
             }
 
             // 信息更新完毕时，允许其他操作开始执行
@@ -312,7 +313,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 计时器：获取正在下载中文件的下载进度
         /// </summary>
-        public void DownloadInfoTimerTick(object sender, object args)
+        public async void DownloadInfoTimerTick(object sender, object args)
         {
             // 有信息在更新时，不再操作，等待下一秒尝试更新内容
             if (!IsInitializeFinished)
@@ -323,17 +324,23 @@ namespace GetStoreApp.UI.Controls.Download
             // 当有信息处于更新状态中时，暂停其他操作
             lock (DownloadingLock) isUpdatingNow = true;
 
-            ObservableCollection<BackgroundModel> downloadingList = DownloadSchedulerService.DownloadingCollection;
+            List<BackgroundModel> downloadingList = await DownloadSchedulerService.GetDownloadingListAsync();
 
             foreach (BackgroundModel backgroundItem in downloadingList)
             {
                 try
                 {
-                    int index = DownloadingCollection.IndexOf(DownloadingCollection.First(item => item.DownloadKey == backgroundItem.DownloadKey));
-                    DownloadingCollection[index].GID = backgroundItem.GID;
-                    DownloadingCollection[index].FinishedSize = backgroundItem.FinishedSize;
-                    DownloadingCollection[index].TotalSize = backgroundItem.TotalSize;
-                    DownloadingCollection[index].CurrentSpeed = backgroundItem.CurrentSpeed;
+                    for (int index = 0; index < DownloadingCollection.Count; index++)
+                    {
+                        if (DownloadingCollection[index].DownloadKey.Equals(backgroundItem.DownloadKey, StringComparison.OrdinalIgnoreCase))
+                        {
+                            DownloadingCollection[index].GID = backgroundItem.GID;
+                            DownloadingCollection[index].FinishedSize = backgroundItem.FinishedSize;
+                            DownloadingCollection[index].TotalSize = backgroundItem.TotalSize;
+                            DownloadingCollection[index].CurrentSpeed = backgroundItem.CurrentSpeed;
+                            break;
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -367,7 +374,16 @@ namespace GetStoreApp.UI.Controls.Download
                             BackgroundModel downloadItem = newItem as BackgroundModel;
                             if (downloadItem is not null)
                             {
-                                DownloadingCollection.Insert(DownloadingCollection.Count(item => item.DownloadFlag is 3),
+                                int count = 0;
+                                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                                {
+                                    if (downloadingItem.DownloadFlag is 3)
+                                    {
+                                        count++;
+                                    }
+                                }
+
+                                DownloadingCollection.Insert(count,
                                     new DownloadingModel
                                     {
                                         DownloadKey = downloadItem.DownloadKey,
@@ -400,7 +416,14 @@ namespace GetStoreApp.UI.Controls.Download
                             {
                                 try
                                 {
-                                    DownloadingCollection.Remove(DownloadingCollection.First(item => item.DownloadKey == downloadItem.DownloadKey && item.DownloadFlag is 3));
+                                    for (int index = 0; index < DownloadingCollection.Count; index++)
+                                    {
+                                        if (DownloadingCollection[index].DownloadKey.Equals(downloadItem.DownloadKey) && DownloadingCollection[index].DownloadFlag is 3)
+                                        {
+                                            DownloadingCollection.RemoveAt(index);
+                                            break;
+                                        }
+                                    }
                                 }
                                 catch (Exception e)
                                 {
@@ -469,7 +492,14 @@ namespace GetStoreApp.UI.Controls.Download
                             {
                                 try
                                 {
-                                    DownloadingCollection.Remove(DownloadingCollection.First(item => item.DownloadKey == downloadItem.DownloadKey && item.DownloadFlag is 1));
+                                    for (int index = 0; index < DownloadingCollection.Count; index++)
+                                    {
+                                        if (DownloadingCollection[index].DownloadKey.Equals(downloadItem.DownloadKey) && DownloadingCollection[index].DownloadFlag is 1)
+                                        {
+                                            DownloadingCollection.RemoveAt(index);
+                                            break;
+                                        }
+                                    }
                                 }
                                 catch (Exception e)
                                 {
@@ -540,7 +570,8 @@ namespace GetStoreApp.UI.Controls.Download
 
             DownloadingCollection.Clear();
 
-            ObservableCollection<BackgroundModel> downloadingList = DownloadSchedulerService.DownloadingCollection;
+            List<BackgroundModel> downloadingList = await DownloadSchedulerService.GetDownloadingListAsync();
+            List<BackgroundModel> waitingList = await DownloadSchedulerService.GetWaitingListAsync();
 
             foreach (BackgroundModel downloadItem in downloadingList)
             {
@@ -556,7 +587,7 @@ namespace GetStoreApp.UI.Controls.Download
                 await Task.Delay(1);
             }
 
-            foreach (BackgroundModel downloadItem in DownloadSchedulerService.WaitingCollection)
+            foreach (BackgroundModel downloadItem in waitingList)
             {
                 DownloadingCollection.Add(new DownloadingModel
                 {

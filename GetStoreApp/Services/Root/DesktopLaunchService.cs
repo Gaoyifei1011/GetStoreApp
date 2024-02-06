@@ -1,11 +1,10 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +21,7 @@ namespace GetStoreApp.Services.Root
     {
         private static IActivatedEventArgs activatedEventArgs;
         private static ActivationKind activationKind = ActivationKind.Launch;
-
-        private static List<string> DesktopLaunchArgs;
+        private static List<string> DesktopLaunchArgs = new List<string>();
 
         // 应用启动时使用的参数
         public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
@@ -40,7 +38,10 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task InitializeLaunchAsync(string[] args)
         {
-            DesktopLaunchArgs = args.ToList();
+            foreach (string item in args)
+            {
+                DesktopLaunchArgs.Add(item);
+            }
             activatedEventArgs = AppInstance.GetActivatedEventArgs();
             await ParseStartupKindAsync(activatedEventArgs is null ? ActivationKind.Launch : activatedEventArgs.Kind);
             await DealLaunchArgsAsync();
@@ -121,29 +122,7 @@ namespace GetStoreApp.Services.Root
                                 }
                             case "Web":
                                 {
-                                    Kernel32Library.GetStartupInfo(out STARTUPINFO webViewStartupInfo);
-                                    webViewStartupInfo.lpReserved = IntPtr.Zero;
-                                    webViewStartupInfo.lpDesktop = IntPtr.Zero;
-                                    webViewStartupInfo.lpTitle = IntPtr.Zero;
-                                    webViewStartupInfo.dwX = 0;
-                                    webViewStartupInfo.dwY = 0;
-                                    webViewStartupInfo.dwXSize = 0;
-                                    webViewStartupInfo.dwYSize = 0;
-                                    webViewStartupInfo.dwXCountChars = 500;
-                                    webViewStartupInfo.dwYCountChars = 500;
-                                    webViewStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                    webViewStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                                    webViewStartupInfo.cbReserved2 = 0;
-                                    webViewStartupInfo.lpReserved2 = IntPtr.Zero;
-                                    webViewStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                                    bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref webViewStartupInfo, out PROCESS_INFORMATION webViewInformation);
-
-                                    if (createResult)
-                                    {
-                                        if (webViewInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hProcess);
-                                        if (webViewInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hThread);
-                                    }
+                                    ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
                                     Environment.Exit(0);
                                     break;
                                 }

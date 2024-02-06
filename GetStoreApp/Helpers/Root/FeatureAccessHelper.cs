@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Windows.ApplicationModel;
 
 namespace GetStoreApp.Helpers.Root
@@ -53,7 +52,15 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static string GenerateAttestation(string featureId)
         {
-            return string.Format("{0} has registered their use of {1} with Microsoft and agrees to the terms of use.", packageFamilyName.Split('_').Last(), featureId);
+            string[] packageFamilyNameArray = packageFamilyName.Split('_');
+            if (packageFamilyNameArray.Length > 0)
+            {
+                return string.Format("{0} has registered their use of {1} with Microsoft and agrees to the terms of use.", packageFamilyNameArray[^1], featureId);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
     }
 }

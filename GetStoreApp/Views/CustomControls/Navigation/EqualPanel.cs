@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Windows.Foundation;
 
 namespace GetStoreApp.Views.CustomControls.Navigation
@@ -39,14 +38,21 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             maxItemWidth = 0;
             maxItemHeight = 0;
 
-            IEnumerable<UIElement> elements = Children.Where(static e => e.Visibility == Visibility.Visible);
-            visibleItemsCount = elements.Count();
-
-            foreach (var child in elements)
+            List<UIElement> uiElementsList = new List<UIElement>();
+            foreach (UIElement uiElement in Children)
             {
-                child.Measure(availableSize);
-                maxItemWidth = Math.Max(maxItemWidth, child.DesiredSize.Width);
-                maxItemHeight = Math.Max(maxItemHeight, child.DesiredSize.Height);
+                if (uiElement.Visibility.Equals(Visibility.Visible))
+                {
+                    uiElementsList.Add(uiElement);
+                }
+            }
+            visibleItemsCount = uiElementsList.Count;
+
+            foreach (UIElement uiElement in uiElementsList)
+            {
+                uiElement.Measure(availableSize);
+                maxItemWidth = Math.Max(maxItemWidth, uiElement.DesiredSize.Width);
+                maxItemHeight = Math.Max(maxItemHeight, uiElement.DesiredSize.Height);
             }
 
             if (visibleItemsCount > 0)
@@ -81,10 +87,18 @@ namespace GetStoreApp.Views.CustomControls.Navigation
                 MeasureOverride(finalSize);
             }
 
-            IEnumerable<UIElement> elements = Children.Where(static e => e.Visibility == Visibility.Visible);
-            foreach (var child in elements)
+            List<UIElement> uiElementsList = new List<UIElement>();
+            foreach (UIElement uiElement in Children)
             {
-                child.Arrange(new Rect(x, 0, maxItemWidth, maxItemHeight));
+                if (uiElement.Visibility.Equals(Visibility.Visible))
+                {
+                    uiElementsList.Add(uiElement);
+                }
+            }
+
+            foreach (UIElement uiElement in uiElementsList)
+            {
+                uiElement.Arrange(new Rect(x, 0, maxItemWidth, maxItemHeight));
                 x += maxItemWidth + Spacing;
             }
             return finalSize;

@@ -309,6 +309,9 @@
   <data name="PublisherName" xml:space="preserve">
     <value>发布者名称</value>
   </data>
+  <data name="PublisherNameToolTip" xml:space="preserve">
+    <value>发布者名称：</value>
+  </data>
   <data name="PublisherToolTip" xml:space="preserve">
     <value>发布者：</value>
   </data>

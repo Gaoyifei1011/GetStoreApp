@@ -2,12 +2,10 @@
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
@@ -58,30 +56,7 @@ namespace GetStoreApp.Services.Root
                 if (splitList.Length > 1)
                 {
                     string appId = splitList[1];
-
-                    Kernel32Library.GetStartupInfo(out STARTUPINFO wingetStartupInfo);
-                    wingetStartupInfo.lpReserved = IntPtr.Zero;
-                    wingetStartupInfo.lpDesktop = IntPtr.Zero;
-                    wingetStartupInfo.lpTitle = IntPtr.Zero;
-                    wingetStartupInfo.dwX = 0;
-                    wingetStartupInfo.dwY = 0;
-                    wingetStartupInfo.dwXSize = 0;
-                    wingetStartupInfo.dwYSize = 0;
-                    wingetStartupInfo.dwXCountChars = 500;
-                    wingetStartupInfo.dwYCountChars = 500;
-                    wingetStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                    wingetStartupInfo.wShowWindow = WindowShowStyle.SW_SHOW;
-                    wingetStartupInfo.cbReserved2 = 0;
-                    wingetStartupInfo.lpReserved2 = IntPtr.Zero;
-                    wingetStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("winget install {0}", appId), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NEW_CONSOLE, IntPtr.Zero, null, ref wingetStartupInfo, out PROCESS_INFORMATION wingetInformation);
-
-                    if (createResult)
-                    {
-                        if (wingetInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hProcess);
-                        if (wingetInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(wingetInformation.hThread);
-                    }
+                    ProcessStarter.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
                 }
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }

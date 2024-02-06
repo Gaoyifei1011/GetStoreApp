@@ -309,6 +309,9 @@
   <data name="PublisherName" xml:space="preserve">
     <value>Publisher name</value>
   </data>
+  <data name="PublisherNameToolTip" xml:space="preserve">
+    <value>PublisherName: </value>
+  </data>
   <data name="PublisherToolTip" xml:space="preserve">
     <value>Publisher: </value>
   </data>

@@ -11,7 +11,6 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -39,8 +38,7 @@ namespace GetStoreApp
             if (!RuntimeHelper.IsMSIX)
             {
                 PackageManager packageManager = new PackageManager();
-                List<Package> packagesList = packageManager.FindPackagesForUser(string.Empty).ToList();
-                foreach (Package package in packagesList)
+                foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
                 {
                     if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
                     {

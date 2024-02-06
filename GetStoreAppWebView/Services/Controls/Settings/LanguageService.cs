@@ -2,7 +2,6 @@
 using GetStoreAppWebView.Services.Root;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Windows.Globalization;
 
 namespace GetStoreAppWebView.Services.Controls.Settings
@@ -25,7 +24,13 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         /// </summary>
         public static void InitializeLanguage()
         {
-            DefaultAppLanguage = AppLanguagesList.First(item => item.Equals("en-US", StringComparison.OrdinalIgnoreCase));
+            foreach (string language in AppLanguagesList)
+            {
+                if (language.Equals("en-US", StringComparison.OrdinalIgnoreCase))
+                {
+                    DefaultAppLanguage = language;
+                }
+            }
 
             AppLanguage = LocalSettingsService.ReadSetting<string>(SettingsKey);
 

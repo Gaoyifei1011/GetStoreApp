@@ -146,8 +146,8 @@
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
 
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.4" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.6" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240124002-experimental2" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.10091-preview" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 

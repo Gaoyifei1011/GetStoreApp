@@ -6,7 +6,6 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System.Threading;
@@ -144,7 +143,14 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 try
                 {
-                    WaitingCollection.Remove(WaitingCollection.First(item => item.DownloadKey == downloadKey));
+                    foreach (BackgroundModel backgroundItem in WaitingCollection)
+                    {
+                        if (backgroundItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
+                        {
+                            WaitingCollection.Remove(backgroundItem);
+                            break;
+                        }
+                    }
                     Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                 }
                 catch (Exception e)
@@ -164,7 +170,14 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        DownloadingCollection.Remove(DownloadingCollection.First(item => item.DownloadKey == downloadKey));
+                        foreach (BackgroundModel backgroundItem in DownloadingCollection)
+                        {
+                            if (backgroundItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
+                            {
+                                DownloadingCollection.Remove(backgroundItem);
+                                break;
+                            }
+                        }
                         Result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
                     }
                     catch (Exception e)
@@ -252,7 +265,15 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 try
                 {
-                    List<BackgroundModel> waitingList = WaitingCollection.Where(item => item.DownloadKey == downloadKey).ToList();
+                    List<BackgroundModel> waitingList = new List<BackgroundModel>();
+                    foreach (BackgroundModel waitingItem in WaitingCollection)
+                    {
+                        if (waitingItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
+                        {
+                            waitingList.Add(waitingItem);
+                        }
+                    }
+
                     foreach (BackgroundModel backgroundItem in waitingList)
                     {
                         WaitingCollection.Remove(backgroundItem);
@@ -277,7 +298,15 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        List<BackgroundModel> downloadingList = DownloadingCollection.Where(item => item.DownloadKey == downloadKey).ToList();
+                        List<BackgroundModel> downloadingList = new List<BackgroundModel>();
+                        foreach (BackgroundModel downloadingItem in DownloadingCollection)
+                        {
+                            if (downloadingItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
+                            {
+                                downloadingList.Add(downloadingItem);
+                            }
+                        }
+
                         foreach (BackgroundModel backgroundItem in downloadingList)
                         {
                             DownloadingCollection.Remove(backgroundItem);
@@ -301,6 +330,50 @@ namespace GetStoreApp.Services.Controls.Download
             lock (DownloadSchedulerLock) IsUpdatingNow = false;
 
             return Result;
+        }
+
+        /// <summary>
+        /// 安全获取正在下载中文件信息
+        /// </summary>
+        public static async Task<List<BackgroundModel>> GetDownloadingListAsync()
+        {
+            // 防止在列表被修改时进行读取
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
+
+            List<BackgroundModel> downloadingList = new List<BackgroundModel>();
+
+            foreach (BackgroundModel backgroundItem in DownloadingCollection)
+            {
+                downloadingList.Add(backgroundItem);
+            }
+
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
+
+            return downloadingList;
+        }
+
+        /// <summary>
+        /// 安全获取等待下载中文件信息
+        /// </summary>
+        public static async Task<List<BackgroundModel>> GetWaitingListAsync()
+        {
+            // 防止在列表被修改时进行读取
+            while (IsUpdatingNow) await Task.Delay(50);
+            lock (DownloadSchedulerLock) IsUpdatingNow = true;
+
+            List<BackgroundModel> waitingList = new List<BackgroundModel>();
+
+            foreach (BackgroundModel backgroundItem in WaitingCollection)
+            {
+                waitingList.Add(backgroundItem);
+            }
+
+            // 信息更新完毕时，退出写模式，让其他线程执行操作
+            lock (DownloadSchedulerLock) IsUpdatingNow = false;
+
+            return waitingList;
         }
 
         /// <summary>
@@ -345,7 +418,7 @@ namespace GetStoreApp.Services.Controls.Download
                         }
 
                         // 发送通知
-                        if (DownloadingCollection.Any() || WaitingCollection.Any())
+                        if (DownloadingCollection.Count > 0 || WaitingCollection.Count > 0)
                         {
                             ToastNotificationService.Show(NotificationKind.DownloadAborted, "DownloadingNow");
                         }
@@ -381,27 +454,35 @@ namespace GetStoreApp.Services.Controls.Download
             while (WaitingCollection.Count > 0 && DownloadingCollection.Count < DownloadOptionsService.DownloadItem)
             {
                 // 获取列表中的第一个元素
-                BackgroundModel DownloadItem = WaitingCollection.FirstOrDefault();
+                BackgroundModel downloadItem = WaitingCollection[0];
 
-                (bool, string) AddResult = await Aria2Service.AddUriAsync(DownloadItem.FileName, DownloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
+                (bool, string) AddResult = await Aria2Service.AddUriAsync(downloadItem.FileName, downloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
 
-                if (AddResult.Item1 && DownloadItem is not null)
+                if (AddResult.Item1 && downloadItem is not null)
                 {
                     try
                     {
-                        List<BackgroundModel> downloadingList = WaitingCollection.Where(item => item.DownloadKey == DownloadItem.DownloadKey).ToList();
-                        foreach (BackgroundModel backgroundItem in downloadingList)
+                        List<BackgroundModel> waitingList = new List<BackgroundModel>();
+                        foreach (BackgroundModel waitingItem in WaitingCollection)
+                        {
+                            if (waitingItem.DownloadKey.Equals(downloadItem.DownloadKey, StringComparison.OrdinalIgnoreCase))
+                            {
+                                waitingList.Add(waitingItem);
+                            }
+                        }
+
+                        foreach (BackgroundModel backgroundItem in waitingList)
                         {
                             WaitingCollection.Remove(backgroundItem);
                         }
 
                         // 将当前任务的下载状态标记为正在下载状态
-                        DownloadItem.DownloadFlag = 3;
-                        DownloadItem.GID = AddResult.Item2;
+                        downloadItem.DownloadFlag = 3;
+                        downloadItem.GID = AddResult.Item2;
 
-                        DownloadingCollection.Add(DownloadItem);
+                        DownloadingCollection.Add(downloadItem);
 
-                        await DownloadXmlService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
+                        await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
                     }
                     catch (Exception e)
                     {
@@ -413,17 +494,17 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        DownloadItem.DownloadFlag = 0;
+                        downloadItem.DownloadFlag = 0;
                         for (int index = 0; index < WaitingCollection.Count; index++)
                         {
-                            if (DownloadItem.DownloadKey == WaitingCollection[index].DownloadKey)
+                            if (downloadItem.DownloadKey.Equals(WaitingCollection[index].DownloadKey, StringComparison.OrdinalIgnoreCase))
                             {
                                 WaitingCollection.RemoveAt(index);
                                 break;
                             }
                         }
 
-                        await DownloadXmlService.UpdateFlagAsync(DownloadItem.DownloadKey, DownloadItem.DownloadFlag);
+                        await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
                     }
                     catch (Exception e)
                     {
@@ -494,7 +575,15 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 正在下载列表中删除掉不是处于下载状态的任务
-                List<BackgroundModel> downloadingList = DownloadingCollection.Where(item => item.DownloadFlag is not 3).ToList();
+                List<BackgroundModel> downloadingList = new List<BackgroundModel>();
+                foreach (BackgroundModel downloadingItem in DownloadingCollection)
+                {
+                    if (downloadingItem.DownloadFlag is not 3)
+                    {
+                        downloadingList.Add(downloadingItem);
+                    }
+                }
+
                 foreach (BackgroundModel backgroundItem in downloadingList)
                 {
                     DownloadingCollection.Remove(backgroundItem);

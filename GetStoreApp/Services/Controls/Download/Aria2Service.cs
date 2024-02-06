@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.IO;

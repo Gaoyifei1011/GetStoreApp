@@ -5,9 +5,8 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
+using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -16,9 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -102,7 +99,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList;
+        private List<MatchResult> MatchResultList = new List<MatchResult>();
 
         private ObservableCollection<InstalledAppsModel> InstalledAppsCollection { get; } = new ObservableCollection<InstalledAppsModel>();
 
@@ -172,29 +169,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    Kernel32Library.GetStartupInfo(out STARTUPINFO shutdownStartupInfo);
-                                    shutdownStartupInfo.lpReserved = IntPtr.Zero;
-                                    shutdownStartupInfo.lpDesktop = IntPtr.Zero;
-                                    shutdownStartupInfo.lpTitle = IntPtr.Zero;
-                                    shutdownStartupInfo.dwX = 0;
-                                    shutdownStartupInfo.dwY = 0;
-                                    shutdownStartupInfo.dwXSize = 0;
-                                    shutdownStartupInfo.dwYSize = 0;
-                                    shutdownStartupInfo.dwXCountChars = 500;
-                                    shutdownStartupInfo.dwYCountChars = 500;
-                                    shutdownStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                                    shutdownStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                                    shutdownStartupInfo.cbReserved2 = 0;
-                                    shutdownStartupInfo.lpReserved2 = IntPtr.Zero;
-
-                                    shutdownStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-                                    bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref shutdownStartupInfo, out PROCESS_INFORMATION shutdownInformation);
-
-                                    if (createResult)
-                                    {
-                                        if (shutdownInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hProcess);
-                                        if (shutdownInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(shutdownInformation.hThread);
-                                    }
+                                    ProcessStarter.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
                                 }
                             }
 
@@ -372,7 +347,17 @@ namespace GetStoreApp.UI.Controls.WinGet
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
 
-                        MatchResultList = findResult.Matches.ToList().Where(item => item.CatalogPackage.InstalledVersion.Publisher != string.Empty).ToList();
+                        MatchResultList.Clear();
+                        IReadOnlyList<MatchResult> list = findResult.Matches;
+
+                        for (int index = 0; index < list.Count; index++)
+                        {
+                            MatchResult matchResultItem = list[index];
+                            if (matchResultItem.CatalogPackage.InstalledVersion.Publisher != string.Empty)
+                            {
+                                MatchResultList.Add(matchResultItem);
+                            }
+                        }
                     }
                     autoResetEvent?.Set();
                 });
@@ -439,11 +424,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             {
                                 if (IsIncrease)
                                 {
-                                    installedAppsList = installedAppsList.OrderBy(item => item.AppName).ToList();
+                                    installedAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
                                 }
                                 else
                                 {
-                                    installedAppsList = installedAppsList.OrderByDescending(item => item.AppName).ToList();
+                                    installedAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
                                 }
                                 break;
                             }
@@ -451,11 +436,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             {
                                 if (IsIncrease)
                                 {
-                                    installedAppsList = installedAppsList.OrderBy(item => item.AppPublisher).ToList();
+                                    installedAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
                                 }
                                 else
                                 {
-                                    installedAppsList = installedAppsList.OrderByDescending(item => item.AppPublisher).ToList();
+                                    installedAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
                                 }
                                 break;
                             }

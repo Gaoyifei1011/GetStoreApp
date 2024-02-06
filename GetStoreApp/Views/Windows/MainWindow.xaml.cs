@@ -10,9 +10,9 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.WindowsUI;
+using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -30,7 +30,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -38,7 +37,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
-using Windows.Graphics.Display;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
@@ -171,7 +169,7 @@ namespace GetStoreApp.Views.Windows
             // 在 WinUI3 桌面应用中创建 CoreWindow
             WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, (IntPtr)AppWindow.Id.Value, typeof(ICoreWindow).GUID, out IntPtr obj);
             CoreWindow = CoreWindow.FromAbi(obj);
-            displayInformation = DisplayInformation.GetForCurrentView();
+            displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -302,6 +300,8 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
+                    displayInformation.Dispose();
+                    AppWindow.Changed -= OnAppWindowChanged;
                     ApplicationData.Current.DataChanged -= OnDataChanged;
                     (Application.Current as WinUIApp).Dispose();
                 }
@@ -315,6 +315,8 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
+                displayInformation.Dispose();
+                AppWindow.Changed -= OnAppWindowChanged;
                 ApplicationData.Current.DataChanged -= OnDataChanged;
                 (Application.Current as WinUIApp).Dispose();
             }
@@ -505,30 +507,7 @@ namespace GetStoreApp.Views.Windows
 
                         if (!isInvoked)
                         {
-                            Kernel32Library.GetStartupInfo(out STARTUPINFO webViewStartupInfo);
-                            webViewStartupInfo.lpReserved = IntPtr.Zero;
-                            webViewStartupInfo.lpDesktop = IntPtr.Zero;
-                            webViewStartupInfo.lpTitle = IntPtr.Zero;
-                            webViewStartupInfo.dwX = 0;
-                            webViewStartupInfo.dwY = 0;
-                            webViewStartupInfo.dwXSize = 0;
-                            webViewStartupInfo.dwYSize = 0;
-                            webViewStartupInfo.dwXCountChars = 500;
-                            webViewStartupInfo.dwYCountChars = 500;
-                            webViewStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                            webViewStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                            webViewStartupInfo.cbReserved2 = 0;
-                            webViewStartupInfo.lpReserved2 = IntPtr.Zero;
-                            webViewStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                            bool createResult = Kernel32Library.CreateProcess(null, Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref webViewStartupInfo, out PROCESS_INFORMATION webViewInformation);
-
-                            if (createResult)
-                            {
-                                isInvoked = true;
-                                if (webViewInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hProcess);
-                                if (webViewInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(webViewInformation.hThread);
-                            }
+                            ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
                         }
                         else
                         {
@@ -1006,10 +985,12 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void NavigateTo(Type navigationPageType, object parameter = null)
         {
-            NavigationModel navigationItem = NavigationItemList.FirstOrDefault(item => item.NavigationPage == navigationPageType);
-            if (navigationItem is not null)
+            foreach (NavigationModel navigationItem in NavigationItemList)
             {
-                WindowFrame.Navigate(navigationItem.NavigationPage, parameter);
+                if (navigationItem.NavigationPage == navigationPageType)
+                {
+                    WindowFrame.Navigate(navigationItem.NavigationPage, parameter);
+                }
             }
         }
 

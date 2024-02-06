@@ -15,7 +15,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -60,7 +59,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 继续下载当前任务
         /// </summary>
-        private async void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
             if (unfinishedItem is not null)
@@ -81,24 +80,37 @@ namespace GetStoreApp.UI.Controls.Download
 
                 if (unfinishedItem.DownloadFlag is 2)
                 {
-                    bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
+                    Task.Run(async () =>
                     {
-                        DownloadKey = unfinishedItem.DownloadKey,
-                        FileName = unfinishedItem.FileName,
-                        FileLink = unfinishedItem.FileLink,
-                        FilePath = unfinishedItem.FilePath,
-                        TotalSize = unfinishedItem.TotalSize
+                        bool continueResult = await DownloadSchedulerService.ContinueTaskAsync(new BackgroundModel
+                        {
+                            DownloadKey = unfinishedItem.DownloadKey,
+                            FileName = unfinishedItem.FileName,
+                            FileLink = unfinishedItem.FileLink,
+                            FilePath = unfinishedItem.FilePath,
+                            TotalSize = unfinishedItem.TotalSize
+                        });
+
+                        if (continueResult)
+                        {
+                            DispatcherQueue.TryEnqueue(async () =>
+                            {
+                                while (isUpdatingNow) await Task.Delay(50);
+                                lock (UnfinishedLock) isUpdatingNow = true;
+
+                                try
+                                {
+                                    UnfinishedCollection.Remove(unfinishedItem);
+                                }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Warning, "Unfinished list remove items failed", e);
+                                }
+
+                                lock (UnfinishedLock) isUpdatingNow = false;
+                            });
+                        }
                     });
-
-                    if (ContinueResult)
-                    {
-                        while (isUpdatingNow) await Task.Delay(50);
-                        lock (UnfinishedLock) isUpdatingNow = true;
-
-                        UnfinishedCollection.Remove(unfinishedItem);
-
-                        lock (UnfinishedLock) isUpdatingNow = false;
-                    }
                 }
             }
         }
@@ -106,56 +118,63 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 删除当前任务
         /// </summary>
-        private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
             if (unfinishedItem is not null)
             {
-                // 删除下载文件
-                try
+                Task.Run(async () =>
                 {
-                    if (File.Exists(unfinishedItem.FilePath))
+                    // 删除下载文件
+                    try
                     {
-                        File.Delete(unfinishedItem.FilePath);
+                        if (File.Exists(unfinishedItem.FilePath))
+                        {
+                            File.Delete(unfinishedItem.FilePath);
+                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download file failed.", e);
-                }
-
-                // 删除Aria2后缀下载信息记录文件
-                try
-                {
-                    if (File.Exists(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2")))
+                    catch (Exception e)
                     {
-                        File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download file failed.", e);
                     }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
-                }
 
-                // 删除记录
-                while (isUpdatingNow) await Task.Delay(50);
-                lock (UnfinishedLock) isUpdatingNow = true;
-
-                try
-                {
-                    bool DeleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
-
-                    if (DeleteResult)
+                    // 删除Aria2后缀下载信息记录文件
+                    try
                     {
-                        UnfinishedCollection.Remove(unfinishedItem);
+                        if (File.Exists(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2")))
+                        {
+                            File.Delete(string.Format("{0}.{1}", unfinishedItem.FilePath, "aria2"));
+                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
-                }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
+                    }
 
-                lock (UnfinishedLock) isUpdatingNow = false;
+                    // 删除记录
+
+                    bool deleteResult = await DownloadXmlService.DeleteAsync(unfinishedItem.DownloadKey);
+
+                    if (deleteResult)
+                    {
+                        DispatcherQueue.TryEnqueue(async () =>
+                        {
+                            while (isUpdatingNow) await Task.Delay(50);
+                            lock (UnfinishedLock) isUpdatingNow = true;
+
+                            try
+                            {
+                                UnfinishedCollection.Remove(unfinishedItem);
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Unfinished list remove items failed", e);
+                            }
+
+                            lock (UnfinishedLock) isUpdatingNow = false;
+                        });
+                    }
+                });
             }
         }
 
@@ -190,47 +209,66 @@ namespace GetStoreApp.UI.Controls.Download
                 }
             }
 
-            List<BackgroundModel> PauseList = new List<BackgroundModel>();
+            List<BackgroundModel> pauseList = new List<BackgroundModel>();
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection.Where(item => item.DownloadFlag is 2))
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
-                PauseList.Add(new BackgroundModel
+                if (unfinishedItem.DownloadFlag is 2)
                 {
-                    DownloadKey = unfinishedItem.DownloadKey,
-                    FileName = unfinishedItem.FileName,
-                    FileLink = unfinishedItem.FileLink,
-                    FilePath = unfinishedItem.FilePath,
-                    DownloadFlag = unfinishedItem.DownloadFlag,
-                    TotalSize = unfinishedItem.TotalSize,
-                });
-            }
-
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedLock) isUpdatingNow = true;
-
-            foreach (BackgroundModel unfinishedItem in PauseList)
-            {
-                bool ContinueResult = await DownloadSchedulerService.ContinueTaskAsync(unfinishedItem);
-
-                if (ContinueResult)
-                {
-                    try
+                    pauseList.Add(new BackgroundModel
                     {
-                        UnfinishedCollection.Remove(UnfinishedCollection.First(item => item.DownloadKey == unfinishedItem.DownloadKey));
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Unfinished download list remove item failed.", e);
-                        continue;
-                    }
-                }
-                else
-                {
-                    continue;
+                        DownloadKey = unfinishedItem.DownloadKey,
+                        FileName = unfinishedItem.FileName,
+                        FileLink = unfinishedItem.FileLink,
+                        FilePath = unfinishedItem.FilePath,
+                        DownloadFlag = unfinishedItem.DownloadFlag,
+                        TotalSize = unfinishedItem.TotalSize,
+                    });
                 }
             }
 
-            lock (UnfinishedLock) isUpdatingNow = false;
+            await Task.Run(async () =>
+            {
+                foreach (BackgroundModel unfinishedItem in pauseList)
+                {
+                    bool continueResult = await DownloadSchedulerService.ContinueTaskAsync(unfinishedItem);
+
+                    if (continueResult)
+                    {
+                        try
+                        {
+                            DispatcherQueue.TryEnqueue(async () =>
+                            {
+                                for (int index = 0; index < UnfinishedCollection.Count; index++)
+                                {
+                                    if (UnfinishedCollection[index].DownloadKey.Equals(unfinishedItem.DownloadKey, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        while (isUpdatingNow) await Task.Delay(50);
+                                        lock (UnfinishedLock) isUpdatingNow = true;
+
+                                        try
+                                        {
+                                            UnfinishedCollection.RemoveAt(index);
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            LogService.WriteLog(LoggingLevel.Warning, "Unfinished list remove items failed", e);
+                                        }
+
+                                        lock (UnfinishedLock) isUpdatingNow = false;
+                                        break;
+                                    }
+                                }
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Unfinished download list remove item failed.", e);
+                            continue;
+                        }
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -290,13 +328,16 @@ namespace GetStoreApp.UI.Controls.Download
         {
             List<BackgroundModel> selectedUnfinishedDataList = new List<BackgroundModel>();
 
-            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection.Where(item => item.IsSelected is true))
+            foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
-                selectedUnfinishedDataList.Add(new BackgroundModel
+                if (unfinishedItem.IsSelected is true)
                 {
-                    DownloadKey = unfinishedItem.DownloadKey,
-                    FilePath = unfinishedItem.FilePath
-                });
+                    selectedUnfinishedDataList.Add(new BackgroundModel
+                    {
+                        DownloadKey = unfinishedItem.DownloadKey,
+                        FilePath = unfinishedItem.FilePath
+                    });
+                }
             }
 
             // 没有选中任何内容时显示空提示对话框
@@ -316,51 +357,75 @@ namespace GetStoreApp.UI.Controls.Download
                 unfinishedItem.IsSelectMode = false;
             }
 
-            foreach (BackgroundModel backgroundItem in selectedUnfinishedDataList)
-            {
-                // 删除下载文件
-                try
-                {
-                    if (File.Exists(backgroundItem.FilePath))
-                    {
-                        File.Delete(backgroundItem.FilePath);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download list  file failed.", e);
-                }
-
-                // 删除Aria2后缀下载信息记录文件
-                try
-                {
-                    if (File.Exists(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2")))
-                    {
-                        File.Delete(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
-                }
-
-                // 删除记录
-                try
-                {
-                    bool DeleteResult = await DownloadXmlService.DeleteAsync(backgroundItem.DownloadKey);
-
-                    if (DeleteResult)
-                    {
-                        UnfinishedCollection.Remove(UnfinishedCollection.First(item => item.DownloadKey == backgroundItem.DownloadKey));
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
-                }
-            }
-
             lock (UnfinishedLock) isUpdatingNow = false;
+
+            await Task.Run(async () =>
+            {
+                foreach (BackgroundModel backgroundItem in selectedUnfinishedDataList)
+                {
+                    // 删除下载文件
+                    try
+                    {
+                        if (File.Exists(backgroundItem.FilePath))
+                        {
+                            File.Delete(backgroundItem.FilePath);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download list  file failed.", e);
+                    }
+
+                    // 删除Aria2后缀下载信息记录文件
+                    try
+                    {
+                        if (File.Exists(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2")))
+                        {
+                            File.Delete(string.Format("{0}.{1}", backgroundItem.FilePath, "aria2"));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download information file failed.", e);
+                    }
+
+                    // 删除记录
+                    try
+                    {
+                        bool deleteResult = await DownloadXmlService.DeleteAsync(backgroundItem.DownloadKey);
+
+                        if (deleteResult)
+                        {
+                            DispatcherQueue.TryEnqueue(async () =>
+                            {
+                                while (isUpdatingNow) await Task.Delay(50);
+                                lock (UnfinishedLock) isUpdatingNow = true;
+
+                                for (int index = 0; index < UnfinishedCollection.Count; index++)
+                                {
+                                    if (UnfinishedCollection[index].DownloadKey.Equals(backgroundItem.DownloadKey))
+                                    {
+                                        try
+                                        {
+                                            UnfinishedCollection.RemoveAt(index);
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            LogService.WriteLog(LoggingLevel.Warning, "Unfinished list remove items failed", e);
+                                        }
+                                    }
+                                }
+
+                                lock (UnfinishedLock) isUpdatingNow = false;
+                            });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete unfinished download record failed.", e);
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -470,15 +535,15 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         public async Task GetUnfinishedDataListAsync()
         {
-            List<BackgroundModel> FailureDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(0);
-            List<BackgroundModel> PauseDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(2);
+            List<BackgroundModel> failureDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(0);
+            List<BackgroundModel> pauseDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(2);
 
             while (isUpdatingNow) await Task.Delay(50);
             lock (UnfinishedLock) isUpdatingNow = true;
 
             UnfinishedCollection.Clear();
 
-            PauseDownloadRawList.ForEach(downloadItem =>
+            pauseDownloadRawList.ForEach(downloadItem =>
             {
                 UnfinishedCollection.Add(new UnfinishedModel
                 {
@@ -491,7 +556,7 @@ namespace GetStoreApp.UI.Controls.Download
                 });
             });
 
-            FailureDownloadRawList.ForEach(async downloadItem =>
+            failureDownloadRawList.ForEach(async downloadItem =>
             {
                 UnfinishedCollection.Add(new UnfinishedModel
                 {

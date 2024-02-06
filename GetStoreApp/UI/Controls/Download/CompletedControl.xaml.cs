@@ -8,8 +8,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.TeachingTips;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -19,9 +18,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation.Diagnostics;
@@ -55,6 +52,8 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
+        private PackageManager packageManager = new PackageManager();
+
         private ObservableCollection<CompletedModel> CompletedCollection { get; } = new ObservableCollection<CompletedModel>();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -83,24 +82,30 @@ namespace GetStoreApp.UI.Controls.Download
                     return;
                 }
 
-                bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
-
-                if (DeleteResult)
+                await Task.Run(async () =>
                 {
-                    while (isUpdatingNow) await Task.Delay(50);
-                    lock (CompletedLock) isUpdatingNow = true;
+                    bool deleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
 
-                    try
+                    if (deleteResult)
                     {
-                        CompletedCollection.Remove(completedItem);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
-                    }
+                        DispatcherQueue.TryEnqueue(async () =>
+                        {
+                            while (isUpdatingNow) await Task.Delay(50);
+                            lock (CompletedLock) isUpdatingNow = true;
 
-                    lock (CompletedLock) isUpdatingNow = false;
-                }
+                            try
+                            {
+                                CompletedCollection.Remove(completedItem);
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                            }
+
+                            lock (CompletedLock) isUpdatingNow = false;
+                        });
+                    }
+                });
             }
         }
 
@@ -118,38 +123,44 @@ namespace GetStoreApp.UI.Controls.Download
                     return;
                 }
 
-                // 删除文件
-                try
+                await Task.Run(async () =>
                 {
-                    if (File.Exists(completedItem.FilePath))
-                    {
-                        File.Delete(completedItem.FilePath);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
-                }
-
-                bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
-
-                // 删除记录
-                if (DeleteResult)
-                {
-                    while (isUpdatingNow) await Task.Delay(50);
-                    lock (CompletedLock) isUpdatingNow = true;
-
+                    // 删除文件
                     try
                     {
-                        CompletedCollection.Remove(completedItem);
+                        if (File.Exists(completedItem.FilePath))
+                        {
+                            File.Delete(completedItem.FilePath);
+                        }
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
                     }
 
-                    lock (CompletedLock) isUpdatingNow = false;
-                }
+                    bool deleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
+
+                    // 删除记录
+                    if (deleteResult)
+                    {
+                        DispatcherQueue.TryEnqueue(async () =>
+                        {
+                            while (isUpdatingNow) await Task.Delay(50);
+                            lock (CompletedLock) isUpdatingNow = true;
+
+                            try
+                            {
+                                CompletedCollection.Remove(completedItem);
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                            }
+
+                            lock (CompletedLock) isUpdatingNow = false;
+                        });
+                    }
+                });
             }
         }
 
@@ -179,40 +190,18 @@ namespace GetStoreApp.UI.Controls.Download
                     // 普通应用：直接安装
                     if (completedItem.FilePath.EndsWith(".exe") || completedItem.FileName.EndsWith(".msi"))
                     {
-                        Kernel32Library.GetStartupInfo(out STARTUPINFO installItemInfo);
-                        installItemInfo.lpReserved = IntPtr.Zero;
-                        installItemInfo.lpDesktop = IntPtr.Zero;
-                        installItemInfo.lpTitle = IntPtr.Zero;
-                        installItemInfo.dwX = 0;
-                        installItemInfo.dwY = 0;
-                        installItemInfo.dwXSize = 0;
-                        installItemInfo.dwYSize = 0;
-                        installItemInfo.dwXCountChars = 500;
-                        installItemInfo.dwYCountChars = 500;
-                        installItemInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                        installItemInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-                        installItemInfo.cbReserved2 = 0;
-                        installItemInfo.lpReserved2 = IntPtr.Zero;
-                        installItemInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-                        bool createResult = Kernel32Library.CreateProcess(null, "explorer.exe " + completedItem.FilePath, IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref installItemInfo, out PROCESS_INFORMATION installItemInformation);
-
-                        if (createResult)
-                        {
-                            if (installItemInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(installItemInformation.hProcess);
-                            if (installItemInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(installItemInformation.hThread);
-                        }
+                        ProcessStarter.StartProcess("explorer.exe ", completedItem.FilePath, out _);
                     }
                     // 商店打包应用：使用应用安装程序安装或直接安装
                     else
                     {
                         try
                         {
-                            StorageFile CompletedFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+                            StorageFile completedFile = await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
 
                             if (InstallModeService.InstallMode.Value.Equals(InstallModeService.InstallModeList[0].Value))
                             {
-                                await Launcher.LaunchFileAsync(CompletedFile);
+                                await Launcher.LaunchFileAsync(completedFile);
                             }
 
                             // 直接安装
@@ -221,53 +210,70 @@ namespace GetStoreApp.UI.Controls.Download
                                 // 标记安装状态
                                 try
                                 {
-                                    int InstallIndex = CompletedCollection.IndexOf(CompletedCollection.First(item => item.DownloadKey == completedItem.DownloadKey));
+                                    for (int index = 0; index < CompletedCollection.Count; index++)
+                                    {
+                                        if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                        {
+                                            DispatcherQueue.TryEnqueue(() =>
+                                            {
+                                                CompletedCollection[index].IsInstalling = true;
+                                            });
+                                        }
+                                    }
 
-                                    if (InstallIndex is not -1 && InstallIndex < CompletedCollection.Count)
+                                    // 更新安装进度
+                                    Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
+                                    {
+                                        for (int index = 0; index < CompletedCollection.Count; index++)
+                                        {
+                                            if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                            {
+                                                DispatcherQueue.TryEnqueue(() =>
+                                                    {
+                                                        CompletedCollection[index].InstallValue = installProgress.percentage;
+                                                    });
+                                            };
+                                        }
+                                    });
+
+                                    try
+                                    {
+                                        // 安装目标应用，并获取安装进度
+                                        DeploymentResult installResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+                                        // 显示安装成功通知
+                                        ToastNotificationService.Show(NotificationKind.InstallApp, "Successfully", completedFile.Name);
+                                    }
+                                    // 安装失败显示失败信息
+                                    catch (Exception e)
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            CompletedCollection[InstallIndex].IsInstalling = true;
+                                            for (int index = 0; index < CompletedCollection.Count; index++)
+                                            {
+                                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                                {
+                                                    CompletedCollection[index].InstallError = true;
+                                                }
+                                            }
                                         });
 
-                                        PackageManager packageManager = new PackageManager();
-
-                                        // 更新安装进度
-                                        Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
+                                        // 显示安装失败通知
+                                        ToastNotificationService.Show(NotificationKind.InstallApp, "Error", completedFile.Name, e.Message);
+                                    }
+                                    // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
+                                    finally
+                                    {
+                                        await Task.Delay(500);
+                                        for (int index = 0; index < CompletedCollection.Count; index++)
                                         {
-                                            DispatcherQueue.TryEnqueue(() =>
+                                            if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                             {
-                                                CompletedCollection[InstallIndex].InstallValue = installProgress.percentage;
-                                            });
-                                        });
-
-                                        try
-                                        {
-                                            // 安装目标应用
-                                            DeploymentResult InstallResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
-                                            // 显示安装成功通知
-                                            ToastNotificationService.Show(NotificationKind.InstallApp, "Successfully", CompletedFile.Name);
-                                        }
-                                        // 安装失败显示失败信息
-                                        catch (Exception e)
-                                        {
-                                            DispatcherQueue.TryEnqueue(() =>
-                                            {
-                                                CompletedCollection[InstallIndex].InstallError = true;
-                                            });
-
-                                            // 显示安装失败通知
-                                            ToastNotificationService.Show(NotificationKind.InstallApp, "Error", CompletedFile.Name, e.Message);
-                                        }
-                                        // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
-                                        finally
-                                        {
-                                            await Task.Delay(500);
-                                            DispatcherQueue.TryEnqueue(() =>
-                                            {
-                                                CompletedCollection[InstallIndex].IsInstalling = false;
-                                                CompletedCollection[InstallIndex].InstallError = false;
-                                            });
+                                                DispatcherQueue.TryEnqueue(() =>
+                                                    {
+                                                        CompletedCollection[index].IsInstalling = false;
+                                                        CompletedCollection[index].InstallError = false;
+                                                    });
+                                            }
                                         }
                                     }
                                 }
@@ -313,7 +319,7 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "Completed download item folder located failed.", e);
+                            LogService.WriteLog(LoggingLevel.Warning, "Completed download completedItem folder located failed.", e);
                             await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                         }
                     }
@@ -351,19 +357,23 @@ namespace GetStoreApp.UI.Controls.Download
                     else
                     {
                         DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+                        ElementTheme theme = ActualTheme;
 
-                        dataTransferManager.DataRequested += async (sender, args) =>
+                        Task.Run(() =>
                         {
-                            DataRequestDeferral deferral = args.Request.GetDeferral();
+                            dataTransferManager.DataRequested += async (sender, args) =>
+                            {
+                                DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                            args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
-                            args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
-                            deferral.Complete();
-                        };
+                                args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+                                args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
+                                deferral.Complete();
+                            };
 
-                        ShareUIOptions options = new ShareUIOptions();
-                        options.Theme = (ShareUITheme)ActualTheme;
-                        DataTransferManager.ShowShareUI(options);
+                            ShareUIOptions options = new ShareUIOptions();
+                            options.Theme = (ShareUITheme)theme;
+                            DataTransferManager.ShowShareUI(options);
+                        });
                     }
                 }
                 catch (Exception e)
@@ -443,13 +453,16 @@ namespace GetStoreApp.UI.Controls.Download
         {
             List<BackgroundModel> selectedCompletedDataList = new List<BackgroundModel>();
 
-            foreach (CompletedModel completedItem in CompletedCollection.Where(item => item.IsSelected is true))
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                selectedCompletedDataList.Add(new BackgroundModel
+                if (completedItem.IsSelected is true)
                 {
-                    DownloadKey = completedItem.DownloadKey,
-                    IsInstalling = completedItem.IsInstalling
-                });
+                    selectedCompletedDataList.Add(new BackgroundModel
+                    {
+                        DownloadKey = completedItem.DownloadKey,
+                        IsInstalling = completedItem.IsInstalling
+                    });
+                }
             }
 
             // 没有选中任何内容时显示空提示对话框
@@ -473,8 +486,6 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 IsSelectMode = false;
 
-                bool DeleteSelectedResult = await DownloadXmlService.DeleteSelectedAsync(selectedCompletedDataList);
-
                 while (isUpdatingNow) await Task.Delay(50);
                 lock (CompletedLock) isUpdatingNow = true;
 
@@ -483,20 +494,39 @@ namespace GetStoreApp.UI.Controls.Download
                     completedItem.IsSelectMode = false;
                 }
 
-                foreach (BackgroundModel backgroundItem in selectedCompletedDataList)
-                {
-                    try
-                    {
-                        CompletedCollection.Remove(CompletedCollection.First(item => item.DownloadKey == backgroundItem.DownloadKey));
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
-                        continue;
-                    }
-                }
-
                 lock (CompletedLock) isUpdatingNow = false;
+
+                await Task.Run(async () =>
+                {
+                    await DownloadXmlService.DeleteSelectedAsync(selectedCompletedDataList);
+
+                    DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        while (isUpdatingNow) await Task.Delay(50);
+                        lock (CompletedLock) isUpdatingNow = true;
+
+                        foreach (BackgroundModel backgroundItem in selectedCompletedDataList)
+                        {
+                            foreach (CompletedModel completedItem in CompletedCollection)
+                            {
+                                if (completedItem.DownloadKey.Equals(backgroundItem.DownloadKey, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    try
+                                    {
+                                        CompletedCollection.Remove(completedItem);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+
+                        lock (CompletedLock) isUpdatingNow = false;
+                    });
+                });
             }
         }
 
@@ -507,14 +537,17 @@ namespace GetStoreApp.UI.Controls.Download
         {
             List<BackgroundModel> selectedCompletedDataList = new List<BackgroundModel>();
 
-            foreach (CompletedModel completedItem in CompletedCollection.Where(item => item.IsSelected is true))
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                selectedCompletedDataList.Add(new BackgroundModel
+                if (completedItem.IsSelected is true)
                 {
-                    DownloadKey = completedItem.DownloadKey,
-                    FilePath = completedItem.FilePath,
-                    IsInstalling = completedItem.IsInstalling,
-                });
+                    selectedCompletedDataList.Add(new BackgroundModel
+                    {
+                        DownloadKey = completedItem.DownloadKey,
+                        FilePath = completedItem.FilePath,
+                        IsInstalling = completedItem.IsInstalling,
+                    });
+                }
             }
 
             // 没有选中任何内容时显示空提示对话框
@@ -546,39 +579,64 @@ namespace GetStoreApp.UI.Controls.Download
                     completedItem.IsSelectMode = false;
                 }
 
-                foreach (BackgroundModel completedItem in selectedCompletedDataList)
-                {
-                    // 删除文件
-                    try
-                    {
-                        if (File.Exists(completedItem.FilePath))
-                        {
-                            File.Delete(completedItem.FilePath);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
-                    }
-
-                    // 删除记录
-                    try
-                    {
-                        bool DeleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
-
-                        if (DeleteResult)
-                        {
-                            CompletedCollection.Remove(CompletedCollection.First(item => item.DownloadKey == completedItem.DownloadKey));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
-                        continue;
-                    }
-                }
-
                 lock (CompletedLock) isUpdatingNow = false;
+
+                await Task.Run(async () =>
+                {
+                    foreach (BackgroundModel completedItem in selectedCompletedDataList)
+                    {
+                        // 删除文件
+                        try
+                        {
+                            if (File.Exists(completedItem.FilePath))
+                            {
+                                File.Delete(completedItem.FilePath);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
+                        }
+
+                        // 删除记录
+                        try
+                        {
+                            bool deleteResult = await DownloadXmlService.DeleteAsync(completedItem.DownloadKey);
+
+                            if (deleteResult)
+                            {
+                                DispatcherQueue.TryEnqueue(async () =>
+                                {
+                                    while (isUpdatingNow) await Task.Delay(50);
+                                    lock (CompletedLock) isUpdatingNow = true;
+
+                                    for (int index = 0; index < CompletedCollection.Count; index++)
+                                    {
+                                        if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            try
+                                            {
+                                                CompletedCollection.RemoveAt(index);
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    lock (CompletedLock) isUpdatingNow = false;
+                                });
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
+                            continue;
+                        }
+                    }
+                });
             }
         }
 
@@ -591,14 +649,17 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 List<BackgroundModel> selectedCompletedDataList = new List<BackgroundModel>();
 
-                foreach (CompletedModel completedItem in CompletedCollection.Where(item => item.IsSelected is true))
+                foreach (CompletedModel completedItem in CompletedCollection)
                 {
-                    selectedCompletedDataList.Add(new BackgroundModel
+                    if (completedItem.IsSelected is true)
                     {
-                        DownloadKey = completedItem.DownloadKey,
-                        FilePath = completedItem.FilePath,
-                        IsInstalling = completedItem.IsInstalling,
-                    });
+                        selectedCompletedDataList.Add(new BackgroundModel
+                        {
+                            DownloadKey = completedItem.DownloadKey,
+                            FilePath = completedItem.FilePath,
+                            IsInstalling = completedItem.IsInstalling,
+                        });
+                    }
                 }
 
                 // 没有选中任何内容时显示空提示对话框
@@ -631,25 +692,29 @@ namespace GetStoreApp.UI.Controls.Download
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+                            ElementTheme theme = ActualTheme;
 
-                            dataTransferManager.DataRequested += async (sender, args) =>
+                            Task.Run(() =>
                             {
-                                DataRequestDeferral deferral = args.Request.GetDeferral();
-
-                                args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
-
-                                List<StorageFile> SelectedFileList = new List<StorageFile>();
-                                foreach (BackgroundModel completedItem in selectedCompletedDataList)
+                                dataTransferManager.DataRequested += async (sender, args) =>
                                 {
-                                    SelectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
-                                }
-                                args.Request.Data.SetStorageItems(SelectedFileList);
-                                deferral.Complete();
-                            };
+                                    DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                            ShareUIOptions options = new ShareUIOptions();
-                            options.Theme = (ShareUITheme)ActualTheme;
-                            DataTransferManager.ShowShareUI(options);
+                                    args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+
+                                    List<StorageFile> selectedFileList = new List<StorageFile>();
+                                    foreach (BackgroundModel completedItem in selectedCompletedDataList)
+                                    {
+                                        selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                                    }
+                                    args.Request.Data.SetStorageItems(selectedFileList);
+                                    deferral.Complete();
+                                };
+
+                                ShareUIOptions options = new ShareUIOptions();
+                                options.Theme = (ShareUITheme)theme;
+                                DataTransferManager.ShowShareUI(options);
+                            });
                         });
                     }
                 }
@@ -699,7 +764,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 订阅事件，下载中列表内容有完成项目时通知UI更改
         /// </summary>
-        public void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
+        public async void OnDownloadingListItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             if (SelectedIndex is 2)
             {
@@ -712,21 +777,21 @@ namespace GetStoreApp.UI.Controls.Download
                         {
                             if (backgroundItem.DownloadFlag is 4)
                             {
+                                BackgroundModel completedItem = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
+
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
                                     while (isUpdatingNow) await Task.Delay(50);
                                     lock (CompletedLock) isUpdatingNow = true;
 
-                                    BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
-
                                     CompletedCollection.Add(new CompletedModel
                                     {
-                                        DownloadKey = item.DownloadKey,
-                                        FileName = item.FileName,
-                                        FileLink = item.FileLink,
-                                        FilePath = item.FilePath,
-                                        TotalSize = item.TotalSize,
-                                        DownloadFlag = item.DownloadFlag
+                                        DownloadKey = completedItem.DownloadKey,
+                                        FileName = completedItem.FileName,
+                                        FileLink = completedItem.FileLink,
+                                        FilePath = completedItem.FilePath,
+                                        TotalSize = completedItem.TotalSize,
+                                        DownloadFlag = completedItem.DownloadFlag
                                     });
 
                                     lock (CompletedLock) isUpdatingNow = false;

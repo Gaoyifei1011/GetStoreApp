@@ -3,10 +3,11 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -26,13 +27,14 @@ namespace GetStoreApp
         public WinUIApp()
         {
             InitializeComponent();
+            DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;
             UnhandledException += OnUnhandledException;
         }
 
         /// <summary>
         /// 启动应用程序时调用，初始化应用主窗口
         /// </summary>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
             Window = new MainWindow();
@@ -143,31 +145,7 @@ namespace GetStoreApp
         public void Restart()
         {
             MainWindow.Current.AppWindow.Hide();
-
-            Kernel32Library.GetStartupInfo(out STARTUPINFO restartStartupInfo);
-            restartStartupInfo.lpReserved = IntPtr.Zero;
-            restartStartupInfo.lpDesktop = IntPtr.Zero;
-            restartStartupInfo.lpTitle = IntPtr.Zero;
-            restartStartupInfo.dwX = 0;
-            restartStartupInfo.dwY = 0;
-            restartStartupInfo.dwXSize = 0;
-            restartStartupInfo.dwYSize = 0;
-            restartStartupInfo.dwXCountChars = 500;
-            restartStartupInfo.dwYCountChars = 500;
-            restartStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-            restartStartupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
-            restartStartupInfo.cbReserved2 = 0;
-            restartStartupInfo.lpReserved2 = IntPtr.Zero;
-            restartStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
-
-            bool createResult = Kernel32Library.CreateProcess(null, "GetStoreApp.exe Restart", IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref restartStartupInfo, out PROCESS_INFORMATION restartInformation);
-
-            if (createResult)
-            {
-                if (restartInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(restartInformation.hProcess);
-                if (restartInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(restartInformation.hThread);
-            }
-
+            ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), "Restart", out _);
             Dispose();
         }
 
@@ -205,7 +183,7 @@ namespace GetStoreApp
                 isDisposed = true;
             }
 
-            Exit();
+            Environment.Exit(0);
         }
     }
 }
