@@ -22,33 +22,33 @@ namespace GetStoreApp.Helpers.Root
                 processName += ".exe";
             }
 
-            List<uint> ProcessEntry32PIDList = new List<uint>();
+            List<uint> processEntry32PIDList = new List<uint>();
             try
             {
                 IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
 
                 if (hSnapshot == IntPtr.Zero || hSnapshot == Kernel32Library.INVALID_HANDLE_VALUE)
                 {
-                    return ProcessEntry32PIDList;
+                    return processEntry32PIDList;
                 }
 
-                PROCESSENTRY32 ProcessEntry32 = new PROCESSENTRY32();
-                ProcessEntry32.dwSize = Marshal.SizeOf(typeof(PROCESSENTRY32));
+                PROCESSENTRY32 processEntry32 = new PROCESSENTRY32();
+                processEntry32.dwSize = Marshal.SizeOf(typeof(PROCESSENTRY32));
 
-                for (bool result = Kernel32Library.Process32First(hSnapshot, ref ProcessEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref ProcessEntry32))
+                for (bool result = Kernel32Library.Process32First(hSnapshot, ref processEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref processEntry32))
                 {
-                    if (Marshal.PtrToStringUni((IntPtr)ProcessEntry32.szExeFile).Equals(processName, StringComparison.OrdinalIgnoreCase))
+                    if (Marshal.PtrToStringUni((IntPtr)processEntry32.szExeFile).Equals(processName, StringComparison.OrdinalIgnoreCase))
                     {
-                        ProcessEntry32PIDList.Add(ProcessEntry32.th32ProcessID);
+                        processEntry32PIDList.Add(processEntry32.th32ProcessID);
                     }
                 }
                 Kernel32Library.CloseHandle(hSnapshot);
-                return ProcessEntry32PIDList;
+                return processEntry32PIDList;
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "Get process pid list failed.", e);
-                return ProcessEntry32PIDList;
+                return processEntry32PIDList;
             }
         }
     }

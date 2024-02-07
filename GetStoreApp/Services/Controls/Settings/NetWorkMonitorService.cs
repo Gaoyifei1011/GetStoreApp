@@ -9,9 +9,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class NetWorkMonitorService
     {
-        private static string SettingsKey = ConfigKey.NetWorkMonitorKey;
+        private static string settingsKey = ConfigKey.NetWorkMonitorKey;
 
-        private static bool DefaultNetWorkMonitorValue = true;
+        private static bool defaultNetWorkMonitorValue = true;
 
         public static bool NetWorkMonitorValue { get; private set; }
 
@@ -28,12 +28,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetNetWorkMonitorValue()
         {
-            bool? netWorkMonitorValue = LocalSettingsService.ReadSetting<bool?>(SettingsKey);
+            bool? netWorkMonitorValue = LocalSettingsService.ReadSetting<bool?>(settingsKey);
 
             if (!netWorkMonitorValue.HasValue)
             {
-                SetNetWorkMonitorValue(DefaultNetWorkMonitorValue);
-                return DefaultNetWorkMonitorValue;
+                SetNetWorkMonitorValue(defaultNetWorkMonitorValue);
+                return defaultNetWorkMonitorValue;
             }
 
             return Convert.ToBoolean(netWorkMonitorValue);
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             NetWorkMonitorValue = netWorkMonitorValue;
 
-            LocalSettingsService.SaveSetting(SettingsKey, netWorkMonitorValue);
+            LocalSettingsService.SaveSetting(settingsKey, netWorkMonitorValue);
         }
 
         /// <summary>
@@ -54,9 +54,9 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void RestoreDefaultValue()
         {
-            NetWorkMonitorValue = DefaultNetWorkMonitorValue;
+            NetWorkMonitorValue = defaultNetWorkMonitorValue;
 
-            LocalSettingsService.SaveSetting(SettingsKey, DefaultNetWorkMonitorValue);
+            LocalSettingsService.SaveSetting(settingsKey, defaultNetWorkMonitorValue);
         }
     }
 }

@@ -17,9 +17,9 @@ namespace GetStoreApp.UI.Dialogs.Settings
     /// </summary>
     public sealed partial class ExperimentalConfigDialog : ContentDialog, INotifyPropertyChanged
     {
-        private int CountDown = 0;
+        private int countDown = 0;
 
-        private DispatcherTimer DisplayTimer = new DispatcherTimer();
+        private DispatcherTimer displayTimer = new DispatcherTimer();
 
         private bool _isMessageVisable = false;
 
@@ -59,10 +59,10 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void OnClosed(object sender, ContentDialogClosedEventArgs args)
         {
-            DisplayTimer.Tick -= DisplayTimerTick;
-            if (DisplayTimer.IsEnabled)
+            displayTimer.Tick -= DisplayTimerTick;
+            if (displayTimer.IsEnabled)
             {
-                DisplayTimer.Stop();
+                displayTimer.Stop();
             }
         }
 
@@ -71,8 +71,8 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void OnOpened(object sender, ContentDialogOpenedEventArgs args)
         {
-            DisplayTimer.Tick += DisplayTimerTick;
-            DisplayTimer.Interval = new TimeSpan(0, 0, 1);
+            displayTimer.Tick += DisplayTimerTick;
+            displayTimer.Interval = new TimeSpan(0, 0, 1);
         }
 
         /// <summary>
@@ -136,25 +136,25 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 Aria2Service.RestoreDefault();
                 NetWorkMonitorService.RestoreDefaultValue();
 
-                if (!DisplayTimer.IsEnabled)
+                if (!displayTimer.IsEnabled)
                 {
-                    DisplayTimer.Start();
+                    displayTimer.Start();
                     IsMessageVisable = true;
                 }
-                CountDown = 3;
+                countDown = 3;
             }
         }
 
         private void DisplayTimerTick(object sender, object args)
         {
-            if (CountDown > 0)
+            if (countDown > 0)
             {
-                CountDown--;
+                countDown--;
             }
             else
             {
                 IsMessageVisable = false;
-                DisplayTimer.Stop();
+                displayTimer.Stop();
             }
         }
 

@@ -30,10 +30,8 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class SearchAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object SearchAppsLock = new object();
-
+        private readonly object searchAppsLock = new object();
         private bool isInitialized = false;
-
         private string cachedSearchText;
 
         private AutoResetEvent autoResetEvent;
@@ -79,7 +77,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList = new List<MatchResult>();
+        private List<MatchResult> MatchResultList { get; } = new List<MatchResult>();
 
         private ObservableCollection<SearchAppsModel> SearchAppsCollection { get; } = new ObservableCollection<SearchAppsModel>();
 
@@ -122,7 +120,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsLock)
+                            lock (searchAppsLock)
                             {
                                 // 禁用当前应用的可安装状态
                                 foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
@@ -151,7 +149,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -170,7 +168,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -192,7 +190,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -213,7 +211,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -233,7 +231,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -258,7 +256,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 添加任务
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (WinGetInstance.InstallingAppsObject)
+                            lock (WinGetInstance.installingAppsObject)
                             {
                                 WinGetInstance.InstallingAppsCollection.Add(new InstallingAppsModel()
                                 {
@@ -307,7 +305,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsLock)
+                            lock (searchAppsLock)
                             {
                                 // 应用安装失败，将当前任务状态修改为可安装状态
                                 foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
@@ -321,7 +319,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
 
                             // 完成任务后从任务管理中删除任务
-                            lock (WinGetInstance.InstallingAppsObject)
+                            lock (WinGetInstance.installingAppsObject)
                             {
                                 foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
@@ -342,7 +340,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsLock)
+                            lock (searchAppsLock)
                             {
                                 // 应用安装失败，将当前任务状态修改为可安装状态
                                 foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
@@ -356,7 +354,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
 
                             // 完成任务后从任务管理中删除任务
-                            lock (WinGetInstance.InstallingAppsObject)
+                            lock (WinGetInstance.installingAppsObject)
                             {
                                 foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
@@ -377,7 +375,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (SearchAppsLock)
+                            lock (searchAppsLock)
                             {
                                 // 应用安装失败，将当前任务状态修改为可安装状态
                                 foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
@@ -391,7 +389,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
 
                             // 完成任务后从任务管理中删除任务
-                            lock (WinGetInstance.InstallingAppsObject)
+                            lock (WinGetInstance.installingAppsObject)
                             {
                                 foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
@@ -474,7 +472,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            MatchResultList = null;
+            MatchResultList.Clear();
             IsSearchCompleted = false;
             await Task.Delay(500);
             if (string.IsNullOrEmpty(cachedSearchText))
@@ -583,7 +581,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         nameMatchFilter.Value = cachedSearchText;
                         findPackagesOptions.Filters.Add(nameMatchFilter);
                         FindPackagesResult findResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
-                        MatchResultList.Clear();
+
                         for (int index = 0; index < findResult.Matches.Count; index++)
                         {
                             MatchResultList.Add(findResult.Matches[index]);
@@ -603,7 +601,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void InitializeData()
         {
-            lock (SearchAppsLock)
+            lock (searchAppsLock)
             {
                 SearchAppsCollection.Clear();
             }
@@ -643,7 +641,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (SearchAppsLock)
+                        lock (searchAppsLock)
                         {
                             foreach (SearchAppsModel searchAppsItem in searchAppsList)
                             {

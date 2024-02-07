@@ -22,9 +22,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static string GenerateHistoryKey(string typeName, string channelName, string currentLink)
         {
-            string Content = string.Format("{0} {1} {2}", typeName, channelName, currentLink);
-
-            return ComputeMD5String(Content);
+            return ComputeMD5String(string.Format("{0} {1} {2}", typeName, channelName, currentLink));
         }
 
         /// <summary>
@@ -32,9 +30,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static string GenerateDownloadKey(string fileName, string filePath)
         {
-            string Content = string.Format("{0} {1}", fileName, filePath);
-
-            return ComputeMD5String(Content);
+            return ComputeMD5String(string.Format("{0} {1}", fileName, filePath));
         }
 
         /// <summary>
@@ -43,11 +39,8 @@ namespace GetStoreApp.Helpers.Root
         private static string ComputeMD5String(string content)
         {
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
-
             IBuffer buffHash = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
-
             IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
-
             return CryptographicBuffer.EncodeToHexString(hashedBuffer);
         }
 
@@ -57,13 +50,9 @@ namespace GetStoreApp.Helpers.Root
         public static byte[] ComputeSHA256Hash(string content)
         {
             HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
-
             IBuffer buffHash = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
-
             IBuffer hashedBuffer = hashAlgorithmProvider.HashData(buffHash);
-
             CryptographicBuffer.CopyToByteArray(hashedBuffer, out byte[] hashBytes);
-
             return hashBytes;
         }
     }

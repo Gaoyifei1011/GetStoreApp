@@ -26,7 +26,7 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class UnfinishedControl : Grid, INotifyPropertyChanged
     {
-        private readonly object UnfinishedLock = new object();
+        private readonly object unfinishedLock = new object();
 
         private bool isUpdatingNow = false;
 
@@ -96,7 +96,7 @@ namespace GetStoreApp.UI.Controls.Download
                             DispatcherQueue.TryEnqueue(async () =>
                             {
                                 while (isUpdatingNow) await Task.Delay(50);
-                                lock (UnfinishedLock) isUpdatingNow = true;
+                                lock (unfinishedLock) isUpdatingNow = true;
 
                                 try
                                 {
@@ -107,7 +107,7 @@ namespace GetStoreApp.UI.Controls.Download
                                     LogService.WriteLog(LoggingLevel.Warning, "Unfinished list remove items failed", e);
                                 }
 
-                                lock (UnfinishedLock) isUpdatingNow = false;
+                                lock (unfinishedLock) isUpdatingNow = false;
                             });
                         }
                     });
@@ -160,7 +160,7 @@ namespace GetStoreApp.UI.Controls.Download
                         DispatcherQueue.TryEnqueue(async () =>
                         {
                             while (isUpdatingNow) await Task.Delay(50);
-                            lock (UnfinishedLock) isUpdatingNow = true;
+                            lock (unfinishedLock) isUpdatingNow = true;
 
                             try
                             {
@@ -171,7 +171,7 @@ namespace GetStoreApp.UI.Controls.Download
                                 LogService.WriteLog(LoggingLevel.Warning, "Unfinished list remove items failed", e);
                             }
 
-                            lock (UnfinishedLock) isUpdatingNow = false;
+                            lock (unfinishedLock) isUpdatingNow = false;
                         });
                     }
                 });
@@ -244,7 +244,7 @@ namespace GetStoreApp.UI.Controls.Download
                                     if (UnfinishedCollection[index].DownloadKey.Equals(unfinishedItem.DownloadKey, StringComparison.OrdinalIgnoreCase))
                                     {
                                         while (isUpdatingNow) await Task.Delay(50);
-                                        lock (UnfinishedLock) isUpdatingNow = true;
+                                        lock (unfinishedLock) isUpdatingNow = true;
 
                                         try
                                         {
@@ -255,7 +255,7 @@ namespace GetStoreApp.UI.Controls.Download
                                             LogService.WriteLog(LoggingLevel.Warning, "Unfinished list remove items failed", e);
                                         }
 
-                                        lock (UnfinishedLock) isUpdatingNow = false;
+                                        lock (unfinishedLock) isUpdatingNow = false;
                                         break;
                                     }
                                 }
@@ -277,7 +277,7 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedLock) isUpdatingNow = true;
+            lock (unfinishedLock) isUpdatingNow = true;
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
@@ -286,7 +286,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             IsSelectMode = true;
-            lock (UnfinishedLock) isUpdatingNow = false;
+            lock (unfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -295,14 +295,14 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedLock) isUpdatingNow = true;
+            lock (unfinishedLock) isUpdatingNow = true;
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelected = true;
             }
 
-            lock (UnfinishedLock) isUpdatingNow = false;
+            lock (unfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -311,14 +311,14 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedLock) isUpdatingNow = true;
+            lock (unfinishedLock) isUpdatingNow = true;
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelected = false;
             }
 
-            lock (UnfinishedLock) isUpdatingNow = false;
+            lock (unfinishedLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -350,14 +350,14 @@ namespace GetStoreApp.UI.Controls.Download
             IsSelectMode = false;
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedLock) isUpdatingNow = true;
+            lock (unfinishedLock) isUpdatingNow = true;
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)
             {
                 unfinishedItem.IsSelectMode = false;
             }
 
-            lock (UnfinishedLock) isUpdatingNow = false;
+            lock (unfinishedLock) isUpdatingNow = false;
 
             await Task.Run(async () =>
             {
@@ -399,7 +399,7 @@ namespace GetStoreApp.UI.Controls.Download
                             DispatcherQueue.TryEnqueue(async () =>
                             {
                                 while (isUpdatingNow) await Task.Delay(50);
-                                lock (UnfinishedLock) isUpdatingNow = true;
+                                lock (unfinishedLock) isUpdatingNow = true;
 
                                 for (int index = 0; index < UnfinishedCollection.Count; index++)
                                 {
@@ -416,7 +416,7 @@ namespace GetStoreApp.UI.Controls.Download
                                     }
                                 }
 
-                                lock (UnfinishedLock) isUpdatingNow = false;
+                                lock (unfinishedLock) isUpdatingNow = false;
                             });
                         }
                     }
@@ -449,14 +449,14 @@ namespace GetStoreApp.UI.Controls.Download
             int ClickedIndex = UnfinishedCollection.IndexOf(resultItem);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedLock) isUpdatingNow = true;
+            lock (unfinishedLock) isUpdatingNow = true;
 
             if (ClickedIndex is not >= 0 && ClickedIndex < UnfinishedCollection.Count)
             {
                 UnfinishedCollection[ClickedIndex].IsSelected = !UnfinishedCollection[ClickedIndex].IsSelected;
             }
 
-            lock (UnfinishedLock) isUpdatingNow = false;
+            lock (unfinishedLock) isUpdatingNow = false;
         }
 
         #endregion 第二部分：未下载完成控件——挂载的事件
@@ -482,7 +482,7 @@ namespace GetStoreApp.UI.Controls.Download
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
                                     while (isUpdatingNow) await Task.Delay(50);
-                                    lock (UnfinishedLock) isUpdatingNow = true;
+                                    lock (unfinishedLock) isUpdatingNow = true;
 
                                     BackgroundModel item = await DownloadXmlService.QueryWithKeyAsync(backgroundItem.DownloadKey);
 
@@ -496,7 +496,7 @@ namespace GetStoreApp.UI.Controls.Download
                                         DownloadFlag = item.DownloadFlag
                                     });
 
-                                    lock (UnfinishedLock) isUpdatingNow = false;
+                                    lock (unfinishedLock) isUpdatingNow = false;
                                 });
                             }
                         }
@@ -539,7 +539,7 @@ namespace GetStoreApp.UI.Controls.Download
             List<BackgroundModel> pauseDownloadRawList = await DownloadXmlService.QueryWithFlagAsync(2);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (UnfinishedLock) isUpdatingNow = true;
+            lock (unfinishedLock) isUpdatingNow = true;
 
             UnfinishedCollection.Clear();
 
@@ -570,7 +570,7 @@ namespace GetStoreApp.UI.Controls.Download
                 await Task.Delay(1);
             });
 
-            lock (UnfinishedLock) isUpdatingNow = false;
+            lock (unfinishedLock) isUpdatingNow = false;
         }
     }
 }

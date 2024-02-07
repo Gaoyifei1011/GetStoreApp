@@ -23,10 +23,10 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class SearchStoreControl : StackPanel, INotifyPropertyChanged
     {
-        private readonly object HistoryLock = new object();
-        private readonly object SearchStoreLock = new object();
+        private readonly object historyLock = new object();
+        private readonly object searchStoreLock = new object();
 
-        private string SearchStoreCountInfo = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
+        private string SearchStoreCountInfo { get; } = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
 
         private bool _isSearchingStore = false;
 
@@ -119,7 +119,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private List<InfoBarModel> SearchStoreInfoList = ResourceService.SearchStoreInfoList;
+        private List<InfoBarModel> SearchStoreInfoList { get; } = ResourceService.SearchStoreInfoList;
 
         private ObservableCollection<HistoryModel> HistoryCollection { get; } = new ObservableCollection<HistoryModel>();
 
@@ -224,7 +224,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (HistoryLock)
+                    lock (historyLock)
                     {
                         HistoryCollection.Clear();
                         Task.Delay(10);
@@ -265,7 +265,7 @@ namespace GetStoreApp.UI.Controls.Store
                             ResultControlVisable = true;
                             UpdateHistory(searchText);
 
-                            lock (SearchStoreLock)
+                            lock (searchStoreLock)
                             {
                                 SearchStoreCollection.Clear();
                                 foreach (SearchStoreModel searchStoreItem in searchStoreResult.Item2)
@@ -319,7 +319,7 @@ namespace GetStoreApp.UI.Controls.Store
             Task.Run(() =>
             {
                 // 计算时间戳
-                long timeStamp = GenerateTimeStamp();
+                long timeStamp = Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
 
                 List<HistoryModel> historyList = new List<HistoryModel>();
@@ -345,7 +345,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (HistoryLock)
+                        lock (historyLock)
                         {
                             if (HistoryCollection.Count is 3)
                             {
@@ -367,7 +367,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (HistoryLock)
+                        lock (historyLock)
                         {
                             HistoryCollection.RemoveAt(index);
                             HistoryCollection.Insert(0, historyItem);
@@ -375,15 +375,6 @@ namespace GetStoreApp.UI.Controls.Store
                     });
                 }
             });
-        }
-
-        /// <summary>
-        /// 生成时间戳
-        /// </summary>
-        private long GenerateTimeStamp()
-        {
-            TimeSpan TimeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
-            return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
     }
 }

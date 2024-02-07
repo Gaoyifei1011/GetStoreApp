@@ -21,7 +21,7 @@ namespace GetStoreApp.Services.Root
     {
         private static IActivatedEventArgs activatedEventArgs;
         private static ActivationKind activationKind = ActivationKind.Launch;
-        private static List<string> DesktopLaunchArgs = new List<string>();
+        private static List<string> desktopLaunchArgs = new List<string>();
 
         // 应用启动时使用的参数
         public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Root
         {
             foreach (string item in args)
             {
-                DesktopLaunchArgs.Add(item);
+                desktopLaunchArgs.Add(item);
             }
             activatedEventArgs = AppInstance.GetActivatedEventArgs();
             await ParseStartupKindAsync(activatedEventArgs is null ? ActivationKind.Launch : activatedEventArgs.Kind);
@@ -71,15 +71,15 @@ namespace GetStoreApp.Services.Root
                 activationKind = kind;
 
                 // 无参数，正常启动
-                if (DesktopLaunchArgs.Count is 0)
+                if (desktopLaunchArgs.Count is 0)
                 {
                     activationKind = ActivationKind.Launch;
                     return;
                 }
                 // 一个参数，可能为重新启动，或者是只输入了链接
-                else if (DesktopLaunchArgs.Count is 1)
+                else if (desktopLaunchArgs.Count is 1)
                 {
-                    if (DesktopLaunchArgs[0] is "Restart")
+                    if (desktopLaunchArgs[0] is "Restart")
                     {
                         activationKind = ActivationKind.CommandLineLaunch;
                         return;
@@ -87,7 +87,7 @@ namespace GetStoreApp.Services.Root
                     else
                     {
                         activationKind = ActivationKind.CommandLineLaunch;
-                        LaunchArgs["Link"] = DesktopLaunchArgs[0];
+                        LaunchArgs["Link"] = desktopLaunchArgs[0];
                     }
                 }
                 // 多个参数，可能为跳转列表启动或者控制台输入了参数
@@ -96,9 +96,9 @@ namespace GetStoreApp.Services.Root
                     activationKind = ActivationKind.CommandLineLaunch;
 
                     // 跳转列表启动的参数
-                    if (DesktopLaunchArgs[0] is "JumpList")
+                    if (desktopLaunchArgs[0] is "JumpList")
                     {
-                        switch (DesktopLaunchArgs[1])
+                        switch (desktopLaunchArgs[1])
                         {
                             case "AppUpdate":
                                 {
@@ -123,7 +123,7 @@ namespace GetStoreApp.Services.Root
                             case "Web":
                                 {
                                     ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
-                                    Environment.Exit(0);
+                                    Environment.Exit(Environment.ExitCode);
                                     break;
                                 }
                         }
@@ -132,15 +132,15 @@ namespace GetStoreApp.Services.Root
                     // 命令行启动带参数
                     else
                     {
-                        if (DesktopLaunchArgs.Count % 2 is not 0) return;
+                        if (desktopLaunchArgs.Count % 2 is not 0) return;
 
-                        int typeNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                        int channelNameIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                        int linkIndex = DesktopLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                        int typeNameIndex = desktopLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                        int channelNameIndex = desktopLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                        int linkIndex = desktopLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                        LaunchArgs["TypeName"] = typeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[typeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                        LaunchArgs["ChannelName"] = channelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(DesktopLaunchArgs[channelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                        LaunchArgs["Link"] = linkIndex is -1 ? LaunchArgs["Link"] : DesktopLaunchArgs[linkIndex + 1];
+                        LaunchArgs["TypeName"] = typeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(desktopLaunchArgs[typeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        LaunchArgs["ChannelName"] = channelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(desktopLaunchArgs[channelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        LaunchArgs["Link"] = linkIndex is -1 ? LaunchArgs["Link"] : desktopLaunchArgs[linkIndex + 1];
                     }
                 }
             }
@@ -182,7 +182,7 @@ namespace GetStoreApp.Services.Root
             else if (activationKind is ActivationKind.CommandLineLaunch || activationKind is ActivationKind.ShareTarget)
             {
                 // 重新启动
-                if (DesktopLaunchArgs.Count > 0 && DesktopLaunchArgs[0] is "Restart")
+                if (desktopLaunchArgs.Count > 0 && desktopLaunchArgs[0] is "Restart")
                 {
                     return;
                 }
@@ -192,9 +192,9 @@ namespace GetStoreApp.Services.Root
                     bool isExisted = false;
 
                     string sendData;
-                    if (DesktopLaunchArgs.Count is 2 && DesktopLaunchArgs[0] is "JumpList")
+                    if (desktopLaunchArgs.Count is 2 && desktopLaunchArgs[0] is "JumpList")
                     {
-                        sendData = string.Join(" ", DesktopLaunchArgs);
+                        sendData = string.Join(" ", desktopLaunchArgs);
                     }
                     else
                     {
@@ -226,7 +226,7 @@ namespace GetStoreApp.Services.Root
             else if (activationKind is ActivationKind.ToastNotification)
             {
                 bool isExisted = false;
-                string sendData = DesktopLaunchArgs[0];
+                string sendData = desktopLaunchArgs[0];
 
                 // 向主实例发送数据
                 COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
@@ -253,7 +253,7 @@ namespace GetStoreApp.Services.Root
                 }
                 else
                 {
-                    await ToastNotificationService.HandleToastNotificationAsync(DesktopLaunchArgs[0]);
+                    await ToastNotificationService.HandleToastNotificationAsync(desktopLaunchArgs[0]);
                 }
             }
         }

@@ -12,11 +12,7 @@ namespace GetStoreApp.Views.CustomControls.Navigation
         private const string IconOnlyState = "IconOnly";
         private const string ContentOnlyState = "ContentOnly";
 
-        private Thickness LeftItemMargin = new Thickness(3, 3, 1, 3);
-        private Thickness MiddleItemMargin = new Thickness(1, 3, 1, 3);
-        private Thickness RightItemMargin = new Thickness(1, 3, 3, 3);
-
-        private Border PART_Hover_Border;
+        private Border part_Hover_Border;
 
         /// <summary>
         /// 获取或设置图标
@@ -45,8 +41,8 @@ namespace GetStoreApp.Views.CustomControls.Navigation
             OnIconChanged();
             ContentChanged();
 
-            PART_Hover_Border = GetTemplateChild("PART_Hover") as Border;
-            if (PART_Hover_Border is not null)
+            part_Hover_Border = GetTemplateChild("PART_Hover") as Border;
+            if (part_Hover_Border is not null)
             {
                 ItemsControl listView = ItemsControl.ItemsControlFromItemContainer(this);
 
@@ -54,15 +50,15 @@ namespace GetStoreApp.Views.CustomControls.Navigation
 
                 if (index == 0)
                 {
-                    PART_Hover_Border.Margin = LeftItemMargin;
+                    part_Hover_Border.Margin = new Thickness(3, 3, 1, 3);
                 }
                 else if (index == listView.Items.Count - 1)
                 {
-                    PART_Hover_Border.Margin = RightItemMargin;
+                    part_Hover_Border.Margin = new Thickness(1, 3, 3, 3);
                 }
                 else
                 {
-                    PART_Hover_Border.Margin = MiddleItemMargin;
+                    part_Hover_Border.Margin = new Thickness(1, 3, 1, 3);
                 }
             }
         }

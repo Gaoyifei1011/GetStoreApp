@@ -15,13 +15,13 @@ namespace GetStoreApp.Services.Root
     {
         private static readonly object logLock = new object();
 
-        private static bool IsInitialized = false;
+        private static bool isInitialized = false;
 
         private static string logName = typeof(LogService).Assembly.GetName().Name;
 
         private static string unknown = "unknown";
 
-        private static StorageFolder LogFolder;
+        private static StorageFolder logFolder;
 
         /// <summary>
         /// 初始化日志记录
@@ -30,12 +30,12 @@ namespace GetStoreApp.Services.Root
         {
             try
             {
-                LogFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
-                IsInitialized = true;
+                logFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
+                isInitialized = true;
             }
             catch (Exception)
             {
-                IsInitialized = false;
+                isInitialized = false;
             }
         }
 
@@ -44,7 +44,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void WriteLog(LoggingLevel logLevel, string logContent, StringBuilder logBuilder)
         {
-            if (IsInitialized)
+            if (isInitialized)
             {
                 try
                 {
@@ -53,7 +53,7 @@ namespace GetStoreApp.Services.Root
                         lock (logLock)
                         {
                             File.AppendAllText(
-                                Path.Combine(LogFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
+                                Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
                                 string.Format("{0}\t{1}:{2}{3}{4}{5}{6}{7}{8}",
                                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                                     "LogLevel",
@@ -80,7 +80,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void WriteLog(LoggingLevel logLevel, string logContent, Exception exception)
         {
-            if (IsInitialized)
+            if (isInitialized)
             {
                 try
                 {
@@ -103,7 +103,7 @@ namespace GetStoreApp.Services.Root
                         lock (logLock)
                         {
                             File.AppendAllText(
-                                Path.Combine(LogFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
+                                Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
                                 string.Format("{0}\t{1}:{2}{3}{4}{5}",
                                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                                     "LogLevel",
@@ -127,9 +127,9 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task OpenLogFolderAsync()
         {
-            if (IsInitialized)
+            if (isInitialized)
             {
-                await Launcher.LaunchFolderAsync(LogFolder);
+                await Launcher.LaunchFolderAsync(logFolder);
             }
         }
 
@@ -142,7 +142,7 @@ namespace GetStoreApp.Services.Root
             {
                 Task.Run(() =>
                 {
-                    string[] logFiles = Directory.GetFiles(LogFolder.Path, "*.log");
+                    string[] logFiles = Directory.GetFiles(logFolder.Path, "*.log");
                     foreach (string logFile in logFiles)
                     {
                         File.Delete(logFile);

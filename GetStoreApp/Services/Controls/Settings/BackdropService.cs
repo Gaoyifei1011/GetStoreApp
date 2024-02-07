@@ -13,9 +13,8 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class BackdropService
     {
-        private static string SettingsKey = ConfigKey.BackdropKey;
-
-        private static DictionaryEntry DefaultAppBackdrop;
+        private static string settingsKey = ConfigKey.BackdropKey;
+        private static DictionaryEntry defaultAppBackdrop;
 
         public static DictionaryEntry AppBackdrop { get; private set; }
 
@@ -28,7 +27,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             BackdropList = ResourceService.BackdropList;
 
-            DefaultAppBackdrop = BackdropList.Find(item => item.Value.ToString().Equals(nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
+            defaultAppBackdrop = BackdropList.Find(item => item.Value.ToString().Equals(nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
 
             AppBackdrop = GetBackdrop();
         }
@@ -38,17 +37,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetBackdrop()
         {
-            object backdrop = LocalSettingsService.ReadSetting<object>(SettingsKey);
+            object backdrop = LocalSettingsService.ReadSetting<object>(settingsKey);
 
             if (backdrop is null)
             {
-                SetBackdrop(DefaultAppBackdrop);
-                return DefaultAppBackdrop;
+                SetBackdrop(defaultAppBackdrop);
+                return defaultAppBackdrop;
             }
 
             DictionaryEntry selectedBackdrop = BackdropList.Find(item => item.Value.Equals(backdrop));
 
-            return selectedBackdrop.Key is null ? DefaultAppBackdrop : selectedBackdrop;
+            return selectedBackdrop.Key is null ? defaultAppBackdrop : selectedBackdrop;
         }
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppBackdrop = backdrop;
 
-            LocalSettingsService.SaveSetting(SettingsKey, backdrop.Value);
+            LocalSettingsService.SaveSetting(settingsKey, backdrop.Value);
         }
 
         /// <summary>

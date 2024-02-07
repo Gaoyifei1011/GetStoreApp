@@ -741,8 +741,17 @@
                             VerticalAlignment="Center"
                             IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                             IsThreeState="False"
-                            ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Store'),Mode=OneWay}"
-                            Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
+                            Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    <Grid>
+                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Store/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                    </Grid>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </CheckBox>
 
                         <HyperlinkButton
                             Grid.Column="1"

@@ -24,7 +24,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
-        private static readonly object AppUpdateLock = new object();
+        private static readonly object appUpdateLock = new object();
 
         private static string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
         private static string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
@@ -39,8 +39,8 @@ namespace GetStoreApp.Views.Pages
         private static string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
         private static string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
 
-        private AppInstallManager AppInstallManager = new AppInstallManager();
-        private PackageManager PackageManager = new PackageManager();
+        private AppInstallManager appInstallManager = new AppInstallManager();
+        private PackageManager packageManager = new PackageManager();
 
         private Dictionary<string, AppInstallItem> AppInstallingDict = new Dictionary<string, AppInstallItem>();
 
@@ -112,7 +112,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (AppUpdateLock)
+                                lock (appUpdateLock)
                                 {
                                     appUpdateItem.AppInstallState = AppInstallState.Pending;
                                     appUpdateItem.IsUpdating = true;
@@ -121,7 +121,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             });
 
-                            appInstallItem = await AppInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
+                            appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
 
                             if (appInstallItem is not null)
                             {
@@ -167,7 +167,7 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (AppUpdateLock)
+                        lock (appUpdateLock)
                         {
                             foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                             {
@@ -220,7 +220,7 @@ namespace GetStoreApp.Views.Pages
                 AppUpdateOptions updateOptions = new AppUpdateOptions();
                 updateOptions.AutomaticallyDownloadAndInstallUpdateIfFound = false;
                 updateOptions.AllowForcedAppRestart = false;
-                IReadOnlyList<AppInstallItem> upgradableAppsList = await AppInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
+                IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
                 List<AppUpdateModel> appUpdateList = new List<AppUpdateModel>();
 
                 foreach (AppInstallItem upgradableApps in upgradableAppsList)
@@ -237,7 +237,7 @@ namespace GetStoreApp.Views.Pages
 
                     if (!isExisted)
                     {
-                        foreach (Package packageItem in PackageManager.FindPackagesForUser(string.Empty))
+                        foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
                         {
                             if (packageItem.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                             {
@@ -271,7 +271,7 @@ namespace GetStoreApp.Views.Pages
                 // 只添加未有的项
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (AppUpdateLock)
+                    lock (appUpdateLock)
                     {
                         foreach (AppUpdateModel appUpdateItem in appUpdateList)
                         {
@@ -297,7 +297,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (AppUpdateLock)
+                            lock (appUpdateLock)
                             {
                                 appUpdateItem.AppInstallState = AppInstallState.Pending;
                                 appUpdateItem.IsUpdating = true;
@@ -310,7 +310,7 @@ namespace GetStoreApp.Views.Pages
 
                 foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                 {
-                    AppInstallItem appInstallItem = await AppInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
+                    AppInstallItem appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
 
                     if (appInstallItem != null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
                     {
@@ -343,7 +343,7 @@ namespace GetStoreApp.Views.Pages
 
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (AppUpdateLock)
+                lock (appUpdateLock)
                 {
                     foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                     {
@@ -383,7 +383,7 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (AppUpdateLock)
+                        lock (appUpdateLock)
                         {
                             appUpdateItem.AppInstallState = appInstallStatus.InstallState;
                             appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;

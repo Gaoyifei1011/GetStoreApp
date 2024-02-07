@@ -9,17 +9,14 @@ namespace GetStoreApp.UI.Dialogs.Common
     /// </summary>
     public sealed partial class DeletePromptDialog : ContentDialog
     {
-        private string DeleteContent;
-
         public DeletePromptDialog(DeleteKind deletePrompt)
         {
+            InitializeComponent();
             switch (deletePrompt)
             {
-                case DeleteKind.Download: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
-                case DeleteKind.DownloadWithFile: DeleteContent = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteKind.Download: Content = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
+                case DeleteKind.DownloadWithFile: Content = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString())); break;
             }
-
-            InitializeComponent();
         }
     }
 }

@@ -10,9 +10,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class WebKernelService
     {
-        private static string WebKernelSettingsKey = ConfigKey.WebKernelKey;
+        private static string webKernelSettingsKey = ConfigKey.WebKernelKey;
 
-        private static DictionaryEntry DefaultWebKernel;
+        private static DictionaryEntry defaultWebKernel;
 
         public static DictionaryEntry WebKernel { get; set; }
 
@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             WebKernelList = ResourceService.WebKernelList;
 
-            DefaultWebKernel = WebKernelList.Find(item => item.Value.ToString() is "WebView2");
+            defaultWebKernel = WebKernelList.Find(item => item.Value.ToString() is "WebView2");
 
             WebKernel = GetWebKernel();
         }
@@ -35,12 +35,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetWebKernel()
         {
-            object webKernelValue = LocalSettingsService.ReadSetting<object>(WebKernelSettingsKey);
+            object webKernelValue = LocalSettingsService.ReadSetting<object>(webKernelSettingsKey);
 
             if (webKernelValue is null)
             {
-                SetWebKernel(DefaultWebKernel);
-                return DefaultWebKernel;
+                SetWebKernel(defaultWebKernel);
+                return defaultWebKernel;
             }
 
             return WebKernelList.Find(item => item.Value.Equals(webKernelValue));
@@ -53,7 +53,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             WebKernel = webKernel;
 
-            LocalSettingsService.SaveSetting(WebKernelSettingsKey, webKernel.Value);
+            LocalSettingsService.SaveSetting(webKernelSettingsKey, webKernel.Value);
         }
     }
 }

@@ -22,9 +22,9 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class AppInformationDialog : ContentDialog, INotifyPropertyChanged
     {
-        private string FileVersionProperty = "System.FileVersion";
+        private string fileVersionProperty = "System.FileVersion";
 
-        private List<string> PropertyNamesList => new List<string> { FileVersionProperty };
+        private List<string> PropertyNamesList => new List<string> { fileVersionProperty };
 
         private string _windowsAppSDKVersion;
 
@@ -129,9 +129,9 @@ namespace GetStoreApp.UI.Dialogs.About
         {
             Task.Run(async () =>
             {
-                IReadOnlyList<Package> DependencyList = Package.Current.Dependencies;
+                IReadOnlyList<Package> dependencyList = Package.Current.Dependencies;
 
-                foreach (Package dependency in DependencyList)
+                foreach (Package dependency in dependencyList)
                 {
                     if (dependency.DisplayName.Contains("WindowsAppRuntime"))
                     {
@@ -148,11 +148,11 @@ namespace GetStoreApp.UI.Dialogs.About
                         // WinUI 3 版本信息
                         try
                         {
-                            StorageFile WinUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
-                            IDictionary<string, object> WinUI3FileProperties = await WinUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
+                            IDictionary<string, object> WinUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                WinUI3Version = WinUI3FileProperties[FileVersionProperty] is not null ? Convert.ToString(WinUI3FileProperties[FileVersionProperty]) : string.Empty;
+                                WinUI3Version = WinUI3FileProperties[fileVersionProperty] is not null ? Convert.ToString(WinUI3FileProperties[fileVersionProperty]) : string.Empty;
                             });
                         }
                         catch (Exception e)
@@ -167,11 +167,11 @@ namespace GetStoreApp.UI.Dialogs.About
                         // WebView2 SDK 版本信息
                         try
                         {
-                            StorageFile WebView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
-                            IDictionary<string, object> WebView2CoreFileProperties = await WebView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
+                            IDictionary<string, object> WebView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                WebView2SDKVersion = WebView2CoreFileProperties[FileVersionProperty] is not null ? Convert.ToString(WebView2CoreFileProperties[FileVersionProperty]) : string.Empty;
+                                WebView2SDKVersion = WebView2CoreFileProperties[fileVersionProperty] is not null ? Convert.ToString(WebView2CoreFileProperties[fileVersionProperty]) : string.Empty;
                             });
                         }
                         catch (Exception e)
@@ -188,11 +188,11 @@ namespace GetStoreApp.UI.Dialogs.About
                 // Windows UI 版本信息
                 try
                 {
-                    StorageFile WindowsUIFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\System32\{1}", InfoHelper.SystemDataPath.Windows, "Windows.UI.dll"));
-                    IDictionary<string, object> WindowsUIFileProperties = await WindowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                    StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\System32\{1}", InfoHelper.SystemDataPath.Windows, "Windows.UI.dll"));
+                    IDictionary<string, object> WindowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        WindowsUIVersion = WindowsUIFileProperties[FileVersionProperty] is not null ? Convert.ToString(WindowsUIFileProperties[FileVersionProperty]) : string.Empty;
+                        WindowsUIVersion = WindowsUIFileProperties[fileVersionProperty] is not null ? Convert.ToString(WindowsUIFileProperties[fileVersionProperty]) : string.Empty;
                     });
                 }
                 catch (Exception e)

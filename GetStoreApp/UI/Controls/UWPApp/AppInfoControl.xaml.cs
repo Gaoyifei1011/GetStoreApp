@@ -295,6 +295,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
+
             if (package is not null)
             {
                 Task.Run(() =>
@@ -405,14 +406,14 @@ namespace GetStoreApp.UI.Controls.UWPApp
         {
             Task.Run(() =>
             {
-                bool IsPinnedSuccessfully = false;
+                bool isPinnedSuccessfully = false;
 
                 try
                 {
                     if (StoreConfiguration.IsPinToDesktopSupported())
                     {
                         StoreConfiguration.PinToDesktop(FamilyName);
-                        IsPinnedSuccessfully = true;
+                        isPinnedSuccessfully = true;
                     }
                 }
                 catch (Exception e)
@@ -423,7 +424,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, IsPinnedSuccessfully));
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, isPinnedSuccessfully));
                     });
                 }
             });
@@ -440,13 +441,13 @@ namespace GetStoreApp.UI.Controls.UWPApp
             {
                 Task.Run(async () =>
                 {
-                    bool IsPinnedSuccessfully = false;
+                    bool isPinnedSuccessfully = false;
 
                     try
                     {
                         StartScreenManager startScreenManager = StartScreenManager.GetDefault();
 
-                        IsPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
+                        isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
                     }
                     catch (Exception e)
                     {
@@ -456,7 +457,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, IsPinnedSuccessfully));
+                            TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
                         });
                     }
                 });

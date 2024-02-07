@@ -10,7 +10,7 @@ namespace GetStoreApp.Helpers.Controls.Extensions
     /// </summary>
     public static class ContentDialogHelper
     {
-        private static bool IsDialogOpening = false;
+        private static bool isDialogOpening = false;
 
         /// <summary>
         /// 显示对话框
@@ -18,9 +18,9 @@ namespace GetStoreApp.Helpers.Controls.Extensions
         public static async Task<ContentDialogResult> ShowAsync(ContentDialog dialog, FrameworkElement element)
         {
             ContentDialogResult dialogResult = ContentDialogResult.None;
-            if (!IsDialogOpening && dialog is not null && element is not null)
+            if (!isDialogOpening && dialog is not null && element is not null)
             {
-                IsDialogOpening = true;
+                isDialogOpening = true;
                 dialog.XamlRoot = element.XamlRoot;
                 dialog.RequestedTheme = element.ActualTheme;
                 element.ActualThemeChanged += (sender, args) =>
@@ -28,7 +28,7 @@ namespace GetStoreApp.Helpers.Controls.Extensions
                     dialog.RequestedTheme = element.ActualTheme;
                 };
                 dialogResult = await dialog.ShowAsync();
-                IsDialogOpening = false;
+                isDialogOpening = false;
             }
             return dialogResult;
         }

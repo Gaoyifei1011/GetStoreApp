@@ -402,7 +402,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
-            if (args.Key == VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
+            if (args.Key is VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
             {
                 UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
                 if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)

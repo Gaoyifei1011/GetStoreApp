@@ -8,7 +8,6 @@
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/RebootTitle')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
-    Content="{x:Bind RebootContent}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Reboot')}"
     Style="{StaticResource DefaultContentDialogStyle}"

@@ -8,7 +8,6 @@
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/DeleteTitle')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Cancel')}"
-    Content="{x:Bind DeleteContent}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Continue')}"
     Style="{StaticResource DefaultContentDialogStyle}"

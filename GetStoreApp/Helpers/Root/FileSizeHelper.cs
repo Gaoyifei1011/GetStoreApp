@@ -8,7 +8,7 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class FileSizeHelper
     {
-        public static Dictionary<string, int> SizeDict = new Dictionary<string, int>()
+        private static Dictionary<string, int> sizeDict = new Dictionary<string, int>()
         {
             { "GB",1024*1024*1024 },
             { "MB",1024*1024 },
@@ -20,17 +20,17 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static string ConvertFileSizeToString(double size)
         {
-            if (size / SizeDict["GB"] >= 1)
+            if (size / sizeDict["GB"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(size / SizeDict["GB"], 2), "GB");
+                return string.Format("{0}{1}", Math.Round(size / sizeDict["GB"], 2), "GB");
             }
-            else if (size / SizeDict["MB"] >= 1)
+            else if (size / sizeDict["MB"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(size / SizeDict["MB"], 2), "MB");
+                return string.Format("{0}{1}", Math.Round(size / sizeDict["MB"], 2), "MB");
             }
-            else if (size / SizeDict["KB"] >= 1)
+            else if (size / sizeDict["KB"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(size / SizeDict["KB"], 2), "KB");
+                return string.Format("{0}{1}", Math.Round(size / sizeDict["KB"], 2), "KB");
             }
             else
             {

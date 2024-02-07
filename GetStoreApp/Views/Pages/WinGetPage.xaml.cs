@@ -20,7 +20,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
-        public readonly object InstallingAppsObject = new object();
+        public readonly object installingAppsObject = new object();
 
         private bool isInitialized;
 
@@ -58,7 +58,7 @@ namespace GetStoreApp.Views.Pages
             string appId = args.Parameter as string;
             if (appId is not null)
             {
-                lock (InstallingAppsObject)
+                lock (installingAppsObject)
                 {
                     foreach (InstallingAppsModel installingAppsItem in InstallingAppsCollection)
                     {

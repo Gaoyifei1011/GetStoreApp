@@ -25,16 +25,16 @@ namespace GetStoreApp.Helpers.Controls.Extensions
                 {
                     try
                     {
-                        foreach (UIElement item in (MainWindow.Current.Content as Grid).Children)
+                        foreach (UIElement uiElement in (MainWindow.Current.Content as Grid).Children)
                         {
-                            if ((item as FrameworkElement).Name == teachingTip.Name)
+                            if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
                             {
-                                (MainWindow.Current.Content as Grid).Children.Remove(item);
+                                (MainWindow.Current.Content as Grid).Children.Remove(uiElement);
                                 break;
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception) { }
                 };
                 await Task.Delay(duration);
                 teachingTip.IsOpen = false;

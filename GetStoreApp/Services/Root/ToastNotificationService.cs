@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ToastNotificationService
     {
-        private static ToastNotifier AppToastNotifier = ToastNotificationManager.CreateToastNotifier();
+        private static ToastNotifier appToastNotifier = ToastNotificationManager.CreateToastNotifier();
 
         /// <summary>
         /// 处理应用通知
@@ -111,7 +111,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/ElevatedRunning"));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     case NotificationKind.DownloadAborted:
@@ -124,7 +124,7 @@ namespace GetStoreApp.Services.Root
                                 XmlDocument notificationDocument = new XmlDocument();
                                 notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadingNowOfflineMode"));
                                 ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                                AppToastNotifier.Show(notificaiton);
+                                appToastNotifier.Show(notificaiton);
                             }
 
                             // 没有任务下载时显示相应的通知
@@ -133,7 +133,7 @@ namespace GetStoreApp.Services.Root
                                 XmlDocument notificationDocument = new XmlDocument();
                                 notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/NotDownloadOfflineMode"));
                                 ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                                AppToastNotifier.Show(notificaiton);
+                                appToastNotifier.Show(notificaiton);
                             }
                             break;
                         }
@@ -149,14 +149,14 @@ namespace GetStoreApp.Services.Root
                                 XmlDocument notificationDocument = new XmlDocument();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), notificationContent[1]));
                                 ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                                AppToastNotifier.Show(notificaiton);
+                                appToastNotifier.Show(notificaiton);
                             }
                             else if (notificationContent[0] is "Error")
                             {
                                 XmlDocument notificationDocument = new XmlDocument();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/InstallError"), notificationContent[1], notificationContent[2]));
                                 ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                                AppToastNotifier.Show(notificaiton);
+                                appToastNotifier.Show(notificaiton);
                             }
                             break;
                         }
@@ -167,7 +167,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadCompleted"));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // UWP 应用卸载成功通知
@@ -176,7 +176,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallSuccessfully"), notificationContent[0]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // UWP 应用卸载失败通知
@@ -185,7 +185,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed"), notificationContent[0], notificationContent[1], notificationContent[2]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // WinGet 应用安装成功通知
@@ -194,7 +194,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), notificationContent[0]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // WinGet 应用安装失败通知
@@ -203,7 +203,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed"), notificationContent[0], notificationContent[1]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // WinGet 应用卸载成功通知
@@ -212,7 +212,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallSuccessfully"), notificationContent[0]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // WinGet 应用卸载失败通知
@@ -221,7 +221,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed"), notificationContent[0]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // WinGet 应用升级成功通知
@@ -230,7 +230,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), notificationContent[0]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     // WinGet 应用升级失败通知
@@ -239,7 +239,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed"), notificationContent[0], notificationContent[1]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     case NotificationKind.AppUpdate:
@@ -247,7 +247,7 @@ namespace GetStoreApp.Services.Root
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), notificationContent[0]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            AppToastNotifier.Show(notificaiton);
+                            appToastNotifier.Show(notificaiton);
                             break;
                         }
                     default:

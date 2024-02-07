@@ -33,9 +33,11 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class CompletedControl : Grid, INotifyPropertyChanged
     {
-        private readonly object CompletedLock = new object();
+        private readonly object completedLock = new object();
 
         private bool isUpdatingNow = false;
+
+        private PackageManager packageManager = new PackageManager();
 
         public int SelectedIndex { get; set; } = 0;
 
@@ -51,8 +53,6 @@ namespace GetStoreApp.UI.Controls.Download
                 OnPropertyChanged();
             }
         }
-
-        private PackageManager packageManager = new PackageManager();
 
         private ObservableCollection<CompletedModel> CompletedCollection { get; } = new ObservableCollection<CompletedModel>();
 
@@ -91,7 +91,7 @@ namespace GetStoreApp.UI.Controls.Download
                         DispatcherQueue.TryEnqueue(async () =>
                         {
                             while (isUpdatingNow) await Task.Delay(50);
-                            lock (CompletedLock) isUpdatingNow = true;
+                            lock (completedLock) isUpdatingNow = true;
 
                             try
                             {
@@ -102,7 +102,7 @@ namespace GetStoreApp.UI.Controls.Download
                                 LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                             }
 
-                            lock (CompletedLock) isUpdatingNow = false;
+                            lock (completedLock) isUpdatingNow = false;
                         });
                     }
                 });
@@ -146,7 +146,7 @@ namespace GetStoreApp.UI.Controls.Download
                         DispatcherQueue.TryEnqueue(async () =>
                         {
                             while (isUpdatingNow) await Task.Delay(50);
-                            lock (CompletedLock) isUpdatingNow = true;
+                            lock (completedLock) isUpdatingNow = true;
 
                             try
                             {
@@ -157,7 +157,7 @@ namespace GetStoreApp.UI.Controls.Download
                                 LogService.WriteLog(LoggingLevel.Warning, "Delete completed download record failed.", e);
                             }
 
-                            lock (CompletedLock) isUpdatingNow = false;
+                            lock (completedLock) isUpdatingNow = false;
                         });
                     }
                 });
@@ -402,7 +402,7 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedLock) isUpdatingNow = true;
+            lock (completedLock) isUpdatingNow = true;
 
             foreach (CompletedModel completedItem in CompletedCollection)
             {
@@ -411,7 +411,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             IsSelectMode = true;
-            lock (CompletedLock) isUpdatingNow = false;
+            lock (completedLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -420,14 +420,14 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedLock) isUpdatingNow = true;
+            lock (completedLock) isUpdatingNow = true;
 
             foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelected = true;
             }
 
-            lock (CompletedLock) isUpdatingNow = false;
+            lock (completedLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -436,14 +436,14 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedLock) isUpdatingNow = true;
+            lock (completedLock) isUpdatingNow = true;
 
             foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelected = false;
             }
 
-            lock (CompletedLock) isUpdatingNow = false;
+            lock (completedLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -487,14 +487,14 @@ namespace GetStoreApp.UI.Controls.Download
                 IsSelectMode = false;
 
                 while (isUpdatingNow) await Task.Delay(50);
-                lock (CompletedLock) isUpdatingNow = true;
+                lock (completedLock) isUpdatingNow = true;
 
                 foreach (CompletedModel completedItem in CompletedCollection)
                 {
                     completedItem.IsSelectMode = false;
                 }
 
-                lock (CompletedLock) isUpdatingNow = false;
+                lock (completedLock) isUpdatingNow = false;
 
                 await Task.Run(async () =>
                 {
@@ -503,7 +503,7 @@ namespace GetStoreApp.UI.Controls.Download
                     DispatcherQueue.TryEnqueue(async () =>
                     {
                         while (isUpdatingNow) await Task.Delay(50);
-                        lock (CompletedLock) isUpdatingNow = true;
+                        lock (completedLock) isUpdatingNow = true;
 
                         foreach (BackgroundModel backgroundItem in selectedCompletedDataList)
                         {
@@ -524,7 +524,7 @@ namespace GetStoreApp.UI.Controls.Download
                             }
                         }
 
-                        lock (CompletedLock) isUpdatingNow = false;
+                        lock (completedLock) isUpdatingNow = false;
                     });
                 });
             }
@@ -572,14 +572,14 @@ namespace GetStoreApp.UI.Controls.Download
                 IsSelectMode = false;
 
                 while (isUpdatingNow) await Task.Delay(50);
-                lock (CompletedLock) isUpdatingNow = true;
+                lock (completedLock) isUpdatingNow = true;
 
                 foreach (CompletedModel completedItem in CompletedCollection)
                 {
                     completedItem.IsSelectMode = false;
                 }
 
-                lock (CompletedLock) isUpdatingNow = false;
+                lock (completedLock) isUpdatingNow = false;
 
                 await Task.Run(async () =>
                 {
@@ -608,7 +608,7 @@ namespace GetStoreApp.UI.Controls.Download
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
                                     while (isUpdatingNow) await Task.Delay(50);
-                                    lock (CompletedLock) isUpdatingNow = true;
+                                    lock (completedLock) isUpdatingNow = true;
 
                                     for (int index = 0; index < CompletedCollection.Count; index++)
                                     {
@@ -626,7 +626,7 @@ namespace GetStoreApp.UI.Controls.Download
                                         }
                                     }
 
-                                    lock (CompletedLock) isUpdatingNow = false;
+                                    lock (completedLock) isUpdatingNow = false;
                                 });
                             }
                         }
@@ -676,15 +676,15 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     if (RuntimeHelper.IsElevated)
                     {
-                        List<StorageFile> SelectedFileList = new List<StorageFile>();
+                        List<StorageFile> selectedFileList = new List<StorageFile>();
                         foreach (BackgroundModel completedItem in selectedCompletedDataList)
                         {
-                            SelectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                            selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
                         }
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            bool copyResult = CopyPasteHelper.CopyFilesToClipBoard(SelectedFileList);
-                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, copyResult, true, SelectedFileList.Count));
+                            bool copyResult = CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
+                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, copyResult, true, selectedFileList.Count));
                         });
                     }
                     else
@@ -744,17 +744,17 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             CompletedModel completedItem = (CompletedModel)args.ClickedItem;
-            int ClickedIndex = CompletedCollection.IndexOf(completedItem);
+            int clickedIndex = CompletedCollection.IndexOf(completedItem);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedLock) isUpdatingNow = true;
+            lock (completedLock) isUpdatingNow = true;
 
-            if (ClickedIndex >= 0 && ClickedIndex < CompletedCollection.Count)
+            if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)
             {
-                CompletedCollection[ClickedIndex].IsSelected = !CompletedCollection[ClickedIndex].IsSelected;
+                CompletedCollection[clickedIndex].IsSelected = !CompletedCollection[clickedIndex].IsSelected;
             }
 
-            lock (CompletedLock) isUpdatingNow = false;
+            lock (completedLock) isUpdatingNow = false;
         }
 
         #endregion 第二部分：已下载完成控件——挂载的事件
@@ -782,7 +782,7 @@ namespace GetStoreApp.UI.Controls.Download
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
                                     while (isUpdatingNow) await Task.Delay(50);
-                                    lock (CompletedLock) isUpdatingNow = true;
+                                    lock (completedLock) isUpdatingNow = true;
 
                                     CompletedCollection.Add(new CompletedModel
                                     {
@@ -794,7 +794,7 @@ namespace GetStoreApp.UI.Controls.Download
                                         DownloadFlag = completedItem.DownloadFlag
                                     });
 
-                                    lock (CompletedLock) isUpdatingNow = false;
+                                    lock (completedLock) isUpdatingNow = false;
                                 });
                             }
                         }
@@ -833,14 +833,14 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         public async Task GetCompletedDataListAsync()
         {
-            List<BackgroundModel> DownloadRawList = await DownloadXmlService.QueryWithFlagAsync(4);
+            List<BackgroundModel> downloadRawList = await DownloadXmlService.QueryWithFlagAsync(4);
 
             while (isUpdatingNow) await Task.Delay(50);
-            lock (CompletedLock) isUpdatingNow = true;
+            lock (completedLock) isUpdatingNow = true;
 
             CompletedCollection.Clear();
 
-            foreach (BackgroundModel downloadRawData in DownloadRawList)
+            foreach (BackgroundModel downloadRawData in downloadRawList)
             {
                 CompletedCollection.Add(new CompletedModel
                 {
@@ -854,7 +854,7 @@ namespace GetStoreApp.UI.Controls.Download
                 await Task.Delay(1);
             }
 
-            lock (CompletedLock) isUpdatingNow = false;
+            lock (completedLock) isUpdatingNow = false;
         }
     }
 }

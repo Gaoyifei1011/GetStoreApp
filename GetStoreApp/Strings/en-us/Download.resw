@@ -321,7 +321,7 @@
   <data name="UnfinishedEmptyDescription" xml:space="preserve">
     <value>When a download task is forced to terminate the download due to an error, the file that you did not complete the download will be displayed here</value>
   </data>
-  <data name="UnselectedToolTip" xml:space="preserve">
+  <data name="UnSelectedToolTip" xml:space="preserve">
     <value>Not selected</value>
   </data>
   <data name="ViewMore" xml:space="preserve">

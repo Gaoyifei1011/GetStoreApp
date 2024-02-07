@@ -4,7 +4,7 @@ namespace GetStoreApp.Services.Root
 {
     public static class ResultService
     {
-        private const string Result = "Result";
+        private const string result = "Result";
 
         private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer resultContainer;
@@ -14,7 +14,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void Initialize()
         {
-            resultContainer = localSettingsContainer.CreateContainer(Result, ApplicationDataCreateDisposition.Always);
+            resultContainer = localSettingsContainer.CreateContainer(result, ApplicationDataCreateDisposition.Always);
         }
 
         /// <summary>

@@ -16,17 +16,16 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class DownloadOptionsService
     {
-        private static string FolderSettingsKey = ConfigKey.DownloadFolderKey;
-        private static string DownloadItemSettingsKey = ConfigKey.DownloadItemKey;
-        private static string DownloadModeSettingsKey = ConfigKey.DownloadModeKey;
+        private static string folderSettingsKey = ConfigKey.DownloadFolderKey;
+        private static string downloadItemSettingsKey = ConfigKey.DownloadItemKey;
+        private static string downloadModeSettingsKey = ConfigKey.DownloadModeKey;
+
+        private static int defaultItem = 1;
+        private static DictionaryEntry defaultDownloadMode;
 
         public static List<DictionaryEntry> DownloadModeList { get; private set; }
 
         public static StorageFolder DefaultDownloadFolder { get; private set; }
-
-        private static int DefaultItem = 1;
-
-        private static DictionaryEntry DefaultDownloadMode;
 
         public static StorageFolder DownloadFolder { get; private set; }
 
@@ -40,15 +39,11 @@ namespace GetStoreApp.Services.Controls.Settings
         public static async Task InitializeAsync()
         {
             DownloadModeList = ResourceService.DownloadModeList;
-
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
-
-            DefaultDownloadMode = DownloadModeList.Find(item => item.Value.ToString().Equals("DownloadInApp", StringComparison.OrdinalIgnoreCase));
+            defaultDownloadMode = DownloadModeList.Find(item => item.Value.ToString().Equals("DownloadInApp", StringComparison.OrdinalIgnoreCase));
 
             DownloadFolder = await GetFolderAsync();
-
             DownloadItem = GetItem();
-
             DownloadMode = GetMode();
         }
 
@@ -57,7 +52,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static async Task<StorageFolder> GetFolderAsync()
         {
-            string folder = LocalSettingsService.ReadSetting<string>(FolderSettingsKey);
+            string folder = LocalSettingsService.ReadSetting<string>(folderSettingsKey);
 
             try
             {
@@ -84,12 +79,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static int GetItem()
         {
-            int? downloadItemValue = LocalSettingsService.ReadSetting<int?>(DownloadItemSettingsKey);
+            int? downloadItemValue = LocalSettingsService.ReadSetting<int?>(downloadItemSettingsKey);
 
             if (!downloadItemValue.HasValue)
             {
-                SetItem(DefaultItem);
-                return DefaultItem;
+                SetItem(defaultItem);
+                return defaultItem;
             }
 
             return Convert.ToInt32(downloadItemValue);
@@ -100,12 +95,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetMode()
         {
-            string downloadMode = LocalSettingsService.ReadSetting<string>(DownloadModeSettingsKey);
+            string downloadMode = LocalSettingsService.ReadSetting<string>(downloadModeSettingsKey);
 
             if (string.IsNullOrEmpty(downloadMode))
             {
-                SetMode(DefaultDownloadMode);
-                return DownloadModeList.Find(item => item.Value.Equals(DefaultDownloadMode.Value));
+                SetMode(defaultDownloadMode);
+                return DownloadModeList.Find(item => item.Value.Equals(defaultDownloadMode.Value));
             }
 
             return DownloadModeList.Find(item => item.Value.ToString().Equals(downloadMode, StringComparison.OrdinalIgnoreCase));
@@ -118,7 +113,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DownloadFolder = downloadFolder;
 
-            LocalSettingsService.SaveSetting(FolderSettingsKey, downloadFolder.Path);
+            LocalSettingsService.SaveSetting(folderSettingsKey, downloadFolder.Path);
         }
 
         /// <summary>
@@ -128,7 +123,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DownloadItem = downloadItem;
 
-            LocalSettingsService.SaveSetting(DownloadItemSettingsKey, downloadItem);
+            LocalSettingsService.SaveSetting(downloadItemSettingsKey, downloadItem);
         }
 
         /// <summary>
@@ -138,7 +133,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DownloadMode = downloadMode;
 
-            LocalSettingsService.SaveSetting(DownloadModeSettingsKey, downloadMode.Value);
+            LocalSettingsService.SaveSetting(downloadModeSettingsKey, downloadMode.Value);
         }
 
         /// <summary>

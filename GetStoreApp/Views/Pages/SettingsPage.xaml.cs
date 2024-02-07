@@ -29,11 +29,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
-        private bool CanUseMicaBackdrop = InfoHelper.SystemVersion.Build >= 22000;
-        private bool IsOfficialVersionExisted = WinGetService.IsOfficialVersionExisted;
-        private bool IsDevVersionExisted = WinGetService.IsDevVersionExisted;
+        private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
-        private AppNaviagtionArgs SettingNavigationArgs = AppNaviagtionArgs.None;
+        private bool CanUseMicaBackdrop { get; } = InfoHelper.SystemVersion.Build >= 22000;
+
+        private bool IsOfficialVersionExisted { get; } = WinGetService.IsOfficialVersionExisted;
+
+        private bool IsDevVersionExisted { get; } = WinGetService.IsDevVersionExisted;
 
         private DictionaryEntry _theme = ThemeService.AppTheme;
 
@@ -293,16 +295,19 @@ namespace GetStoreApp.Views.Pages
 
         #region 第一部分：重写父类事件
 
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
             if (args.Parameter is not null)
             {
-                SettingNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+                settingNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
             }
             else
             {
-                SettingNavigationArgs = AppNaviagtionArgs.None;
+                settingNavigationArgs = AppNaviagtionArgs.None;
             }
         }
 
@@ -315,13 +320,13 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            double CurrentScrollPosition = SettingsScroll.VerticalOffset;
-            Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
+            double currentScrollPosition = SettingsScroll.VerticalOffset;
+            Point currentPoint = new Point(0, (int)currentScrollPosition);
 
-            if (SettingNavigationArgs is AppNaviagtionArgs.DownloadOptions)
+            if (settingNavigationArgs is AppNaviagtionArgs.DownloadOptions)
             {
-                Point TargetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(CurrentPoint);
-                SettingsScroll.ChangeView(null, TargetPosition.Y, null);
+                Point targetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(currentPoint);
+                SettingsScroll.ChangeView(null, targetPosition.Y, null);
             }
             else
             {

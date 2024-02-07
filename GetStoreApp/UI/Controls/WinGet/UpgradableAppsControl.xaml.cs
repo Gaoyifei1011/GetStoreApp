@@ -30,7 +30,7 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class UpgradableAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object UpgradableAppsLock = new object();
+        private readonly object upgradableAppsLock = new object();
 
         private bool isInitialized = false;
 
@@ -64,7 +64,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList;
+        private List<MatchResult> MatchResultList { get; } = new List<MatchResult>();
 
         private ObservableCollection<UpgradableAppsModel> UpgradableAppsCollection { get; } = new ObservableCollection<UpgradableAppsModel>();
 
@@ -122,7 +122,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (UpgradableAppsLock)
+                            lock (upgradableAppsLock)
                             {
                                 // 禁用当前应用的可升级状态
                                 foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
@@ -151,7 +151,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -171,7 +171,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -194,7 +194,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -215,7 +215,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -235,7 +235,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (WinGetInstance.InstallingAppsObject)
+                                            lock (WinGetInstance.installingAppsObject)
                                             {
                                                 foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                                 {
@@ -260,7 +260,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 添加任务
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (WinGetInstance.InstallingAppsObject)
+                            lock (WinGetInstance.installingAppsObject)
                             {
                                 WinGetInstance.InstallingAppsCollection.Add(new InstallingAppsModel()
                                 {
@@ -303,7 +303,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 // 完成任务后从任务管理中删除任务
-                                lock (WinGetInstance.InstallingAppsObject)
+                                lock (WinGetInstance.installingAppsObject)
                                 {
                                     foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                     {
@@ -316,7 +316,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                                 }
 
-                                lock (UpgradableAppsLock)
+                                lock (upgradableAppsLock)
                                 {
                                     // 从升级列表中移除已升级完成的任务
                                     foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
@@ -335,7 +335,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (UpgradableAppsLock)
+                                lock (upgradableAppsLock)
                                 {
                                     // 应用升级失败，将当前任务状态修改为可升级状态
                                     foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
@@ -348,7 +348,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 }
 
                                 // 应用升级失败，将当前任务状态修改为可升级状态
-                                lock (WinGetInstance.InstallingAppsObject)
+                                lock (WinGetInstance.installingAppsObject)
                                 {
                                     foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                     {
@@ -372,7 +372,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (UpgradableAppsLock)
+                            lock (upgradableAppsLock)
                             {
                                 // 应用升级失败，将当前任务状态修改为可升级状态
                                 foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
@@ -386,7 +386,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
 
                             // 应用升级失败，将当前任务状态修改为可升级状态
-                            lock (WinGetInstance.InstallingAppsObject)
+                            lock (WinGetInstance.installingAppsObject)
                             {
                                 foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
@@ -407,7 +407,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            lock (UpgradableAppsLock)
+                            lock (upgradableAppsLock)
                             {
                                 // 应用升级失败，从任务管理列表中移除当前任务
                                 foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
@@ -421,7 +421,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
 
                             // 应用升级失败，从任务管理列表中移除当前任务
-                            lock (WinGetInstance.InstallingAppsObject)
+                            lock (WinGetInstance.installingAppsObject)
                             {
                                 foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
@@ -488,7 +488,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            MatchResultList = null;
+            MatchResultList.Clear();
             IsLoadedCompleted = false;
             GetUpgradableApps();
             InitializeData();
@@ -572,7 +572,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void InitializeData()
         {
-            lock (UpgradableAppsLock)
+            lock (upgradableAppsLock)
             {
                 UpgradableAppsCollection.Clear();
             }
@@ -612,7 +612,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (UpgradableAppsLock)
+                        lock (upgradableAppsLock)
                         {
                             foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsList)
                             {

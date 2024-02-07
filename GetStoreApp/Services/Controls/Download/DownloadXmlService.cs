@@ -16,7 +16,7 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class DownloadXmlService
     {
-        private static readonly object DownloadXmlFileLock = new object();
+        private static readonly object downloadXmlFileLock = new object();
 
         private static bool isReadingAndWriting = false;
 
@@ -38,28 +38,28 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 await Task.Run(async () =>
                 {
-                    FileInfo DownloadFileInfo = new FileInfo(XmlStorageService.DownloadXmlFile.Path);
-                    if (DownloadFileInfo.Exists && DownloadFileInfo.Length is 0)
+                    FileInfo downloadFileInfo = new FileInfo(XmlStorageService.DownloadXmlFile.Path);
+                    if (downloadFileInfo.Exists && downloadFileInfo.Length is 0)
                     {
                         await XmlStorageService.InitializeDownloadXmlFileAsync();
                     }
                     else
                     {
                         while (isReadingAndWriting) await Task.Delay(10);
-                        lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                        lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                        XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                        XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                        lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                        lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                        if (DownloadFileDocument.HasChildNodes())
+                        if (downloadFileDocument.HasChildNodes())
                         {
-                            IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                            IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                            if (DownloadRootElement.HasChildNodes())
+                            if (downloadRootElement.HasChildNodes())
                             {
                                 bool isModified = false;
-                                foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                                foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                                 {
                                     if (downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText.Equals(1.ToString()) ||
                                        downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText.Equals(3.ToString())
@@ -73,11 +73,11 @@ namespace GetStoreApp.Services.Controls.Download
                                 if (isModified)
                                 {
                                     while (isReadingAndWriting) await Task.Delay(10);
-                                    lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                                    lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                                    await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+                                    await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
 
-                                    lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                                    lock (downloadXmlFileLock) isReadingAndWriting = false;
                                 }
                             }
                         }
@@ -99,31 +99,31 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    XmlElement DownloadItemElement = DownloadFileDocument.CreateElement(DownloadItem);
-                    DownloadItemElement.SetAttribute(DownloadKey, backgroundItem.DownloadKey);
-                    DownloadItemElement.SetAttribute(FileName, backgroundItem.FileName);
-                    DownloadItemElement.SetAttribute(FileLink, backgroundItem.FileLink);
-                    DownloadItemElement.SetAttribute(FilePath, backgroundItem.FilePath);
-                    DownloadItemElement.SetAttribute(FileSize, Convert.ToString(backgroundItem.TotalSize));
-                    DownloadItemElement.SetAttribute(DownloadFlag, Convert.ToString(backgroundItem.DownloadFlag));
-                    DownloadRootElement.AppendChild(DownloadItemElement);
+                    XmlElement downloadItemElement = downloadFileDocument.CreateElement(DownloadItem);
+                    downloadItemElement.SetAttribute(DownloadKey, backgroundItem.DownloadKey);
+                    downloadItemElement.SetAttribute(FileName, backgroundItem.FileName);
+                    downloadItemElement.SetAttribute(FileLink, backgroundItem.FileLink);
+                    downloadItemElement.SetAttribute(FilePath, backgroundItem.FilePath);
+                    downloadItemElement.SetAttribute(FileSize, Convert.ToString(backgroundItem.TotalSize));
+                    downloadItemElement.SetAttribute(DownloadFlag, Convert.ToString(backgroundItem.DownloadFlag));
+                    downloadRootElement.AppendChild(downloadItemElement);
 
                     while (isReadingAndWriting) await Task.Delay(10);
-                    lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                    lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                    await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+                    await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
 
-                    lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                    lock (downloadXmlFileLock) isReadingAndWriting = false;
                     return true;
                 }
                 else
@@ -147,20 +147,20 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
                         bool isModified = false;
-                        foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                        foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                         {
                             if (downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
                             {
@@ -173,11 +173,11 @@ namespace GetStoreApp.Services.Controls.Download
                         if (isModified)
                         {
                             while (isReadingAndWriting) await Task.Delay(10);
-                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                            lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                            await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+                            await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
 
-                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                            lock (downloadXmlFileLock) isReadingAndWriting = false;
                             isUpdatedSuccessfully = true;
                         }
                     }
@@ -199,20 +199,20 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
                         bool isModified = false;
-                        foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                        foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                         {
                             if (downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
                             {
@@ -225,11 +225,11 @@ namespace GetStoreApp.Services.Controls.Download
                         if (isModified)
                         {
                             while (isReadingAndWriting) await Task.Delay(10);
-                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                            lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                            await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+                            await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
 
-                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                            lock (downloadXmlFileLock) isReadingAndWriting = false;
                             isUpdatedSuccessfully = true;
                         }
                     }
@@ -249,24 +249,24 @@ namespace GetStoreApp.Services.Controls.Download
         /// <returns>返回指定下载标志记录列表</returns>
         public static async Task<List<BackgroundModel>> QueryWithFlagAsync(int downloadFlag)
         {
-            List<BackgroundModel> DownloadRawList = new List<BackgroundModel>();
+            List<BackgroundModel> downloadRawList = new List<BackgroundModel>();
 
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
-                        foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                        foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                         {
                             if (downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText.Equals(Convert.ToString(downloadFlag)))
                             {
@@ -279,17 +279,17 @@ namespace GetStoreApp.Services.Controls.Download
                                     TotalSize = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(FileSize).InnerText),
                                     DownloadFlag = Convert.ToInt32(downloadItemElement.Attributes.GetNamedItem(DownloadFlag).InnerText)
                                 };
-                                DownloadRawList.Add(downloadRawModel);
+                                downloadRawList.Add(downloadRawModel);
                             }
                         }
                     }
                 }
-                return DownloadRawList;
+                return downloadRawList;
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Warning, "Query download record with flag failed.", e);
-                return DownloadRawList;
+                return downloadRawList;
             }
         }
 
@@ -305,19 +305,19 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
-                        foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                        foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                         {
                             if (downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText.Equals(Convert.ToString(downloadKey)))
                             {
@@ -351,19 +351,19 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
-                        foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                        foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                         {
                             if (downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText.Equals(Convert.ToString(downloadKey)))
                             {
@@ -398,24 +398,24 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
                         bool isModified = false;
-                        foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                        foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                         {
                             if (downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText.Equals(Convert.ToString(downloadKey)))
                             {
-                                DownloadRootElement.RemoveChild(downloadItemElement);
+                                downloadRootElement.RemoveChild(downloadItemElement);
                                 isModified = true;
                                 break;
                             }
@@ -424,11 +424,11 @@ namespace GetStoreApp.Services.Controls.Download
                         if (isModified)
                         {
                             while (isReadingAndWriting) await Task.Delay(10);
-                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                            lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                            await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+                            await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
 
-                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                            lock (downloadXmlFileLock) isReadingAndWriting = false;
                             isDeleteSuccessfully = true;
                         }
                     }
@@ -450,26 +450,26 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
                         bool isModified = false;
                         selectedDownloadList.ForEach((backgroundItem) =>
                         {
-                            foreach (IXmlNode downloadItemElement in DownloadRootElement.ChildNodes)
+                            foreach (IXmlNode downloadItemElement in downloadRootElement.ChildNodes)
                             {
                                 if (downloadItemElement.Attributes.GetNamedItem(DownloadKey).InnerText.Equals(Convert.ToString(backgroundItem.DownloadKey)))
                                 {
-                                    DownloadRootElement.RemoveChild(downloadItemElement);
+                                    downloadRootElement.RemoveChild(downloadItemElement);
                                     isModified = true;
                                     break;
                                 }
@@ -479,11 +479,11 @@ namespace GetStoreApp.Services.Controls.Download
                         if (isModified)
                         {
                             while (isReadingAndWriting) await Task.Delay(10);
-                            lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                            lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                            await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+                            await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
 
-                            lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                            lock (downloadXmlFileLock) isReadingAndWriting = false;
                             isDeleteSuccessfully = true;
                         }
                     }
@@ -504,29 +504,29 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 while (isReadingAndWriting) await Task.Delay(10);
-                lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                XmlDocument DownloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
 
-                lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
 
-                if (DownloadFileDocument.HasChildNodes())
+                if (downloadFileDocument.HasChildNodes())
                 {
-                    IXmlNode DownloadRootElement = DownloadFileDocument.ChildNodes[0];
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
 
-                    if (DownloadRootElement.HasChildNodes())
+                    if (downloadRootElement.HasChildNodes())
                     {
-                        while (DownloadRootElement.ChildNodes.Count > 0)
+                        while (downloadRootElement.ChildNodes.Count > 0)
                         {
-                            DownloadRootElement.RemoveChild(DownloadRootElement.ChildNodes[0]);
+                            downloadRootElement.RemoveChild(downloadRootElement.ChildNodes[0]);
                         }
 
                         while (isReadingAndWriting) await Task.Delay(10);
-                        lock (DownloadXmlFileLock) isReadingAndWriting = true;
+                        lock (downloadXmlFileLock) isReadingAndWriting = true;
 
-                        await DownloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+                        await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
 
-                        lock (DownloadXmlFileLock) isReadingAndWriting = false;
+                        lock (downloadXmlFileLock) isReadingAndWriting = false;
                     }
                 }
                 return true;

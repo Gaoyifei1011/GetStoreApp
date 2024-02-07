@@ -13,13 +13,13 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class LanguageService
     {
-        private static string SettingsKey = ConfigKey.LanguageKey;
+        private static string settingsKey = ConfigKey.LanguageKey;
 
         public static DictionaryEntry DefaultAppLanguage { get; private set; }
 
         public static DictionaryEntry AppLanguage { get; private set; }
 
-        private static IReadOnlyList<string> AppLanguagesList = ApplicationLanguages.ManifestLanguages;
+        private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
 
         public static List<DictionaryEntry> LanguageList { get; } = new List<DictionaryEntry>();
 
@@ -72,7 +72,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetLanguage()
         {
-            object language = LocalSettingsService.ReadSetting<object>(SettingsKey);
+            object language = LocalSettingsService.ReadSetting<object>(settingsKey);
 
             // 当前系统的语言值
             string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;
@@ -108,7 +108,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppLanguage = language;
 
-            LocalSettingsService.SaveSetting(SettingsKey, language.Value);
+            LocalSettingsService.SaveSetting(settingsKey, language.Value);
         }
     }
 }

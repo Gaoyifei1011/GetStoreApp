@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class XmlStorageService
     {
-        private static string DownloadXmlFileName = "DownloadRecords.xml.dat";
+        private static string downloadXmlFileName = "DownloadRecords.xml.dat";
 
         public static StorageFile DownloadXmlFile { get; private set; }
 
@@ -28,13 +28,13 @@ namespace GetStoreApp.Services.Root
         {
             try
             {
-                if (File.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, DownloadXmlFileName)))
+                if (File.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, downloadXmlFileName)))
                 {
-                    DownloadXmlFile = await ApplicationData.Current.LocalFolder.GetFileAsync(DownloadXmlFileName);
+                    DownloadXmlFile = await ApplicationData.Current.LocalFolder.GetFileAsync(downloadXmlFileName);
                 }
                 else
                 {
-                    DownloadXmlFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(DownloadXmlFileName);
+                    DownloadXmlFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(downloadXmlFileName);
                     await InitializeDownloadDataAsync();
                 }
             }

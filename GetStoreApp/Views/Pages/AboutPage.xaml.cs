@@ -30,9 +30,9 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page
     {
-        private AppNaviagtionArgs AboutNavigationArgs = AppNaviagtionArgs.None;
+        private AppNaviagtionArgs aboutNavigationArgs = AppNaviagtionArgs.None;
 
-        private string AppVersion = string.Format(ResourceService.GetLocalized("About/AppVersion"), InfoHelper.AppVersion.ToString());
+        private string AppVersion { get; } = string.Format(ResourceService.GetLocalized("About/AppVersion"), InfoHelper.AppVersion.ToString());
 
         //项目引用信息
         private Hashtable ReferenceDict { get; } = new Hashtable()
@@ -62,16 +62,19 @@ namespace GetStoreApp.Views.Pages
 
         #region 第一部分：重写父类事件
 
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
             if (args.Parameter is not null)
             {
-                AboutNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+                aboutNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
             }
             else
             {
-                AboutNavigationArgs = AppNaviagtionArgs.None;
+                aboutNavigationArgs = AppNaviagtionArgs.None;
             }
         }
 
@@ -84,21 +87,21 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            double CurrentScrollPosition = AboutScroll.VerticalOffset;
-            Point CurrentPoint = new Point(0, (int)CurrentScrollPosition);
+            double currentScrollPosition = AboutScroll.VerticalOffset;
+            Point currentPoint = new Point(0, (int)currentScrollPosition);
 
-            switch (AboutNavigationArgs)
+            switch (aboutNavigationArgs)
             {
                 case AppNaviagtionArgs.Instructions:
                     {
-                        Point TargetPosition = Instructions.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
-                        AboutScroll.ChangeView(null, TargetPosition.Y, null);
+                        Point targetPosition = Instructions.TransformToVisual(AboutScroll).TransformPoint(currentPoint);
+                        AboutScroll.ChangeView(null, targetPosition.Y, null);
                         break;
                     }
                 case AppNaviagtionArgs.SettingsHelp:
                     {
-                        Point TargetPosition = SettingsHelp.TransformToVisual(AboutScroll).TransformPoint(CurrentPoint);
-                        AboutScroll.ChangeView(null, TargetPosition.Y, null);
+                        Point targetPosition = SettingsHelp.TransformToVisual(AboutScroll).TransformPoint(currentPoint);
+                        AboutScroll.ChangeView(null, targetPosition.Y, null);
                         break;
                     }
                 default:
@@ -116,14 +119,14 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(() =>
             {
-                bool IsCreatedSuccessfully = false;
+                bool isCreatedSuccessfully = false;
 
                 try
                 {
                     if (StoreConfiguration.IsPinToDesktopSupported())
                     {
                         StoreConfiguration.PinToDesktop(Package.Current.Id.FamilyName);
-                        IsCreatedSuccessfully = true;
+                        isCreatedSuccessfully = true;
                     }
                 }
                 catch (Exception e)
@@ -134,7 +137,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, IsCreatedSuccessfully));
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
                     });
                 }
             });
@@ -147,19 +150,19 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(async () =>
             {
-                bool IsPinnedSuccessfully = false;
+                bool isPinnedSuccessfully = false;
 
                 try
                 {
-                    IReadOnlyList<AppListEntry> AppEntries = await Package.Current.GetAppListEntriesAsync();
+                    IReadOnlyList<AppListEntry> appEntries = await Package.Current.GetAppListEntriesAsync();
 
-                    AppListEntry DefaultEntry = AppEntries[0];
+                    AppListEntry defaultEntry = appEntries[0];
 
-                    if (DefaultEntry is not null)
+                    if (defaultEntry is not null)
                     {
                         StartScreenManager startScreenManager = StartScreenManager.GetDefault();
 
-                        IsPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(DefaultEntry);
+                        isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(defaultEntry);
                     }
                 }
                 catch (Exception e)
@@ -170,7 +173,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, IsPinnedSuccessfully));
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
                     });
                 }
             });
@@ -183,7 +186,7 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(async () =>
             {
-                bool IsPinnedSuccessfully = false;
+                bool isPinnedSuccessfully = false;
 
                 try
                 {
@@ -194,7 +197,7 @@ namespace GetStoreApp.Views.Pages
 
                     if (accessResult.Status is LimitedAccessFeatureStatus.Available)
                     {
-                        IsPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                        isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
                     }
                     else
                     {
@@ -212,7 +215,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Taskbar, IsPinnedSuccessfully));
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Taskbar, isPinnedSuccessfully));
                     });
                 }
             });

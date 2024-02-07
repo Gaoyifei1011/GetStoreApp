@@ -17,9 +17,11 @@ namespace GetStoreApp.UI.Dialogs.Download
     /// </summary>
     public sealed partial class FileInformationDialog : ContentDialog, INotifyPropertyChanged
     {
-        private string FileName;
-        private string FilePath;
-        private string FileSize;
+        private string FileName { get; set; }
+
+        private string FilePath { get; set; }
+
+        private string FileSize { get; set; }
 
         private bool _fileCheckState = false;
 

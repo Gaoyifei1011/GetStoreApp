@@ -321,7 +321,7 @@
   <data name="UnfinishedEmptyDescription" xml:space="preserve">
     <value>下载任务因错误被迫终止下载时，您未完成下载的文件将会显示在此处</value>
   </data>
-  <data name="UnselectedToolTip" xml:space="preserve">
+  <data name="UnSelectedToolTip" xml:space="preserve">
     <value>未选择</value>
   </data>
   <data name="ViewMore" xml:space="preserve">

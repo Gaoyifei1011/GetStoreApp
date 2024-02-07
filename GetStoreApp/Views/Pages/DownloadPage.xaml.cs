@@ -37,6 +37,9 @@ namespace GetStoreApp.Views.Pages
 
         #region 第一部分：重写父类事件
 
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);

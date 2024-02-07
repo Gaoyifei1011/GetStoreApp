@@ -26,17 +26,29 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 复选框状态文字提示
+        /// UI字符串本地化（类型）格式化
         /// </summary>
-        public static string CheckBoxToolTipFormat(bool isSelected, string content)
+        public static string TypeNameFormat(string content)
         {
-            if (isSelected)
+            return ResourceService.TypeList.Find(item => item.InternalName.Equals(content)).DisplayName;
+        }
+
+        /// <summary>
+        /// 文件名称提示格式化
+        /// </summary>
+        public static string FileNameToolTipFormat(string content)
+        {
+            if (DownloadOptionsService.DownloadMode.Value.Equals(DownloadOptionsService.DownloadModeList[0].Value))
             {
-                return ResourceService.GetLocalized(string.Format("{0}/SelectedToolTip", content));
+                return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToDownload"));
+            }
+            else if (DownloadOptionsService.DownloadMode.Value.Equals(DownloadOptionsService.DownloadModeList[1].Value))
+            {
+                return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToOpen"));
             }
             else
             {
-                return ResourceService.GetLocalized(string.Format("{0}/UnselectedToolTip", content));
+                return string.Empty;
             }
         }
 
@@ -61,41 +73,6 @@ namespace GetStoreApp.Helpers.Converters
             {
                 return string.Format("{0}{1}", speed, "Byte/s");
             }
-        }
-
-        /// <summary>
-        /// 文件名称提示格式化
-        /// </summary>
-        public static string FileNameToolTipFormat(string content)
-        {
-            if (DownloadOptionsService.DownloadMode.Value.Equals(DownloadOptionsService.DownloadModeList[0].Value))
-            {
-                return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToDownload"));
-            }
-            else if (DownloadOptionsService.DownloadMode.Value.Equals(DownloadOptionsService.DownloadModeList[1].Value))
-            {
-                return string.Format("{0}{1}{2}", content, Environment.NewLine, ResourceService.GetLocalized("Store/ClickToOpen"));
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// 安装进度文字提示格式化
-        /// </summary>
-        public static string InstallValueFormat(double content)
-        {
-            return string.Format(ResourceService.GetLocalized("Download/InstallValue"), content);
-        }
-
-        /// <summary>
-        /// UI字符串本地化（类型）格式化
-        /// </summary>
-        public static string TypeNameFormat(string content)
-        {
-            return ResourceService.TypeList.Find(item => item.InternalName.Equals(content)).DisplayName;
         }
     }
 }

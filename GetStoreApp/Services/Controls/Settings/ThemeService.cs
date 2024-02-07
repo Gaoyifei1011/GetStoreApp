@@ -13,9 +13,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class ThemeService
     {
-        private static string ThemeSettingsKey = ConfigKey.ThemeKey;
+        private static string themeSettingsKey = ConfigKey.ThemeKey;
 
-        private static DictionaryEntry DefaultAppTheme;
+        private static DictionaryEntry defaultAppTheme;
 
         public static DictionaryEntry AppTheme { get; private set; }
 
@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             ThemeList = ResourceService.ThemeList;
 
-            DefaultAppTheme = ThemeList.Find(item => item.Value.ToString().Equals(nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
+            defaultAppTheme = ThemeList.Find(item => item.Value.ToString().Equals(nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
 
             AppTheme = GetTheme();
         }
@@ -38,17 +38,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetTheme()
         {
-            object theme = LocalSettingsService.ReadSetting<object>(ThemeSettingsKey);
+            object theme = LocalSettingsService.ReadSetting<object>(themeSettingsKey);
 
             if (theme is null)
             {
-                SetTheme(DefaultAppTheme);
-                return DefaultAppTheme;
+                SetTheme(defaultAppTheme);
+                return defaultAppTheme;
             }
 
             DictionaryEntry selectedTheme = ThemeList.Find(item => item.Value.Equals(theme));
 
-            return selectedTheme.Key is null ? DefaultAppTheme : ThemeList.Find(item => item.Value.Equals(theme));
+            return selectedTheme.Key is null ? defaultAppTheme : ThemeList.Find(item => item.Value.Equals(theme));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppTheme = theme;
 
-            LocalSettingsService.SaveSetting(ThemeSettingsKey, theme.Value);
+            LocalSettingsService.SaveSetting(themeSettingsKey, theme.Value);
         }
 
         /// <summary>

@@ -230,8 +230,17 @@
                         VerticalAlignment="Center"
                         IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                         IsThreeState="False"
-                        ToolTipService.ToolTip="{x:Bind converter:StringConverterHelper.CheckBoxToolTipFormat(IsSelected,'Download'),Mode=OneWay}"
-                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
+                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                <Grid>
+                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                </Grid>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                    </CheckBox>
 
                     <Grid
                         Grid.Column="1"
@@ -331,15 +340,26 @@
                                 ShowError="{x:Bind InstallError, Mode=OneWay}"
                                 Value="{x:Bind InstallValue, Mode=OneWay}" />
 
-                            <TextBlock
+                            <StackPanel
                                 x:Name="InstallStateInfo"
                                 Grid.Column="2"
                                 MinWidth="50"
                                 VerticalAlignment="Center"
                                 x:Load="{x:Bind InstallError.Equals(x:False), Mode=OneWay}"
-                                FontSize="14"
-                                Text="{x:Bind converter:StringConverterHelper.InstallValueFormat(InstallValue), Mode=OneWay}"
-                                TextAlignment="Left" />
+                                Orientation="Horizontal">
+
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallValue')}"
+                                    TextAlignment="Left" />
+
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{x:Bind InstallValue, Mode=OneWay}"
+                                    TextAlignment="Left" />
+                            </StackPanel>
 
                             <TextBlock
                                 x:Name="InstallErrorInfo"

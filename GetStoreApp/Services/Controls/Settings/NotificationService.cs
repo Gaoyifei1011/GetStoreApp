@@ -9,9 +9,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class NotificationService
     {
-        private static string SettingsKey = ConfigKey.NotificationKey;
+        private static string settingsKey = ConfigKey.NotificationKey;
 
-        private static bool DefaultAppNotification = true;
+        private static bool defaultAppNotification = true;
 
         public static bool AppNotification { get; private set; }
 
@@ -28,12 +28,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetNotification()
         {
-            bool? appNotification = LocalSettingsService.ReadSetting<bool?>(SettingsKey);
+            bool? appNotification = LocalSettingsService.ReadSetting<bool?>(settingsKey);
 
             if (!appNotification.HasValue)
             {
-                SetNotification(DefaultAppNotification);
-                return DefaultAppNotification;
+                SetNotification(defaultAppNotification);
+                return defaultAppNotification;
             }
 
             return Convert.ToBoolean(appNotification);
@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppNotification = appNotification;
 
-            LocalSettingsService.SaveSetting(SettingsKey, appNotification);
+            LocalSettingsService.SaveSetting(settingsKey, appNotification);
         }
     }
 }

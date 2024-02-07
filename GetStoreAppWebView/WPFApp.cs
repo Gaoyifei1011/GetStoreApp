@@ -80,7 +80,7 @@ namespace GetStoreAppWebView
                 {
                     isDisposed = true;
                     MainWindow?.Close();
-                    Environment.Exit(0);
+                    Environment.Exit(Environment.ExitCode);
                 }
             }
         }

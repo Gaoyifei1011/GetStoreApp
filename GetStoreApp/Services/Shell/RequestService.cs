@@ -14,9 +14,9 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class RequestService
     {
-        private static string SelectedType;
-        private static string SelectedChannel;
-        private static string LinkText;
+        private static string selectedType;
+        private static string selectedChannel;
+        private static string linkText;
 
         private static List<string> TypeList = new List<string>()
         {
@@ -37,11 +37,11 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static void InitializeWithoutQueryData()
         {
-            SelectedType = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"])];
+            selectedType = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"])];
 
-            SelectedChannel = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[0] : ChannelList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"])];
+            selectedChannel = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[0] : ChannelList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"])];
 
-            LinkText = ConsoleLaunchService.LaunchArgs["Link"] is null ? string.Empty : Convert.ToString(ConsoleLaunchService.LaunchArgs["Link"]);
+            linkText = ConsoleLaunchService.LaunchArgs["Link"] is null ? string.Empty : Convert.ToString(ConsoleLaunchService.LaunchArgs["Link"]);
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static void InitializeQueryData(int typeIndex, int channelIndex, string link)
         {
-            SelectedType = TypeList[typeIndex - 1];
-            SelectedChannel = ChannelList[channelIndex - 1];
-            LinkText = link;
+            selectedType = TypeList[typeIndex - 1];
+            selectedChannel = ChannelList[channelIndex - 1];
+            linkText = link;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace GetStoreApp.Services.Shell
         public static async Task GetLinksAsync()
         {
             // 解析链接对应的产品 ID
-            string productId = SelectedType.Equals(TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
+            string productId = selectedType.Equals(TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(linkText) : linkText;
 
             bool RequestState = true;
 
@@ -92,11 +92,11 @@ namespace GetStoreApp.Services.Shell
                     // 解析商店应用数据
                     else
                     {
-                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, SelectedChannel);
+                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
 
                         if (!string.IsNullOrEmpty(fileListXml))
                         {
-                            List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, SelectedChannel);
+                            List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, selectedChannel);
                             foreach (QueryLinksModel appxPackage in appxPackagesList)
                             {
                                 queryLinksList.Add(appxPackage);

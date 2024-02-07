@@ -9,10 +9,10 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class LinkFilterService
     {
-        private static string EncryptedPackageSettingsKey = ConfigKey.EncryptedPackageFilterKey;
-        private static string BlockMapSettingsKey = ConfigKey.BlockMapFilterKey;
+        private static string encryptedPackageSettingsKey = ConfigKey.EncryptedPackageFilterKey;
+        private static string blockMapSettingsKey = ConfigKey.BlockMapFilterKey;
 
-        private static bool DefaultLinkFilterValue = true;
+        private static bool defaultLinkFilterValue = true;
 
         public static bool EncryptedPackageFilterValue { get; private set; }
 
@@ -33,12 +33,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetEncryptedPackageFilterValue()
         {
-            bool? encryptedPackageFilterValue = LocalSettingsService.ReadSetting<bool?>(EncryptedPackageSettingsKey);
+            bool? encryptedPackageFilterValue = LocalSettingsService.ReadSetting<bool?>(encryptedPackageSettingsKey);
 
             if (!encryptedPackageFilterValue.HasValue)
             {
-                SetEncryptedPackageFilterValue(DefaultLinkFilterValue);
-                return DefaultLinkFilterValue;
+                SetEncryptedPackageFilterValue(defaultLinkFilterValue);
+                return defaultLinkFilterValue;
             }
 
             return Convert.ToBoolean(encryptedPackageFilterValue);
@@ -49,12 +49,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetBlockMapFilterValue()
         {
-            bool? blockMapFilterValue = LocalSettingsService.ReadSetting<bool?>(BlockMapSettingsKey);
+            bool? blockMapFilterValue = LocalSettingsService.ReadSetting<bool?>(blockMapSettingsKey);
 
             if (!blockMapFilterValue.HasValue)
             {
-                SetBlockMapFilterValue(DefaultLinkFilterValue);
-                return DefaultLinkFilterValue;
+                SetBlockMapFilterValue(defaultLinkFilterValue);
+                return defaultLinkFilterValue;
             }
 
             return Convert.ToBoolean(blockMapFilterValue);
@@ -67,7 +67,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             EncryptedPackageFilterValue = encryptedPackageFilterValue;
 
-            LocalSettingsService.SaveSetting(EncryptedPackageSettingsKey, encryptedPackageFilterValue);
+            LocalSettingsService.SaveSetting(encryptedPackageSettingsKey, encryptedPackageFilterValue);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             BlockMapFilterValue = blockMapFilterValue;
 
-            LocalSettingsService.SaveSetting(BlockMapSettingsKey, blockMapFilterValue);
+            LocalSettingsService.SaveSetting(blockMapSettingsKey, blockMapFilterValue);
         }
     }
 }

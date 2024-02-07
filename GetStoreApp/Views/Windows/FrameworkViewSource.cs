@@ -10,7 +10,6 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 创建 FrameworkView
         /// </summary>
-        /// <returns></returns>
         public IFrameworkView CreateView()
         {
             return new FrameworkView();

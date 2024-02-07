@@ -13,11 +13,6 @@ namespace GetStoreApp.Helpers.Converters
             return !value.Equals(comparedValue);
         }
 
-        public static Visibility StringEmptyConvert(string value)
-        {
-            return string.IsNullOrEmpty(value) ? Visibility.Collapsed : Visibility.Visible;
-        }
-
         public static Uri UriConvert(object uri)
         {
             return new Uri(uri.ToString());

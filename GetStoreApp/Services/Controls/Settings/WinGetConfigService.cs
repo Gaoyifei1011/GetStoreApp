@@ -12,10 +12,10 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class WinGetConfigService
     {
-        private static string WinGetConfigSettingsKey = ConfigKey.WinGetConfigKey;
-        private static string WinGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
+        private static string winGetConfigSettingsKey = ConfigKey.WinGetConfigKey;
+        private static string winGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
 
-        private static bool DefaultUseDevVersion = false;
+        private static bool defaultUseDevVersion = false;
 
         public static bool UseDevVersion { get; private set; }
 
@@ -44,12 +44,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetUseDevVersion()
         {
-            bool? useDevVersion = LocalSettingsService.ReadSetting<bool?>(WinGetConfigSettingsKey);
+            bool? useDevVersion = LocalSettingsService.ReadSetting<bool?>(winGetConfigSettingsKey);
 
             if (!useDevVersion.HasValue)
             {
-                SetUseDevVersion(DefaultUseDevVersion);
-                return DefaultUseDevVersion;
+                SetUseDevVersion(defaultUseDevVersion);
+                return defaultUseDevVersion;
             }
 
             return Convert.ToBoolean(useDevVersion);
@@ -62,7 +62,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             UseDevVersion = useDevVersion;
 
-            LocalSettingsService.SaveSetting(WinGetConfigSettingsKey, useDevVersion);
+            LocalSettingsService.SaveSetting(winGetConfigSettingsKey, useDevVersion);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetWinGetInstallMode()
         {
-            object winGetInstallMode = LocalSettingsService.ReadSetting<object>(WinGetInstallModeSettingsKey);
+            object winGetInstallMode = LocalSettingsService.ReadSetting<object>(winGetInstallModeSettingsKey);
 
             if (winGetInstallMode is null)
             {
@@ -88,7 +88,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             WinGetInstallMode = winGetInstallMode;
 
-            LocalSettingsService.SaveSetting(WinGetInstallModeSettingsKey, winGetInstallMode.Value);
+            LocalSettingsService.SaveSetting(winGetInstallModeSettingsKey, winGetInstallMode.Value);
         }
     }
 }

@@ -14,18 +14,18 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class ParseService
     {
-        public static List<QueryLinksModel> QueryLinksList = new List<QueryLinksModel>();
+        public static List<QueryLinksModel> _queryLinksList = new List<QueryLinksModel>();
 
         /// <summary>
         /// 解析得到的数据
         /// </summary>
         public static async Task ParseDataAsync(AppInfoModel appInfo, List<QueryLinksModel> queryLinksList)
         {
-            QueryLinksList.Clear();
+            _queryLinksList.Clear();
             ResultListFilter(ref queryLinksList);
             foreach (QueryLinksModel queryLinksItem in queryLinksList)
             {
-                QueryLinksList.Add(queryLinksItem);
+                _queryLinksList.Add(queryLinksItem);
             }
 
             PrintAppInformation(appInfo);
@@ -78,10 +78,10 @@ namespace GetStoreApp.Services.Shell
             int fileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(fileNameHeader);
             int fileSizeHeaderLength = CharExtension.GetStringDisplayLengthEx(fileSizeHeader);
 
-            int serialNumberColumnLength = (serialNumberHeaderLength > QueryLinksList.Count.ToString().Length ? serialNumberHeaderLength : QueryLinksList.Count.ToString().Length) + 3;
+            int serialNumberColumnLength = (serialNumberHeaderLength > _queryLinksList.Count.ToString().Length ? serialNumberHeaderLength : _queryLinksList.Count.ToString().Length) + 3;
 
             int fileNameContentMaxLength = 0;
-            foreach (QueryLinksModel queryLinksItem in QueryLinksList)
+            foreach (QueryLinksModel queryLinksItem in _queryLinksList)
             {
                 if (queryLinksItem.FileName.Length > fileNameContentMaxLength)
                 {
@@ -104,11 +104,11 @@ namespace GetStoreApp.Services.Shell
             ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, fileSizeHeaderLength) + Environment.NewLine);
 
             // 打印内容
-            for (int resultDataIndex = 0; resultDataIndex < QueryLinksList.Count; resultDataIndex++)
+            for (int resultDataIndex = 0; resultDataIndex < _queryLinksList.Count; resultDataIndex++)
             {
                 ConsoleHelper.Write(Convert.ToString(resultDataIndex + 1) + new string(ConsoleLaunchService.RowSplitCharacter, serialNumberColumnLength - Convert.ToString(resultDataIndex + 1).Length));
-                ConsoleHelper.Write(QueryLinksList[resultDataIndex].FileName + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - QueryLinksList[resultDataIndex].FileName.Length));
-                ConsoleHelper.Write(QueryLinksList[resultDataIndex].FileSize + Environment.NewLine);
+                ConsoleHelper.Write(_queryLinksList[resultDataIndex].FileName + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - _queryLinksList[resultDataIndex].FileName.Length));
+                ConsoleHelper.Write(_queryLinksList[resultDataIndex].FileSize + Environment.NewLine);
             }
 
             ConsoleHelper.Write(Environment.NewLine);

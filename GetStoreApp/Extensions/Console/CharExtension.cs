@@ -7,7 +7,7 @@ namespace GetStoreApp.Extensions.Console
     /// </summary>
     public static class CharExtension
     {
-        private static byte[] Lengths = Resources.Lengths;
+        private static byte[] lengths = Resources.Lengths;
 
         /// <summary>
         /// 判断该字符在控制台显示的实际宽度是否大于1（速度更快版本）
@@ -15,7 +15,7 @@ namespace GetStoreApp.Extensions.Console
         public static bool IsWideDisplayCharEx(char c)
         {
             int index = c;
-            return (Lengths[index / 8] & (1 << (index % 8))) is not 0;
+            return (lengths[index / 8] & (1 << (index % 8))) is not 0;
         }
 
         /// <summary>

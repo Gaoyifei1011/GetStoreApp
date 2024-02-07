@@ -24,11 +24,10 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class DownloadingControl : Grid, INotifyPropertyChanged
     {
-        private readonly object DownloadingLock = new object();
+        private readonly object downloadingLock = new object();
 
         private bool isUpdatingNow = false;
-
-        private bool IsInitializeFinished = false;
+        private bool isInitializeFinished = false;
 
         public int SelectedIndex { get; set; } = 0;
 
@@ -133,14 +132,14 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnPauseAllClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
-            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingLock) isUpdatingNow = true;
+            while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+            lock (downloadingLock) isUpdatingNow = true;
 
             // 暂停下载所有任务
             await DownloadSchedulerService.PauseAllTaskAsync();
 
             // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingLock) isUpdatingNow = false;
+            lock (downloadingLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -149,8 +148,8 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
-            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingLock) isUpdatingNow = true;
+            while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+            lock (downloadingLock) isUpdatingNow = true;
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
@@ -161,7 +160,7 @@ namespace GetStoreApp.UI.Controls.Download
             IsSelectMode = true;
 
             // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingLock) isUpdatingNow = false;
+            lock (downloadingLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -170,8 +169,8 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
-            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingLock) isUpdatingNow = true;
+            while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+            lock (downloadingLock) isUpdatingNow = true;
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
@@ -179,7 +178,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingLock) isUpdatingNow = false;
+            lock (downloadingLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -188,8 +187,8 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
             // 有信息在更新时，等待操作
-            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingLock) isUpdatingNow = true;
+            while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+            lock (downloadingLock) isUpdatingNow = true;
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
@@ -197,7 +196,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingLock) isUpdatingNow = false;
+            lock (downloadingLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -222,8 +221,8 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 有信息在更新时，等待操作
-            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingLock) isUpdatingNow = true;
+            while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+            lock (downloadingLock) isUpdatingNow = true;
 
             IsSelectMode = false;
 
@@ -233,7 +232,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingLock) isUpdatingNow = false;
+            lock (downloadingLock) isUpdatingNow = false;
 
             await Task.Run(() =>
             {
@@ -291,8 +290,8 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             // 有信息在更新时，等待操作
-            while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-            lock (DownloadingLock) isUpdatingNow = true;
+            while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+            lock (downloadingLock) isUpdatingNow = true;
 
             DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
             int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
@@ -303,7 +302,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingLock) isUpdatingNow = false;
+            lock (downloadingLock) isUpdatingNow = false;
         }
 
         #endregion 第二部分：正在下载中控件——挂载的事件
@@ -316,13 +315,13 @@ namespace GetStoreApp.UI.Controls.Download
         public async void DownloadInfoTimerTick(object sender, object args)
         {
             // 有信息在更新时，不再操作，等待下一秒尝试更新内容
-            if (!IsInitializeFinished)
+            if (!isInitializeFinished)
             {
                 return;
             }
 
             // 当有信息处于更新状态中时，暂停其他操作
-            lock (DownloadingLock) isUpdatingNow = true;
+            lock (downloadingLock) isUpdatingNow = true;
 
             List<BackgroundModel> downloadingList = await DownloadSchedulerService.GetDownloadingListAsync();
 
@@ -350,7 +349,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 信息更新完毕时，允许其他操作开始执行
-            lock (DownloadingLock) isUpdatingNow = false;
+            lock (downloadingLock) isUpdatingNow = false;
         }
 
         /// <summary>
@@ -366,8 +365,8 @@ namespace GetStoreApp.UI.Controls.Download
                     DispatcherQueue.TryEnqueue(async () =>
                     {
                         // 有信息在更新时，等待操作
-                        while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-                        lock (DownloadingLock) isUpdatingNow = true;
+                        while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+                        lock (downloadingLock) isUpdatingNow = true;
 
                         foreach (object newItem in args.NewItems)
                         {
@@ -396,7 +395,7 @@ namespace GetStoreApp.UI.Controls.Download
                             }
                         }
 
-                        lock (DownloadingLock) isUpdatingNow = false;
+                        lock (downloadingLock) isUpdatingNow = false;
                     });
                 }
 
@@ -406,8 +405,8 @@ namespace GetStoreApp.UI.Controls.Download
                     DispatcherQueue.TryEnqueue(async () =>
                     {
                         // 有信息在更新时，等待操作
-                        while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-                        lock (DownloadingLock) isUpdatingNow = true;
+                        while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+                        lock (downloadingLock) isUpdatingNow = true;
 
                         foreach (object oldItem in args.OldItems)
                         {
@@ -433,7 +432,7 @@ namespace GetStoreApp.UI.Controls.Download
                             }
                         }
 
-                        lock (DownloadingLock) isUpdatingNow = false;
+                        lock (downloadingLock) isUpdatingNow = false;
                     });
                 }
             }
@@ -452,8 +451,8 @@ namespace GetStoreApp.UI.Controls.Download
                     DispatcherQueue.TryEnqueue(async () =>
                     {
                         // 有信息在更新时，等待操作
-                        while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-                        lock (DownloadingLock) isUpdatingNow = true;
+                        while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+                        lock (downloadingLock) isUpdatingNow = true;
 
                         foreach (object newItem in args.NewItems)
                         {
@@ -472,7 +471,7 @@ namespace GetStoreApp.UI.Controls.Download
                             }
                         }
 
-                        lock (DownloadingLock) isUpdatingNow = false;
+                        lock (downloadingLock) isUpdatingNow = false;
                     });
                 }
 
@@ -482,8 +481,8 @@ namespace GetStoreApp.UI.Controls.Download
                     DispatcherQueue.TryEnqueue(async () =>
                     {
                         // 有信息在更新时，等待操作
-                        while (isUpdatingNow || !IsInitializeFinished) await Task.Delay(50);
-                        lock (DownloadingLock) isUpdatingNow = true;
+                        while (isUpdatingNow || !isInitializeFinished) await Task.Delay(50);
+                        lock (downloadingLock) isUpdatingNow = true;
 
                         foreach (object oldItem in args.OldItems)
                         {
@@ -509,7 +508,7 @@ namespace GetStoreApp.UI.Controls.Download
                             }
                         }
 
-                        lock (DownloadingLock) isUpdatingNow = false;
+                        lock (downloadingLock) isUpdatingNow = false;
                     });
                 }
             }
@@ -566,7 +565,7 @@ namespace GetStoreApp.UI.Controls.Download
         private async Task GetDownloadingDataListAsync()
         {
             // 有信息在更新时，等待操作
-            lock (DownloadingLock) isUpdatingNow = true;
+            lock (downloadingLock) isUpdatingNow = true;
 
             DownloadingCollection.Clear();
 
@@ -602,9 +601,9 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 有信息在更新时，等待操作
-            lock (DownloadingLock)
+            lock (downloadingLock)
             {
-                IsInitializeFinished = true;
+                isInitializeFinished = true;
                 isUpdatingNow = false;
             }
         }

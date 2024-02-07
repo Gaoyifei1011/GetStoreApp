@@ -17,7 +17,6 @@ namespace GetStoreApp.Helpers.Root
         public static int ResetTextColor()
         {
             IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
-
             return Kernel32Library.SetConsoleTextAttribute(consoleHandle, 0x0F);
         }
 
@@ -27,7 +26,6 @@ namespace GetStoreApp.Helpers.Root
         public static int SetTextColor(ushort color)
         {
             IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
-
             return Kernel32Library.SetConsoleTextAttribute(consoleHandle, color);
         }
 
@@ -68,7 +66,6 @@ namespace GetStoreApp.Helpers.Root
             if (!IsExited)
             {
                 IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
-
                 return Kernel32Library.WriteConsole(consoleHandle, value, value.Length, out _, IntPtr.Zero);
             }
             else

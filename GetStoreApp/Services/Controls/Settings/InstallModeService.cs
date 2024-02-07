@@ -11,9 +11,8 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class InstallModeService
     {
-        private static string SettingsKey = ConfigKey.InstallModeKey;
-
-        private static DictionaryEntry DefaultInstallMode;
+        private static string settingsKey = ConfigKey.InstallModeKey;
+        private static DictionaryEntry defaultInstallMode;
 
         public static DictionaryEntry InstallMode { get; private set; }
 
@@ -26,7 +25,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             InstallModeList = ResourceService.InstallModeList;
 
-            DefaultInstallMode = InstallModeList.Find(item => item.Value.ToString().Equals("AppInstall", StringComparison.OrdinalIgnoreCase));
+            defaultInstallMode = InstallModeList.Find(item => item.Value.ToString().Equals("AppInstall", StringComparison.OrdinalIgnoreCase));
 
             InstallMode = GetInstallMode();
         }
@@ -36,12 +35,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static DictionaryEntry GetInstallMode()
         {
-            object installMode = LocalSettingsService.ReadSetting<object>(SettingsKey);
+            object installMode = LocalSettingsService.ReadSetting<object>(settingsKey);
 
             if (installMode is null)
             {
-                SetInstallMode(DefaultInstallMode);
-                return InstallModeList.Find(item => item.Value.Equals(DefaultInstallMode.Value));
+                SetInstallMode(defaultInstallMode);
+                return InstallModeList.Find(item => item.Value.Equals(defaultInstallMode.Value));
             }
 
             return InstallModeList.Find(item => item.Value.Equals(installMode));
@@ -54,7 +53,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             InstallMode = installMode;
 
-            LocalSettingsService.SaveSetting(SettingsKey, installMode.Value);
+            LocalSettingsService.SaveSetting(settingsKey, installMode.Value);
         }
     }
 }

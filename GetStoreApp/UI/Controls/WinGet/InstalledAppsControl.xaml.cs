@@ -27,12 +27,12 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object InstalledAppsLock = new object();
+        private readonly object installedAppsLock = new object();
 
         private bool isInitialized = false;
 
         private AutoResetEvent autoResetEvent;
-        private PackageManager InstalledAppsManager;
+        private PackageManager installedAppsManager;
 
         private bool _isLoadedCompleted = false;
 
@@ -99,7 +99,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList = new List<MatchResult>();
+        private List<MatchResult> MatchResultList { get; } = new List<MatchResult>();
 
         private ObservableCollection<InstalledAppsModel> InstalledAppsCollection { get; } = new ObservableCollection<InstalledAppsModel>();
 
@@ -146,7 +146,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         uninstallOptions.PackageUninstallMode = PackageUninstallMode.Interactive;
                         uninstallOptions.PackageUninstallScope = PackageUninstallScope.Any;
 
-                        UninstallResult unInstallResult = await InstalledAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
+                        UninstallResult unInstallResult = await installedAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
 
                         // 获取卸载后的结果信息
                         // 卸载成功，从列表中删除该应用
@@ -175,7 +175,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (InstalledAppsLock)
+                                lock (installedAppsLock)
                                 {
                                     // 从已安装应用列表中移除已卸载完成的应用
                                     foreach (InstalledAppsModel installedAppsItem in InstalledAppsCollection)
@@ -224,7 +224,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 try
                 {
-                    InstalledAppsManager = WinGetService.CreatePackageManager();
+                    installedAppsManager = WinGetService.CreatePackageManager();
                 }
                 catch (Exception e)
                 {
@@ -268,7 +268,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            MatchResultList = null;
+            MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
             GetInstalledApps();
@@ -294,7 +294,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null)
             {
-                if (autoSuggestBox.Text == string.Empty && MatchResultList is not null)
+                if (autoSuggestBox.Text == string.Empty && MatchResultList.Count > 0)
                 {
                     InitializeData();
                 }
@@ -337,7 +337,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 Task.Run(async () =>
                 {
                     await Task.Delay(300);
-                    PackageCatalogReference searchCatalogReference = InstalledAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
+                    PackageCatalogReference searchCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
                     ConnectResult connectResult = await searchCatalogReference.ConnectAsync();
                     PackageCatalog installedCatalog = connectResult.PackageCatalog;
@@ -347,7 +347,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
 
-                        MatchResultList.Clear();
                         IReadOnlyList<MatchResult> list = findResult.Matches;
 
                         for (int index = 0; index < list.Count; index++)
@@ -373,7 +372,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void InitializeData(bool hasSearchText = false)
         {
-            lock (InstalledAppsLock)
+            lock (installedAppsLock)
             {
                 InstalledAppsCollection.Clear();
             }
@@ -384,7 +383,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 autoResetEvent?.Dispose();
                 autoResetEvent = null;
 
-                if (MatchResultList is not null)
+                if (MatchResultList.Count > 0)
                 {
                     List<InstalledAppsModel> installedAppsList = new List<InstalledAppsModel>();
 
@@ -448,7 +447,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (InstalledAppsLock)
+                        lock (installedAppsLock)
                         {
                             foreach (InstalledAppsModel installedApps in installedAppsList)
                             {
@@ -463,7 +462,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (InstalledAppsLock)
+                        lock (installedAppsLock)
                         {
                             IsInstalledAppsEmpty = true;
                             IsLoadedCompleted = true;

@@ -49,21 +49,8 @@ namespace GetStoreApp
         private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
-
-            // 系统背景色弹出的异常，不进行处理
-            if (args.Exception.HResult is -2147024809 && args.Exception.StackTrace.Contains("SystemBackdropConfiguration"))
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "System backdrop config warning.", args.Exception);
-                return;
-            }
-            // 处理其他异常
-            else
-            {
-                LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
-
-                // 退出应用
-                Dispose();
-            }
+            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
+            Dispose();
         }
 
         /// <summary>
@@ -75,39 +62,39 @@ namespace GetStoreApp
             {
                 Task.Run(async () =>
                 {
-                    JumpList TaskbarJumpList = await JumpList.LoadCurrentAsync();
-                    TaskbarJumpList.Items.Clear();
-                    TaskbarJumpList.SystemGroupKind = JumpListSystemGroupKind.None;
+                    JumpList taskbarJumpList = await JumpList.LoadCurrentAsync();
+                    taskbarJumpList.Items.Clear();
+                    taskbarJumpList.SystemGroupKind = JumpListSystemGroupKind.None;
 
                     JumpListItem storeItem = JumpListItem.CreateWithArguments("JumpList Store", ResourceService.GetLocalized("Window/Store"));
                     storeItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Store.png");
-                    TaskbarJumpList.Items.Add(storeItem);
+                    taskbarJumpList.Items.Add(storeItem);
 
                     JumpListItem appUpdateItem = JumpListItem.CreateWithArguments("JumpList AppUpdate", ResourceService.GetLocalized("Window/AppUpdate"));
                     appUpdateItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/AppUpdate.png");
-                    TaskbarJumpList.Items.Add(appUpdateItem);
+                    taskbarJumpList.Items.Add(appUpdateItem);
 
-                    TaskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
+                    taskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
 
                     JumpListItem wingetItem = JumpListItem.CreateWithArguments("JumpList WinGet", ResourceService.GetLocalized("Window/WinGet"));
                     wingetItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/WinGet.png");
-                    TaskbarJumpList.Items.Add(wingetItem);
+                    taskbarJumpList.Items.Add(wingetItem);
 
                     JumpListItem uwpAppItem = JumpListItem.CreateWithArguments("JumpList UWPApp", ResourceService.GetLocalized("Window/UWPApp"));
                     uwpAppItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/UWPApp.png");
-                    TaskbarJumpList.Items.Add(uwpAppItem);
+                    taskbarJumpList.Items.Add(uwpAppItem);
 
-                    TaskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
+                    taskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
 
                     JumpListItem downloadItem = JumpListItem.CreateWithArguments("JumpList Download", ResourceService.GetLocalized("Window/Download"));
                     downloadItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Download.png");
-                    TaskbarJumpList.Items.Add(downloadItem);
+                    taskbarJumpList.Items.Add(downloadItem);
 
                     JumpListItem webItem = JumpListItem.CreateWithArguments("JumpList Web", ResourceService.GetLocalized("Window/Web"));
                     webItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/Web.png");
-                    TaskbarJumpList.Items.Add(webItem);
+                    taskbarJumpList.Items.Add(webItem);
 
-                    await TaskbarJumpList.SaveAsync();
+                    await taskbarJumpList.SaveAsync();
                 });
             }
         }
@@ -146,6 +133,7 @@ namespace GetStoreApp
         {
             MainWindow.Current.AppWindow.Hide();
             ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), "Restart", out _);
+            MainWindow.Current.Close();
             Dispose();
         }
 
@@ -183,7 +171,7 @@ namespace GetStoreApp
                 isDisposed = true;
             }
 
-            Environment.Exit(0);
+            Environment.Exit(Environment.ExitCode);
         }
     }
 }

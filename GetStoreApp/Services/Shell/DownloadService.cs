@@ -17,10 +17,10 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class DownloadService
     {
-        private static bool IsFileDownloading = false;
+        private static bool isFileDownloading = false;
 
-        public static STARTUPINFO DownloadStartupInfo;
-        public static PROCESS_INFORMATION DownloadInformation;
+        public static STARTUPINFO downloadStartupInfo;
+        public static PROCESS_INFORMATION downloadInformation;
 
         /// <summary>
         /// 下载相应的文件
@@ -43,7 +43,7 @@ namespace GetStoreApp.Services.Shell
                     foreach (string indexItem in indexList)
                     {
                         int index = Convert.ToInt32(indexItem);
-                        if (index > ParseService.QueryLinksList.Count || index < 1)
+                        if (index > ParseService._queryLinksList.Count || index < 1)
                         {
                             checkResult = false;
                             break;
@@ -54,16 +54,16 @@ namespace GetStoreApp.Services.Shell
                     {
                         for (int index = 0; index < indexList.Count; index++)
                         {
-                            string IndexItem = indexList[index];
+                            string indexItem = indexList[index];
                             if (ConsoleLaunchService.IsAppRunning)
                             {
                                 ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, indexList.Count));
-                                DownloadFile(ParseService.QueryLinksList[Convert.ToInt32(IndexItem) - 1].FileName, ParseService.QueryLinksList[Convert.ToInt32(IndexItem) - 1].FileLink);
+                                DownloadFile(ParseService._queryLinksList[Convert.ToInt32(indexItem) - 1].FileName, ParseService._queryLinksList[Convert.ToInt32(indexItem) - 1].FileLink);
                             }
                         }
                         ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
-                        string InputString = ConsoleHelper.ReadLine();
-                        if (InputString is "Y" || InputString is "y")
+                        string inputString = ConsoleHelper.ReadLine();
+                        if (inputString is "Y" || inputString is "y")
                         {
                             continue;
                         }
@@ -77,8 +77,8 @@ namespace GetStoreApp.Services.Shell
                     else
                     {
                         ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
-                        string InputString = ConsoleHelper.ReadLine();
-                        if (InputString is "Y" || InputString is "y")
+                        string inputString = ConsoleHelper.ReadLine();
+                        if (inputString is "Y" || inputString is "y")
                         {
                             continue;
                         }
@@ -91,8 +91,8 @@ namespace GetStoreApp.Services.Shell
                 catch (Exception)
                 {
                     ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
-                    string InputString = ConsoleHelper.ReadLine();
-                    if (InputString is "Y" || InputString is "y")
+                    string inputString = ConsoleHelper.ReadLine();
+                    if (inputString is "Y" || inputString is "y")
                     {
                         continue;
                     }
@@ -109,18 +109,18 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static unsafe void DownloadFile(string fileName, string fileLink)
         {
-            byte[] ReadBuff = new byte[101];
+            byte[] readBuff = new byte[101];
 
-            SECURITY_ATTRIBUTES DownloadSecurityAttributes = new SECURITY_ATTRIBUTES();
-            DownloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
-            DownloadSecurityAttributes.bInheritHandle = true;
-            DownloadSecurityAttributes.lpSecurityDescriptor = 0;
+            SECURITY_ATTRIBUTES downloadSecurityAttributes = new SECURITY_ATTRIBUTES();
+            downloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
+            downloadSecurityAttributes.bInheritHandle = true;
+            downloadSecurityAttributes.lpSecurityDescriptor = 0;
 
-            bool PipeCreateResult = Kernel32Library.CreatePipe(out IntPtr hRead, out IntPtr hWrite, &DownloadSecurityAttributes, 0);
+            bool pipeCreateResult = Kernel32Library.CreatePipe(out IntPtr hRead, out IntPtr hWrite, &downloadSecurityAttributes, 0);
 
-            if (PipeCreateResult)
+            if (pipeCreateResult)
             {
-                IntPtr Handle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+                IntPtr handle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
                 Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, hWrite);
 
                 Kernel32Library.GetStartupInfo(out STARTUPINFO downloadStartupInfo);
@@ -158,16 +158,16 @@ namespace GetStoreApp.Services.Shell
                     out PROCESS_INFORMATION downloadInformation
                     );
 
-                IsFileDownloading = true;
-                Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, Handle);
+                isFileDownloading = true;
+                Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, handle);
                 Kernel32Library.CloseHandle(hWrite);
 
                 if (createResult)
                 {
-                    while (Kernel32Library.ReadFile(hRead, ReadBuff, 100, out uint ReadNum, IntPtr.Zero))
+                    while (Kernel32Library.ReadFile(hRead, readBuff, 100, out uint ReadNum, IntPtr.Zero))
                     {
-                        ReadBuff[ReadNum] = (byte)'\0';
-                        ConsoleHelper.Write(Encoding.UTF8.GetString(ReadBuff));
+                        readBuff[ReadNum] = (byte)'\0';
+                        ConsoleHelper.Write(Encoding.UTF8.GetString(readBuff));
                     }
 
                     if (downloadInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(downloadInformation.hProcess);
@@ -176,7 +176,7 @@ namespace GetStoreApp.Services.Shell
                 }
 
                 if (hRead != IntPtr.Zero) Kernel32Library.CloseHandle(hRead);
-                IsFileDownloading = false;
+                isFileDownloading = false;
                 ConsoleHelper.Write(Environment.NewLine);
             }
         }
@@ -194,11 +194,11 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static void StopDownloadFile()
         {
-            if (IsFileDownloading)
+            if (isFileDownloading)
             {
-                if (DownloadInformation.dwProcessId is not 0)
+                if (downloadInformation.dwProcessId is not 0)
                 {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, DownloadInformation.dwProcessId);
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, downloadInformation.dwProcessId);
                     if (hProcess != IntPtr.Zero)
                     {
                         Kernel32Library.TerminateProcess(hProcess, 0);

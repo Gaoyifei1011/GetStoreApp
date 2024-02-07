@@ -12,8 +12,6 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class CopyPasteHelper
     {
-        private static DataPackage DataPackage = new DataPackage();
-
         /// <summary>
         /// 复制字符串内容到剪贴板
         /// </summary>
@@ -21,9 +19,10 @@ namespace GetStoreApp.Helpers.Root
         {
             try
             {
-                DataPackage.RequestedOperation = DataPackageOperation.Copy;
-                DataPackage.SetText(content);
-                Clipboard.SetContent(DataPackage);
+                DataPackage dataPackage = new DataPackage();
+                dataPackage.RequestedOperation = DataPackageOperation.Copy;
+                dataPackage.SetText(content);
+                Clipboard.SetContent(dataPackage);
                 return true;
             }
             catch (Exception e)
@@ -40,9 +39,10 @@ namespace GetStoreApp.Helpers.Root
         {
             try
             {
-                DataPackage.RequestedOperation = DataPackageOperation.Copy;
-                DataPackage.SetStorageItems(files);
-                Clipboard.SetContent(DataPackage);
+                DataPackage dataPackage = new DataPackage();
+                dataPackage.RequestedOperation = DataPackageOperation.Copy;
+                dataPackage.SetStorageItems(files);
+                Clipboard.SetContent(dataPackage);
                 return true;
             }
             catch (Exception e)

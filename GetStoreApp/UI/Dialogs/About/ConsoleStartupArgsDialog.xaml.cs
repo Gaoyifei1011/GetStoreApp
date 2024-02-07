@@ -10,9 +10,11 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class ConsoleStartupArgsDialog : ContentDialog
     {
-        private string SampleShort = @"GetStoreApp.exe Console ""https://www.microsoft.com/store/productId/9WZDNCRFJBMP""";
-        private string SampleFull = @"GetStoreApp.exe Console -t ""pid"" -c ""rt"" ""-l"" ""9WZDNCRFJBMP""";
-        private string SampleWithoutParameter = @"GetStoreApp.exe Console";
+        private string SampleShort { get; } = @"GetStoreApp.exe Console ""https://www.microsoft.com/store/productId/9WZDNCRFJBMP""";
+
+        private string SampleFull { get; } = @"GetStoreApp.exe Console -t ""pid"" -c ""rt"" ""-l"" ""9WZDNCRFJBMP""";
+
+        private string SampleWithoutParameter { get; } = @"GetStoreApp.exe Console";
 
         private List<StartupArgsModel> ConsoleStartupArgsList { get; } = new List<StartupArgsModel>
         {

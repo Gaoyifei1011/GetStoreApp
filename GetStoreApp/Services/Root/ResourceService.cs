@@ -18,15 +18,15 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ResourceService
     {
-        private static bool IsInitialized = false;
+        private static bool isInitialized = false;
 
-        private static DictionaryEntry DefaultAppLanguage;
-        private static DictionaryEntry CurrentAppLanguage;
+        private static DictionaryEntry _defaultAppLanguage;
+        private static DictionaryEntry _currentAppLanguage;
 
-        private static ResourceContext DefaultResourceContext = new ResourceContext();
-        private static ResourceContext CurrentResourceContext = new ResourceContext();
+        private static ResourceContext defaultResourceContext = new ResourceContext();
+        private static ResourceContext currentResourceContext = new ResourceContext();
 
-        private static ResourceMap ResourceMap = ResourceManager.Current.MainResourceMap;
+        private static ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
 
         public static List<TypeModel> TypeList { get; } = new List<TypeModel>();
 
@@ -57,13 +57,13 @@ namespace GetStoreApp.Services.Root
         /// <param name="currentAppLanguage">当前语言名称</param>
         public static void InitializeResource(DictionaryEntry defaultAppLanguage, DictionaryEntry currentAppLanguage)
         {
-            DefaultAppLanguage = defaultAppLanguage;
-            CurrentAppLanguage = currentAppLanguage;
+            _defaultAppLanguage = defaultAppLanguage;
+            _currentAppLanguage = currentAppLanguage;
 
-            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage.Value.ToString();
-            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage.Value.ToString();
+            defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage.Value.ToString();
+            currentResourceContext.QualifierValues["Language"] = _currentAppLanguage.Value.ToString();
 
-            IsInitialized = true;
+            isInitialized = true;
         }
 
         /// <summary>
@@ -376,22 +376,22 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static string GetLocalized(string resource)
         {
-            if (IsInitialized)
+            if (isInitialized)
             {
                 try
                 {
-                    return ResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
+                    return resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", CurrentAppLanguage.Value), currentResourceException);
+                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _currentAppLanguage.Value), currentResourceException);
                     try
                     {
-                        return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
+                        return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", DefaultAppLanguage.Value), defaultResourceException);
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _defaultAppLanguage.Value), defaultResourceException);
                         return resource;
                     }
                 }

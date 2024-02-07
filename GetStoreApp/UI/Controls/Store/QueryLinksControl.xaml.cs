@@ -34,12 +34,13 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
     {
-        private readonly object HistoryLock = new object();
-        private readonly object QueryLinksLock = new object();
+        private readonly object historyLock = new object();
+        private readonly object queryLinksLock = new object();
 
-        private string SampleLink;
-        private string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
-        private string QueryLinksCountInfo = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
+        private string sampleLink;
+        private string sampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
+
+        private string QueryLinksCountInfo { get; } = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
 
         private TypeModel _selectedType;
 
@@ -210,8 +211,8 @@ namespace GetStoreApp.UI.Controls.Store
             SelectedChannel = Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"])];
             LinkText = DesktopLaunchService.LaunchArgs["Link"] is null ? string.Empty : (string)DesktopLaunchService.LaunchArgs["Link"];
 
-            SampleLink = SampleLinkList[0];
-            LinkPlaceHolderText = SampleTitle + SampleLink;
+            sampleLink = SampleLinkList[0];
+            LinkPlaceHolderText = sampleTitle + sampleLink;
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -283,29 +284,29 @@ namespace GetStoreApp.UI.Controls.Store
                     // 使用应用内提供的下载方式
                     if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[0].Value)
                     {
-                        string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+                        string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
                         BackgroundModel backgroundItem = new BackgroundModel
                         {
-                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, DownloadFilePath),
+                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
                             FileName = queryLinksItem.FileName,
                             FileLink = queryLinksItem.FileLink,
-                            FilePath = DownloadFilePath,
+                            FilePath = downloadFilePath,
                             TotalSize = 0,
                             DownloadFlag = 1
                         };
 
                         // 检查是否存在相同的任务记录
-                        DuplicatedDataKind CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                        DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
-                        switch (CheckResult)
+                        switch (checkResult)
                         {
                             case DuplicatedDataKind.None:
                                 {
-                                    bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                                    bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        TeachingTipHelper.Show(new DownloadCreateTip(AddResult));
+                                        TeachingTipHelper.Show(new DownloadCreateTip(addResult));
                                     });
 
                                     break;
@@ -338,10 +339,10 @@ namespace GetStoreApp.UI.Controls.Store
                                         }
                                         finally
                                         {
-                                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             DispatcherQueue.TryEnqueue(() =>
                                             {
-                                                TeachingTipHelper.Show(new DownloadCreateTip(AddResult));
+                                                TeachingTipHelper.Show(new DownloadCreateTip(addResult));
                                             });
                                         }
                                     }
@@ -382,10 +383,10 @@ namespace GetStoreApp.UI.Controls.Store
                                         }
                                         finally
                                         {
-                                            bool AddResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                            bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                             DispatcherQueue.TryEnqueue(() =>
                                             {
-                                                TeachingTipHelper.Show(new DownloadCreateTip(AddResult));
+                                                TeachingTipHelper.Show(new DownloadCreateTip(addResult));
                                             });
                                         }
                                     }
@@ -479,8 +480,8 @@ namespace GetStoreApp.UI.Controls.Store
             if (item.Tag is not null)
             {
                 SelectedType = TypeList[Convert.ToInt32(item.Tag)];
-                SampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
-                LinkPlaceHolderText = SampleTitle + SampleLink;
+                sampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
+                LinkPlaceHolderText = sampleTitle + sampleLink;
 
                 LinkText = string.Empty;
             }
@@ -536,7 +537,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
-            lock (QueryLinksLock)
+            lock (queryLinksLock)
             {
                 foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
@@ -553,7 +554,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            lock (QueryLinksLock)
+            lock (queryLinksLock)
             {
                 foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
@@ -567,7 +568,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            lock (QueryLinksLock)
+            lock (queryLinksLock)
             {
                 foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
@@ -717,21 +718,21 @@ namespace GetStoreApp.UI.Controls.Store
 
                     foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                     {
-                        string DownloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+                        string downloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
                         BackgroundModel backgroundItem = new BackgroundModel
                         {
-                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, DownloadFilePath),
+                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
                             FileName = queryLinksItem.FileName,
                             FileLink = queryLinksItem.FileLink,
-                            FilePath = DownloadFilePath,
+                            FilePath = downloadFilePath,
                             TotalSize = 0,
                             DownloadFlag = 1
                         };
 
-                        DuplicatedDataKind CheckResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
+                        DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
-                        if (CheckResult is DuplicatedDataKind.None)
+                        if (checkResult is DuplicatedDataKind.None)
                         {
                             await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
                             IsDownloadSuccessfully = true;
@@ -815,7 +816,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
-            lock (QueryLinksLock)
+            lock (queryLinksLock)
             {
                 IsSelectMode = false;
                 foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
@@ -834,7 +835,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (queryLinksItem is not null)
             {
-                lock (QueryLinksLock)
+                lock (queryLinksLock)
                 {
                     int ClickedIndex = QueryLinksCollection.IndexOf(queryLinksItem);
                     QueryLinksCollection[ClickedIndex].IsSelected = !QueryLinksCollection[ClickedIndex].IsSelected;
@@ -878,7 +879,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (HistoryLock)
+                    lock (historyLock)
                     {
                         HistoryCollection.Clear();
                         Task.Delay(10);
@@ -897,7 +898,7 @@ namespace GetStoreApp.UI.Controls.Store
         public void QueryLinks()
         {
             // 设置获取数据时的相关控件状态
-            LinkText = string.IsNullOrEmpty(LinkText) ? SampleLink : LinkText;
+            LinkText = string.IsNullOrEmpty(LinkText) ? sampleLink : LinkText;
             IsQueryingLinks = true;
             SetControlState(InfoBarSeverity.Informational);
 
@@ -963,7 +964,7 @@ namespace GetStoreApp.UI.Controls.Store
                             AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
                             AppInfo.ProductID = appInformationResult.Item2.ProductID;
 
-                            lock (QueryLinksLock)
+                            lock (queryLinksLock)
                             {
                                 QueryLinksCollection.Clear();
                                 foreach (QueryLinksModel resultItem in queryLinksList)
@@ -1012,7 +1013,7 @@ namespace GetStoreApp.UI.Controls.Store
             Task.Run(() =>
             {
                 // 计算时间戳
-                long timeStamp = GenerateTimeStamp();
+                long timeStamp = Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link);
 
                 List<HistoryModel> historyList = new List<HistoryModel>();
@@ -1041,7 +1042,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (HistoryLock)
+                        lock (historyLock)
                         {
                             if (HistoryCollection.Count is 3)
                             {
@@ -1063,7 +1064,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (HistoryLock)
+                        lock (historyLock)
                         {
                             HistoryCollection.RemoveAt(index);
                             HistoryCollection.Insert(0, historyItem);
@@ -1092,15 +1093,6 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 resultDataList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
             }
-        }
-
-        /// <summary>
-        /// 生成时间戳
-        /// </summary>
-        private long GenerateTimeStamp()
-        {
-            TimeSpan TimeSpan = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
-            return Convert.ToInt64(TimeSpan.TotalSeconds);
         }
     }
 }

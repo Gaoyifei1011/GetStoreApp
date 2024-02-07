@@ -25,9 +25,9 @@ namespace GetStoreApp.Helpers.Controls.Store
         private static string market = CultureInfo.InstalledUICulture.Name.Remove(0, 3).ToUpper();
         private static string locale = CultureInfo.InstalledUICulture.Name.ToLower();
 
-        private static Uri CookieUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
-        private static Uri FileListXmlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
-        private static Uri UrlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured");
+        private static Uri cookieUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
+        private static Uri fileListXmlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
+        private static Uri urlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured");
 
         /// <summary>
         /// 解析输入框输入的字符串
@@ -67,7 +67,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new HttpClient();
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(CookieUri, httpStringContent).AsTask(cancellationTokenSource.Token);
+                HttpResponseMessage responseMessage = await httpClient.PostAsync(cookieUri, httpStringContent).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
@@ -186,9 +186,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                                     appInfoModel.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
                                 }
                             }
-                            catch
-                            {
-                            }
+                            catch (Exception) { }
                             appInformationResult = new Tuple<bool, AppInfoModel>(true, appInfoModel);
                         }
                     }
@@ -252,7 +250,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new HttpClient();
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(FileListXmlUri, httpStringContent).AsTask(cancellationTokenSource.Token);
+                HttpResponseMessage responseMessage = await httpClient.PostAsync(fileListXmlUri, httpStringContent).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
@@ -419,7 +417,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new HttpClient();
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(UrlUri, httpContent).AsTask(cancellationTokenSource.Token);
+                HttpResponseMessage responseMessage = await httpClient.PostAsync(urlUri, httpContent).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
@@ -685,7 +683,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         {
             foreach (IXmlNode node in xmlNode.ChildNodes)
             {
-                if (node.NodeName == name)
+                if (node.NodeName.Equals(name))
                 {
                     return node;
                 }

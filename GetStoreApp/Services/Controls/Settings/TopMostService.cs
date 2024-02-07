@@ -10,9 +10,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class TopMostService
     {
-        private static string SettingsKey = ConfigKey.TopMostKey;
+        private static string settingsKey = ConfigKey.TopMostKey;
 
-        private static bool DefaultTopMostValue = false;
+        private static bool defaultTopMostValue = false;
 
         public static bool TopMostValue { get; private set; }
 
@@ -29,12 +29,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static bool GetTopMostValue()
         {
-            bool? topMostValue = LocalSettingsService.ReadSetting<bool?>(SettingsKey);
+            bool? topMostValue = LocalSettingsService.ReadSetting<bool?>(settingsKey);
 
             if (!topMostValue.HasValue)
             {
-                SetTopMostValue(DefaultTopMostValue);
-                return DefaultTopMostValue;
+                SetTopMostValue(defaultTopMostValue);
+                return defaultTopMostValue;
             }
 
             return Convert.ToBoolean(topMostValue);
@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             TopMostValue = topMostValue;
 
-            LocalSettingsService.SaveSetting(SettingsKey, topMostValue);
+            LocalSettingsService.SaveSetting(settingsKey, topMostValue);
         }
 
         /// <summary>

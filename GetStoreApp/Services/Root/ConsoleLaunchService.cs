@@ -21,7 +21,7 @@ namespace GetStoreApp.Services.Root
 
         public static bool IsAppRunning { get; private set; } = true;
 
-        private static List<string> ConsoleLaunchArgs = new List<string>();
+        private static List<string> consoleLaunchArgs = new List<string>();
 
         /// <summary>
         /// 应用启动时使用的参数
@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Root
         {
             foreach (string item in args)
             {
-                ConsoleLaunchArgs.Add(item);
+                consoleLaunchArgs.Add(item);
             }
             ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
             Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
@@ -86,7 +86,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeRequestContent()
         {
-            if (ConsoleLaunchArgs.Count is not 1)
+            if (consoleLaunchArgs.Count is not 1)
             {
                 ParseLaunchArgs();
                 RequestService.InitializeWithoutQueryData();
@@ -144,25 +144,25 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void ParseLaunchArgs()
         {
-            if (ConsoleLaunchArgs.Count is 2)
+            if (consoleLaunchArgs.Count is 2)
             {
-                LaunchArgs["Link"] = ConsoleLaunchArgs[1];
+                LaunchArgs["Link"] = consoleLaunchArgs[1];
             }
             else
             {
-                if (ConsoleLaunchArgs.Count % 2 is not 1)
+                if (consoleLaunchArgs.Count % 2 is not 1)
                 {
                     ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
                     return;
                 }
 
-                int TypeNameIndex = ConsoleLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                int ChannelNameIndex = ConsoleLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                int LinkIndex = ConsoleLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                int TypeNameIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                int ChannelNameIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                int LinkIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(ConsoleLaunchArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(ConsoleLaunchArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : ConsoleLaunchArgs[LinkIndex + 1];
+                LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
+                LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : consoleLaunchArgs[LinkIndex + 1];
             }
         }
     }

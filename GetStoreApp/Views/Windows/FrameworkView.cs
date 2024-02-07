@@ -78,7 +78,7 @@ namespace GetStoreApp.Views.Windows
                     }
                 }
 
-                Environment.Exit(0);
+                Environment.Exit(Environment.ExitCode);
             });
             coreWindow.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
         }

@@ -12,7 +12,7 @@ namespace GetStoreApp.Helpers.Controls.Download
     /// </summary>
     public static class Aria2ProcessHelper
     {
-        private static PROCESS_INFORMATION Aria2Information;
+        private static PROCESS_INFORMATION aria2Information;
 
         /// <summary>
         /// 让Aria2以RPC方式启动，并让其在后台运行
@@ -37,7 +37,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                 Aria2StartupInfo.lpReserved2 = IntPtr.Zero;
                 Aria2StartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2StartupInfo, out Aria2Information);
+                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2StartupInfo, out aria2Information);
             }
             catch (Exception e)
             {
@@ -66,7 +66,7 @@ namespace GetStoreApp.Helpers.Controls.Download
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref ProcessEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref ProcessEntry32))
                 {
-                    if (ProcessEntry32.th32ProcessID == Aria2Information.dwProcessId)
+                    if (ProcessEntry32.th32ProcessID == aria2Information.dwProcessId)
                     {
                         SearchResult = true;
                     }

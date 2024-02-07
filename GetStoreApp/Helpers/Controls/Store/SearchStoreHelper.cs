@@ -20,7 +20,7 @@ namespace GetStoreApp.Helpers.Controls.Store
     {
         private static string storeUri = "https://www.microsoft.com/store/productId/{0}";
 
-        private static Uri ManifestSearchUri = new Uri("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
+        private static Uri manifestSearchUri = new Uri("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
 
         /// <summary>
         /// 生成搜索应用的所需的字符串
@@ -64,7 +64,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new HttpClient();
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(ManifestSearchUri, httpStringContent).AsTask(cancellationTokenSource.Token);
+                HttpResponseMessage responseMessage = await httpClient.PostAsync(manifestSearchUri, httpStringContent).AsTask(cancellationTokenSource.Token);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {

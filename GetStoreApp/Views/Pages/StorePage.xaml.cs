@@ -17,7 +17,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class StorePage : Page, INotifyPropertyChanged
     {
-        private AppNaviagtionArgs StoreNavigationArgs = AppNaviagtionArgs.None;
+        private AppNaviagtionArgs storeNavigationArgs = AppNaviagtionArgs.None;
 
         private int _selectedIndex;
 
@@ -41,13 +41,16 @@ namespace GetStoreApp.Views.Pages
 
         #region 第一部分：重写父类事件
 
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
             if (args.Parameter is not null)
             {
                 object[] navigationArgs = args.Parameter as object[];
-                StoreNavigationArgs = (AppNaviagtionArgs)navigationArgs[0];
+                storeNavigationArgs = (AppNaviagtionArgs)navigationArgs[0];
                 if (navigationArgs.Length is 4)
                 {
                     QueryLinks.SelectedType = QueryLinks.TypeList.Find(item => item.InternalName.Equals(navigationArgs[1]));
@@ -57,7 +60,7 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                StoreNavigationArgs = AppNaviagtionArgs.None;
+                storeNavigationArgs = AppNaviagtionArgs.None;
             }
 
             QueryLinks.GetQueryLinksHistoryData();
@@ -106,7 +109,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (StoreNavigationArgs is AppNaviagtionArgs.Store)
+            if (storeNavigationArgs is AppNaviagtionArgs.Store)
             {
                 StoreScroll.ChangeView(null, 0, null);
             }
