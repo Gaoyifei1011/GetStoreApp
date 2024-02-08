@@ -8,7 +8,6 @@ using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
 using Microsoft.Management.Deployment;
-using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -102,7 +101,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(() =>
                 {
-                    ProcessStarter.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
+                    ProcessHelper.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
                 });
             }
         }
@@ -296,7 +295,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    ProcessStarter.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
+                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
                                 }
                             }
 
@@ -534,10 +533,13 @@ namespace GetStoreApp.UI.Controls.WinGet
                 autoResetEvent ??= new AutoResetEvent(false);
                 Task.Run(async () =>
                 {
+                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = UpgradableAppsManager.GetPackageCatalogs();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetService.CreateCreateCompositePackageCatalogOptions();
                     PackageCatalogReference searchCatalogReference = UpgradableAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
-                    foreach (PackageCatalogReference catalogReference in UpgradableAppsManager.GetPackageCatalogs())
+
+                    for (int index = 0; index < packageCatalogsList.Count; index++)
                     {
+                        PackageCatalogReference catalogReference = packageCatalogsList[index];
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
                     createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
@@ -550,8 +552,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         FindPackagesResult findResult = await upgradableCatalog.FindPackagesAsync(findPackagesOptions);
 
-                        foreach (MatchResult matchResultItem in findResult.Matches)
+                        for (int index = 0; index < findResult.Matches.Count; index++)
                         {
+                            MatchResult matchResultItem = findResult.Matches[index];
                             if (matchResultItem.CatalogPackage.IsUpdateAvailable is true)
                             {
                                 MatchResultList.Add(matchResultItem);

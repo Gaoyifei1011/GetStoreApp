@@ -9,14 +9,14 @@ namespace GetStoreAppWebView.Services.Root
     /// </summary>
     public static class ResourceService
     {
-        private static bool IsInitialized = false;
+        private static bool isInitialized = false;
 
-        private static string DefaultAppLanguage;
-        private static string CurrentAppLanguage;
+        private static string _defaultAppLanguage;
+        private static string _currentAppLanguage;
 
-        private static ResourceContext DefaultResourceContext = new ResourceContext();
-        private static ResourceContext CurrentResourceContext = new ResourceContext();
-        private static ResourceMap ResourceMap = ResourceManager.Current.MainResourceMap;
+        private static ResourceContext defaultResourceContext = new ResourceContext();
+        private static ResourceContext currentResourceContext = new ResourceContext();
+        private static ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -25,13 +25,13 @@ namespace GetStoreAppWebView.Services.Root
         /// <param name="currentAppLanguage">当前语言名称</param>
         public static void InitializeResource(string defaultAppLanguage, string currentAppLanguage)
         {
-            DefaultAppLanguage = defaultAppLanguage;
-            CurrentAppLanguage = currentAppLanguage;
+            _defaultAppLanguage = defaultAppLanguage;
+            _currentAppLanguage = currentAppLanguage;
 
-            DefaultResourceContext.QualifierValues["Language"] = DefaultAppLanguage;
-            CurrentResourceContext.QualifierValues["Language"] = CurrentAppLanguage;
+            defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage;
+            currentResourceContext.QualifierValues["Language"] = _currentAppLanguage;
 
-            IsInitialized = true;
+            isInitialized = true;
         }
 
         /// <summary>
@@ -39,17 +39,17 @@ namespace GetStoreAppWebView.Services.Root
         /// </summary>
         public static string GetLocalized(string resource)
         {
-            if (IsInitialized)
+            if (isInitialized)
             {
                 try
                 {
-                    return ResourceMap.GetValue(resource, CurrentResourceContext).ValueAsString;
+                    return resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
                 }
                 catch (NullReferenceException)
                 {
                     try
                     {
-                        return ResourceMap.GetValue(resource, DefaultResourceContext).ValueAsString;
+                        return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
                     }
                     catch (NullReferenceException)
                     {

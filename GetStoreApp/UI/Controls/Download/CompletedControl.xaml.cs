@@ -8,7 +8,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.TeachingTips;
-using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -190,7 +189,7 @@ namespace GetStoreApp.UI.Controls.Download
                     // 普通应用：直接安装
                     if (completedItem.FilePath.EndsWith(".exe") || completedItem.FileName.EndsWith(".msi"))
                     {
-                        ProcessStarter.StartProcess("explorer.exe ", completedItem.FilePath, out _);
+                        ProcessHelper.StartProcess("explorer.exe ", completedItem.FilePath, out _);
                     }
                     // 商店打包应用：使用应用安装程序安装或直接安装
                     else

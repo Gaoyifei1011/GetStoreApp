@@ -12,7 +12,6 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.WindowsUI;
-using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -28,7 +27,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -49,8 +47,6 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private bool isInvoked = false;
-
         private WNDPROC newMainWindowWndProc = null;
         private IntPtr oldMainWindowWndProc = IntPtr.Zero;
 
@@ -58,7 +54,6 @@ namespace GetStoreApp.Views.Windows
         private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
 
         private ContentCoordinateConverter contentCoordinateConverter;
-        private DisplayInformation displayInformation;
         private OverlappedPresenter overlappedPresenter;
 
         private new CoreWindow CoreWindow { get; }
@@ -169,7 +164,6 @@ namespace GetStoreApp.Views.Windows
             // 在 WinUI3 桌面应用中创建 CoreWindow
             WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, (IntPtr)AppWindow.Id.Value, typeof(ICoreWindow).GUID, out IntPtr obj);
             CoreWindow = CoreWindow.FromAbi(obj);
-            displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -300,7 +294,6 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
-                    displayInformation.Dispose();
                     AppWindow.Changed -= OnAppWindowChanged;
                     ApplicationData.Current.DataChanged -= OnDataChanged;
                     (Application.Current as WinUIApp).Dispose();
@@ -315,7 +308,6 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                displayInformation.Dispose();
                 AppWindow.Changed -= OnAppWindowChanged;
                 ApplicationData.Current.DataChanged -= OnDataChanged;
                 (Application.Current as WinUIApp).Dispose();
@@ -489,11 +481,11 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 当菜单中的项收到交互（如单击或点击）时发生
+        /// 在当前导航控件所选项更改时发生
         /// </summary>
-        private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            NavigationViewItemBase navigationViewItem = args.InvokedItemContainer;
+            NavigationViewItemBase navigationViewItem = args.SelectedItemContainer;
             if (navigationViewItem.Tag is not null)
             {
                 NavigationModel navigationItem = NavigationItemList.Find(item => item.NavigationTag == PageList[Convert.ToInt32(navigationViewItem.Tag)].Key);
@@ -502,17 +494,8 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (PageList[Convert.ToInt32(navigationItem.NavigationItem.Tag)].Key is "Web")
                     {
-                        Debug.WriteLine(SelectedItem.Tag.ToString());
                         NavigationViewItem originalSelectedItem = SelectedItem;
-
-                        if (!isInvoked)
-                        {
-                            ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
-                        }
-                        else
-                        {
-                            isInvoked = false;
-                        }
+                        ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
                         SelectedItem = originalSelectedItem;
                     }
                     else
@@ -775,11 +758,11 @@ namespace GetStoreApp.Views.Windows
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
-                        if (displayInformation is not null)
+                        if (Content is not null && Content.XamlRoot is not null)
                         {
                             MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
-                            minMaxInfo.ptMinTrackSize.X = (int)(960 * displayInformation.RawPixelsPerViewPixel);
-                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * displayInformation.RawPixelsPerViewPixel);
+                            minMaxInfo.ptMinTrackSize.X = (int)(960 * Content.XamlRoot.RasterizationScale);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * Content.XamlRoot.RasterizationScale);
                             Marshal.StructureToPtr(minMaxInfo, lParam, true);
                         }
 
@@ -957,7 +940,7 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (displayInformation is not null)
+                        if (Content is not null && Content.XamlRoot is not null)
                         {
                             PointInt32 screenPoint = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
@@ -965,7 +948,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.ShowMode = FlyoutShowMode.Standard;
                             options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                            new Point(localPoint.X / displayInformation.RawPixelsPerViewPixel, localPoint.Y / displayInformation.RawPixelsPerViewPixel) :
+                            new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) :
                             new Point(localPoint.X, localPoint.Y);
 
                             TitlebarMenuFlyout.ShowAt(Content, options);

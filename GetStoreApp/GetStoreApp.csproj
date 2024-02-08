@@ -5,7 +5,6 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <DebugType>portable</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
@@ -60,16 +59,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
 
-    <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
-    <Content Include="$(TargetDir)\winrtact.dll" ExcludeFromSingleFile="true" Link="winrtact.dll" CopyToOutputDirectory="Always" />
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Resources\Lengths.bin" />
     <Content Remove="Assets\Resources\LICENSE" />
     <Content Remove="Assets\XML\cookie.xml" />
     <Content Remove="Assets\XML\url.xml" />
     <Content Remove="Assets\XML\wu.xml" />
-
-    <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
 
     <EmbeddedResource Update="Properties\Resources.resx" Generator="PublicResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
 
@@ -146,9 +141,7 @@
     <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
     <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
 
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.6" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240124002-experimental2" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.10091-preview" GeneratePathProperty="true" IncludeAssets="none" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Styles\AppBarButton.xaml" Generator="MSBuild:Compile" />
@@ -216,7 +209,10 @@
 
     <Page Remove="WinUIApp.xaml" />
 
+    <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
+
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
+    <TrimmableAssembly Include="Microsoft.Management.Deployment.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />
@@ -227,17 +223,13 @@
     <TrimmableAssembly Include="Microsoft.Windows.Security.AccessControl.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.System.Power.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.System.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Release.Net" />
-    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Providers.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+    <TrimmableAssembly Include="WinRT.Host.Shim" />
   </ItemGroup>
-
-  <!-- 复制 Microsoft.WindowsPackageManager.ComInterop 所需要的文件到输出根目录 -->
-  <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
-    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\runtimes\win10-$(Platform)\native\winrtact.dll" DestinationFolder="$(TargetDir)" />
-  </Target>
 
   <!-- 捆绑前对二进制文件进行后处理 -->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">

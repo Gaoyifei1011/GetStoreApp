@@ -128,11 +128,11 @@
             IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
             IsPaneToggleButtonVisible="False"
             IsSettingsVisible="False"
-            ItemInvoked="{x:Bind OnItemInvoked}"
             Loaded="{x:Bind OnLoaded}"
             OpenPaneLength="220"
             PaneDisplayMode="Left"
-            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
+            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+            SelectionChanged="{x:Bind OnSelectionChanged}">
 
             <NavigationView.Resources>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />

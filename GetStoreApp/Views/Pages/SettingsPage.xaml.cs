@@ -6,7 +6,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
-using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -443,7 +442,7 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(() =>
             {
-                ProcessStarter.StartProcess("winget.exe", "settings", out _);
+                ProcessHelper.StartProcess("winget.exe", "settings", out _);
             });
         }
 

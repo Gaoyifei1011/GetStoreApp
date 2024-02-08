@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Description", "Description"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWebView", "GetStoreAppWebView\GetStoreAppWebView.csproj", "{29E64374-337A-4D09-8A1C-0D8C6DCE84C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Management.Deployment.Projection", "Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj", "{9782AEF8-5FD1-457E-8018-7233F1567ADB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -79,6 +81,18 @@ Global
 		{29E64374-337A-4D09-8A1C-0D8C6DCE84C5}.Release|x64.Build.0 = Release|x64
 		{29E64374-337A-4D09-8A1C-0D8C6DCE84C5}.Release|x86.ActiveCfg = Release|x86
 		{29E64374-337A-4D09-8A1C-0D8C6DCE84C5}.Release|x86.Build.0 = Release|x86
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Debug|ARM64.Build.0 = Debug|ARM64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Debug|x64.ActiveCfg = Debug|x64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Debug|x64.Build.0 = Debug|x64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Debug|x86.ActiveCfg = Debug|x86
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Debug|x86.Build.0 = Debug|x86
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|ARM64.ActiveCfg = Release|ARM64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|ARM64.Build.0 = Release|ARM64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|x64.ActiveCfg = Release|X64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|x64.Build.0 = Release|X64
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|x86.ActiveCfg = Release|x86
+		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

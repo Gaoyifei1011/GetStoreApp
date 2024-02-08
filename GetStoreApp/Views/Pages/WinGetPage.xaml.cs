@@ -1,7 +1,7 @@
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.CustomControls.Navigation;
-using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -120,7 +120,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnControlPanelClicked(object sender, RoutedEventArgs args)
         {
-            ProcessStarter.StartProcess("control.exe", "appwiz.cpl", out _);
+            ProcessHelper.StartProcess("control.exe", "appwiz.cpl", out _);
         }
 
         /// <summary>

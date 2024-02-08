@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -122,7 +121,7 @@ namespace GetStoreApp.Services.Root
                                 }
                             case "Web":
                                 {
-                                    ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
+                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
                                     Environment.Exit(Environment.ExitCode);
                                     break;
                                 }

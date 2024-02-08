@@ -27,7 +27,7 @@ namespace GetStoreAppWebView.Views.Controls
     /// </summary>
     public sealed partial class IslandsControl : Grid, INotifyPropertyChanged
     {
-        private bool IsLoadWebView2 = false;
+        private bool IsLoadWebView2 { get; } = false;
 
         public System.Windows.Controls.WebBrowser WebBrowser { get; private set; }
 

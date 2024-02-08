@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
+    <CSWinRTWindowsMetadata>10.0.22621.0</CSWinRTWindowsMetadata>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <FileVersion>1.22.2401.9001</FileVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <IsTrimmable>true</IsTrimmable>
+    <Platforms>x64;x86;ARM64</Platforms>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <WindowsSdkPackageVersion>10.0.22621.31</WindowsSdkPackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='x86'">
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='ARM64'">
+    <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <!-- Configure the release build binary to be as required by internal API scanning tools. -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
+    
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.10091-preview" GeneratePathProperty="true" IncludeAssets="none" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
+
+    <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
+    <Content Include="$(TargetDir)\winrtact.dll" ExcludeFromSingleFile="true" Link="winrtact.dll" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <!-- 复制 Microsoft.WindowsPackageManager.ComInterop 所需要的文件到输出根目录 -->
+  <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
+    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
+    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\runtimes\win10-$(Platform)\native\winrtact.dll" DestinationFolder="$(TargetDir)" />
+  </Target>
+</Project>

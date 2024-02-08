@@ -2,6 +2,7 @@
 using GetStoreAppWebView.Views.Windows;
 using System;
 using System.Windows;
+using System.Windows.Threading;
 using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView
@@ -50,7 +51,7 @@ namespace GetStoreAppWebView
         /// <summary>
         /// 处理 WPF UI 线程异常
         /// </summary>
-        private void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs args)
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs args)
         {
             LogService.WriteLog(LoggingLevel.Error, "Unknown dispatcher unhandled exception.", args.Exception);
         }

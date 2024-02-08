@@ -4,7 +4,6 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using System;
 using System.IO;
@@ -27,7 +26,6 @@ namespace GetStoreApp
         public WinUIApp()
         {
             InitializeComponent();
-            DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;
             UnhandledException += OnUnhandledException;
         }
 
@@ -132,8 +130,7 @@ namespace GetStoreApp
         public void Restart()
         {
             MainWindow.Current.AppWindow.Hide();
-            ProcessStarter.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), "Restart", out _);
-            MainWindow.Current.Close();
+            ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), "Restart", out _);
             Dispose();
         }
 

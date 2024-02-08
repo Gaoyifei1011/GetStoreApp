@@ -10,13 +10,13 @@ namespace GetStoreAppWebView.Services.Controls.Settings
     /// </summary>
     public static class WebKernelService
     {
-        private static string WebKernelSettingsKey = ConfigKey.WebKernelKey;
+        private static string settingsKey = ConfigKey.WebKernelKey;
 
-        private static object DefaultWebKernel;
+        private static object defaultWebKernel;
 
         public static object WebKernel { get; set; }
 
-        public static List<object> WebKernelList { get; private set; } = new List<object>()
+        public static List<object> WebKernelList { get; } = new List<object>()
         {
             "IE",
             "WebView2",
@@ -27,7 +27,7 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         /// </summary>
         public static void InitializeWebKernel()
         {
-            DefaultWebKernel = WebKernelList.Find(item => item is "WebView2");
+            defaultWebKernel = WebKernelList.Find(item => item is "WebView2");
 
             WebKernel = GetWebKernel();
         }
@@ -39,11 +39,11 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         {
             if (RuntimeHelper.IsWebView2Installed)
             {
-                object webKernelValue = LocalSettingsService.ReadSetting<object>(WebKernelSettingsKey);
+                object webKernelValue = LocalSettingsService.ReadSetting<object>(settingsKey);
 
                 if (webKernelValue is null)
                 {
-                    return DefaultWebKernel;
+                    return defaultWebKernel;
                 }
 
                 return WebKernelList.Find(item => item.Equals(webKernelValue));

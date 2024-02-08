@@ -23,8 +23,8 @@ namespace GetStoreAppWebView.Views.Windows
     /// </summary>
     public class MainWindow : Window
     {
-        private IntPtr InputNonClientPointerSourceHandle;
-        private IslandsControl IslandsControl = new IslandsControl();
+        private IntPtr inputNonClientPointerSourceHandle;
+        private IslandsControl islandsControl = new IslandsControl();
 
         private WNDPROC newMainWindowWndProc = null;
         private IntPtr oldMainWindowWndProc = IntPtr.Zero;
@@ -68,7 +68,7 @@ namespace GetStoreAppWebView.Views.Windows
         protected override void OnClosing(CancelEventArgs args)
         {
             base.OnClosing(args);
-            IslandsControl.CloseWindow();
+            islandsControl.CloseWindow();
         }
 
         /// <summary>
@@ -90,23 +90,23 @@ namespace GetStoreAppWebView.Views.Windows
             AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
             DesktopWindowXamlSource.Initialize(windowId);
-            DesktopWindowXamlSource.Content = IslandsControl;
+            DesktopWindowXamlSource.Content = islandsControl;
             DesktopWindowXamlSource.SystemBackdrop = InfoHelper.SystemVersion.Build >= 22000 ? new MicaBackdrop() : new DesktopAcrylicBackdrop();
 
             desktopSourceSubClassProc = new SUBCLASSPROC(OnDesktopSourceSubClassProc);
             Comctl32Library.SetWindowSubclass((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value, desktopSourceSubClassProc, 100, IntPtr.Zero);
 
-            InputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
+            inputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
 
-            if (InputNonClientPointerSourceHandle != IntPtr.Zero)
+            if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
                 newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
-                oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(InputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
+                oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
             }
 
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
-                IslandsControl.InitializeWebBrowser();
+                islandsControl.InitializeWebBrowser();
             }
             else
             {
@@ -122,7 +122,7 @@ namespace GetStoreAppWebView.Views.Windows
         protected override void OnStateChanged(EventArgs args)
         {
             base.OnStateChanged(args);
-            IslandsControl.IsWindowMaximized = WindowState is WindowState.Maximized;
+            islandsControl.IsWindowMaximized = WindowState is WindowState.Maximized;
         }
 
         /// <summary>
@@ -167,17 +167,17 @@ namespace GetStoreAppWebView.Views.Windows
                         if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0] && DesktopWindowXamlSource.SiteBridge is not null)
                         {
                             User32Library.SetWindowPos((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value,
-                              IntPtr.Zero, 0, 0, lParam.ToInt32() & 0xFFFF, Convert.ToInt32(IslandsControl.ActualHeight * WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
+                              IntPtr.Zero, 0, 0, lParam.ToInt32() & 0xFFFF, Convert.ToInt32(islandsControl.ActualHeight * WindowDPI), SetWindowPosFlags.SWP_NOOWNERZORDER | SetWindowPosFlags.SWP_NOZORDER);
                         }
                         else
                         {
-                            IslandsControl.CloseDownloadDialog();
+                            islandsControl.CloseDownloadDialog();
                         }
                         break;
                     }
                 case WindowMessage.WM_MOVE:
                     {
-                        IslandsControl?.CloseDownloadDialog();
+                        islandsControl?.CloseDownloadDialog();
                         break;
                     }
                 // 选择窗口右键菜单的条目时接收到的消息
@@ -190,7 +190,7 @@ namespace GetStoreAppWebView.Views.Windows
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new global::Windows.Foundation.Point(0, 45);
                             options.ShowMode = FlyoutShowMode.Standard;
-                            IslandsControl.TitlebarMenuFlyout.ShowAt(null, options);
+                            islandsControl.TitlebarMenuFlyout.ShowAt(null, options);
                             return IntPtr.Zero;
                         }
                         break;
@@ -210,16 +210,16 @@ namespace GetStoreAppWebView.Views.Windows
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
-                        if (IslandsControl.TitlebarMenuFlyout.IsOpen)
+                        if (islandsControl.TitlebarMenuFlyout.IsOpen)
                         {
-                            IslandsControl.TitlebarMenuFlyout.Hide();
+                            islandsControl.TitlebarMenuFlyout.Hide();
                         }
                         break;
                     }
                 // 当用户按下鼠标右键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (IslandsControl is not null && IslandsControl.XamlRoot is not null)
+                        if (islandsControl is not null && islandsControl.XamlRoot is not null)
                         {
                             Point screenPoint = new Point(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             RECT rect = new RECT();
@@ -251,7 +251,7 @@ namespace GetStoreAppWebView.Views.Windows
                                 }
                             }
 
-                            IslandsControl.TitlebarMenuFlyout.ShowAt(null, options);
+                            islandsControl.TitlebarMenuFlyout.ShowAt(null, options);
                         }
                         return IntPtr.Zero;
                     }
@@ -264,7 +264,7 @@ namespace GetStoreAppWebView.Views.Windows
         /// </summary>
         private IntPtr OnDesktopSourceSubClassProc(IntPtr hWnd, WindowMessage uMsg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
-            if (uMsg == WindowMessage.WM_ERASEBKGND || uMsg == WindowMessage.WM_NCPAINT)
+            if (uMsg is WindowMessage.WM_ERASEBKGND || uMsg is WindowMessage.WM_NCPAINT)
             {
                 return IntPtr.Zero;
             }

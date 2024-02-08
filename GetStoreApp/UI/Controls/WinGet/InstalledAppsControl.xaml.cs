@@ -6,7 +6,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
 using Microsoft.Management.Deployment;
-using Microsoft.UI.Content;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -169,7 +168,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    ProcessStarter.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
+                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
                                 }
                             }
 
