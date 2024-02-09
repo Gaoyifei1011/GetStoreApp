@@ -300,7 +300,7 @@
                                 VerticalAlignment="Center"
                                 x:Load="{x:Bind io:File.Exists(FilePath)}"
                                 FontSize="14"
-                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/CompleteDownload')}"
                                 TextAlignment="Left" />
 
                             <TextBlock
@@ -310,7 +310,7 @@
                                 x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistReverseCheck(FilePath)}"
                                 FontSize="14"
                                 Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-                                Text="{x:Bind converter:ValueCheckConverterHelper.FileExistTextCheck(FilePath)}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/FileNotExist')}"
                                 TextAlignment="Left" />
                         </StackPanel>
 

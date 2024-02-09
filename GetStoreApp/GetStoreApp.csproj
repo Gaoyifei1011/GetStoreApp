@@ -37,7 +37,7 @@
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.22621.31</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.22621.33</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">

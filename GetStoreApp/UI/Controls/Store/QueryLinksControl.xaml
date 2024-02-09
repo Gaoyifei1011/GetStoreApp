@@ -522,7 +522,25 @@
                 VerticalAlignment="Center"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
 
-                <TextBlock Text="{x:Bind LocalizeQueryedAppType(AppInfo.CategoryID), Mode=OneWay}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryedAppType')}" />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/NonPackagedApp')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.StringReverseVisibilityConvert(AppInfo.CategoryID), Mode=OneWay}" />
+
+                    <TextBlock
+                        Grid.Column="2"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/PackagedApp')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.StringVisibilityConvert(AppInfo.CategoryID), Mode=OneWay}" />
+                </Grid>
+
                 <TextBlock Text="{x:Bind sys:String.Format(QueryLinksCountInfo, QueryLinksCollection.Count), Mode=OneWay}" />
             </StackPanel>
 

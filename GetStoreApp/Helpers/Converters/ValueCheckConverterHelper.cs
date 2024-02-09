@@ -24,21 +24,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 检测文件是否存在，进行文字提示
-        /// </summary>
-        public static string FileExistTextCheck(string path)
-        {
-            if (File.Exists(path))
-            {
-                return ResourceService.GetLocalized("Download/CompleteDownload");
-            }
-            else
-            {
-                return ResourceService.GetLocalized("Download/FileNotExist");
-            }
-        }
-
-        /// <summary>
         /// 检测当前页面是否为应用列表页面
         /// </summary>
         public static Visibility IsAppListPageCheck(int count)

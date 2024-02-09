@@ -854,21 +854,6 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
-        /// 本地化应用类型字符串
-        /// </summary>
-        private string LocalizeQueryedAppType(string categoryId)
-        {
-            if (string.IsNullOrEmpty(categoryId))
-            {
-                return string.Format(ResourceService.GetLocalized("Store/QueryedAppType"), ResourceService.GetLocalized("Store/NonPackagedApp"));
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("Store/QueryedAppType"), ResourceService.GetLocalized("Store/PackagedApp"));
-            }
-        }
-
-        /// <summary>
         /// 从本地数据存储中加载查询链接历史记录数据
         /// </summary>
         public void GetQueryLinksHistoryData()

@@ -32,8 +32,6 @@ namespace GetStoreApp.Views.Pages
     {
         private AppNaviagtionArgs aboutNavigationArgs = AppNaviagtionArgs.None;
 
-        private string AppVersion { get; } = string.Format(ResourceService.GetLocalized("About/AppVersion"), InfoHelper.AppVersion.ToString());
-
         //项目引用信息
         private Hashtable ReferenceDict { get; } = new Hashtable()
         {

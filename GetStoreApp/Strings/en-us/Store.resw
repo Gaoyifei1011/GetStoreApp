@@ -232,7 +232,7 @@
     <value>Publisehr:</value>
   </data>
   <data name="QueryedAppType" xml:space="preserve">
-    <value>AppType: {0}</value>
+    <value>AppType: </value>
   </data>
   <data name="QueryLinks" xml:space="preserve">
     <value>Query links</value>

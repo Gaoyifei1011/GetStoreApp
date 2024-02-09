@@ -41,5 +41,21 @@ namespace GetStoreApp.Helpers.Converters
         {
             return value is false ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        /// <summary>
+        /// 空字符串值与显示值转换
+        /// </summary>
+        public static Visibility StringVisibilityConvert(string value)
+        {
+            return !string.IsNullOrEmpty(value) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 空字符串值与显示值转换（判断结果相反）
+        /// </summary>
+        public static Visibility StringReverseVisibilityConvert(string value)
+        {
+            return string.IsNullOrEmpty(value) ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }
