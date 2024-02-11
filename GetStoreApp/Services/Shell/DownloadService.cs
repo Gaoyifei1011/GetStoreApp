@@ -34,9 +34,9 @@ namespace GetStoreApp.Services.Shell
                 try
                 {
                     List<string> indexList = new List<string>();
-                    foreach (string item in ConsoleHelper.ReadLine().Split(','))
+                    foreach (string index in ConsoleHelper.ReadLine().Split(','))
                     {
-                        indexList.Add(item);
+                        indexList.Add(index);
                     }
 
                     bool checkResult = true;

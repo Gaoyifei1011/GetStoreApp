@@ -28,6 +28,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
     /// </summary>
     public sealed partial class AppInfoControl : Grid, INotifyPropertyChanged
     {
+        private readonly object appInfoLock = new object();
+
         private string _displayName = string.Empty;
 
         public string DisplayName
@@ -562,16 +564,19 @@ namespace GetStoreApp.UI.Controls.UWPApp
             IsStub = appInfoDict[nameof(IsStub)].ToString();
             VertifyIsOK = appInfoDict[nameof(VertifyIsOK)].ToString();
 
-            AppListEntryCollection.Clear();
-            foreach (AppListEntryModel appListEntry in appInfoDict[nameof(AppListEntryCollection)] as List<AppListEntryModel>)
+            lock (appInfoLock)
             {
-                AppListEntryCollection.Add(appListEntry);
-            }
+                AppListEntryCollection.Clear();
+                foreach (AppListEntryModel appListEntry in appInfoDict[nameof(AppListEntryCollection)] as List<AppListEntryModel>)
+                {
+                    AppListEntryCollection.Add(appListEntry);
+                }
 
-            DependenciesCollection.Clear();
-            foreach (PackageModel packageItem in appInfoDict[nameof(DependenciesCollection)] as List<PackageModel>)
-            {
-                DependenciesCollection.Add(packageItem);
+                DependenciesCollection.Clear();
+                foreach (PackageModel packageItem in appInfoDict[nameof(DependenciesCollection)] as List<PackageModel>)
+                {
+                    DependenciesCollection.Add(packageItem);
+                }
             }
         }
     }

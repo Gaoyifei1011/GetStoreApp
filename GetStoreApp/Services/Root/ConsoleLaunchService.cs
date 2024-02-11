@@ -38,9 +38,9 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task InitializeLaunchAsync(string[] args)
         {
-            foreach (string item in args)
+            foreach (string arg in args)
             {
-                consoleLaunchArgs.Add(item);
+                consoleLaunchArgs.Add(arg);
             }
             ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
             Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);

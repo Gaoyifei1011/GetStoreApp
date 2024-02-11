@@ -362,10 +362,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
             {
-                Theme = ThemeList[Convert.ToInt32(item.Tag)];
+                Theme = ThemeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 ThemeService.SetTheme(Theme);
                 ThemeService.SetWindowTheme();
             }
@@ -376,10 +376,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
             {
-                Backdrop = BackdropList[Convert.ToInt32(item.Tag)];
+                Backdrop = BackdropList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 BackdropService.SetBackdrop(Backdrop);
                 BackdropService.SetAppBackdrop();
             }
@@ -414,10 +414,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWebKernelSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
             {
-                WebKernelItem = HistoryLiteNumList[Convert.ToInt32(item.Tag)];
+                WebKernelItem = HistoryLiteNumList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 WebKernelService.SetWebKernel(WebKernelItem);
             }
         }
@@ -427,10 +427,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
             {
-                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(item.Tag)];
+                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 WinGetConfigService.SetWinGetInstallMode(WinGetInstallMode);
             }
         }
@@ -459,10 +459,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            MenuFlyoutItem item = sender as MenuFlyoutItem;
-            if (item.Tag is not null)
+            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
+            if (menuFlyoutItem.Tag is not null)
             {
-                switch ((string)item.Tag)
+                switch ((string)menuFlyoutItem.Tag)
                 {
                     case "AppCache":
                         {
@@ -513,10 +513,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
             {
-                DownloadItem = Convert.ToInt32(item.Tag);
+                DownloadItem = Convert.ToInt32(toggleMenuFlyoutItem.Tag);
                 DownloadOptionsService.SetItem(DownloadItem);
             }
         }
@@ -526,10 +526,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
             {
-                DownloadMode = DownloadModeList[Convert.ToInt32(item.Tag)];
+                DownloadMode = DownloadModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 DownloadOptionsService.SetMode(DownloadMode);
             }
         }
@@ -539,10 +539,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem item = sender as ToggleMenuFlyoutItem;
-            if (item.Tag is not null)
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
             {
-                InstallMode = InstallModeList[Convert.ToInt32(item.Tag)];
+                InstallMode = InstallModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 InstallModeService.SetInstallMode(InstallMode);
             }
         }

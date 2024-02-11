@@ -144,6 +144,9 @@
   <data name="NavigationFailed" xml:space="preserve">
     <value>Page {0} navigation failed</value>
   </data>
+  <data name="PinToStartScreen" xml:space="preserve">
+    <value>Pin to start screen</value>
+  </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
   </data>

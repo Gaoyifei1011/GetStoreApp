@@ -37,9 +37,9 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task InitializeLaunchAsync(string[] args)
         {
-            foreach (string item in args)
+            foreach (string arg in args)
             {
-                desktopLaunchArgs.Add(item);
+                desktopLaunchArgs.Add(arg);
             }
             activatedEventArgs = AppInstance.GetActivatedEventArgs();
             await ParseStartupKindAsync(activatedEventArgs is null ? ActivationKind.Launch : activatedEventArgs.Kind);
@@ -94,8 +94,8 @@ namespace GetStoreApp.Services.Root
                 {
                     activationKind = ActivationKind.CommandLineLaunch;
 
-                    // 跳转列表启动的参数
-                    if (desktopLaunchArgs[0] is "JumpList")
+                    // 跳转列表或辅助磁贴启动的参数
+                    if (desktopLaunchArgs[0] is "JumpList" || desktopLaunchArgs[0] is "SecondaryTile")
                     {
                         switch (desktopLaunchArgs[1])
                         {
@@ -191,9 +191,15 @@ namespace GetStoreApp.Services.Root
                     bool isExisted = false;
 
                     string sendData;
+                    // 跳转列表启动
                     if (desktopLaunchArgs.Count is 2 && desktopLaunchArgs[0] is "JumpList")
                     {
                         sendData = string.Join(" ", desktopLaunchArgs);
+                    }
+                    // 辅助磁贴启动
+                    else if (desktopLaunchArgs.Count is 4 && desktopLaunchArgs[0] is "SecondaryTile")
+                    {
+                        sendData = string.Join(' ', desktopLaunchArgs[0], desktopLaunchArgs[1]);
                     }
                     else
                     {

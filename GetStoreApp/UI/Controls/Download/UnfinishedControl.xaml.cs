@@ -263,7 +263,7 @@ namespace GetStoreApp.UI.Controls.Download
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "Unfinished download list remove item failed.", e);
+                            LogService.WriteLog(LoggingLevel.Warning, "Unfinished download list remove oldItem failed.", e);
                             continue;
                         }
                     }
@@ -472,9 +472,9 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 if (args.Action is NotifyCollectionChangedAction.Remove)
                 {
-                    foreach (object item in args.OldItems)
+                    foreach (object oldItem in args.OldItems)
                     {
-                        BackgroundModel backgroundItem = item as BackgroundModel;
+                        BackgroundModel backgroundItem = oldItem as BackgroundModel;
                         if (backgroundItem is not null)
                         {
                             if (backgroundItem.DownloadFlag is 0 || backgroundItem.DownloadFlag is 2)

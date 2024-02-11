@@ -39,6 +39,8 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.StartScreen;
+using WinRT.Interop;
 
 namespace GetStoreApp.Views.Windows
 {
@@ -408,6 +410,49 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
+        /// <summary>
+        /// 固定到开始屏幕
+        /// </summary>
+        private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        {
+            bool isPinnedSuccessfully = false;
+
+            try
+            {
+                MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
+
+                if (menuFlyoutItem is not null)
+                {
+                    string tag = menuFlyoutItem.Tag as string;
+
+                    SecondaryTile secondaryTile = new SecondaryTile("GetStoreApp" + tag);
+                    secondaryTile.DisplayName = ResourceService.GetLocalized("Resources/AppDisplayName");
+                    secondaryTile.Arguments = "SecondaryTile " + tag;
+
+                    secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
+                    secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/ControlIcon/{0}.png", tag));
+                    secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/ControlIcon/{0}.png", tag));
+                    secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/ControlIcon/{0}.png", tag));
+
+                    secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+
+                    InitializeWithWindow.Initialize(secondaryTile, (IntPtr)AppWindow.Id.Value);
+                    isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
+                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
+            }
+            finally
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+                });
+            }
+        }
+
         #endregion 第四部分：窗口内容挂载的事件
 
         #region 第五部分：导航控件及其内容挂载的事件
@@ -422,9 +467,9 @@ namespace GetStoreApp.Views.Windows
             NavigationView navigationView = sender as NavigationView;
             if (navigationView is not null)
             {
-                foreach (object item in navigationView.MenuItems)
+                foreach (object menuItem in navigationView.MenuItems)
                 {
-                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
+                    NavigationViewItem navigationViewItem = menuItem as NavigationViewItem;
                     if (navigationViewItem is not null)
                     {
                         int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
@@ -438,9 +483,9 @@ namespace GetStoreApp.Views.Windows
                     }
                 }
 
-                foreach (object item in navigationView.FooterMenuItems)
+                foreach (object footerMenuItem in navigationView.FooterMenuItems)
                 {
-                    NavigationViewItem navigationViewItem = item as NavigationViewItem;
+                    NavigationViewItem navigationViewItem = footerMenuItem as NavigationViewItem;
                     if (navigationViewItem is not null)
                     {
                         int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
@@ -805,7 +850,7 @@ namespace GetStoreApp.Views.Windows
                         {
                             string[] startupArgs = copyDataStruct.lpData.Split(' ');
 
-                            if (startupArgs.Length is 2)
+                            if (startupArgs.Length is 2 && (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile"))
                             {
                                 if (startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
                                 {

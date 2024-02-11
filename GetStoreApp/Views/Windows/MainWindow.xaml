@@ -155,6 +155,15 @@
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Store.png" />
                     </NavigationViewItem.Icon>
 
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToStartScreenClicked}"
+                                Tag="Store"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Visibility="{x:Bind WindowStoreText.IsTextTrimmed, Mode=OneWay}" />
                     </ToolTipService.ToolTip>
@@ -173,6 +182,15 @@
                     <NavigationViewItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/AppUpdate.png" />
                     </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToStartScreenClicked}"
+                                Tag="AppUpdate"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}" Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
@@ -195,6 +213,15 @@
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/WinGet.png" />
                     </NavigationViewItem.Icon>
 
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToStartScreenClicked}"
+                                Tag="WinGet"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
                     </ToolTipService.ToolTip>
@@ -213,6 +240,15 @@
                     <NavigationViewItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/UWPApp.png" />
                     </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToStartScreenClicked}"
+                                Tag="UWPApp"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
@@ -235,6 +271,15 @@
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
                     </NavigationViewItem.Icon>
 
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToStartScreenClicked}"
+                                Tag="Download"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
+
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
                     </ToolTipService.ToolTip>
@@ -253,6 +298,15 @@
                     <NavigationViewItem.Icon>
                         <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
                     </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.ContextFlyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnPinToStartScreenClicked}"
+                                Tag="Web"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                        </MenuFlyout>
+                    </NavigationViewItem.ContextFlyout>
 
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Visibility="{x:Bind WindowWebText.IsTextTrimmed, Mode=OneWay}" />
