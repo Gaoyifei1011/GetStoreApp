@@ -129,6 +129,9 @@
   <data name="AppName" xml:space="preserve">
     <value>App name:</value>
   </data>
+  <data name="AppPublisher" xml:space="preserve">
+    <value>Publisher: </value>
+  </data>
   <data name="AskContinue" xml:space="preserve">
     <value>Do you want to try to get it again? (Make sure to input "Y", exit entering other characters)</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="ProductIDSample" xml:space="preserve">
     <value>ProductID sample: 9WZDNCRFJBMP</value>
+  </data>
+  <data name="QueryLinksCollection" xml:space="preserve">
+    <value>A total of {0} results were retrieved</value>
   </data>
   <data name="RequestError" xml:space="preserve">
     <value>An error occurred in fetching data from the servers of the Microsoft Store, please check your network before trying to get it again</value>

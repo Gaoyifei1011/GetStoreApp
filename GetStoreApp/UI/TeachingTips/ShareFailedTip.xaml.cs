@@ -28,7 +28,6 @@ namespace GetStoreApp.UI.TeachingTips
             }
             else
             {
-                ShareFailed.Text = ResourceService.GetLocalized("Notification/ShareFailed");
                 ShareFailed.Visibility = Visibility.Visible;
                 ShareSelectedFailed.Visibility = Visibility.Collapsed;
             }

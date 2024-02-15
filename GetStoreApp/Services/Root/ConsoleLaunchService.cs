@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.Console;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
@@ -47,6 +48,7 @@ namespace GetStoreApp.Services.Root
 
             InitializeIntroduction();
             InitializeRequestContent();
+            await CharExtension.InitializeAsync();
             await RequestService.GetLinksAsync();
 
             ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));

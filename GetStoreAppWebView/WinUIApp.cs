@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.XamlTypeInfo;
 using System;
-using Windows.Foundation.Diagnostics;
+using System.Diagnostics;
 
 namespace GetStoreAppWebView
 {
@@ -67,7 +67,7 @@ namespace GetStoreAppWebView
         private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             args.Handled = true;
-            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
+            LogService.WriteLog(EventLogEntryType.Error, "Unknown unhandled exception.", args.Exception);
             (System.Windows.Application.Current as WPFApp).Dispose();
         }
     }

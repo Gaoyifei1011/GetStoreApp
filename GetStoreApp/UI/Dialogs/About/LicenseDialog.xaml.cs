@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -28,7 +30,14 @@ namespace GetStoreApp.UI.Dialogs.About
         public LicenseDialog()
         {
             InitializeComponent();
-            LicenseText = Encoding.UTF8.GetString(Properties.Resources.LICENSE);
+        }
+
+        /// <summary>
+        /// 初始化许可证对话框时加载的内容
+        /// </summary>
+        private async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/LICENSE"));
         }
 
         /// <summary>

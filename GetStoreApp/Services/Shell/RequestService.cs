@@ -62,9 +62,9 @@ namespace GetStoreApp.Services.Shell
             // 解析链接对应的产品 ID
             string productId = selectedType.Equals(TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(linkText) : linkText;
 
-            bool RequestState = true;
+            bool requestState = true;
 
-            while (RequestState)
+            while (requestState)
             {
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
 
@@ -121,7 +121,7 @@ namespace GetStoreApp.Services.Shell
                             ConsoleHelper.SetTextColor(0x02);
                             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
                             ConsoleHelper.ResetTextColor();
-                            RequestState = false;
+                            requestState = false;
                             await ParseService.ParseDataAsync(appInfo, queryLinksList);
                             break;
                         }
@@ -133,7 +133,7 @@ namespace GetStoreApp.Services.Shell
                             PrintRequestFailedData();
                             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
                             string RegainString = ConsoleHelper.ReadLine();
-                            RequestState = RegainString is "Y" || RegainString is "y";
+                            requestState = RegainString is "Y" || RegainString is "y";
                             break;
                         }
                     case 3:
@@ -143,7 +143,7 @@ namespace GetStoreApp.Services.Shell
                             ConsoleHelper.ResetTextColor();
                             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
                             string RegainString = ConsoleHelper.ReadLine();
-                            RequestState = RegainString is "Y" || RegainString is "y";
+                            requestState = RegainString is "Y" || RegainString is "y";
                             break;
                         }
                 }

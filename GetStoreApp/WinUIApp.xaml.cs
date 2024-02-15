@@ -32,13 +32,20 @@ namespace GetStoreApp
         /// <summary>
         /// 启动应用程序时调用，初始化应用主窗口
         /// </summary>
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
             Window = new MainWindow();
             MainWindow.Current.Show(true);
             InitializeJumpList();
-            ConfigApp();
+
+            ThemeService.SetWindowTheme();
+            BackdropService.SetAppBackdrop();
+            TopMostService.SetAppTopMost();
+            WinGetService.InitializeService();
+            DownloadSchedulerService.InitializeDownloadScheduler();
+            await Aria2Service.InitializeAria2ConfAsync();
+            Aria2Service.StartAria2Process();
         }
 
         /// <summary>
@@ -95,33 +102,6 @@ namespace GetStoreApp
                     await taskbarJumpList.SaveAsync();
                 });
             }
-        }
-
-        /// <summary>
-        /// 窗口激活后配置其他设置
-        /// </summary>
-        private void ConfigApp()
-        {
-            // 设置应用主题
-            ThemeService.SetWindowTheme();
-
-            // 设置应用背景色
-            BackdropService.SetAppBackdrop();
-
-            // 设置应用置顶状态
-            TopMostService.SetAppTopMost();
-
-            // 初始化 WinGet 程序包安装信息
-            WinGetService.InitializeService();
-
-            // 初始化下载监控服务
-            DownloadSchedulerService.InitializeDownloadScheduler();
-
-            // 初始化Aria2配置文件信息
-            Aria2Service.InitializeAria2Conf();
-
-            // 启动Aria2下载服务
-            Aria2Service.StartAria2Process();
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.TeachingTips
@@ -22,13 +21,11 @@ namespace GetStoreApp.UI.TeachingTips
         {
             if (isDownloadCreated)
             {
-                DownloadCreateSuccess.Text = ResourceService.GetLocalized("Notification/DownloadCreateSuccessfully");
                 DownloadCreateSuccess.Visibility = Visibility.Visible;
                 DownloadCreateFailed.Visibility = Visibility.Collapsed;
             }
             else
             {
-                DownloadCreateFailed.Text = ResourceService.GetLocalized("Notification/DownloadCreateFailed");
                 DownloadCreateSuccess.Visibility = Visibility.Collapsed;
                 DownloadCreateFailed.Visibility = Visibility.Visible;
             }

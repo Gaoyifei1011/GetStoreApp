@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Properties;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
@@ -10,7 +9,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -33,8 +31,6 @@ namespace GetStoreApp
         [STAThread]
         public static void Main(string[] args)
         {
-            Resources.Culture = CultureInfo.CurrentCulture.Parent;
-
             if (!RuntimeHelper.IsMSIX)
             {
                 PackageManager packageManager = new PackageManager();

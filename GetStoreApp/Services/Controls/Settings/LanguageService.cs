@@ -3,7 +3,6 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using Windows.Globalization;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -30,12 +29,10 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             foreach (string applanguage in AppLanguagesList)
             {
-                CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
-
                 LanguageList.Add(new DictionaryEntry()
                 {
-                    Key = culture.NativeName,
-                    Value = culture.Name,
+                    Key = new Language(applanguage).NativeName,
+                    Value = applanguage,
                 });
             }
         }
@@ -47,7 +44,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             foreach (DictionaryEntry languageItem in LanguageList)
             {
-                if (languageItem.Value.ToString().Equals(currentSystemLanguage))
+                if (languageItem.Value.ToString().Contains(currentSystemLanguage, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
@@ -75,30 +72,30 @@ namespace GetStoreApp.Services.Controls.Settings
             object language = LocalSettingsService.ReadSetting<object>(settingsKey);
 
             // 当前系统的语言值
-            string CurrentSystemLanguage = CultureInfo.CurrentCulture.Parent.Name;
+            string currentSystemLanguage = ApplicationLanguages.Languages[0];
 
             if (language is null)
             {
                 // 判断当前系统语言是否存在应用默认添加的语言列表中
-                bool result = IsExistsInLanguageList(CurrentSystemLanguage);
+                bool result = IsExistsInLanguageList(currentSystemLanguage);
 
                 // 如果存在，设置存储值和应用初次设置的语言为当前系统的语言
                 if (result)
                 {
-                    DictionaryEntry currentSystemLanguage = LanguageList.Find(item => item.Value.Equals(CurrentSystemLanguage));
-                    SetLanguage(currentSystemLanguage);
-                    return currentSystemLanguage;
+                    DictionaryEntry currentLanguage = LanguageList.Find(item => item.Value.ToString().Contains(currentSystemLanguage));
+                    SetLanguage(currentLanguage);
+                    return currentLanguage;
                 }
 
                 // 不存在，设置存储值和应用初次设置的语言为默认语言：English(United States)
                 else
                 {
                     SetLanguage(DefaultAppLanguage);
-                    return LanguageList.Find(item => item.Value.Equals(DefaultAppLanguage.Value));
+                    return DefaultAppLanguage;
                 }
             }
 
-            return LanguageList.Find(item => item.Value.Equals(language));
+            return LanguageList.Find(item => item.Value.ToString().Contains(language.ToString(), StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

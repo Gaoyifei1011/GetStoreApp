@@ -12,7 +12,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="3.5.211.0" />
+    Version="3.5.215.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -27,7 +27,7 @@
 
   <Resources>
     <Resource Language="EN-US" />
-    <Resource Language="ZH-HANS" />
+    <Resource Language="ZH-HANS-CN" />
   </Resources>
 
   <Applications>

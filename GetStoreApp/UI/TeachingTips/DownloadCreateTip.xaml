@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
     IsLightDismissEnabled="False"
     PlacementMargin="0,20,0,0"
     PreferredPlacement="Bottom"
@@ -11,7 +12,14 @@
     mc:Ignorable="d">
 
     <Grid>
-        <TextBlock x:Name="DownloadCreateSuccess" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />
-        <TextBlock x:Name="DownloadCreateFailed" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+        <TextBlock
+            x:Name="DownloadCreateSuccess"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/DownloadCreateSuccessfully')}" />
+
+        <TextBlock
+            x:Name="DownloadCreateFailed"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/DownloadCreateFailed')}" />
     </Grid>
 </TeachingTip>

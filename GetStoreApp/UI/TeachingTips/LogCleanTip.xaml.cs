@@ -1,4 +1,3 @@
-using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -22,13 +21,11 @@ namespace GetStoreApp.UI.TeachingTips
         {
             if (cleanResult)
             {
-                LogCleanSuccess.Text = ResourceService.GetLocalized("Notification/LogCleanSuccessfully");
                 LogCleanSuccess.Visibility = Visibility.Visible;
                 LogCleanFailed.Visibility = Visibility.Collapsed;
             }
             else
             {
-                LogCleanSuccess.Text = ResourceService.GetLocalized("Notification/LogCleanFailed");
                 LogCleanSuccess.Visibility = Visibility.Collapsed;
                 LogCleanFailed.Visibility = Visibility.Visible;
             }

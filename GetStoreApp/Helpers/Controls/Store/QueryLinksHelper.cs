@@ -1,10 +1,8 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
-using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -22,9 +20,6 @@ namespace GetStoreApp.Helpers.Controls.Store
     /// </summary>
     public static class QueryLinksHelper
     {
-        private static string market = CultureInfo.InstalledUICulture.Name.Remove(0, 3).ToUpper();
-        private static string locale = CultureInfo.InstalledUICulture.Name.ToLower();
-
         private static Uri cookieUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
         private static Uri fileListXmlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
         private static Uri urlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured");
@@ -58,9 +53,9 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] contentBytes = Encoding.UTF8.GetBytes(Resources.cookie);
+                byte[] contentBytes = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/cookie.xml");
 
-                HttpStringContent httpStringContent = new HttpStringContent(Resources.cookie);
+                HttpStringContent httpStringContent = new HttpStringContent(Encoding.UTF8.GetString(contentBytes));
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
                 httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
@@ -141,7 +136,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market={1}&locale={2}&deviceFamily=Windows.Desktop", productId, market, locale);
+                string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market=US&locale=en-US&deviceFamily=Windows.Desktop", productId);
 
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri(categoryIDAPI)).AsTask(cancellationTokenSource.Token);
@@ -240,7 +235,8 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                string fileListXml = Resources.wu.Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
+                byte[] wubytesArray = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/wu.xml");
+                string fileListXml = Encoding.UTF8.GetString(wubytesArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
                 byte[] contentBytes = Encoding.UTF8.GetBytes(fileListXml);
 
                 HttpStringContent httpStringContent = new HttpStringContent(fileListXml);
@@ -407,7 +403,8 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                string url = Resources.url.Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
+                byte[] urlbytesArray = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/url.xml");
+                string url = Encoding.UTF8.GetString(urlbytesArray).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
                 byte[] contentBytes = Encoding.UTF8.GetBytes(url);
 
                 HttpStringContent httpContent = new HttpStringContent(url);
@@ -553,19 +550,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                             }
                             else
                             {
-                                string name = string.Empty;
-                                JsonArray appsAndFeaturesEntriesArray = installerObject.GetNamedValue("AppsAndFeaturesEntries").GetArray();
-                                if (appsAndFeaturesEntriesArray.Count > 0)
-                                {
-                                    if (appsAndFeaturesEntriesArray[0].GetObject().GetNamedString("DisplayName") is not null)
-                                    {
-                                        name = appsAndFeaturesEntriesArray[0].GetObject().GetNamedString("DisplayName");
-                                    }
-                                }
-                                else if (versionsObject.GetNamedValue("DefaultLocale").GetObject() is not null && versionsObject.GetNamedValue("DefaultLocale").GetObject().GetNamedString("PackageName") is not null)
-                                {
-                                    name = versionsObject.GetNamedValue("DefaultLocale").GetObject().GetNamedString("PackageName");
-                                }
+                                string name = installerUrl.Split('/')[^1];
 
                                 lock (nonAppxPackagesLock)
                                 {

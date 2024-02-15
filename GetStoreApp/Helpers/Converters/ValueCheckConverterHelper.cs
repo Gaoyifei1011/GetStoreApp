@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using System.IO;
 using Windows.ApplicationModel;
 

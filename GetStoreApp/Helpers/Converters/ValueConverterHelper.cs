@@ -8,7 +8,7 @@ namespace GetStoreApp.Helpers.Converters
     /// </summary>
     public static class ValueConverterHelper
     {
-        public static bool StringCompareReverseConvert(object value, object comparedValue)
+        public static bool ObjectCompareReverseConvert(object value, object comparedValue)
         {
             return !value.Equals(comparedValue);
         }

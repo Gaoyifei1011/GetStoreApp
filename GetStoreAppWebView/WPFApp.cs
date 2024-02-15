@@ -1,9 +1,9 @@
 ﻿using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Views.Windows;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
-using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView
 {
@@ -53,7 +53,7 @@ namespace GetStoreAppWebView
         /// </summary>
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs args)
         {
-            LogService.WriteLog(LoggingLevel.Error, "Unknown dispatcher unhandled exception.", args.Exception);
+            LogService.WriteLog(EventLogEntryType.Error, "Unknown dispatcher unhandled exception.", args.Exception);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace GetStoreAppWebView
         /// </summary>
         private void OnUnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
-            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
+            LogService.WriteLog(EventLogEntryType.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
             Dispose();
         }
 

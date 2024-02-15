@@ -8,8 +8,10 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
+using Windows.Storage.Streams;
 
 namespace GetStoreApp.Services.Root
 {
@@ -391,7 +393,7 @@ namespace GetStoreApp.Services.Root
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _defaultAppLanguage.Value), defaultResourceException);
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context string with langauge {0} failed.", _defaultAppLanguage.Value), defaultResourceException);
                         return resource;
                     }
                 }
@@ -400,6 +402,28 @@ namespace GetStoreApp.Services.Root
             {
                 LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new Exception());
                 return resource;
+            }
+        }
+
+        /// <summary>
+        /// 获取嵌入的数据
+        /// </summary>
+        public static async Task<byte[]> GetEmbeddedDataAsync(string resource)
+        {
+            try
+            {
+                IRandomAccessStream randomAccessStream = await resourceMap.GetValue(resource).GetValueAsStreamAsync();
+                DataReader dataReader = new DataReader(randomAccessStream);
+                await dataReader.LoadAsync((uint)randomAccessStream.Size);
+                byte[] bytesArray = new byte[randomAccessStream.Size];
+                dataReader.ReadBytes(bytesArray);
+                dataReader.Dispose();
+                return bytesArray;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource embedData failed."), e);
+                return [];
             }
         }
     }

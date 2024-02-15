@@ -53,25 +53,24 @@
   <ItemGroup>
     <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
 
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
     <Content Remove="Assets\GetStoreApp.ico" />
-    <Content Remove="Assets\Resources\Lengths.bin" />
-    <Content Remove="Assets\Resources\LICENSE" />
-    <Content Remove="Assets\XML\cookie.xml" />
-    <Content Remove="Assets\XML\url.xml" />
-    <Content Remove="Assets\XML\wu.xml" />
-
-    <EmbeddedResource Update="Properties\Resources.resx" Generator="PublicResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
+    <Content Remove="EmbedAssets\cookie.xml" />
+    <Content Remove="EmbedAssets\Lengths.bin" />
+    <Content Remove="EmbedAssets\LICENSE" />
+    <Content Remove="EmbedAssets\Mile.Aria2.conf" />
+    <Content Remove="EmbedAssets\url.xml" />
+    <Content Remove="EmbedAssets\wu.xml" />
 
     <Manifest Include="$(ApplicationManifest)" />
-
+    
+    <MyEmbeddedItems Include="EmbedAssets\cookie.xml" />
+    <MyEmbeddedItems Include="EmbedAssets\Lengths.bin" />
+    <MyEmbeddedItems Include="EmbedAssets\LICENSE" />
+    <MyEmbeddedItems Include="EmbedAssets\Mile.Aria2.conf" />
+    <MyEmbeddedItems Include="EmbedAssets\url.xml" />
+    <MyEmbeddedItems Include="EmbedAssets\wu.xml" />
+    
     <None Remove="Assets\LICENSE" />
-
     <None Remove="Styles\AppbarButton.xaml" />
     <None Remove="Styles\DropDownButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
@@ -82,40 +81,30 @@
     <None Remove="Styles\ScrollBar.xaml" />
     <None Remove="Styles\Segmented.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
-
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
-
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
     <None Remove="UI\Controls\Store\SearchStoreControl.xaml" />
-
     <None Remove="UI\Controls\UWPApp\AppInfoControl.xaml" />
     <None Remove="UI\Controls\UWPApp\AppListControl.xaml" />
-
     <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
-
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\About\LicenseDialog.xaml" />
-
     <None Remove="UI\Dialogs\Common\AppRunningDialog.xaml" />
     <None Remove="UI\Dialogs\Common\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DownloadNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" />
-
     <None Remove="UI\Dialogs\Download\FileInformationDialog.xaml" />
     <None Remove="UI\Dialogs\Download\InstallingNotifyDialog.xaml" />
-
     <None Remove="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
-
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
-
     <None Remove="UI\TeachingTips\DataCopyTip.xaml" />
     <None Remove="UI\TeachingTips\DownloadCreateTip.xaml" />
     <None Remove="UI\TeachingTips\FolderPickerTip.xaml" />
@@ -124,7 +113,6 @@
     <None Remove="UI\TeachingTips\NetWorkErrorTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="UI\TeachingTips\ShareFailedTip.xaml" />
-
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -132,16 +120,10 @@
     <None Remove="Views\Pages\StorePage.xaml" />
     <None Remove="Views\Pages\UWPAppPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
-
     <None Remove="Views\Windows\MainWindow.xaml" />
-
     <None Remove="WinUIApp.xaml" />
 
-    <None Update="Assets\GetStoreApp.ico" CopyToOutputDirectory="Never" />
-    <None Update="Assets\Resources\LICENSE" CopyToOutputDirectory="Never" />
-    <None Update="Mile.Aria2.conf" CopyToOutputDirectory="Never" />
-
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231219000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.240211001" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Styles\AppBarButton.xaml" Generator="MSBuild:Compile" />
@@ -154,40 +136,30 @@
     <Page Update="Styles\ScrollBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Segmented.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Controls\Store\QueryLinksControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Store\SearchStoreControl.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Controls\UWPApp\AppInfoControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\UWPApp\AppListControl.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\About\LicenseDialog.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Dialogs\Common\AppRunningDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="UI\TeachingTips\DataCopyTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\DownloadCreateTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\FolderPickerTip.xaml" Generator="MSBuild:Compile" />
@@ -196,7 +168,6 @@
     <Page Update="UI\TeachingTips\NetWorkErrorTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\ShareFailedTip.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="Views\Pages\AboutPage.xaml" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
@@ -204,9 +175,7 @@
     <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />
-
     <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />
-
     <Page Remove="WinUIApp.xaml" />
 
     <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
@@ -242,5 +211,18 @@
     <ItemGroup>
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
     </ItemGroup>
+  </Target>
+  
+  <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->
+  <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
+    <Copy SourceFiles="@(MyEmbeddedItems)" DestinationFiles="@(MyEmbeddedItems->'$(IntermediateOutputPath)embed\EmbedAssets\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <ReadLinesFromFile File="$(_EmbedFileResfilePath)">
+      <Output TaskParameter="Lines" ItemName="ItemsFromFile" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+      <MyEmbeddedFileList Include="@(ItemsFromFile)" />
+      <MyEmbeddedFileList Include="@(MyEmbeddedItems)" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
   </Target>
 </Project>

@@ -10,10 +10,6 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class DesktopStartupArgsDialog : ContentDialog
     {
-        private string SampleShort { get; } = @"GetStoreApp.exe ""https://www.microsoft.com/store/productId/9WZDNCRFJBMP""";
-
-        private string SampleFull { get; } = @"GetStoreApp.exe -t ""pid"" -c ""rt"" ""-l"" ""9WZDNCRFJBMP""";
-
         private List<StartupArgsModel> DesktopStartupArgsList { get; } = new List<StartupArgsModel>
         {
             new StartupArgsModel()

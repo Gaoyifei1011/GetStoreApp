@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Properties;
+﻿using GetStoreApp.Services.Root;
+using System.Threading.Tasks;
 
 namespace GetStoreApp.Extensions.Console
 {
@@ -7,7 +8,12 @@ namespace GetStoreApp.Extensions.Console
     /// </summary>
     public static class CharExtension
     {
-        private static byte[] lengths = Resources.Lengths;
+        private static byte[] lengths;
+
+        public static async Task InitializeAsync()
+        {
+            lengths = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/Lengths.bin");
+        }
 
         /// <summary>
         /// 判断该字符在控制台显示的实际宽度是否大于1（速度更快版本）

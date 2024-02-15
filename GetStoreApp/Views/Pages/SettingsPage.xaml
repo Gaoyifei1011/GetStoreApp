@@ -330,7 +330,7 @@
                         MinWidth="0"
                         Margin="0,-2,0,0"
                         FlowDirection="RightToLeft"
-                        IsEnabled="{x:Bind converter:ValueConverterHelper.StringCompareReverseConvert(Backdrop.Value, BackdropList[0].Value), Mode=OneWay}"
+                        IsEnabled="{x:Bind converter:ValueConverterHelper.ObjectCompareReverseConvert(Backdrop.Value, BackdropList[0].Value), Mode=OneWay}"
                         IsEnabledChanged="{x:Bind OnIsEnabledChanged}"
                         IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"

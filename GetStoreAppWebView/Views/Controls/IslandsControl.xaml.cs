@@ -17,7 +17,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
-using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
 namespace GetStoreAppWebView.Views.Controls
@@ -354,7 +353,7 @@ namespace GetStoreAppWebView.Views.Controls
             processFailedBuilder.Append(args.ProcessDescription);
             processFailedBuilder.Append(Environment.NewLine);
 
-            LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", processFailedBuilder);
+            LogService.WriteLog(EventLogEntryType.Error, "WebView2 process failed", processFailedBuilder);
 
             System.Windows.MessageBox.Show(ResourceService.GetLocalized("WebView/WebViewProcessFailedContent"), ResourceService.GetLocalized("WebView/WebViewProcessFailedTitle"), System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             (System.Windows.Application.Current as WPFApp).Dispose();
@@ -484,7 +483,7 @@ namespace GetStoreAppWebView.Views.Controls
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "WPF WebBrowser unloaded failed", e);
+                        LogService.WriteLog(EventLogEntryType.Error, "WPF WebBrowser unloaded failed", e);
                     }
                 }
             }
@@ -502,7 +501,7 @@ namespace GetStoreAppWebView.Views.Controls
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "WebView2 unloaded event failed", e);
+                        LogService.WriteLog(EventLogEntryType.Error, "WebView2 unloaded event failed", e);
                     }
                 }
             }

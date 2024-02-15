@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
 namespace GetStoreAppWebView.Services.Root
@@ -39,7 +39,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string logContent, StringBuilder logBuilder)
+        public static void WriteLog(EventLogEntryType logType, string logContent, StringBuilder logBuilder)
         {
             if (isInitialized)
             {
@@ -49,7 +49,7 @@ namespace GetStoreAppWebView.Services.Root
                     {
                         File.AppendAllText(
                             Path.Combine(logFolderPath, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logLevel), logBuilder)
+                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logType), logBuilder)
                             );
                     });
                 }
@@ -63,7 +63,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string logContent, Exception exception)
+        public static void WriteLog(EventLogEntryType logType, string logContent, Exception exception)
         {
             if (isInitialized)
             {
@@ -87,7 +87,7 @@ namespace GetStoreAppWebView.Services.Root
 
                         File.AppendAllText(
                             Path.Combine(logFolderPath, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logLevel), exceptionBuilder.ToString())
+                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logType), exceptionBuilder.ToString())
                             );
                     });
                 }

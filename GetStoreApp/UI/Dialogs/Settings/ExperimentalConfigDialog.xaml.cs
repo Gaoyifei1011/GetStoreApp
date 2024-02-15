@@ -126,14 +126,14 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 还原默认值
         /// </summary>
-        private void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void OnRestoreDefaultClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
             if (sender.Tag is not null)
             {
                 NetWorkMonitorValue = true;
-                Aria2Service.RestoreDefault();
+                await Aria2Service.RestoreDefaultAsync();
                 NetWorkMonitorService.RestoreDefaultValue();
 
                 if (!displayTimer.IsEnabled)

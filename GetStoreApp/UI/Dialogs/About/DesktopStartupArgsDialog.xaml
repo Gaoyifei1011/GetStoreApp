@@ -209,13 +209,13 @@
 
         <TextBlock
             Margin="0"
-            Text="{x:Bind SampleShort}"
+            Text="GetStoreApp.exe &quot;https://www.microsoft.com/store/productId/9WZDNCRFJBMP&quot;"
             TextAlignment="Left"
             TextWrapping="Wrap" />
 
         <TextBlock
             Margin="0"
-            Text="{x:Bind SampleFull}"
+            Text="GetStoreApp.exe -t &quot;pid&quot; -c &quot;rt&quot; &quot;-l&quot; &quot;9WZDNCRFJBMP&quot;"
             TextAlignment="Justify"
             TextWrapping="Wrap" />
     </StackPanel>

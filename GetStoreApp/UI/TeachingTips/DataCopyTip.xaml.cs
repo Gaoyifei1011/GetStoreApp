@@ -137,7 +137,6 @@ namespace GetStoreApp.UI.TeachingTips
             {
                 CopySuccess.Visibility = Visibility.Collapsed;
                 CopyFailed.Visibility = Visibility.Visible;
-                CopyFailed.Text = ResourceService.GetLocalized("Notification/CopyToClipboardFailed");
             }
         }
     }

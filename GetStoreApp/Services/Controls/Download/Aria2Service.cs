@@ -1,9 +1,9 @@
 ﻿using GetStoreApp.Helpers.Controls.Download;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Properties;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
 using System.Text;
@@ -31,7 +31,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 初始化Aria2配置文件
         /// </summary>
-        public static void InitializeAria2Conf()
+        public static async Task InitializeAria2ConfAsync()
         {
             User32Library.GetWindowThreadProcessId((IntPtr)MainWindow.Current.AppWindow.Id.Value, out uint processId);
             try
@@ -39,8 +39,9 @@ namespace GetStoreApp.Services.Controls.Download
                 // 原配置文件存在且新的配置文件不存在，拷贝到指定目录
                 if (!File.Exists(Aria2ConfPath))
                 {
+                    byte[] mileAria2 = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/MileAria2.conf");
                     FileStream file = new FileStream(Aria2ConfPath, FileMode.Create);
-                    file.Write(Resources.MileAria2, 0, Resources.MileAria2.Length);
+                    file.Write(mileAria2, 0, mileAria2.Length);
                     file.Flush();
                     file.Close();
                 }
@@ -67,15 +68,17 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 恢复配置文件默认值
         /// </summary>
-        public static void RestoreDefault()
+        public static async Task RestoreDefaultAsync()
         {
             try
             {
                 // 原配置文件存在时，覆盖已经修改的配置文件
+                byte[] mileAria2 = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/MileAria2.conf");
                 FileStream fileStream = new FileStream(Aria2ConfPath, FileMode.Create);
-                fileStream.Write(Resources.MileAria2, 0, Resources.MileAria2.Length);
+                fileStream.Write(mileAria2, 0, mileAria2.Length);
                 fileStream.Flush();
                 fileStream.Close();
+                fileStream.Dispose();
 
                 // 使用自定义的配置文件目录
                 aria2Arguments = string.Format("--conf-path=\"{0}\" -D", Aria2ConfPath);

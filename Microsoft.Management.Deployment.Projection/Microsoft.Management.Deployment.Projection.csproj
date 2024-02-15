@@ -4,7 +4,6 @@
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <CSWinRTWindowsMetadata>10.0.22621.0</CSWinRTWindowsMetadata>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-    <FileVersion>1.22.2401.9001</FileVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsTrimmable>true</IsTrimmable>
     <Platforms>x64;x86;ARM64</Platforms>
