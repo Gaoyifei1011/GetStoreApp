@@ -219,29 +219,17 @@
   <data name="DownloadFolder" xml:space="preserve">
     <value>下载</value>
   </data>
-  <data name="DownloadInApp" xml:space="preserve">
-    <value>应用内置下载</value>
-  </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>同时下载任务数</value>
   </data>
   <data name="DownloadItemDescription" xml:space="preserve">
     <value>设置同时下载的文件数目</value>
   </data>
-  <data name="DownloadMode" xml:space="preserve">
-    <value>下载方式</value>
-  </data>
-  <data name="DownloadModeDescription" xml:space="preserve">
-    <value>选择您要使用下载文件的方式</value>
-  </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>下载管理</value>
   </data>
   <data name="DownloadOptionsDescription" xml:space="preserve">
     <value>应用程序下载文件设置</value>
-  </data>
-  <data name="DownloadWithBrowser" xml:space="preserve">
-    <value>浏览器下载</value>
   </data>
   <data name="EncryptedPackage" xml:space="preserve">
     <value>不显示加密包文件</value>

@@ -5,6 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
+    xmlns:downloadHelper="using:GetStoreApp.Helpers.Controls.Download"
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -305,7 +306,7 @@
                                     MinWidth="50"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind converter:StringConverterHelper.DownloadSpeedFormat(CurrentSpeed), Mode=OneWay}"
+                                    Text="{x:Bind downloadHelper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"
                                     TextAlignment="Left"
                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
 

@@ -1,4 +1,6 @@
-﻿namespace GetStoreApp.Models.Controls.Store
+﻿using System.Collections.Generic;
+
+namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
     /// 历史记录数据模型
@@ -23,12 +25,12 @@
         /// <summary>
         /// 查询链接控件：历史记录中包含的类型，数据库存储的原始名称
         /// </summary>
-        public string HistoryType { get; set; }
+        public KeyValuePair<string, string> HistoryType { get; set; }
 
         /// <summary>
         /// 查询链接控件：历史记录中包含的通道
         /// </summary>
-        public string HistoryChannel { get; set; }
+        public KeyValuePair<string, string> HistoryChannel { get; set; }
 
         /// <summary>
         /// 查询链接控件：历史记录包含的链接

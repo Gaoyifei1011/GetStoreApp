@@ -201,7 +201,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 设置当前系统的预览体验计划
         /// </summary>
-        private async void OnWIPSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnInsiderProgramClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsinsider"));
         }

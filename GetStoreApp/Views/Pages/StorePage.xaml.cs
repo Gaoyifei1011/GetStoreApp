@@ -116,6 +116,14 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 打开设置中的语言和区域
+        /// </summary>
+        private async void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
+        }
+
+        /// <summary>
         /// 了解应用具体的使用说明
         /// </summary>
         private void OnUseInstructionClicked(object sender, RoutedEventArgs args)

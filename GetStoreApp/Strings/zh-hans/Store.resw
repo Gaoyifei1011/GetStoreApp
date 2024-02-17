@@ -123,12 +123,6 @@
   <data name="CancelToolTip" xml:space="preserve">
     <value>退出多选模式</value>
   </data>
-  <data name="ClickToDownload" xml:space="preserve">
-    <value>单击以下载</value>
-  </data>
-  <data name="ClickToOpen" xml:space="preserve">
-    <value>单击以打开</value>
-  </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
@@ -197,6 +191,12 @@
   </data>
   <data name="HistoryType" xml:space="preserve">
     <value>类型</value>
+  </data>
+  <data name="LanguageAndRegion" xml:space="preserve">
+    <value>语言和区域</value>
+  </data>
+  <data name="LanguageAndRegionToolTip" xml:space="preserve">
+    <value>打开设置中的语言和区域</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>了解更多</value>

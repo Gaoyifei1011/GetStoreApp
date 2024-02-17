@@ -228,8 +228,8 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 string copyContent = string.Format("{0}\t{1}\t{2}\t{3}",
                     historyItem.HistoryAppName,
-                    TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType)).DisplayName,
-                    ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel)).DisplayName,
+                    historyItem.HistoryType.Value,
+                    historyItem.HistoryChannel.Value,
                     historyItem.HistoryLink);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
@@ -249,8 +249,8 @@ namespace GetStoreApp.UI.Controls.Store
                 StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
                 if (storePage is not null)
                 {
-                    SelectedType = TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType));
-                    SelectedChannel = ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel));
+                    SelectedType = TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
+                    SelectedChannel = ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
                     LinkText = historyItem.HistoryLink;
                 }
             }
@@ -281,131 +281,122 @@ namespace GetStoreApp.UI.Controls.Store
                 Task.Run(async () =>
                 {
                     AutoResetEvent autoResetEvent = new AutoResetEvent(false);
-                    // 使用应用内提供的下载方式
-                    if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[0].Value)
+
+                    string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+
+                    BackgroundModel backgroundItem = new BackgroundModel
                     {
-                        string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+                        DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
+                        FileName = queryLinksItem.FileName,
+                        FileLink = queryLinksItem.FileLink,
+                        FilePath = downloadFilePath,
+                        TotalSize = 0,
+                        DownloadFlag = 1
+                    };
 
-                        BackgroundModel backgroundItem = new BackgroundModel
-                        {
-                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
-                            FileName = queryLinksItem.FileName,
-                            FileLink = queryLinksItem.FileLink,
-                            FilePath = downloadFilePath,
-                            TotalSize = 0,
-                            DownloadFlag = 1
-                        };
+                    // 检查是否存在相同的任务记录
+                    DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
-                        // 检查是否存在相同的任务记录
-                        DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
-
-                        switch (checkResult)
-                        {
-                            case DuplicatedDataKind.None:
+                    switch (checkResult)
+                    {
+                        case DuplicatedDataKind.None:
+                            {
+                                bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                                DispatcherQueue.TryEnqueue(() =>
                                 {
-                                    bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                                    TeachingTipHelper.Show(new DownloadCreateTip(addResult));
+                                });
+
+                                break;
+                            }
+
+                        case DuplicatedDataKind.Unfinished:
+                            {
+                                ContentDialogResult result = ContentDialogResult.None;
+
+                                DispatcherQueue.TryEnqueue(async () =>
+                                {
+                                    result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Unfinished), this);
+                                    autoResetEvent.Set();
+                                });
+
+                                autoResetEvent.WaitOne();
+
+                                if (result is ContentDialogResult.Primary)
+                                {
+                                    try
+                                    {
+                                        if (File.Exists(backgroundItem.FilePath))
+                                        {
+                                            File.Delete(backgroundItem.FilePath);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated unfinished downloaded file failed.", e);
+                                    }
+                                    finally
+                                    {
+                                        bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                        DispatcherQueue.TryEnqueue(() =>
+                                        {
+                                            TeachingTipHelper.Show(new DownloadCreateTip(addResult));
+                                        });
+                                    }
+                                }
+                                else if (result is ContentDialogResult.Secondary)
+                                {
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        TeachingTipHelper.Show(new DownloadCreateTip(addResult));
+                                        MainWindow.Current.NavigateTo(typeof(DownloadPage));
                                     });
-
-                                    break;
                                 }
+                                break;
+                            }
 
-                            case DuplicatedDataKind.Unfinished:
+                        case DuplicatedDataKind.Completed:
+                            {
+                                ContentDialogResult result = ContentDialogResult.None;
+
+                                DispatcherQueue.TryEnqueue(async () =>
                                 {
-                                    ContentDialogResult result = ContentDialogResult.None;
+                                    result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Completed), this);
+                                    autoResetEvent.Set();
+                                });
 
-                                    DispatcherQueue.TryEnqueue(async () =>
+                                autoResetEvent.WaitOne();
+
+                                if (result is ContentDialogResult.Primary)
+                                {
+                                    try
                                     {
-                                        result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Unfinished), this);
-                                        autoResetEvent.Set();
-                                    });
-
-                                    autoResetEvent.WaitOne();
-
-                                    if (result is ContentDialogResult.Primary)
-                                    {
-                                        try
+                                        if (File.Exists(backgroundItem.FilePath))
                                         {
-                                            if (File.Exists(backgroundItem.FilePath))
-                                            {
-                                                File.Delete(backgroundItem.FilePath);
-                                            }
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated unfinished downloaded file failed.", e);
-                                        }
-                                        finally
-                                        {
-                                            bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            DispatcherQueue.TryEnqueue(() =>
-                                            {
-                                                TeachingTipHelper.Show(new DownloadCreateTip(addResult));
-                                            });
+                                            File.Delete(backgroundItem.FilePath);
                                         }
                                     }
-                                    else if (result is ContentDialogResult.Secondary)
+                                    catch (Exception e)
                                     {
+                                        LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated completed downloaded file failed.", e);
+                                    }
+                                    finally
+                                    {
+                                        bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
+                                            TeachingTipHelper.Show(new DownloadCreateTip(addResult));
                                         });
                                     }
-                                    break;
                                 }
-
-                            case DuplicatedDataKind.Completed:
+                                else if (result is ContentDialogResult.Secondary)
                                 {
-                                    ContentDialogResult result = ContentDialogResult.None;
-
-                                    DispatcherQueue.TryEnqueue(async () =>
+                                    DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Completed), this);
-                                        autoResetEvent.Set();
+                                        MainWindow.Current.NavigateTo(typeof(DownloadPage));
                                     });
-
-                                    autoResetEvent.WaitOne();
-
-                                    if (result is ContentDialogResult.Primary)
-                                    {
-                                        try
-                                        {
-                                            if (File.Exists(backgroundItem.FilePath))
-                                            {
-                                                File.Delete(backgroundItem.FilePath);
-                                            }
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated completed downloaded file failed.", e);
-                                        }
-                                        finally
-                                        {
-                                            bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                            DispatcherQueue.TryEnqueue(() =>
-                                            {
-                                                TeachingTipHelper.Show(new DownloadCreateTip(addResult));
-                                            });
-                                        }
-                                    }
-                                    else if (result is ContentDialogResult.Secondary)
-                                    {
-                                        DispatcherQueue.TryEnqueue(() =>
-                                        {
-                                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
-                                        });
-                                    }
-                                    break;
                                 }
-                        }
-                    }
-
-                    // 使用浏览器下载
-                    else if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[1].Value)
-                    {
-                        await Launcher.LaunchUriAsync(new Uri(queryLinksItem.FileLink));
+                                break;
+                            }
                     }
 
                     autoResetEvent.Dispose();
@@ -709,105 +700,92 @@ namespace GetStoreApp.UI.Controls.Store
                     return;
                 };
 
-                // 使用应用内提供的下载方式
-                if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[0].Value)
+                List<BackgroundModel> duplicatedList = new List<BackgroundModel>();
+
+                bool IsDownloadSuccessfully = false;
+
+                foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
-                    List<BackgroundModel> duplicatedList = new List<BackgroundModel>();
+                    string downloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
-                    bool IsDownloadSuccessfully = false;
-
-                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
+                    BackgroundModel backgroundItem = new BackgroundModel
                     {
-                        string downloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+                        DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
+                        FileName = queryLinksItem.FileName,
+                        FileLink = queryLinksItem.FileLink,
+                        FilePath = downloadFilePath,
+                        TotalSize = 0,
+                        DownloadFlag = 1
+                    };
 
-                        BackgroundModel backgroundItem = new BackgroundModel
-                        {
-                            DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
-                            FileName = queryLinksItem.FileName,
-                            FileLink = queryLinksItem.FileLink,
-                            FilePath = downloadFilePath,
-                            TotalSize = 0,
-                            DownloadFlag = 1
-                        };
+                    DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
 
-                        DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
-
-                        if (checkResult is DuplicatedDataKind.None)
-                        {
-                            await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                            IsDownloadSuccessfully = true;
-                        }
-                        else
-                        {
-                            duplicatedList.Add(backgroundItem);
-                        }
+                    if (checkResult is DuplicatedDataKind.None)
+                    {
+                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
+                        IsDownloadSuccessfully = true;
                     }
-
-                    if (duplicatedList.Count > 0)
+                    else
                     {
-                        ContentDialogResult result = ContentDialogResult.None;
+                        duplicatedList.Add(backgroundItem);
+                    }
+                }
 
-                        DispatcherQueue.TryEnqueue(async () =>
+                if (duplicatedList.Count > 0)
+                {
+                    ContentDialogResult result = ContentDialogResult.None;
+
+                    DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.MultiRecord), this);
+                        autoResetEvent.Set();
+                    });
+
+                    autoResetEvent.WaitOne();
+                    autoResetEvent.Dispose();
+
+                    if (result is ContentDialogResult.Primary)
+                    {
+                        foreach (BackgroundModel backgroundItem in duplicatedList)
                         {
-                            result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.MultiRecord), this);
-                            autoResetEvent.Set();
-                        });
-
-                        autoResetEvent.WaitOne();
-                        autoResetEvent.Dispose();
-
-                        if (result is ContentDialogResult.Primary)
-                        {
-                            foreach (BackgroundModel backgroundItem in duplicatedList)
+                            try
                             {
-                                try
+                                if (File.Exists(backgroundItem.FilePath))
                                 {
-                                    if (File.Exists(backgroundItem.FilePath))
-                                    {
-                                        File.Delete(backgroundItem.FilePath);
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated downloaded file failed.", e);
-                                }
-                                finally
-                                {
-                                    await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                    IsDownloadSuccessfully = true;
+                                    File.Delete(backgroundItem.FilePath);
                                 }
                             }
-                        }
-                        else if (result is ContentDialogResult.Secondary)
-                        {
-                            DispatcherQueue.TryEnqueue(() =>
+                            catch (Exception e)
                             {
-                                MainWindow.Current.NavigateTo(typeof(DownloadPage));
-                            });
+                                LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated downloaded file failed.", e);
+                            }
+                            finally
+                            {
+                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
+                                IsDownloadSuccessfully = true;
+                            }
                         }
                     }
-
-                    DispatcherQueue.TryEnqueue(() =>
+                    else if (result is ContentDialogResult.Secondary)
                     {
-                        // 显示下载任务创建成功消息
-                        TeachingTipHelper.Show(new DownloadCreateTip(IsDownloadSuccessfully));
-
-                        foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                        DispatcherQueue.TryEnqueue(() =>
                         {
-                            queryLinksItem.IsSelectMode = false;
-                        }
-                        IsSelectMode = false;
-                    });
-                }
-
-                // 使用浏览器下载
-                else if (DownloadOptionsService.DownloadMode.Value == DownloadOptionsService.DownloadModeList[1].Value)
-                {
-                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
-                    {
-                        await Launcher.LaunchUriAsync(new Uri(queryLinksItem.FileLink));
+                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
+                        });
                     }
                 }
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    // 显示下载任务创建成功消息
+                    TeachingTipHelper.Show(new DownloadCreateTip(IsDownloadSuccessfully));
+
+                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                    {
+                        queryLinksItem.IsSelectMode = false;
+                    }
+                    IsSelectMode = false;
+                });
             });
         }
 
@@ -1017,8 +995,8 @@ namespace GetStoreApp.UI.Controls.Store
                         CreateTimeStamp = timeStamp,
                         HistoryKey = historyKey,
                         HistoryAppName = appName,
-                        HistoryType = TypeList[selectedType].InternalName,
-                        HistoryChannel = ChannelList[selectedChannel].InternalName,
+                        HistoryType = new KeyValuePair<string, string>(TypeList[selectedType].InternalName, TypeList[selectedType].DisplayName),
+                        HistoryChannel = new KeyValuePair<string, string>(ChannelList[selectedChannel].InternalName, ChannelList[selectedChannel].DisplayName),
                         HistoryLink = link
                     };
 

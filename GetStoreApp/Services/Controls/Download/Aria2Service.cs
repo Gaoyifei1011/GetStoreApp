@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
 using System.Text;
@@ -39,7 +38,7 @@ namespace GetStoreApp.Services.Controls.Download
                 // 原配置文件存在且新的配置文件不存在，拷贝到指定目录
                 if (!File.Exists(Aria2ConfPath))
                 {
-                    byte[] mileAria2 = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/MileAria2.conf");
+                    byte[] mileAria2 = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/Mile.Aria2.conf");
                     FileStream file = new FileStream(Aria2ConfPath, FileMode.Create);
                     file.Write(mileAria2, 0, mileAria2.Length);
                     file.Flush();
@@ -73,7 +72,7 @@ namespace GetStoreApp.Services.Controls.Download
             try
             {
                 // 原配置文件存在时，覆盖已经修改的配置文件
-                byte[] mileAria2 = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/MileAria2.conf");
+                byte[] mileAria2 = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/Mile.Aria2.conf");
                 FileStream fileStream = new FileStream(Aria2ConfPath, FileMode.Create);
                 fileStream.Write(mileAria2, 0, mileAria2.Length);
                 fileStream.Flush();

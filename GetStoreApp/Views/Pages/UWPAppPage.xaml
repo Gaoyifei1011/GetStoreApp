@@ -70,8 +70,9 @@
 
             <Button
                 Grid.Column="2"
-                Click="{x:Bind OnOpenSettingsClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenSettings')}"
+                Click="{x:Bind OnInstalledAppsClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstalledApps')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstalledAppsToolTip')}"
                 Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppListPageCheck(BreadCollection.Count), Mode=OneWay}" />
         </Grid>
 

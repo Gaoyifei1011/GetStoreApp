@@ -15,8 +15,6 @@
 
         public const string DownloadItemKey = "DownloadItemKey";
 
-        public const string DownloadModeKey = "DownloadMode";
-
         public const string InstallModeKey = "InstallMode";
 
         public const string IsWindowMaximizedKey = "IsWindowMaximized";

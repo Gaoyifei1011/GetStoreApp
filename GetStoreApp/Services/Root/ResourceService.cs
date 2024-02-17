@@ -40,8 +40,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<DictionaryEntry> BackdropList { get; } = new List<DictionaryEntry>();
 
-        public static List<DictionaryEntry> DownloadModeList { get; } = new List<DictionaryEntry>();
-
         public static List<DictionaryEntry> WebKernelList { get; } = new List<DictionaryEntry>();
 
         public static List<DictionaryEntry> InstallModeList { get; } = new List<DictionaryEntry>();
@@ -78,7 +76,6 @@ namespace GetStoreApp.Services.Root
             InitializeQueryLinksInfoList();
             InitializeSearchStoreInfoList();
             InitializeBackdropList();
-            InitializeDownloadModeList();
             InitializeWebKernelList();
             InitializeInstallModeList();
             InitializeThemeList();
@@ -249,23 +246,6 @@ namespace GetStoreApp.Services.Root
             {
                 Key = GetLocalized("Settings/BackdropAcrylicThin"),
                 Value = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)
-            });
-        }
-
-        /// <summary>
-        /// 初始化应用下载方式列表
-        /// </summary>
-        private static void InitializeDownloadModeList()
-        {
-            DownloadModeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/DownloadInApp"),
-                Value = "DownloadInApp"
-            });
-            DownloadModeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/DownloadWithBrowser"),
-                Value = "DownloadWithBrowser"
             });
         }
 

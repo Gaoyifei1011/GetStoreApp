@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation.Diagnostics;
+using Windows.Globalization;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -136,7 +138,8 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market=US&locale=en-US&deviceFamily=Windows.Desktop", productId);
+                GeographicRegion geographicRegion = new GeographicRegion();
+                string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market={1}&locale={2}&deviceFamily=Windows.Desktop", productId, geographicRegion.CodeTwoLetter, LanguageService.AppLanguage.Value);
 
                 HttpClient httpClient = new HttpClient();
                 HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri(categoryIDAPI)).AsTask(cancellationTokenSource.Token);

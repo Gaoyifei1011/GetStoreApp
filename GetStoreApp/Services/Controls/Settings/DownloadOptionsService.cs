@@ -1,8 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -18,12 +16,7 @@ namespace GetStoreApp.Services.Controls.Settings
     {
         private static string folderSettingsKey = ConfigKey.DownloadFolderKey;
         private static string downloadItemSettingsKey = ConfigKey.DownloadItemKey;
-        private static string downloadModeSettingsKey = ConfigKey.DownloadModeKey;
-
         private static int defaultItem = 1;
-        private static DictionaryEntry defaultDownloadMode;
-
-        public static List<DictionaryEntry> DownloadModeList { get; private set; }
 
         public static StorageFolder DefaultDownloadFolder { get; private set; }
 
@@ -31,20 +24,15 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static int DownloadItem { get; private set; }
 
-        public static DictionaryEntry DownloadMode { get; private set; }
-
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
         public static async Task InitializeAsync()
         {
-            DownloadModeList = ResourceService.DownloadModeList;
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
-            defaultDownloadMode = DownloadModeList.Find(item => item.Value.ToString().Equals("DownloadInApp", StringComparison.OrdinalIgnoreCase));
 
             DownloadFolder = await GetFolderAsync();
             DownloadItem = GetItem();
-            DownloadMode = GetMode();
         }
 
         /// <summary>
@@ -91,22 +79,6 @@ namespace GetStoreApp.Services.Controls.Settings
         }
 
         /// <summary>
-        /// 获取设置存储的下载方式值，如果设置没有存储，使用默认值
-        /// </summary>
-        private static DictionaryEntry GetMode()
-        {
-            string downloadMode = LocalSettingsService.ReadSetting<string>(downloadModeSettingsKey);
-
-            if (string.IsNullOrEmpty(downloadMode))
-            {
-                SetMode(defaultDownloadMode);
-                return DownloadModeList.Find(item => item.Value.Equals(defaultDownloadMode.Value));
-            }
-
-            return DownloadModeList.Find(item => item.Value.ToString().Equals(downloadMode, StringComparison.OrdinalIgnoreCase));
-        }
-
-        /// <summary>
         /// 下载位置发生修改时修改设置存储的下载位置值
         /// </summary>
         public static void SetFolder(StorageFolder downloadFolder)
@@ -124,16 +96,6 @@ namespace GetStoreApp.Services.Controls.Settings
             DownloadItem = downloadItem;
 
             LocalSettingsService.SaveSetting(downloadItemSettingsKey, downloadItem);
-        }
-
-        /// <summary>
-        /// 下载方式设定值发送改变时修改涉嫌存储的下载方式设定值
-        /// </summary>
-        public static void SetMode(DictionaryEntry downloadMode)
-        {
-            DownloadMode = downloadMode;
-
-            LocalSettingsService.SaveSetting(downloadModeSettingsKey, downloadMode.Value);
         }
 
         /// <summary>

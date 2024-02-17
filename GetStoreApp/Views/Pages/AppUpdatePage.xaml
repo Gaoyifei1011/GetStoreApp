@@ -48,9 +48,9 @@
 
             <Button
                 Grid.Column="2"
-                Click="{x:Bind OnWIPSettingsClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/WIPSettings')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppUpdate/WIPSettingsToolTip')}" />
+                Click="{x:Bind OnInsiderProgramClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/InsiderProgram')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppUpdate/InsiderProgramToolTip')}" />
         </Grid>
 
         <Grid

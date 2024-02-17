@@ -1118,7 +1118,7 @@
 
                             <MenuFlyoutSeparator Margin="0,4,0,4" />
 
-                            <StackPanel>
+                            <StackPanel Margin="0,0,0,6">
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -1174,62 +1174,6 @@
                                                     IsChecked="{x:Bind DownloadItem.Equals(3), Mode=OneWay}"
                                                     Tag="3"
                                                     Text="3" />
-                                            </MenuFlyout>
-                                        </DropDownButton.Flyout>
-                                    </DropDownButton>
-                                </Grid>
-                            </StackPanel>
-
-                            <MenuFlyoutSeparator Margin="0,4,0,4" />
-
-                            <StackPanel Margin="0,0,0,6">
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadMode')}" />
-                                        <TextBlock
-                                            x:Name="DownloadModeDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadModeDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadModeDescription')}" Visibility="{x:Bind DownloadModeDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <DropDownButton
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Content="{x:Bind DownloadMode.Key, Mode=OneWay}">
-
-                                        <DropDownButton.Flyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <ToggleMenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnDownloadModeSelectClicked}"
-                                                    IsChecked="{x:Bind DownloadMode.Value.Equals(DownloadModeList[0].Value), Mode=OneWay}"
-                                                    Tag="0"
-                                                    Text="{x:Bind sys:Convert.ToString(DownloadModeList[0].Key)}" />
-
-                                                <ToggleMenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnDownloadModeSelectClicked}"
-                                                    IsChecked="{x:Bind DownloadMode.Value.Equals(DownloadModeList[1].Value), Mode=OneWay}"
-                                                    Tag="1"
-                                                    Text="{x:Bind sys:Convert.ToString(DownloadModeList[1].Key)}" />
                                             </MenuFlyout>
                                         </DropDownButton.Flyout>
                                     </DropDownButton>

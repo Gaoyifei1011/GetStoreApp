@@ -144,6 +144,12 @@
   <data name="Error" xml:space="preserve">
     <value>Failed, Error code: {0}</value>
   </data>
+  <data name="InsiderProgram" xml:space="preserve">
+    <value>Insider program</value>
+  </data>
+  <data name="InsiderProgramToolTip" xml:space="preserve">
+    <value>Click to modify the insider program for the current user</value>
+  </data>
   <data name="Installing" xml:space="preserve">
     <value>Installing,{0}% completed</value>
   </data>
@@ -191,11 +197,5 @@
   </data>
   <data name="UpdateEmptyDescription" xml:space="preserve">
     <value>All apps are up to date</value>
-  </data>
-  <data name="WIPSettings" xml:space="preserve">
-    <value>WIP settings</value>
-  </data>
-  <data name="WIPSettingsToolTip" xml:space="preserve">
-    <value>Click to modify the preview experience plan for the current user</value>
   </data>
 </root>

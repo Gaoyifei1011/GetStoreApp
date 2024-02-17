@@ -198,6 +198,12 @@
   <data name="InstallDateToolTip" xml:space="preserve">
     <value>安装日期：</value>
   </data>
+  <data name="InstalledApps" xml:space="preserve">
+    <value>安装的应用</value>
+  </data>
+  <data name="InstalledAppsToolTip" xml:space="preserve">
+    <value>打开设置中的安装的应用</value>
+  </data>
   <data name="InstalledDate" xml:space="preserve">
     <value>安装日期</value>
   </data>
@@ -245,9 +251,6 @@
   </data>
   <data name="OpenManifest" xml:space="preserve">
     <value>打开清单文件</value>
-  </data>
-  <data name="OpenSettings" xml:space="preserve">
-    <value>打开设置</value>
   </data>
   <data name="OpenStore" xml:space="preserve">
     <value>打开商店</value>

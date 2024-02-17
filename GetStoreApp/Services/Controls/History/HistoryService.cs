@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using Windows.Storage;
@@ -41,13 +42,15 @@ namespace GetStoreApp.Services.Controls.History
                     try
                     {
                         string[] queryLinksArray = Convert.ToString(value).Split('|');
+                        TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(queryLinksArray[3], StringComparison.OrdinalIgnoreCase));
+                        ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(queryLinksArray[4], StringComparison.OrdinalIgnoreCase));
                         queryLinksHistoryList.Add(new HistoryModel()
                         {
                             CreateTimeStamp = Convert.ToInt64(queryLinksArray[0]),
                             HistoryKey = queryLinksArray[1],
                             HistoryAppName = queryLinksArray[2],
-                            HistoryType = queryLinksArray[3],
-                            HistoryChannel = queryLinksArray[4],
+                            HistoryType = new KeyValuePair<string, string>(typeItem.InternalName, typeItem.DisplayName),
+                            HistoryChannel = new KeyValuePair<string, string>(channelItem.InternalName, channelItem.DisplayName),
                             HistoryLink = queryLinksArray[5]
                         });
                     }
@@ -106,8 +109,8 @@ namespace GetStoreApp.Services.Controls.History
                     queryLinksHistoryList[index - 1].CreateTimeStamp,
                     queryLinksHistoryList[index - 1].HistoryKey,
                     queryLinksHistoryList[index - 1].HistoryAppName,
-                    queryLinksHistoryList[index - 1].HistoryType,
-                    queryLinksHistoryList[index - 1].HistoryChannel,
+                    queryLinksHistoryList[index - 1].HistoryType.Key,
+                    queryLinksHistoryList[index - 1].HistoryChannel.Key,
                     queryLinksHistoryList[index - 1].HistoryLink
                     );
 

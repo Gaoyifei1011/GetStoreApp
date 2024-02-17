@@ -205,19 +205,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private DictionaryEntry _downloadMode = DownloadOptionsService.DownloadMode;
-
-        public DictionaryEntry DownloadMode
-        {
-            get { return _downloadMode; }
-
-            set
-            {
-                _downloadMode = value;
-                OnPropertyChanged();
-            }
-        }
-
         private DictionaryEntry _installMode = InstallModeService.InstallMode;
 
         public DictionaryEntry InstallMode
@@ -240,8 +227,6 @@ namespace GetStoreApp.Views.Pages
         private List<DictionaryEntry> HistoryLiteNumList { get; } = WebKernelService.WebKernelList;
 
         private List<DictionaryEntry> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
-
-        private List<DictionaryEntry> DownloadModeList { get; } = DownloadOptionsService.DownloadModeList;
 
         private List<DictionaryEntry> InstallModeList { get; } = InstallModeService.InstallModeList;
 
@@ -518,19 +503,6 @@ namespace GetStoreApp.Views.Pages
             {
                 DownloadItem = Convert.ToInt32(toggleMenuFlyoutItem.Tag);
                 DownloadOptionsService.SetItem(DownloadItem);
-            }
-        }
-
-        /// <summary>
-        /// 修改下载文件的方式
-        /// </summary>
-        private void OnDownloadModeSelectClicked(object sender, RoutedEventArgs args)
-        {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
-            {
-                DownloadMode = DownloadModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
-                DownloadOptionsService.SetMode(DownloadMode);
             }
         }
 

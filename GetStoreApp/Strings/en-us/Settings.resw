@@ -219,29 +219,17 @@
   <data name="DownloadFolder" xml:space="preserve">
     <value>Downloads</value>
   </data>
-  <data name="DownloadInApp" xml:space="preserve">
-    <value>In-app download</value>
-  </data>
   <data name="DownloadItem" xml:space="preserve">
     <value>The number of simultaneous download tasks</value>
   </data>
   <data name="DownloadItemDescription" xml:space="preserve">
     <value>Sets the number of files that are downloaded at the same time</value>
   </data>
-  <data name="DownloadMode" xml:space="preserve">
-    <value>Download mode</value>
-  </data>
-  <data name="DownloadModeDescription" xml:space="preserve">
-    <value>Select the method you want to use to download the file</value>
-  </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>Download management</value>
   </data>
   <data name="DownloadOptionsDescription" xml:space="preserve">
     <value>Application download file settings</value>
-  </data>
-  <data name="DownloadWithBrowser" xml:space="preserve">
-    <value>Browser download</value>
   </data>
   <data name="EncryptedPackage" xml:space="preserve">
     <value>The encrypted package file is not displayed</value>

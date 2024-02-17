@@ -144,6 +144,12 @@
   <data name="Error" xml:space="preserve">
     <value>安装失败，错误代码：{0}</value>
   </data>
+  <data name="InsiderProgram" xml:space="preserve">
+    <value>预览体验计划</value>
+  </data>
+  <data name="InsiderProgramToolTip" xml:space="preserve">
+    <value>单击修改当前用户的预览体验计划</value>
+  </data>
   <data name="Installing" xml:space="preserve">
     <value>正在安装，已完成{0}%</value>
   </data>
@@ -191,11 +197,5 @@
   </data>
   <data name="UpdateEmptyDescription" xml:space="preserve">
     <value>所有应用都已经更新到最新版本</value>
-  </data>
-  <data name="WIPSettings" xml:space="preserve">
-    <value>预览体验计划设置</value>
-  </data>
-  <data name="WIPSettingsToolTip" xml:space="preserve">
-    <value>单击修改当前用户的预览体验计划</value>
   </data>
 </root>

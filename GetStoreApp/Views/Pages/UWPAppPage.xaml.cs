@@ -57,9 +57,9 @@ namespace GetStoreApp.Views.Pages
         #region 第一部分：应用管理页面——挂载的事件
 
         /// <summary>
-        /// 打开设置
+        /// 打开设置中的安装的应用
         /// </summary>
-        private async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnInstalledAppsClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
         }

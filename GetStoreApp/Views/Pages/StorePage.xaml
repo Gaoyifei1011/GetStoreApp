@@ -20,9 +20,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="30,15,30,0">
+        <Grid
+            Grid.Row="0"
+            Margin="30,15,30,0"
+            ColumnSpacing="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
@@ -33,6 +37,13 @@
 
             <Button
                 Grid.Column="1"
+                VerticalAlignment="Center"
+                Click="{x:Bind OnLanguageAndRegionClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}" />
+
+            <Button
+                Grid.Column="2"
                 VerticalAlignment="Center"
                 Click="{x:Bind OnUseInstructionClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"

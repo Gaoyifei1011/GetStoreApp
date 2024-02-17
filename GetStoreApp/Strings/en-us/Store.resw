@@ -123,12 +123,6 @@
   <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
   </data>
-  <data name="ClickToDownload" xml:space="preserve">
-    <value>Click to download</value>
-  </data>
-  <data name="ClickToOpen" xml:space="preserve">
-    <value>Click to open</value>
-  </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -197,6 +191,12 @@
   </data>
   <data name="HistoryType" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="LanguageAndRegion" xml:space="preserve">
+    <value>Language and region</value>
+  </data>
+  <data name="LanguageAndRegionToolTip" xml:space="preserve">
+    <value>Open Language and Region in settings</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
     <value>Learn more</value>
