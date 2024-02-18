@@ -55,7 +55,7 @@ namespace GetStoreApp
             // Win32 基于 HWND 的传统桌面应用 / 控制台应用
             if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_ClassicDesktop)
             {
-                bool isDesktopProgram = GetAppExecuteMode(args);
+                bool isDesktopProgram = args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
 
                 InitializeResourcesAsync(isDesktopProgram).Wait();
 
@@ -100,14 +100,6 @@ namespace GetStoreApp
                 CoreApplication.Run(new Views.Windows.FrameworkViewSource());
                 Ole32Library.CoUninitialize();
             }
-        }
-
-        /// <summary>
-        /// 检查应用启动方式
-        /// </summary>
-        private static bool GetAppExecuteMode(string[] args)
-        {
-            return args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

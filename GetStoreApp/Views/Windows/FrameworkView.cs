@@ -40,6 +40,7 @@ namespace GetStoreApp.Views.Windows
         public void Run()
         {
             CoreWindow coreWindow = CoreWindow.GetForCurrentThread();
+            coreWindow.Activate();
             coreWindow.DispatcherQueue.TryEnqueue(async () =>
             {
                 string taskbarInfo = ResultService.ReadResult<string>(ConfigKey.TaskbarPinInfoKey);
