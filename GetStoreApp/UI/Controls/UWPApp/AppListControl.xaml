@@ -375,10 +375,11 @@
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DisplayNameToolTip')}" />
-                                                <TextBlock Text="{x:Bind DisplayName}" />
-                                            </StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DisplayNameToolTip')}" />
+                                                <LineBreak />
+                                                <Run Text="{x:Bind DisplayName}" />
+                                            </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -396,10 +397,11 @@
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PublisherNameToolTip')}" />
-                                                <TextBlock Text="{x:Bind PublisherName}" />
-                                            </StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PublisherNameToolTip')}" />
+                                                <LineBreak />
+                                                <Run Text="{x:Bind PublisherName}" />
+                                            </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -418,10 +420,11 @@
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/VersionToolTip')}" />
-                                                <TextBlock Text="{x:Bind Version}" />
-                                            </StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/VersionToolTip')}" />
+                                                <LineBreak />
+                                                <Run Text="{x:Bind Version}" />
+                                            </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
@@ -440,10 +443,11 @@
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstallDateToolTip')}" />
-                                                <TextBlock Text="{x:Bind InstallDate}" />
-                                            </StackPanel>
+                                            <TextBlock>
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstallDateToolTip')}" />
+                                                <LineBreak />
+                                                <Run Text="{x:Bind InstallDate}" />
+                                            </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>

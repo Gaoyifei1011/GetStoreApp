@@ -188,10 +188,11 @@
 
                             <ToolTipService.ToolTip>
                                 <ToolTip>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
-                                        <TextBlock Text="{x:Bind AppName}" />
-                                    </StackPanel>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                        <LineBreak />
+                                        <Run Text="{x:Bind AppName}" />
+                                    </TextBlock>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                         </TextBlock>
@@ -209,10 +210,11 @@
 
                             <ToolTipService.ToolTip>
                                 <ToolTip>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
-                                        <TextBlock Text="{x:Bind AppPublisher}" />
-                                    </StackPanel>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
+                                        <LineBreak />
+                                        <Run Text="{x:Bind AppPublisher}" />
+                                    </TextBlock>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                         </TextBlock>
@@ -231,10 +233,11 @@
 
                             <ToolTipService.ToolTip>
                                 <ToolTip>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCurrentVersionToolTip')}" />
-                                        <TextBlock Text="{x:Bind AppCurrentVersion}" />
-                                    </StackPanel>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCurrentVersionToolTip')}" />
+                                        <LineBreak />
+                                        <Run Text="{x:Bind AppCurrentVersion}" />
+                                    </TextBlock>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                         </TextBlock>
@@ -254,10 +257,11 @@
 
                             <ToolTipService.ToolTip>
                                 <ToolTip>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNewestVersionToolTip')}" />
-                                        <TextBlock Text="{x:Bind AppNewestVersion}" />
-                                    </StackPanel>
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNewestVersionToolTip')}" />
+                                        <LineBreak />
+                                        <Run Text="{x:Bind AppNewestVersion}" />
+                                    </TextBlock>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                         </TextBlock>

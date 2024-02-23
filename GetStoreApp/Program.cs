@@ -73,7 +73,7 @@ namespace GetStoreApp
                         {
                             DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                             SynchronizationContext.SetSynchronizationContext(context);
-                            WinUIApp app = new WinUIApp();
+                            new WinUIApp();
                         });
                     }
                 }

@@ -284,10 +284,11 @@
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/FileSizeToolTip')}" />
-                                            <TextBlock Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
-                                        </StackPanel>
+                                        <TextBlock>
+                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FileSizeToolTip')}" />
+                                            <LineBreak />
+                                            <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
+                                        </TextBlock>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
                             </TextBlock>

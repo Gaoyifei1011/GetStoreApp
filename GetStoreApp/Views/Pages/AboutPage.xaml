@@ -335,8 +335,11 @@
                                             <ToolTip>
                                                 <ToolTip.Content>
                                                     <StackPanel>
-                                                        <TextBlock Text="{x:Bind Key}" />
-                                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                        <TextBlock>
+                                                            <Run Text="{x:Bind Key}" />
+                                                            <LineBreak />
+                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                        </TextBlock>
                                                     </StackPanel>
                                                 </ToolTip.Content>
                                             </ToolTip>
@@ -862,8 +865,11 @@
                                                 <ToolTip>
                                                     <ToolTip.Content>
                                                         <StackPanel>
-                                                            <TextBlock Text="{x:Bind Key}" />
-                                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind Key}" />
+                                                                <LineBreak />
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                            </TextBlock>
                                                         </StackPanel>
                                                     </ToolTip.Content>
                                                 </ToolTip>
