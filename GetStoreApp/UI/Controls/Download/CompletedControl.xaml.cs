@@ -18,6 +18,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation.Diagnostics;
@@ -209,30 +210,43 @@ namespace GetStoreApp.UI.Controls.Download
                                 // 标记安装状态
                                 try
                                 {
-                                    for (int index = 0; index < CompletedCollection.Count; index++)
+                                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                                    DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                        lock (completedLock)
                                         {
-                                            DispatcherQueue.TryEnqueue(() =>
+                                            for (int index = 0; index < CompletedCollection.Count; index++)
                                             {
-                                                CompletedCollection[index].IsInstalling = true;
-                                            });
+                                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                                {
+                                                    CompletedCollection[index].IsInstalling = true;
+                                                    break;
+                                                }
+                                            }
                                         }
-                                    }
+                                        autoResetEvent.Set();
+                                    });
+
+                                    autoResetEvent.WaitOne();
+                                    autoResetEvent.Dispose();
 
                                     // 更新安装进度
                                     Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
                                     {
-                                        for (int index = 0; index < CompletedCollection.Count; index++)
+                                        DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                            lock (completedLock)
                                             {
-                                                DispatcherQueue.TryEnqueue(() =>
+                                                for (int index = 0; index < CompletedCollection.Count; index++)
+                                                {
+                                                    if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                                     {
                                                         CompletedCollection[index].InstallValue = installProgress.percentage;
-                                                    });
-                                            };
-                                        }
+                                                        break;
+                                                    };
+                                                }
+                                            }
+                                        });
                                     });
 
                                     try
@@ -263,17 +277,21 @@ namespace GetStoreApp.UI.Controls.Download
                                     finally
                                     {
                                         await Task.Delay(500);
-                                        for (int index = 0; index < CompletedCollection.Count; index++)
+                                        DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                            lock (completedLock)
                                             {
-                                                DispatcherQueue.TryEnqueue(() =>
+                                                for (int index = 0; index < CompletedCollection.Count; index++)
+                                                {
+                                                    if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                                     {
                                                         CompletedCollection[index].IsInstalling = false;
                                                         CompletedCollection[index].InstallError = false;
-                                                    });
+                                                        break;
+                                                    }
+                                                }
                                             }
-                                        }
+                                        });
                                     }
                                 }
                                 catch (Exception e)
@@ -604,6 +622,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                             if (deleteResult)
                             {
+                                AutoResetEvent autoResetEvent = new AutoResetEvent(false);
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
                                     while (isUpdatingNow) await Task.Delay(50);
@@ -626,7 +645,11 @@ namespace GetStoreApp.UI.Controls.Download
                                     }
 
                                     lock (completedLock) isUpdatingNow = false;
+                                    autoResetEvent.Set();
                                 });
+
+                                autoResetEvent.WaitOne();
+                                autoResetEvent.Dispose();
                             }
                         }
                         catch (Exception e)

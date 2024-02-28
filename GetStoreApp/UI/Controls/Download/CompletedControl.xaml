@@ -341,26 +341,15 @@
                                 ShowError="{x:Bind InstallError, Mode=OneWay}"
                                 Value="{x:Bind InstallValue, Mode=OneWay}" />
 
-                            <StackPanel
+                            <TextBlock
                                 x:Name="InstallStateInfo"
                                 Grid.Column="2"
                                 MinWidth="50"
                                 VerticalAlignment="Center"
                                 x:Load="{x:Bind InstallError.Equals(x:False), Mode=OneWay}"
-                                Orientation="Horizontal">
-
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallValue')}"
-                                    TextAlignment="Left" />
-
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind InstallValue, Mode=OneWay}"
-                                    TextAlignment="Left" />
-                            </StackPanel>
+                                FontSize="14"
+                                Text="{x:Bind sys:String.Format(InstalledValue, InstallValue), Mode=OneWay}"
+                                TextAlignment="Left" />
 
                             <TextBlock
                                 x:Name="InstallErrorInfo"

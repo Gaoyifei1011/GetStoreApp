@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
@@ -110,6 +111,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (appUpdateItem.PackageFamilyName == packageFamilyName)
                         {
+                            AutoResetEvent autoResetEvent = new AutoResetEvent(false);
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 lock (appUpdateLock)
@@ -119,7 +121,11 @@ namespace GetStoreApp.Views.Pages
                                     appUpdateItem.InstallInformation = Pending;
                                     appUpdateItem.PercentComplete = 0;
                                 }
+                                autoResetEvent.Set();
                             });
+
+                            autoResetEvent.WaitOne();
+                            autoResetEvent.Dispose();
 
                             appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
 
@@ -289,25 +295,22 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUpdateAllClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
+            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
             {
-                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                if (!appUpdateItem.IsUpdating)
                 {
-                    if (!appUpdateItem.IsUpdating)
+                    lock (appUpdateLock)
                     {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            lock (appUpdateLock)
-                            {
-                                appUpdateItem.AppInstallState = AppInstallState.Pending;
-                                appUpdateItem.IsUpdating = true;
-                                appUpdateItem.InstallInformation = Pending;
-                                appUpdateItem.PercentComplete = 0;
-                            }
-                        });
+                        appUpdateItem.AppInstallState = AppInstallState.Pending;
+                        appUpdateItem.IsUpdating = true;
+                        appUpdateItem.InstallInformation = Pending;
+                        appUpdateItem.PercentComplete = 0;
                     }
                 }
+            }
 
+            Task.Run(async () =>
+            {
                 foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                 {
                     AppInstallItem appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
@@ -377,6 +380,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
                 {
+                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
                     AppInstallStatus appInstallStatus = sender.GetCurrentStatus();
                     string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus.PercentComplete);
                     string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
@@ -396,7 +400,11 @@ namespace GetStoreApp.Views.Pages
                                 appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
                                 appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired);
                         }
+                        autoResetEvent.Set();
                     });
+
+                    autoResetEvent.WaitOne();
+                    autoResetEvent.Dispose();
                 }
             }
         }

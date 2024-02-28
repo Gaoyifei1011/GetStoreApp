@@ -16,6 +16,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -237,6 +238,7 @@ namespace GetStoreApp.UI.Controls.Download
                     {
                         try
                         {
+                            AutoResetEvent autoResetEvent = new AutoResetEvent(false);
                             DispatcherQueue.TryEnqueue(async () =>
                             {
                                 for (int index = 0; index < UnfinishedCollection.Count; index++)
@@ -259,7 +261,12 @@ namespace GetStoreApp.UI.Controls.Download
                                         break;
                                     }
                                 }
+
+                                autoResetEvent.Set();
                             });
+
+                            autoResetEvent.WaitOne();
+                            autoResetEvent.Dispose();
                         }
                         catch (Exception e)
                         {

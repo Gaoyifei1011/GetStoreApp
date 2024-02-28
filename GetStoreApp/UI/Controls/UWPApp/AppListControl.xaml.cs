@@ -814,7 +814,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     // 根据搜索条件对搜索符合要求的数据
                     if (hasSearchText)
                     {
-                        for (int index = filteredList.Count; index > 0; index++)
+                        for (int index = filteredList.Count - 1; index >= 0; index--)
                         {
                             if (!(filteredList[index].DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)))
                             {
