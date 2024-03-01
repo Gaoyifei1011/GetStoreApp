@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dc="using:GetStoreApp.UI.Controls.Download"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:navigation="using:GetStoreApp.Views.CustomControls.Navigation"
     xmlns:root="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -27,17 +26,28 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <navigation:Segmented
+            <SelectorBar
+                x:Name="DownloadSelctorBar"
                 Grid.Column="0"
+                Padding="0"
                 HorizontalAlignment="Left"
-                SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-                SelectionChanged="{x:Bind OnSelectionChanged}"
-                SelectionMode="Single"
-                Style="{StaticResource PivotSegmentedStyle}">
-                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" FontSize="18" />
-                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Download/Unfinished')}" FontSize="18" />
-                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" FontSize="18" />
-            </navigation:Segmented>
+                SelectionChanged="{x:Bind OnSelectionChanged}">
+
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="18"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" />
+
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="18"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Unfinished')}" />
+
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="18"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" />
+            </SelectorBar>
 
             <Button
                 Grid.Column="1"
@@ -93,17 +103,8 @@
             </Button>
         </Grid>
 
-        <dc:DownloadingControl
-            x:Name="Downloading"
-            Grid.Row="1"
-            Visibility="{x:Bind IsCurrentControl(SelectedIndex, 0), Mode=OneWay}" />
-        <dc:UnfinishedControl
-            x:Name="Unfinished"
-            Grid.Row="1"
-            Visibility="{x:Bind IsCurrentControl(SelectedIndex, 1), Mode=OneWay}" />
-        <dc:CompletedControl
-            x:Name="Completed"
-            Grid.Row="1"
-            Visibility="{x:Bind IsCurrentControl(SelectedIndex, 2), Mode=OneWay}" />
+        <dc:DownloadingControl x:Name="Downloading" Grid.Row="1" />
+        <dc:UnfinishedControl x:Name="Unfinished" Grid.Row="1" />
+        <dc:CompletedControl x:Name="Completed" Grid.Row="1" />
     </Grid>
 </Page>

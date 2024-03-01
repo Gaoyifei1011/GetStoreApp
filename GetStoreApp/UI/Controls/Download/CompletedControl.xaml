@@ -286,7 +286,6 @@
                                     <ToolTip>
                                         <TextBlock>
                                             <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FileSizeToolTip')}" />
-                                            <LineBreak />
                                             <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
                                         </TextBlock>
                                     </ToolTip>

@@ -26,6 +26,7 @@ namespace GetStoreApp
         public WinUIApp()
         {
             InitializeComponent();
+            DispatcherShutdownMode = DispatcherShutdownMode.OnExplicitShutdown;
             UnhandledException += OnUnhandledException;
         }
 

@@ -1,7 +1,6 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.CustomControls.Navigation;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -23,19 +22,6 @@ namespace GetStoreApp.Views.Pages
         public readonly object installingAppsObject = new object();
 
         private bool isInitialized;
-
-        private int _selectedIndex;
-
-        public int SelectedIndex
-        {
-            get { return _selectedIndex; }
-
-            set
-            {
-                _selectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
 
         public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = new Dictionary<string, CancellationTokenSource>();
 
@@ -87,14 +73,34 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 分割控件选中项发生改变时引发的事件
         /// </summary>
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
-            if (args.RemovedItems.Count > 0)
+            SelectorBar selectorBar = sender as SelectorBar;
+
+            if (selectorBar is not null && selectorBar.SelectedItem is not null)
             {
-                Segmented segmented = sender as Segmented;
-                if (segmented is not null)
+                int selectedIndex = selectorBar.Items.IndexOf(selectorBar.SelectedItem);
+
+                if (selectedIndex is 0)
                 {
-                    SelectedIndex = segmented.SelectedIndex;
+                    SearchApps.Visibility = Visibility.Visible;
+                    InstalledApps.Visibility = Visibility.Collapsed;
+                    UpgradableApps.Visibility = Visibility.Collapsed;
+                    ControlPanel.Visibility = Visibility.Collapsed;
+                }
+                else if (selectedIndex is 1)
+                {
+                    SearchApps.Visibility = Visibility.Collapsed;
+                    InstalledApps.Visibility = Visibility.Visible;
+                    UpgradableApps.Visibility = Visibility.Collapsed;
+                    ControlPanel.Visibility = Visibility.Visible;
+                }
+                else if (selectedIndex is 2)
+                {
+                    SearchApps.Visibility = Visibility.Collapsed;
+                    InstalledApps.Visibility = Visibility.Collapsed;
+                    UpgradableApps.Visibility = Visibility.Visible;
+                    ControlPanel.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -112,6 +118,11 @@ namespace GetStoreApp.Views.Pages
                     UpgradableApps.InitializeWingetInstance(this);
                     isInitialized = true;
                 }
+            }
+
+            if (WinGetSelectorBar is not null)
+            {
+                WinGetSelectorBar.SelectedItem = WinGetSelectorBar.Items[0];
             }
         }
 
@@ -171,14 +182,6 @@ namespace GetStoreApp.Views.Pages
             {
                 return result;
             }
-        }
-
-        /// <summary>
-        /// 确定当前选择的索引是否为目标控件
-        /// </summary>
-        private Visibility IsCurrentControl(int selectedIndex, int index)
-        {
-            return selectedIndex.Equals(index) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

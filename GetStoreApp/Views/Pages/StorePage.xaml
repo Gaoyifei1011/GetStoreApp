@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:navigation="using:GetStoreApp.Views.CustomControls.Navigation"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sc="using:GetStoreApp.UI.Controls.Store"
     Loaded="{x:Bind OnLoaded}"
@@ -50,26 +49,34 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}" />
         </Grid>
 
-        <navigation:Segmented
+        <Grid
             Grid.Row="1"
             Margin="0,8"
             HorizontalAlignment="Center"
-            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-            SelectionChanged="{x:Bind OnSelectionChanged}"
-            SelectionMode="Single">
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{ThemeResource ControlCornerRadius}">
 
-            <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
-                <navigation:SegmentedItem.Icon>
-                    <FontIcon Glyph="&#xE71B;" />
-                </navigation:SegmentedItem.Icon>
-            </navigation:SegmentedItem>
+            <SelectorBar
+                x:Name="StoreSelectorBar"
+                Padding="0"
+                x:FieldModifier="public"
+                SelectionChanged="{x:Bind OnSelectionChanged}">
 
-            <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
-                <navigation:SegmentedItem.Icon>
-                    <FontIcon Glyph="&#xE721;" />
-                </navigation:SegmentedItem.Icon>
-            </navigation:SegmentedItem>
-        </navigation:Segmented>
+                <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
+                    <SelectorBarItem.Icon>
+                        <FontIcon Glyph="&#xE71B;" />
+                    </SelectorBarItem.Icon>
+                </SelectorBarItem>
+
+                <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
+                    <SelectorBarItem.Icon>
+                        <FontIcon Glyph="&#xE721;" />
+                    </SelectorBarItem.Icon>
+                </SelectorBarItem>
+            </SelectorBar>
+        </Grid>
 
         <MenuFlyoutSeparator
             Grid.Row="2"
@@ -85,14 +92,8 @@
             VerticalScrollMode="Enabled">
 
             <Grid Padding="30,0">
-                <sc:QueryLinksControl
-                    x:Name="QueryLinks"
-                    x:FieldModifier="public"
-                    Visibility="{x:Bind IsCurrentControl(SelectedIndex, 0), Mode=OneWay}" />
-                <sc:SearchStoreControl
-                    x:Name="SearchStore"
-                    x:FieldModifier="public"
-                    Visibility="{x:Bind IsCurrentControl(SelectedIndex, 1), Mode=OneWay}" />
+                <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
+                <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
             </Grid>
         </ScrollViewer>
     </Grid>

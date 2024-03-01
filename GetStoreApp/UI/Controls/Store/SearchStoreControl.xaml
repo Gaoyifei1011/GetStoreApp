@@ -372,10 +372,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
                                             <ToolTip.Content>
-                                                <StackPanel>
-                                                    <TextBlock Text="{x:Bind StoreAppLink}" />
-                                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Store/ClickToOpen')}" />
-                                                </StackPanel>
+                                                <TextBlock Text="{x:Bind StoreAppLink}" />
                                             </ToolTip.Content>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>

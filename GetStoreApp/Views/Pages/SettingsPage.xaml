@@ -1060,10 +1060,7 @@
                                             Style="{StaticResource BodyTextBlockStyle}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
 
-                                        <HyperlinkButton
-                                            Click="{x:Bind OnOpenFolderClicked}"
-                                            Style="{StaticResource HyperlinkButtonStyle}"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}">
+                                        <HyperlinkButton Click="{x:Bind OnOpenFolderClicked}" Style="{StaticResource HyperlinkButtonStyle}">
 
                                             <HyperlinkButton.Content>
                                                 <TextBlock
@@ -1071,6 +1068,17 @@
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap" />
                                             </HyperlinkButton.Content>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip MaxWidth="9999">
+                                                    <StackPanel HorizontalAlignment="Stretch">
+                                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
+                                                        <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
+                                                        <MenuFlyoutSeparator Margin="4,3" />
+                                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" />
+                                                    </StackPanel>
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
                                         </HyperlinkButton>
                                     </StackPanel>
 

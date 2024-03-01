@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
-    xmlns:navigation="using:GetStoreApp.Views.CustomControls.Navigation"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     x:Name="WinGetRoot"
@@ -38,22 +37,32 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <navigation:Segmented
+            <SelectorBar
+                x:Name="WinGetSelectorBar"
                 Grid.Column="0"
+                Padding="0"
                 HorizontalAlignment="Left"
-                SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-                SelectionChanged="{x:Bind OnSelectionChanged}"
-                SelectionMode="Single"
-                Style="{StaticResource PivotSegmentedStyle}">
-                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" FontSize="18" />
-                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" FontSize="18" />
-                <navigation:SegmentedItem Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" FontSize="18" />
-            </navigation:Segmented>
+                SelectionChanged="{x:Bind OnSelectionChanged}">
+
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="18"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
+
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="18"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
+
+                <SelectorBarItem
+                    Padding="12,5"
+                    FontSize="18"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
+            </SelectorBar>
 
             <Button
                 x:Name="ControlPanel"
                 Grid.Column="1"
-                x:Load="{x:Bind SelectedIndex.Equals(1), Mode=OneWay}"
                 Click="{x:Bind OnControlPanelClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanel')}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}" />
@@ -190,9 +199,9 @@
             Grid.Row="1"
             x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}">
 
-            <wc:SearchAppsControl x:Name="SearchApps" Visibility="{x:Bind IsCurrentControl(SelectedIndex, 0), Mode=OneWay}" />
-            <wc:InstalledAppsControl x:Name="InstalledApps" Visibility="{x:Bind IsCurrentControl(SelectedIndex, 1), Mode=OneWay}" />
-            <wc:UpgradableAppsControl x:Name="UpgradableApps" Visibility="{x:Bind IsCurrentControl(SelectedIndex, 2), Mode=OneWay}" />
+            <wc:SearchAppsControl x:Name="SearchApps" />
+            <wc:InstalledAppsControl x:Name="InstalledApps" />
+            <wc:UpgradableAppsControl x:Name="UpgradableApps" />
         </Grid>
 
         <!--  WinGet 程序包不存在提示内容  -->

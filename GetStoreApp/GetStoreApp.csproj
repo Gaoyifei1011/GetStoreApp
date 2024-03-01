@@ -15,6 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ImplicitUsings>disable</ImplicitUsings>
+    <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
     <IncludeSymbols>False</IncludeSymbols>
     <LangVersion>latest</LangVersion>
     <Optimize>False</Optimize>
@@ -36,6 +37,7 @@
     <Win32Resource>GetStoreAppResource.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
     <WindowsSdkPackageVersion>10.0.22621.33</WindowsSdkPackageVersion>
   </PropertyGroup>
@@ -78,8 +80,6 @@
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
-    <None Remove="Styles\ScrollBar.xaml" />
-    <None Remove="Styles\Segmented.xaml" />
     <None Remove="Styles\SplitButton.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
@@ -123,7 +123,7 @@
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="WinUIApp.xaml" />
 
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.240211001" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240227000" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Styles\AppBarButton.xaml" Generator="MSBuild:Compile" />
@@ -133,8 +133,6 @@
     <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\ScrollBar.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\Segmented.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
@@ -188,15 +186,13 @@
     <TrimmableAssembly Include="Microsoft.Windows.AppLifecycle.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Builder.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Management.Deployment.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.PushNotifications.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.Security.AccessControl.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.System.Power.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.System.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-    <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
-    <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Release.Net" />
-    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
     <TrimmableAssembly Include="WinRT.Host.Shim" />
   </ItemGroup>
 

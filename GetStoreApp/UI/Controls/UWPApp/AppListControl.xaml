@@ -377,7 +377,6 @@
                                         <ToolTip>
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DisplayNameToolTip')}" />
-                                                <LineBreak />
                                                 <Run Text="{x:Bind DisplayName}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -399,7 +398,6 @@
                                         <ToolTip>
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PublisherNameToolTip')}" />
-                                                <LineBreak />
                                                 <Run Text="{x:Bind PublisherName}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -422,7 +420,6 @@
                                         <ToolTip>
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/VersionToolTip')}" />
-                                                <LineBreak />
                                                 <Run Text="{x:Bind Version}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -445,7 +442,6 @@
                                         <ToolTip>
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstallDateToolTip')}" />
-                                                <LineBreak />
                                                 <Run Text="{x:Bind InstallDate}" />
                                             </TextBlock>
                                         </ToolTip>

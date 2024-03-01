@@ -190,7 +190,6 @@
                                 <ToolTip>
                                     <TextBlock>
                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
-                                        <LineBreak />
                                         <Run Text="{x:Bind AppName}" />
                                     </TextBlock>
                                 </ToolTip>
@@ -212,7 +211,6 @@
                                 <ToolTip>
                                     <TextBlock>
                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
-                                        <LineBreak />
                                         <Run Text="{x:Bind AppPublisher}" />
                                     </TextBlock>
                                 </ToolTip>
@@ -235,7 +233,6 @@
                                 <ToolTip>
                                     <TextBlock>
                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCurrentVersionToolTip')}" />
-                                        <LineBreak />
                                         <Run Text="{x:Bind AppCurrentVersion}" />
                                     </TextBlock>
                                 </ToolTip>
@@ -259,7 +256,6 @@
                                 <ToolTip>
                                     <TextBlock>
                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNewestVersionToolTip')}" />
-                                        <LineBreak />
                                         <Run Text="{x:Bind AppNewestVersion}" />
                                     </TextBlock>
                                 </ToolTip>

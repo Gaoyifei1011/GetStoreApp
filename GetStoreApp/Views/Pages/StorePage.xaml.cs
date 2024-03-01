@@ -1,9 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Views.CustomControls.Navigation;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.ComponentModel;
@@ -19,24 +17,12 @@ namespace GetStoreApp.Views.Pages
     {
         private AppNaviagtionArgs storeNavigationArgs = AppNaviagtionArgs.None;
 
-        private int _selectedIndex;
-
-        public int SelectedIndex
-        {
-            get { return _selectedIndex; }
-
-            set
-            {
-                _selectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public StorePage()
         {
             InitializeComponent();
+            StoreSelectorBar.SelectedItem = StoreSelectorBar.Items[0];
         }
 
         #region 第一部分：重写父类事件
@@ -67,24 +53,6 @@ namespace GetStoreApp.Views.Pages
             SearchStore.GetSearchStoreHistoryData();
         }
 
-        /// <summary>
-        /// 响应键盘按键事件
-        /// </summary>
-        protected override void OnKeyDown(KeyRoutedEventArgs args)
-        {
-            if (args.Key is VirtualKey.Enter)
-            {
-                if (SelectedIndex is 0)
-                {
-                    QueryLinks.QueryLinks();
-                }
-                else if (SelectedIndex is 1)
-                {
-                    SearchStore.SearchStore();
-                }
-            }
-        }
-
         #endregion 第一部分：重写父类事件
 
         #region 第二部分：应用商店页面——挂载的事件
@@ -92,14 +60,23 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 分割控件选中项发生改变时引发的事件
         /// </summary>
-        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
-            if (args.RemovedItems.Count > 0)
+            SelectorBar selectorBar = sender as SelectorBar;
+
+            if (selectorBar is not null && selectorBar.SelectedItem is not null)
             {
-                Segmented segmented = sender as Segmented;
-                if (segmented is not null)
+                int selectedIndex = selectorBar.Items.IndexOf(selectorBar.SelectedItem);
+
+                if (selectedIndex is 0)
                 {
-                    SelectedIndex = segmented.SelectedIndex;
+                    QueryLinks.Visibility = Visibility.Visible;
+                    SearchStore.Visibility = Visibility.Collapsed;
+                }
+                else if (selectedIndex is 1)
+                {
+                    QueryLinks.Visibility = Visibility.Collapsed;
+                    SearchStore.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -139,14 +116,6 @@ namespace GetStoreApp.Views.Pages
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// 确定当前选择的索引是否为目标控件
-        /// </summary>
-        private Visibility IsCurrentControl(int selectedIndex, int index)
-        {
-            return selectedIndex.Equals(index) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

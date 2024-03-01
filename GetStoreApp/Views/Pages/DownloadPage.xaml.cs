@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Views.CustomControls.Navigation;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -15,24 +14,12 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
-        private int _selectedIndex;
-
-        public int SelectedIndex
-        {
-            get { return _selectedIndex; }
-
-            set
-            {
-                _selectedIndex = value;
-                OnPropertyChanged();
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DownloadPage()
         {
             InitializeComponent();
+            DownloadSelctorBar.SelectedItem = DownloadSelctorBar.Items[0];
         }
 
         #region 第一部分：重写父类事件
@@ -43,19 +30,20 @@ namespace GetStoreApp.Views.Pages
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            Downloading.SelectedIndex = SelectedIndex;
-            Unfinished.SelectedIndex = SelectedIndex;
-            Completed.SelectedIndex = SelectedIndex;
+            int selectedIndex = DownloadSelctorBar.Items.IndexOf(DownloadSelctorBar.SelectedItem);
+            Downloading.SelectedIndex = selectedIndex;
+            Unfinished.SelectedIndex = selectedIndex;
+            Completed.SelectedIndex = selectedIndex;
 
-            if (SelectedIndex is 0)
+            if (selectedIndex is 0)
             {
                 await Downloading.StartDownloadingTimerAsync();
             }
-            else if (SelectedIndex is 1)
+            else if (selectedIndex is 1)
             {
                 await Unfinished.GetUnfinishedDataListAsync();
             }
-            else
+            else if (selectedIndex is 2)
             {
                 await Completed.GetCompletedDataListAsync();
             }
@@ -88,33 +76,39 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 下载透视控件选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
         /// </summary>
-        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        private async void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
-            if (args.RemovedItems.Count > 0)
+            SelectorBar selectorBar = sender as SelectorBar;
+
+            if (selectorBar is not null && selectorBar.SelectedItem is not null)
             {
-                Segmented segmented = sender as Segmented;
+                int selectedIndex = selectorBar.Items.IndexOf(selectorBar.SelectedItem);
 
-                if (segmented is not null)
+                if (selectedIndex is 0)
                 {
-                    SelectedIndex = segmented.SelectedIndex;
-                    Downloading.SelectedIndex = segmented.SelectedIndex;
-                    Unfinished.SelectedIndex = segmented.SelectedIndex;
-                    Completed.SelectedIndex = segmented.SelectedIndex;
+                    Downloading.Visibility = Visibility.Visible;
+                    Unfinished.Visibility = Visibility.Collapsed;
+                    Completed.Visibility = Visibility.Collapsed;
 
-                    if (segmented.SelectedIndex is 0)
-                    {
-                        await Downloading.StartDownloadingTimerAsync();
-                    }
-                    else if (segmented.SelectedIndex is 1)
-                    {
-                        Downloading.StopDownloadingTimer();
-                        await Unfinished.GetUnfinishedDataListAsync();
-                    }
-                    else if (segmented.SelectedIndex is 2)
-                    {
-                        Downloading.StopDownloadingTimer();
-                        await Completed.GetCompletedDataListAsync();
-                    }
+                    await Downloading.StartDownloadingTimerAsync();
+                }
+                else if (selectedIndex is 1)
+                {
+                    Downloading.Visibility = Visibility.Collapsed;
+                    Unfinished.Visibility = Visibility.Visible;
+                    Completed.Visibility = Visibility.Collapsed;
+
+                    Downloading.StopDownloadingTimer();
+                    await Unfinished.GetUnfinishedDataListAsync();
+                }
+                else if (selectedIndex is 2)
+                {
+                    Downloading.Visibility = Visibility.Collapsed;
+                    Unfinished.Visibility = Visibility.Collapsed;
+                    Completed.Visibility = Visibility.Visible;
+
+                    Downloading.StopDownloadingTimer();
+                    await Completed.GetCompletedDataListAsync();
                 }
             }
         }
@@ -145,14 +139,6 @@ namespace GetStoreApp.Views.Pages
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
-        /// 确定当前选择的索引是否为目标控件
-        /// </summary>
-        private Visibility IsCurrentControl(int selectedIndex, int index)
-        {
-            return selectedIndex.Equals(index) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

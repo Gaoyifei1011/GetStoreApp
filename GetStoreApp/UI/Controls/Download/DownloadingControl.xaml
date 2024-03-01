@@ -276,7 +276,6 @@
                                         <ToolTip>
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
-                                                <LineBreak />
                                                 <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -296,7 +295,6 @@
                                         <ToolTip>
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/TotalSizeToolTip')}" />
-                                                <LineBreak />
                                                 <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
@@ -316,7 +314,6 @@
                                         <ToolTip>
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
-                                                <LineBreak />
                                                 <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(CurrentSpeed), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>

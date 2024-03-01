@@ -178,7 +178,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     storePage.QueryLinks.SelectedType = storePage.QueryLinks.TypeList[0];
                     storePage.QueryLinks.LinkText = appLink;
-                    storePage.SelectedIndex = 0;
+                    storePage.StoreSelectorBar.SelectedItem = storePage.StoreSelectorBar.Items[0];
                 }
             }
         }
