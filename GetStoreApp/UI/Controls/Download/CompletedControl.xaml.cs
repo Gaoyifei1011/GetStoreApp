@@ -8,6 +8,8 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.ComTypes;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -359,39 +361,20 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 try
                 {
-                    if (RuntimeHelper.IsElevated)
+                    IDataTransferManagerInterop dataTransferManagerInterop = DataTransferManager.As<IDataTransferManagerInterop>();
+
+                    DataTransferManager dataTransferManager = DataTransferManager.FromAbi(dataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value, new Guid("A5CAEE9B-8708-49D1-8D36-67D25A8DA00C")));
+
+                    dataTransferManager.DataRequested += async (sender, args) =>
                     {
-                        Task.Run(async () =>
-                        {
-                            List<StorageFile> selectedFileList = new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) };
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                bool copyResult = CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
-                                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, copyResult, false));
-                            });
-                        });
-                    }
-                    else
-                    {
-                        DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-                        ElementTheme theme = ActualTheme;
+                        DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                        Task.Run(() =>
-                        {
-                            dataTransferManager.DataRequested += async (sender, args) =>
-                            {
-                                DataRequestDeferral deferral = args.Request.GetDeferral();
+                        args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+                        args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
+                        deferral.Complete();
+                    };
 
-                                args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
-                                args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
-                                deferral.Complete();
-                            };
-
-                            ShareUIOptions options = new ShareUIOptions();
-                            options.Theme = (ShareUITheme)theme;
-                            DataTransferManager.ShowShareUI(options);
-                        });
-                    }
+                    dataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
                 }
                 catch (Exception e)
                 {
@@ -667,7 +650,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnShareSelectedFileClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 List<BackgroundModel> selectedCompletedDataList = new List<BackgroundModel>();
 
@@ -694,57 +677,45 @@ namespace GetStoreApp.UI.Controls.Download
                     return;
                 }
 
-                try
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (RuntimeHelper.IsElevated)
+                    try
                     {
-                        List<StorageFile> selectedFileList = new List<StorageFile>();
-                        foreach (BackgroundModel completedItem in selectedCompletedDataList)
-                        {
-                            selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
-                        }
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            bool copyResult = CopyPasteHelper.CopyFilesToClipBoard(selectedFileList);
-                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ShareFile, copyResult, true, selectedFileList.Count));
-                        });
-                    }
-                    else
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-                            ElementTheme theme = ActualTheme;
+                        IDataTransferManagerInterop dataTransferManagerInterop = DataTransferManager.As<IDataTransferManagerInterop>();
 
-                            Task.Run(() =>
+                        DataTransferManager dataTransferManager = DataTransferManager.FromAbi(dataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value, new Guid("A5CAEE9B-8708-49D1-8D36-67D25A8DA00C")));
+
+                        dataTransferManager.DataRequested += async (sender, args) =>
+                        {
+                            DataRequestDeferral deferral = args.Request.GetDeferral();
+
+                            args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+
+                            List<StorageFile> selectedFileList = new List<StorageFile>();
+                            foreach (BackgroundModel completedItem in selectedCompletedDataList)
                             {
-                                dataTransferManager.DataRequested += async (sender, args) =>
+                                try
                                 {
-                                    DataRequestDeferral deferral = args.Request.GetDeferral();
+                                    selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                                }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Read file {0} failed", completedItem.FilePath), e);
+                                    continue;
+                                }
+                            }
+                            args.Request.Data.SetStorageItems(selectedFileList);
+                            deferral.Complete();
+                        };
 
-                                    args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
-
-                                    List<StorageFile> selectedFileList = new List<StorageFile>();
-                                    foreach (BackgroundModel completedItem in selectedCompletedDataList)
-                                    {
-                                        selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
-                                    }
-                                    args.Request.Data.SetStorageItems(selectedFileList);
-                                    deferral.Complete();
-                                };
-
-                                ShareUIOptions options = new ShareUIOptions();
-                                options.Theme = (ShareUITheme)theme;
-                                DataTransferManager.ShowShareUI(options);
-                            });
-                        });
+                        dataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
                     }
-                }
-                catch (Exception e)
-                {
-                    TeachingTipHelper.Show(new ShareFailedTip(true, selectedCompletedDataList.Count));
-                    LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
-                }
+                    catch (Exception e)
+                    {
+                        TeachingTipHelper.Show(new ShareFailedTip(true, selectedCompletedDataList.Count));
+                        LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
+                    }
+                });
             });
         }
 

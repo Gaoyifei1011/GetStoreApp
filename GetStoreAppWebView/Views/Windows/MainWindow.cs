@@ -12,7 +12,6 @@ using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -26,13 +25,9 @@ namespace GetStoreAppWebView.Views.Windows
         private IntPtr inputNonClientPointerSourceHandle;
         private IslandsControl islandsControl = new IslandsControl();
 
-        private WNDPROC newMainWindowWndProc = null;
-        private IntPtr oldMainWindowWndProc = IntPtr.Zero;
-
-        private WNDPROC newInputNonClientPointerSourceWndProc = null;
-        private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
-
+        private SUBCLASSPROC mainWindowSubClassProc;
         private SUBCLASSPROC desktopSourceSubClassProc;
+        private SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
 
         public double WindowDPI { get; private set; }
 
@@ -81,9 +76,8 @@ namespace GetStoreAppWebView.Views.Windows
             Handle = new WindowInteropHelper(this).Handle;
             WindowDPI = System.Drawing.Graphics.FromHwnd(Handle).DpiX / 96;
 
-            // 为应用主窗口添加窗口过程
-            newMainWindowWndProc = new WNDPROC(WindowWndProc);
-            oldMainWindowWndProc = SetWindowLongAuto(Handle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
+            mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
+            Comctl32Library.SetWindowSubclass(Handle, mainWindowSubClassProc, 0, IntPtr.Zero);
 
             WindowId windowId = new WindowId() { Value = (ulong)Handle };
             AppWindow = AppWindow.GetFromWindowId(windowId);
@@ -94,14 +88,14 @@ namespace GetStoreAppWebView.Views.Windows
             DesktopWindowXamlSource.SystemBackdrop = InfoHelper.SystemVersion.Build >= 22000 ? new MicaBackdrop() : new DesktopAcrylicBackdrop();
 
             desktopSourceSubClassProc = new SUBCLASSPROC(OnDesktopSourceSubClassProc);
-            Comctl32Library.SetWindowSubclass((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value, desktopSourceSubClassProc, 100, IntPtr.Zero);
+            Comctl32Library.SetWindowSubclass((IntPtr)DesktopWindowXamlSource.SiteBridge.WindowId.Value, desktopSourceSubClassProc, 0, IntPtr.Zero);
 
             inputNonClientPointerSourceHandle = User32Library.FindWindowEx(Handle, IntPtr.Zero, "InputNonClientPointerSource", null);
 
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
-                newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
-                oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
+                inputNonClientPointerSourceSubClassProc = new SUBCLASSPROC(InputNonClientPointerSourceSubClassProc);
+                Comctl32Library.SetWindowSubclass(inputNonClientPointerSourceHandle, inputNonClientPointerSourceSubClassProc, 0, IntPtr.Zero);
             }
 
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
@@ -126,39 +120,9 @@ namespace GetStoreAppWebView.Views.Windows
         }
 
         /// <summary>
-        /// 获取指定窗口的属性
-        /// </summary>
-        private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
-        {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.GetWindowLongPtr(hWnd, nIndex);
-            }
-            else
-            {
-                return User32Library.GetWindowLong(hWnd, nIndex);
-            }
-        }
-
-        /// <summary>
-        /// 更改指定窗口的窗口属性
-        /// </summary>
-        private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
-        {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
-            }
-            else
-            {
-                return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
-            }
-        }
-
-        /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
-        private IntPtr WindowWndProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             switch (Msg)
             {
@@ -197,13 +161,13 @@ namespace GetStoreAppWebView.Views.Windows
                     }
             }
 
-            return User32Library.CallWindowProc(oldMainWindowWndProc, hWnd, Msg, wParam, lParam);
+            return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
 
         /// <summary>
         /// 应用拖拽区域窗口消息处理
         /// </summary>
-        private IntPtr InputNonClientPointerSourceWndProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr InputNonClientPointerSourceSubClassProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             switch (Msg)
             {
@@ -256,7 +220,7 @@ namespace GetStoreAppWebView.Views.Windows
                         return IntPtr.Zero;
                     }
             }
-            return User32Library.CallWindowProc(oldInputNonClientPointerSourceWndProc, hWnd, Msg, wParam, lParam);
+            return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
 
         /// <summary>

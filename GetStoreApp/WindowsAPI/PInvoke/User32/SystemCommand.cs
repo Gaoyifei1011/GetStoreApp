@@ -1,5 +1,8 @@
 ﻿namespace GetStoreApp.WindowsAPI.PInvoke.User32
 {
+    /// <summary>
+    /// 请求的系统命令的类型
+    /// </summary>
     public enum SystemCommand : int
     {
         /// <summary>

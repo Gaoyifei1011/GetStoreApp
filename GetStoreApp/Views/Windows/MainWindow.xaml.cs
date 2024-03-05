@@ -10,8 +10,8 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using GetStoreApp.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -38,7 +38,6 @@ using Windows.Graphics;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.StartScreen;
 using WinRT.Interop;
 
@@ -49,16 +48,11 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private WNDPROC newMainWindowWndProc = null;
-        private IntPtr oldMainWindowWndProc = IntPtr.Zero;
-
-        private WNDPROC newInputNonClientPointerSourceWndProc = null;
-        private IntPtr oldInputNonClientPointerSourceWndProc = IntPtr.Zero;
+        private SUBCLASSPROC mainWindowSubClassProc;
+        private SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
 
         private ContentCoordinateConverter contentCoordinateConverter;
         private OverlappedPresenter overlappedPresenter;
-
-        private new CoreWindow CoreWindow { get; }
 
         public AppWindow CoreAppWindow { get; }
 
@@ -163,41 +157,22 @@ namespace GetStoreApp.Views.Windows
             SetTitleBar(AppTitlebar);
             SetTitleBarColor((Content as FrameworkElement).ActualTheme);
 
-            // 在 WinUI3 桌面应用中创建 CoreWindow
-            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "GetStoreAppCoreWindow", 0, 0, AppWindow.Size.Width, AppWindow.Size.Height, 0, (IntPtr)AppWindow.Id.Value, typeof(ICoreWindow).GUID, out IntPtr obj);
-            CoreWindow = CoreWindow.FromAbi(obj);
-
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
             ApplicationData.Current.DataChanged += OnDataChanged;
 
             // 为应用主窗口添加窗口过程
-            newMainWindowWndProc = new WNDPROC(WindowWndProc);
-            oldMainWindowWndProc = SetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newMainWindowWndProc));
+            mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
+            Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0, IntPtr.Zero);
 
             // 为非工作区的窗口设置相应的窗口样式，添加窗口过程
             IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx((IntPtr)AppWindow.Id.Value, IntPtr.Zero, "InputNonClientPointerSource", null);
 
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
-                newInputNonClientPointerSourceWndProc = new WNDPROC(InputNonClientPointerSourceWndProc);
-                oldInputNonClientPointerSourceWndProc = SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newInputNonClientPointerSourceWndProc));
-            }
-
-            // 设置 CoreWindow 窗口的样式
-            if (CoreWindow is not null)
-            {
-                CoreAppWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(User32Library.FindWindowEx(IntPtr.Zero, IntPtr.Zero, typeof(CoreWindow).FullName, "GetStoreAppCoreWindow")));
-
-                if (CoreAppWindow is not null)
-                {
-                    long style = GetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE);
-                    style &= ~(long)WindowStyle.WS_POPUP;
-                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_STYLE, (nint)(style | (long)WindowStyle.WS_CHILDWINDOW | (long)WindowStyle.WS_VISIBLE));
-                    SetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto((IntPtr)CoreAppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowStyleEx.WS_EX_TOOLWINDOW | (int)WindowStyleEx.WS_EX_TRANSPARENT);
-                    User32Library.SetParent((IntPtr)CoreAppWindow.Id.Value, (IntPtr)AppWindow.Id.Value);
-                }
+                inputNonClientPointerSourceSubClassProc = new SUBCLASSPROC(InputNonClientPointerSourceSubClassProc);
+                Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, inputNonClientPointerSourceSubClassProc, 0, IntPtr.Zero);
             }
 
             // 处理提权模式下运行应用
@@ -750,36 +725,6 @@ namespace GetStoreApp.Views.Windows
             LocalSettingsService.SaveSetting(ConfigKey.WindowPositionYAxisKey, AppWindow.Position.Y);
         }
 
-        /// <summary>
-        /// 获取窗口属性
-        /// </summary>
-        private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
-        {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.GetWindowLongPtr(hWnd, nIndex);
-            }
-            else
-            {
-                return User32Library.GetWindowLong(hWnd, nIndex);
-            }
-        }
-
-        /// <summary>
-        /// 更改窗口属性
-        /// </summary>
-        private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
-        {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
-            }
-            else
-            {
-                return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
-            }
-        }
-
         #endregion 第七部分：窗口属性设置
 
         #region 第八部分：窗口过程
@@ -787,7 +732,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
-        private IntPtr WindowWndProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             switch (Msg)
             {
@@ -947,13 +892,13 @@ namespace GetStoreApp.Views.Windows
                         break;
                     }
             }
-            return User32Library.CallWindowProc(oldMainWindowWndProc, hWnd, Msg, wParam, lParam);
+            return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
 
         /// <summary>
         /// 应用拖拽区域窗口消息处理
         /// </summary>
-        private IntPtr InputNonClientPointerSourceWndProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr InputNonClientPointerSourceSubClassProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             switch (Msg)
             {
@@ -985,7 +930,7 @@ namespace GetStoreApp.Views.Windows
                         return 0;
                     }
             }
-            return User32Library.CallWindowProc(oldInputNonClientPointerSourceWndProc, hWnd, Msg, wParam, lParam);
+            return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
         }
 
         #endregion 第八部分：窗口过程

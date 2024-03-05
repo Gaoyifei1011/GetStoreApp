@@ -276,12 +276,6 @@
   <data name="ShareFailed" xml:space="preserve">
     <value>文件分享失败，请检查被分享文件的访问权限</value>
   </data>
-  <data name="ShareFileCopy" xml:space="preserve">
-    <value>分享的文件已复制到剪贴板</value>
-  </data>
-  <data name="ShareFileSelectedCopy" xml:space="preserve">
-    <value>{0}个分享的文件已复制到剪贴板</value>
-  </data>
   <data name="ShareSelectedFailed" xml:space="preserve">
     <value>{0}个文件分享失败，请检查被分享文件的访问权限</value>
   </data>

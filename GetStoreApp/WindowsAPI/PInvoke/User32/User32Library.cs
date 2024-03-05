@@ -11,20 +11,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         private const string User32 = "user32.dll";
 
         /// <summary>
-        /// 将消息信息传递给指定的窗口过程。
-        /// </summary>
-        /// <param name="lpPrevWndFunc">
-        /// 上一个窗口过程。 如果通过调用设置为 GWL_WNDPROC 或 DWL_DLGPROC 的 nIndex 参数的 GetWindowLong 函数来获取此值，
-        /// 则它实际上是窗口或对话框过程的地址，或者仅对 CallWindowProc 有意义的特殊内部值。</param>
-        /// <param name="hWnd">用于接收消息的窗口过程的句柄。</param>
-        /// <param name="Msg">消息。</param>
-        /// <param name="wParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
-        /// <param name="lParam">其他的消息特定信息。 此参数的内容取决于 Msg 参数的值。</param>
-        /// <returns>返回值指定消息处理的结果，具体取决于发送的消息。</returns>
-        [LibraryImport(User32, EntryPoint = "CallWindowProcW", SetLastError = false)]
-        public static partial IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
-
-        /// <summary>
         /// 修改指定窗口的用户界面特权隔离 (UIPI) 消息筛选器。
         /// </summary>
         /// <param name="hWnd">要修改其 UIPI 消息筛选器的窗口的句柄。</param>
@@ -46,26 +32,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
         public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
-
-        /// <summary>
-        /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
-        /// <param name="nIndex">要检索的值的从零开始的偏移量。 有效值在 0 到额外窗口内存的字节数中，减去 4 个;例如，如果指定了 12 个或更多字节的额外内存，则值 8 将是第三个 32 位整数的索引。
-        /// </param>
-        /// <returns>如果函数成功，则返回值是请求的值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowLongW", SetLastError = false)]
-        public static partial int GetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex);
-
-        /// <summary>
-        /// 检索有关指定窗口的信息。 该函数还会检索 64 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>
-        /// <param name="nIndex">要检索的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去 LONG_PTR的大小。
-        /// </param>
-        /// <returns>如果函数成功，则返回值是请求的值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowLongPtrW", SetLastError = false)]
-        public static partial int GetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex);
 
         /// <summary>
         /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
@@ -99,34 +65,5 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false)]
         public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
-
-        /// <summary>
-        /// 更改指定子窗口的父窗口。
-        /// </summary>
-        /// <param name="hWndChild">子窗口的句柄。</param>
-        /// <param name="hWndNewParent">新父窗口的句柄。 如果此参数为 NULL，桌面窗口将成为新的父窗口。 如果此参数 HWND_MESSAGE，则子窗口将成为 仅消息窗口。</param>
-        /// <returns>如果函数成功，则返回值是上一个父窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [LibraryImport(User32, EntryPoint = "SetParent", SetLastError = false)]
-        public static partial IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        /// <summary>
-        /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
-        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
-        /// <param name="newProc">新事件处理函数（回调函数）</param>
-        /// <returns>如果函数成功，则返回值是指定 32 位整数的上一个值。如果函数失败，则返回值为零。 </returns>
-        [LibraryImport(User32, EntryPoint = "SetWindowLongW", SetLastError = false)]
-        public static partial IntPtr SetWindowLong(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong);
-
-        /// <summary>
-        /// 更改指定窗口的属性。 该函数还将指定偏移量处的64位（long类型）值设置到额外的窗口内存中。
-        /// </summary>
-        /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
-        /// <param name="nIndex">要设置的值的从零开始的偏移量。 有效值的范围为零到额外窗口内存的字节数，减去整数的大小。</param>
-        /// <param name="newProc">新事件处理函数（回调函数）</param>
-        /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
-        [LibraryImport(User32, EntryPoint = "SetWindowLongPtrW", SetLastError = false)]
-        public static partial IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong);
     }
 }

@@ -6,6 +6,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -14,8 +15,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
@@ -469,6 +472,10 @@ namespace GetStoreApp.Views.Pages
                         }
                     case "Custom":
                         {
+                            // 先使用 FolderPicker，FolderPicker 打开失败，再尝试使用 SHBrowseForFolder 函数选择文件夹，否则提示自定义文件夹失败
+                            bool result = false;
+
+                            // 使用 FolderPicker
                             try
                             {
                                 FolderPicker folderPicker = new FolderPicker();
@@ -482,11 +489,67 @@ namespace GetStoreApp.Views.Pages
                                     DownloadFolder = downloadFolder;
                                     DownloadOptionsService.SetFolder(downloadFolder);
                                 }
+                                result = true;
                             }
-                            catch (Exception)
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, "Open folderPicker failed", e);
+                            }
+
+                            // 使用 SHBrowseForFolder
+                            if (!result)
+                            {
+                                string selectedPath = string.Empty;
+                                unsafe
+                                {
+                                    char* pszPath = stackalloc char[260 + 1];
+
+                                    try
+                                    {
+                                        BROWSEINFO browseInfo = new BROWSEINFO();
+                                        browseInfo.hwndOwner = (IntPtr)MainWindow.Current.AppWindow.Id.Value;
+                                        browseInfo.lpszTitle = Marshal.StringToHGlobalUni(ResourceService.GetLocalized("Settings/SelectFolder"));
+                                        browseInfo.ulFlags = BROWSEINFOFLAGS.BIF_RETURNONLYFSDIRS | BROWSEINFOFLAGS.BIF_NEWDIALOGSTYLE;
+                                        IntPtr resultPtr = Shell32Library.SHBrowseForFolder(ref browseInfo);
+
+                                        if (resultPtr != IntPtr.Zero)
+                                        {
+                                            if (Shell32Library.SHGetPathFromIDList(resultPtr, pszPath))
+                                            {
+                                                selectedPath = new string(pszPath);
+                                            }
+                                            Marshal.FreeCoTaskMem(resultPtr);
+                                        }
+                                        result = true;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        LogService.WriteLog(LoggingLevel.Error, "Open SHBrowseForFolder failed", e);
+                                        TeachingTipHelper.Show(new FolderPickerTip());
+                                    }
+                                };
+
+                                try
+                                {
+                                    if (result is true && !string.IsNullOrEmpty(selectedPath))
+                                    {
+                                        DownloadFolder = await StorageFolder.GetFolderFromPathAsync(selectedPath);
+                                        DownloadOptionsService.SetFolder(DownloadFolder);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, "Failed to read the directory obtained by the SHBrowseForFolder function", e);
+                                    result = false;
+                                }
+                            }
+
+                            // 选取文件夹失败，显示提示
+                            if (!result)
                             {
                                 TeachingTipHelper.Show(new FolderPickerTip());
                             }
+
                             break;
                         }
                 }

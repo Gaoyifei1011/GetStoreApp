@@ -104,18 +104,6 @@ namespace GetStoreApp.UI.TeachingTips
                             }
                             break;
                         }
-                    case DataCopyKind.ShareFile:
-                        {
-                            if (isMultiSelected)
-                            {
-                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/ShareFileSelectedCopy"), count);
-                            }
-                            else
-                            {
-                                CopySuccess.Text = ResourceService.GetLocalized("Notification/ShareFileCopy");
-                            }
-                            break;
-                        }
                     case DataCopyKind.WinGetSearchInstall:
                         {
                             CopySuccess.Text = ResourceService.GetLocalized("Notification/SearchInstallCopy");
