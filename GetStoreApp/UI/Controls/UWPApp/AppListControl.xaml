@@ -2,7 +2,7 @@
     x:Class="GetStoreApp.UI.Controls.UWPApp.AppListControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:basicInput="using:GetStoreApp.Views.CustomControls.BasicInput"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
@@ -448,69 +448,105 @@
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
-                                <basicInput:ExtendedSplitButton
+                                <StackPanel
                                     Grid.Column="4"
-                                    Command="{StaticResource ViewInformationCommand}"
-                                    CommandParameter="{Binding}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/View')}"
-                                    PrimaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/ViewToolTip')}"
-                                    SecondaryButtonToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/FastOperationToolTip')}">
+                                    Height="30"
+                                    BorderBrush="{ThemeResource ButtonBorderBrush}"
+                                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                                    CornerRadius="{ThemeResource ControlCornerRadius}"
+                                    Orientation="Horizontal">
 
-                                    <basicInput:ExtendedSplitButton.Flyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource OpenAppCommand}"
-                                                CommandParameter="{x:Bind Package}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenApp')}"
-                                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCount)}" />
+                                    <Button
+                                        VerticalAlignment="Stretch"
+                                        VerticalContentAlignment="Center"
+                                        BorderThickness="0,0,1,0"
+                                        Command="{StaticResource ViewInformationCommand}"
+                                        CommandParameter="{Binding}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/View')}"
+                                        CornerRadius="0"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/ViewToolTip')}" />
 
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource OpenStoreCommand}"
-                                                CommandParameter="{x:Bind Package}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
+                                    <Button
+                                        Width="35"
+                                        VerticalAlignment="Stretch"
+                                        BorderThickness="0"
+                                        CornerRadius="0"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/FastOperationToolTip')}">
 
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource OpenManifestCommand}"
-                                                CommandParameter="{x:Bind Package}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenManifest')}" />
+                                        <Button.Content>
+                                            <AnimatedIcon
+                                                Width="12"
+                                                Height="12"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                AutomationProperties.AccessibilityView="Raw">
+                                                <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                                <AnimatedIcon.FallbackIconSource>
+                                                    <FontIconSource
+                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                        FontSize="8"
+                                                        Glyph="&#xE96E;"
+                                                        IsTextScaleFactorEnabled="False" />
+                                                </AnimatedIcon.FallbackIconSource>
+                                            </AnimatedIcon>
+                                        </Button.Content>
 
-                                            <MenuFlyoutSubItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenFolder')}">
+                                        <Button.Flyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource OpenAppCommand}"
+                                                    CommandParameter="{x:Bind Package}"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenApp')}"
+                                                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCount)}" />
 
                                                 <MenuFlyoutItem
                                                     Height="32"
                                                     Padding="11,0"
-                                                    Command="{StaticResource OpenInstalledFolderCommand}"
+                                                    Command="{StaticResource OpenStoreCommand}"
                                                     CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenInstalledFolder')}" />
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
 
                                                 <MenuFlyoutItem
                                                     Height="32"
                                                     Padding="11,0"
-                                                    Command="{StaticResource OpenCacheFolderCommand}"
+                                                    Command="{StaticResource OpenManifestCommand}"
                                                     CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenCacheFolder')}" />
-                                            </MenuFlyoutSubItem>
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenManifest')}" />
 
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource UnInstallCommand}"
-                                                CommandParameter="{x:Bind Package}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemAppCheck(SignatureKind)}" />
-                                        </MenuFlyout>
-                                    </basicInput:ExtendedSplitButton.Flyout>
-                                </basicInput:ExtendedSplitButton>
+                                                <MenuFlyoutSubItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenFolder')}">
+
+                                                    <MenuFlyoutItem
+                                                        Height="32"
+                                                        Padding="11,0"
+                                                        Command="{StaticResource OpenInstalledFolderCommand}"
+                                                        CommandParameter="{x:Bind Package}"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenInstalledFolder')}" />
+
+                                                    <MenuFlyoutItem
+                                                        Height="32"
+                                                        Padding="11,0"
+                                                        Command="{StaticResource OpenCacheFolderCommand}"
+                                                        CommandParameter="{x:Bind Package}"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenCacheFolder')}" />
+                                                </MenuFlyoutSubItem>
+
+                                                <MenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource UnInstallCommand}"
+                                                    CommandParameter="{x:Bind Package}"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemAppCheck(SignatureKind)}" />
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </StackPanel>
                             </Grid>
 
                             <ProgressBar

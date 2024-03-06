@@ -6,6 +6,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -502,7 +503,7 @@ namespace GetStoreApp.Views.Pages
                                 string selectedPath = string.Empty;
                                 unsafe
                                 {
-                                    char* pszPath = stackalloc char[260 + 1];
+                                    char* pszPath = stackalloc char[Kernel32Library.MAX_PATH + 1];
 
                                     try
                                     {

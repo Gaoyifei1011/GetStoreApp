@@ -15,7 +15,6 @@
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/ListView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/SplitButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/TeachingTip.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

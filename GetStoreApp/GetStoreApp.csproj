@@ -80,7 +80,6 @@
     <None Remove="Styles\InfoBar.xaml" />
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
-    <None Remove="Styles\SplitButton.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
@@ -133,7 +132,6 @@
     <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\SplitButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
@@ -194,6 +192,7 @@
     <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="WinRT.Host.Shim" />
+    <TrimmableAssembly Include="WinRT.Runtime" />
   </ItemGroup>
 
   <!-- 捆绑前对二进制文件进行后处理 -->
