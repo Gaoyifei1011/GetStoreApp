@@ -107,16 +107,16 @@ namespace GetStoreApp.Services.Shell
         /// <summary>
         /// 下载文件
         /// </summary>
-        private static unsafe void DownloadFile(string fileName, string fileLink)
+        private static void DownloadFile(string fileName, string fileLink)
         {
             byte[] readBuff = new byte[101];
 
             SECURITY_ATTRIBUTES downloadSecurityAttributes = new SECURITY_ATTRIBUTES();
             downloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
-            downloadSecurityAttributes.bInheritHandle = true;
+            downloadSecurityAttributes.bInheritHandle = 1;
             downloadSecurityAttributes.lpSecurityDescriptor = 0;
 
-            bool pipeCreateResult = Kernel32Library.CreatePipe(out IntPtr hRead, out IntPtr hWrite, &downloadSecurityAttributes, 0);
+            bool pipeCreateResult = Kernel32Library.CreatePipe(out IntPtr hRead, out IntPtr hWrite, ref downloadSecurityAttributes, 0);
 
             if (pipeCreateResult)
             {
@@ -155,7 +155,7 @@ namespace GetStoreApp.Services.Shell
                     IntPtr.Zero,
                     null,
                     ref downloadStartupInfo,
-                    out PROCESS_INFORMATION downloadInformation
+                    out downloadInformation
                     );
 
                 isFileDownloading = true;

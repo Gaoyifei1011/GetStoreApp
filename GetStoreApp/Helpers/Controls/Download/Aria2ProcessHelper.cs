@@ -51,14 +51,14 @@ namespace GetStoreApp.Helpers.Controls.Download
         /// </summary>
         public static bool IsAria2ProcessExisted()
         {
-            bool SearchResult = false;
+            bool searchResult = false;
             try
             {
                 IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
 
                 if (hSnapshot == IntPtr.Zero || hSnapshot == Kernel32Library.INVALID_HANDLE_VALUE)
                 {
-                    return SearchResult;
+                    return searchResult;
                 }
 
                 PROCESSENTRY32 ProcessEntry32 = new PROCESSENTRY32();
@@ -68,7 +68,8 @@ namespace GetStoreApp.Helpers.Controls.Download
                 {
                     if (ProcessEntry32.th32ProcessID == aria2Information.dwProcessId)
                     {
-                        SearchResult = true;
+                        searchResult = true;
+                        break;
                     }
                 }
                 Kernel32Library.CloseHandle(hSnapshot);
@@ -76,9 +77,9 @@ namespace GetStoreApp.Helpers.Controls.Download
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "Aria2 Process search failed.", e);
-                SearchResult = false;
+                searchResult = false;
             }
-            return SearchResult;
+            return searchResult;
         }
     }
 }

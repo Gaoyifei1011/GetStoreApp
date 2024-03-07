@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
     /// 包含 SHBrowseForFolder 函数的参数，并接收有关用户选择的文件夹的信息。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public unsafe struct BROWSEINFO
+    public struct BROWSEINFO
     {
         /// <summary>
         /// 对话框的所有者窗口的句柄。

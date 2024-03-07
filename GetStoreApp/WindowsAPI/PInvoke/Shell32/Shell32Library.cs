@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         /// 返回的 PIDL 可能是文件夹快捷方式而不是文件夹的。 有关此情况的完整讨论，请参阅备注部分。
         /// </returns>
         [LibraryImport(Shell32, EntryPoint = "SHBrowseForFolderW", SetLastError = false)]
-        public static unsafe partial IntPtr SHBrowseForFolder(ref BROWSEINFO lpbi);
+        public static partial IntPtr SHBrowseForFolder(ref BROWSEINFO lpbi);
 
         /// <summary>
         /// 将项标识符列表转换为文件系统路径。

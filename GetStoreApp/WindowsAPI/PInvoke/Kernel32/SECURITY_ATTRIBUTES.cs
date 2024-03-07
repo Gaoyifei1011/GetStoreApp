@@ -23,6 +23,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <summary>
         /// 一个布尔值，它指定在创建新进程时是否继承返回的句柄。如果此成员为 TRUE，则新进程将继承句柄。
         /// </summary>
-        public bool bInheritHandle;
+        public int bInheritHandle;
     }
 }

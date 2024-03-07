@@ -38,7 +38,7 @@ namespace GetStoreApp.Helpers.Root
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref processEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref processEntry32))
                 {
-                    if (Marshal.PtrToStringUni((IntPtr)processEntry32.szExeFile).Equals(processName, StringComparison.OrdinalIgnoreCase))
+                    if (new string(processEntry32.szExeFile).Equals(processName, StringComparison.OrdinalIgnoreCase))
                     {
                         processEntry32PIDList.Add(processEntry32.th32ProcessID);
                     }

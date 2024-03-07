@@ -7,6 +7,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
@@ -489,6 +490,18 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// 更多按钮点击时显示菜单
+        /// </summary>
+        private void OnShowMoreExecuteRequested(object sender, ExecuteRequestedEventArgs args)
+        {
+            HyperlinkButton hyperlinkButton = args.Parameter as HyperlinkButton;
+            if (hyperlinkButton is not null)
+            {
+                FlyoutBase.ShowAttachedFlyout(hyperlinkButton);
+            }
         }
 
         #endregion 第一部分：XamlUICommand 命令调用时挂载的事件

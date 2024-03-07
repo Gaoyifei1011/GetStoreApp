@@ -1,8 +1,10 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -121,6 +123,22 @@ namespace GetStoreApp.UI.Dialogs.Settings
                     }
                 });
             }
+        }
+
+        /// <summary>
+        /// 指针进入此元素的命中测试区域时发生的事件
+        /// </summary>
+        private void OnButtonPointerEntered(object sender, PointerRoutedEventArgs args)
+        {
+            ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
+        }
+
+        /// <summary>
+        /// 指针离开此元素的命中测试区域时发生的事件
+        /// </summary>
+        private void OnButtonPointerExited(object sender, PointerRoutedEventArgs args)
+        {
+            ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Arrow);
         }
 
         /// <summary>

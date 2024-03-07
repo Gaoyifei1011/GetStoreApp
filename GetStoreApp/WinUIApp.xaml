@@ -9,7 +9,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/AppBarButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/DropDownButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/Flyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
