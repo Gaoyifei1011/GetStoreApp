@@ -12,7 +12,7 @@
   <Identity
     Name="Gaoyifei1011.GetStoreApp"
     Publisher="CN=高怡飞"
-    Version="3.7.307.0" />
+    Version="3.7.308.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>

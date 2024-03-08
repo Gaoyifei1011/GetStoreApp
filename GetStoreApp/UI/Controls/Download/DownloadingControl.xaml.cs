@@ -205,7 +205,7 @@ namespace GetStoreApp.UI.Controls.Download
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
             List<DownloadingModel> selectedDownloadingDataList = new List<DownloadingModel>();
-            foreach (DownloadingModel downloadingItem in selectedDownloadingDataList)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
                 if (downloadingItem.IsSelected)
                 {

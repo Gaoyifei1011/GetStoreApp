@@ -106,8 +106,6 @@
                 Height="Auto"
                 VerticalAlignment="Center"
                 Click="{x:Bind OnOpenConfigFileClicked}"
-                PointerEntered="{x:Bind OnButtonPointerEntered}"
-                PointerExited="{x:Bind OnButtonPointerExited}"
                 Style="{StaticResource AlternateCloseButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenConfigFolder')}">
                 <Button.Content>
