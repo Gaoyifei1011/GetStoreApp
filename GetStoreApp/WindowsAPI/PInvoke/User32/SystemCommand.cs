@@ -3,7 +3,7 @@
     /// <summary>
     /// 请求的系统命令的类型
     /// </summary>
-    public enum SystemCommand : int
+    public enum SYSTEMCOMMAND : int
     {
         /// <summary>
         /// 指示屏幕保存程序是否安全。

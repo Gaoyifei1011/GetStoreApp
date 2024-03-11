@@ -16,7 +16,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static int ResetTextColor()
         {
-            IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+            IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
             return Kernel32Library.SetConsoleTextAttribute(consoleHandle, 0x0F);
         }
 
@@ -25,7 +25,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static int SetTextColor(ushort color)
         {
-            IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+            IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
             return Kernel32Library.SetConsoleTextAttribute(consoleHandle, color);
         }
 
@@ -42,7 +42,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static string ReadLine()
         {
-            IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_INPUT_HANDLE);
+            IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_INPUT_HANDLE);
 
             const int bufferSize = 1024;
             byte[] buffer = new byte[bufferSize];
@@ -65,7 +65,7 @@ namespace GetStoreApp.Helpers.Root
         {
             if (!IsExited)
             {
-                IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+                IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
                 return Kernel32Library.WriteConsole(consoleHandle, value, value.Length, out _, IntPtr.Zero);
             }
             else
@@ -81,7 +81,7 @@ namespace GetStoreApp.Helpers.Root
         {
             if (!IsExited)
             {
-                IntPtr consoleHandle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
+                IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
 
                 StringBuilder valueBuilder = new StringBuilder();
                 valueBuilder.AppendLine(value);

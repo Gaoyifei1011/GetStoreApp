@@ -6,7 +6,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     /// 要包含在快照中的系统部分 CreateToolhelp32Snapshot。
     /// </summary>
     [Flags]
-    public enum CreateToolhelp32SnapshotFlags : uint
+    public enum CREATE_TOOLHELP32_SNAPSHOT_FLAGS : uint
     {
         /// <summary>
         /// 指示快照句柄是可继承的。

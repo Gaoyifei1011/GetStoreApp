@@ -1,6 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 
 namespace GetStoreApp.Models.Controls.AppUpdate
@@ -21,8 +20,11 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                _isUpdating = value;
-                OnPropertyChanged();
+                if (_isUpdating != value)
+                {
+                    _isUpdating = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdating)));
+                }
             }
         }
 
@@ -52,9 +54,11 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                _installInformation = value;
-
-                OnPropertyChanged();
+                if (_installInformation != value)
+                {
+                    _installInformation = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallInformation)));
+                }
             }
         }
 
@@ -66,8 +70,11 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                _installSubInformation = value;
-                OnPropertyChanged();
+                if (_installSubInformation != value)
+                {
+                    _installSubInformation = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallSubInformation)));
+                }
             }
         }
 
@@ -87,8 +94,11 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                _appInstallState = value;
-                OnPropertyChanged();
+                if (_appInstallState != value)
+                {
+                    _appInstallState = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstallState)));
+                }
             }
         }
 
@@ -103,8 +113,11 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                _percentComplete = value;
-                OnPropertyChanged();
+                if (_percentComplete != value)
+                {
+                    _percentComplete = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PercentComplete)));
+                }
             }
         }
 
@@ -120,14 +133,6 @@ namespace GetStoreApp.Models.Controls.AppUpdate
             {
                 return Visibility.Collapsed;
             }
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

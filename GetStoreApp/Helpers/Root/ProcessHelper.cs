@@ -26,7 +26,7 @@ namespace GetStoreApp.Helpers.Root
             List<uint> processEntry32PIDList = new List<uint>();
             try
             {
-                IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
+                IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CREATE_TOOLHELP32_SNAPSHOT_FLAGS.TH32CS_SNAPPROCESS, 0);
 
                 if (hSnapshot == IntPtr.Zero || hSnapshot == Kernel32Library.INVALID_HANDLE_VALUE)
                 {
@@ -74,7 +74,7 @@ namespace GetStoreApp.Helpers.Root
             startupInfo.lpReserved2 = IntPtr.Zero;
             startupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-            bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", processName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.None, IntPtr.Zero, null, ref startupInfo, out PROCESS_INFORMATION processInformation);
+            bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", processName, arguments), IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.None, IntPtr.Zero, null, ref startupInfo, out PROCESS_INFORMATION processInformation);
 
             if (createResult)
             {

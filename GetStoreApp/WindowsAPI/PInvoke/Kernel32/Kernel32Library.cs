@@ -89,7 +89,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果函数成功，它将返回指定快照的打开句柄。如果函数失败，它将返回 INVALID_HANDLE_VALUE。 要获得更多的错误信息，请调用 GetLastError。 可能的错误代码包括 ERROR_BAD_LENGTH。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = true)]
-        public static partial IntPtr CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags dwFlags, uint th32ProcessID);
+        public static partial IntPtr CreateToolhelp32Snapshot(CREATE_TOOLHELP32_SNAPSHOT_FLAGS dwFlags, uint th32ProcessID);
 
         /// <summary>
         /// 创建新进程及其主线程。 新进程在调用进程的安全上下文中运行。
@@ -166,7 +166,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
             IntPtr lpProcessAttributes,
             IntPtr lpThreadAttributes,
             [MarshalAs(UnmanagedType.Bool)] bool bInheritHandles,
-            CreateProcessFlags dwCreationFlags,
+            CREATE_PROCESS_FLAGS dwCreationFlags,
             IntPtr lpEnvironment,
             string lpCurrentDirectory,
             ref STARTUPINFO lpStartupInfo,
@@ -196,7 +196,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 除非应用程序已使用 SetStdHandle 来设置具有较少访问权限的标准句柄，否则该句柄具有 GENERIC_READ 和 GENERIC_WRITE 访问权限。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "GetStdHandle", SetLastError = true)]
-        public static partial IntPtr GetStdHandle(StdHandle nStdHandle);
+        public static partial IntPtr GetStdHandle(STD_HANDLE nStdHandle);
 
         /// <summary>
         /// 打开现有的本地进程对象。
@@ -213,7 +213,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </param>
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
         [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false)]
-        public static partial IntPtr OpenProcess(EDesiredAccess dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
+        public static partial IntPtr OpenProcess(EDESIREDACCESS dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
 
         /// <summary>
         /// 检索有关系统快照中遇到的第一个进程的信息。
@@ -313,7 +313,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "SetStdHandle", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetStdHandle(StdHandle nStdHandle, IntPtr handle);
+        public static partial bool SetStdHandle(STD_HANDLE nStdHandle, IntPtr handle);
 
         /// <summary>
         /// 从调用进程的处理程序函数列表中添加或删除应用程序定义的 HandlerRoutine 函数。如果未指定处理程序函数，则该函数将设置可继承的属性，该属性确定调用进程是否忽略 Ctrl+C 信号。

@@ -27,7 +27,7 @@ namespace GetStoreApp.Services.Controls.Download
         private const string FilePath = "FilePath";
         private const string FileSHA1 = "FileSHA1";
         private const string FileSize = "FileSize";
-        private const string DownloadFlag = "DownloadFlag";
+        private const string DownloadFlag = "DownloadFlags";
 
         /// <summary>
         /// 检查是否有下载异常的记录，并将对应的下载状态值复原
@@ -116,6 +116,53 @@ namespace GetStoreApp.Services.Controls.Download
                     downloadItemElement.SetAttribute(FilePath, backgroundItem.FilePath);
                     downloadItemElement.SetAttribute(FileSize, Convert.ToString(backgroundItem.TotalSize));
                     downloadItemElement.SetAttribute(DownloadFlag, Convert.ToString(backgroundItem.DownloadFlag));
+                    downloadRootElement.AppendChild(downloadItemElement);
+
+                    while (isReadingAndWriting) await Task.Delay(10);
+                    lock (downloadXmlFileLock) isReadingAndWriting = true;
+
+                    await downloadFileDocument.SaveToFileAsync(XmlStorageService.DownloadXmlFile);
+
+                    lock (downloadXmlFileLock) isReadingAndWriting = false;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Add download record failed.", e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 直接添加下载记录数据，并返回下载记录添加是否成功的结果
+        /// </summary>
+        public static async Task<bool> AddAsync(DownloadSchedulerModel downloadSchedulerItem)
+        {
+            try
+            {
+                while (isReadingAndWriting) await Task.Delay(10);
+                lock (downloadXmlFileLock) isReadingAndWriting = true;
+
+                XmlDocument downloadFileDocument = await XmlDocument.LoadFromFileAsync(XmlStorageService.DownloadXmlFile);
+
+                lock (downloadXmlFileLock) isReadingAndWriting = false;
+
+                if (downloadFileDocument.HasChildNodes())
+                {
+                    IXmlNode downloadRootElement = downloadFileDocument.ChildNodes[0];
+
+                    XmlElement downloadItemElement = downloadFileDocument.CreateElement(DownloadItem);
+                    downloadItemElement.SetAttribute(DownloadKey, downloadSchedulerItem.DownloadKey);
+                    downloadItemElement.SetAttribute(FileName, downloadSchedulerItem.FileName);
+                    downloadItemElement.SetAttribute(FileLink, downloadSchedulerItem.FileLink);
+                    downloadItemElement.SetAttribute(FilePath, downloadSchedulerItem.FilePath);
+                    downloadItemElement.SetAttribute(FileSize, Convert.ToString(downloadSchedulerItem.TotalSize));
+                    downloadItemElement.SetAttribute(DownloadFlag, Convert.ToString(downloadSchedulerItem.DownloadFlag));
                     downloadRootElement.AppendChild(downloadItemElement);
 
                     while (isReadingAndWriting) await Task.Delay(10);

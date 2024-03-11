@@ -120,8 +120,8 @@ namespace GetStoreApp.Services.Shell
 
             if (pipeCreateResult)
             {
-                IntPtr handle = Kernel32Library.GetStdHandle(StdHandle.STD_OUTPUT_HANDLE);
-                Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, hWrite);
+                IntPtr handle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
+                Kernel32Library.SetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE, hWrite);
 
                 Kernel32Library.GetStartupInfo(out STARTUPINFO downloadStartupInfo);
                 downloadStartupInfo.lpReserved = IntPtr.Zero;
@@ -151,7 +151,7 @@ namespace GetStoreApp.Services.Shell
                     IntPtr.Zero,
                     IntPtr.Zero,
                     true,
-                    CreateProcessFlags.CREATE_NO_WINDOW,
+                    CREATE_PROCESS_FLAGS.CREATE_NO_WINDOW,
                     IntPtr.Zero,
                     null,
                     ref downloadStartupInfo,
@@ -159,7 +159,7 @@ namespace GetStoreApp.Services.Shell
                     );
 
                 isFileDownloading = true;
-                Kernel32Library.SetStdHandle(StdHandle.STD_OUTPUT_HANDLE, handle);
+                Kernel32Library.SetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE, handle);
                 Kernel32Library.CloseHandle(hWrite);
 
                 if (createResult)
@@ -198,7 +198,7 @@ namespace GetStoreApp.Services.Shell
             {
                 if (downloadInformation.dwProcessId is not 0)
                 {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDesiredAccess.PROCESS_TERMINATE, false, downloadInformation.dwProcessId);
+                    IntPtr hProcess = Kernel32Library.OpenProcess(EDESIREDACCESS.PROCESS_TERMINATE, false, downloadInformation.dwProcessId);
                     if (hProcess != IntPtr.Zero)
                     {
                         Kernel32Library.TerminateProcess(hProcess, 0);

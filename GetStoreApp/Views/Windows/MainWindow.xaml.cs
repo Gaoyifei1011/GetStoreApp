@@ -871,9 +871,9 @@ namespace GetStoreApp.Views.Windows
                 // 选择窗口右键菜单的条目时接收到的消息
                 case WindowMessage.WM_SYSCOMMAND:
                     {
-                        SystemCommand sysCommand = (SystemCommand)(wParam.ToInt32() & 0xFFF0);
+                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToInt32() & 0xFFF0);
 
-                        if (sysCommand is SystemCommand.SC_MOUSEMENU)
+                        if (sysCommand is SYSTEMCOMMAND.SC_MOUSEMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 15);
@@ -881,7 +881,7 @@ namespace GetStoreApp.Views.Windows
                             TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
-                        else if (sysCommand is SystemCommand.SC_KEYMENU)
+                        else if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU)
                         {
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.Position = new Point(0, 45);

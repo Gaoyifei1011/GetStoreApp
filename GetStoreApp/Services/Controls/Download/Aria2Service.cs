@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Helpers.Controls.Download;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -22,7 +23,7 @@ namespace GetStoreApp.Services.Controls.Download
     {
         private static string aria2FilePath = Path.Combine(InfoHelper.AppInstalledLocation, "Mile.Aria2.exe");
         private static string aria2Arguments;
-        private static string defaultAria2Arguments = "-c --fileStream-allocation=none --max-concurrent-downloads=3 --max-connection-per-server=5 --min-split-size=10M --split=5 --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 --stop-with-process={0} -D";
+        private static string defaultAria2Arguments = "-c --fileStream-allocation=none --max-concurrent-downloads=1 --max-connection-per-server=5 --min-split-size=10M --split=5 --enable-rpc=true --rpc-allow-origin-all=true --rpc-listen-all=true --rpc-listen-port=6300 --stop-with-process={0} -D";
         private static string rpcServerLink = "http://127.0.0.1:6300/jsonrpc";
 
         public static string Aria2ConfPath { get; } = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Aria2.conf");
@@ -46,7 +47,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 使用自定义的配置文件目录
-                aria2Arguments = string.Format("--conf-path=\"{0}\" --stop-with-process={1} -D", Aria2ConfPath, processId);
+                aria2Arguments = string.Format("--conf-path=\"{0}\" -j {1} --stop-with-process={2} -D", Aria2ConfPath, DownloadOptionsService.DownloadItem, processId);
             }
             //  发生异常时，使用默认的参数
             catch (Exception e)

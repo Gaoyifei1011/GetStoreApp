@@ -3,7 +3,7 @@
     /// <summary>
     /// 进程对象的访问权限
     /// </summary>
-    public enum EDesiredAccess : uint
+    public enum EDESIREDACCESS : uint
     {
         /// <summary>
         /// 删除对象所必需的。

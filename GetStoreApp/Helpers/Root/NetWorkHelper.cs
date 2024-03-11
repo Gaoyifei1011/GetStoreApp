@@ -1,4 +1,7 @@
-﻿using Windows.Networking.Connectivity;
+﻿using GetStoreApp.Services.Root;
+using System;
+using Windows.Foundation.Diagnostics;
+using Windows.Networking.Connectivity;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -10,6 +13,24 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 检测当前设备的网络是否连接
         /// </summary>
+        public static Tuple<bool, bool> IsNetworkConnected()
+        {
+            bool isConnected = false;
+            bool isChecked = false;
+
+            try
+            {
+                ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+                isConnected = connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() is NetworkConnectivityLevel.InternetAccess;
+                isChecked = true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Network state check failed", e);
+            }
+            return new Tuple<bool, bool>(isChecked, isConnected);
+        }
+
         public static bool IsNetworkConnected(out bool checkFailed)
         {
             try

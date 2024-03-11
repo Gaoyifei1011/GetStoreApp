@@ -37,7 +37,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                 Aria2StartupInfo.lpReserved2 = IntPtr.Zero;
                 Aria2StartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
 
-                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CreateProcessFlags.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2StartupInfo, out aria2Information);
+                return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2StartupInfo, out aria2Information);
             }
             catch (Exception e)
             {
@@ -54,7 +54,7 @@ namespace GetStoreApp.Helpers.Controls.Download
             bool searchResult = false;
             try
             {
-                IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CreateToolhelp32SnapshotFlags.TH32CS_SNAPPROCESS, 0);
+                IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CREATE_TOOLHELP32_SNAPSHOT_FLAGS.TH32CS_SNAPPROCESS, 0);
 
                 if (hSnapshot == IntPtr.Zero || hSnapshot == Kernel32Library.INVALID_HANDLE_VALUE)
                 {

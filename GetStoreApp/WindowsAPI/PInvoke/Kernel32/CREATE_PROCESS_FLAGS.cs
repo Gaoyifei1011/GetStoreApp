@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     /// 函数使用以下进程创建标志。 可以在任意组合中指定它们，
     /// </summary>
     [Flags]
-    public enum CreateProcessFlags
+    public enum CREATE_PROCESS_FLAGS
     {
         /// <summary>
         /// 无任何标志
