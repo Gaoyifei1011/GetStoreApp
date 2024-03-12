@@ -9,7 +9,6 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.ComTypes;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -361,9 +360,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 try
                 {
-                    IDataTransferManagerInterop dataTransferManagerInterop = DataTransferManager.As<IDataTransferManagerInterop>();
-
-                    DataTransferManager dataTransferManager = DataTransferManager.FromAbi(dataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value, new Guid("A5CAEE9B-8708-49D1-8D36-67D25A8DA00C")));
+                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
 
                     dataTransferManager.DataRequested += async (sender, args) =>
                     {
@@ -374,7 +371,7 @@ namespace GetStoreApp.UI.Controls.Download
                         deferral.Complete();
                     };
 
-                    dataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
+                    DataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
                 }
                 catch (Exception e)
                 {
@@ -681,9 +678,7 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     try
                     {
-                        IDataTransferManagerInterop dataTransferManagerInterop = DataTransferManager.As<IDataTransferManagerInterop>();
-
-                        DataTransferManager dataTransferManager = DataTransferManager.FromAbi(dataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value, new Guid("A5CAEE9B-8708-49D1-8D36-67D25A8DA00C")));
+                        DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
 
                         dataTransferManager.DataRequested += async (sender, args) =>
                         {
@@ -708,7 +703,7 @@ namespace GetStoreApp.UI.Controls.Download
                             deferral.Complete();
                         };
 
-                        dataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
+                        DataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
                     }
                     catch (Exception e)
                     {
