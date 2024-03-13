@@ -100,7 +100,7 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | Check for store app updates                              | Completed                                                                                                          |
 | WinGet package manager                                   | Completed                                                                                                          |
 | Device application management                            | Completed                                                                                                          |
-| Download management                                      | Need restruct (4.0 version finished)                                                                               |
+| Download management                                      | Restructing now (4.0 version finished)                                                                             |
 | Console applications                                     | Completed                                                                                                          |
 | Program performance optimization                         | Completed                                                                                                          |
 | Interface modernization                                  | Completed                                                                                                          |

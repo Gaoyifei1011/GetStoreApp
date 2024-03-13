@@ -12,9 +12,17 @@ namespace Windows.ApplicationModel.DataTransfer
     /// </summary>
     public static class DataTransferManagerInterop
     {
+        private static readonly Guid IDataTransferManagerInterop_IID = new Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8");
+
         private static readonly Guid riid = new Guid("A5CAEE9B-8708-49D1-8D36-67D25A8DA00C");
 
-        private static FactoryObjectReference<IObjectReference> factoryObjectReference = ActivationFactory.Get<IObjectReference>("Windows.ApplicationModel.DataTransfer.DataTransferManager", new Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8"));
+        private static FactoryObjectReference<IObjectReference> factoryObjectReference;
+
+        static DataTransferManagerInterop()
+        {
+            // typeName = typeof(Windows.ApplicationModel.DataTransfer.DataTransferManager).FullName
+            factoryObjectReference = ActivationFactory.Get<IObjectReference>("Windows.ApplicationModel.DataTransfer.DataTransferManager", IDataTransferManagerInterop_IID);
+        }
 
         /// <summary>
         /// 获取指定窗口的 DataTransferManager 实例。
