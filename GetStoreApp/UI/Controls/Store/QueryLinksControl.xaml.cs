@@ -838,7 +838,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<HistoryModel> queryLinksHistoryList = HistoryService.GetQueryLinksData();
+                List<HistoryModel> queryLinksHistoryList = HistoryStorageService.GetQueryLinksData();
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -1001,7 +1001,11 @@ namespace GetStoreApp.UI.Controls.Store
                     };
 
                     historyList.Insert(0, historyItem);
-                    HistoryService.SaveQueryLinksData(historyList);
+                    if (historyList.Count is 3)
+                    {
+                        historyList.RemoveAt(historyList.Count - 1);
+                    }
+                    HistoryStorageService.SaveQueryLinksData(historyList);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -1023,7 +1027,7 @@ namespace GetStoreApp.UI.Controls.Store
                     historyItem.CreateTimeStamp = timeStamp;
                     historyList.RemoveAt(index);
                     historyList.Insert(0, historyItem);
-                    HistoryService.SaveQueryLinksData(historyList);
+                    HistoryStorageService.SaveQueryLinksData(historyList);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {

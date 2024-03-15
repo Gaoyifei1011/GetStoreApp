@@ -220,7 +220,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<HistoryModel> searchStoreHistoryList = HistoryService.GetSearchStoreData();
+                List<HistoryModel> searchStoreHistoryList = HistoryStorageService.GetSearchStoreData();
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -341,7 +341,7 @@ namespace GetStoreApp.UI.Controls.Store
                     };
 
                     historyList.Insert(0, historyItem);
-                    HistoryService.SaveSearchStoreData(historyList);
+                    HistoryStorageService.SaveSearchStoreData(historyList);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -363,7 +363,7 @@ namespace GetStoreApp.UI.Controls.Store
                     historyItem.CreateTimeStamp = timeStamp;
                     historyList.RemoveAt(index);
                     historyList.Insert(0, historyItem);
-                    HistoryService.SaveSearchStoreData(historyList);
+                    HistoryStorageService.SaveSearchStoreData(historyList);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {

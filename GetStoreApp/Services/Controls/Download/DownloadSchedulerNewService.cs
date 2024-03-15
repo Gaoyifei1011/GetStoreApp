@@ -17,7 +17,7 @@ namespace GetStoreApp.Services.Controls.Download
     /// <summary>
     /// 下载调度服务
     /// </summary>
-    public static class DownloadSchedulerServiceNew
+    public static class DownloadSchedulerNewService
     {
         private static readonly object isNetWorkConnectedLock = new object();
 

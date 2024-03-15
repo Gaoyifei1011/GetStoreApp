@@ -52,19 +52,6 @@ namespace GetStoreApp.UI.Dialogs.About
             }
         }
 
-        private string _windowsUIVersion;
-
-        public string WindowsUIVersion
-        {
-            get { return _windowsUIVersion; }
-
-            set
-            {
-                _windowsUIVersion = value;
-                OnPropertyChanged();
-            }
-        }
-
         private string _doNetVersion;
 
         public string DoNetVersion
@@ -183,25 +170,6 @@ namespace GetStoreApp.UI.Dialogs.About
                             });
                         }
                     }
-                }
-
-                // Windows UI 版本信息
-                try
-                {
-                    StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\System32\{1}", InfoHelper.SystemDataPath.Windows, "Windows.UI.dll"));
-                    IDictionary<string, object> WindowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        WindowsUIVersion = WindowsUIFileProperties[fileVersionProperty] is not null ? Convert.ToString(WindowsUIFileProperties[fileVersionProperty]) : string.Empty;
-                    });
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        WindowsUIVersion = string.Empty;
-                    });
                 }
             });
 

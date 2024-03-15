@@ -6,7 +6,7 @@ namespace Windows.ApplicationModel.DataTransfer
     /// <summary>
     /// 等效调用 IDataTransferManagerInterop 接口的方法
     /// </summary>
-    internal static class IIDataTransferManagerInteropMethods
+    internal static class IDataTransferManagerInteropMethods
     {
         internal static unsafe DataTransferManager GetForWindow(IObjectReference _obj, IntPtr appWindow, in Guid riid)
         {

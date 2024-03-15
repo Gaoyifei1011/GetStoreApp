@@ -126,7 +126,7 @@ namespace GetStoreApp
             {
                 // 初始化存储数据信息
                 await XmlStorageService.InitializeXmlFileAsync();
-                HistoryService.Initialize();
+                HistoryStorageService.Initialize();
                 await DownloadXmlService.InitializeDownloadXmlAsync();
 
                 // 初始化应用配置信息

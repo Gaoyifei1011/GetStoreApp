@@ -31,7 +31,7 @@ namespace Windows.ApplicationModel.DataTransfer
         /// <returns>返回 DataTransferManager 实例。</returns>
         public static DataTransferManager GetForWindow(IntPtr appWindow)
         {
-            return IIDataTransferManagerInteropMethods.GetForWindow(factoryObjectReference, appWindow, riid);
+            return IDataTransferManagerInteropMethods.GetForWindow(factoryObjectReference, appWindow, riid);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Windows.ApplicationModel.DataTransfer
         /// <param name="appWindow">显示共享 UI 的窗口。</param>
         public static void ShowShareUIForWindow(IntPtr appWindow)
         {
-            IIDataTransferManagerInteropMethods.ShowShowShareUIForWindow(factoryObjectReference, appWindow);
+            IDataTransferManagerInteropMethods.ShowShowShareUIForWindow(factoryObjectReference, appWindow);
         }
     }
 }
