@@ -10,6 +10,6 @@
         Wait = 2,
         Pause = 3,
         Download = 4,
-        Success = 5
+        Completed = 5
     }
 }

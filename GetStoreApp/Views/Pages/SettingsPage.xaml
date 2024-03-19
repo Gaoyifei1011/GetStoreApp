@@ -613,6 +613,7 @@
                     Padding="0"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     IsExpanded="True">
 
                     <Expander.Header>
@@ -653,82 +654,95 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
-                            <StackPanel>
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                        <StackPanel Padding="0" HorizontalAlignment="Stretch">
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
 
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackage')}" />
-                                        <TextBlock
-                                            x:Name="EncryptedPackageDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}" Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
 
-                                    <ToggleSwitch
-                                        Grid.Column="1"
-                                        MinWidth="0"
-                                        FlowDirection="RightToLeft"
-                                        IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
-                                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
-                                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
-                                        Toggled="{x:Bind OnEncryptedPackageToggled}" />
-                                </Grid>
-                            </StackPanel>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackage')}" />
+                                    <TextBlock
+                                        x:Name="EncryptedPackageDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                            <MenuFlyoutSeparator Margin="0,0,0,4" />
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}" Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
 
-                            <StackPanel>
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                <ToggleSwitch
+                                    Grid.Column="1"
+                                    MinWidth="0"
+                                    FlowDirection="RightToLeft"
+                                    IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
+                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
+                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
+                                    Toggled="{x:Bind OnEncryptedPackageToggled}" />
+                            </Grid>
 
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMap')}" />
-                                        <TextBlock
-                                            x:Name="BlockMapDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                            <MenuFlyoutSeparator />
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}" Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
 
-                                    <ToggleSwitch
-                                        Grid.Column="1"
-                                        MinWidth="0"
-                                        FlowDirection="RightToLeft"
-                                        IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
-                                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
-                                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
-                                        Toggled="{x:Bind OnBlockMapToggled}" />
-                                </Grid>
-                            </StackPanel>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMap')}" />
+                                    <TextBlock
+                                        x:Name="BlockMapDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}" Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <ToggleSwitch
+                                    Grid.Column="1"
+                                    MinWidth="0"
+                                    FlowDirection="RightToLeft"
+                                    IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
+                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
+                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
+                                    Toggled="{x:Bind OnBlockMapToggled}" />
+                            </Grid>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>
@@ -738,6 +752,7 @@
                     Padding="0"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     IsExpanded="True">
 
                     <Expander.Header>
@@ -778,224 +793,244 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
-                            <StackPanel>
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                        <StackPanel Padding="0" HorizontalAlignment="Stretch">
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
 
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersion')}" />
-                                        <TextBlock
-                                            x:Name="WinGetVersionDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}" Visibility="{x:Bind WinGetVersionDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
 
-                                    <Button
-                                        Grid.Column="1"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersion')}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersionToolTip')}">
-                                        <Button.Flyout>
-                                            <Flyout
-                                                FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
-                                                Placement="Bottom"
-                                                ShouldConstrainToRootBounds="False"
-                                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
-
-                                                <StackPanel Width="250" Padding="16,15,16,10">
-                                                    <Grid Margin="0,0,0,8">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <TextBlock
-                                                            Grid.Column="0"
-                                                            VerticalAlignment="Center"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersion')}" />
-                                                        <TextBlock
-                                                            x:Name="OfficialVersionInstalledText"
-                                                            Grid.Column="1"
-                                                            VerticalAlignment="Center"
-                                                            x:Load="{x:Bind IsOfficialVersionExisted}"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstalled')}" />
-                                                        <HyperlinkButton
-                                                            x:Name="OfficialVersionInstall"
-                                                            Grid.Column="1"
-                                                            HorizontalAlignment="Right"
-                                                            x:Load="{x:Bind IsOfficialVersionExisted.Equals(x:False), Mode=OneWay}"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstall')}"
-                                                            NavigateUri="https://github.com/microsoft/winget-cli/releases"
-                                                            Style="{StaticResource HyperlinkButtonStyle}"
-                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}" />
-                                                    </Grid>
-
-                                                    <Grid Margin="0,0,0,8">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <TextBlock
-                                                            Grid.Column="0"
-                                                            VerticalAlignment="Center"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersion')}" />
-                                                        <TextBlock
-                                                            x:Name="DevVersionInstalledText"
-                                                            Grid.Column="1"
-                                                            VerticalAlignment="Center"
-                                                            x:Load="{x:Bind IsDevVersionExisted}"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstalled')}" />
-                                                        <HyperlinkButton
-                                                            x:Name="DevVersionInstall"
-                                                            Grid.Column="1"
-                                                            HorizontalAlignment="Right"
-                                                            x:Load="{x:Bind IsDevVersionExisted.Equals(x:False), Mode=OneWay}"
-                                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstall')}"
-                                                            NavigateUri="https://github.com/microsoft/winget-cli/releases"
-                                                            Style="{StaticResource HyperlinkButtonStyle}"
-                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}" />
-                                                    </Grid>
-
-                                                    <MenuFlyoutSeparator
-                                                        x:Name="FlyoutSeperator"
-                                                        x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
-                                                        Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
-
-                                                    <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <TextBlock
-                                                            Grid.Column="0"
-                                                            VerticalAlignment="Center"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirst')}"
-                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}" />
-
-                                                        <ToggleSwitch
-                                                            Grid.Column="1"
-                                                            MinWidth="0"
-                                                            FlowDirection="RightToLeft"
-                                                            IsOn="{x:Bind UseDevVersion, Mode=OneWay}"
-                                                            OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOffContent')}"
-                                                            OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOnContent')}"
-                                                            Toggled="{x:Bind OnWinGetConfigToggled}" />
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Flyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </Grid>
-                            </StackPanel>
-
-                            <MenuFlyoutSeparator Margin="0,0,0,4" />
-
-                            <StackPanel Margin="0,0,0,6">
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallMode')}" />
-                                        <TextBlock
-                                            x:Name="WinGetInstallModeDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}" Visibility="{x:Bind WinGetInstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <DropDownButton
-                                        Grid.Column="1"
+                                    <TextBlock
                                         VerticalAlignment="Center"
-                                        Content="{x:Bind WinGetInstallMode.Key, Mode=OneWay}">
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersion')}" />
+                                    <TextBlock
+                                        x:Name="WinGetVersionDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                        <DropDownButton.Flyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <ToggleMenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnWinGetInstallModeSelectClicked}"
-                                                    IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[0].Value), Mode=OneWay}"
-                                                    Tag="0"
-                                                    Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[0].Key)}" />
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}" Visibility="{x:Bind WinGetVersionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
 
-                                                <ToggleMenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnWinGetInstallModeSelectClicked}"
-                                                    IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[1].Value), Mode=OneWay}"
-                                                    Tag="1"
-                                                    Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[1].Key)}" />
-                                            </MenuFlyout>
-                                        </DropDownButton.Flyout>
-                                    </DropDownButton>
-                                </Grid>
-                            </StackPanel>
+                                <Button
+                                    Grid.Column="1"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersion')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersionToolTip')}">
+                                    <Button.Flyout>
+                                        <Flyout
+                                            FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
+                                            Placement="Bottom"
+                                            ShouldConstrainToRootBounds="False"
+                                            SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
 
-                            <MenuFlyoutSeparator Margin="0,0,0,4" />
+                                            <StackPanel Width="250" Padding="16,15,16,10">
+                                                <Grid Margin="0,0,0,8">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
 
-                            <StackPanel Margin="0,0,0,6">
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersion')}" />
+                                                    <TextBlock
+                                                        x:Name="OfficialVersionInstalledText"
+                                                        Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        x:Load="{x:Bind IsOfficialVersionExisted}"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstalled')}" />
+                                                    <HyperlinkButton
+                                                        x:Name="OfficialVersionInstall"
+                                                        Grid.Column="1"
+                                                        HorizontalAlignment="Right"
+                                                        x:Load="{x:Bind IsOfficialVersionExisted.Equals(x:False), Mode=OneWay}"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstall')}"
+                                                        NavigateUri="https://github.com/microsoft/winget-cli/releases"
+                                                        Style="{StaticResource HyperlinkButtonStyle}"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OfficialVersionInstallToolTip')}" />
+                                                </Grid>
 
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettings')}" />
-                                        <TextBlock
-                                            x:Name="WinGetSettingsDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                                <Grid Margin="0,0,0,8">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}" Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersion')}" />
+                                                    <TextBlock
+                                                        x:Name="DevVersionInstalledText"
+                                                        Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        x:Load="{x:Bind IsDevVersionExisted}"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstalled')}" />
+                                                    <HyperlinkButton
+                                                        x:Name="DevVersionInstall"
+                                                        Grid.Column="1"
+                                                        HorizontalAlignment="Right"
+                                                        x:Load="{x:Bind IsDevVersionExisted.Equals(x:False), Mode=OneWay}"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstall')}"
+                                                        NavigateUri="https://github.com/microsoft/winget-cli/releases"
+                                                        Style="{StaticResource HyperlinkButtonStyle}"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/DevVersionInstallToolTip')}" />
+                                                </Grid>
 
-                                    <Button
-                                        Grid.Column="1"
-                                        Click="{x:Bind OnOpenWinGetSettingsClicked}"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
-                                        IsEnabled="{x:Bind IsWinGetExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
-                                </Grid>
-                            </StackPanel>
+                                                <MenuFlyoutSeparator
+                                                    x:Name="FlyoutSeperator"
+                                                    x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
+                                                    Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+                                                <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirst')}"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstToolTip')}" />
+
+                                                    <ToggleSwitch
+                                                        Grid.Column="1"
+                                                        MinWidth="0"
+                                                        FlowDirection="RightToLeft"
+                                                        IsOn="{x:Bind UseDevVersion, Mode=OneWay}"
+                                                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOffContent')}"
+                                                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOnContent')}"
+                                                        Toggled="{x:Bind OnWinGetConfigToggled}" />
+                                                </Grid>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Grid>
+
+                            <MenuFlyoutSeparator />
+
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallMode')}" />
+                                    <TextBlock
+                                        x:Name="WinGetInstallModeDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}" Visibility="{x:Bind WinGetInstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <DropDownButton
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="{x:Bind WinGetInstallMode.Key, Mode=OneWay}">
+
+                                    <DropDownButton.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <ToggleMenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnWinGetInstallModeSelectClicked}"
+                                                IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[0].Value), Mode=OneWay}"
+                                                Tag="0"
+                                                Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[0].Key)}" />
+
+                                            <ToggleMenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnWinGetInstallModeSelectClicked}"
+                                                IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[1].Value), Mode=OneWay}"
+                                                Tag="1"
+                                                Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[1].Key)}" />
+                                        </MenuFlyout>
+                                    </DropDownButton.Flyout>
+                                </DropDownButton>
+                            </Grid>
+
+                            <MenuFlyoutSeparator />
+
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettings')}" />
+                                    <TextBlock
+                                        x:Name="WinGetSettingsDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}" Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <Button
+                                    Grid.Column="1"
+                                    Click="{x:Bind OnOpenWinGetSettingsClicked}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
+                                    IsEnabled="{x:Bind IsWinGetExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
+                            </Grid>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>
@@ -1006,6 +1041,7 @@
                     Padding="0"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     IsExpanded="True">
 
                     <Expander.Header>
@@ -1046,147 +1082,160 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
-                            <StackPanel>
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                        <StackPanel Padding="0" HorizontalAlignment="Stretch">
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
 
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                        <HyperlinkButton Click="{x:Bind OnOpenFolderClicked}" Style="{StaticResource HyperlinkButtonStyle}">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
 
-                                            <HyperlinkButton.Content>
-                                                <TextBlock
-                                                    Text="{x:Bind DownloadFolder.Path, Mode=OneWay}"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap" />
-                                            </HyperlinkButton.Content>
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip MaxWidth="9999">
-                                                    <StackPanel HorizontalAlignment="Stretch">
-                                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
-                                                        <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
-                                                        <MenuFlyoutSeparator Margin="4,3" />
-                                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" />
-                                                    </StackPanel>
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
-                                        </HyperlinkButton>
-                                    </StackPanel>
-
-                                    <DropDownButton
-                                        Grid.Column="2"
-                                        Margin="6,0,0,0"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
-
-                                        <DropDownButton.Flyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnChangeFolderClicked}"
-                                                    Tag="AppCache"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}" />
-
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnChangeFolderClicked}"
-                                                    Tag="Download"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
-
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnChangeFolderClicked}"
-                                                    Tag="Desktop"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}" />
-
-                                                <MenuFlyoutSeparator />
-
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnChangeFolderClicked}"
-                                                    Tag="Custom"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
-                                            </MenuFlyout>
-                                        </DropDownButton.Flyout>
-                                    </DropDownButton>
-                                </Grid>
-                            </StackPanel>
-
-                            <MenuFlyoutSeparator Margin="0,4,0,4" />
-
-                            <StackPanel Margin="0,0,0,6">
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItem')}" />
-                                        <TextBlock
-                                            x:Name="DownloadItemDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}" Visibility="{x:Bind DownloadItemDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <DropDownButton
-                                        Grid.Column="1"
+                                    <TextBlock
                                         VerticalAlignment="Center"
-                                        Content="{x:Bind DownloadItem, Mode=OneWay}">
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
 
-                                        <DropDownButton.Flyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <ToggleMenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnDownloadItemSelectClicked}"
-                                                    IsChecked="{x:Bind DownloadItem.Equals(1), Mode=OneWay}"
-                                                    Tag="1"
-                                                    Text="1" />
+                                    <HyperlinkButton Click="{x:Bind OnOpenFolderClicked}" Style="{StaticResource HyperlinkButtonStyle}">
 
-                                                <ToggleMenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnDownloadItemSelectClicked}"
-                                                    IsChecked="{x:Bind DownloadItem.Equals(2), Mode=OneWay}"
-                                                    Tag="2"
-                                                    Text="2" />
+                                        <HyperlinkButton.Content>
+                                            <TextBlock
+                                                Text="{x:Bind DownloadFolder.Path, Mode=OneWay}"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap" />
+                                        </HyperlinkButton.Content>
 
-                                                <ToggleMenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Click="{x:Bind OnDownloadItemSelectClicked}"
-                                                    IsChecked="{x:Bind DownloadItem.Equals(3), Mode=OneWay}"
-                                                    Tag="3"
-                                                    Text="3" />
-                                            </MenuFlyout>
-                                        </DropDownButton.Flyout>
-                                    </DropDownButton>
-                                </Grid>
-                            </StackPanel>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <StackPanel HorizontalAlignment="Stretch">
+                                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/FileStoragePath')}" />
+                                                    <TextBlock Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
+                                                    <MenuFlyoutSeparator Margin="4,3" />
+                                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" />
+                                                </StackPanel>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </HyperlinkButton>
+                                </StackPanel>
+
+                                <DropDownButton
+                                    Grid.Column="2"
+                                    Margin="6,0,0,0"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
+
+                                    <DropDownButton.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnChangeFolderClicked}"
+                                                Tag="AppCache"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}" />
+
+                                            <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnChangeFolderClicked}"
+                                                Tag="Download"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
+
+                                            <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnChangeFolderClicked}"
+                                                Tag="Desktop"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}" />
+
+                                            <MenuFlyoutSeparator />
+
+                                            <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnChangeFolderClicked}"
+                                                Tag="Custom"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
+                                        </MenuFlyout>
+                                    </DropDownButton.Flyout>
+                                </DropDownButton>
+                            </Grid>
+
+                            <MenuFlyoutSeparator />
+
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItem')}" />
+                                    <TextBlock
+                                        x:Name="DownloadItemDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadItemDescription')}" Visibility="{x:Bind DownloadItemDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <DropDownButton
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Content="{x:Bind DownloadItem, Mode=OneWay}">
+
+                                    <DropDownButton.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <ToggleMenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnDownloadItemSelectClicked}"
+                                                IsChecked="{x:Bind DownloadItem.Equals(1), Mode=OneWay}"
+                                                Tag="1"
+                                                Text="1" />
+
+                                            <ToggleMenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnDownloadItemSelectClicked}"
+                                                IsChecked="{x:Bind DownloadItem.Equals(2), Mode=OneWay}"
+                                                Tag="2"
+                                                Text="2" />
+
+                                            <ToggleMenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Click="{x:Bind OnDownloadItemSelectClicked}"
+                                                IsChecked="{x:Bind DownloadItem.Equals(3), Mode=OneWay}"
+                                                Tag="3"
+                                                Text="3" />
+                                        </MenuFlyout>
+                                    </DropDownButton.Flyout>
+                                </DropDownButton>
+                            </Grid>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>
@@ -1383,6 +1432,7 @@
                     Padding="0"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     IsExpanded="True">
 
                     <Expander.Header>
@@ -1423,78 +1473,92 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <StackPanel Padding="43,6,16,4" HorizontalAlignment="Stretch">
-                            <StackPanel>
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                        <StackPanel Padding="0" HorizontalAlignment="Stretch">
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
 
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolder')}" />
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
 
-                                        <TextBlock
-                                            x:Name="LogFolderDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}" Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
-
-                                    <Button
-                                        Grid.Column="1"
+                                    <TextBlock
                                         VerticalAlignment="Center"
-                                        Click="{x:Bind OnOpenLogFolderClicked}"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenLogFolder')}" />
-                                </Grid>
-                            </StackPanel>
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolder')}" />
 
-                            <MenuFlyoutSeparator Margin="0,4,0,4" />
+                                    <TextBlock
+                                        x:Name="LogFolderDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                            <StackPanel Margin="0,0,0,6">
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}" Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
 
-                                    <StackPanel Grid.Column="0" Orientation="Vertical">
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource BodyTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLog')}" />
+                                <Button
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Click="{x:Bind OnOpenLogFolderClicked}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenLogFolder')}" />
+                            </Grid>
 
-                                        <TextBlock
-                                            x:Name="ClearLogDescription"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                            <MenuFlyoutSeparator />
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}" Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </StackPanel>
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
 
-                                    <Button
-                                        Grid.Column="1"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+
+                                    <TextBlock
                                         VerticalAlignment="Center"
-                                        Click="{x:Bind OnClearClicked}"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Clear')}" />
-                                </Grid>
-                            </StackPanel>
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLog')}" />
+
+                                    <TextBlock
+                                        x:Name="ClearLogDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}" Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <Button
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Click="{x:Bind OnClearClicked}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/Clear')}" />
+                            </Grid>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>
