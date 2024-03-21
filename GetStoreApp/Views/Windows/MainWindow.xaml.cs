@@ -28,7 +28,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -66,8 +65,11 @@ namespace GetStoreApp.Views.Windows
 
             set
             {
-                _isWindowMaximized = value;
-                OnPropertyChanged();
+                if (!Equals(_isWindowMaximized, value))
+                {
+                    _isWindowMaximized = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                }
             }
         }
 
@@ -79,8 +81,11 @@ namespace GetStoreApp.Views.Windows
 
             set
             {
-                _isBackEnabled = value;
-                OnPropertyChanged();
+                if (!Equals(_isBackEnabled, value))
+                {
+                    _isBackEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBackEnabled)));
+                }
             }
         }
 
@@ -92,8 +97,11 @@ namespace GetStoreApp.Views.Windows
 
             set
             {
-                _windowTheme = value;
-                OnPropertyChanged();
+                if (!Equals(_windowTheme, value))
+                {
+                    _windowTheme = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                }
             }
         }
 
@@ -105,8 +113,11 @@ namespace GetStoreApp.Views.Windows
 
             set
             {
-                _windowBackground = value;
-                OnPropertyChanged();
+                if (!Equals(_windowBackground, value))
+                {
+                    _windowBackground = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowBackground)));
+                }
             }
         }
 
@@ -118,8 +129,11 @@ namespace GetStoreApp.Views.Windows
 
             set
             {
-                _selectedItem = value;
-                OnPropertyChanged();
+                if (!Equals(_selectedItem, value))
+                {
+                    _selectedItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                }
             }
         }
 
@@ -562,14 +576,6 @@ namespace GetStoreApp.Views.Windows
 
         #endregion 第六部分：自定义事件
 
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         #region 第七部分：窗口属性设置
 
         /// <summary>
@@ -699,6 +705,13 @@ namespace GetStoreApp.Views.Windows
                 }
 
                 AppWindow.SetIcon("Assets/Logo.ico");
+            }
+            else
+            {
+                if (overlappedPresenter.IsMinimizable)
+                {
+                    overlappedPresenter.Restore();
+                }
             }
 
             User32Library.SetForegroundWindow((IntPtr)AppWindow.Id.Value);

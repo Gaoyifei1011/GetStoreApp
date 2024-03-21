@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -41,8 +40,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             set
             {
-                _isLoadedCompleted = value;
-                OnPropertyChanged();
+                if (!Equals(_isLoadedCompleted, value))
+                {
+                    _isLoadedCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                }
             }
         }
 
@@ -54,8 +56,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             set
             {
-                _isInstalledAppsEmpty = value;
-                OnPropertyChanged();
+                if (!Equals(_isInstalledAppsEmpty, value))
+                {
+                    _isInstalledAppsEmpty = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalledAppsEmpty)));
+                }
             }
         }
 
@@ -67,8 +72,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             set
             {
-                _isIncrease = value;
-                OnPropertyChanged();
+                if (!Equals(_isIncrease, value))
+                {
+                    _isIncrease = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsIncrease)));
+                }
             }
         }
 
@@ -80,8 +88,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             set
             {
-                _searchText = value;
-                OnPropertyChanged();
+                if (!Equals(_searchText, value))
+                {
+                    _searchText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                }
             }
         }
 
@@ -93,8 +104,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             set
             {
-                _selectedRule = value;
-                OnPropertyChanged();
+                if (!Equals(_selectedRule, value))
+                {
+                    _selectedRule = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedRule)));
+                }
             }
         }
 
@@ -301,14 +315,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         #endregion 第二部分：已安装应用控件——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 本地化应用数量统计信息

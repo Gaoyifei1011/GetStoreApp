@@ -10,7 +10,7 @@ namespace GetStoreApp.Helpers.Converters
     {
         public static bool ObjectCompareReverseConvert(object value, object comparedValue)
         {
-            return !value.Equals(comparedValue);
+            return !Equals(value, comparedValue);
         }
 
         public static Uri UriConvert(object uri)

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     x:Name="WinGetRoot"
     Loaded="{x:Bind OnLoaded}"
@@ -154,7 +155,7 @@
                                                         MinWidth="50"
                                                         VerticalAlignment="Center"
                                                         FontSize="16"
-                                                        Text="{x:Bind GetDownloadProgress(DownloadProgress), Mode=OneWay}"
+                                                        Text="{x:Bind sys:String.Format('{0}%', DownloadProgress), Mode=OneWay}"
                                                         TextAlignment="Right" />
                                                 </Grid>
 

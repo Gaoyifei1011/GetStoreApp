@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.Store
 {
@@ -16,8 +15,11 @@ namespace GetStoreApp.Models.Controls.Store
 
             set
             {
-                _name = value;
-                OnPropertyChanged();
+                if (!Equals(_name, value))
+                {
+                    _name = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
+                }
             }
         }
 
@@ -29,8 +31,11 @@ namespace GetStoreApp.Models.Controls.Store
 
             set
             {
-                _publisher = value;
-                OnPropertyChanged();
+                if (!Equals(_publisher, value))
+                {
+                    _publisher = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Publisher)));
+                }
             }
         }
 
@@ -42,8 +47,11 @@ namespace GetStoreApp.Models.Controls.Store
 
             set
             {
-                _description = value;
-                OnPropertyChanged();
+                if (!Equals(_description, value))
+                {
+                    _description = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                }
             }
         }
 
@@ -55,21 +63,16 @@ namespace GetStoreApp.Models.Controls.Store
 
             set
             {
-                _categoryID = value;
-                OnPropertyChanged();
+                if (!Equals(_categoryID, value))
+                {
+                    _categoryID = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CategoryID)));
+                }
             }
         }
 
         public string ProductID { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

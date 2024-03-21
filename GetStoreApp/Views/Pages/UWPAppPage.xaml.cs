@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Windows.System;
 
 namespace GetStoreApp.Views.Pages
@@ -24,8 +23,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _selectedIndex = value;
-                OnPropertyChanged();
+                if (!Equals(_selectedIndex, value))
+                {
+                    _selectedIndex = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIndex)));
+                }
             }
         }
 
@@ -37,8 +39,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _searchText = value;
-                OnPropertyChanged();
+                if (!Equals(_searchText, value))
+                {
+                    _searchText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                }
             }
         }
 
@@ -105,14 +110,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第一部分：应用管理页面——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 查看应用信息

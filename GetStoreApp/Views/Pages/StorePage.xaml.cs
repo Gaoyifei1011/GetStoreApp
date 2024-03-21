@@ -4,8 +4,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Windows.System;
 
 namespace GetStoreApp.Views.Pages
@@ -13,11 +11,9 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 微软商店页面
     /// </summary>
-    public sealed partial class StorePage : Page, INotifyPropertyChanged
+    public sealed partial class StorePage : Page
     {
         private AppNaviagtionArgs storeNavigationArgs = AppNaviagtionArgs.None;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public StorePage()
         {
@@ -109,13 +105,5 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：应用商店页面——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

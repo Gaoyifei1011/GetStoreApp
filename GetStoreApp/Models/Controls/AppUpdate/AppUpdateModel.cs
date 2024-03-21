@@ -20,7 +20,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                if (_isUpdating != value)
+                if (!Equals(_isUpdating, value))
                 {
                     _isUpdating = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdating)));
@@ -54,7 +54,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                if (_installInformation != value)
+                if (!Equals(_installInformation, value))
                 {
                     _installInformation = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallInformation)));
@@ -70,7 +70,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                if (_installSubInformation != value)
+                if (!Equals(_installSubInformation, value))
                 {
                     _installSubInformation = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallSubInformation)));
@@ -94,7 +94,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                if (_appInstallState != value)
+                if (!Equals(_appInstallState, value))
                 {
                     _appInstallState = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstallState)));
@@ -113,7 +113,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
             set
             {
-                if (_percentComplete != value)
+                if (!Equals(_percentComplete, value))
                 {
                     _percentComplete = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PercentComplete)));

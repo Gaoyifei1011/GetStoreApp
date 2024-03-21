@@ -8,7 +8,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -34,8 +33,11 @@ namespace GetStoreApp.UI.Dialogs.About
 
             set
             {
-                _windowsAppSDKVersion = value;
-                OnPropertyChanged();
+                if (!Equals(_windowsAppSDKVersion, value))
+                {
+                    _windowsAppSDKVersion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowsAppSDKVersion)));
+                }
             }
         }
 
@@ -47,8 +49,11 @@ namespace GetStoreApp.UI.Dialogs.About
 
             set
             {
-                _winUI3Version = value;
-                OnPropertyChanged();
+                if (!Equals(_winUI3Version, value))
+                {
+                    _winUI3Version = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinUI3Version)));
+                }
             }
         }
 
@@ -60,8 +65,11 @@ namespace GetStoreApp.UI.Dialogs.About
 
             set
             {
-                _doNetVersion = value;
-                OnPropertyChanged();
+                if (!Equals(_doNetVersion, value))
+                {
+                    _doNetVersion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoNetVersion)));
+                }
             }
         }
 
@@ -73,8 +81,11 @@ namespace GetStoreApp.UI.Dialogs.About
 
             set
             {
-                _webView2SDKVersion = value;
-                OnPropertyChanged();
+                if (!Equals(_webView2SDKVersion, value))
+                {
+                    _webView2SDKVersion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WebView2SDKVersion)));
+                }
             }
         }
 
@@ -174,11 +185,6 @@ namespace GetStoreApp.UI.Dialogs.About
             });
 
             DoNetVersion = Environment.Version.ToString();
-        }
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

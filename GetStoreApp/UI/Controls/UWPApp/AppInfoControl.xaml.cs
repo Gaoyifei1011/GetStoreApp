@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -39,8 +38,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _displayName = value;
-                OnPropertyChanged();
+                if (!Equals(_displayName, value))
+                {
+                    _displayName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayName)));
+                }
             }
         }
 
@@ -52,8 +54,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _familyName = value;
-                OnPropertyChanged();
+                if (!Equals(_familyName, value))
+                {
+                    _familyName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FamilyName)));
+                }
             }
         }
 
@@ -65,8 +70,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _fullName = value;
-                OnPropertyChanged();
+                if (!Equals(_fullName, value))
+                {
+                    _fullName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FullName)));
+                }
             }
         }
 
@@ -78,8 +86,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _description = value;
-                OnPropertyChanged();
+                if (!Equals(_description, value))
+                {
+                    _description = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                }
             }
         }
 
@@ -91,8 +102,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _publisherName = value;
-                OnPropertyChanged();
+                if (!Equals(_publisherName, value))
+                {
+                    _publisherName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherName)));
+                }
             }
         }
 
@@ -104,8 +118,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _publisherId = value;
-                OnPropertyChanged();
+                if (!Equals(_publisherId, value))
+                {
+                    _publisherId = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherId)));
+                }
             }
         }
 
@@ -117,8 +134,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _version = value;
-                OnPropertyChanged();
+                if (!Equals(_version, value))
+                {
+                    _version = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
+                }
             }
         }
 
@@ -130,8 +150,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _installedDate = value;
-                OnPropertyChanged();
+                if (!Equals(_installedDate, value))
+                {
+                    _installedDate = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstalledDate)));
+                }
             }
         }
 
@@ -143,8 +166,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _architecture = value;
-                OnPropertyChanged();
+                if (!Equals(_architecture, value))
+                {
+                    _architecture = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Architecture)));
+                }
             }
         }
 
@@ -156,8 +182,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _signatureKind = value;
-                OnPropertyChanged();
+                if (!Equals(_signatureKind, value))
+                {
+                    _signatureKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SignatureKind)));
+                }
             }
         }
 
@@ -169,8 +198,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _resourceId = value;
-                OnPropertyChanged();
+                if (!Equals(_resourceId, value))
+                {
+                    _resourceId = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResourceId)));
+                }
             }
         }
 
@@ -182,8 +214,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isBundle = value;
-                OnPropertyChanged();
+                if (!Equals(_isBundle, value))
+                {
+                    _isBundle = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBundle)));
+                }
             }
         }
 
@@ -195,8 +230,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isDevelopmentMode = value;
-                OnPropertyChanged();
+                if (!Equals(_isDevelopmentMode, value))
+                {
+                    _isDevelopmentMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDevelopmentMode)));
+                }
             }
         }
 
@@ -208,8 +246,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isFramework = value;
-                OnPropertyChanged();
+                if (!Equals(_isFramework, value))
+                {
+                    _isFramework = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
+                }
             }
         }
 
@@ -221,8 +262,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isOptional = value;
-                OnPropertyChanged();
+                if (!Equals(_isOptional, value))
+                {
+                    _isOptional = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOptional)));
+                }
             }
         }
 
@@ -234,8 +278,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isResourcePackage = value;
-                OnPropertyChanged();
+                if (!Equals(_isResourcePackage, value))
+                {
+                    _isResourcePackage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsResourcePackage)));
+                }
             }
         }
 
@@ -247,8 +294,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isStub = value;
-                OnPropertyChanged();
+                if (!Equals(_isStub, value))
+                {
+                    _isStub = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStub)));
+                }
             }
         }
 
@@ -260,8 +310,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _vertifyIsOK = value;
-                OnPropertyChanged();
+                if (!Equals(_vertifyIsOK, value))
+                {
+                    _vertifyIsOK = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VertifyIsOK)));
+                }
             }
         }
 
@@ -544,14 +597,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         }
 
         #endregion 第二部分：应用信息控件——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 初始化应用信息

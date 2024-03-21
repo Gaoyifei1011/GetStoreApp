@@ -13,7 +13,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
@@ -38,8 +37,11 @@ namespace GetStoreAppWebView.Views.Controls
 
             set
             {
-                _isWindowMaximized = value;
-                OnPropertyChanged();
+                if (!_isWindowMaximized.Equals(value))
+                {
+                    _isWindowMaximized = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                }
             }
         }
 
@@ -51,8 +53,11 @@ namespace GetStoreAppWebView.Views.Controls
 
             set
             {
-                _canGoBack = value;
-                OnPropertyChanged();
+                if (!_canGoBack.Equals(value))
+                {
+                    _canGoBack = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoBack)));
+                }
             }
         }
 
@@ -64,8 +69,11 @@ namespace GetStoreAppWebView.Views.Controls
 
             set
             {
-                _canGoForward = value;
-                OnPropertyChanged();
+                if (!_canGoForward.Equals(value))
+                {
+                    _canGoForward = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanGoForward)));
+                }
             }
         }
 
@@ -77,8 +85,11 @@ namespace GetStoreAppWebView.Views.Controls
 
             set
             {
-                _isLoading = value;
-                OnPropertyChanged();
+                if (!_isLoading.Equals(value))
+                {
+                    _isLoading = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoading)));
+                }
             }
         }
 
@@ -90,8 +101,11 @@ namespace GetStoreAppWebView.Views.Controls
 
             set
             {
-                _isEnabled = value;
-                OnPropertyChanged();
+                if (!_isEnabled.Equals(value))
+                {
+                    _isEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnabled)));
+                }
             }
         }
 
@@ -544,14 +558,6 @@ namespace GetStoreAppWebView.Views.Controls
             if (objComWebBrowser == null) return;
 
             objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, [Hide]);
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

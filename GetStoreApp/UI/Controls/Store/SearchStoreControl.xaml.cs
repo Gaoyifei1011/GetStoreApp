@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.System;
 
@@ -36,8 +35,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _isSearchingStore = value;
-                OnPropertyChanged();
+                if (!Equals(_isSearchingStore, value))
+                {
+                    _isSearchingStore = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSeachingStore)));
+                }
             }
         }
 
@@ -49,8 +51,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _searchText = value;
-                OnPropertyChanged();
+                if (!Equals(_searchText, value))
+                {
+                    _searchText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                }
             }
         }
 
@@ -62,8 +67,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _resultSeverity = value;
-                OnPropertyChanged();
+                if (!Equals(_resultSeverity, value))
+                {
+                    _resultSeverity = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultSeverity)));
+                }
             }
         }
 
@@ -75,8 +83,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _stateInfoText = value;
-                OnPropertyChanged();
+                if (!Equals(_stateInfoText, value))
+                {
+                    _stateInfoText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StateInfoText)));
+                }
             }
         }
 
@@ -88,8 +99,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _isRingActive = value;
-                OnPropertyChanged();
+                if (!Equals(_isRingActive, value))
+                {
+                    _isRingActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRingActive)));
+                }
             }
         }
 
@@ -101,8 +115,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _resultCotnrolVisable = value;
-                OnPropertyChanged();
+                if (!Equals(_resultCotnrolVisable, value))
+                {
+                    _resultCotnrolVisable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultControlVisable)));
+                }
             }
         }
 
@@ -114,8 +131,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _isSelectMode = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelectMode, value))
+                {
+                    _isSelectMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                }
             }
         }
 
@@ -204,14 +224,6 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         #endregion 第二部分：搜索应用控件——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 从本地数据存储中加载搜索应用历史记录数据

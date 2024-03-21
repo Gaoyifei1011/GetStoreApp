@@ -4,18 +4,14 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// 下载页面
     /// </summary>
-    public sealed partial class DownloadPage : Page, INotifyPropertyChanged
+    public sealed partial class DownloadPage : Page
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public DownloadPage()
         {
             InitializeComponent();
@@ -132,13 +128,5 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：下载页面——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

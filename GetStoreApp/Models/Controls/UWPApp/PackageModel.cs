@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Windows.ApplicationModel;
 
 namespace GetStoreApp.Models.Controls.UWPApp
@@ -61,21 +60,16 @@ namespace GetStoreApp.Models.Controls.UWPApp
 
             set
             {
-                _isUnInstalling = value;
-                OnPropertyChanged();
+                if (!Equals(_isUnInstalling, value))
+                {
+                    _isUnInstalling = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUnInstalling)));
+                }
             }
         }
 
         public Package Package { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

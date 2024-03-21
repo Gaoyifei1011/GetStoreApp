@@ -7,8 +7,6 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using Windows.System;
 
@@ -17,7 +15,7 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// WinGet 程序包页面
     /// </summary>
-    public sealed partial class WinGetPage : Page, INotifyPropertyChanged
+    public sealed partial class WinGetPage : Page
     {
         public readonly object installingAppsObject = new object();
 
@@ -26,8 +24,6 @@ namespace GetStoreApp.Views.Pages
         public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = new Dictionary<string, CancellationTokenSource>();
 
         public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = new ObservableCollection<InstallingAppsModel>();
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public WinGetPage()
         {
@@ -159,14 +155,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：WinGet 程序包页面——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 判断 WinGet 程序包是否存在

@@ -15,7 +15,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -48,8 +47,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _theme = value;
-                OnPropertyChanged();
+                if (!Equals(_theme, value))
+                {
+                    _theme = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Theme)));
+                }
             }
         }
 
@@ -61,8 +63,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _backdrop = value;
-                OnPropertyChanged();
+                if (!Equals(_backdrop, value))
+                {
+                    _backdrop = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Backdrop)));
+                }
             }
         }
 
@@ -74,8 +79,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _alwaysShowBackdropValue = value;
-                OnPropertyChanged();
+                if (!Equals(_alwaysShowBackdropValue, value))
+                {
+                    _alwaysShowBackdropValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysShowBackdropValue)));
+                }
             }
         }
 
@@ -87,8 +95,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _appLanguage = value;
-                OnPropertyChanged();
+                if (!Equals(_appLanguage, value))
+                {
+                    _appLanguage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppLanguage)));
+                }
             }
         }
 
@@ -100,8 +111,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _topMostValue = value;
-                OnPropertyChanged();
+                if (!Equals(_topMostValue, value))
+                {
+                    _topMostValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TopMostValue)));
+                }
             }
         }
 
@@ -113,8 +127,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _notification = value;
-                OnPropertyChanged();
+                if (!Equals(_notification, value))
+                {
+                    _notification = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Notification)));
+                }
             }
         }
 
@@ -126,8 +143,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _webKernelItem = value;
-                OnPropertyChanged();
+                if (!Equals(_webKernelItem, value))
+                {
+                    _webKernelItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WebKernelItem)));
+                }
             }
         }
 
@@ -139,8 +159,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _encryptedPackageFilterValue = value;
-                OnPropertyChanged();
+                if (!Equals(_encryptedPackageFilterValue, value))
+                {
+                    _encryptedPackageFilterValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EncryptedPackageFilterValue)));
+                }
             }
         }
 
@@ -152,8 +175,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _blockMapFilterValue = value;
-                OnPropertyChanged();
+                if (!Equals(_blockMapFilterValue, value))
+                {
+                    _blockMapFilterValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BlockMapFilterValue)));
+                }
             }
         }
 
@@ -165,8 +191,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _useDevVersion = value;
-                OnPropertyChanged();
+                if (!Equals(_useDevVersion, value))
+                {
+                    _useDevVersion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseDevVersion)));
+                }
             }
         }
 
@@ -178,8 +207,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _winGetInstallMode = value;
-                OnPropertyChanged();
+                if (!Equals(_winGetInstallMode, value))
+                {
+                    _winGetInstallMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetInstallMode)));
+                }
             }
         }
 
@@ -191,8 +223,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _downloadFolder = value;
-                OnPropertyChanged();
+                if (!Equals(_downloadFolder, value))
+                {
+                    _downloadFolder = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFolder)));
+                }
             }
         }
 
@@ -204,8 +239,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _downloadItem = value;
-                OnPropertyChanged();
+                if (!Equals(_downloadItem, value))
+                {
+                    _downloadItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadItem)));
+                }
             }
         }
 
@@ -217,8 +255,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _installMode = value;
-                OnPropertyChanged();
+                if (!Equals(_installMode, value))
+                {
+                    _installMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallMode)));
+                }
             }
         }
 
@@ -709,14 +750,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：设置页面——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 判断两个版本是否共同存在

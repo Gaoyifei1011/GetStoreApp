@@ -15,7 +15,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -41,8 +40,11 @@ namespace GetStoreApp.UI.Controls.Download
 
             set
             {
-                _isSelectMode = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelectMode, value))
+                {
+                    _isSelectMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                }
             }
         }
 
@@ -513,14 +515,6 @@ namespace GetStoreApp.UI.Controls.Download
         }
 
         #endregion 第三部分：自定义事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 本地化未下载完成数量统计信息

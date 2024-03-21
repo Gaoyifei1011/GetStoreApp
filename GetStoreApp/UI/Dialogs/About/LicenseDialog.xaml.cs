@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace GetStoreApp.UI.Dialogs.About
@@ -20,8 +19,11 @@ namespace GetStoreApp.UI.Dialogs.About
 
             set
             {
-                _licenseText = value;
-                OnPropertyChanged();
+                if (!Equals(_licenseText, value))
+                {
+                    _licenseText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LicenseText)));
+                }
             }
         }
 
@@ -38,14 +40,6 @@ namespace GetStoreApp.UI.Dialogs.About
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/LICENSE"));
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

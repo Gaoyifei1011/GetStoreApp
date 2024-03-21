@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -53,8 +52,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _isInitialized = value;
-                OnPropertyChanged();
+                if (!Equals(_isInitialized, value))
+                {
+                    _isInitialized = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInitialized)));
+                }
             }
         }
 
@@ -66,8 +68,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _isLoadedCompleted = value;
-                OnPropertyChanged();
+                if (!Equals(_isLoadedCompleted, value))
+                {
+                    _isLoadedCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                }
             }
         }
 
@@ -79,8 +84,11 @@ namespace GetStoreApp.Views.Pages
 
             set
             {
-                _isUpdateEmpty = value;
-                OnPropertyChanged();
+                if (!Equals(_isUpdateEmpty, value))
+                {
+                    _isUpdateEmpty = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdateEmpty)));
+                }
             }
         }
 
@@ -258,12 +266,11 @@ namespace GetStoreApp.Views.Pages
                                     PublisherName = packageItem.PublisherDisplayName,
                                     InstallInformation = installInformation,
                                     InstallSubInformation = installSubInformation,
-                                    IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
-                                        appInstallStatus.InstallState is AppInstallState.Error ||
-                                        appInstallStatus.InstallState is AppInstallState.Paused ||
-                                        appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
-                                        appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
-                                        appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired),
+                                    IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
+                                                 appInstallStatus.InstallState is AppInstallState.Starting ||
+                                                 appInstallStatus.InstallState is AppInstallState.Downloading ||
+                                                 appInstallStatus.InstallState is AppInstallState.RestoringData ||
+                                                 appInstallStatus.InstallState is AppInstallState.Installing,
                                     PackageFamilyName = upgradableApps.PackageFamilyName,
                                     PercentComplete = appInstallStatus.PercentComplete,
                                     ProductId = upgradableApps.ProductId
@@ -410,14 +417,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第三部分：自定义事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 本地化应用更新数量统计信息

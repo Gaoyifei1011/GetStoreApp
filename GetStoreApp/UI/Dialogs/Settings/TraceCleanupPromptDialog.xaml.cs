@@ -6,7 +6,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Dialogs.Settings
@@ -24,8 +23,11 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             set
             {
-                _isSelected = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelected, value))
+                {
+                    _isSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                }
             }
         }
 
@@ -37,8 +39,11 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             set
             {
-                _isCleaning = value;
-                OnPropertyChanged();
+                if (!Equals(_isCleaning, value))
+                {
+                    _isCleaning = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCleaning)));
+                }
             }
         }
 
@@ -77,14 +82,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             IsCleaning = true;
             TraceCleanup();
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private bool IsButtonEnabled(bool isSelected, bool isCleaning)

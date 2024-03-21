@@ -6,7 +6,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,8 +30,11 @@ namespace GetStoreApp.UI.Dialogs.Download
 
             set
             {
-                _fileCheckState = value;
-                OnPropertyChanged();
+                if (!Equals(_fileCheckState, value))
+                {
+                    _fileCheckState = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileCheckState)));
+                }
             }
         }
 
@@ -44,8 +46,11 @@ namespace GetStoreApp.UI.Dialogs.Download
 
             set
             {
-                _fileSHA1 = value;
-                OnPropertyChanged();
+                if (!Equals(_fileSHA1, value))
+                {
+                    _fileSHA1 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileSHA1)));
+                }
             }
         }
 
@@ -90,14 +95,6 @@ namespace GetStoreApp.UI.Dialogs.Download
                     TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
                 });
             });
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

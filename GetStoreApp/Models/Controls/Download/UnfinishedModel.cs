@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.Download
 {
@@ -19,8 +18,11 @@ namespace GetStoreApp.Models.Controls.Download
 
             set
             {
-                _isSelected = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelected, value))
+                {
+                    _isSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                }
             }
         }
 
@@ -35,8 +37,11 @@ namespace GetStoreApp.Models.Controls.Download
 
             set
             {
-                _isSelectMode = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelectMode, value))
+                {
+                    _isSelectMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                }
             }
         }
 
@@ -81,13 +86,5 @@ namespace GetStoreApp.Models.Controls.Download
         public double TotalSize { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Dialogs.Settings
 {
@@ -20,8 +19,11 @@ namespace GetStoreApp.Models.Dialogs.Settings
 
             set
             {
-                _isSelected = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelected, value))
+                {
+                    _isSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                }
             }
         }
 
@@ -36,8 +38,11 @@ namespace GetStoreApp.Models.Dialogs.Settings
 
             set
             {
-                _isCleanFailed = value;
-                OnPropertyChanged();
+                if (!Equals(_isCleanFailed, value))
+                {
+                    _isCleanFailed = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCleanFailed)));
+                }
             }
         }
 
@@ -57,13 +62,5 @@ namespace GetStoreApp.Models.Dialogs.Settings
         public string CleanFailedText { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

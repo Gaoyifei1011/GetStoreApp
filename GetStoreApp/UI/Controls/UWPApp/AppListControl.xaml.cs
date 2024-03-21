@@ -53,8 +53,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isLoadedCompleted = value;
-                OnPropertyChanged();
+                if (!Equals(_isLoadedCompleted, value))
+                {
+                    _isLoadedCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                }
             }
         }
 
@@ -66,8 +69,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isPackageEmpty = value;
-                OnPropertyChanged();
+                if (!Equals(_isPackageEmpty, value))
+                {
+                    _isPackageEmpty = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPackageEmpty)));
+                }
             }
         }
 
@@ -79,8 +85,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isIncrease = value;
-                OnPropertyChanged();
+                if (!Equals(_isIncrease, value))
+                {
+                    _isIncrease = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsIncrease)));
+                }
             }
         }
 
@@ -92,8 +101,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _isFramework = value;
-                OnPropertyChanged();
+                if (!Equals(_isFramework, value))
+                {
+                    _isFramework = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
+                }
             }
         }
 
@@ -105,8 +117,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _selectedRule = value;
-                OnPropertyChanged();
+                if (!Equals(_selectedRule, value))
+                {
+                    _selectedRule = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedRule)));
+                }
             }
         }
 
@@ -118,8 +133,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             set
             {
-                _signType = value;
-                OnPropertyChanged();
+                if (!Equals(_signType, value))
+                {
+                    _signType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SignType)));
+                }
             }
         }
 
@@ -652,14 +670,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         }
 
         #endregion 第二部分：应用列表控件——挂载的事件
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         /// <summary>
         /// 本地化应用管理记录数量统计信息

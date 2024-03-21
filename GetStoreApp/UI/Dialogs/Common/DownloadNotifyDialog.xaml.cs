@@ -14,9 +14,21 @@ namespace GetStoreApp.UI.Dialogs.Common
             InitializeComponent();
             switch (duplicatedDataInfo)
             {
-                case DuplicatedDataKind.Unfinished: Content = ResourceService.GetLocalized("Dialog/DownloadUnfinishedContent"); break;
-                case DuplicatedDataKind.Completed: Content = ResourceService.GetLocalized("Dialog/DownloadCompletedContent"); break;
-                case DuplicatedDataKind.MultiRecord: Content = ResourceService.GetLocalized("Dialog/DownloadMultiRecordContent"); break;
+                case DuplicatedDataKind.Unfinished:
+                    {
+                        Content = ResourceService.GetLocalized("Dialog/DownloadUnfinishedContent");
+                        break;
+                    }
+                case DuplicatedDataKind.Completed:
+                    {
+                        Content = ResourceService.GetLocalized("Dialog/DownloadCompletedContent");
+                        break;
+                    }
+                case DuplicatedDataKind.MultiRecord:
+                    {
+                        Content = ResourceService.GetLocalized("Dialog/DownloadMultiRecordContent");
+                        break;
+                    }
             }
         }
     }

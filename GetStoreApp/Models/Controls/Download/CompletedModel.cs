@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Services.Root;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.Download
 {
@@ -22,8 +21,11 @@ namespace GetStoreApp.Models.Controls.Download
 
             set
             {
-                _isSelected = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelected, value))
+                {
+                    _isSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                }
             }
         }
 
@@ -38,8 +40,11 @@ namespace GetStoreApp.Models.Controls.Download
 
             set
             {
-                _isSelectMode = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelectMode, value))
+                {
+                    _isSelectMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                }
             }
         }
 
@@ -89,8 +94,11 @@ namespace GetStoreApp.Models.Controls.Download
 
             set
             {
-                _isInstalling = value;
-                OnPropertyChanged();
+                if (!Equals(_isInstalling, value))
+                {
+                    _isInstalling = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalling)));
+                }
             }
         }
 
@@ -105,8 +113,11 @@ namespace GetStoreApp.Models.Controls.Download
 
             set
             {
-                _installValue = value;
-                OnPropertyChanged();
+                if (!Equals(_installValue, value))
+                {
+                    _installValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallValue)));
+                }
             }
         }
 
@@ -119,19 +130,14 @@ namespace GetStoreApp.Models.Controls.Download
 
             set
             {
-                _installError = value;
-                OnPropertyChanged();
+                if (!Equals(_installError, value))
+                {
+                    _installError = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallError)));
+                }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

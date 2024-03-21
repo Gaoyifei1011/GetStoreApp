@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
@@ -29,8 +28,11 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             set
             {
-                _isMessageVisable = value;
-                OnPropertyChanged();
+                if (!Equals(_isMessageVisable, value))
+                {
+                    _isMessageVisable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsMessageVisable)));
+                }
             }
         }
 
@@ -42,8 +44,11 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             set
             {
-                _netWorkMonitorValue = value;
-                OnPropertyChanged();
+                if (!Equals(_netWorkMonitorValue, value))
+                {
+                    _netWorkMonitorValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NetWorkMonitorValue)));
+                }
             }
         }
 
@@ -156,14 +161,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 IsMessageVisable = false;
                 displayTimer.Stop();
             }
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

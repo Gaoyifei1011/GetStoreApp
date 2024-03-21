@@ -444,7 +444,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                     foreach (IXmlNode fileLocationNode in fileLocationList)
                     {
-                        if (fileLocationNode.GetElementsByName("FileDigest").InnerText.Equals(digest))
+                        if (Equals(fileLocationNode.GetElementsByName("FileDigest").InnerText, digest))
                         {
                             urlResult = fileLocationNode.GetElementsByName("Url").InnerText;
                             break;
@@ -536,7 +536,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                             string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
                             string fileSizeString = FileSizeHelper.ConvertFileSizeToString(double.TryParse(fileSize, out double size) == true ? size : 0);
 
-                            if (installerType.Equals(string.Empty) || installerUrl.ToLower().EndsWith(".exe") || installerUrl.ToLower().EndsWith(".msi"))
+                            if (Equals(installerType, string.Empty) || installerUrl.ToLower().EndsWith(".exe") || installerUrl.ToLower().EndsWith(".msi"))
                             {
                                 lock (nonAppxPackagesLock)
                                 {
@@ -671,7 +671,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         {
             foreach (IXmlNode node in xmlNode.ChildNodes)
             {
-                if (node.NodeName.Equals(name))
+                if (Equals(node.NodeName, name))
                 {
                     return node;
                 }

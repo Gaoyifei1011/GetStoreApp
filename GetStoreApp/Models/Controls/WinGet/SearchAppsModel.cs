@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
@@ -39,19 +38,14 @@ namespace GetStoreApp.Models.Controls.WinGet
 
             set
             {
-                _isInstalling = value;
-                OnPropertyChanged();
+                if (!Equals(_isInstalling, value))
+                {
+                    _isInstalling = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInstalling)));
+                }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
@@ -44,19 +43,14 @@ namespace GetStoreApp.Models.Controls.WinGet
 
             set
             {
-                _isUpgrading = value;
-                OnPropertyChanged();
+                if (!Equals(_isUpgrading, value))
+                {
+                    _isUpgrading = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpgrading)));
+                }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

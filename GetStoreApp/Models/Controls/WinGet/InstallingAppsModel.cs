@@ -42,8 +42,11 @@ namespace GetStoreApp.Models.Controls.WinGet
 
             set
             {
-                _downloadProgress = value;
-                OnPropertyChanged();
+                if (!Equals(_downloadProgress, value))
+                {
+                    _downloadProgress = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadProgress)));
+                }
             }
         }
 
@@ -58,8 +61,11 @@ namespace GetStoreApp.Models.Controls.WinGet
 
             set
             {
-                _downloadedFileSize = value;
-                OnPropertyChanged();
+                if (!Equals(_downloadedFileSize, value))
+                {
+                    _downloadedFileSize = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadedFileSize)));
+                }
             }
         }
 
@@ -74,8 +80,11 @@ namespace GetStoreApp.Models.Controls.WinGet
 
             set
             {
-                _totalFileSize = value;
-                OnPropertyChanged();
+                if (!Equals(_totalFileSize, value))
+                {
+                    _totalFileSize = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalFileSize)));
+                }
             }
         }
 
@@ -87,8 +96,11 @@ namespace GetStoreApp.Models.Controls.WinGet
 
             set
             {
-                _isCanceling = true;
-                OnPropertyChanged();
+                if (!Equals(_isCanceling, value))
+                {
+                    _isCanceling = true;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCanceling)));
+                }
             }
         }
 
@@ -103,8 +115,11 @@ namespace GetStoreApp.Models.Controls.WinGet
 
             set
             {
-                _installProgressState = value;
-                OnPropertyChanged();
+                if (!Equals(_installProgressState, value))
+                {
+                    _installProgressState = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallProgressState)));
+                }
             }
         }
 
@@ -116,14 +131,6 @@ namespace GetStoreApp.Models.Controls.WinGet
         public bool IsDownloading(PackageInstallProgressState installProgressState)
         {
             return installProgressState is not PackageInstallProgressState.Downloading;
-        }
-
-        /// <summary>
-        /// 获取下载的进度
-        /// </summary>
-        public string GetDownloadProgress(double downloadProgress)
-        {
-            return string.Format("{0}%", downloadProgress);
         }
 
         /// <summary>
@@ -174,14 +181,6 @@ namespace GetStoreApp.Models.Controls.WinGet
             }
 
             return builder.ToString();
-        }
-
-        /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

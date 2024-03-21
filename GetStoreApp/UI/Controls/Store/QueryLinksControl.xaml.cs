@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,8 +49,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _selectedType = value;
-                OnPropertyChanged();
+                if (!Equals(_selectedType, value))
+                {
+                    _selectedType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedType)));
+                }
             }
         }
 
@@ -63,8 +65,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _selectedChannel = value;
-                OnPropertyChanged();
+                if (!Equals(_selectedChannel, value))
+                {
+                    _selectedChannel = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedChannel)));
+                }
             }
         }
 
@@ -76,8 +81,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _linkPlaceHolderText = value;
-                OnPropertyChanged();
+                if (!Equals(_linkPlaceHolderText, value))
+                {
+                    _linkPlaceHolderText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkPlaceHolderText)));
+                }
             }
         }
 
@@ -89,8 +97,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _linkText = value;
-                OnPropertyChanged();
+                if (!Equals(_linkText, value))
+                {
+                    _linkText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LinkText)));
+                }
             }
         }
 
@@ -102,8 +113,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _isQueryingLinks = value;
-                OnPropertyChanged();
+                if (!Equals(_isQueryingLinks, value))
+                {
+                    _isQueryingLinks = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQueryingLinks)));
+                }
             }
         }
 
@@ -115,8 +129,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _appInfo = value;
-                OnPropertyChanged();
+                if (!Equals(_appInfo, value))
+                {
+                    _appInfo = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInfo)));
+                }
             }
         }
 
@@ -128,8 +145,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _resultSeverity = value;
-                OnPropertyChanged();
+                if (!Equals(_resultSeverity, value))
+                {
+                    _resultSeverity = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultSeverity)));
+                }
             }
         }
 
@@ -141,8 +161,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _stateInfoText = value;
-                OnPropertyChanged();
+                if (!Equals(_stateInfoText, value))
+                {
+                    _stateInfoText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StateInfoText)));
+                }
             }
         }
 
@@ -154,8 +177,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _isRingActive = value;
-                OnPropertyChanged();
+                if (!Equals(_isRingActive, value))
+                {
+                    _isRingActive = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRingActive)));
+                }
             }
         }
 
@@ -167,8 +193,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _resultCotnrolVisable = value;
-                OnPropertyChanged();
+                if (!Equals(_resultCotnrolVisable, value))
+                {
+                    _resultCotnrolVisable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResultControlVisable)));
+                }
             }
         }
 
@@ -180,8 +209,11 @@ namespace GetStoreApp.UI.Controls.Store
 
             set
             {
-                _isSelectMode = value;
-                OnPropertyChanged();
+                if (!Equals(_isSelectMode, value))
+                {
+                    _isSelectMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelectMode)));
+                }
             }
         }
 
@@ -824,14 +856,6 @@ namespace GetStoreApp.UI.Controls.Store
         #endregion 第二部分：查找链接控件——挂载的事件
 
         /// <summary>
-        /// 属性值发生变化时通知更改
-        /// </summary>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        /// <summary>
         /// 从本地数据存储中加载查询链接历史记录数据
         /// </summary>
         public void GetQueryLinksHistoryData()
@@ -908,7 +932,22 @@ namespace GetStoreApp.UI.Controls.Store
                         }
                     }
 
-                    ResultListFilter(ref queryLinksList);
+                    // 按设置选项设置的内容过滤列表
+                    if (LinkFilterService.EncryptedPackageFilterValue)
+                    {
+                        queryLinksList.RemoveAll(item =>
+                        item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
+                        item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
+                        item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                        item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                        );
+                    }
+
+                    if (LinkFilterService.BlockMapFilterValue)
+                    {
+                        queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                    }
+
                     queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
 
                     DispatcherQueue.TryEnqueue(() =>
@@ -1039,27 +1078,6 @@ namespace GetStoreApp.UI.Controls.Store
                     });
                 }
             });
-        }
-
-        /// <summary>
-        /// 按设置选项设置的内容过滤列表
-        /// </summary>
-        private void ResultListFilter(ref List<QueryLinksModel> resultDataList)
-        {
-            if (LinkFilterService.EncryptedPackageFilterValue)
-            {
-                resultDataList.RemoveAll(item =>
-                item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
-                item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
-                item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
-                item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
-                );
-            }
-
-            if (LinkFilterService.BlockMapFilterValue)
-            {
-                resultDataList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
-            }
         }
     }
 }
