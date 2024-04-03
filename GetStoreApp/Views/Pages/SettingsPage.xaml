@@ -229,8 +229,7 @@
                                 <MenuFlyoutSubItem
                                     Height="32"
                                     Padding="11,0,11,0"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Mica')}"
-                                    Visibility="{x:Bind CanUseMicaBackdrop}">
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Mica')}">
 
                                     <ToggleMenuFlyoutItem
                                         Height="32"

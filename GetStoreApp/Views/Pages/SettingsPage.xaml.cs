@@ -33,8 +33,6 @@ namespace GetStoreApp.Views.Pages
     {
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
-        private bool CanUseMicaBackdrop { get; } = InfoHelper.SystemVersion.Build >= 22000;
-
         private bool IsOfficialVersionExisted { get; } = WinGetService.IsOfficialVersionExisted;
 
         private bool IsDevVersionExisted { get; } = WinGetService.IsDevVersionExisted;

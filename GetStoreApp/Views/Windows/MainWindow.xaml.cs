@@ -934,9 +934,7 @@ namespace GetStoreApp.Views.Windows
 
                             FlyoutShowOptions options = new FlyoutShowOptions();
                             options.ShowMode = FlyoutShowMode.Standard;
-                            options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                            new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) :
-                            new Point(localPoint.X, localPoint.Y);
+                            options.Position = new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale);
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
                         }
