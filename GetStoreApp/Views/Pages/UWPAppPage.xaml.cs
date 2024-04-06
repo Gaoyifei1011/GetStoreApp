@@ -49,7 +49,7 @@ namespace GetStoreApp.Views.Pages
 
         public ObservableCollection<DictionaryEntry> BreadCollection { get; } = new ObservableCollection<DictionaryEntry>()
         {
-            new DictionaryEntry(){ Key = ResourceService.GetLocalized("UWPApp/AppList"), Value = "AppList" },
+            new DictionaryEntry(ResourceService.GetLocalized("UWPApp/AppList"), "AppList")
         };
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -119,11 +119,7 @@ namespace GetStoreApp.Views.Pages
             if (packageInstance is not null)
             {
                 AppInfo.InitializeAppInfo(packageInstance);
-                BreadCollection.Add(new DictionaryEntry()
-                {
-                    Key = ResourceService.GetLocalized("UWPApp/AppInformation"),
-                    Value = "AppInformation"
-                });
+                BreadCollection.Add(new DictionaryEntry(ResourceService.GetLocalized("UWPApp/AppInformation"), "AppInformation"));
             }
         }
 

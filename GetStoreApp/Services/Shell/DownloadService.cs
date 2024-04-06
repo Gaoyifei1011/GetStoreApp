@@ -61,7 +61,7 @@ namespace GetStoreApp.Services.Shell
                                 DownloadFile(ParseService._queryLinksList[Convert.ToInt32(indexItem) - 1].FileName, ParseService._queryLinksList[Convert.ToInt32(indexItem) - 1].FileLink);
                             }
                         }
-                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
+                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/Completed"));
                         string inputString = ConsoleHelper.ReadLine();
                         if (inputString is "Y" || inputString is "y")
                         {

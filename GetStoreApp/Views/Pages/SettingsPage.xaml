@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
+    xmlns:systembackdrop="using:Microsoft.UI.Composition.SystemBackdrops"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -227,8 +228,10 @@
                                     Text="{x:Bind sys:Convert.ToString(BackdropList[0].Key)}" />
 
                                 <MenuFlyoutSubItem
+                                    x:Name="MicaFlyoutItem"
                                     Height="32"
                                     Padding="11,0,11,0"
+                                    x:Load="{x:Bind systembackdrop:MicaController.IsSupported()}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/Mica')}">
 
                                     <ToggleMenuFlyoutItem
@@ -249,8 +252,10 @@
                                 </MenuFlyoutSubItem>
 
                                 <MenuFlyoutSubItem
+                                    x:Name="DesktopAcrylicFlyoutItem"
                                     Height="32"
                                     Padding="11,0,11,0"
+                                    x:Load="{x:Bind systembackdrop:DesktopAcrylicController.IsSupported()}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopAcrylic')}">
 
                                     <ToggleMenuFlyoutItem

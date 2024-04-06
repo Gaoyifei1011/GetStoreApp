@@ -212,41 +212,12 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeBackdropList()
         {
-            BackdropList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/BackdropDefault"),
-                Value = nameof(SystemBackdropTheme.Default)
-            });
-
-            BackdropList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/BackdropMica"),
-                Value = nameof(MicaKind) + nameof(MicaKind.Base)
-            });
-
-            BackdropList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/BackdropMicaAlt"),
-                Value = nameof(MicaKind) + nameof(MicaKind.BaseAlt)
-            });
-
-            BackdropList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/BackdropAcrylic"),
-                Value = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default)
-            });
-
-            BackdropList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/BackdropAcrylicBase"),
-                Value = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base)
-            });
-
-            BackdropList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/BackdropAcrylicThin"),
-                Value = nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)
-            });
+            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropDefault"), nameof(SystemBackdropTheme.Default)));
+            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropMica"), nameof(MicaKind) + nameof(MicaKind.Base)));
+            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropMicaAlt"), nameof(MicaKind) + nameof(MicaKind.BaseAlt)));
+            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropAcrylic"), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default)));
+            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropAcrylicBase"), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base)));
+            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropAcrylicThin"), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)));
         }
 
         /// <summary>
@@ -254,16 +225,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeWebKernelList()
         {
-            WebKernelList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/WebKernelIE"),
-                Value = "IE"
-            });
-            WebKernelList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/WebKernelWebView2"),
-                Value = "WebView2"
-            });
+            WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelIE"), "IE"));
+            WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelWebView2"), "WebView2"));
         }
 
         /// <summary>
@@ -271,16 +234,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeInstallModeList()
         {
-            InstallModeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/AppInstall"),
-                Value = "AppInstall"
-            });
-            InstallModeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/CodeInstall"),
-                Value = "CodeInstall"
-            });
+            InstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/AppInstall"), "AppInstall"));
+            InstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/CodeInstall"), "CodeInstall"));
         }
 
         /// <summary>
@@ -288,21 +243,9 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeThemeList()
         {
-            ThemeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/ThemeDefault"),
-                Value = nameof(ElementTheme.Default)
-            });
-            ThemeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/ThemeLight"),
-                Value = nameof(ElementTheme.Light)
-            });
-            ThemeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/ThemeDark"),
-                Value = nameof(ElementTheme.Dark)
-            });
+            ThemeList.Add(new DictionaryEntry(GetLocalized("Settings/ThemeDefault"), nameof(ElementTheme.Default)));
+            ThemeList.Add(new DictionaryEntry(GetLocalized("Settings/ThemeLight"), nameof(ElementTheme.Light)));
+            ThemeList.Add(new DictionaryEntry(GetLocalized("Settings/ThemeDark"), nameof(ElementTheme.Dark)));
         }
 
         /// <summary>
@@ -341,16 +284,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeWinGetInstallModeList()
         {
-            WinGetInstallModeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/InteractiveInstall"),
-                Value = nameof(PackageInstallMode.Interactive),
-            });
-            WinGetInstallModeList.Add(new DictionaryEntry
-            {
-                Key = GetLocalized("Settings/SlientInstall"),
-                Value = nameof(PackageInstallMode.Silent),
-            });
+            WinGetInstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/InteractiveInstall"), nameof(PackageInstallMode.Interactive)));
+            WinGetInstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/SlientInstall"), nameof(PackageInstallMode.Silent)));
         }
 
         /// <summary>

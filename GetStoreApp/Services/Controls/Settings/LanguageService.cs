@@ -29,11 +29,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             foreach (string applanguage in AppLanguagesList)
             {
-                LanguageList.Add(new DictionaryEntry()
-                {
-                    Key = new Language(applanguage).NativeName,
-                    Value = applanguage,
-                });
+                LanguageList.Add(new DictionaryEntry(new Language(applanguage).NativeName, applanguage));
             }
         }
 
