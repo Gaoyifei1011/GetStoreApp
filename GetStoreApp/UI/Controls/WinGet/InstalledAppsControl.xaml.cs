@@ -307,7 +307,8 @@ namespace GetStoreApp.UI.Controls.WinGet
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null)
             {
-                if (autoSuggestBox.Text == string.Empty && MatchResultList.Count > 0)
+                SearchText = autoSuggestBox.Text;
+                if (SearchText == string.Empty && MatchResultList.Count > 0)
                 {
                     InitializeData();
                 }

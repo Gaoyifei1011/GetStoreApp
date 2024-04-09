@@ -102,10 +102,14 @@ namespace GetStoreApp.Views.Pages
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
-            if (autoSuggestBox is not null && autoSuggestBox.Text.Equals(string.Empty))
+            if (autoSuggestBox is not null)
             {
-                AppList.SearchText = string.Empty;
-                AppList.InitializeData();
+                SearchText = autoSuggestBox.Text;
+                if (SearchText.Equals(string.Empty))
+                {
+                    AppList.SearchText = string.Empty;
+                    AppList.InitializeData();
+                }
             }
         }
 

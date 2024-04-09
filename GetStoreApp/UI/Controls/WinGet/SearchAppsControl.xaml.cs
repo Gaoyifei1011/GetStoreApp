@@ -507,6 +507,18 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        /// <summary>
+        /// 文本输入框内容为空时，复原原来的内容
+        /// </summary>
+        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
+            if (autoSuggestBox is not null)
+            {
+                SearchText = autoSuggestBox.Text;
+            }
+        }
+
         #endregion 第二部分：搜索应用控件——挂载的事件
 
         /// <summary>

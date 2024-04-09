@@ -59,7 +59,7 @@
                 VerticalAlignment="Center"
                 PlaceholderText="{x:Bind root:ResourceService.GetLocalized('UWPApp/PlaceHolderText')}"
                 QuerySubmitted="{x:Bind OnQuerySubmitted}"
-                Text="{x:Bind SearchText, Mode=TwoWay}"
+                Text="{x:Bind SearchText, Mode=OneWay}"
                 TextChanged="{x:Bind OnTextChanged}"
                 Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppListPageCheck(BreadCollection.Count), Mode=OneWay}">
 

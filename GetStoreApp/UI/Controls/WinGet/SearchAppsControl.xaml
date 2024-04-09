@@ -69,7 +69,8 @@
             IsEnabled="{x:Bind IsSearchBoxEnabled(NotSearched, IsSearchCompleted), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsPlaceHolderText')}"
             QuerySubmitted="{x:Bind OnQuerySubmitted}"
-            Text="{x:Bind SearchText, Mode=TwoWay}">
+            Text="{x:Bind SearchText, Mode=OneWay}"
+            TextChanged="{x:Bind OnTextChanged}">
 
             <AutoSuggestBox.QueryIcon>
                 <FontIcon FontSize="14" Glyph="&#xE71E;" />

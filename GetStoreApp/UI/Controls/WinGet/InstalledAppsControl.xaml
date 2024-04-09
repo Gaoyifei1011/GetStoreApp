@@ -69,7 +69,7 @@
             IsEnabled="{x:Bind IsInstalledAppsEmpty.Equals(x:False), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsPlaceHolderText')}"
             QuerySubmitted="{x:Bind OnQuerySubmitted}"
-            Text="{x:Bind SearchText, Mode=TwoWay}"
+            Text="{x:Bind SearchText, Mode=OneWay}"
             TextChanged="{x:Bind OnTextChanged}">
 
             <AutoSuggestBox.QueryIcon>
