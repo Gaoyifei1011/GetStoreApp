@@ -193,7 +193,7 @@ namespace GetStoreApp.Views.Windows
             if (RuntimeHelper.IsElevated)
             {
                 CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
-                changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
+                changeFilterStatus.cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>();
                 User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
                 ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
             }
@@ -528,9 +528,8 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (PageList[Convert.ToInt32(navigationItem.NavigationItem.Tag)].Key is "Web")
                     {
-                        NavigationViewItem originalSelectedItem = SelectedItem;
                         ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
-                        SelectedItem = originalSelectedItem;
+                        sender.SelectedItem = SelectedItem;
                     }
                     else
                     {

@@ -112,7 +112,7 @@ namespace GetStoreApp.Services.Shell
             byte[] readBuff = new byte[101];
 
             SECURITY_ATTRIBUTES downloadSecurityAttributes = new SECURITY_ATTRIBUTES();
-            downloadSecurityAttributes.nLength = Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
+            downloadSecurityAttributes.nLength = Marshal.SizeOf<SECURITY_ATTRIBUTES>();
             downloadSecurityAttributes.bInheritHandle = 1;
             downloadSecurityAttributes.lpSecurityDescriptor = 0;
 
@@ -137,7 +137,7 @@ namespace GetStoreApp.Services.Shell
                 downloadStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
                 downloadStartupInfo.cbReserved2 = 0;
                 downloadStartupInfo.lpReserved2 = IntPtr.Zero;
-                downloadStartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                downloadStartupInfo.cb = Marshal.SizeOf<STARTUPINFO>();
                 downloadStartupInfo.hStdError = hWrite;
                 downloadStartupInfo.hStdOutput = hWrite;
 

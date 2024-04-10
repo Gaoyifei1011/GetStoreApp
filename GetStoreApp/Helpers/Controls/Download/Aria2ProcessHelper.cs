@@ -35,7 +35,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                 Aria2StartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
                 Aria2StartupInfo.cbReserved2 = 0;
                 Aria2StartupInfo.lpReserved2 = IntPtr.Zero;
-                Aria2StartupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+                Aria2StartupInfo.cb = Marshal.SizeOf<STARTUPINFO>();
 
                 return Kernel32Library.CreateProcess(null, string.Format("{0} {1}", fileName, arguments), IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.CREATE_NO_WINDOW, IntPtr.Zero, null, ref Aria2StartupInfo, out aria2Information);
             }
@@ -62,7 +62,7 @@ namespace GetStoreApp.Helpers.Controls.Download
                 }
 
                 PROCESSENTRY32 ProcessEntry32 = new PROCESSENTRY32();
-                ProcessEntry32.dwSize = Marshal.SizeOf(typeof(PROCESSENTRY32));
+                ProcessEntry32.dwSize = Marshal.SizeOf<PROCESSENTRY32>();
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref ProcessEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref ProcessEntry32))
                 {

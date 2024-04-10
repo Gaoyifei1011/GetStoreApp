@@ -34,7 +34,7 @@ namespace GetStoreApp.Helpers.Root
                 }
 
                 PROCESSENTRY32 processEntry32 = new PROCESSENTRY32();
-                processEntry32.dwSize = Marshal.SizeOf(typeof(PROCESSENTRY32));
+                processEntry32.dwSize = Marshal.SizeOf<PROCESSENTRY32>();
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref processEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref processEntry32))
                 {
@@ -72,7 +72,7 @@ namespace GetStoreApp.Helpers.Root
             startupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
             startupInfo.cbReserved2 = 0;
             startupInfo.lpReserved2 = IntPtr.Zero;
-            startupInfo.cb = Marshal.SizeOf(typeof(STARTUPINFO));
+            startupInfo.cb = Marshal.SizeOf<STARTUPINFO>();
 
             bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", processName, arguments), IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.None, IntPtr.Zero, null, ref startupInfo, out PROCESS_INFORMATION processInformation);
 

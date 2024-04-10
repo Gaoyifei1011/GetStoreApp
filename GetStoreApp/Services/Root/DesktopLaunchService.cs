@@ -168,7 +168,7 @@ namespace GetStoreApp.Services.Root
                 foreach (IntPtr hwnd in hwndList)
                 {
                     isExisted = true;
-                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
+                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf<COPYDATASTRUCT>());
                     Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
                     User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
                     Marshal.FreeHGlobal(ptrCopyDataStruct);
@@ -217,7 +217,7 @@ namespace GetStoreApp.Services.Root
                     foreach (IntPtr hwnd in hwndList)
                     {
                         isExisted = true;
-                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
+                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf<COPYDATASTRUCT>());
                         Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
                         User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
                         Marshal.FreeHGlobal(ptrCopyDataStruct);
@@ -244,7 +244,7 @@ namespace GetStoreApp.Services.Root
                 foreach (IntPtr hwnd in hwndList)
                 {
                     isExisted = true;
-                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(COPYDATASTRUCT)));
+                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf<COPYDATASTRUCT>());
                     Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
                     User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
                     Marshal.FreeHGlobal(ptrCopyDataStruct);

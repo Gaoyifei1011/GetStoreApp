@@ -139,7 +139,7 @@ namespace GetStoreApp
                 if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
                 {
                     CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
-                    changeFilterStatus.cbSize = Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT));
+                    changeFilterStatus.cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>();
                     User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
                 }
 

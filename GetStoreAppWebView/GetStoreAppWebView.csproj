@@ -37,7 +37,7 @@
     <Content Remove="Assets\GetStoreAppWebView.ico" />
 
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.3233" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240311000" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" GeneratePathProperty="true" />
 
     <Reference Include="Microsoft.UI.Xaml" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0\Microsoft.UI.Xaml.winmd" IsWinMDFile="true" Private="false" />
     <Reference Include="Microsoft.Web.WebView2.Core" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0\Microsoft.Web.WebView2.Core.winmd" IsWinMDFile="true" Private="false" />

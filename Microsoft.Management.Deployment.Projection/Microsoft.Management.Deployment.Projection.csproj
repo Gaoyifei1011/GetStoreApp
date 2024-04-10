@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyVersion>1.22.2401.9001</AssemblyVersion>
+    <AssemblyVersion>1.22.2404.9003</AssemblyVersion>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <CSWinRTWindowsMetadata>10.0.22621.0</CSWinRTWindowsMetadata>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
@@ -32,7 +32,7 @@
   <ItemGroup>
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
     
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.10861" GeneratePathProperty="true" IncludeAssets="none" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.11003" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
 
     <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
