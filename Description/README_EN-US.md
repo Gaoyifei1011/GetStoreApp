@@ -166,6 +166,14 @@ All the content of the program has been developed
 
 ------
 
+### Planned update for version 4.0 (expected to be completed around the release of Windows App SDK 1.6, around September)
+1. Bring back the Store.rg API to parse Store applications and provide multiple channels to parse store application installation packages
+2. Add Native AOT support to reduce binary distribution and improve application speed
+3. Rebuild the web browsing section using native c++
+4. Rebuild the download management module, integrate the display of downloading page and uncompleted download page, and replace Aria2 download with the delivery optimization that comes with Windows 11 22621+
+
+------
+
 ### Thanks (Sort by alphabetical order)
 
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
@@ -180,7 +188,6 @@ All the content of the program has been developed
 ### Other content
 
 > * This is the first small project I personally practiced when learning C#, because the advanced content about C# is not very deep, so there are many deficiencies in code content and quality, I hope to cover more.
-> * The project will last 12 months and 10 days from 20 May 2022 to 30 May 2023.
 > * This project is an open source project licensed under the MIT license, and you may modify, distribute, or merge copies with new copies. If you use the project, please do not use it for illegal purposes, and the developer will not be held responsible.
 
 ------

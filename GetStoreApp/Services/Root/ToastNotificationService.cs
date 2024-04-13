@@ -165,7 +165,7 @@ namespace GetStoreApp.Services.Root
                     case NotificationKind.DownloadCompleted:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
-                            notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/Completed"));
+                            notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadCompleted"));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
                             appToastNotifier.Show(notificaiton);
                             break;

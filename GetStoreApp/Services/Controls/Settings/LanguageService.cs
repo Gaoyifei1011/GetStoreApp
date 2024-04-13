@@ -78,7 +78,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 // 如果存在，设置存储值和应用初次设置的语言为当前系统的语言
                 if (result)
                 {
-                    DictionaryEntry currentLanguage = LanguageList.Find(item => item.Value.ToString().Contains(currentSystemLanguage));
+                    DictionaryEntry currentLanguage = LanguageList.Find(item => item.Value.ToString().Contains(currentSystemLanguage, StringComparison.OrdinalIgnoreCase));
                     SetLanguage(currentLanguage);
                     return currentLanguage;
                 }

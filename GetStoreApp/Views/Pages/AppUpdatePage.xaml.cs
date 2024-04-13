@@ -256,7 +256,7 @@ namespace GetStoreApp.Views.Pages
                             if (packageItem.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                             {
                                 AppInstallStatus appInstallStatus = upgradableApps.GetCurrentStatus();
-                                string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus.PercentComplete);
+                                string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
                                 string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
 
                                 appUpdateList.Add(new AppUpdateModel()
@@ -389,7 +389,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     AutoResetEvent autoResetEvent = new AutoResetEvent(false);
                     AppInstallStatus appInstallStatus = sender.GetCurrentStatus();
-                    string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus.PercentComplete);
+                    string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
                     string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
 
                     DispatcherQueue.TryEnqueue(() =>
@@ -436,16 +436,16 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用安装的描述信息
         /// </summary>
-        private string GetInstallInformation(AppInstallState appInstallState, double percentComplete)
+        private string GetInstallInformation(AppInstallState appInstallState, AppInstallStatus appInstallStatus)
         {
             return appInstallState switch
             {
                 AppInstallState.AcquiringLicense => AcquiringLicense,
                 AppInstallState.Canceled => Canceled,
                 AppInstallState.Completed => Completed,
-                AppInstallState.Downloading => string.Format(Downloading, percentComplete),
-                AppInstallState.Error => Error,
-                AppInstallState.Installing => string.Format(Installing, percentComplete),
+                AppInstallState.Downloading => string.Format(Downloading, appInstallStatus.PercentComplete),
+                AppInstallState.Error => string.Format(Error, appInstallStatus.ErrorCode.HResult),
+                AppInstallState.Installing => string.Format(Installing, appInstallStatus.PercentComplete),
                 AppInstallState.Paused => Paused,
                 AppInstallState.PausedLowBattery => Paused,
                 AppInstallState.PausedWiFiRecommended => Paused,
