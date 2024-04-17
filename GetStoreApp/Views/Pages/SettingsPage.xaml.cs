@@ -330,7 +330,7 @@ namespace GetStoreApp.Views.Pages
             base.OnNavigatedTo(args);
             if (args.Parameter is not null)
             {
-                settingNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+                settingNavigationArgs = Enum.Parse<AppNaviagtionArgs>(Convert.ToString(args.Parameter));
             }
             else
             {
@@ -395,7 +395,6 @@ namespace GetStoreApp.Views.Pages
             {
                 Theme = ThemeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 ThemeService.SetTheme(Theme);
-                ThemeService.SetWindowTheme();
             }
         }
 
@@ -409,7 +408,6 @@ namespace GetStoreApp.Views.Pages
             {
                 Backdrop = BackdropList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 BackdropService.SetBackdrop(Backdrop);
-                BackdropService.SetAppBackdrop();
             }
         }
 
@@ -677,7 +675,6 @@ namespace GetStoreApp.Views.Pages
             if (toggleSwitch is not null)
             {
                 TopMostService.SetTopMostValue(toggleSwitch.IsOn);
-                TopMostService.SetAppTopMost();
                 TopMostValue = toggleSwitch.IsOn;
             }
         }

@@ -24,7 +24,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -175,6 +174,9 @@ namespace GetStoreApp.Views.Windows
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
             ApplicationData.Current.DataChanged += OnDataChanged;
+            ThemeService.PropertyChanged += OnServicePropertyChanged;
+            BackdropService.PropertyChanged += OnServicePropertyChanged;
+            TopMostService.PropertyChanged += OnServicePropertyChanged;
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
@@ -197,6 +199,10 @@ namespace GetStoreApp.Views.Windows
                 User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
                 ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
             }
+
+            SetWindowTheme();
+            SetSystemBackdrop();
+            SetTopMost();
         }
 
         #region 第一部分：窗口类事件
@@ -287,6 +293,9 @@ namespace GetStoreApp.Views.Windows
                 {
                     AppWindow.Changed -= OnAppWindowChanged;
                     ApplicationData.Current.DataChanged -= OnDataChanged;
+                    ThemeService.PropertyChanged -= OnServicePropertyChanged;
+                    BackdropService.PropertyChanged -= OnServicePropertyChanged;
+                    TopMostService.PropertyChanged -= OnServicePropertyChanged;
                     (Application.Current as WinUIApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
@@ -301,6 +310,9 @@ namespace GetStoreApp.Views.Windows
             {
                 AppWindow.Changed -= OnAppWindowChanged;
                 ApplicationData.Current.DataChanged -= OnDataChanged;
+                ThemeService.PropertyChanged -= OnServicePropertyChanged;
+                BackdropService.PropertyChanged -= OnServicePropertyChanged;
+                TopMostService.PropertyChanged -= OnServicePropertyChanged;
                 (Application.Current as WinUIApp).Dispose();
             }
         }
@@ -573,32 +585,69 @@ namespace GetStoreApp.Views.Windows
             });
         }
 
+        /// <summary>
+        /// 设置选项发生变化时触发的事件
+        /// </summary>
+        private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                if (args.PropertyName.Equals(nameof(ThemeService.AppTheme)))
+                {
+                    SetWindowTheme();
+                }
+                if (args.PropertyName.Equals(nameof(BackdropService.AppBackdrop)))
+                {
+                    SetSystemBackdrop();
+                }
+                if (args.PropertyName.Equals(nameof(TopMostService.TopMostValue)))
+                {
+                    SetTopMost();
+                }
+            });
+        }
+
         #endregion 第六部分：自定义事件
 
         #region 第七部分：窗口属性设置
 
         /// <summary>
+        /// 设置应用显示的主题
+        /// </summary>
+        public void SetWindowTheme()
+        {
+            if (ThemeService.AppTheme.Value.Equals(ThemeService.ThemeList[0].Value))
+            {
+                WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+            }
+            else
+            {
+                WindowTheme = Enum.Parse<ElementTheme>(ThemeService.AppTheme.Value.ToString());
+            }
+        }
+
+        /// <summary>
         /// 设置应用的背景色
         /// </summary>
-        public void SetSystemBackdrop(DictionaryEntry backdropItem)
+        private void SetSystemBackdrop()
         {
-            if (backdropItem.Value == BackdropService.BackdropList[1].Value)
+            if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[1].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(MicaKind.Base);
             }
-            else if (backdropItem.Value == BackdropService.BackdropList[2].Value)
+            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[2].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
             }
-            else if (backdropItem.Value == BackdropService.BackdropList[3].Value)
+            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[3].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
             }
-            else if (backdropItem.Value == BackdropService.BackdropList[4].Value)
+            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[4].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
             }
-            else if (backdropItem.Value == BackdropService.BackdropList[5].Value)
+            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[5].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
             }
@@ -720,9 +769,9 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 设置窗口的置顶状态
         /// </summary>
-        public void SetTopMost(bool isAlwaysOnTop)
+        private void SetTopMost()
         {
-            overlappedPresenter.IsAlwaysOnTop = isAlwaysOnTop;
+            overlappedPresenter.IsAlwaysOnTop = TopMostService.TopMostValue;
         }
 
         /// <summary>

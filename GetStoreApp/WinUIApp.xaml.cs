@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
-using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
@@ -40,9 +39,6 @@ namespace GetStoreApp
             MainWindow.Current.Show(true);
             InitializeJumpList();
 
-            ThemeService.SetWindowTheme();
-            BackdropService.SetAppBackdrop();
-            TopMostService.SetAppTopMost();
             WinGetService.InitializeService();
             DownloadSchedulerService.InitializeDownloadScheduler();
             await Aria2Service.InitializeAria2ConfAsync();

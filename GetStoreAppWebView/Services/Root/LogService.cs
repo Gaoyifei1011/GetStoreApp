@@ -39,7 +39,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(EventLogEntryType logType, string logContent, StringBuilder logBuilder)
+        public static void WriteLog(EventLogEntryType logType, StringBuilder logBuilder)
         {
             if (isInitialized)
             {

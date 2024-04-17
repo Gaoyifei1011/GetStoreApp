@@ -367,7 +367,7 @@ namespace GetStoreAppWebView.Views.Controls
             processFailedBuilder.Append(args.ProcessDescription);
             processFailedBuilder.Append(Environment.NewLine);
 
-            LogService.WriteLog(EventLogEntryType.Error, "WebView2 process failed", processFailedBuilder);
+            LogService.WriteLog(EventLogEntryType.Error, processFailedBuilder);
 
             System.Windows.MessageBox.Show(ResourceService.GetLocalized("WebView/WebViewProcessFailedContent"), ResourceService.GetLocalized("WebView/WebViewProcessFailedTitle"), System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             (System.Windows.Application.Current as WPFApp).Dispose();

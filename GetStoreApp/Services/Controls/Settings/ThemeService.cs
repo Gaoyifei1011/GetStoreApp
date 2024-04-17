@@ -1,10 +1,10 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GetStoreApp.Services.Controls.Settings
 {
@@ -17,9 +17,25 @@ namespace GetStoreApp.Services.Controls.Settings
 
         private static DictionaryEntry defaultAppTheme;
 
-        public static DictionaryEntry AppTheme { get; private set; }
+        private static DictionaryEntry _appTheme;
+
+        public static DictionaryEntry AppTheme
+        {
+            get { return _appTheme; }
+
+            private set
+            {
+                if (!Equals(_appTheme, value))
+                {
+                    _appTheme = value;
+                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(AppTheme)));
+                }
+            }
+        }
 
         public static List<DictionaryEntry> ThemeList { get; private set; }
+
+        public static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的主题值
@@ -59,28 +75,6 @@ namespace GetStoreApp.Services.Controls.Settings
             AppTheme = theme;
 
             LocalSettingsService.SaveSetting(themeSettingsKey, theme.Value);
-        }
-
-        /// <summary>
-        /// 设置应用显示的主题
-        /// </summary>
-        public static void SetWindowTheme()
-        {
-            if (AppTheme.Value.Equals(ThemeList[0].Value))
-            {
-                if (Application.Current.RequestedTheme is ApplicationTheme.Light)
-                {
-                    MainWindow.Current.WindowTheme = ElementTheme.Light;
-                }
-                else
-                {
-                    MainWindow.Current.WindowTheme = ElementTheme.Dark;
-                }
-            }
-            else
-            {
-                MainWindow.Current.WindowTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), AppTheme.Value.ToString());
-            }
         }
     }
 }

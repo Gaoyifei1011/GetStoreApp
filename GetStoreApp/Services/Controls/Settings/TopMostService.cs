@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Windows;
 using System;
+using System.ComponentModel;
 
 namespace GetStoreApp.Services.Controls.Settings
 {
@@ -14,7 +14,23 @@ namespace GetStoreApp.Services.Controls.Settings
 
         private static bool defaultTopMostValue = false;
 
-        public static bool TopMostValue { get; private set; }
+        private static bool _topMostValue;
+
+        public static bool TopMostValue
+        {
+            get { return _topMostValue; }
+
+            private set
+            {
+                if (!Equals(_topMostValue, value))
+                {
+                    _topMostValue = value;
+                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(TopMostValue)));
+                }
+            }
+        }
+
+        public static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的窗口置顶值
@@ -48,14 +64,6 @@ namespace GetStoreApp.Services.Controls.Settings
             TopMostValue = topMostValue;
 
             LocalSettingsService.SaveSetting(settingsKey, topMostValue);
-        }
-
-        /// <summary>
-        /// 设置应用的窗口置顶状态
-        /// </summary>
-        public static void SetAppTopMost()
-        {
-            MainWindow.Current.SetTopMost(TopMostValue);
         }
     }
 }
