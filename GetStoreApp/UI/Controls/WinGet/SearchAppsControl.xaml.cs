@@ -143,7 +143,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                         InstallOptions installOptions = WinGetService.CreateInstallOptions();
 
-                        installOptions.PackageInstallMode = (PackageInstallMode)Enum.Parse(typeof(PackageInstallMode), WinGetConfigService.WinGetInstallMode.Value.ToString());
+                        installOptions.PackageInstallMode = Enum.Parse<PackageInstallMode>(WinGetConfigService.WinGetInstallMode.Value.ToString());
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
                         // 更新安装进度

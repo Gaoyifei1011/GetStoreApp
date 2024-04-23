@@ -64,7 +64,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             DictionaryEntry selectedTheme = ThemeList.Find(item => item.Value.Equals(theme));
 
-            return selectedTheme.Key is null ? defaultAppTheme : ThemeList.Find(item => item.Value.Equals(theme));
+            return selectedTheme.Key is null ? defaultAppTheme : selectedTheme;
         }
 
         /// <summary>

@@ -147,6 +147,9 @@
   <data name="BriefIntroduction" xml:space="preserve">
     <value>应用简介</value>
   </data>
+  <data name="Checking" xml:space="preserve">
+    <value>检查中</value>
+  </data>
   <data name="CheckNetwork" xml:space="preserve">
     <value>检查网络</value>
   </data>

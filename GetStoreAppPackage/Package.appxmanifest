@@ -10,9 +10,9 @@
   IgnorableNamespaces="desktop2 uap uap5 rescap">
 
   <Identity
-    Name="Gaoyifei1011.GetStoreApp"
+    Name="Gaoyifei1011.GetStoreAppTest"
     Publisher="CN=高怡飞"
-    Version="3.8.417.0" />
+    Version="3.9.423.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -52,7 +52,12 @@
       <Extensions>
         <uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="GetStoreApp.App">
           <uap:Protocol Name="taskbarpinner">
-            <uap:DisplayName>ms-resource:ProtocolName</uap:DisplayName>
+            <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap:Protocol Name="webbrowser">
+            <uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
 

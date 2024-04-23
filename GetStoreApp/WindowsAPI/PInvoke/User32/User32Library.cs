@@ -18,7 +18,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="action">要执行的操作，可以执行以下值</param>
         /// <param name="pChangeFilterStruct">指向 CHANGEFILTERSTRUCT 结构的可选指针。</param>
         /// <returns>如果函数成功，则返回 TRUE;否则，它将返回 FALSE。</returns>
-        [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = true)]
+        [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool ChangeWindowMessageFilterEx(IntPtr hWnd, WindowMessage message, ChangeFilterAction action, in CHANGEFILTERSTRUCT pChangeFilterStruct);
 
@@ -30,7 +30,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="lpszClass">类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 </param>
         /// <param name="lpszWindow">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
         /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
 
         /// <summary>
@@ -39,8 +39,27 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="hwnd">窗口的句柄。</param>
         /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 GetWindowThreadProcessId 将进程的标识符复制到变量;否则，它不会。</param>
         /// <returns>返回值是创建窗口的线程的标识符。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = true)]
+        [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = false)]
         public static partial int GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
+
+        /// <summary>
+        /// 创建从指定文件中提取的图标的句柄数组。
+        /// </summary>
+        /// <param name="lpszFile">要从中提取图标的文件的路径和名称。</param>
+        /// <param name="nIconIndex">要提取的第一个图标的从零开始的索引。 例如，如果此值为零，函数将提取指定文件中的第一个图标。</param>
+        /// <param name="cxIcon">所需的水平图标大小。 </param>
+        /// <param name="cyIcon">所需的垂直图标大小。</param>
+        /// <param name="phicon">指向返回的图标句柄数组的指针。</param>
+        /// <param name="piconid">
+        /// 指向最适合当前显示设备的图标返回的资源标识符的指针。 如果标识符不可用于此格式，则返回的标识符0xFFFFFFFF。 如果无法获取标识符，则返回的标识符为 0。
+        /// </param>
+        /// <param name="nIcons">要从文件中提取的图标数。 此参数仅在从.exe和.dll文件时有效。</param>
+        /// <param name="flags">指定控制此函数的标志。 这些标志是 LoadImage 函数使用的 LR_* 标志。</param>
+        /// <returns>
+        /// 如果 <param name="phicon"> 参数为 NULL 且此函数成功，则返回值为文件中的图标数。 如果函数失败，则返回值为 0。 如果 <param name="phicon"> 参数不是 NULL 且函数成功，则返回值是提取的图标数。 否则，如果未找到文件，则返回值0xFFFFFFFF。
+        /// </returns>
+        [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        public static partial int PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out] IntPtr[] phicon, [Out] int[] piconid, int nIcons, int flags);
 
         /// <summary>
         /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统为创建前台窗口的线程分配的优先级略高于其他线程的优先级。

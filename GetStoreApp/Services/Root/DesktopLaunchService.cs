@@ -3,13 +3,13 @@ using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
+using Windows.System;
 
 namespace GetStoreApp.Services.Root
 {
@@ -121,7 +121,7 @@ namespace GetStoreApp.Services.Root
                                 }
                             case "Web":
                                 {
-                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
+                                    await Launcher.LaunchUriAsync(new Uri("webbrowser:"));
                                     Environment.Exit(Environment.ExitCode);
                                     break;
                                 }

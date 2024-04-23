@@ -147,6 +147,9 @@
   <data name="BriefIntroduction" xml:space="preserve">
     <value>App brief introduction</value>
   </data>
+  <data name="Checking" xml:space="preserve">
+    <value>Checking</value>
+  </data>
   <data name="CheckNetwork" xml:space="preserve">
     <value>Check the network</value>
   </data>

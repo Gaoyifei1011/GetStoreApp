@@ -31,14 +31,7 @@ namespace GetStoreApp.Helpers.Root
         {
             try
             {
-                if (Package.Current is not null)
-                {
-                    IsMSIX = true;
-                }
-                else
-                {
-                    IsMSIX = false;
-                }
+                IsMSIX = Package.Current is not null;
             }
             catch (Exception)
             {

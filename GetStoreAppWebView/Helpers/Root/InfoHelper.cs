@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace GetStoreAppWebView.Helpers.Root
@@ -8,10 +8,18 @@ namespace GetStoreAppWebView.Helpers.Root
     /// </summary>
     public static class InfoHelper
     {
-        // 系统版本信息
-        public static Version SystemVersion { get; } = Environment.OSVersion.Version;
+        // 系统范围文件夹位置
+        public static SystemDataPaths SystemDataPath { get; } = SystemDataPaths.GetDefault();
 
         // 常见用户数据文件夹的完整路径
         public static UserDataPaths UserDataPath { get; } = UserDataPaths.GetDefault();
+
+        /// <summary>
+        /// 获取应用安装根目录
+        /// </summary>
+        public static string GetAppInstalledLocation()
+        {
+            return Package.Current.InstalledLocation.Path;
+        }
     }
 }

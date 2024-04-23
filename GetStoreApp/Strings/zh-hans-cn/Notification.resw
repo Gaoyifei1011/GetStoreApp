@@ -239,6 +239,9 @@
   <data name="NetWorkError" xml:space="preserve">
     <value>网络连接异常，请检查您的网络连接后再尝试下载</value>
   </data>
+  <data name="NewestVersion" xml:space="preserve">
+    <value>应用已是最新版本</value>
+  </data>
   <data name="NotDownloadOfflineMode" xml:space="preserve">
     <value>&lt;toast launch="action=OpenApp"&gt;
   &lt;visual&gt;
@@ -251,6 +254,9 @@
     &lt;action content="检查网络连接" arguments="action=CheckNetWorkConnection"/&gt;
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
+  </data>
+  <data name="NotNewestVersion" xml:space="preserve">
+    <value>应用不是最新版本，点击项目主页以获取更新</value>
   </data>
   <data name="PackageInformationCopy" xml:space="preserve">
     <value>应用包信息已成功复制到剪贴板</value>

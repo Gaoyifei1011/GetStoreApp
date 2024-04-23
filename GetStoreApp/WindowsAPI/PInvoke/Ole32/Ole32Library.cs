@@ -21,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// <param name="dwClsContext">管理新创建对象的代码将在其中运行的上下文。 这些值取自枚举 CLSCTX。</param>
         /// <param name="riid">对要用于与对象通信的接口标识符的引用。</param>
         /// <param name="ppv">接收 riid 中请求的接口指针的指针变量的地址。 成功返回后，*ppv 包含请求的接口指针。 失败后，*ppv 包含 NULL。</param>
-        [LibraryImport(Ole32, EntryPoint = "CoCreateInstance", SetLastError = true)]
+        [LibraryImport(Ole32, EntryPoint = "CoCreateInstance", SetLastError = false)]
         public static partial int CoCreateInstance(ref Guid rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, ref Guid riid, out IntPtr ppv);
 
         /// <summary>

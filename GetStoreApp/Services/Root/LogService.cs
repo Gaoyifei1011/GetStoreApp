@@ -17,7 +17,7 @@ namespace GetStoreApp.Services.Root
 
         private static bool isInitialized = false;
 
-        private static string logName = typeof(LogService).Assembly.GetName().Name;
+        private static string logName = "GetStoreApp";
 
         private static string unknown = "unknown";
 

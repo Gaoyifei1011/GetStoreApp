@@ -135,9 +135,6 @@
   <data name="ProductID" xml:space="preserve">
     <value>产品 ID</value>
   </data>
-  <data name="ProtocolName" xml:space="preserve">
-    <value>任务栏固定辅助程序</value>
-  </data>
   <data name="Retail" xml:space="preserve">
     <value>正式版</value>
   </data>
@@ -153,7 +150,13 @@
   <data name="TaskbarPinner" xml:space="preserve">
     <value>任务栏固定程序</value>
   </data>
+  <data name="TaskbarProtocolName" xml:space="preserve">
+    <value>任务栏固定辅助程序</value>
+  </data>
   <data name="URL" xml:space="preserve">
     <value>URL（链接）</value>
+  </data>
+  <data name="WebBrowserProtocolName" xml:space="preserve">
+    <value>网页浏览器</value>
   </data>
 </root>

@@ -150,10 +150,4 @@
   <data name="WebTitle" xml:space="preserve">
     <value>Web interface</value>
   </data>
-  <data name="WebViewProcessFailedContent" xml:space="preserve">
-    <value>The browser process is abnormal and the program is about to exit</value>
-  </data>
-  <data name="WebViewProcessFailedTitle" xml:space="preserve">
-    <value>Web process failed</value>
-  </data>
 </root>

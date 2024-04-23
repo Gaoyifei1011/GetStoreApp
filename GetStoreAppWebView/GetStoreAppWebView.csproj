@@ -1,24 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ApplicationIcon>Assets\GetStoreAppWebView.ico</ApplicationIcon>
-    <ApplicationManifest>App.manifest</ApplicationManifest>
+    <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppWebView</AssemblyName>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DebugType>portable</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
+    <DesktopCompatible>true</DesktopCompatible>
+    <DisableXbfLineInfo>False</DisableXbfLineInfo>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
+    <IncludeSymbols>False</IncludeSymbols>
     <LangVersion>latest</LangVersion>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win7-x86;win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <PublishProtocol>FileSystem</PublishProtocol>
+    <PublishReadyToRun>False</PublishReadyToRun>
+    <PublishSingleFile>True</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <RootNamespace>GetStoreApp</RootNamespace>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <StartupObject>GetStoreAppWebView.Program</StartupObject>
-    <TargetFramework>net481</TargetFramework>
-    <TargetPlatformMinVersion>10.0.19044.0</TargetPlatformMinVersion>
-    <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
-    <WindowsAppSDKVerifyWinrtRuntimeVersion>false</WindowsAppSDKVerifyWinrtRuntimeVersion>
+    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.22621.0</TargetPlatformMinVersion>
+    <TrimMode>partial</TrimMode>
+    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+    <UseRidGraph>true</UseRidGraph>
+    <Win32Resource>GetStoreAppWebViewResource.res</Win32Resource>
+    <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
+    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
+    <WindowsPackageType>MSIX</WindowsPackageType>
+    <WindowsSdkPackageVersion>10.0.22621.33</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -32,28 +52,52 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Remove="App.manifest" />
+    <ApplicationDefinition Include="WebApp.xaml" SubType="Designer" />
 
     <Content Remove="Assets\GetStoreAppWebView.ico" />
 
-    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22621.3233" />
+    <Manifest Include="$(ApplicationManifest)" />
+
+    <None Remove="UI\Dialogs\ProcessFailedDialog.xaml" />
+    <None Remove="WebApp.xaml" />
+    <None Remove="WebWindow.xaml" />
+
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" GeneratePathProperty="true" />
 
-    <Reference Include="Microsoft.UI.Xaml" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0\Microsoft.UI.Xaml.winmd" IsWinMDFile="true" Private="false" />
-    <Reference Include="Microsoft.Web.WebView2.Core" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0\Microsoft.Web.WebView2.Core.winmd" IsWinMDFile="true" Private="false" />
-    <Reference Include="Microsoft.UI.Windowing" HintPath="$(PkgMicrosoft_WindowsAppSDK)\lib\uap10.0.18362\Microsoft.UI.winmd" IsWinMDFile="true" Private="false" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
+    <Page Remove="WebApp.xaml" />
+
+    <Page Update="UI\Dialogs\ProcessFailedDialog.xaml" Generator="MSBuild:Compile" />
+    <Page Update="WebWindow.xaml" Generator="MSBuild:Compile" />
+    
+    <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
+    <TrimmableAssembly Include="Microsoft.Management.Deployment.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.AppLifecycle.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Builder.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Management.Deployment.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.PushNotifications.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Security.AccessControl.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.System.Power.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.System.Projection" />
+    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
+    <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
+    <TrimmableAssembly Include="WinRT.Host.Shim" />
+    <TrimmableAssembly Include="WinRT.Runtime" />
   </ItemGroup>
 
-  <Target Name="TryBuild" BeforeTargets="BeforeBuild">
-    <PropertyGroup>
-      <_UsingCSWinRT>false</_UsingCSWinRT>
-    </PropertyGroup>
+  <!-- 捆绑前对二进制文件进行后处理 -->
+  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
+    <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->
+    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
+  </Target>
+
+  <!-- 不要复制本机引导文件 -->
+  <Target Name="_RemoveWasdkBootstrapDll" BeforeTargets="ResolveReferences">
     <ItemGroup>
-      <XamlFeatureControlFlags Remove="UsingCSWinRT" />
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
     </ItemGroup>
   </Target>
 </Project>

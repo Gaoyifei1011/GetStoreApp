@@ -72,7 +72,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </param>
         /// <param name="nSize">管道缓冲区的大小（以字节为单位）。 大小只是建议;系统使用该值计算适当的缓冲机制。 如果此参数为零，则系统使用默认缓冲区大小。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "CreatePipe", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "CreatePipe", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool CreatePipe(out IntPtr hReadPipe, out IntPtr hWritePipe, ref SECURITY_ATTRIBUTES lpPipeAttributes, uint nSize);
 
@@ -88,7 +88,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>
         /// 如果函数成功，它将返回指定快照的打开句柄。如果函数失败，它将返回 INVALID_HANDLE_VALUE。 要获得更多的错误信息，请调用 GetLastError。 可能的错误代码包括 ERROR_BAD_LENGTH。
         /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = false)]
         public static partial IntPtr CreateToolhelp32Snapshot(CREATE_TOOLHELP32_SNAPSHOT_FLAGS dwFlags, uint th32ProcessID);
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。
         /// 请注意，函数在进程完成初始化之前返回 。 如果找不到所需的 DLL 或无法初始化，则进程将终止。 若要获取进程的终止状态，请调用 GetExitCodeProcess。
         /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "CreateProcessW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(Kernel32, EntryPoint = "CreateProcessW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool CreateProcess(
             string lpApplicationName,
@@ -195,7 +195,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果该函数成功，则返回值为指定设备的句柄，或为由先前对 SetStdHandle 的调用设置的重定向句柄。
         /// 除非应用程序已使用 SetStdHandle 来设置具有较少访问权限的标准句柄，否则该句柄具有 GENERIC_READ 和 GENERIC_WRITE 访问权限。
         /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "GetStdHandle", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "GetStdHandle", SetLastError = false)]
         public static partial IntPtr GetStdHandle(STD_HANDLE nStdHandle);
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="lpNumberOfCharsRead">指向接收实际读取字符数的变量的指针。</param>
         /// <param name="pInputControl">指向 CONSOLE_READCONSOLE_CONTROL 结构的指针，该结构指定要向读取操作末尾发出信号的控制字符。 此参数可以为 NULL。此参数默认需要 Unicode 输入。 对于 ANSI 模式，请将此参数设置为 NULL。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "ReadConsoleW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(Kernel32, EntryPoint = "ReadConsoleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool ReadConsole(
             IntPtr hConsoleInput,
@@ -283,7 +283,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 有关 lpOverlapped 和 FILE_FLAG_OVERLAPPED的不同组合的详细信息，请参阅“备注”部分和 “同步和文件位置 ”部分。
         /// </param>
         /// <returns>如果函数成功，则返回值为非零 (TRUE) 。如果函数失败或异步完成，则返回值为零，(FALSE) </returns>
-        [LibraryImport(Kernel32, EntryPoint = "ReadFile", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "ReadFile", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool ReadFile(IntPtr hFile, [In, Out] byte[] lpBuffer, uint nNumberOfBytesToRead, out uint lpNumberOfBytesRead, IntPtr lpOverlapped);
 
@@ -293,7 +293,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="hConsoleOutput">控制台屏幕缓冲区的句柄。 该句柄必须具有 GENERIC_READ 访问权限。 有关详细信息，请参阅控制台缓冲区安全性和访问权限。</param>
         /// <param name="wAttributes">字符属性。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "SetConsoleTextAttribute", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "SetConsoleTextAttribute", SetLastError = false)]
         public static partial int SetConsoleTextAttribute(IntPtr hConsoleOutput, ushort wAttributes);
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </summary>
         /// <param name="title">要在控制台窗口的标题栏中显示的字符串。 总大小必须小于64K。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "SetConsoleTitleW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(Kernel32, EntryPoint = "SetConsoleTitleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool SetConsoleTitle(string lpConsoleTitle);
 
@@ -311,7 +311,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="nStdHandle">要为其设置句柄的标准设备。</param>
         /// <param name="handle">标准设备的句柄。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "SetStdHandle", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "SetStdHandle", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool SetStdHandle(STD_HANDLE nStdHandle, IntPtr handle);
 
@@ -321,9 +321,9 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="HandlerRoutine">指向应用程序定义的要添加或删除的 HandlerRoutine 函数的指针。 此参数可以为 NULL。</param>
         /// <param name="add">如果此参数为 TRUE，则添加处理程序；如果 FALSE，则删除处理程序 。如果 HandlerRoutine 参数为 NULL，TRUE 值会使调用进程忽略 Ctrl+C 输入，而 FALSE 值会还原 Ctrl+C 输入的正常处理过程 。 此属性（忽略或处理 Ctrl+C）由子进程继承。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "SetConsoleCtrlHandler", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "SetConsoleCtrlHandler", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetConsoleCtrlHandler(ConsoleEventDelegate HandlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
+        public static partial bool SetConsoleCtrlHandler(IntPtr handlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
 
         /// <summary>
         /// 终止指定的进程及其所有线程。
@@ -332,7 +332,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="uExitCode">
         /// 进程和线程因此调用而终止的退出代码。 使用 GetExitCodeProcess 函数检索进程的退出值。 使用 GetExitCodeThread 函数检索线程的退出值。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = true)]
+        [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool TerminateProcess(IntPtr hProcess, uint uExitCode);
 
@@ -345,7 +345,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="lpNumberOfCharsWritten">指向某个变量的指针，该变量接收实际写入的字符数。</param>
         /// <param name="lpReservedMustBeNull">lpReserved 保留；必须为 NULL。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "WriteConsoleW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(Kernel32, EntryPoint = "WriteConsoleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool WriteConsole(
              IntPtr hConsoleOutput,

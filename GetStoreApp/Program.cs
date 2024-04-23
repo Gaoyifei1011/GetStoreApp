@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using WinRT;
 
@@ -80,6 +81,7 @@ namespace GetStoreApp
                 // 以控制台程序方式启动
                 else
                 {
+                    AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
                     bool AttachResult = Kernel32Library.AttachConsole();
 
                     if (!AttachResult)
@@ -100,6 +102,12 @@ namespace GetStoreApp
                 CoreApplication.Run(new Views.Windows.FrameworkViewSource());
                 Ole32Library.CoUninitialize();
             }
+        }
+
+        private static void OnUnhandledException(object sender, System.UnhandledExceptionEventArgs args)
+        {
+            LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
+            Environment.Exit(0);
         }
 
         /// <summary>

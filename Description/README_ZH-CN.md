@@ -112,7 +112,6 @@
 ### 项目引用（按英文首字母排序）
 
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
-> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
@@ -124,7 +123,7 @@
 
 ### 下载与安装注意事项
 
-> * 该程序使用的是 Windows 应用 SDK 构建的，建议您的系统版本为Windows 11（代号 21H2 / 内部版本号 22000）或更高版本，最低版本为Windows 10（代号21H2 / 内部版本号19044）或更高版本。
+> * 该程序使用的是 Windows 应用 SDK 构建的，建议您的系统版本为 Windows 11（代号 22H2 / 内部版本号 22621）或更高版本，最低版本为Windows 10（代号21H2 / 内部版本号19044）或更高版本。
 > * 如果您的系统是 Windows 10，应用功能存在一些限制：
     不支持设置云母/云母Alt 背景色
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases)页面的二进制安装文件已经打包成压缩包。请解压压缩包并使用 Powershell 管理员模式（必要情况下）运行 install.ps1 文件方可实现快速安装。
@@ -166,10 +165,10 @@
 ------
 
 ### Planned update for version 4.0 (expected to be completed around the release of Windows App SDK 1.6, around September)
-> * Bring back the Store.rg API to parse Store applications and provide multiple channels to parse store application installation packages
-> * Add Native AOT support to reduce binary distribution and improve application speed
-> * Rebuild the web browsing section using native c++
-> * Rebuild the download management module, integrate the display of downloading page and uncompleted download page, and replace Aria2 download with the delivery optimization that comes with Windows 11 22621+
+> * 带回 Store.rg API 的解析商店应用方式，提供多种渠道解析商店应用安装包
+> * 添加对 Native AOT 的支持，减少二进制分发的同时，提升应用的运行速度
+> * 重新构建网页浏览部分（引入 Edge legacy 和 WebView2）
+> * 重新构建下载管理模块，整合正在下载页面和未完成下载展示页面，使用 Windows 11 22621+ 自带的传递优化替代 Aria2 下载
 
 ------
 

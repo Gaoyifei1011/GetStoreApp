@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// <summary>
     /// IDODownload 接口用于启动和管理下载。
     /// </summary>
-    [GeneratedComInterface, Guid("FBBD7FC0-C147-4727-A38D-827EF071EE77"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GeneratedComInterface, Guid("FBBD7FC0-C147-4727-A38D-827EF071EE77")]
     public unsafe partial interface IDODownload
     {
         /// <summary>

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices.Marshalling;
 
 namespace GetStoreApp.WindowsAPI.ComTypes
 {
-    [GeneratedComInterface, Guid("400E2D4A-1431-4C1A-A748-39CA472CFDB1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GeneratedComInterface, Guid("400E2D4A-1431-4C1A-A748-39CA472CFDB1")]
     public partial interface IDOManager
     {
         /// <summary>

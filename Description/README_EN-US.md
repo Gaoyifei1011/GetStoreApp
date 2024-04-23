@@ -113,7 +113,6 @@ All the content of the program has been developed
 ### Project References (Sort by alphabetical order)
 
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
-> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
@@ -167,10 +166,10 @@ All the content of the program has been developed
 ------
 
 ### Planned update for version 4.0 (expected to be completed around the release of Windows App SDK 1.6, around September)
-> * Bring back the Store.rg API to parse Store applications and provide multiple channels to parse store application installation packages
-> * Add Native AOT support to reduce binary distribution and improve application speed
-> * Rebuild the web browsing section using native c++
-> * Rebuild the download management module, integrate the display of downloading page and uncompleted download page, and replace Aria2 download with the delivery optimization that comes with Windows 11 22621+
+> * Back to Store.rg API parsing store application, provide a variety of channels to parse store application installation package
+> * Added support for Native AOT, reducing binary distribution while improving application speed
+> * Re-architecting the Web browsing section (introducing Edge legacy and WebView2)
+> * Rebuild the download management module, integrate the download page and the incomplete download display page, and replace Aria2 downloads with the delivery optimization that comes with Windows 11 22621+
 
 ------
 

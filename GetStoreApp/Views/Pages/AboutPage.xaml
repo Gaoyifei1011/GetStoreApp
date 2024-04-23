@@ -210,8 +210,22 @@
                         <Button
                             MinWidth="130"
                             HorizontalAlignment="Right"
-                            Click="{x:Bind OnCheckUpdateClicked}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}" />
+                            Click="{x:Bind OnCheckUpdateClicked}">
+
+                            <Button.Content>
+                                <Grid>
+                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsChecking), Mode=OneWay}" />
+
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Spacing="5"
+                                        Visibility="{x:Bind IsChecking, Mode=OneWay}">
+                                        <ProgressRing Width="16" Height="16" />
+                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('About/Checking')}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
                     </StackPanel>
                 </Grid>
 

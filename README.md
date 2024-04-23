@@ -119,7 +119,6 @@
 ### 项目引用（按英文首字母排序）
 
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
-> * [Microsoft.Windows.SDK.Contracts](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 > * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
@@ -175,7 +174,7 @@
 ### 4.0 版本的计划更新（预计 Windows 应用 SDK 1.6 发布前后完成，9月左右）
 > * 带回 Store.rg API 的解析商店应用方式，提供多种渠道解析商店应用安装包
 > * 添加对 Native AOT 的支持，减少二进制分发的同时，提升应用的运行速度
-> * 使用原生 c++ 方式重新构建网页浏览部分
+> * 重新构建网页浏览部分（引入 Edge legacy 和 WebView2）
 > * 重新构建下载管理模块，整合正在下载页面和未完成下载展示页面，使用 Windows 11 22621+ 自带的传递优化替代 Aria2 下载
 
 ------

@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyVersion>1.22.2404.9003</AssemblyVersion>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <CSWinRTWindowsMetadata>10.0.22621.0</CSWinRTWindowsMetadata>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>

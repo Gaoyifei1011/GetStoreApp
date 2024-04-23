@@ -18,7 +18,7 @@ namespace GetStoreAppWebView.Services.Controls.Settings
 
         public static List<object> WebKernelList { get; } = new List<object>()
         {
-            "IE",
+            "WebView",
             "WebView2",
         };
 
@@ -46,7 +46,9 @@ namespace GetStoreAppWebView.Services.Controls.Settings
                     return defaultWebKernel;
                 }
 
-                return WebKernelList.Find(item => item.Equals(webKernelValue));
+                object selectedWebKernel = WebKernelList.Find(item => item.Equals(webKernelValue));
+
+                return selectedWebKernel is null ? defaultWebKernel : selectedWebKernel;
             }
             else
             {

@@ -390,4 +390,10 @@
   <data name="WebView2SDKVersion" xml:space="preserve">
     <value>WebView2 SDK 版本：</value>
   </data>
+  <data name="WebViewProcessFailedContent" xml:space="preserve">
+    <value>浏览器进程发生了异常，程序即将退出</value>
+  </data>
+  <data name="WebViewProcessFailedTitle" xml:space="preserve">
+    <value>浏览器进程异常</value>
+  </data>
 </root>

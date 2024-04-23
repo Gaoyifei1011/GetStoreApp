@@ -239,6 +239,9 @@
   <data name="NetWorkError" xml:space="preserve">
     <value>The network connection is abnormal, please check your network connection before trying to download</value>
   </data>
+  <data name="NewestVersion" xml:space="preserve">
+    <value>The application is the latest version</value>
+  </data>
   <data name="NotDownloadOfflineMode" xml:space="preserve">
     <value>&lt;toast launch="action=OpenApp"&gt;
   &lt;visual&gt;
@@ -251,6 +254,9 @@
     &lt;action content="Check the network connection" arguments="action=CheckNetWorkConnection"/&gt;
   &lt;/actions&gt;
 &lt;/toast&gt;</value>
+  </data>
+  <data name="NotNewestVersion" xml:space="preserve">
+    <value>The app is not the latest version, click on the project home page to get an update</value>
   </data>
   <data name="PackageInformationCopy" xml:space="preserve">
     <value>The package information has been successfully copied to the clipboard</value>

@@ -225,7 +225,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeWebKernelList()
         {
-            WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelIE"), "IE"));
+            WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelWebView"), "WebView"));
             WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelWebView2"), "WebView2"));
         }
 

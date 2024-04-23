@@ -147,7 +147,7 @@
   <data name="URL" xml:space="preserve">
     <value>URL(Link)</value>
   </data>
-  <data name="ProtocolName" xml:space="preserve">
+  <data name="TaskbarProtocolName" xml:space="preserve">
     <value>Taskbar Pinner</value>
   </data>
   <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
@@ -155,5 +155,8 @@
   </data>
   <data name="TaskbarPinner" xml:space="preserve">
     <value>Taskbar Pinner</value>
+  </data>
+  <data name="WebBrowserProtocolName" xml:space="preserve">
+    <value>Web Browser</value>
   </data>
 </root>

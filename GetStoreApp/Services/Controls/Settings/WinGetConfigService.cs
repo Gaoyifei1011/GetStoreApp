@@ -78,7 +78,9 @@ namespace GetStoreApp.Services.Controls.Settings
                 return WinGetInstallModeList.Find(item => item.Value.Equals(DefaultWinGetInstallMode.Value));
             }
 
-            return WinGetInstallModeList.Find(item => item.Value.Equals(winGetInstallMode));
+            DictionaryEntry selectedWinGetInstallMode = WinGetInstallModeList.Find(item => item.Value.Equals(winGetInstallMode));
+
+            return selectedWinGetInstallMode.Key is null ? DefaultWinGetInstallMode : selectedWinGetInstallMode;
         }
 
         /// <summary>

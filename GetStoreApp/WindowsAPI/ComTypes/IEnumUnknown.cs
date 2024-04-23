@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// <summary>
     /// 枚举具有 IUnknown 接口的对象。 它可用于枚举包含多个对象的组件中的对象。
     /// </summary>
-    [GeneratedComInterface, Guid("00000100-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GeneratedComInterface, Guid("00000100-0000-0000-C000-000000000046")]
     public partial interface IEnumUnknown
     {
         /// <summary>

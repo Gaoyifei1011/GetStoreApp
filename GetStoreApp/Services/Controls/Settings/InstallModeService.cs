@@ -43,7 +43,9 @@ namespace GetStoreApp.Services.Controls.Settings
                 return InstallModeList.Find(item => item.Value.Equals(defaultInstallMode.Value));
             }
 
-            return InstallModeList.Find(item => item.Value.Equals(installMode));
+            DictionaryEntry selectedInstallMode = InstallModeList.Find(item => item.Value.Equals(installMode));
+
+            return selectedInstallMode.Key is null ? defaultInstallMode : selectedInstallMode;
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
-﻿using GetStoreAppWebView.WindowsAPI.PInvoke.Kernel32;
-using Microsoft.Web.WebView2.Core;
+﻿using Microsoft.Web.WebView2.Core;
 using System;
 using System.Security.Principal;
+using Windows.ApplicationModel;
 
 namespace GetStoreAppWebView.Helpers.Root
 {
@@ -28,8 +28,14 @@ namespace GetStoreAppWebView.Helpers.Root
         /// </summary>
         private static void IsInMsixContainer()
         {
-            int length = 0;
-            IsMSIX = Kernel32Library.GetCurrentPackageFullName(ref length, null) != Kernel32Library.APPMODEL_ERROR_NO_PACKAGE;
+            try
+            {
+                IsMSIX = Package.Current is not null;
+            }
+            catch (Exception)
+            {
+                IsMSIX = false;
+            }
         }
 
         /// <summary>

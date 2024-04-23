@@ -3,6 +3,7 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
 using System.IO;
@@ -19,6 +20,8 @@ namespace GetStoreApp
     public partial class WinUIApp : Application, IDisposable
     {
         private bool isDisposed;
+
+        private IntPtr[] hIcons;
 
         public Window Window { get; private set; }
 
@@ -38,6 +41,7 @@ namespace GetStoreApp
             Window = new MainWindow();
             MainWindow.Current.Show(true);
             InitializeJumpList();
+            SetAppIcon();
 
             WinGetService.InitializeService();
             DownloadSchedulerService.InitializeDownloadScheduler();
@@ -53,6 +57,30 @@ namespace GetStoreApp
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
             Dispose();
+        }
+
+        /// <summary>
+        /// 设置应用窗口图标
+        /// </summary>
+        private void SetAppIcon()
+        {
+            // 选中文件中的图标总数
+            int iconTotalCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreApp.exe"), 0, 0, 0, null, null, 0, 0);
+
+            // 用于接收获取到的图标指针
+            hIcons = new IntPtr[iconTotalCount];
+
+            // 对应的图标id
+            int[] ids = new int[iconTotalCount];
+
+            // 成功获取到的图标个数
+            int successCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreApp.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
+
+            // GetStoreApp.exe 应用程序只有一个图标
+            if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
+            {
+                MainWindow.Current.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
+            }
         }
 
         /// <summary>

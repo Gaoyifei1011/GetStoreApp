@@ -26,7 +26,6 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -51,8 +50,6 @@ namespace GetStoreApp.Views.Windows
 
         private ContentCoordinateConverter contentCoordinateConverter;
         private OverlappedPresenter overlappedPresenter;
-
-        public AppWindow CoreAppWindow { get; }
 
         public new static MainWindow Current { get; private set; }
 
@@ -180,7 +177,7 @@ namespace GetStoreApp.Views.Windows
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0, IntPtr.Zero);
+            Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0, IntPtr.Zero);
 
             // 为非工作区的窗口设置相应的窗口样式，添加窗口过程
             IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx((IntPtr)AppWindow.Id.Value, IntPtr.Zero, "InputNonClientPointerSource", null);
@@ -188,7 +185,7 @@ namespace GetStoreApp.Views.Windows
             if (inputNonClientPointerSourceHandle != IntPtr.Zero)
             {
                 inputNonClientPointerSourceSubClassProc = new SUBCLASSPROC(InputNonClientPointerSourceSubClassProc);
-                Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, inputNonClientPointerSourceSubClassProc, 0, IntPtr.Zero);
+                Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(inputNonClientPointerSourceSubClassProc), 0, IntPtr.Zero);
             }
 
             // 处理提权模式下运行应用
@@ -210,7 +207,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 窗口激活状态发生变化的事件
         /// </summary>
-        private void OnActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs args)
+        private void OnActivated(object sender, WindowActivatedEventArgs args)
         {
             try
             {
@@ -237,7 +234,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 窗口大小发生改变时的事件
         /// </summary>
-        private void OnSizeChanged(object sender, Microsoft.UI.Xaml.WindowSizeChangedEventArgs args)
+        private void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
             if (TitlebarMenuFlyout.IsOpen)
             {
@@ -529,7 +526,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 在当前导航控件所选项更改时发生
         /// </summary>
-        private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private async void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             NavigationViewItemBase navigationViewItem = args.SelectedItemContainer;
             if (navigationViewItem.Tag is not null)
@@ -540,7 +537,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (PageList[Convert.ToInt32(navigationItem.NavigationItem.Tag)].Key is "Web")
                     {
-                        ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), " ", out _);
+                        await Launcher.LaunchUriAsync(new Uri("webbrowser:"));
                         sender.SelectedItem = SelectedItem;
                     }
                     else
@@ -751,8 +748,6 @@ namespace GetStoreApp.Views.Windows
                             ));
                     }
                 }
-
-                AppWindow.SetIcon("Assets/Logo.ico");
             }
             else
             {
@@ -797,15 +792,6 @@ namespace GetStoreApp.Views.Windows
         {
             switch (Msg)
             {
-                // 窗口大小发生更改后的消息
-                case WindowMessage.WM_SIZE:
-                    {
-                        if (CoreAppWindow is not null && CoreAppWindow.Id.Value is not 0)
-                        {
-                            CoreAppWindow.Resize(new SizeInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16));
-                        }
-                        break;
-                    }
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {

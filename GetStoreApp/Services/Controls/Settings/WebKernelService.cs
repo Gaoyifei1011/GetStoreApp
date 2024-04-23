@@ -43,7 +43,9 @@ namespace GetStoreApp.Services.Controls.Settings
                 return defaultWebKernel;
             }
 
-            return WebKernelList.Find(item => item.Value.Equals(webKernelValue));
+            DictionaryEntry selectedWebKernel = WebKernelList.Find(item => item.Value.Equals(webKernelValue));
+
+            return selectedWebKernel.Key is null ? defaultWebKernel : selectedWebKernel;
         }
 
         /// <summary>

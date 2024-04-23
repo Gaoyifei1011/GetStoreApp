@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
 namespace GetStoreAppWebView.Services.Root
@@ -12,22 +12,24 @@ namespace GetStoreAppWebView.Services.Root
     /// </summary>
     public static class LogService
     {
+        private static readonly object logLock = new object();
+
         private static bool isInitialized = false;
 
+        private static string logName = "GetStoreApp";
+
         private static string unknown = "unknown";
-        private static string logFolderPath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs");
+
+        private static StorageFolder logFolder;
 
         /// <summary>
         /// 初始化日志记录
         /// </summary>
-        public static void Initialize()
+        public static async Task InitializeAsync()
         {
             try
             {
-                if (!Directory.Exists(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs")))
-                {
-                    Directory.CreateDirectory(Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs"));
-                }
+                logFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
                 isInitialized = true;
             }
             catch (Exception)
@@ -39,7 +41,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(EventLogEntryType logType, StringBuilder logBuilder)
+        public static void WriteLog(LoggingLevel logLevel, string logContent, StringBuilder logBuilder)
         {
             if (isInitialized)
             {
@@ -47,10 +49,22 @@ namespace GetStoreAppWebView.Services.Root
                 {
                     Task.Run(() =>
                     {
-                        File.AppendAllText(
-                            Path.Combine(logFolderPath, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logType), logBuilder)
-                            );
+                        lock (logLock)
+                        {
+                            File.AppendAllText(
+                                Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
+                                string.Format("{0}\t{1}:{2}{3}{4}{5}{6}{7}{8}",
+                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                    "LogLevel",
+                                    Convert.ToString(logLevel),
+                                    Environment.NewLine,
+                                    "LogContent:",
+                                    logContent,
+                                    Environment.NewLine,
+                                    logBuilder,
+                                    Environment.NewLine)
+                                );
+                        }
                     });
                 }
                 catch (Exception)
@@ -63,7 +77,7 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(EventLogEntryType logType, string logContent, Exception exception)
+        public static void WriteLog(LoggingLevel logLevel, string logContent, Exception exception)
         {
             if (isInitialized)
             {
@@ -85,10 +99,19 @@ namespace GetStoreAppWebView.Services.Root
                         exceptionBuilder.Append("StackTrace:");
                         exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 
-                        File.AppendAllText(
-                            Path.Combine(logFolderPath, string.Format("GetStoreApp_{0}.log", DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}\n{3}\n", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), "LogLevel", Convert.ToString(logType), exceptionBuilder.ToString())
-                            );
+                        lock (logLock)
+                        {
+                            File.AppendAllText(
+                                Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
+                                string.Format("{0}\t{1}:{2}{3}{4}{5}",
+                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                    "LogLevel",
+                                    Convert.ToString(logLevel),
+                                    Environment.NewLine,
+                                    exceptionBuilder.ToString(),
+                                    Environment.NewLine)
+                                );
+                        }
                     });
                 }
                 catch (Exception)

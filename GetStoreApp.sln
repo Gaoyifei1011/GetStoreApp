@@ -27,7 +27,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Description", "Description"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWebView", "GetStoreAppWebView\GetStoreAppWebView.csproj", "{29E64374-337A-4D09-8A1C-0D8C6DCE84C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Management.Deployment.Projection", "Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj", "{9782AEF8-5FD1-457E-8018-7233F1567ADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Management.Deployment.Projection", "Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj", "{9782AEF8-5FD1-457E-8018-7233F1567ADB}"
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "signtool", "signtool.exe", "{86DD9BE2-5280-46E5-956E-F31EC452BB22}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = D:\Github\GetStoreApp\signtool.exe
+		RemoteMachine = DESKTOP-D7B6T3H
+		StartingDirectory = D:\Github\GetStoreApp
+		Environment = 默认值
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,12 +107,19 @@ Global
 		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|x64.Build.0 = Release|X64
 		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|x86.ActiveCfg = Release|x86
 		{9782AEF8-5FD1-457E-8018-7233F1567ADB}.Release|x86.Build.0 = Release|x86
+		{86DD9BE2-5280-46E5-956E-F31EC452BB22}.Debug|ARM64.ActiveCfg = Release|x64
+		{86DD9BE2-5280-46E5-956E-F31EC452BB22}.Debug|x64.ActiveCfg = Release|x64
+		{86DD9BE2-5280-46E5-956E-F31EC452BB22}.Debug|x86.ActiveCfg = Release|x64
+		{86DD9BE2-5280-46E5-956E-F31EC452BB22}.Release|ARM64.ActiveCfg = Release|x64
+		{86DD9BE2-5280-46E5-956E-F31EC452BB22}.Release|x64.ActiveCfg = Release|x64
+		{86DD9BE2-5280-46E5-956E-F31EC452BB22}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{119BC62D-028A-420E-B1B6-D49B12D56320} = {23584989-CD5F-4D3C-BBD0-59E2C9A93B04}
+		{86DD9BE2-5280-46E5-956E-F31EC452BB22} = {23584989-CD5F-4D3C-BBD0-59E2C9A93B04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A0E0485-2B4F-48FF-B84E-F6BB189242A9}

@@ -11,32 +11,53 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Store.Preview;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
+using Windows.Web.Http;
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// 关于页面
     /// </summary>
-    public sealed partial class AboutPage : Page
+    public sealed partial class AboutPage : Page, INotifyPropertyChanged
     {
         private AppNaviagtionArgs aboutNavigationArgs = AppNaviagtionArgs.None;
+
+        private bool _isChecking;
+
+        public bool IsChecking
+        {
+            get { return _isChecking; }
+
+            set
+            {
+                if (!Equals(_isChecking, value))
+                {
+                    _isChecking = value;
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(IsChecking)));
+                }
+            }
+        }
 
         //项目引用信息
         private Hashtable ReferenceDict { get; } = new Hashtable()
         {
             { "Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"},
-            { "Microsoft.Windows.SDK.Contracts","https://aka.ms/WinSDKProjectURL"},
             { "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"},
             { "Microsoft.WindowsPackageManager.ComInterop","https://github.com/microsoft/winget-cli"},
             { "Mile.Aria2", "https://github.com/ProjectMile/Mile.Aria2"},
@@ -53,6 +74,8 @@ namespace GetStoreApp.Views.Pages
             { "wherewhere","https://github.com/wherewhere" },
         };
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public AboutPage()
         {
             InitializeComponent();
@@ -68,7 +91,7 @@ namespace GetStoreApp.Views.Pages
             base.OnNavigatedTo(args);
             if (args.Parameter is not null)
             {
-                aboutNavigationArgs = (AppNaviagtionArgs)Enum.Parse(typeof(AppNaviagtionArgs), Convert.ToString(args.Parameter));
+                aboutNavigationArgs = Enum.Parse<AppNaviagtionArgs>(Convert.ToString(args.Parameter));
             }
             else
             {
@@ -262,9 +285,89 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查更新
         /// </summary>
-        private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
+        private void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+            if (!IsChecking)
+            {
+                IsChecking = true;
+
+                Task.Run(async () =>
+                {
+                    // 添加超时设置（半分钟后停止获取）
+                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                    cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                    try
+                    {
+                        HttpClient httpClient = new HttpClient();
+                        httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
+                        HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest")).AsTask(cancellationTokenSource.Token);
+
+                        // 请求成功
+                        if (responseMessage.IsSuccessStatusCode)
+                        {
+                            StringBuilder responseBuilder = new StringBuilder();
+
+                            responseBuilder.Append("Status Code:");
+                            responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
+                            responseBuilder.Append("Headers:");
+                            responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
+                            responseBuilder.Append("ResponseMessage:");
+                            responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
+
+                            string responseString = await responseMessage.Content.ReadAsStringAsync();
+                            httpClient.Dispose();
+                            responseMessage.Dispose();
+
+                            if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                            {
+                                string tag = responseStringObject.GetNamedString("tag_name").Remove(0, 1);
+                                Version tagVersion = new Version(tag);
+
+                                if (tagVersion is not null)
+                                {
+                                    bool isNewest = InfoHelper.AppVersion >= tagVersion;
+
+                                    DispatcherQueue.TryEnqueue(() =>
+                                    {
+                                        TeachingTipHelper.Show(new CheckUpdateTip(isNewest));
+                                    });
+                                }
+                            }
+                        }
+                        else
+                        {
+                            httpClient.Dispose();
+                            responseMessage.Dispose();
+                        }
+                    }
+                    // 捕捉因为网络失去链接获取信息时引发的异常
+                    catch (COMException e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "Check update request failed", e);
+                    }
+
+                    // 捕捉因访问超时引发的异常
+                    catch (TaskCanceledException e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "Check update request timeout", e);
+                    }
+
+                    // 其他异常
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Check update request unknown exception", e);
+                    }
+                    finally
+                    {
+                        cancellationTokenSource.Dispose();
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            IsChecking = false;
+                        });
+                    }
+                });
+            }
         }
 
         /// <summary>

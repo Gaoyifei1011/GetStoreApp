@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// <summary>
     /// IDODownloadStatusCallback 接口用于接收有关下载的通知。
     /// </summary>
-    [GeneratedComInterface, Guid("D166E8E3-A90E-4392-8E87-05E996D3747D"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GeneratedComInterface, Guid("D166E8E3-A90E-4392-8E87-05E996D3747D")]
     public partial interface IDODownloadStatusCallback
     {
         /// <summary>

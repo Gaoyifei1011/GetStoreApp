@@ -4,6 +4,7 @@ using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -44,7 +45,7 @@ namespace GetStoreApp.Services.Root
                 consoleLaunchArgs.Add(arg);
             }
             ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
-            Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
+            Kernel32Library.SetConsoleCtrlHandler(Marshal.GetFunctionPointerForDelegate(ctrlDelegate), true);
 
             InitializeIntroduction();
             InitializeRequestContent();
