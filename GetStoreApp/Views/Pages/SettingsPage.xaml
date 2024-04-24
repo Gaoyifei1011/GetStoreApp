@@ -1333,7 +1333,7 @@
                     </DropDownButton>
                 </Grid>
 
-                <!--  痕迹清理设置  -->
+                <!--  痕迹清理  -->
                 <Grid
                     Height="61"
                     Padding="16,12"
@@ -1382,7 +1382,7 @@
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}" />
                 </Grid>
 
-                <!--  实验性功能设置  -->
+                <!--  网络监控状态设置  -->
                 <Grid
                     Height="61"
                     Padding="16,12"
@@ -1401,25 +1401,78 @@
                         Grid.Column="0"
                         Margin="0,0,12,0"
                         FontSize="16"
-                        Glyph="&#xE7BA;" />
+                        Glyph="&#xE9D9;" />
 
                     <StackPanel
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         Orientation="Vertical">
 
-                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/ExperimentalFeatures')}" />
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitor')}" />
 
                         <TextBlock
-                            x:Name="ExperimentalFeaturesDescription"
+                            x:Name="NetWorkMonitorDescription"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ExperimentalFeaturesDescription')}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorDescription')}"
                             TextTrimming="CharacterEllipsis"
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ExperimentalFeaturesDescription')}" Visibility="{x:Bind ExperimentalFeaturesDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorDescription')}" Visibility="{x:Bind NetWorkMonitorDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <ToggleSwitch
+                        Grid.Column="2"
+                        MinWidth="0"
+                        Margin="0,-2,0,0"
+                        FlowDirection="RightToLeft"
+                        IsOn="{x:Bind NetWorkMonitorValue, Mode=OneWay}"
+                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorOffContent')}"
+                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorOnContent')}"
+                        Toggled="{x:Bind OnNetWorkMonitorToggled}" />
+                </Grid>
+
+                <!--  清理未释放的 WebView 进程  -->
+                <Grid
+                    Height="61"
+                    Padding="16,12"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <FontIcon
+                        Grid.Column="0"
+                        Margin="0,0,12,0"
+                        FontSize="16"
+                        Glyph="&#xE711;" />
+
+                    <StackPanel
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical">
+
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcess')}" />
+
+                        <TextBlock
+                            x:Name="TerminateWebViewProcessDescription"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcessDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcessDescription')}" Visibility="{x:Bind TerminateWebViewProcessDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -1427,8 +1480,8 @@
                     <Button
                         Grid.Column="2"
                         MinWidth="100"
-                        Click="{x:Bind OnConfigClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Config')}" />
+                        Click="{x:Bind OnTerminateWebViewProcessClicked}"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Terminate')}" />
                 </Grid>
 
                 <!--  日志记录设置  -->

@@ -297,6 +297,12 @@
   <data name="TaskbarSuccessfully" xml:space="preserve">
     <value>已成功将应用固定到任务栏</value>
   </data>
+  <data name="TerminateFailed" xml:space="preserve">
+    <value>浏览器进程关闭失败，请手动关闭</value>
+  </data>
+  <data name="TerminateSuccess" xml:space="preserve">
+    <value>浏览器进程关闭成功</value>
+  </data>
   <data name="UnInstallCopy" xml:space="preserve">
     <value>卸载命令已复制到剪贴板</value>
   </data>

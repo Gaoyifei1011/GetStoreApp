@@ -297,6 +297,12 @@
   <data name="TaskbarSuccessfully" xml:space="preserve">
     <value>The app was successfully pinned to the taskbar</value>
   </data>
+  <data name="TerminateFailed" xml:space="preserve">
+    <value>Terminate the browser process failed, please terminate it manually</value>
+  </data>
+  <data name="TerminateSuccess" xml:space="preserve">
+    <value>Terminate the browser process successfully</value>
+  </data>
   <data name="UnInstallCopy" xml:space="preserve">
     <value>Uninstall command was successfully copied to the clipboard</value>
   </data>

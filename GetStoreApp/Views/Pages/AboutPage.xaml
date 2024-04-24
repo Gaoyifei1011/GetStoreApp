@@ -220,7 +220,12 @@
                                         Orientation="Horizontal"
                                         Spacing="5"
                                         Visibility="{x:Bind IsChecking, Mode=OneWay}">
-                                        <ProgressRing Width="16" Height="16" />
+
+                                        <ProgressRing
+                                            Width="16"
+                                            Height="16"
+                                            IsActive="{x:Bind IsChecking, Mode=OneWay}" />
+
                                         <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('About/Checking')}" />
                                     </StackPanel>
                                 </Grid>

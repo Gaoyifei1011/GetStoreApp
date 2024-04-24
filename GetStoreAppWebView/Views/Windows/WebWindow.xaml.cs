@@ -348,6 +348,7 @@ namespace GetStoreAppWebView.Windows
         private async void OnProcessExited(WebViewControlProcess sender, object args)
         {
             webViewControlProcess = null;
+            webViewControl = null;
             await ContentDialogHelper.ShowAsync(new ProcessFailedDialog(), Content as FrameworkElement);
             (Application.Current as WebApp).Dispose();
         }

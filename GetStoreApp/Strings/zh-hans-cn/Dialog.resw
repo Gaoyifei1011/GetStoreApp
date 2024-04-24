@@ -201,21 +201,6 @@
   <data name="ExitCode" xml:space="preserve">
     <value>退出代码：</value>
   </data>
-  <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>实验性功能</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription" xml:space="preserve">
-    <value>实验功能说明</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription1" xml:space="preserve">
-    <value>下载文件时需要获取设备的网络状态信息，网络异常时应用主动停止下载文件。当设备误判网络状态时，请开启该选项。</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription2" xml:space="preserve">
-    <value>下载文件是依托Aria2下载进程来实现的，如果要定制化下载工具，请自定义配置文件的内容。</value>
-  </data>
-  <data name="ExperimentalWarning" xml:space="preserve">
-    <value>注意：这些是实验性功能。操作不当可能会导致应用奔溃，发生意外时请恢复到默认设置</value>
-  </data>
   <data name="FileInformationTitle" xml:space="preserve">
     <value>文件信息</value>
   </data>
@@ -290,12 +275,6 @@
   </data>
   <data name="RestartContent" xml:space="preserve">
     <value>应用即将重启，重启后应用的数据将会丢失，请确保您的工作内容已经全部保存。</value>
-  </data>
-  <data name="RestoreDefualt" xml:space="preserve">
-    <value>还原默认值</value>
-  </data>
-  <data name="RestoreDefaultSuccessfully" xml:space="preserve">
-    <value>已成功还原默认值</value>
   </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>您没有选择任何内容，请选中后再进行操作</value>

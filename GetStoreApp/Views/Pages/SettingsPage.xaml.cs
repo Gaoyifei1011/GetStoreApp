@@ -8,6 +8,7 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -257,6 +258,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     _installMode = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallMode)));
+                }
+            }
+        }
+
+        private bool _netWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;
+
+        public bool NetWorkMonitorValue
+        {
+            get { return _netWorkMonitorValue; }
+
+            set
+            {
+                if (!Equals(_netWorkMonitorValue, value))
+                {
+                    _netWorkMonitorValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NetWorkMonitorValue)));
                 }
             }
         }
@@ -629,14 +646,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 实验功能设置
-        /// </summary>
-        private async void OnConfigClicked(object sender, RoutedEventArgs args)
-        {
-            await ContentDialogHelper.ShowAsync(new ExperimentalConfigDialog(), this);
-        }
-
-        /// <summary>
         /// 打开日志文件夹
         /// </summary>
         private async void OnOpenLogFolderClicked(object sender, RoutedEventArgs args)
@@ -651,6 +660,51 @@ namespace GetStoreApp.Views.Pages
         {
             bool result = LogService.ClearLog();
             TeachingTipHelper.Show(new LogCleanTip(result));
+        }
+
+        /// <summary>
+        /// 终止浏览器未正常退出的进程
+        /// </summary>
+        private void OnTerminateWebViewProcessClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    Kernel32Library.GetStartupInfo(out STARTUPINFO ProcessStartupInfo);
+                    ProcessStartupInfo.lpReserved = IntPtr.Zero;
+                    ProcessStartupInfo.lpDesktop = IntPtr.Zero;
+                    ProcessStartupInfo.lpTitle = IntPtr.Zero;
+                    ProcessStartupInfo.dwX = 0;
+                    ProcessStartupInfo.dwY = 0;
+                    ProcessStartupInfo.dwXSize = 0;
+                    ProcessStartupInfo.dwYSize = 0;
+                    ProcessStartupInfo.dwXCountChars = 500;
+                    ProcessStartupInfo.dwYCountChars = 500;
+                    ProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
+                    ProcessStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
+                    ProcessStartupInfo.cbReserved2 = 0;
+                    ProcessStartupInfo.lpReserved2 = IntPtr.Zero;
+                    ProcessStartupInfo.cb = Marshal.SizeOf<STARTUPINFO>();
+
+                    bool result = Kernel32Library.CreateProcess(null, "taskkill /F /IM Win32WebViewHost.exe", IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.CREATE_NO_WINDOW, IntPtr.Zero, null, ref ProcessStartupInfo, out PROCESS_INFORMATION processInformation);
+
+                    if (result)
+                    {
+                        if (processInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(processInformation.hProcess);
+                        if (processInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(processInformation.hThread);
+                    }
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        TeachingTipHelper.Show(new TerminateProcessTip(result));
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Aria2 Process create failed.", e);
+                }
+            });
         }
 
         /// <summary>
@@ -728,6 +782,19 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);
                 UseDevVersion = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 下载文件时“网络状态监控”开启设置
+        /// </summary>
+        private void OnNetWorkMonitorToggled(object sender, RoutedEventArgs args)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch is not null)
+            {
+                NetWorkMonitorService.SetNetWorkMonitorValue(toggleSwitch.IsOn);
+                NetWorkMonitorValue = toggleSwitch.IsOn;
             }
         }
 

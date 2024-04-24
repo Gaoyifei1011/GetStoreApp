@@ -192,9 +192,6 @@
   <data name="CodeInstall" xml:space="preserve">
     <value>Direct installation</value>
   </data>
-  <data name="Config" xml:space="preserve">
-    <value>Config</value>
-  </data>
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
   </data>
@@ -243,12 +240,6 @@
   <data name="EncryptedPackageOnContent" xml:space="preserve">
     <value>filter</value>
   </data>
-  <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>Experimental features</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription" xml:space="preserve">
-    <value>Experimental features of the app, generally without modification</value>
-  </data>
   <data name="FileStoragePath" xml:space="preserve">
     <value>File storage path</value>
   </data>
@@ -294,6 +285,9 @@
   <data name="NetWorkMonitor" xml:space="preserve">
     <value>Network monitoring status</value>
   </data>
+  <data name="NetWorkMonitorDescription" xml:space="preserve">
+    <value>Monitor the network status in real time while downloading files</value>
+  </data>
   <data name="NetWorkMonitorOffContent" xml:space="preserve">
     <value>Closed</value>
   </data>
@@ -323,12 +317,6 @@
   </data>
   <data name="OfficialVersionInstallToolTip" xml:space="preserve">
     <value>Click to install the official version</value>
-  </data>
-  <data name="OpenConfigFile" xml:space="preserve">
-    <value>Open the Aria2 configuration file</value>
-  </data>
-  <data name="OpenConfigFolder" xml:space="preserve">
-    <value>Open the configuration file directory</value>
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>Click to access the folder</value>
@@ -374,6 +362,15 @@
   </data>
   <data name="SystemThemeSettings" xml:space="preserve">
     <value>System theme settings</value>
+  </data>
+  <data name="Terminate" xml:space="preserve">
+    <value>Terminate</value>
+  </data>
+  <data name="TerminateWebViewProcess" xml:space="preserve">
+    <value>Terminate webview process</value>
+  </data>
+  <data name="TerminateWebViewProcessDescription" xml:space="preserve">
+    <value>Terminates the background process of the WebView kernel engine</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Application theme</value>

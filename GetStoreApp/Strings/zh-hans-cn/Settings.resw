@@ -192,9 +192,6 @@
   <data name="CodeInstall" xml:space="preserve">
     <value>直接安装</value>
   </data>
-  <data name="Config" xml:space="preserve">
-    <value>配置</value>
-  </data>
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
   </data>
@@ -243,12 +240,6 @@
   <data name="EncryptedPackageOnContent" xml:space="preserve">
     <value>过滤</value>
   </data>
-  <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>实验性功能</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription" xml:space="preserve">
-    <value>应用的实验性功能，一般情况下无需修改</value>
-  </data>
   <data name="FileStoragePath" xml:space="preserve">
     <value>文件存放路径</value>
   </data>
@@ -294,6 +285,9 @@
   <data name="NetWorkMonitor" xml:space="preserve">
     <value>网络监控状态</value>
   </data>
+  <data name="NetWorkMonitorDescription" xml:space="preserve">
+    <value>下载文件时实时监控网络的状态</value>
+  </data>
   <data name="NetWorkMonitorOffContent" xml:space="preserve">
     <value>关闭</value>
   </data>
@@ -323,12 +317,6 @@
   </data>
   <data name="OfficialVersionInstallToolTip" xml:space="preserve">
     <value>点击安装官方版本</value>
-  </data>
-  <data name="OpenConfigFile" xml:space="preserve">
-    <value>打开Aria2配置文件</value>
-  </data>
-  <data name="OpenConfigFolder" xml:space="preserve">
-    <value>打开配置文件目录</value>
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>单击访问该文件夹</value>
@@ -374,6 +362,15 @@
   </data>
   <data name="SystemThemeSettings" xml:space="preserve">
     <value>系统主题设置</value>
+  </data>
+  <data name="Terminate" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="TerminateWebViewProcess" xml:space="preserve">
+    <value>关闭浏览器进程</value>
+  </data>
+  <data name="TerminateWebViewProcessDescription" xml:space="preserve">
+    <value>关闭 WebView 内核引擎的后台进程</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>应用主题</value>

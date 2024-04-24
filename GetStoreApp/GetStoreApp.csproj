@@ -98,7 +98,6 @@
     <None Remove="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\Download\FileInformationDialog.xaml" />
     <None Remove="UI\Dialogs\Download\InstallingNotifyDialog.xaml" />
-    <None Remove="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
@@ -111,6 +110,7 @@
     <None Remove="UI\TeachingTips\NetWorkErrorTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="UI\TeachingTips\ShareFailedTip.xaml" />
+    <None Remove="UI\TeachingTips\TerminateProcessTip.xaml" />
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -150,7 +150,6 @@
     <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Settings\ExperimentalConfigDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
@@ -163,6 +162,7 @@
     <Page Update="UI\TeachingTips\NetWorkErrorTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\ShareFailedTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\TerminateProcessTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\AboutPage.xaml" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" Generator="MSBuild:Compile" />
     <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />

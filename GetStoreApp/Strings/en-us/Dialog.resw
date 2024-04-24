@@ -201,21 +201,6 @@
   <data name="ExitCode" xml:space="preserve">
     <value>Exit code: </value>
   </data>
-  <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>Experimental features</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription" xml:space="preserve">
-    <value>Experimental functions description</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription1" xml:space="preserve">
-    <value>When downloading files, you need to obtain the network status information of the device, and the application actively stops downloading files when the network is abnormal. Enable this option when the device misjudges the network status.</value>
-  </data>
-  <data name="ExperimentalFeaturesDescription2" xml:space="preserve">
-    <value>The download file is based on the Aria2 download process, if you want to customize the download tool, please customize the content of the configuration file.</value>
-  </data>
-  <data name="ExperimentalWarning" xml:space="preserve">
-    <value>Note: These are experimental features. Improper operation may cause the application to crash, please restore to the default settings in case of accidents</value>
-  </data>
   <data name="FileInformationTitle" xml:space="preserve">
     <value>File information</value>
   </data>
@@ -290,12 +275,6 @@
   </data>
   <data name="RestartContent" xml:space="preserve">
     <value>The app is about to restart, after the restart the app's data will be lost, make sure that your work has been saved in its entirety</value>
-  </data>
-  <data name="RestoreDefualt" xml:space="preserve">
-    <value>Restore default values</value>
-  </data>
-  <data name="RestoreDefaultSuccessfully" xml:space="preserve">
-    <value>The default values were successfully restored</value>
   </data>
   <data name="SelectEmptyContent" xml:space="preserve">
     <value>You have not selected anything, please select it before proceeding</value>

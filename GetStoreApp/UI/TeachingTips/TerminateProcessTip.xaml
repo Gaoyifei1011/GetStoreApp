@@ -1,5 +1,5 @@
 <TeachingTip
-    x:Class="GetStoreApp.UI.TeachingTips.CheckUpdateTip"
+    x:Class="GetStoreApp.UI.TeachingTips.TerminateProcessTip"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,13 +13,13 @@
 
     <Grid>
         <TextBlock
-            x:Name="NewestVersion"
+            x:Name="TerminateSuccess"
             Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/NewestVersion')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/TerminateSuccess')}" />
 
         <TextBlock
-            x:Name="NotNewestVersion"
+            x:Name="TerminateFailed"
             Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/NotNewestVersion')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/TerminateFailed')}" />
     </Grid>
 </TeachingTip>
