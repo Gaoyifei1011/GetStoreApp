@@ -175,7 +175,7 @@
     <value>Fill in</value>
   </data>
   <data name="HistoryAppName" xml:space="preserve">
-    <value>App name</value>
+    <value>App name / category id</value>
   </data>
   <data name="HistoryChannel" xml:space="preserve">
     <value>Channel</value>

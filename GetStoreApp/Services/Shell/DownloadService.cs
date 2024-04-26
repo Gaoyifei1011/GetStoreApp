@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
@@ -25,7 +26,7 @@ namespace GetStoreApp.Services.Shell
         /// <summary>
         /// 下载相应的文件
         /// </summary>
-        public static async Task QueryDownloadIndexAsync()
+        public static async Task QueryDownloadIndexAsync(List<QueryLinksModel> queryLinksList)
         {
             while (true)
             {
@@ -43,7 +44,7 @@ namespace GetStoreApp.Services.Shell
                     foreach (string indexItem in indexList)
                     {
                         int index = Convert.ToInt32(indexItem);
-                        if (index > ParseService._queryLinksList.Count || index < 1)
+                        if (index > queryLinksList.Count || index < 1)
                         {
                             checkResult = false;
                             break;
@@ -58,12 +59,12 @@ namespace GetStoreApp.Services.Shell
                             if (ConsoleLaunchService.IsAppRunning)
                             {
                                 ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, indexList.Count));
-                                DownloadFile(ParseService._queryLinksList[Convert.ToInt32(indexItem) - 1].FileName, ParseService._queryLinksList[Convert.ToInt32(indexItem) - 1].FileLink);
+                                DownloadFile(queryLinksList[Convert.ToInt32(indexItem) - 1].FileName, queryLinksList[Convert.ToInt32(indexItem) - 1].FileLink);
                             }
                         }
                         ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
                         string inputString = ConsoleHelper.ReadLine();
-                        if (inputString is "Y" || inputString is "y")
+                        if (inputString is "Y" or "y")
                         {
                             continue;
                         }
@@ -78,7 +79,7 @@ namespace GetStoreApp.Services.Shell
                     {
                         ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
                         string inputString = ConsoleHelper.ReadLine();
-                        if (inputString is "Y" || inputString is "y")
+                        if (inputString is "Y" or "y")
                         {
                             continue;
                         }
@@ -92,7 +93,7 @@ namespace GetStoreApp.Services.Shell
                 {
                     ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
                     string inputString = ConsoleHelper.ReadLine();
-                    if (inputString is "Y" || inputString is "y")
+                    if (inputString is "Y" or "y")
                     {
                         continue;
                     }

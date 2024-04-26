@@ -380,7 +380,8 @@
             HorizontalAlignment="Stretch"
             HorizontalContentAlignment="Stretch"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            IsExpanded="True">
+            IsExpanded="True"
+            Visibility="{x:Bind IsAppInfoVisible, Mode=OneWay}">
 
             <Expander.Resources>
                 <SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
@@ -508,7 +509,7 @@
                 Grid.Column="0"
                 Margin="0,0,12,0"
                 FontSize="16"
-                Glyph="&#xE71e;" />
+                Glyph="&#xE71E;" />
 
             <TextBlock
                 Grid.Column="1"
@@ -533,12 +534,12 @@
                     <TextBlock
                         Grid.Column="1"
                         Text="{x:Bind root:ResourceService.GetLocalized('Store/NonPackagedApp')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.StringReverseVisibilityConvert(AppInfo.CategoryID), Mode=OneWay}" />
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackagedApp), Mode=OneWay}" />
 
                     <TextBlock
-                        Grid.Column="2"
+                        Grid.Column="1"
                         Text="{x:Bind root:ResourceService.GetLocalized('Store/PackagedApp')}"
-                        Visibility="{x:Bind converter:ValueConverterHelper.StringVisibilityConvert(AppInfo.CategoryID), Mode=OneWay}" />
+                        Visibility="{x:Bind IsPackagedApp, Mode=OneWay}" />
                 </Grid>
 
                 <TextBlock Text="{x:Bind sys:String.Format(QueryLinksCountInfo, QueryLinksCollection.Count), Mode=OneWay}" />
@@ -588,7 +589,7 @@
                     Style="{StaticResource AppBarButtonStyle}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8b3;" />
+                        <FontIcon Glyph="&#xE8B3;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -598,7 +599,7 @@
                     Style="{StaticResource AppBarButtonStyle}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8e6;" />
+                        <FontIcon Glyph="&#xE8E6;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -608,7 +609,7 @@
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8c8;" />
+                        <FontIcon Glyph="&#xE8C8;" />
                     </AppBarButton.Icon>
 
                     <AppBarButton.Flyout>
@@ -636,7 +637,7 @@
                     Style="{StaticResource AppBarButtonStyle}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74b;" />
+                        <FontIcon Glyph="&#xE74B;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 

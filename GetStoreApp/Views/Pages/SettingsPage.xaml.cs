@@ -150,6 +150,22 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private DictionaryEntry _queryLinksModeItem = QueryLinksModeService.QueryLinksMode;
+
+        public DictionaryEntry QueryLinksModeItem
+        {
+            get { return _queryLinksModeItem; }
+
+            set
+            {
+                if (!Equals(_queryLinksModeItem, value))
+                {
+                    _queryLinksModeItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksModeItem)));
+                }
+            }
+        }
+
         private bool _encryptedPackageFilterValue = LinkFilterService.EncryptedPackageFilterValue;
 
         public bool EncryptedPackageFilterValue
@@ -284,7 +300,9 @@ namespace GetStoreApp.Views.Pages
 
         private List<DictionaryEntry> LanguageList { get; } = LanguageService.LanguageList;
 
-        private List<DictionaryEntry> HistoryLiteNumList { get; } = WebKernelService.WebKernelList;
+        private List<DictionaryEntry> WebKernelList { get; } = WebKernelService.WebKernelList;
+
+        private List<DictionaryEntry> QueryLinksModeList { get; } = QueryLinksModeService.QueryLinksModeList;
 
         private List<DictionaryEntry> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
 
@@ -460,8 +478,21 @@ namespace GetStoreApp.Views.Pages
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
-                WebKernelItem = HistoryLiteNumList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                WebKernelItem = WebKernelList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 WebKernelService.SetWebKernel(WebKernelItem);
+            }
+        }
+
+        /// <summary>
+        /// 选择查询链接方式
+        /// </summary>
+        private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
+        {
+            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
+            if (toggleMenuFlyoutItem.Tag is not null)
+            {
+                QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                QueryLinksModeService.SetQueryLinksMode(QueryLinksModeItem);
             }
         }
 
@@ -837,11 +868,11 @@ namespace GetStoreApp.Views.Pages
             {
                 return selectedBackdrop.Key.ToString();
             }
-            else if (index is 1 || index is 2)
+            else if (index is 1 or 2)
             {
                 return ResourceService.GetLocalized("Settings/Mica") + " " + selectedBackdrop.Key.ToString();
             }
-            else if (index is 3 || index is 4 || index is 5)
+            else if (index is 3 or 4 or 5)
             {
                 return ResourceService.GetLocalized("Settings/DesktopAcrylic") + " " + selectedBackdrop.Key.ToString();
             }

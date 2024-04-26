@@ -86,7 +86,7 @@ namespace GetStoreApp.Services.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "InitializeWebKernel download record state failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Initialize download record state failed.", e);
                 return;
             }
         }

@@ -18,7 +18,7 @@ namespace GetStoreApp.Models.Controls.Store
         public string HistoryKey { get; set; }
 
         /// <summary>
-        /// 查询链接控件：历史记录的应用名称
+        /// 查询链接控件：历史记录的应用名称或类别ID
         /// </summary>
         public string HistoryAppName { get; set; }
 

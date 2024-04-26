@@ -2,7 +2,9 @@
 using GetStoreApp.Helpers.Controls.Store;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -61,91 +63,151 @@ namespace GetStoreApp.Services.Shell
         {
             // 解析链接对应的产品 ID
             string productId = selectedType.Equals(TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(linkText) : linkText;
-
+            InfoBarSeverity state = InfoBarSeverity.Informational;
             bool requestState = true;
+            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
 
-            while (requestState)
+            if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
             {
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
-
-                string cookie = await QueryLinksHelper.GetCookieAsync();
-
-                List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
-                AppInfoModel appInfo = null;
-                int state = 0;
-
-                // 获取应用信息
-                Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
-
-                if (appInformationResult.Item1)
+                while (requestState)
                 {
-                    // 解析非商店应用数据
-                    if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
+                    string cookie = await QueryLinksHelper.GetCookieAsync();
+
+                    List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
+                    AppInfoModel appInfo = null;
+
+                    // 获取应用信息
+                    Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+
+                    if (appInformationResult.Item1)
                     {
-                        List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
-                        foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
+                        // 解析非商店应用数据
+                        if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                         {
-                            queryLinksList.Add(nonAppxPackage);
+                            List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                            foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
+                            {
+                                queryLinksList.Add(nonAppxPackage);
+                            }
+                            state = queryLinksList.Count is 0 ? InfoBarSeverity.Warning : InfoBarSeverity.Success;
                         }
-                        state = queryLinksList.Count is 0 ? 2 : 1;
+                        // 解析商店应用数据
+                        else
+                        {
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
+
+                            if (!string.IsNullOrEmpty(fileListXml))
+                            {
+                                List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, selectedChannel);
+                                foreach (QueryLinksModel appxPackage in appxPackagesList)
+                                {
+                                    queryLinksList.Add(appxPackage);
+                                }
+                                state = queryLinksList.Count is 0 ? InfoBarSeverity.Warning : InfoBarSeverity.Success;
+                            }
+                        }
+
+                        appInfo = appInformationResult.Item2;
                     }
-                    // 解析商店应用数据
                     else
                     {
-                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
-
-                        if (!string.IsNullOrEmpty(fileListXml))
-                        {
-                            List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, selectedChannel);
-                            foreach (QueryLinksModel appxPackage in appxPackagesList)
-                            {
-                                queryLinksList.Add(appxPackage);
-                            }
-                            state = queryLinksList.Count is 0 ? 2 : 1;
-                        }
+                        state = InfoBarSeverity.Error;
                     }
 
-                    appInfo = appInformationResult.Item2;
-                }
-                else
-                {
-                    state = 3;
-                }
+                    ConsoleHelper.Write(Environment.NewLine);
+                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
 
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
-
-                switch (state)
+                    switch (state)
+                    {
+                        case InfoBarSeverity.Success:
+                            {
+                                ConsoleHelper.SetTextColor(0x02);
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
+                                ConsoleHelper.Write(Environment.NewLine);
+                                ConsoleHelper.ResetTextColor();
+                                requestState = false;
+                                await ParseService.ParseDataAsync(appInfo, queryLinksList);
+                                break;
+                            }
+                        case InfoBarSeverity.Warning:
+                            {
+                                ConsoleHelper.SetTextColor(0x06);
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
+                                ConsoleHelper.Write(Environment.NewLine);
+                                ConsoleHelper.ResetTextColor();
+                                PrintRequestFailedData();
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = ConsoleHelper.ReadLine();
+                                requestState = regainString is "Y" or "y";
+                                break;
+                            }
+                        case InfoBarSeverity.Error:
+                            {
+                                ConsoleHelper.SetTextColor(0x04);
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
+                                ConsoleHelper.Write(Environment.NewLine);
+                                ConsoleHelper.ResetTextColor();
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = ConsoleHelper.ReadLine();
+                                requestState = regainString is "Y" or "y";
+                                break;
+                            }
+                    }
+                }
+            }
+            // 第三方接口
+            else if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[1]))
+            {
+                while (requestState)
                 {
-                    case 1:
-                        {
-                            ConsoleHelper.SetTextColor(0x02);
-                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
-                            ConsoleHelper.ResetTextColor();
-                            requestState = false;
-                            await ParseService.ParseDataAsync(appInfo, queryLinksList);
-                            break;
-                        }
-                    case 2:
-                        {
-                            ConsoleHelper.SetTextColor(0x06);
-                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
-                            ConsoleHelper.ResetTextColor();
-                            PrintRequestFailedData();
-                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                            string RegainString = ConsoleHelper.ReadLine();
-                            requestState = RegainString is "Y" || RegainString is "y";
-                            break;
-                        }
-                    case 3:
-                        {
-                            ConsoleHelper.SetTextColor(0x04);
-                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
-                            ConsoleHelper.ResetTextColor();
-                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                            string RegainString = ConsoleHelper.ReadLine();
-                            requestState = RegainString is "Y" || RegainString is "y";
-                            break;
-                        }
+                    string generateContent = HtmlRequestHelper.GenerateRequestContent(selectedType, linkText, selectedChannel);
+
+                    // 获取网页反馈回的原始数据
+                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+
+                    ConsoleHelper.Write(Environment.NewLine);
+                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
+
+                    state = HtmlRequestHelper.CheckRequestState(httpRequestData);
+
+                    switch (state)
+                    {
+                        case InfoBarSeverity.Success:
+                            {
+                                ConsoleHelper.SetTextColor(0x02);
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
+                                ConsoleHelper.Write(Environment.NewLine);
+                                ConsoleHelper.ResetTextColor();
+                                requestState = false;
+                                HtmlParseHelper.InitializeParseData(httpRequestData);
+                                List<QueryLinksModel> queryLinksList = HtmlParseHelper.HtmlParseLinks();
+                                await ParseService.ParseDataAsync(null, queryLinksList);
+                                break;
+                            }
+                        case InfoBarSeverity.Warning:
+                            {
+                                ConsoleHelper.SetTextColor(0x06);
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
+                                ConsoleHelper.Write(Environment.NewLine);
+                                ConsoleHelper.ResetTextColor();
+                                PrintRequestFailedData();
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = ConsoleHelper.ReadLine();
+                                requestState = regainString is "Y" or "y";
+                                break;
+                            }
+                        case InfoBarSeverity.Error:
+                            {
+                                ConsoleHelper.SetTextColor(0x04);
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
+                                ConsoleHelper.Write(Environment.NewLine);
+                                ConsoleHelper.ResetTextColor();
+                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = ConsoleHelper.ReadLine();
+                                requestState = regainString is "Y" or "y";
+                                break;
+                            }
+                    }
                 }
             }
         }

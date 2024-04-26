@@ -201,6 +201,38 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
+        private bool _isAppInfoVisible = false;
+
+        public bool IsAppInfoVisible
+        {
+            get { return _isAppInfoVisible; }
+
+            set
+            {
+                if (!Equals(_isAppInfoVisible, value))
+                {
+                    _resultCotnrolVisable = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInfoVisible)));
+                }
+            }
+        }
+
+        private bool _isPackagedApp = false;
+
+        public bool IsPackagedApp
+        {
+            get { return _isPackagedApp; }
+
+            set
+            {
+                if (!Equals(_isPackagedApp, value))
+                {
+                    _isPackagedApp = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPackagedApp)));
+                }
+            }
+        }
+
         private bool _isSelectMode = false;
 
         public bool IsSelectMode
@@ -536,11 +568,11 @@ namespace GetStoreApp.UI.Controls.Store
         private void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
         {
             StringBuilder appInformationBuilder = new StringBuilder();
-            appInformationBuilder.Append(ResourceService.GetLocalized("Store/AppName"));
+            appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppName"));
             appInformationBuilder.AppendLine(AppInfo.Name);
-            appInformationBuilder.Append(ResourceService.GetLocalized("Store/AppPublisher"));
+            appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppPublisher"));
             appInformationBuilder.AppendLine(AppInfo.Publisher);
-            appInformationBuilder.AppendLine(ResourceService.GetLocalized("Store/AppDescription"));
+            appInformationBuilder.AppendLine(ResourceService.GetLocalized("Store/QueryedAppDescription"));
             appInformationBuilder.AppendLine(AppInfo.Description);
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
@@ -889,82 +921,170 @@ namespace GetStoreApp.UI.Controls.Store
             IsQueryingLinks = true;
             SetControlState(InfoBarSeverity.Informational);
 
-            Task.Run(async () =>
+            // 商店接口查询方式
+            if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
             {
-                List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
-
-                // 记录当前选定的选项和填入的内容
-                int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
-                int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
-                string link = LinkText;
-
-                // 解析链接对应的产品 ID
-                string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
-
-                string cookie = await QueryLinksHelper.GetCookieAsync();
-
-                // 获取应用信息
-                Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
-
-                if (appInformationResult.Item1)
+                Task.Run(async () =>
                 {
-                    // 解析非商店应用数据
-                    if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
-                    {
-                        List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
-                        foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
-                        {
-                            queryLinksList.Add(nonAppxPackage);
-                        }
-                    }
-                    // 解析商店应用数据
-                    else
-                    {
-                        string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
+                    List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
 
-                        if (!string.IsNullOrEmpty(fileListXml))
+                    // 记录当前选定的选项和填入的内容
+                    int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
+                    int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
+                    string link = LinkText;
+
+                    // 解析链接对应的产品 ID
+                    string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
+
+                    string cookie = await QueryLinksHelper.GetCookieAsync();
+
+                    // 获取应用信息
+                    Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+
+                    if (appInformationResult.Item1)
+                    {
+                        // 解析非商店应用数据
+                        if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                         {
-                            List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[channelIndex].InternalName);
-                            foreach (QueryLinksModel appxPackage in appxPackagesList)
+                            List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                            foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                             {
-                                queryLinksList.Add(appxPackage);
+                                queryLinksList.Add(nonAppxPackage);
                             }
                         }
-                    }
-
-                    // 按设置选项设置的内容过滤列表
-                    if (LinkFilterService.EncryptedPackageFilterValue)
-                    {
-                        queryLinksList.RemoveAll(item =>
-                        item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
-                        item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
-                        item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
-                        item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
-                        );
-                    }
-
-                    if (LinkFilterService.BlockMapFilterValue)
-                    {
-                        queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
-                    }
-
-                    queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
-
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        IsQueryingLinks = false;
-
-                        if (queryLinksList.Count > 0)
+                        // 解析商店应用数据
+                        else
                         {
-                            UpdateHistory(appInformationResult.Item2.Name, typeIndex, channelIndex, link);
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
+
+                            if (!string.IsNullOrEmpty(fileListXml))
+                            {
+                                List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[channelIndex].InternalName);
+                                foreach (QueryLinksModel appxPackage in appxPackagesList)
+                                {
+                                    queryLinksList.Add(appxPackage);
+                                }
+                            }
+                        }
+
+                        // 按设置选项设置的内容过滤列表
+                        if (LinkFilterService.EncryptedPackageFilterValue)
+                        {
+                            queryLinksList.RemoveAll(item =>
+                            item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
+                            item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
+                            item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                            item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                            );
+                        }
+
+                        if (LinkFilterService.BlockMapFilterValue)
+                        {
+                            queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                        }
+
+                        queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            IsQueryingLinks = false;
+
+                            if (queryLinksList.Count > 0)
+                            {
+                                UpdateHistory(appInformationResult.Item2.Name, typeIndex, channelIndex, link);
+                                SetControlState(InfoBarSeverity.Success);
+                                ResultControlVisable = true;
+                                IsAppInfoVisible = true;
+                                IsPackagedApp = !string.IsNullOrEmpty(appInformationResult.Item2.CategoryID);
+
+                                AppInfo.Name = appInformationResult.Item2.Name;
+                                AppInfo.Publisher = appInformationResult.Item2.Publisher;
+                                AppInfo.Description = appInformationResult.Item2.Description;
+                                AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
+                                AppInfo.ProductID = appInformationResult.Item2.ProductID;
+
+                                lock (queryLinksLock)
+                                {
+                                    QueryLinksCollection.Clear();
+                                    foreach (QueryLinksModel resultItem in queryLinksList)
+                                    {
+                                        QueryLinksCollection.Add(resultItem);
+                                        Task.Delay(1);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                SetControlState(InfoBarSeverity.Warning);
+                                ResultControlVisable = false;
+                                IsAppInfoVisible = false;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            IsQueryingLinks = false;
+                            SetControlState(InfoBarSeverity.Error);
+                            ResultControlVisable = false;
+                        });
+                    }
+                });
+            }
+
+            // 第三方接口查询方式
+            else if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[1]))
+            {
+                Task.Run(async () =>
+                {
+                    // 记录当前选定的选项和填入的内容
+                    int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
+                    int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
+                    string link = LinkText;
+
+                    // 生成请求的内容
+                    string generateContent = HtmlRequestHelper.GenerateRequestContent(SelectedType.InternalName, link, SelectedChannel.InternalName);
+
+                    // 获取网页反馈回的原始数据
+                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+
+                    // 检查服务器返回获取的状态
+                    InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);
+
+                    if (requestState is InfoBarSeverity.Success)
+                    {
+                        HtmlParseHelper.InitializeParseData(httpRequestData);
+                        string categoryId = HtmlParseHelper.HtmlParseCID();
+                        List<QueryLinksModel> queryLinksList = HtmlParseHelper.HtmlParseLinks();
+
+                        // 按设置选项设置的内容过滤列表
+                        if (LinkFilterService.EncryptedPackageFilterValue)
+                        {
+                            queryLinksList.RemoveAll(item =>
+                            item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
+                            item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
+                            item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                            item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                            );
+                        }
+
+                        if (LinkFilterService.BlockMapFilterValue)
+                        {
+                            queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                        }
+
+                        queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            IsQueryingLinks = false;
+                            IsAppInfoVisible = false;
+                            IsPackagedApp = !string.IsNullOrEmpty(categoryId);
+
+                            UpdateHistory(categoryId, typeIndex, channelIndex, link);
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
-
-                            AppInfo.Name = appInformationResult.Item2.Name;
-                            AppInfo.Publisher = appInformationResult.Item2.Publisher;
-                            AppInfo.Description = appInformationResult.Item2.Description;
-                            AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
-                            AppInfo.ProductID = appInformationResult.Item2.ProductID;
 
                             lock (queryLinksLock)
                             {
@@ -975,24 +1095,30 @@ namespace GetStoreApp.UI.Controls.Store
                                     Task.Delay(1);
                                 }
                             }
-                        }
-                        else
+                        });
+                    }
+                    else if (requestState is InfoBarSeverity.Warning)
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
                         {
+                            IsQueryingLinks = false;
                             SetControlState(InfoBarSeverity.Warning);
                             ResultControlVisable = false;
-                        }
-                    });
-                }
-                else
-                {
-                    DispatcherQueue.TryEnqueue(() =>
+                            IsAppInfoVisible = false;
+                        });
+                    }
+                    else if (requestState is InfoBarSeverity.Error)
                     {
-                        IsQueryingLinks = false;
-                        SetControlState(InfoBarSeverity.Error);
-                        ResultControlVisable = false;
-                    });
-                }
-            });
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            IsQueryingLinks = false;
+                            SetControlState(InfoBarSeverity.Error);
+                            ResultControlVisable = false;
+                            IsAppInfoVisible = false;
+                        });
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -1064,6 +1190,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     HistoryModel historyItem = historyList[index];
                     historyItem.CreateTimeStamp = timeStamp;
+                    historyItem.HistoryAppName = appName;
                     historyList.RemoveAt(index);
                     historyList.Insert(0, historyItem);
                     HistoryStorageService.SaveQueryLinksData(historyList);

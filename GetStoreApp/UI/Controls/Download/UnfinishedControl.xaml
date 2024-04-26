@@ -74,7 +74,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8b7;" />
+                    <FontIcon Glyph="&#xE8B7;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -86,7 +86,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAllToolTip')}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE74b;" />
+                    <FontIcon Glyph="&#xE74B;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -119,7 +119,7 @@
                 Style="{StaticResource AppBarButtonStyle}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8b3;" />
+                    <FontIcon Glyph="&#xE8B3;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -129,7 +129,7 @@
                 Style="{StaticResource AppBarButtonStyle}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8e6;" />
+                    <FontIcon Glyph="&#xE8E6;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -140,7 +140,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE74d;" />
+                    <FontIcon Glyph="&#xE74D;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -288,7 +288,7 @@
                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 2)}">
 
                                 <Button.Content>
-                                    <FontIcon FontSize="14" Glyph="&#xE74b;" />
+                                    <FontIcon FontSize="14" Glyph="&#xE74B;" />
                                 </Button.Content>
                             </Button>
 

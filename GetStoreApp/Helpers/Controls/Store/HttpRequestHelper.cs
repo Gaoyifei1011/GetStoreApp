@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -46,7 +47,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         public static async Task<RequestModel> HttpRequestAsync(string content)
         {
-            RequestModel HttpRequestResult = null;
+            RequestModel httpRequestResult = null;
 
             // 添加超时设置（半分钟后停止获取）
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
@@ -124,7 +125,7 @@ namespace GetStoreApp.Helpers.Controls.Store
             }
             finally
             {
-                HttpRequestResult = new RequestModel
+                httpRequestResult = new RequestModel
                 {
                     RequestId = RequestId,
                     RequestStatusCode = RequestStatusCode,
@@ -134,32 +135,25 @@ namespace GetStoreApp.Helpers.Controls.Store
                 cancellationTokenSource.Dispose();
             }
 
-            return HttpRequestResult;
+            return httpRequestResult;
         }
 
         /// <summary>
         /// 检查请求后的状态信息
         /// </summary>
-        public static int CheckRequestState(RequestModel HttpRequestData)
+        public static InfoBarSeverity CheckRequestState(RequestModel HttpRequestData)
         {
             // 服务器请求异常，返回状态值3
             if (HttpRequestData.RequestId is not 0)
             {
-                return 3;
+                return InfoBarSeverity.Error;
             }
 
             // 服务器请求成功
             else
             {
                 // 成功下返回值为成功，否则返回警告
-                if (HttpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.", StringComparison.Ordinal))
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 2;
-                }
+                return HttpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.", StringComparison.OrdinalIgnoreCase) ? InfoBarSeverity.Success : InfoBarSeverity.Warning;
             }
         }
     }

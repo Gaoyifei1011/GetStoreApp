@@ -49,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Settings
         }
 
         /// <summary>
-        /// 历史记录显示数量发生修改时修改设置存储的微软商店页面历史记录显示数量值
+        /// 网页浏览器内核发生修改时修改设置存储的网页浏览器内核值
         /// </summary>
         public static void SetWebKernel(DictionaryEntry webKernel)
         {

@@ -80,7 +80,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8b7;" />
+                    <FontIcon Glyph="&#xE8B7;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -113,7 +113,7 @@
                 Style="{StaticResource AppBarButtonStyle}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8b3;" />
+                    <FontIcon Glyph="&#xE8B3;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -123,7 +123,7 @@
                 Style="{StaticResource AppBarButtonStyle}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8e6;" />
+                    <FontIcon Glyph="&#xE8E6;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -133,7 +133,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptionsToolTip')}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE74d;" />
+                    <FontIcon Glyph="&#xE74D;" />
                 </AppBarButton.Icon>
 
                 <AppBarButton.Flyout>
@@ -161,7 +161,7 @@
                 Style="{StaticResource AppBarButtonStyle}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE72d;" />
+                    <FontIcon Glyph="&#xE72D;" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
@@ -427,7 +427,12 @@
                                             Command="{StaticResource DeleteCommand}"
                                             CommandParameter="{Binding}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/Delete')}"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}" />
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteToolTip')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE74D;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
 
                                         <MenuFlyoutItem
                                             Height="32"
@@ -436,7 +441,12 @@
                                             CommandParameter="{Binding}"
                                             IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}" />
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE74D;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
 
                                         <MenuFlyoutSeparator />
 
@@ -449,7 +459,7 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                             <MenuFlyoutItem.Icon>
-                                                <FontIcon Glyph="&#xE72d;" />
+                                                <FontIcon Glyph="&#xE72D;" />
                                             </MenuFlyoutItem.Icon>
                                         </MenuFlyoutItem>
 

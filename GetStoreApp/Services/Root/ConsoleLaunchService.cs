@@ -105,7 +105,7 @@ namespace GetStoreApp.Services.Root
                 try
                 {
                     typeIndex = int.Parse(ConsoleHelper.ReadLine());
-                    if (typeIndex < 1 || typeIndex > 4)
+                    if (typeIndex is < 1 or > 4)
                     {
                         typeIndex = 1;
                     }
@@ -123,7 +123,7 @@ namespace GetStoreApp.Services.Root
                 try
                 {
                     channelIndex = int.Parse(ConsoleHelper.ReadLine());
-                    if (channelIndex < 1 || channelIndex > 4)
+                    if (channelIndex is < 1 or > 4)
                     {
                         channelIndex = 4;
                     }

@@ -42,6 +42,8 @@ namespace GetStoreApp.Services.Root
 
         public static List<DictionaryEntry> WebKernelList { get; } = new List<DictionaryEntry>();
 
+        public static List<DictionaryEntry> QueryLinksModeList { get; } = new List<DictionaryEntry>();
+
         public static List<DictionaryEntry> InstallModeList { get; } = new List<DictionaryEntry>();
 
         public static List<DictionaryEntry> ThemeList { get; } = new List<DictionaryEntry>();
@@ -77,6 +79,7 @@ namespace GetStoreApp.Services.Root
             InitializeSearchStoreInfoList();
             InitializeBackdropList();
             InitializeWebKernelList();
+            InitializeQueryLinksModeList();
             InitializeInstallModeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
@@ -227,6 +230,15 @@ namespace GetStoreApp.Services.Root
         {
             WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelWebView"), "WebView"));
             WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelWebView2"), "WebView2"));
+        }
+
+        /// <summary>
+        /// 初始化查询链接方式信息列表
+        /// </summary>
+        private static void InitializeQueryLinksModeList()
+        {
+            QueryLinksModeList.Add(new DictionaryEntry(GetLocalized("Settings/QueryLinksModeOfficial"), "Official"));
+            QueryLinksModeList.Add(new DictionaryEntry(GetLocalized("Settings/QueryLinksModeThirdParty"), "ThirdParty"));
         }
 
         /// <summary>

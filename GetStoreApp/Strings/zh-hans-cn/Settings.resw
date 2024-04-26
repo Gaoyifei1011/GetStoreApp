@@ -330,6 +330,18 @@
   <data name="OpenWinGetSettingsToolTip" xml:space="preserve">
     <value>打开配置文件</value>
   </data>
+  <data name="QueryLinksMode" xml:space="preserve">
+    <value>查询链接方式</value>
+  </data>
+  <data name="QueryLinksModeDescription" xml:space="preserve">
+    <value>选择查询链接的应用接口渠道</value>
+  </data>
+  <data name="QueryLinksModeOfficial" xml:space="preserve">
+    <value>官方接口</value>
+  </data>
+  <data name="QueryLinksModeThirdParty" xml:space="preserve">
+    <value>第三方接口</value>
+  </data>
   <data name="RestartApp" xml:space="preserve">
     <value>重启应用</value>
   </data>

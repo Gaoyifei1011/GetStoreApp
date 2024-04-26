@@ -146,7 +146,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/FilterToolTip')}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE71c;" />
+                    <FontIcon Glyph="&#xE71C;" />
                 </AppBarButton.Icon>
 
                 <AppBarButton.Flyout>
@@ -247,7 +247,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/RefreshToolTip')}">
 
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE72c;" />
+                    <FontIcon Glyph="&#xE72C;" />
                 </AppBarButton.Icon>
             </AppBarButton>
         </StackPanel>

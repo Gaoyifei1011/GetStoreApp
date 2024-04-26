@@ -19,14 +19,14 @@ namespace GetStoreApp.Helpers.Controls.Store
 
         private static Regex ResultDataListRegex = ResultDataListRegularExpression();
 
-        private static string ParseContent = string.Empty;
+        private static string parseContent = string.Empty;
 
         /// <summary>
         /// 初始化HtmlParseService类时添加HtmlReqeustHelper生成的字符串数据
         /// </summary>
-        public static void InitializeParseData(RequestModel HttpRequestData)
+        public static void InitializeParseData(RequestModel httpRequestData)
         {
-            ParseContent = HttpRequestData.RequestContent;
+            parseContent = httpRequestData.RequestContent;
         }
 
         /// <summary>
@@ -34,16 +34,16 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         public static string HtmlParseCID()
         {
-            if (!string.IsNullOrEmpty(ParseContent))
+            if (!string.IsNullOrEmpty(parseContent))
             {
-                MatchCollection CIDCollection = CIDRegex.Matches(ParseContent);
-                if (CIDCollection.Count > 0)
+                MatchCollection cidCollection = CIDRegex.Matches(parseContent);
+                if (cidCollection.Count > 0)
                 {
-                    GroupCollection CIDGroups = CIDCollection[0].Groups;
+                    GroupCollection cidGroups = cidCollection[0].Groups;
 
-                    if (CIDGroups.Count > 0)
+                    if (cidGroups.Count > 0)
                     {
-                        return CIDGroups[1].Value;
+                        return cidGroups[1].Value;
                     }
                 }
             }
@@ -55,13 +55,13 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         public static List<QueryLinksModel> HtmlParseLinks()
         {
-            List<QueryLinksModel> ResultDataList = new List<QueryLinksModel>();
+            List<QueryLinksModel> resultDataList = new List<QueryLinksModel>();
 
-            if (!string.IsNullOrEmpty(ParseContent))
+            if (!string.IsNullOrEmpty(parseContent))
             {
-                MatchCollection ResultDataListCollection = ResultDataListRegex.Matches(ParseContent);
+                MatchCollection resultDataListCollection = ResultDataListRegex.Matches(parseContent);
 
-                foreach (Match matchItem in ResultDataListCollection)
+                foreach (Match matchItem in resultDataListCollection)
                 {
                     GroupCollection ResultDataListGroups = matchItem.Groups;
 
@@ -74,11 +74,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                         queryLinksData.FileSHA1 = ResultDataListGroups[4].Value;
                         queryLinksData.FileSize = ResultDataListGroups[5].Value;
 
-                        ResultDataList.Add(queryLinksData);
+                        resultDataList.Add(queryLinksData);
                     }
                 }
             }
-            return ResultDataList;
+            return resultDataList;
         }
     }
 }

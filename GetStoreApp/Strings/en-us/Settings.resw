@@ -330,6 +330,18 @@
   <data name="OpenWinGetSettingsToolTip" xml:space="preserve">
     <value>Open configuration file</value>
   </data>
+  <data name="QueryLinksMode" xml:space="preserve">
+    <value>Query links mode</value>
+  </data>
+  <data name="QueryLinksModeDescription" xml:space="preserve">
+    <value>Select the application interface channel to query the link</value>
+  </data>
+  <data name="QueryLinksModeOfficial" xml:space="preserve">
+    <value>Official interface</value>
+  </data>
+  <data name="QueryLinksModeThirdParty" xml:space="preserve">
+    <value>Third party interface</value>
+  </data>
   <data name="RestartApp" xml:space="preserve">
     <value>Application restart</value>
   </data>

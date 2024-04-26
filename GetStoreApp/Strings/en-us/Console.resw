@@ -192,7 +192,7 @@
   <data name="ProductIDSample" xml:space="preserve">
     <value>ProductID sample: 9WZDNCRFJBMP</value>
   </data>
-  <data name="QueryLinksCollection" xml:space="preserve">
+  <data name="QueryLinksCount" xml:space="preserve">
     <value>A total of {0} results were retrieved</value>
   </data>
   <data name="RequestError" xml:space="preserve">

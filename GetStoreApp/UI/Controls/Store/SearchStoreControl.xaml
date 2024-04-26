@@ -211,7 +211,7 @@
                 Grid.Column="0"
                 Margin="0,0,12,0"
                 FontSize="16"
-                Glyph="&#xE71e;" />
+                Glyph="&#xE71E;" />
 
             <TextBlock
                 Grid.Column="1"

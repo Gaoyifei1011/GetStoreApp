@@ -175,7 +175,7 @@
     <value>填入</value>
   </data>
   <data name="HistoryAppName" xml:space="preserve">
-    <value>应用名称</value>
+    <value>应用名称 / 类别ID</value>
   </data>
   <data name="HistoryChannel" xml:space="preserve">
     <value>通道</value>

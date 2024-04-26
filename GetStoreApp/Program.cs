@@ -126,6 +126,7 @@ namespace GetStoreApp
             {
                 ResourceService.LocalizeReosurce();
                 LinkFilterService.InitializeLinkFilterValue();
+                QueryLinksModeService.InitializeQueryLinksMode();
                 await DownloadOptionsService.InitializeAsync();
             }
 

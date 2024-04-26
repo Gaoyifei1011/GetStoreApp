@@ -37,6 +37,8 @@
 
         public const string WebKernelKey = "WebKernel";
 
+        public const string QueryLinksModeKey = "QueryLinksMode";
+
         public const string WindowWidthKey = "WindowWidth";
 
         public const string WindowHeightKey = "WindowHeight";

@@ -55,23 +55,23 @@ namespace GetStoreApp.Views.Pages
         }
 
         //项目引用信息
-        private Hashtable ReferenceDict { get; } = new Hashtable()
+        private List<DictionaryEntry> ReferenceList { get; } = new List<DictionaryEntry>()
         {
-            { "Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"},
-            { "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"},
-            { "Microsoft.WindowsPackageManager.ComInterop","https://github.com/microsoft/winget-cli"},
-            { "Mile.Aria2", "https://github.com/ProjectMile/Mile.Aria2"},
+            new DictionaryEntry("Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"),
+            new DictionaryEntry( "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
+            new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),
+            new DictionaryEntry("Mile.Aria2", "https://github.com/ProjectMile/Mile.Aria2"),
         };
 
         //项目感谢者信息
-        private Hashtable ThanksDict { get; } = new Hashtable()
+        private List<DictionaryEntry> ThanksList { get; } = new List<DictionaryEntry>()
         {
-            { "AndromedaMelody","https://github.com/AndromedaMelody" },
-            { "cnbluefire","https://github.com/cnbluefire" },
-            { "飞翔","https://fionlen.azurewebsites.net" },
-            { "MouriNaruto","https://github.com/MouriNaruto" },
-            { "TaylorShi","https://github.com/TaylorShi" },
-            { "wherewhere","https://github.com/wherewhere" },
+            new DictionaryEntry("AndromedaMelody", "https://github.com/AndromedaMelody"),
+            new DictionaryEntry("cnbluefire", "https://github.com/cnbluefire"),
+            new DictionaryEntry("飞翔", "https://fionlen.azurewebsites.net"),
+            new DictionaryEntry("MouriNaruto", "https://github.com/MouriNaruto"),
+            new DictionaryEntry("TaylorShi", "https://github.com/TaylorShi"),
+            new DictionaryEntry("wherewhere", "https://github.com/wherewhere"),
         };
 
         public event PropertyChangedEventHandler PropertyChanged;

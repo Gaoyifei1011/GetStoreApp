@@ -98,14 +98,24 @@
                             Padding="11,0"
                             Click="{x:Bind OnShowReleaseNotesClicked}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotesToolTip')}" />
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotesToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE70B;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
 
                         <MenuFlyoutItem
                             Height="32"
                             Padding="11,0"
                             Click="{x:Bind OnShowLicenseClicked}"
                             Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowLicenseToolTip')}" />
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/ShowLicenseToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE779;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
 
                         <MenuFlyoutSeparator />
 
@@ -324,7 +334,7 @@
                             Padding="5"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch"
-                            ItemsSource="{x:Bind ReferenceDict}"
+                            ItemsSource="{x:Bind ReferenceList}"
                             SelectionMode="None">
 
                             <GridView.ItemContainerStyle>
@@ -845,7 +855,7 @@
                                 Padding="5"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
-                                ItemsSource="{x:Bind ThanksDict}"
+                                ItemsSource="{x:Bind ThanksList}"
                                 SelectionMode="None">
 
                                 <GridView.ItemContainerStyle>

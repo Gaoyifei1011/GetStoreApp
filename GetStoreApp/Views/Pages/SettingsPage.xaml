@@ -503,7 +503,7 @@
                         Grid.Column="0"
                         Margin="0,0,12,0"
                         FontSize="16"
-                        Glyph="&#xEA8f;" />
+                        Glyph="&#xEA8F;" />
 
                     <StackPanel
                         Grid.Column="1"
@@ -544,7 +544,7 @@
                         Toggled="{x:Bind OnNotificationToggled}" />
                 </Grid>
 
-                <!--  历史记录设置  -->
+                <!--  浏览器内核设置  -->
                 <Grid
                     Height="61"
                     Padding="16,12"
@@ -596,17 +596,85 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnWebKernelSelectClicked}"
-                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(HistoryLiteNumList[0].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(WebKernelList[0].Value), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind sys:Convert.ToString(HistoryLiteNumList[0].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(WebKernelList[0].Key)}" />
 
                                 <ToggleMenuFlyoutItem
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnWebKernelSelectClicked}"
-                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(HistoryLiteNumList[1].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(WebKernelList[1].Value), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind sys:Convert.ToString(HistoryLiteNumList[1].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(WebKernelList[1].Key)}" />
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </Grid>
+
+                <!--  查询链接方式设置  -->
+                <Grid
+                    Height="61"
+                    Padding="16,12"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <FontIcon
+                        Grid.Column="0"
+                        Margin="0,0,12,0"
+                        FontSize="16"
+                        Glyph="&#xE773;" />
+
+                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksMode')}" />
+
+                        <TextBlock
+                            x:Name="QueryLinksModeDescription"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}" Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <DropDownButton
+                        Grid.Column="2"
+                        VerticalAlignment="Center"
+                        Content="{x:Bind QueryLinksModeItem.Key, Mode=OneWay}">
+
+                        <DropDownButton.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnQueryLinksModeSelectClicked}"
+                                    IsChecked="{x:Bind QueryLinksModeItem.Value.Equals(QueryLinksModeList[0].Value), Mode=OneWay}"
+                                    Tag="0"
+                                    Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[0].Key)}" />
+
+                                <ToggleMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnQueryLinksModeSelectClicked}"
+                                    IsChecked="{x:Bind QueryLinksModeItem.Value.Equals(QueryLinksModeList[1].Value), Mode=OneWay}"
+                                    Tag="1"
+                                    Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[1].Key)}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -631,7 +699,7 @@
                                 Grid.Column="0"
                                 Margin="0,0,12,0"
                                 FontSize="16"
-                                Glyph="&#xE71c;" />
+                                Glyph="&#xE71C;" />
 
                             <StackPanel
                                 Grid.Column="1"
@@ -1352,7 +1420,7 @@
                         Grid.Column="0"
                         Margin="0,0,12,0"
                         FontSize="16"
-                        Glyph="&#xE74d;" />
+                        Glyph="&#xE74D;" />
 
                     <StackPanel
                         Grid.Column="1"

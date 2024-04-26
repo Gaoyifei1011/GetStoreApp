@@ -192,7 +192,7 @@
   <data name="ProductIDSample" xml:space="preserve">
     <value>产品 ID 例子：9WZDNCRFJBMP</value>
   </data>
-  <data name="QueryLinksCollection" xml:space="preserve">
+  <data name="QueryLinksCount" xml:space="preserve">
     <value>共检索到{0}个结果</value>
   </data>
   <data name="RequestError" xml:space="preserve">

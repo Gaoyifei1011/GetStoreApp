@@ -136,7 +136,7 @@
                     Style="{StaticResource AppBarButtonStyle}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72b;" />
+                        <FontIcon Glyph="&#xE72B;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -147,7 +147,7 @@
                     Style="{StaticResource AppBarButtonStyle}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72a;" />
+                        <FontIcon Glyph="&#xE72A;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -157,7 +157,7 @@
                     Style="{StaticResource AppBarButtonStyle}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72c;" />
+                        <FontIcon Glyph="&#xE72C;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </StackPanel>
@@ -242,7 +242,7 @@
                                 Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
 
                                 <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE74d;" />
+                                    <FontIcon Glyph="&#xE74D;" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                         </MenuFlyout>
