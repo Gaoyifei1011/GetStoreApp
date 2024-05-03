@@ -62,7 +62,7 @@
     <None Remove="WebApp.xaml" />
     <None Remove="WebWindow.xaml" />
 
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240428000" GeneratePathProperty="true" />
 
     <Page Remove="WebApp.xaml" />
 

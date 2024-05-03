@@ -121,7 +121,7 @@
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="WinUIApp.xaml" />
 
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240428000" />
     <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Styles\AppBarButton.xaml" Generator="MSBuild:Compile" />
