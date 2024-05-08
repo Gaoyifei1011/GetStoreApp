@@ -531,7 +531,8 @@
                                 <HyperlinkButton
                                     Padding="0"
                                     Click="{x:Bind OnTroubleShootClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" />
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
+                                    Style="{StaticResource HyperlinkButtonStyle}" />
                             </StackPanel>
 
                             <MenuFlyoutSeparator />
@@ -789,6 +790,22 @@
                                 Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadDescription3')}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
+
+                            <StackPanel
+                                Margin="30,0,16,5"
+                                Orientation="Horizontal"
+                                Spacing="15">
+
+                                <HyperlinkButton
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/LearnDeliveryOptimization')}"
+                                    NavigateUri="https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization"
+                                    Style="{StaticResource HyperlinkButtonStyle}" />
+
+                                <HyperlinkButton
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/LearnBits')}"
+                                    NavigateUri="https://learn.microsoft.com/windows/win32/bits/background-intelligent-transfer-service-portal"
+                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                            </StackPanel>
 
                             <MenuFlyoutSeparator />
 

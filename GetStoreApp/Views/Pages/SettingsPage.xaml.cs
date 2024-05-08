@@ -246,18 +246,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private int _downloadItem = DownloadOptionsService.DownloadItem;
+        private DictionaryEntry _doEngineMode = DownloadOptionsService.DoEngineMode;
 
-        public int DownloadItem
+        public DictionaryEntry DoEngineMode
         {
-            get { return _downloadItem; }
+            get { return _doEngineMode; }
 
             set
             {
-                if (!Equals(_downloadItem, value))
+                if (!Equals(_doEngineMode, value))
                 {
-                    _downloadItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadItem)));
+                    _doEngineMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoEngineMode)));
                 }
             }
         }
@@ -305,6 +305,8 @@ namespace GetStoreApp.Views.Pages
         private List<DictionaryEntry> QueryLinksModeList { get; } = QueryLinksModeService.QueryLinksModeList;
 
         private List<DictionaryEntry> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
+
+        private List<DictionaryEntry> DoEngineModeList { get; } = DownloadOptionsService.DoEngineModeList;
 
         private List<DictionaryEntry> InstallModeList { get; } = InstallModeService.InstallModeList;
 
@@ -643,15 +645,32 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 修改同时下载文件数
+        /// 打开传递优化设置
         /// </summary>
-        private void OnDownloadItemSelectClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenDeliveryOptimizationClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:delivery-optimization"));
+        }
+
+        /// <summary>
+        /// 下载引擎说明
+        /// </summary>
+        private void OnLearnDoEngineClicked(object sender, RoutedEventArgs args)
+        {
+            MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+        }
+
+        /// <summary>
+        /// 下载引擎方式设置
+        /// </summary>
+
+        private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
-                DownloadItem = Convert.ToInt32(toggleMenuFlyoutItem.Tag);
-                DownloadOptionsService.SetItem(DownloadItem);
+                DoEngineMode = DoEngineModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                DownloadOptionsService.SetDoEngineMode(DoEngineMode);
             }
         }
 
@@ -843,6 +862,14 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：设置页面——挂载的事件
+
+        /// <summary>
+        /// 判断传递优化下载引擎是否存在
+        /// </summary>
+        private bool IsDeliveryOptimizationExisted()
+        {
+            return InfoHelper.SystemVersion.Build >= 22621;
+        }
 
         /// <summary>
         /// 判断两个版本是否共同存在

@@ -13,7 +13,7 @@
 
         public const string DownloadFolderKey = "DownloadFolder";
 
-        public const string DownloadItemKey = "DownloadItemKey";
+        public const string DoEngineModeKey = "DoEngineMode";
 
         public const string InstallModeKey = "InstallMode";
 

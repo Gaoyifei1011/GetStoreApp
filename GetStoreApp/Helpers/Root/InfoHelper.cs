@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.System.Profile;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -17,6 +18,9 @@ namespace GetStoreApp.Helpers.Root
             Package.Current.Id.Version.Revision
             );
 
+        // 系统版本信息
+        public static Version SystemVersion { get; }
+
         // 系统范围文件夹位置
         public static SystemDataPaths SystemDataPath { get; } = SystemDataPaths.GetDefault();
 
@@ -32,6 +36,13 @@ namespace GetStoreApp.Helpers.Root
         public static string GetAppInstalledLocation()
         {
             return Package.Current.InstalledLocation.Path;
+        }
+
+        static InfoHelper()
+        {
+            string systemVersion = AnalyticsInfo.VersionInfo.DeviceFamilyVersion;
+            ulong version = ulong.Parse(systemVersion);
+            SystemVersion = new Version((int)((version & 0xFFFF000000000000L) >> 48), (int)((version & 0x0000FFFF00000000L) >> 32), (int)((version & 0x00000000FFFF0000L) >> 16), (int)(version & 0x000000000000FFFFL));
         }
     }
 }

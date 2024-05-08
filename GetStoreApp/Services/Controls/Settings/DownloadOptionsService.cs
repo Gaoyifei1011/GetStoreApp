@@ -1,6 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -14,25 +17,32 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class DownloadOptionsService
     {
-        private static string folderSettingsKey = ConfigKey.DownloadFolderKey;
-        private static string downloadItemSettingsKey = ConfigKey.DownloadItemKey;
-        private static int defaultItem = 1;
+        private static string downloadFolderKey = ConfigKey.DownloadFolderKey;
+        private static string doEngineModeKey = ConfigKey.DoEngineModeKey;
+        private static DictionaryEntry defaultDoEngineMode;
 
         public static StorageFolder DefaultDownloadFolder { get; private set; }
 
         public static StorageFolder DownloadFolder { get; private set; }
 
-        public static int DownloadItem { get; private set; }
+        public static DictionaryEntry DoEngineMode { get; private set; }
+
+        public static int DownloadItem { get; } = 1;
+
+        public static List<DictionaryEntry> DoEngineModeList { get; } = ResourceService.DoEngineModeList;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
-        public static async Task InitializeAsync()
+        public static async Task InitializeDownloadAsync()
         {
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
 
+            defaultDoEngineMode = InfoHelper.SystemVersion.Build >= 22621 ? DoEngineModeList[0] : DoEngineModeList[1];
+
             DownloadFolder = await GetFolderAsync();
-            DownloadItem = GetItem();
+
+            DoEngineMode = GetDoEngineMode();
         }
 
         /// <summary>
@@ -40,7 +50,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static async Task<StorageFolder> GetFolderAsync()
         {
-            string folder = LocalSettingsService.ReadSetting<string>(folderSettingsKey);
+            string folder = LocalSettingsService.ReadSetting<string>(downloadFolderKey);
 
             try
             {
@@ -63,19 +73,21 @@ namespace GetStoreApp.Services.Controls.Settings
         }
 
         /// <summary>
-        /// 获取设置存储的同时下载任务数值，如果设置没有存储，使用默认值
+        /// 获取设置存储的下载引擎方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static int GetItem()
+        private static DictionaryEntry GetDoEngineMode()
         {
-            int? downloadItemValue = LocalSettingsService.ReadSetting<int?>(downloadItemSettingsKey);
+            object doEngineMode = LocalSettingsService.ReadSetting<object>(doEngineModeKey);
 
-            if (!downloadItemValue.HasValue)
+            if (doEngineMode is null)
             {
-                SetItem(defaultItem);
-                return defaultItem;
+                SetDoEngineMode(defaultDoEngineMode);
+                return DoEngineModeList.Find(item => item.Value.Equals(defaultDoEngineMode.Value));
             }
 
-            return Convert.ToInt32(downloadItemValue);
+            DictionaryEntry selectedDoEngine = DoEngineModeList.Find(item => item.Value.Equals(doEngineMode));
+
+            return selectedDoEngine.Key is null ? defaultDoEngineMode : selectedDoEngine;
         }
 
         /// <summary>
@@ -85,17 +97,17 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DownloadFolder = downloadFolder;
 
-            LocalSettingsService.SaveSetting(folderSettingsKey, downloadFolder.Path);
+            LocalSettingsService.SaveSetting(downloadFolderKey, downloadFolder.Path);
         }
 
         /// <summary>
-        /// 同时下载任务数发生修改时修改设置存储的同时下载任务数值
+        /// 应用下载引擎发生修改时修改设置存储的下载引擎方式值
         /// </summary>
-        public static void SetItem(int downloadItem)
+        public static void SetDoEngineMode(DictionaryEntry doEngineMode)
         {
-            DownloadItem = downloadItem;
+            DoEngineMode = doEngineMode;
 
-            LocalSettingsService.SaveSetting(downloadItemSettingsKey, downloadItem);
+            LocalSettingsService.SaveSetting(doEngineModeKey, doEngineMode.Value);
         }
 
         /// <summary>

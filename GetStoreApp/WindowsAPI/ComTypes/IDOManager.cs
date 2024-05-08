@@ -27,7 +27,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// DODownloadProperty_LocalPath
         /// </param>
         /// <returns>指向 IEnumUnknown 的接口指针的地址，用于枚举现有下载。 枚举器的内容取决于 类别的值。 枚举接口中包含的下载是以前由此函数的同一调用方创建的下载。</returns>
-        [return: MarshalAs(UnmanagedType.Interface)]
-        IEnumUnknown EnumDownloads(IntPtr category);
+        IntPtr EnumDownloads(IntPtr category);
     }
 }

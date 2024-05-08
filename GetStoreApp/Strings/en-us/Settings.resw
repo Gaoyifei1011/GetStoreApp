@@ -195,6 +195,12 @@
   <data name="Custom" xml:space="preserve">
     <value>Custom</value>
   </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>Delivery optimization settings</value>
+  </data>
+  <data name="DeliveryOptimizationDescription" xml:space="preserve">
+    <value>Open the system's delivery optimization Settings</value>
+  </data>
   <data name="DesktopAcrylic" xml:space="preserve">
     <value>Acrylic</value>
   </data>
@@ -213,14 +219,20 @@
   <data name="DevVersionInstallToolTip" xml:space="preserve">
     <value>Click to install the dev version</value>
   </data>
+  <data name="DoEngineBits" xml:space="preserve">
+    <value>BITS</value>
+  </data>
+  <data name="DoEngineDo" xml:space="preserve">
+    <value>Delivery optimization</value>
+  </data>
+  <data name="DOEngineMode" xml:space="preserve">
+    <value>Download engine mode</value>
+  </data>
+  <data name="DOEngineModeDescription" xml:space="preserve">
+    <value>Set the download engine to use when downloading files</value>
+  </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>Downloads</value>
-  </data>
-  <data name="DownloadItem" xml:space="preserve">
-    <value>The number of simultaneous download tasks</value>
-  </data>
-  <data name="DownloadItemDescription" xml:space="preserve">
-    <value>Sets the number of files that are downloaded at the same time</value>
   </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>Download management</value>
@@ -260,6 +272,9 @@
   </data>
   <data name="LanguageDescription" xml:space="preserve">
     <value>Modify the language displayed in the app interface</value>
+  </data>
+  <data name="LearnDoEngine" xml:space="preserve">
+    <value>Download engine instruction</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>Link filtering</value>
@@ -317,6 +332,9 @@
   </data>
   <data name="OfficialVersionInstallToolTip" xml:space="preserve">
     <value>Click to install the official version</value>
+  </data>
+  <data name="OpenDeliveryOptimzationSettings" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>Click to access the folder</value>

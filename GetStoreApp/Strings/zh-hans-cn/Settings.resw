@@ -195,6 +195,12 @@
   <data name="Custom" xml:space="preserve">
     <value>自定义</value>
   </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>传递优化设置</value>
+  </data>
+  <data name="DeliveryOptimizationDescription" xml:space="preserve">
+    <value>打开系统的传递优化设置</value>
+  </data>
   <data name="DesktopAcrylic" xml:space="preserve">
     <value>亚克力</value>
   </data>
@@ -213,14 +219,20 @@
   <data name="DevVersionInstallToolTip" xml:space="preserve">
     <value>点击安装开发版本</value>
   </data>
+  <data name="DoEngineBits" xml:space="preserve">
+    <value>后台智能传输服务</value>
+  </data>
+  <data name="DoEngineDo" xml:space="preserve">
+    <value>传递优化</value>
+  </data>
+  <data name="DOEngineMode" xml:space="preserve">
+    <value>下载引擎方式</value>
+  </data>
+  <data name="DOEngineModeDescription" xml:space="preserve">
+    <value>设置下载文件时使用的下载引擎</value>
+  </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>下载</value>
-  </data>
-  <data name="DownloadItem" xml:space="preserve">
-    <value>同时下载任务数</value>
-  </data>
-  <data name="DownloadItemDescription" xml:space="preserve">
-    <value>设置同时下载的文件数目</value>
   </data>
   <data name="DownloadOptions" xml:space="preserve">
     <value>下载管理</value>
@@ -260,6 +272,9 @@
   </data>
   <data name="LanguageDescription" xml:space="preserve">
     <value>修改应用界面显示的语言</value>
+  </data>
+  <data name="LearnDoEngine" xml:space="preserve">
+    <value>下载引擎说明</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
     <value>链接过滤</value>
@@ -317,6 +332,9 @@
   </data>
   <data name="OfficialVersionInstallToolTip" xml:space="preserve">
     <value>点击安装官方版本</value>
+  </data>
+  <data name="OpenDeliveryOptimzationSettings" xml:space="preserve">
+    <value>打开</value>
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">
     <value>单击访问该文件夹</value>

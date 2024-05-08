@@ -52,6 +52,8 @@ namespace GetStoreApp.Services.Root
 
         public static List<DictionaryEntry> WinGetInstallModeList { get; } = new List<DictionaryEntry>();
 
+        public static List<DictionaryEntry> DoEngineModeList { get; } = new List<DictionaryEntry>();
+
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
@@ -84,6 +86,7 @@ namespace GetStoreApp.Services.Root
             InitializeThemeList();
             InitializeTraceCleanupList();
             InitializeWinGetInstallModeList();
+            InitializeDoEngineModeList();
         }
 
         /// <summary>
@@ -298,6 +301,15 @@ namespace GetStoreApp.Services.Root
         {
             WinGetInstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/InteractiveInstall"), nameof(PackageInstallMode.Interactive)));
             WinGetInstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/SlientInstall"), nameof(PackageInstallMode.Silent)));
+        }
+
+        /// <summary>
+        /// 初始化下载引擎方式信息列表
+        /// </summary>
+        private static void InitializeDoEngineModeList()
+        {
+            DoEngineModeList.Add(new DictionaryEntry(GetLocalized("Settings/DoEngineDo"), "DeliveryOptimization"));
+            DoEngineModeList.Add(new DictionaryEntry(GetLocalized("Settings/DoEngineBits"), "BITS"));
         }
 
         /// <summary>

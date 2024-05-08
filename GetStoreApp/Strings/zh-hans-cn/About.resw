@@ -184,13 +184,13 @@
     <value>开发目的</value>
   </data>
   <data name="DevelopPurposeDescription" xml:space="preserve">
-    <value>Microsoft Store 提供了对已上架商店应用的分发，下载和更新通道。但是在最新的 Microsoft Store 中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。该应用使用了 store.rg-adguard.net 提供的获取接口，绕开了 Microsoft Store 官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。</value>
+    <value>Microsoft Store 提供了对已上架商店应用的分发，下载和更新通道。但是在最新的 Microsoft Store 中，微软要求用户下载商店的应用需要使用在线账户。这对一些从不使用微软账户且应用必须依赖商店下载的用户带来了困扰。该应用使用了官方API和第三方API提供的获取接口，绕开了 Microsoft Store 官方提供的应用下载渠道。用户可以离线下载所需的应用安装包，进行独立部署。</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>下载管理说明</value>
   </data>
   <data name="DownloadDescription1" xml:space="preserve">
-    <value>应用的下载功能并不是由应用本身所提供的，它使用的是开源的Aria2下载工具来下载文件。所以在下载文件的过程中会在本地磁盘出现两个文件，一个是下载文件自己的文件名称，另一个是扩展名为Aria2的下载文件。下载文件的时长取决于您的网络连接速度。</value>
+    <value>应用的下载功能并不是由应用本身所提供的，它使用的是系统内置的传递优化或后台智能传输服务（BITS）来下载文件。所以在下载文件的过程中会在本地磁盘出现 TMP 格式的临时下载文件，下载文件的时长取决于您的网络连接速度。</value>
   </data>
   <data name="DownloadDescription2" xml:space="preserve">
     <value>下载链接具有时效性，一段时间过后如果访问下载链接就会出现404错误。所以该应用暂不支持下载失败的应用恢复下载。如果您有未完成且链接已经超时的下载任务，建议您重新获取链接后再进行下载。</value>
@@ -248,6 +248,12 @@
   </data>
   <data name="LaunchParametersDescription" xml:space="preserve">
     <value>桌面应用程序现在已经开始支持参数运行了，具体的使用方法请点击下方的参数说明</value>
+  </data>
+  <data name="LearnBits" xml:space="preserve">
+    <value>了解后台智能传输服务</value>
+  </data>
+  <data name="LearnDeliveryOptimization" xml:space="preserve">
+    <value>了解传递优化</value>
   </data>
   <data name="LearnWinGetConfig" xml:space="preserve">
     <value>了解配置选项</value>

@@ -184,13 +184,13 @@
     <value>Purpose of development</value>
   </data>
   <data name="DevelopPurposeDescription" xml:space="preserve">
-    <value>The Microsoft Store provides a distribution, download, and update channel for apps that are already on the shelves. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This has plagued some users who never use a Microsoft account and whose apps must rely on store downloads. The app uses the acquisition interface provided by store.rg-adguard.net, bypassing the official App Download Channel provided by the Microsoft Store. Users can download the required app installation packages offline for standalone deployment.</value>
+    <value>The Microsoft Store provides distribution, download, and update access to apps already on the store. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This is a problem for users who never use a Microsoft account and must rely on the store to download their apps. The app uses the official API and the acquisition interface provided by the third-party API, bypassing the official app download channel provided by the Microsoft Store. Users can download the required application installation package offline for independent deployment.</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download management instructions</value>
   </data>
   <data name="DownloadDescription1" xml:space="preserve">
-    <value>The download function of the application is not provided by the application itself, it uses the open source Aria2 download tool to download the file. Therefore, in the process of downloading the file, two files will appear on the local disk, one is the file name of the download file itself, and the other is the download file with the extension Aria2. The length of time the file is downloaded depends on your network connection speed.</value>
+    <value>The download function of the application is not provided by the application itself, it uses the built-in delivery optimization or background intelligent transfer service (BITS) to download files. Therefore, during the download process, a temporary download file in TMP format will appear on the local disk, and the download time will depend on your Internet connection speed.</value>
   </data>
   <data name="DownloadDescription2" xml:space="preserve">
     <value>The download link is time-sensitive, and a 404 error will appear if you visit the download link after a certain period of time. Therefore, the application does not support resuming downloads for applications that fail to download. If you have an incomplete download task that has been timed out, we recommend that you re-obtain the link before downloading.</value>
@@ -248,6 +248,12 @@
   </data>
   <data name="LaunchParametersDescription" xml:space="preserve">
     <value>The desktop application now supports parameter operation, please click the parameter description below for specific usage</value>
+  </data>
+  <data name="LearnBits" xml:space="preserve">
+    <value>Learn bits</value>
+  </data>
+  <data name="LearnDeliveryOptimization" xml:space="preserve">
+    <value>Learn delivery optimization</value>
   </data>
   <data name="LearnWinGetConfig" xml:space="preserve">
     <value>learn config options</value>

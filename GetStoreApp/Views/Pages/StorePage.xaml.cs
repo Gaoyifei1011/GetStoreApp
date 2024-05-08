@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -94,8 +93,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
         {
-            //await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
-            DeliveryOptimizationService.CreateDownload("https://dldir1v6.qq.com/weixin/Windows/WeChatSetup.exe", @"C:\Users\Gaoyifei\Download\WeChatSetup.exe");
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
         }
 
         /// <summary>

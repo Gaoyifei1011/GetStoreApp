@@ -85,6 +85,7 @@ namespace GetStoreApp.Services.Controls.Download
             // 挂载网络状态变化的事件
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
 
+            DeliveryOptimizationService.InItialize();
             semaphoreSlim = new SemaphoreSlim(1, 1);
             downloadSchedulerTimer ??= ThreadPoolTimer.CreatePeriodicTimer(DownloadSchedulerTimerElapsed, TimeSpan.FromSeconds(1));
         }

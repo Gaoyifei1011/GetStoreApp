@@ -127,7 +127,7 @@ namespace GetStoreApp
                 ResourceService.LocalizeReosurce();
                 LinkFilterService.InitializeLinkFilterValue();
                 QueryLinksModeService.InitializeQueryLinksMode();
-                await DownloadOptionsService.InitializeAsync();
+                await DownloadOptionsService.InitializeDownloadAsync();
             }
 
             // 初始化其他设置信息（桌面应用程序）

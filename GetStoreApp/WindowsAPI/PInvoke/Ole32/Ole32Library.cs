@@ -34,6 +34,25 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         public static partial int CoInitializeEx(IntPtr pvReserved, COINIT dwCoInit);
 
         /// <summary>
+        /// 注册安全性并设置进程的默认安全值。
+        /// </summary>
+        /// <param name="pSecDesc">服务器将用于接收呼叫的访问权限。 仅当服务器调用 CoInitializeSecurity 时，COM 才使用此参数。 其值是指向三种类型之一的指针：AppID、 IAccessControl 对象或 SECURITY_DESCRIPTOR，采用绝对格式。 有关详细信息，请参阅备注部分。</param>
+        /// <param name="cAuthSvc">asAuthSvc 参数中的条目计数。 仅当服务器调用 CoInitializeSecurity 时，COM 才使用此参数。 如果此参数为 0，则不会注册任何身份验证服务，并且服务器无法接收安全调用。 值 -1 告知 COM 选择要注册的身份验证服务，如果是这种情况， asAuthSvc 参数必须为 NULL。 但是，如果此参数为 -1，则服务器永远不会选择 Schannel 作为身份验证服务。</param>
+        /// <param name="asAuthSvc">服务器愿意用来接收呼叫的身份验证服务数组。 仅当服务器调用 CoInitializeSecurity 时，COM 才使用此参数。 有关详细信息，请参阅 SOLE_AUTHENTICATION_SERVICE。</param>
+        /// <param name="pReserved1">此参数是保留的，必须为 NULL。</param>
+        /// <param name="dwAuthnLevel">进程的默认身份验证级别。 服务器和客户端在调用 CoInitializeSecurity 时都使用此参数。 COM 将失败以较低身份验证级别到达的调用。 默认情况下，所有代理将至少使用此身份验证级别。 此值应包含 身份验证级别常量之一。 默认情况下，对 IUnknown 的所有调用都在此级别进行。</param>
+        /// <param name="dwImpLevel">
+        /// 代理的默认模拟级别。 仅当进程是客户端时，才使用此参数的值。 它应该是 模拟级别常量中的值，RPC_C_IMP_LEVEL_DEFAULT除外，它不适用于 CoInitializeSecurity。
+        /// 来自客户端的传出调用始终使用指定的模拟级别。 (不协商。) 客户端的传入调用可以在任何模拟级别进行。 默认情况下，所有 IUnknown 调用都是使用此模拟级别进行的，因此即使是安全感知型应用程序也应仔细设置此级别。 若要确定每个身份验证服务支持的模拟级别，请参阅 COM 和安全包中身份验证服务的说明。 有关模拟级别的详细信息，请参阅 模拟。
+        /// </param>
+        /// <param name="pAuthList">指向 SOLE_AUTHENTICATION_LIST的指针，它是 SOLE_AUTHENTICATION_INFO 结构的数组。 此列表指示客户端可用于调用服务器的每个身份验证服务的信息。 仅当客户端调用 CoInitializeSecurity 时，COM 才使用此参数。</param>
+        /// <param name="dwCapabilities">客户端或服务器的其他功能，通过设置一个或多个 EOLE_AUTHENTICATION_CAPABILITIES 值来指定。 其中一些值不能同时使用，在使用特定身份验证服务时无法设置其中一些值。 有关这些标志的详细信息，请参阅备注部分。</param>
+        /// <param name="pReserved3">此参数是保留的，必须为 NULL。</param>
+        /// <returns>此函数可以返回E_INVALIDARG的标准返回值和其他值。</returns>
+        [LibraryImport(Ole32, EntryPoint = "CoInitializeSecurity", SetLastError = false)]
+        public static partial int CoInitializeSecurity(IntPtr pSecDesc, IntPtr cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1, int dwAuthnLevel, int dwImpLevel, IntPtr pAuthList, int dwCapabilities, IntPtr pReserved3);
+
+        /// <summary>
         /// 设置将用于对指定代理进行调用的身份验证信息。 这是 IClientSecurity：：SetBlanket 的帮助程序函数。
         /// </summary>
         /// <param name="punk">要设置的代理。</param>
