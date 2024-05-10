@@ -33,7 +33,7 @@
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
-    <Win32Resource>GetStoreAppWebViewResource.res</Win32Resource>
+    <Win32Resource>GetStoreAppWebView.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>

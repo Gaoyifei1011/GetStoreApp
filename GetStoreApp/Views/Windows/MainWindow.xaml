@@ -10,362 +10,397 @@
     SizeChanged="{x:Bind OnSizeChanged}"
     mc:Ignorable="d">
 
-    <Grid
+    <Page
+        x:Name="MainPage"
         ActualThemeChanged="{x:Bind OnActualThemeChanged}"
-        Background="{x:Bind WindowBackground, Mode=OneWay}"
         KeyDown="{x:Bind OnKeyDown}"
         RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}">
 
-        <!--  应用标题栏内容  -->
-        <Grid
-            x:Name="AppTitlebar"
-            Height="45"
-            Margin="45,0,0,0"
-            VerticalAlignment="Top"
-            x:FieldModifier="public">
+        <Grid>
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.ThemeDictionaries>
+                        <ResourceDictionary x:Key="Default">
+                            <Color x:Key="DefaultBackgroundColor">#141414</Color>
+                            <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighConstract">
+                            <Color x:Key="DefaultBackgroundColor">#FF0000</Color>
+                            <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="Light">
+                            <Color x:Key="DefaultBackgroundColor">#F0F3F9</Color>
+                            <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                        </ResourceDictionary>
+                    </ResourceDictionary.ThemeDictionaries>
+                </ResourceDictionary>
+            </Grid.Resources>
 
-            <!--  标题栏图标和应用名称  -->
+            <!--  应用标题栏内容  -->
             <Grid
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Canvas.ZIndex="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="22" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image
-                    Grid.Column="0"
-                    Width="18"
-                    Height="18"
-                    Margin="2,3,0,0"
+                x:Name="AppTitlebar"
+                Height="45"
+                Margin="45,0,0,0"
+                VerticalAlignment="Top"
+                x:FieldModifier="public">
+                <!--  标题栏图标和应用名称  -->
+                <Grid
                     HorizontalAlignment="Left"
-                    Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
-                <TextBlock
-                    Grid.Column="1"
-                    Margin="12,2,0,0"
                     VerticalAlignment="Center"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
-                    TextWrapping="NoWrap" />
+                    Canvas.ZIndex="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image
+                        Grid.Column="0"
+                        Width="18"
+                        Height="18"
+                        Margin="2,3,0,0"
+                        HorizontalAlignment="Left"
+                        Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="12,2,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
+                        TextWrapping="NoWrap" />
 
-                <!--  标题栏右键菜单  -->
-                <Grid.Resources>
-                    <MenuFlyout
-                        x:Name="TitlebarMenuFlyout"
-                        x:FieldModifier="public"
-                        Placement="BottomEdgeAlignedLeft">
+                    <!--  标题栏右键菜单  -->
+                    <Grid.Resources>
+                        <MenuFlyout
+                            x:Name="TitlebarMenuFlyout"
+                            x:FieldModifier="public"
+                            Placement="BottomEdgeAlignedLeft">
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnRestoreClicked}"
-                            IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
-                            Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnRestoreClicked}"
+                                IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
+                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE923;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE923;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnMoveClicked}"
-                            IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                            Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                            Tag="{x:Bind TitlebarMenuFlyout}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnMoveClicked}"
+                                IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
+                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                                Tag="{x:Bind TitlebarMenuFlyout}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnSizeClicked}"
-                            IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                            Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                            Tag="{x:Bind TitlebarMenuFlyout}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnSizeClicked}"
+                                IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
+                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                                Tag="{x:Bind TitlebarMenuFlyout}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnMinimizeClicked}"
-                            Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE921;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnMinimizeClicked}"
+                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE921;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnMaximizeClicked}"
-                            IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                            Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnMaximizeClicked}"
+                                IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
+                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE922;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE922;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                        <MenuFlyoutSeparator Width="200" />
+                            <MenuFlyoutSeparator Width="200" />
 
-                        <MenuFlyoutItem
-                            Click="{x:Bind OnCloseClicked}"
-                            Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnCloseClicked}"
+                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
 
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE8BB;" />
-                            </MenuFlyoutItem.Icon>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8BB;" />
+                                </MenuFlyoutItem.Icon>
 
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="F4" Modifiers="Menu" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </Grid.Resources>
+                                <MenuFlyoutItem.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="F4" Modifiers="Menu" />
+                                </MenuFlyoutItem.KeyboardAccelerators>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Grid.Resources>
+                </Grid>
             </Grid>
+
+            <NavigationView
+                AlwaysShowHeader="True"
+                BackRequested="{x:Bind OnBackRequested}"
+                Canvas.ZIndex="0"
+                IsBackButtonVisible="Visible"
+                IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
+                IsPaneToggleButtonVisible="False"
+                IsSettingsVisible="False"
+                Loaded="{x:Bind OnLoaded}"
+                OpenPaneLength="220"
+                PaneDisplayMode="Left"
+                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
+                SelectionChanged="{x:Bind OnSelectionChanged}">
+
+                <NavigationView.Resources>
+                    <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
+                    <Thickness x:Key="NavigationViewContentMargin">0,30,0,0</Thickness>
+                </NavigationView.Resources>
+
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Tag="0">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowStoreText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Store.png" />
+                        </NavigationViewItem.Icon>
+
+                        <NavigationViewItem.ContextFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToStartScreenClicked}"
+                                    Tag="Store"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                            </MenuFlyout>
+                        </NavigationViewItem.ContextFlyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Visibility="{x:Bind WindowStoreText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+
+                    <NavigationViewItem Tag="1">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowAppUpdateText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/AppUpdate.png" />
+                        </NavigationViewItem.Icon>
+
+                        <NavigationViewItem.ContextFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToStartScreenClicked}"
+                                    Tag="AppUpdate"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                            </MenuFlyout>
+                        </NavigationViewItem.ContextFlyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}" Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+
+                    <NavigationViewItemSeparator Margin="0,0,5,0" />
+
+                    <NavigationViewItem Tag="2">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowWinGetText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/WinGet.png" />
+                        </NavigationViewItem.Icon>
+
+                        <NavigationViewItem.ContextFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToStartScreenClicked}"
+                                    Tag="WinGet"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                            </MenuFlyout>
+                        </NavigationViewItem.ContextFlyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+
+                    <NavigationViewItem Tag="3">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowUWPAppText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/UWPApp.png" />
+                        </NavigationViewItem.Icon>
+
+                        <NavigationViewItem.ContextFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToStartScreenClicked}"
+                                    Tag="UWPApp"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                            </MenuFlyout>
+                        </NavigationViewItem.ContextFlyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+
+                    <NavigationViewItemSeparator Margin="0,0,5,0" />
+
+                    <NavigationViewItem Tag="4">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowDownloadText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
+                        </NavigationViewItem.Icon>
+
+                        <NavigationViewItem.ContextFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToStartScreenClicked}"
+                                    Tag="Download"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                            </MenuFlyout>
+                        </NavigationViewItem.ContextFlyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+
+                    <NavigationViewItem Tag="5">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowWebText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
+                        </NavigationViewItem.Icon>
+
+                        <NavigationViewItem.ContextFlyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnPinToStartScreenClicked}"
+                                    Tag="Web"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                            </MenuFlyout>
+                        </NavigationViewItem.ContextFlyout>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Visibility="{x:Bind WindowWebText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+                </NavigationView.MenuItems>
+
+                <NavigationView.FooterMenuItems>
+                    <NavigationViewItem Tag="6">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowAboutText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
+                        </NavigationViewItem.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Visibility="{x:Bind WindowAboutText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+
+                    <NavigationViewItem Tag="7">
+
+                        <NavigationViewItem.Content>
+                            <TextBlock
+                                x:Name="WindowSettingsText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </NavigationViewItem.Content>
+
+                        <NavigationViewItem.Icon>
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />
+                        </NavigationViewItem.Icon>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Visibility="{x:Bind WindowSettingsText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </NavigationViewItem>
+                </NavigationView.FooterMenuItems>
+
+                <Frame
+                    x:Name="WindowFrame"
+                    Navigated="{x:Bind OnNavigated}"
+                    NavigationFailed="{x:Bind OnNavigationFailed}">
+                    <Frame.ContentTransitions>
+                        <TransitionCollection>
+                            <NavigationThemeTransition>
+                                <DrillInNavigationTransitionInfo />
+                            </NavigationThemeTransition>
+                        </TransitionCollection>
+                    </Frame.ContentTransitions>
+                </Frame>
+            </NavigationView>
+
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="BackgroundDefault">
+                        <VisualState.Setters>
+                            <Setter Target="MainPage.Background" Value="{ThemeResource DefaultBackgroundColorBrush}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="BackgroundTransparent">
+                        <VisualState.Setters>
+                            <Setter Target="MainPage.Background" Value="Transparent" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
         </Grid>
-
-        <NavigationView
-            AlwaysShowHeader="True"
-            BackRequested="{x:Bind OnBackRequested}"
-            Canvas.ZIndex="0"
-            IsBackButtonVisible="Visible"
-            IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
-            IsPaneToggleButtonVisible="False"
-            IsSettingsVisible="False"
-            Loaded="{x:Bind OnLoaded}"
-            OpenPaneLength="220"
-            PaneDisplayMode="Left"
-            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
-            SelectionChanged="{x:Bind OnSelectionChanged}">
-
-            <NavigationView.Resources>
-                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
-                <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
-                <Thickness x:Key="NavigationViewContentMargin">0,30,0,0</Thickness>
-            </NavigationView.Resources>
-
-            <NavigationView.MenuItems>
-                <NavigationViewItem Tag="0">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowStoreText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Store.png" />
-                    </NavigationViewItem.Icon>
-
-                    <NavigationViewItem.ContextFlyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnPinToStartScreenClicked}"
-                                Tag="Store"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
-                        </MenuFlyout>
-                    </NavigationViewItem.ContextFlyout>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Visibility="{x:Bind WindowStoreText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItem Tag="1">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowAppUpdateText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/AppUpdate.png" />
-                    </NavigationViewItem.Icon>
-
-                    <NavigationViewItem.ContextFlyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnPinToStartScreenClicked}"
-                                Tag="AppUpdate"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
-                        </MenuFlyout>
-                    </NavigationViewItem.ContextFlyout>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}" Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItemSeparator Margin="0,0,5,0" />
-
-                <NavigationViewItem Tag="2">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowWinGetText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/WinGet.png" />
-                    </NavigationViewItem.Icon>
-
-                    <NavigationViewItem.ContextFlyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnPinToStartScreenClicked}"
-                                Tag="WinGet"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
-                        </MenuFlyout>
-                    </NavigationViewItem.ContextFlyout>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItem Tag="3">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowUWPAppText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/UWPApp.png" />
-                    </NavigationViewItem.Icon>
-
-                    <NavigationViewItem.ContextFlyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnPinToStartScreenClicked}"
-                                Tag="UWPApp"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
-                        </MenuFlyout>
-                    </NavigationViewItem.ContextFlyout>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItemSeparator Margin="0,0,5,0" />
-
-                <NavigationViewItem Tag="4">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowDownloadText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
-                    </NavigationViewItem.Icon>
-
-                    <NavigationViewItem.ContextFlyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnPinToStartScreenClicked}"
-                                Tag="Download"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
-                        </MenuFlyout>
-                    </NavigationViewItem.ContextFlyout>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItem Tag="5">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowWebText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
-                    </NavigationViewItem.Icon>
-
-                    <NavigationViewItem.ContextFlyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnPinToStartScreenClicked}"
-                                Tag="Web"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
-                        </MenuFlyout>
-                    </NavigationViewItem.ContextFlyout>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Visibility="{x:Bind WindowWebText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
-
-            <NavigationView.FooterMenuItems>
-                <NavigationViewItem Tag="6">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowAboutText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
-                    </NavigationViewItem.Icon>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Visibility="{x:Bind WindowAboutText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-
-                <NavigationViewItem Tag="7">
-
-                    <NavigationViewItem.Content>
-                        <TextBlock
-                            x:Name="WindowSettingsText"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </NavigationViewItem.Content>
-
-                    <NavigationViewItem.Icon>
-                        <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />
-                    </NavigationViewItem.Icon>
-
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Visibility="{x:Bind WindowSettingsText.IsTextTrimmed, Mode=OneWay}" />
-                    </ToolTipService.ToolTip>
-                </NavigationViewItem>
-            </NavigationView.FooterMenuItems>
-
-            <Frame
-                x:Name="WindowFrame"
-                Navigated="{x:Bind OnNavigated}"
-                NavigationFailed="{x:Bind OnNavigationFailed}">
-                <Frame.ContentTransitions>
-                    <TransitionCollection>
-                        <NavigationThemeTransition>
-                            <DrillInNavigationTransitionInfo />
-                        </NavigationThemeTransition>
-                    </TransitionCollection>
-                </Frame.ContentTransitions>
-            </Frame>
-        </NavigationView>
-    </Grid>
+    </Page>
 </Window>

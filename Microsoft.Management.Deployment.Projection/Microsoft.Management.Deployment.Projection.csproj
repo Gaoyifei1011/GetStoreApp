@@ -31,7 +31,7 @@
   <ItemGroup>
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
     
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.11132" GeneratePathProperty="true" IncludeAssets="none" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.11261" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
 
     <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />

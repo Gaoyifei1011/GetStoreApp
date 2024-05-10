@@ -21,7 +21,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -97,22 +96,6 @@ namespace GetStoreApp.Views.Windows
                 {
                     _windowTheme = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
-                }
-            }
-        }
-
-        private SolidColorBrush _windowBackground;
-
-        public SolidColorBrush WindowBackground
-        {
-            get { return _windowBackground; }
-
-            set
-            {
-                if (!Equals(_windowBackground, value))
-                {
-                    _windowBackground = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowBackground)));
                 }
             }
         }
@@ -386,7 +369,6 @@ namespace GetStoreApp.Views.Windows
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetTitleBarColor(sender.ActualTheme);
-            SetWindowBackground();
         }
 
         /// <summary>
@@ -631,55 +613,37 @@ namespace GetStoreApp.Views.Windows
             if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[1].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(MicaKind.Base);
+                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[2].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
+                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[3].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
+                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[4].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
+                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[5].Value))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
+                VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else
             {
                 SystemBackdrop = null;
+                VisualStateManager.GoToState(MainPage, "BackgroundDefault", false);
             }
 
             if (SystemBackdrop is not null && AlwaysShowBackdropService.AlwaysShowBackdropValue)
             {
                 (SystemBackdrop as MaterialBackdrop).BackdropConfiguration.IsInputActive = true;
-            }
-
-            SetWindowBackground();
-        }
-
-        /// <summary>
-        /// 应用背景色设置跟随系统发生变化时，修改控件的背景值
-        /// </summary>
-        private void SetWindowBackground()
-        {
-            if (SystemBackdrop is null)
-            {
-                if ((Content as FrameworkElement).ActualTheme is ElementTheme.Light)
-                {
-                    WindowBackground = new SolidColorBrush(Color.FromArgb(255, 240, 243, 249));
-                }
-                else
-                {
-                    WindowBackground = new SolidColorBrush(Color.FromArgb(255, 20, 20, 20));
-                }
-            }
-            else
-            {
-                WindowBackground = new SolidColorBrush(Colors.Transparent);
             }
         }
 
@@ -694,27 +658,25 @@ namespace GetStoreApp.Views.Windows
             titleBar.ForegroundColor = Colors.Transparent;
             titleBar.InactiveBackgroundColor = Colors.Transparent;
             titleBar.InactiveForegroundColor = Colors.Transparent;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
             if (theme is ElementTheme.Light)
             {
-                titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.Black;
                 titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 0, 0, 0);
                 titleBar.ButtonHoverForegroundColor = Colors.Black;
                 titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 0, 0, 0);
                 titleBar.ButtonPressedForegroundColor = Colors.Black;
-                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.Black;
             }
             else
             {
-                titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.White;
                 titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 255, 255, 255);
                 titleBar.ButtonHoverForegroundColor = Colors.White;
                 titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 255, 255, 255);
                 titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
             }
         }
