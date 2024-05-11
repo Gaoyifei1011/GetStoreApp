@@ -107,7 +107,6 @@
     <None Remove="UI\TeachingTips\FolderPickerTip.xaml" />
     <None Remove="UI\TeachingTips\LanguageChangeTip.xaml" />
     <None Remove="UI\TeachingTips\LogCleanTip.xaml" />
-    <None Remove="UI\TeachingTips\NetWorkErrorTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="UI\TeachingTips\ShareFailedTip.xaml" />
     <None Remove="UI\TeachingTips\TerminateProcessTip.xaml" />
@@ -159,7 +158,6 @@
     <Page Update="UI\TeachingTips\FolderPickerTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\LanguageChangeTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\LogCleanTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\NetWorkErrorTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\ShareFailedTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\TerminateProcessTip.xaml" Generator="MSBuild:Compile" />

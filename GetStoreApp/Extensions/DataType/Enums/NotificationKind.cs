@@ -10,13 +10,14 @@
         InstallApp = 2,
         DownloadCompleted = 3,
         RunAsAdministrator = 4,
-        UWPUnInstallSuccessfully = 5,
-        UWPUnInstallFailed = 6,
-        WinGetInstallSuccessfully = 7,
-        WinGetInstallFailed = 8,
-        WinGetUnInstallSuccessfully = 9,
-        WinGetUnInstallFailed = 10,
-        WinGetUpgradeSuccessfully = 11,
-        WinGetUpgradeFailed = 12
+        NetworkError = 5,
+        UWPUnInstallSuccessfully = 6,
+        UWPUnInstallFailed = 7,
+        WinGetInstallSuccessfully = 8,
+        WinGetInstallFailed = 9,
+        WinGetUnInstallSuccessfully = 10,
+        WinGetUnInstallFailed = 11,
+        WinGetUpgradeSuccessfully = 12,
+        WinGetUpgradeFailed = 13
     }
 }

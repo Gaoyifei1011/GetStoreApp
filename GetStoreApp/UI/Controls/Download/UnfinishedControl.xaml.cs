@@ -1,11 +1,9 @@
 ﻿using GetStoreApp.Helpers.Controls.Extensions;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
-using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -67,20 +65,6 @@ namespace GetStoreApp.UI.Controls.Download
             UnfinishedModel unfinishedItem = args.Parameter as UnfinishedModel;
             if (unfinishedItem is not null)
             {
-                // 查看是否开启了网络监控服务
-                if (NetWorkMonitorService.NetWorkMonitorValue)
-                {
-                    // 网络处于未连接状态，不再进行下载，显示通知
-                    if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
-                    {
-                        if (!checkFailed)
-                        {
-                            TeachingTipHelper.Show(new NetWorkErrorTip());
-                            return;
-                        }
-                    }
-                }
-
                 if (unfinishedItem.DownloadFlag is 2)
                 {
                     Task.Run(async () =>
@@ -198,20 +182,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnContinueAllClicked(object sender, RoutedEventArgs args)
         {
-            // 查看是否开启了网络监控服务
-            if (NetWorkMonitorService.NetWorkMonitorValue)
-            {
-                // 网络处于未连接状态，不再进行下载，显示通知
-                if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
-                {
-                    if (!checkFailed)
-                    {
-                        TeachingTipHelper.Show(new NetWorkErrorTip());
-                        return;
-                    }
-                }
-            }
-
             List<BackgroundModel> pauseList = new List<BackgroundModel>();
 
             foreach (UnfinishedModel unfinishedItem in UnfinishedCollection)

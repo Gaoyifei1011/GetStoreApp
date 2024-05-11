@@ -149,9 +149,6 @@ namespace GetStoreApp
                 WebKernelService.InitializeWebKernel();
                 NotificationService.InitializeNotification();
                 WinGetConfigService.InitializeWinGetConfig();
-
-                // 实验功能设置配置
-                NetWorkMonitorService.InitializeNetWorkMonitorValue();
             }
         }
     }

@@ -36,19 +36,6 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void InitializeDownloadScheduler()
         {
-            // 查看是否开启了网络监控服务
-            if (NetWorkMonitorService.NetWorkMonitorValue)
-            {
-                if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
-                {
-                    if (!checkFailed)
-                    {
-                        isNetWorkConnected = false;
-                        ToastNotificationService.Show(NotificationKind.DownloadAborted, "NotDownload");
-                    }
-                }
-            }
-
             downloadSchedulerTimer = ThreadPoolTimer.CreatePeriodicTimer(DownloadSchedulerTimerElapsed, TimeSpan.FromSeconds(1));
             BadgeNotificationService.Show(DownloadingCollection.Count + WaitingCollection.Count);
         }
@@ -382,10 +369,7 @@ namespace GetStoreApp.Services.Controls.Download
         private static async void DownloadSchedulerTimerElapsed(ThreadPoolTimer timer)
         {
             // 查看是否开启了网络监控服务
-            if (NetWorkMonitorService.NetWorkMonitorValue)
-            {
-                await ScheduledGetNetWorkAsync();
-            }
+            await ScheduledGetNetWorkAsync();
 
             // 尝试进入写模式，该模式必须等待
             while (isUpdatingNow) await Task.Delay(50);
@@ -409,25 +393,6 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 if (!checkFailed)
                 {
-                    // 如果网络处于正在连接状态，修改当前网络状态并发送通知
-                    if (isNetWorkConnected)
-                    {
-                        lock (isNetWorkConnectedLock)
-                        {
-                            isNetWorkConnected = false;
-                        }
-
-                        // 发送通知
-                        if (DownloadingCollection.Count > 0 || WaitingCollection.Count > 0)
-                        {
-                            ToastNotificationService.Show(NotificationKind.DownloadAborted, "DownloadingNow");
-                        }
-                        else
-                        {
-                            ToastNotificationService.Show(NotificationKind.DownloadAborted, "NotDownload");
-                        }
-                    }
-
                     // 暂停所有下载任务
                     await PauseAllTaskAsync();
                 }

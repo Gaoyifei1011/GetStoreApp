@@ -31,6 +31,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
+using Windows.Networking.Connectivity;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
@@ -153,6 +154,7 @@ namespace GetStoreApp.Views.Windows
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
             AppWindow.Closing += OnAppWindowClosing;
+            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
             ApplicationData.Current.DataChanged += OnDataChanged;
             ThemeService.PropertyChanged += OnServicePropertyChanged;
             BackdropService.PropertyChanged += OnServicePropertyChanged;
@@ -183,6 +185,7 @@ namespace GetStoreApp.Views.Windows
             SetWindowTheme();
             SetSystemBackdrop();
             SetTopMost();
+            CheckNetwork();
         }
 
         #region 第一部分：窗口类事件
@@ -552,6 +555,14 @@ namespace GetStoreApp.Views.Windows
         #endregion 第五部分：导航控件及其内容挂载的事件
 
         #region 第六部分：自定义事件
+
+        /// <summary>
+        /// 网络状态发生变化时触发的事件
+        /// </summary>
+        private void OnNetworkStatusChanged(object sender)
+        {
+            DispatcherQueue.TryEnqueue(CheckNetwork);
+        }
 
         /// <summary>
         /// 同步漫游应用程序数据时发生的事件
@@ -996,5 +1007,26 @@ namespace GetStoreApp.Views.Windows
         }
 
         #endregion 第九部分：窗口导航方法
+
+        /// <summary>
+        /// 检查网络状态
+        /// </summary>
+        private void CheckNetwork()
+        {
+            try
+            {
+                ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+                bool isConnected = connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() is NetworkConnectivityLevel.InternetAccess;
+
+                if (!isConnected)
+                {
+                    ToastNotificationService.Show(NotificationKind.NetworkError);
+                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Network state check failed", e);
+            }
+        }
     }
 }

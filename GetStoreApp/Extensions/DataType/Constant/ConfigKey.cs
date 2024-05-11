@@ -21,8 +21,6 @@
 
         public const string LanguageKey = "AppLanguage";
 
-        public const string NetWorkMonitorKey = "NetWorkMonitorValue";
-
         public const string NotificationKey = "AppNotification";
 
         public const string EncryptedPackageFilterKey = "EncryptedPackageFilterValue";

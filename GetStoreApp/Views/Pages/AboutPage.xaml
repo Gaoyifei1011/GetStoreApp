@@ -805,6 +805,11 @@
                                     Content="{x:Bind root:ResourceService.GetLocalized('About/LearnBits')}"
                                     NavigateUri="https://learn.microsoft.com/windows/win32/bits/background-intelligent-transfer-service-portal"
                                     Style="{StaticResource HyperlinkButtonStyle}" />
+
+                                <HyperlinkButton
+                                    Click="{x:Bind OnTroubleShootClicked}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
+                                    Style="{StaticResource HyperlinkButtonStyle}" />
                             </StackPanel>
 
                             <MenuFlyoutSeparator />

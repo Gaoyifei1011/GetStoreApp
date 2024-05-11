@@ -328,20 +328,6 @@ namespace GetStoreApp.UI.Controls.Store
             QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
             if (queryLinksItem is not null)
             {
-                // 查看是否开启了网络监控服务
-                if (NetWorkMonitorService.NetWorkMonitorValue)
-                {
-                    // 网络处于未连接状态，不再进行下载，显示通知
-                    if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
-                    {
-                        if (!checkFailed)
-                        {
-                            TeachingTipHelper.Show(new NetWorkErrorTip());
-                            return;
-                        }
-                    }
-                }
-
                 Task.Run(async () =>
                 {
                     AutoResetEvent autoResetEvent = new AutoResetEvent(false);
@@ -725,20 +711,6 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
-            // 查看是否开启了网络监控服务
-            if (NetWorkMonitorService.NetWorkMonitorValue)
-            {
-                // 网络处于未连接状态，不再进行下载，显示通知
-                if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
-                {
-                    if (!checkFailed)
-                    {
-                        TeachingTipHelper.Show(new NetWorkErrorTip());
-                        return;
-                    }
-                }
-            }
-
             AutoResetEvent autoResetEvent = new AutoResetEvent(false);
 
             Task.Run(async () =>

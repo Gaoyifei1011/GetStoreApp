@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using System;
 
 namespace GetStoreApp.Models.Controls.Download
 {
@@ -8,14 +9,14 @@ namespace GetStoreApp.Models.Controls.Download
     public class DownloadSchedulerModel
     {
         /// <summary>
-        /// 任务在下载状态时，获取的GID码。该值唯一
-        /// </summary>
-        public string GID { get; set; }
-
-        /// <summary>
-        /// 下载任务的唯一标识码，该值唯一
+        /// 任务下载时创建的下载唯一标识符
         /// </summary>
         public string DownloadKey { get; set; }
+
+        /// <summary>
+        /// 任务下载时创建下载 ID
+        /// </summary>
+        public Guid DownloadID { get; set; }
 
         /// <summary>
         /// 下载文件名称
@@ -37,8 +38,6 @@ namespace GetStoreApp.Models.Controls.Download
         /// </summary>
         public DownloadStatus DownloadStatus { get; set; }
 
-        public int DownloadFlag { get; set; }
-
         /// <summary>
         /// 下载文件的总大小
         /// </summary>
@@ -48,15 +47,5 @@ namespace GetStoreApp.Models.Controls.Download
         /// 下载文件已完成的进度
         /// </summary>
         public double FinishedSize { get; set; }
-
-        /// <summary>
-        /// 文件下载速度
-        /// </summary>
-        public double CurrentSpeed { get; set; }
-
-        /// <summary>
-        /// 文件是否处于正在安装状态
-        /// </summary>
-        public bool IsInstalling { get; set; }
     }
 }

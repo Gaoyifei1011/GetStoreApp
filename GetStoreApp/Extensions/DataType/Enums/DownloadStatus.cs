@@ -5,11 +5,9 @@
     /// </summary>
     public enum DownloadStatus
     {
-        Unknown = 0,
-        Error = 1,
-        Wait = 2,
-        Pause = 3,
-        Download = 4,
-        Completed = 5
+        Error = 0,
+        Pause = 1,
+        Downloading = 2,
+        Completed = 3
     }
 }

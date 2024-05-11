@@ -162,7 +162,6 @@ namespace GetStoreApp.Services.Controls.Download
                     downloadItemElement.SetAttribute(FileLink, downloadSchedulerItem.FileLink);
                     downloadItemElement.SetAttribute(FilePath, downloadSchedulerItem.FilePath);
                     downloadItemElement.SetAttribute(FileSize, Convert.ToString(downloadSchedulerItem.TotalSize));
-                    downloadItemElement.SetAttribute(DownloadFlag, Convert.ToString(downloadSchedulerItem.DownloadFlag));
                     downloadRootElement.AppendChild(downloadItemElement);
 
                     while (isReadingAndWriting) await Task.Delay(10);

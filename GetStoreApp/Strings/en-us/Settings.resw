@@ -225,10 +225,10 @@
   <data name="DoEngineDo" xml:space="preserve">
     <value>Delivery optimization</value>
   </data>
-  <data name="DOEngineMode" xml:space="preserve">
+  <data name="DoEngineMode" xml:space="preserve">
     <value>Download engine mode</value>
   </data>
-  <data name="DOEngineModeDescription" xml:space="preserve">
+  <data name="DoEngineModeDescription" xml:space="preserve">
     <value>Set the download engine to use when downloading files</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
@@ -296,18 +296,6 @@
   </data>
   <data name="Mica" xml:space="preserve">
     <value>Mica</value>
-  </data>
-  <data name="NetWorkMonitor" xml:space="preserve">
-    <value>Network monitoring status</value>
-  </data>
-  <data name="NetWorkMonitorDescription" xml:space="preserve">
-    <value>Monitor the network status in real time while downloading files</value>
-  </data>
-  <data name="NetWorkMonitorOffContent" xml:space="preserve">
-    <value>Closed</value>
-  </data>
-  <data name="NetWorkMonitorOnContent" xml:space="preserve">
-    <value>Open</value>
   </data>
   <data name="Notification" xml:space="preserve">
     <value>App notifications</value>

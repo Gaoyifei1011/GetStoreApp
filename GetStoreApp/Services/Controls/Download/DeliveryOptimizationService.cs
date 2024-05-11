@@ -12,7 +12,7 @@ using Windows.Foundation.Diagnostics;
 namespace GetStoreApp.Services.Controls.Download
 {
     /// <summary>
-    /// 传递优化服务
+    /// 传递优化服务（仅支持 Winodws 11 22621 及更高版本）
     /// </summary>
     public static class DeliveryOptimizationService
     {
@@ -20,24 +20,24 @@ namespace GetStoreApp.Services.Controls.Download
         private static object deliveryOptimizationLock = new object();
         private static Guid CLSID_DeliveryOptimization = new Guid("5B99FA76-721C-423C-ADAC-56D03C8A8007");
         private static Guid IID_DOManager = new Guid("400E2D4A-1431-4C1A-A748-39CA472CFDB1");
-        private static StrategyBasedComWrappers comWrappers = new StrategyBasedComWrappers();
+        private static StrategyBasedComWrappers strategyBasedComWrappers = new StrategyBasedComWrappers();
 
-        private static Dictionary<string, IDODownload> DeliveryOptimizationDict { get; } = new Dictionary<string, IDODownload>();
+        private static Dictionary<Guid, Tuple<IDODownload, DODownloadStatusCallback>> DeliveryOptimizationDict { get; } = new Dictionary<Guid, Tuple<IDODownload, DODownloadStatusCallback>>();
 
-        public static event Action<string, string, string, string, double> DownloadCreated;
+        public static event Action<Guid, string, string, string, double> DownloadCreated;
 
-        public static event Action<string> DownloadContinued;
+        public static event Action<Guid> DownloadContinued;
 
-        public static event Action<string> DownloadPaused;
+        public static event Action<Guid> DownloadPaused;
 
-        public static event Action<string> DownloadAborted;
+        public static event Action<Guid> DownloadDeleted;
 
-        public static event Action<string, DO_DOWNLOAD_STATUS> DownloadProgressing;
+        public static event Action<Guid, DO_DOWNLOAD_STATUS> DownloadProgressing;
 
-        public static event Action<string, DO_DOWNLOAD_STATUS> DownloadCompleted;
+        public static event Action<Guid, DO_DOWNLOAD_STATUS> DownloadCompleted;
 
         /// <summary>
-        /// 初始化传递优化
+        /// 初始化传递优化服务
         /// </summary>
         public static void InItialize()
         {
@@ -49,10 +49,12 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static int GetDownloadCount()
         {
+            int count = 0;
             lock (deliveryOptimizationLock)
             {
-                return DeliveryOptimizationDict.Count;
+                count = DeliveryOptimizationDict.Count;
             }
+            return count;
         }
 
         /// <summary>
@@ -64,9 +66,16 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 lock (deliveryOptimizationLock)
                 {
-                    foreach (KeyValuePair<string, IDODownload> deliveryOptimizationKeyValue in DeliveryOptimizationDict)
+                    try
                     {
-                        deliveryOptimizationKeyValue.Value.Abort();
+                        foreach (KeyValuePair<Guid, Tuple<IDODownload, DODownloadStatusCallback>> deliveryOptimizationKeyValue in DeliveryOptimizationDict)
+                        {
+                            deliveryOptimizationKeyValue.Value.Item1.Abort();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Abort all task failed", e);
                     }
                 }
             }
@@ -77,21 +86,19 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static unsafe void CreateDownload(string url, string saveFilePath)
         {
-            try
+            Task.Run(() =>
             {
-                IDOManager doManager = null;
-                IDODownload doDownload = null;
-
-                // 创建 IDoManager
-                int createResult = Ole32Library.CoCreateInstance(ref CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, ref IID_DOManager, out IntPtr doManagerPointer);
-
-                if (createResult is 0)
+                try
                 {
-                    doManager = (IDOManager)comWrappers.GetOrCreateObjectForComInstance(doManagerPointer, CreateObjectFlags.None);
+                    IDOManager doManager = null;
+                    IDODownload doDownload = null;
 
-                    // 创建下载
-                    if (doManager is not null)
+                    // 创建 IDoManager
+                    int createResult = Ole32Library.CoCreateInstance(ref CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, ref IID_DOManager, out IntPtr doManagerPointer);
+
+                    if (createResult is 0)
                     {
+                        doManager = (IDOManager)strategyBasedComWrappers.GetOrCreateObjectForComInstance(doManagerPointer, CreateObjectFlags.None);
                         doManager.CreateDownload(out doDownload);
                         ComWrappers.TryGetComInstance(doDownload, out IntPtr doDownloadPointer);
                         int proxyResult = Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
@@ -106,7 +113,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                         DODownloadStatusCallback doDownloadStatusCallback = new DODownloadStatusCallback();
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
-                        IntPtr callbackPointer = comWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(doDownloadStatusCallback).WrappedObject, CreateComInterfaceFlags.None);
+                        IntPtr callbackPointer = strategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(doDownloadStatusCallback).WrappedObject, CreateComInterfaceFlags.None);
                         ComVariant callbackInterfaceVarient = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, callbackPointer);
                         ComVariant foregroundVarient = ComVariant.Create(true);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, &foregroundVarient);
@@ -115,43 +122,104 @@ namespace GetStoreApp.Services.Controls.Download
                         doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, &idVarient);
                         ComVariant totalSizeVarient = ComVariant.Null;
                         doDownload.GetProperty(DODownloadProperty.DODownloadProperty_TotalSizeBytes, &totalSizeVarient);
-                        string downloadID = idVarient.As<string>();
-                        doDownloadStatusCallback.DownloadID = downloadID;
+                        doDownloadStatusCallback.DownloadID = new Guid(idVarient.As<string>());
                         double size = Convert.ToDouble(totalSizeVarient.As<ulong>());
-                        DownloadCreated?.Invoke(downloadID, Path.GetFileName(saveFilePath), saveFilePath, url, Convert.ToDouble(totalSizeVarient.As<ulong>()));
+                        DownloadCreated?.Invoke(doDownloadStatusCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, Convert.ToDouble(totalSizeVarient.As<ulong>()));
 
                         lock (deliveryOptimizationLock)
                         {
-                            DeliveryOptimizationDict.TryAdd(downloadID, doDownload);
+                            DeliveryOptimizationDict.TryAdd(doDownloadStatusCallback.DownloadID, Tuple.Create(doDownload, doDownloadStatusCallback));
                         }
-                        int result = doDownload.Start(IntPtr.Zero);
-                        Marshal.ThrowExceptionForHR(result);
+
+                        doDownload.Start(IntPtr.Zero);
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, "Create delivery optimization download failed", e);
-            }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Create delivery optimization download failed", e);
+                }
+            });
         }
 
         /// <summary>
-        /// 删除下载
+        /// 继续下载
         /// </summary>
-        public static void DeleteDownload(string downloadID)
+        public static void ContinueDownload(Guid downloadID)
         {
             Task.Run(() =>
             {
                 try
                 {
-                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out IDODownload doDownload))
+                    lock (deliveryOptimizationLock)
                     {
-                        int abortResult = doDownload.Abort();
-                        if (abortResult is 0)
+                        if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
                         {
-                            DownloadAborted?.Invoke(downloadID);
+                            int continueResult = downloadValue.Item1.Start(IntPtr.Zero);
 
-                            DeliveryOptimizationDict.Remove(downloadID);
+                            if (continueResult is 0)
+                            {
+                                DownloadContinued?.Invoke(downloadID);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Continue delivery optimization download failed", e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 暂停下载
+        /// </summary>
+        public static void PauseDownload(Guid downloadID)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    lock (deliveryOptimizationLock)
+                    {
+                        if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
+                        {
+                            int pauseResult = downloadValue.Item1.Pause();
+
+                            if (pauseResult is 0)
+                            {
+                                DownloadPaused?.Invoke(downloadID);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Pause delivery optimization download failed", e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 删除下载
+        /// </summary>
+        public static void DeleteDownload(Guid downloadID)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    lock (deliveryOptimizationLock)
+                    {
+                        if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
+                        {
+                            int deleteResult = downloadValue.Item1.Abort();
+
+                            if (deleteResult is 0)
+                            {
+                                downloadValue.Item2.StatusChanged -= OnStatusChanged;
+                                DownloadDeleted?.Invoke(downloadID);
+                                DeliveryOptimizationDict.Remove(downloadID);
+                            }
                         }
                     }
                 }
@@ -191,6 +259,10 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     LogService.WriteLog(LoggingLevel.Warning, "Finalize download task failed", e);
                 }
+            }
+            else if (status.State is DODownloadState.DODownloadState_Paused)
+            {
+                DownloadPaused?.Invoke(callback.DownloadID);
             }
         }
     }

@@ -1302,17 +1302,17 @@
                                     <TextBlock
                                         VerticalAlignment="Center"
                                         Style="{StaticResource BodyTextBlockStyle}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DOEngineMode')}" />
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DoEngineMode')}" />
                                     <TextBlock
-                                        x:Name="DOEngineModeDescription"
+                                        x:Name="DoEngineModeDescription"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DOEngineModeDescription')}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DoEngineModeDescription')}"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DOEngineModeDescription')}" Visibility="{x:Bind DeliveryOptimizationDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DoEngineModeDescription')}" Visibility="{x:Bind DoEngineModeDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -1491,59 +1491,6 @@
                         MinWidth="100"
                         Click="{x:Bind OnTraceCleanupClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}" />
-                </Grid>
-
-                <!--  网络监控状态设置  -->
-                <Grid
-                    Height="61"
-                    Padding="16,12"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <FontIcon
-                        Grid.Column="0"
-                        Margin="0,0,12,0"
-                        FontSize="16"
-                        Glyph="&#xE9D9;" />
-
-                    <StackPanel
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitor')}" />
-
-                        <TextBlock
-                            x:Name="NetWorkMonitorDescription"
-                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorDescription')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorDescription')}" Visibility="{x:Bind NetWorkMonitorDescription.IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-                    </StackPanel>
-
-                    <ToggleSwitch
-                        Grid.Column="2"
-                        MinWidth="0"
-                        Margin="0,-2,0,0"
-                        FlowDirection="RightToLeft"
-                        IsOn="{x:Bind NetWorkMonitorValue, Mode=OneWay}"
-                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorOffContent')}"
-                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NetWorkMonitorOnContent')}"
-                        Toggled="{x:Bind OnNetWorkMonitorToggled}" />
                 </Grid>
 
                 <!--  清理未释放的 WebView 进程  -->

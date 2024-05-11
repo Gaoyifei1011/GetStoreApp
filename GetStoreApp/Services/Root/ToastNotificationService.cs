@@ -105,36 +105,22 @@ namespace GetStoreApp.Services.Root
             {
                 switch (notificationKey)
                 {
-                    // 管理员身份运行应用显示通知
-                    case NotificationKind.RunAsAdministrator:
+                    case NotificationKind.AppUpdate:
                         {
                             XmlDocument notificationDocument = new XmlDocument();
-                            notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/ElevatedRunning"));
+                            notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), notificationContent[0]));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
                             appToastNotifier.Show(notificaiton);
                             break;
                         }
+                    // 有任务处于正在下载状态时被迫中断显示相应的通知
                     case NotificationKind.DownloadAborted:
                         {
-                            if (notificationContent.Length is 0) return;
+                            XmlDocument notificationDocument = new XmlDocument();
+                            notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadingNowOfflineMode"));
+                            ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                            appToastNotifier.Show(notificaiton);
 
-                            // 有任务处于正在下载状态时被迫中断显示相应的通知
-                            if (notificationContent[0] is "DownloadingNow")
-                            {
-                                XmlDocument notificationDocument = new XmlDocument();
-                                notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadingNowOfflineMode"));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                                appToastNotifier.Show(notificaiton);
-                            }
-
-                            // 没有任务下载时显示相应的通知
-                            else if (notificationContent[0] is "NotDownload")
-                            {
-                                XmlDocument notificationDocument = new XmlDocument();
-                                notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/NotDownloadOfflineMode"));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                                appToastNotifier.Show(notificaiton);
-                            }
                             break;
                         }
 
@@ -166,6 +152,24 @@ namespace GetStoreApp.Services.Root
                         {
                             XmlDocument notificationDocument = new XmlDocument();
                             notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadCompleted"));
+                            ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                            appToastNotifier.Show(notificaiton);
+                            break;
+                        }
+                    // 管理员身份运行应用显示通知
+                    case NotificationKind.RunAsAdministrator:
+                        {
+                            XmlDocument notificationDocument = new XmlDocument();
+                            notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/ElevatedRunning"));
+                            ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                            appToastNotifier.Show(notificaiton);
+                            break;
+                        }
+                    // 网络连接异常通知
+                    case NotificationKind.NetworkError:
+                        {
+                            XmlDocument notificationDocument = new XmlDocument();
+                            notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/NetworkError"));
                             ToastNotification notificaiton = new ToastNotification(notificationDocument);
                             appToastNotifier.Show(notificaiton);
                             break;
@@ -242,14 +246,7 @@ namespace GetStoreApp.Services.Root
                             appToastNotifier.Show(notificaiton);
                             break;
                         }
-                    case NotificationKind.AppUpdate:
-                        {
-                            XmlDocument notificationDocument = new XmlDocument();
-                            notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), notificationContent[0]));
-                            ToastNotification notificaiton = new ToastNotification(notificationDocument);
-                            appToastNotifier.Show(notificaiton);
-                            break;
-                        }
+
                     default:
                         break;
                 }

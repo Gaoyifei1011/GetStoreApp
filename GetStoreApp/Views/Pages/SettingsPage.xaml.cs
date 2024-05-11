@@ -278,22 +278,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _netWorkMonitorValue = NetWorkMonitorService.NetWorkMonitorValue;
-
-        public bool NetWorkMonitorValue
-        {
-            get { return _netWorkMonitorValue; }
-
-            set
-            {
-                if (!Equals(_netWorkMonitorValue, value))
-                {
-                    _netWorkMonitorValue = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NetWorkMonitorValue)));
-                }
-            }
-        }
-
         private List<DictionaryEntry> ThemeList { get; } = ThemeService.ThemeList;
 
         private List<DictionaryEntry> BackdropList { get; } = BackdropService.BackdropList;
@@ -832,19 +816,6 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);
                 UseDevVersion = toggleSwitch.IsOn;
-            }
-        }
-
-        /// <summary>
-        /// 下载文件时“网络状态监控”开启设置
-        /// </summary>
-        private void OnNetWorkMonitorToggled(object sender, RoutedEventArgs args)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
-            {
-                NetWorkMonitorService.SetNetWorkMonitorValue(toggleSwitch.IsOn);
-                NetWorkMonitorValue = toggleSwitch.IsOn;
             }
         }
 
