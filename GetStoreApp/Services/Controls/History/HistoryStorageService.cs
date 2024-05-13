@@ -29,6 +29,10 @@ namespace GetStoreApp.Services.Controls.History
         private static ApplicationDataContainer queryLinksContainer;
         private static ApplicationDataContainer searchStoreContainer;
 
+        public static event Action QueryLinksCleared;
+
+        public static event Action SearchStoreCleared;
+
         /// <summary>
         /// 初始化历史记录存储服务
         /// </summary>
@@ -199,7 +203,9 @@ namespace GetStoreApp.Services.Controls.History
                 try
                 {
                     queryLinksContainer.Values.Clear();
+                    QueryLinksCleared?.Invoke();
                     searchStoreContainer.Values.Clear();
+                    SearchStoreCleared?.Invoke();
                     return true;
                 }
                 catch (Exception e)

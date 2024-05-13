@@ -5,7 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
-    xmlns:downloadHelper="using:GetStoreApp.Helpers.Controls.Download"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -14,6 +14,7 @@
     mc:Ignorable="d">
 
     <Grid.Resources>
+        <XamlUICommand x:Name="ContinueCommand" ExecuteRequested="{x:Bind OnContinueExecuteRequested}" />
         <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
         <XamlUICommand x:Name="PauseCommand" ExecuteRequested="{x:Bind OnPauseExecuteRequested}" />
     </Grid.Resources>
@@ -78,6 +79,18 @@
 
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8B7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton
+                    Click="{x:Bind OnContinueAllClicked}"
+                    IsEnabled="{x:Bind sys:Convert.ToBoolean(DownloadingCollection.Count), Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAll')}"
+                    Style="{StaticResource AppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueAllToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74B;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
 
@@ -270,7 +283,7 @@
                                     FontSize="16"
                                     Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}"
                                     TextAlignment="Left"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
+                                    Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
@@ -288,8 +301,7 @@
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
-                                    TextAlignment="Left"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
+                                    TextAlignment="Left">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
@@ -306,9 +318,9 @@
                                     MinWidth="50"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind downloadHelper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"
+                                    Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"
                                     TextAlignment="Left"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3), Mode=OneWay}">
+                                    Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip>
@@ -323,19 +335,9 @@
 
                             <ProgressBar
                                 Grid.Row="1"
-                                IsIndeterminate="{x:Bind IsFileDownloading.Equals(x:False), Mode=OneWay}"
-                                Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 3)}"
+                                IsIndeterminate="False"
+                                ShowPaused="{x:Bind sys:Object.Equals(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}"
                                 Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
-
-                            <TextBlock
-                                Grid.Row="1"
-                                MinWidth="50"
-                                Margin="0,-8,0,0"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Download/WaitDownload')}"
-                                TextAlignment="Left"
-                                Visibility="{x:Bind converter:ValueCheckConverterHelper.DownloadFlagCheck(DownloadFlag, 1)}" />
                         </Grid>
 
                         <ContentControl
@@ -352,10 +354,29 @@
                                     Height="32"
                                     Margin="5,0,0,0"
                                     Padding="0"
-                                    Command="{StaticResource PauseCommand}"
-                                    CommandParameter="{Binding}"
+                                    Command="{StaticResource ContinueCommand}"
+                                    CommandParameter="{x:Bind DownloadID}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}">
+                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
+                                    Visibility="{x:Bind IsPaused(DownloadStatus), Mode=OneWay}">
+
+                                    <Button.Content>
+                                        <FontIcon FontSize="14" Glyph="&#xE768;" />
+                                    </Button.Content>
+                                </Button>
+
+                                <Button
+                                    Width="32"
+                                    Height="32"
+                                    Margin="5,0,0,0"
+                                    Padding="0"
+                                    Command="{StaticResource PauseCommand}"
+                                    CommandParameter="{x:Bind DownloadID}"
+                                    CornerRadius="{StaticResource ControlCornerRadius}"
+                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}"
+                                    Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE769;" />
@@ -368,8 +389,9 @@
                                     Margin="5,0,0,0"
                                     Padding="0"
                                     Command="{StaticResource DeleteCommand}"
-                                    CommandParameter="{Binding}"
+                                    CommandParameter="{x:Bind DownloadID}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
+                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteDownloadingToolTip')}">
 
                                     <Button.Content>

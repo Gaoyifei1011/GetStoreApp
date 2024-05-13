@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GetStoreApp.Helpers.Controls.Download
+namespace GetStoreApp.Helpers.Root
 {
     /// <summary>
     /// 下载速度转换辅助类

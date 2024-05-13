@@ -309,25 +309,10 @@
   <data name="TotalSizeToolTip" xml:space="preserve">
     <value>文件大小：</value>
   </data>
-  <data name="Unfinished" xml:space="preserve">
-    <value>未完成</value>
-  </data>
-  <data name="UnfinishedCountInfo" xml:space="preserve">
-    <value>共有{0}条未下载完成的记录</value>
-  </data>
-  <data name="UnfinishedEmpty" xml:space="preserve">
-    <value>没有任何未下载完成的记录</value>
-  </data>
-  <data name="UnfinishedEmptyDescription" xml:space="preserve">
-    <value>下载任务因错误被迫终止下载时，您未完成下载的文件将会显示在此处</value>
-  </data>
   <data name="UnSelectedToolTip" xml:space="preserve">
     <value>未选择</value>
   </data>
   <data name="ViewMore" xml:space="preserve">
     <value>查看更多</value>
-  </data>
-  <data name="WaitDownload" xml:space="preserve">
-    <value>等待下载</value>
   </data>
 </root>

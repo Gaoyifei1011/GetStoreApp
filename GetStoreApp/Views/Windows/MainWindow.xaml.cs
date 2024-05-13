@@ -3,6 +3,7 @@ using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
@@ -264,8 +265,12 @@ namespace GetStoreApp.Views.Windows
         {
             args.Cancel = true;
 
+            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+            List<DownloadSchedulerModel> downloadSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
+            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-            if (DownloadSchedulerService.DownloadingCollection.Count > 0 || DownloadSchedulerService.WaitingCollection.Count > 0)
+            if (downloadSchedulerList.Count > 0)
             {
                 Show();
 
@@ -279,6 +284,7 @@ namespace GetStoreApp.Views.Windows
                     ThemeService.PropertyChanged -= OnServicePropertyChanged;
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
+                    DownloadSchedulerService.TerminateDownload();
                     (Application.Current as WinUIApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)

@@ -150,6 +150,29 @@ namespace GetStoreApp.UI.Controls.Store
         public SearchStoreControl()
         {
             InitializeComponent();
+
+            HistoryStorageService.SearchStoreCleared += () =>
+            {
+                DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
+            };
+
+            Task.Run(() =>
+            {
+                List<HistoryModel> searchStoreHistoryList = HistoryStorageService.GetSearchStoreData();
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    lock (historyLock)
+                    {
+                        HistoryCollection.Clear();
+                        Task.Delay(10);
+                        foreach (HistoryModel historyItem in searchStoreHistoryList)
+                        {
+                            HistoryCollection.Add(historyItem);
+                        }
+                    }
+                });
+            });
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -224,30 +247,6 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         #endregion 第二部分：搜索应用控件——挂载的事件
-
-        /// <summary>
-        /// 从本地数据存储中加载搜索应用历史记录数据
-        /// </summary>
-        public void GetSearchStoreHistoryData()
-        {
-            Task.Run(() =>
-            {
-                List<HistoryModel> searchStoreHistoryList = HistoryStorageService.GetSearchStoreData();
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    lock (historyLock)
-                    {
-                        HistoryCollection.Clear();
-                        Task.Delay(10);
-                        foreach (HistoryModel historyItem in searchStoreHistoryList)
-                        {
-                            HistoryCollection.Add(historyItem);
-                        }
-                    }
-                });
-            });
-        }
 
         /// <summary>
         /// 搜索应用

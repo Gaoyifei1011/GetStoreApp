@@ -21,12 +21,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Advapi32, EntryPoint = "GetTokenInformation", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool GetTokenInformation(
-            IntPtr tokenHandle,
-            TOKEN_INFORMATION_CLASS tokenInformationClass,
-            IntPtr tokenInformation,
-            uint tokenInformationLength,
-            out uint returnLength);
+        public static partial bool GetTokenInformation(IntPtr tokenHandle, TOKEN_INFORMATION_CLASS tokenInformationClass, IntPtr tokenInformation, uint tokenInformationLength, out uint returnLength);
 
         /// <summary>
         /// OpenProcessToken 函数打开与进程关联的访问令牌。

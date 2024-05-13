@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using Microsoft.UI.Xaml;
+using System;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Download
@@ -51,14 +53,28 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         /// <summary>
-        /// 任务在下载状态时，获取的GID码。该值唯一
+        /// 是否正在进行操作
         /// </summary>
-        public string GID { get; set; }
+        private bool _isNotOperated;
+
+        public bool IsNotOperated
+        {
+            get { return _isNotOperated; }
+
+            set
+            {
+                if (!Equals(_isNotOperated, value))
+                {
+                    _isNotOperated = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotOperated)));
+                }
+            }
+        }
 
         /// <summary>
-        /// 下载任务的唯一标识码，该值唯一
+        /// 任务下载时创建下载 ID
         /// </summary>
-        public string DownloadKey { get; set; }
+        public Guid DownloadID { get; set; }
 
         /*
         2.下载文件的基础信息
@@ -85,24 +101,24 @@ namespace GetStoreApp.Models.Controls.Download
         public string FileSHA1 { get; set; }
 
         /*
-        3.下载文件的状态信息（动态呈现在UI界面上）
+        3.下载文件的状态信息
         */
 
         /// <summary>
-        /// 文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载
+        /// 文件下载状态
         /// </summary>
-        private int _downloadFlag;
+        private DownloadStatus _downloadStatus;
 
-        public int DownloadFlag
+        public DownloadStatus DownloadStatus
         {
-            get { return _downloadFlag; }
+            get { return _downloadStatus; }
 
             set
             {
-                if (!Equals(_downloadFlag, value))
+                if (!Equals(_downloadStatus, value))
                 {
-                    _downloadFlag = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadFlag)));
+                    _downloadStatus = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadStatus)));
                 }
             }
         }
@@ -164,42 +180,30 @@ namespace GetStoreApp.Models.Controls.Download
             }
         }
 
-        /// <summary>
-        /// 用来标志文件是否处于正在下载状态还是未确定状态
-        /// </summary>
-        private bool _isFileDownloading;
-
-        public bool IsFileDownloading
-        {
-            get { return _isFileDownloading; }
-
-            set
-            {
-                if (!Equals(_isFileDownloading, value))
-                {
-                    _isFileDownloading = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFileDownloading)));
-                }
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// 计算当前文件的下载进度（如果文件暂未下载，修改下载文件的进度显示状态为未确定）
+        /// 计算当前文件的下载进度
         /// </summary>
         public double DownloadProgress(double finishedSize, double totalSize)
         {
-            if (totalSize == default)
-            {
-                IsFileDownloading = false;
-                return default;
-            }
-            else
-            {
-                IsFileDownloading = true;
-                return Math.Round(finishedSize / totalSize, 4) * 100;
-            }
+            return totalSize == default ? 0 : Math.Round(finishedSize / totalSize, 4) * 100;
+        }
+
+        /// <summary>
+        /// 检查任务是否处于下载中
+        /// </summary>
+        public Visibility IsDownloading(DownloadStatus downloadStatus)
+        {
+            return downloadStatus is DownloadStatus.Downloading ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 检查任务是否处于暂停中
+        /// </summary>
+        public Visibility IsPaused(DownloadStatus downloadStatus)
+        {
+            return downloadStatus is DownloadStatus.Pause ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

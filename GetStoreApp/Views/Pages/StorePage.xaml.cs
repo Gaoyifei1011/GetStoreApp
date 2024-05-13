@@ -44,9 +44,6 @@ namespace GetStoreApp.Views.Pages
             {
                 storeNavigationArgs = AppNaviagtionArgs.None;
             }
-
-            QueryLinks.GetQueryLinksHistoryData();
-            SearchStore.GetSearchStoreHistoryData();
         }
 
         #endregion 第一部分：重写父类事件

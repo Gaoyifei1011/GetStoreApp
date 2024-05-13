@@ -47,5 +47,10 @@ namespace GetStoreApp.Models.Controls.Download
         /// 下载文件已完成的进度
         /// </summary>
         public double FinishedSize { get; set; }
+
+        /// <summary>
+        /// 文件下载速度
+        /// </summary>
+        public double CurrentSpeed { get; set; }
     }
 }

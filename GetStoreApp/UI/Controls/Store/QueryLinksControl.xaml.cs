@@ -21,7 +21,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
@@ -277,6 +276,29 @@ namespace GetStoreApp.UI.Controls.Store
 
             sampleLink = SampleLinkList[0];
             LinkPlaceHolderText = sampleTitle + sampleLink;
+
+            HistoryStorageService.QueryLinksCleared += () =>
+            {
+                DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
+            };
+
+            Task.Run(() =>
+            {
+                List<HistoryModel> queryLinksHistoryList = HistoryStorageService.GetQueryLinksData();
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    lock (historyLock)
+                    {
+                        HistoryCollection.Clear();
+
+                        foreach (HistoryModel historyItem in queryLinksHistoryList)
+                        {
+                            HistoryCollection.Add(historyItem);
+                        }
+                    }
+                });
+            });
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -328,128 +350,68 @@ namespace GetStoreApp.UI.Controls.Store
             QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
             if (queryLinksItem is not null)
             {
-                Task.Run(async () =>
+                Task.Run(() =>
                 {
-                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                    List<DownloadSchedulerModel> downloadInfoList = new List<DownloadSchedulerModel>();
 
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+                    {
+                        downloadInfoList.Add(downloadSchedulerItem);
+                    }
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+
+                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+                    {
+                        downloadInfoList.Add(downloadSchedulerItem);
+                    }
+                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+
+                    bool isDownloadSuccessfully = false;
+                    bool isExisted = false;
                     string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
-                    BackgroundModel backgroundItem = new BackgroundModel
+                    // 检查下载文件信息是否已存在
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadInfoList)
                     {
-                        DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
-                        FileName = queryLinksItem.FileName,
-                        FileLink = queryLinksItem.FileLink,
-                        FilePath = downloadFilePath,
-                        TotalSize = 0,
-                        DownloadFlag = 1
-                    };
-
-                    // 检查是否存在相同的任务记录
-                    DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
-
-                    switch (checkResult)
-                    {
-                        case DuplicatedDataKind.None:
-                            {
-                                bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    TeachingTipHelper.Show(new DownloadCreateTip(addResult));
-                                });
-
-                                break;
-                            }
-
-                        case DuplicatedDataKind.Unfinished:
-                            {
-                                ContentDialogResult result = ContentDialogResult.None;
-
-                                DispatcherQueue.TryEnqueue(async () =>
-                                {
-                                    result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Unfinished), this);
-                                    autoResetEvent.Set();
-                                });
-
-                                autoResetEvent.WaitOne();
-
-                                if (result is ContentDialogResult.Primary)
-                                {
-                                    try
-                                    {
-                                        if (File.Exists(backgroundItem.FilePath))
-                                        {
-                                            File.Delete(backgroundItem.FilePath);
-                                        }
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated unfinished downloaded file failed.", e);
-                                    }
-                                    finally
-                                    {
-                                        bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        DispatcherQueue.TryEnqueue(() =>
-                                        {
-                                            TeachingTipHelper.Show(new DownloadCreateTip(addResult));
-                                        });
-                                    }
-                                }
-                                else if (result is ContentDialogResult.Secondary)
-                                {
-                                    DispatcherQueue.TryEnqueue(() =>
-                                    {
-                                        MainWindow.Current.NavigateTo(typeof(DownloadPage));
-                                    });
-                                }
-                                break;
-                            }
-
-                        case DuplicatedDataKind.Completed:
-                            {
-                                ContentDialogResult result = ContentDialogResult.None;
-
-                                DispatcherQueue.TryEnqueue(async () =>
-                                {
-                                    result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.Completed), this);
-                                    autoResetEvent.Set();
-                                });
-
-                                autoResetEvent.WaitOne();
-
-                                if (result is ContentDialogResult.Primary)
-                                {
-                                    try
-                                    {
-                                        if (File.Exists(backgroundItem.FilePath))
-                                        {
-                                            File.Delete(backgroundItem.FilePath);
-                                        }
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated completed downloaded file failed.", e);
-                                    }
-                                    finally
-                                    {
-                                        bool addResult = await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                        DispatcherQueue.TryEnqueue(() =>
-                                        {
-                                            TeachingTipHelper.Show(new DownloadCreateTip(addResult));
-                                        });
-                                    }
-                                }
-                                else if (result is ContentDialogResult.Secondary)
-                                {
-                                    DispatcherQueue.TryEnqueue(() =>
-                                    {
-                                        MainWindow.Current.NavigateTo(typeof(DownloadPage));
-                                    });
-                                }
-                                break;
-                            }
+                        if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                        {
+                            isExisted = true;
+                            break;
+                        }
                     }
 
-                    autoResetEvent.Dispose();
+                    if (!isExisted)
+                    {
+                        try
+                        {
+                            // 检查下载目录是否存在
+                            if (!Directory.Exists(DownloadOptionsService.DownloadFolder.Path))
+                            {
+                                Directory.CreateDirectory(DownloadOptionsService.DownloadFolder.Path);
+                            }
+
+                            // 检查是否已有重复文件，如果有，直接删除
+                            if (File.Exists(downloadFilePath))
+                            {
+                                File.Delete(downloadFilePath);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, "Delete existed file failed", e);
+                        }
+
+                        DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
+                        isDownloadSuccessfully = true;
+                    }
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        // 显示下载任务创建成功消息
+                        TeachingTipHelper.Show(new DownloadCreateTip(isDownloadSuccessfully));
+                    });
                 });
             }
         }
@@ -627,11 +589,14 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
 
-                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                lock (queryLinksLock)
                 {
-                    if (queryLinksItem.IsSelected is true)
+                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
-                        selectedQueryLinksList.Add(queryLinksItem);
+                        if (queryLinksItem.IsSelected is true)
+                        {
+                            selectedQueryLinksList.Add(queryLinksItem);
+                        }
                     }
                 }
 
@@ -673,11 +638,14 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
 
-                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                lock (queryLinksLock)
                 {
-                    if (queryLinksItem.IsSelected is true)
+                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
-                        selectedQueryLinksList.Add(queryLinksItem);
+                        if (queryLinksItem.IsSelected is true)
+                        {
+                            selectedQueryLinksList.Add(queryLinksItem);
+                        }
                     }
                 }
 
@@ -711,17 +679,18 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
-            AutoResetEvent autoResetEvent = new AutoResetEvent(false);
-
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
 
-                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                lock (queryLinksLock)
                 {
-                    if (queryLinksItem.IsSelected is true)
+                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
-                        selectedQueryLinksList.Add(queryLinksItem);
+                        if (queryLinksItem.IsSelected is true)
+                        {
+                            selectedQueryLinksList.Add(queryLinksItem);
+                        }
                     }
                 }
 
@@ -736,91 +705,78 @@ namespace GetStoreApp.UI.Controls.Store
                     return;
                 };
 
-                List<BackgroundModel> duplicatedList = new List<BackgroundModel>();
+                List<DownloadSchedulerModel> downloadInfoList = new List<DownloadSchedulerModel>();
 
-                bool IsDownloadSuccessfully = false;
+                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+                {
+                    downloadInfoList.Add(downloadSchedulerItem);
+                }
+                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
 
+                DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+                {
+                    downloadInfoList.Add(downloadSchedulerItem);
+                }
+                DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+
+                bool isDownloadSuccessfully = false;
                 foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
-                    string downloadFilePath = string.Format("{0}\\{1}", DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+                    bool isExisted = false;
+                    string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
-                    BackgroundModel backgroundItem = new BackgroundModel
+                    // 检查下载文件信息是否已存在
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadInfoList)
                     {
-                        DownloadKey = HashAlgorithmHelper.GenerateDownloadKey(queryLinksItem.FileName, downloadFilePath),
-                        FileName = queryLinksItem.FileName,
-                        FileLink = queryLinksItem.FileLink,
-                        FilePath = downloadFilePath,
-                        TotalSize = 0,
-                        DownloadFlag = 1
-                    };
-
-                    DuplicatedDataKind checkResult = await DownloadXmlService.CheckDuplicatedAsync(backgroundItem.DownloadKey);
-
-                    if (checkResult is DuplicatedDataKind.None)
-                    {
-                        await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Add");
-                        IsDownloadSuccessfully = true;
-                    }
-                    else
-                    {
-                        duplicatedList.Add(backgroundItem);
-                    }
-                }
-
-                if (duplicatedList.Count > 0)
-                {
-                    ContentDialogResult result = ContentDialogResult.None;
-
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        result = await ContentDialogHelper.ShowAsync(new DownloadNotifyDialog(DuplicatedDataKind.MultiRecord), this);
-                        autoResetEvent.Set();
-                    });
-
-                    autoResetEvent.WaitOne();
-                    autoResetEvent.Dispose();
-
-                    if (result is ContentDialogResult.Primary)
-                    {
-                        foreach (BackgroundModel backgroundItem in duplicatedList)
+                        if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
                         {
-                            try
-                            {
-                                if (File.Exists(backgroundItem.FilePath))
-                                {
-                                    File.Delete(backgroundItem.FilePath);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Warning, "Delete duplicated downloaded file failed.", e);
-                            }
-                            finally
-                            {
-                                await DownloadSchedulerService.AddTaskAsync(backgroundItem, "Update");
-                                IsDownloadSuccessfully = true;
-                            }
+                            isExisted = true;
+                            break;
                         }
                     }
-                    else if (result is ContentDialogResult.Secondary)
+
+                    if (!isExisted)
                     {
-                        DispatcherQueue.TryEnqueue(() =>
+                        try
                         {
-                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
-                        });
+                            // 检查下载目录是否存在
+                            if (!Directory.Exists(DownloadOptionsService.DownloadFolder.Path))
+                            {
+                                Directory.CreateDirectory(DownloadOptionsService.DownloadFolder.Path);
+                            }
+
+                            // 检查是否已有重复文件，如果有，直接删除
+                            if (File.Exists(downloadFilePath))
+                            {
+                                File.Delete(downloadFilePath);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, "Delete existed file failed", e);
+                            continue;
+                        }
+
+                        DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
+                        isDownloadSuccessfully = true;
                     }
                 }
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     // 显示下载任务创建成功消息
-                    TeachingTipHelper.Show(new DownloadCreateTip(IsDownloadSuccessfully));
-
-                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
-                    {
-                        queryLinksItem.IsSelectMode = false;
-                    }
+                    TeachingTipHelper.Show(new DownloadCreateTip(isDownloadSuccessfully));
                     IsSelectMode = false;
+
+                    lock (queryLinksLock)
+                    {
+                        foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                        {
+                            queryLinksItem.IsSelectMode = false;
+                        }
+                    }
                 });
             });
         }
@@ -833,9 +789,13 @@ namespace GetStoreApp.UI.Controls.Store
             lock (queryLinksLock)
             {
                 IsSelectMode = false;
-                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+
+                lock (queryLinksLock)
                 {
-                    queryLinksItem.IsSelectMode = false;
+                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                    {
+                        queryLinksItem.IsSelectMode = false;
+                    }
                 }
             }
         }
@@ -858,30 +818,6 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         #endregion 第二部分：查找链接控件——挂载的事件
-
-        /// <summary>
-        /// 从本地数据存储中加载查询链接历史记录数据
-        /// </summary>
-        public void GetQueryLinksHistoryData()
-        {
-            Task.Run(() =>
-            {
-                List<HistoryModel> queryLinksHistoryList = HistoryStorageService.GetQueryLinksData();
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    lock (historyLock)
-                    {
-                        HistoryCollection.Clear();
-                        Task.Delay(10);
-                        foreach (HistoryModel historyItem in queryLinksHistoryList)
-                        {
-                            HistoryCollection.Add(historyItem);
-                        }
-                    }
-                });
-            });
-        }
 
         /// <summary>
         /// 获取链接

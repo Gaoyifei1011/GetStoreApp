@@ -1,7 +1,9 @@
-﻿using GetStoreApp.Models.Controls.Download;
+﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
@@ -12,8 +14,6 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class DownloadStorageService
     {
-        private static readonly object downloadStorageLock = new object();
-
         private const string DownloadStorage = "DownloadStorage";
         private const string DownloadKey = "DownloadKey";
         private const string FileName = "FileName";
@@ -24,158 +24,103 @@ namespace GetStoreApp.Services.Controls.Download
         private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer downloadStorageContainer;
 
+        public static SemaphoreSlim DownloadStorageSemaphoreSlim { get; private set; } = new SemaphoreSlim(1, 1);
+
+        public static event Action<DownloadSchedulerModel> StorageDataAdded;
+
+        public static event Action<string> StorageDataDeleted;
+
+        public static event Action StorageDataCleared;
+
         /// <summary>
         /// 初始化下载记录服务
         /// </summary>
         public static void InitializeStorage()
         {
-            lock (downloadStorageLock)
+            DownloadStorageSemaphoreSlim?.Wait();
+
+            try
             {
-                try
-                {
-                    downloadStorageContainer = localSettingsContainer.CreateContainer(DownloadStorage, ApplicationDataCreateDisposition.Always);
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Initialize download storage container failed", e);
-                }
+                downloadStorageContainer = localSettingsContainer.CreateContainer(DownloadStorage, ApplicationDataCreateDisposition.Always);
             }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Initialize download storage container failed", e);
+            }
+
+            DownloadStorageSemaphoreSlim?.Release();
         }
 
         /// <summary>
         /// 直接添加已下载完成任务数据
         /// </summary>
-        public static bool AddDownloadData(DownloadSchedulerModel downloadSchedulerItem)
+        public static void AddDownloadData(DownloadSchedulerModel downloadSchedulerItem)
         {
             if (downloadStorageContainer is not null)
             {
-                lock (downloadStorageLock)
+                DownloadStorageSemaphoreSlim?.Wait();
+
+                try
                 {
-                    try
+                    ApplicationDataCompositeValue compositeValue = new ApplicationDataCompositeValue();
+
+                    downloadSchedulerItem.DownloadKey = string.IsNullOrEmpty(downloadSchedulerItem.DownloadKey)
+                        ? HashAlgorithmHelper.GenerateDownloadKey(downloadSchedulerItem.FileName, downloadSchedulerItem.FilePath)
+                        : downloadSchedulerItem.DownloadKey;
+
+                    compositeValue[DownloadKey] = downloadSchedulerItem.DownloadKey;
+                    compositeValue[FileName] = downloadSchedulerItem.FileName;
+                    compositeValue[FileLink] = downloadSchedulerItem.FileLink;
+                    compositeValue[FilePath] = downloadSchedulerItem.FilePath;
+                    compositeValue[FileSize] = downloadSchedulerItem.TotalSize.ToString();
+
+                    if (downloadStorageContainer.Values.TryAdd(DownloadKey, compositeValue))
                     {
-                        ApplicationDataCompositeValue compositeValue = new ApplicationDataCompositeValue();
-
-                        compositeValue[FileName] = downloadSchedulerItem.FileName;
-                        compositeValue[FileLink] = downloadSchedulerItem.FileLink;
-                        compositeValue[FilePath] = downloadSchedulerItem.FilePath;
-                        compositeValue[FileSize] = downloadSchedulerItem.TotalSize.ToString();
-
-                        downloadStorageContainer.Values.Add(DownloadKey, compositeValue);
-
-                        return true;
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Add download storage container data failed", e);
-                        return false;
+                        StorageDataAdded?.Invoke(downloadSchedulerItem);
                     }
                 }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 检查是否已下载完成任务的数据
-        /// </summary>
-        public static bool CheckDuplicatedDownloadData(DownloadSchedulerModel downloadSchedulerItem)
-        {
-            if (downloadStorageContainer is not null)
-            {
-                lock (downloadStorageLock)
+                catch (Exception e)
                 {
-                    try
-                    {
-                        return downloadStorageContainer.Values.ContainsKey(downloadSchedulerItem.DownloadKey);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Check duplicated download storage container data failed", e);
-                        return false;
-                    }
+                    LogService.WriteLog(LoggingLevel.Error, "Add download storage container data failed", e);
                 }
-            }
-            else
-            {
-                return false;
+
+                DownloadStorageSemaphoreSlim?.Release();
             }
         }
 
         /// <summary>
         /// 删除已下载完成任务数据
         /// </summary>
-        public static bool DeleteDownloadData(DownloadSchedulerModel downloadSchedulerItem)
+        public static void DeleteDownloadData(string downloadKey)
         {
             if (downloadStorageContainer is not null)
             {
-                lock (downloadStorageLock)
+                DownloadStorageSemaphoreSlim?.Wait();
+
+                try
                 {
-                    try
+                    if (downloadStorageContainer.Values.Remove(downloadKey))
                     {
-                        return downloadStorageContainer.Values.Remove(downloadSchedulerItem.DownloadKey);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Delete download storage container data failed", e);
-                        return false;
+                        StorageDataDeleted?.Invoke(downloadKey);
                     }
                 }
-            }
-            else
-            {
-                return false;
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Delete download storage container data failed", e);
+                }
+
+                DownloadStorageSemaphoreSlim?.Release();
             }
         }
 
         /// <summary>
-        /// 删除已下载完成任务数据，并返回下载记录是否删除成功的结果
+        /// 获取已下载完成任务数据，为保证安全访问，需要手动对访问的锁进行加锁和释放
         /// </summary>
-        public static bool DeleteSelectedDownloadData(List<DownloadSchedulerModel> downloadSchedulerList)
-        {
-            if (downloadStorageContainer is not null)
-            {
-                lock (downloadStorageLock)
-                {
-                    try
-                    {
-                        bool deleteResult = false;
-
-                        // 遍历选定的下载记录数据，尝试删除
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
-                        {
-                            bool result = downloadStorageContainer.Values.Remove(downloadSchedulerItem.DownloadKey);
-
-                            if (result)
-                            {
-                                deleteResult = result;
-                            }
-                        }
-
-                        return deleteResult;
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Delete selected download storage container data failed", e);
-                        return false;
-                    }
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// 获取已下载完成任务数据
-        /// </summary>
-        public static List<DownloadSchedulerModel> QueryDownloadData()
+        public static List<DownloadSchedulerModel> GetDownloadData()
         {
             List<DownloadSchedulerModel> downloadSchedulerList = new List<DownloadSchedulerModel>();
 
-            lock (downloadStorageLock)
+            if (downloadStorageContainer is not null && DownloadStorageSemaphoreSlim?.CurrentCount is 0)
             {
                 try
                 {
@@ -195,77 +140,41 @@ namespace GetStoreApp.Services.Controls.Download
                             });
                         }
                     }
-
-                    return downloadSchedulerList;
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Query download storage container data with status failed", e);
-                    return downloadSchedulerList;
+                    LogService.WriteLog(LoggingLevel.Error, "Get download storage container data with status failed", e);
                 }
             }
-        }
 
-        /// <summary>
-        /// 获取指定下载键值的已下载完成任务数据，并返回指定下载键值的查询结果
-        /// </summary>
-        public static DownloadSchedulerModel QueryWithKeyDownloadData(string downloadKey)
-        {
-            DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel();
-
-            lock (downloadStorageLock)
-            {
-                try
-                {
-                    // 获取指定下载键值的下载记录数据
-                    if (downloadStorageContainer.Values.TryGetValue(downloadKey, out object downloadItemValue))
-                    {
-                        ApplicationDataCompositeValue compositeValue = downloadItemValue as ApplicationDataCompositeValue;
-
-                        if (compositeValue is not null)
-                        {
-                            downloadSchedulerItem.DownloadKey = downloadKey;
-                            downloadSchedulerItem.FileName = Convert.ToString(compositeValue[FileName]);
-                            downloadSchedulerItem.FileLink = Convert.ToString(compositeValue[FileLink]);
-                            downloadSchedulerItem.FilePath = Convert.ToString(compositeValue[FilePath]);
-                            downloadSchedulerItem.TotalSize = Convert.ToInt32(compositeValue[FileSize]);
-                        }
-                    }
-                    return downloadSchedulerItem;
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Query download storage container data with key failed", e);
-                    return downloadSchedulerItem;
-                }
-            }
+            return downloadSchedulerList;
         }
 
         /// <summary>
         /// 清除下载记录
         /// </summary>
-        private static bool RemoveDownloadData()
+        public static bool ClearDownloadData()
         {
+            bool result = false;
+
             if (downloadStorageContainer is not null)
             {
-                lock (downloadStorageLock)
+                DownloadStorageSemaphoreSlim?.Wait();
+
+                try
                 {
-                    try
-                    {
-                        downloadStorageContainer.Values.Clear();
-                        return true;
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Clear download storage container data failed", e);
-                        return false;
-                    }
+                    downloadStorageContainer.Values.Clear();
+                    StorageDataCleared?.Invoke();
+                    result = true;
                 }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Clear download storage container data failed", e);
+                }
+
+                DownloadStorageSemaphoreSlim?.Release();
             }
-            else
-            {
-                return false;
-            }
+            return result;
         }
     }
 }

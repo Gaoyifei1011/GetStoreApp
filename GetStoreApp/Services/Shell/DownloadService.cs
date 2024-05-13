@@ -3,11 +3,8 @@ using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.System;
 
@@ -110,76 +107,7 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void DownloadFile(string fileName, string fileLink)
         {
-            byte[] readBuff = new byte[101];
-
-            SECURITY_ATTRIBUTES downloadSecurityAttributes = new SECURITY_ATTRIBUTES();
-            downloadSecurityAttributes.nLength = Marshal.SizeOf<SECURITY_ATTRIBUTES>();
-            downloadSecurityAttributes.bInheritHandle = 1;
-            downloadSecurityAttributes.lpSecurityDescriptor = 0;
-
-            bool pipeCreateResult = Kernel32Library.CreatePipe(out IntPtr hRead, out IntPtr hWrite, ref downloadSecurityAttributes, 0);
-
-            if (pipeCreateResult)
-            {
-                IntPtr handle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
-                Kernel32Library.SetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE, hWrite);
-
-                Kernel32Library.GetStartupInfo(out STARTUPINFO downloadStartupInfo);
-                downloadStartupInfo.lpReserved = IntPtr.Zero;
-                downloadStartupInfo.lpDesktop = IntPtr.Zero;
-                downloadStartupInfo.lpTitle = IntPtr.Zero;
-                downloadStartupInfo.dwX = 0;
-                downloadStartupInfo.dwY = 0;
-                downloadStartupInfo.dwXSize = 0;
-                downloadStartupInfo.dwYSize = 0;
-                downloadStartupInfo.dwXCountChars = 500;
-                downloadStartupInfo.dwYCountChars = 500;
-                downloadStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW | STARTF.STARTF_USESTDHANDLES;
-                downloadStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                downloadStartupInfo.cbReserved2 = 0;
-                downloadStartupInfo.lpReserved2 = IntPtr.Zero;
-                downloadStartupInfo.cb = Marshal.SizeOf<STARTUPINFO>();
-                downloadStartupInfo.hStdError = hWrite;
-                downloadStartupInfo.hStdOutput = hWrite;
-
-                bool createResult = Kernel32Library.CreateProcess(
-                    null,
-                    string.Format(
-                        @"{0}\{1} --file-allocation=none -d ""{2}"" -o""{3}"" ""{4}""",
-                        InfoHelper.AppInstalledLocation, "Mile.Aria2.exe",
-                        DownloadOptionsService.DownloadFolder.Path, fileName, fileLink
-                        ),
-                    IntPtr.Zero,
-                    IntPtr.Zero,
-                    true,
-                    CREATE_PROCESS_FLAGS.CREATE_NO_WINDOW,
-                    IntPtr.Zero,
-                    null,
-                    ref downloadStartupInfo,
-                    out downloadInformation
-                    );
-
-                isFileDownloading = true;
-                Kernel32Library.SetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE, handle);
-                Kernel32Library.CloseHandle(hWrite);
-
-                if (createResult)
-                {
-                    while (Kernel32Library.ReadFile(hRead, readBuff, 100, out uint ReadNum, IntPtr.Zero))
-                    {
-                        readBuff[ReadNum] = (byte)'\0';
-                        ConsoleHelper.Write(Encoding.UTF8.GetString(readBuff));
-                    }
-
-                    if (downloadInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(downloadInformation.hProcess);
-                    if (downloadInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(downloadInformation.hThread);
-                    Kernel32Library.CloseHandle(hRead);
-                }
-
-                if (hRead != IntPtr.Zero) Kernel32Library.CloseHandle(hRead);
-                isFileDownloading = false;
-                ConsoleHelper.Write(Environment.NewLine);
-            }
+            // TODO ：需要更新下载服务
         }
 
         /// <summary>

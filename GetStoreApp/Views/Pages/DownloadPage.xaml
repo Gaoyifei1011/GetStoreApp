@@ -41,11 +41,6 @@
                 <SelectorBarItem
                     Padding="12,5"
                     FontSize="18"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Unfinished')}" />
-
-                <SelectorBarItem
-                    Padding="12,5"
-                    FontSize="18"
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" />
             </SelectorBar>
 
@@ -104,7 +99,6 @@
         </Grid>
 
         <dc:DownloadingControl x:Name="Downloading" Grid.Row="1" />
-        <dc:UnfinishedControl x:Name="Unfinished" Grid.Row="1" />
         <dc:CompletedControl x:Name="Completed" Grid.Row="1" />
     </Grid>
 </Page>

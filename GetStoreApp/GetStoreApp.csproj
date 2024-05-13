@@ -58,7 +58,6 @@
     <Content Remove="EmbedAssets\cookie.xml" />
     <Content Remove="EmbedAssets\Lengths.bin" />
     <Content Remove="EmbedAssets\LICENSE" />
-    <Content Remove="EmbedAssets\Mile.Aria2.conf" />
     <Content Remove="EmbedAssets\url.xml" />
     <Content Remove="EmbedAssets\wu.xml" />
 
@@ -67,7 +66,6 @@
     <MyEmbeddedItems Include="EmbedAssets\cookie.xml" />
     <MyEmbeddedItems Include="EmbedAssets\Lengths.bin" />
     <MyEmbeddedItems Include="EmbedAssets\LICENSE" />
-    <MyEmbeddedItems Include="EmbedAssets\Mile.Aria2.conf" />
     <MyEmbeddedItems Include="EmbedAssets\url.xml" />
     <MyEmbeddedItems Include="EmbedAssets\wu.xml" />
     
@@ -79,7 +77,6 @@
     <None Remove="Styles\ListView.xaml" />
     <None Remove="Styles\MenuFlyout.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
-    <None Remove="UI\Controls\Download\UnfinishedControl.xaml" />
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
     <None Remove="UI\Controls\Store\SearchStoreControl.xaml" />
     <None Remove="UI\Controls\UWPApp\AppInfoControl.xaml" />
@@ -121,7 +118,6 @@
     <None Remove="WinUIApp.xaml" />
 
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240428000" />
-    <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Styles\AppBarButton.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
@@ -130,7 +126,6 @@
     <Page Update="Styles\ListView.xaml" Generator="MSBuild:Compile" />
     <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Download\UnfinishedControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />

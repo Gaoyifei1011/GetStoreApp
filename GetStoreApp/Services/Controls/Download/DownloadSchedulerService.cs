@@ -1,14 +1,13 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.ComTypes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Threading;
 using Windows.Foundation.Diagnostics;
-using Windows.System.Threading;
 
 namespace GetStoreApp.Services.Controls.Download
 {
@@ -17,27 +16,345 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class DownloadSchedulerService
     {
-        private static readonly object downloadSchedulerLock = new object();
-        private static readonly object isNetWorkConnectedLock = new object();
+        private static int badgeCount = 0;
 
-        private static bool isUpdatingNow = false;
-        private static bool isNetWorkConnected = true;
+        private static DictionaryEntry doEngineMode;
 
-        private static ThreadPoolTimer downloadSchedulerTimer;
+        public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new SemaphoreSlim(1, 1);
 
-        // 下载中任务列表（带通知）
-        public static ObservableCollection<BackgroundModel> DownloadingCollection { get; } = new ObservableCollection<BackgroundModel>();
+        private static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = new List<DownloadSchedulerModel>();
 
-        // 等待下载任务列表（带通知）
-        public static ObservableCollection<BackgroundModel> WaitingCollection { get; } = new ObservableCollection<BackgroundModel>();
+        public static event Action<Guid, DownloadSchedulerModel> DownloadCreated;
+
+        public static event Action<Guid> DownloadContinued;
+
+        public static event Action<Guid> DownloadPaused;
+
+        public static event Action<Guid> DownloadDeleted;
+
+        public static event Action<Guid, DownloadSchedulerModel> DownloadProgressing;
+
+        public static event Action<Guid, DownloadSchedulerModel> DownloadCompleted;
+
+        public static event Action<int> CollectionCountChanged;
+
+        #region 第一部分：传递优化服务挂载的事件
 
         /// <summary>
-        /// 先获取当前网络状态信息，然后初始化下载监控任务
+        /// 传递优化：下载任务已创建事件
+        /// </summary>
+        private static void OnDeliveryOptimizationCreated(Guid downloadID, string fileName, string filePath, string url, double totalSize)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
+            {
+                DownloadID = downloadID,
+                DownloadStatus = DownloadStatus.Downloading,
+                FileName = fileName,
+                FilePath = filePath,
+                FileLink = url,
+                FinishedSize = 0,
+                TotalSize = totalSize
+            };
+
+            DownloadSchedulerList.Add(downloadSchedulerItem);
+            DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
+            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 传递优化：下载任务已继续下载事件
+        /// </summary>
+        private static void OnDeliveryOptimizationContinued(Guid downloadID)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+
+                    DownloadContinued?.Invoke(downloadID);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 传递优化：下载任务已暂停下载事件
+        /// </summary>
+        private static void OnDeliveryOptimizationPaused(Guid downloadID)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
+
+                    DownloadPaused?.Invoke(downloadID);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 传递优化：下载任务已删除事件
+        /// </summary>
+        private static void OnDeliveryOptimizationDeleted(Guid downloadID)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    DownloadSchedulerList.Remove(downloadSchedulerItem);
+
+                    DownloadDeleted?.Invoke(downloadID);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 传递优化：下载任务下载进度发生变化事件
+        /// </summary>
+        private static void OnDeliveryOptimizationProgressing(Guid downloadID, DO_DOWNLOAD_STATUS status)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                    downloadSchedulerItem.FinishedSize = status.BytesTransferred;
+                    downloadSchedulerItem.TotalSize = status.BytesTotal;
+
+                    DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 传递优化：下载任务已下载完成事件
+        /// </summary>
+        private static void OnDeliveryOptimizationCompleted(Guid downloadID, DO_DOWNLOAD_STATUS status)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
+                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                    downloadSchedulerItem.FinishedSize = status.BytesTransferred;
+                    downloadSchedulerItem.TotalSize = status.BytesTotal;
+
+                    DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    DownloadStorageService.AddDownloadData(downloadSchedulerItem);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        #endregion 第一部分：传递优化服务挂载的事件
+
+        #region 第二部分：后台智能传输服务挂载的事件
+
+        /// <summary>
+        /// 后台智能传输任务：下载任务已创建事件
+        /// </summary>
+        private static void OnBitsCreated(Guid downloadID, string fileName, string filePath, string url, double totalSize)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
+            {
+                DownloadID = downloadID,
+                DownloadStatus = DownloadStatus.Downloading,
+                FileName = fileName,
+                FilePath = filePath,
+                FileLink = url,
+                FinishedSize = 0,
+                TotalSize = totalSize
+            };
+
+            DownloadSchedulerList.Add(downloadSchedulerItem);
+            DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
+            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 后台智能传输任务：下载任务已继续下载事件
+        /// </summary>
+        private static void OnBitsContinued(Guid downloadID)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+                    DownloadContinued?.Invoke(downloadID);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 后台智能传输任务：下载任务已暂停下载事件
+        /// </summary>
+        private static void OnBitsPaused(Guid downloadID)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
+                    DownloadPaused?.Invoke(downloadID);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 后台智能传输任务：下载任务已删除事件
+        /// </summary>
+        private static void OnBitsDeleted(Guid downloadID)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    DownloadSchedulerList.Remove(downloadSchedulerItem);
+
+                    DownloadDeleted?.Invoke(downloadID);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 后台智能传输任务：下载任务下载进度发生变化事件
+        /// </summary>
+        private static void OnBitsProgressing(Guid downloadID, BG_JOB_PROGRESS progress)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                    downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
+                    downloadSchedulerItem.TotalSize = progress.BytesTotal;
+
+                    DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        /// <summary>
+        /// 后台智能传输任务：下载任务已下载完成事件
+        /// </summary>
+        private static void OnBitsCompleted(Guid downloadID, BG_JOB_PROGRESS progress)
+        {
+            DownloadSchedulerSemaphoreSlim?.Wait();
+            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+            {
+                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                {
+                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
+                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                    downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
+                    downloadSchedulerItem.TotalSize = progress.BytesTotal;
+
+                    DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    DownloadStorageService.AddDownloadData(downloadSchedulerItem);
+                    break;
+                }
+            }
+            DownloadSchedulerSemaphoreSlim?.Release();
+        }
+
+        #endregion 第二部分：后台智能传输服务挂载的事件
+
+        #region 第三部分：下载控制服务：自定义事件
+
+        /// <summary>
+        /// 集合的数量发生变化时修改任务栏徽标下载调度任务数量
+        /// </summary>
+        private static void OnCollectionCountChanged(int count)
+        {
+            // 当前下载任务数量发生变化时，更新当前下载任务数量通知
+            if (badgeCount != count)
+            {
+                BadgeNotificationService.Show(count);
+                badgeCount = count;
+            }
+        }
+
+        #endregion 第三部分：下载控制服务：自定义事件
+
+        /// <summary>
+        /// 初始化后台下载调度器
+        /// 先检查当前网络状态信息，加载暂停任务信息，然后初始化下载监控任务
         /// </summary>
         public static void InitializeDownloadScheduler()
         {
-            downloadSchedulerTimer = ThreadPoolTimer.CreatePeriodicTimer(DownloadSchedulerTimerElapsed, TimeSpan.FromSeconds(1));
-            BadgeNotificationService.Show(DownloadingCollection.Count + WaitingCollection.Count);
+            // 获取当前下载引擎
+            doEngineMode = DownloadOptionsService.DoEngineMode;
+
+            // 更新当前下载任务数量通知
+            BadgeNotificationService.Show(badgeCount);
+
+            // 挂载集合数量发生更改事件
+            CollectionCountChanged += OnCollectionCountChanged;
+
+            // 初始化下载服务
+            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+            {
+                DeliveryOptimizationService.InItialize();
+                DeliveryOptimizationService.DownloadCreated += OnDeliveryOptimizationCreated;
+                DeliveryOptimizationService.DownloadContinued += OnDeliveryOptimizationContinued;
+                DeliveryOptimizationService.DownloadPaused += OnDeliveryOptimizationPaused;
+                DeliveryOptimizationService.DownloadDeleted += OnDeliveryOptimizationDeleted;
+                DeliveryOptimizationService.DownloadProgressing += OnDeliveryOptimizationProgressing;
+                DeliveryOptimizationService.DownloadCompleted += OnDeliveryOptimizationCompleted;
+            }
+            else
+            {
+                BitsService.Initialize();
+                BitsService.DownloadCreated += OnBitsCreated;
+                BitsService.DownloadContinued += OnBitsContinued;
+                BitsService.DownloadPaused += OnBitsPaused;
+                BitsService.DownloadDeleted += OnBitsDeleted;
+                BitsService.DownloadProgressing += OnBitsProgressing;
+                BitsService.DownloadCompleted += OnBitsCompleted;
+            }
         }
 
         /// <summary>
@@ -45,523 +362,133 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void CloseDownloadScheduler()
         {
-            downloadSchedulerTimer.Cancel();
+            DownloadSchedulerSemaphoreSlim.Dispose();
+            DownloadSchedulerSemaphoreSlim = null;
+
+            // 卸载集合数量发生更改事件
+            CollectionCountChanged -= OnCollectionCountChanged;
+
+            // 注销下载服务
+            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+            {
+                DeliveryOptimizationService.UnInitialize();
+                DeliveryOptimizationService.DownloadCreated -= OnDeliveryOptimizationCreated;
+                DeliveryOptimizationService.DownloadContinued -= OnDeliveryOptimizationContinued;
+                DeliveryOptimizationService.DownloadPaused -= OnDeliveryOptimizationPaused;
+                DeliveryOptimizationService.DownloadDeleted -= OnDeliveryOptimizationDeleted;
+                DeliveryOptimizationService.DownloadProgressing -= OnDeliveryOptimizationProgressing;
+                DeliveryOptimizationService.DownloadCompleted -= OnDeliveryOptimizationCompleted;
+            }
+            else
+            {
+                BitsService.UnInitialize();
+                BitsService.DownloadCreated -= OnBitsCreated;
+                BitsService.DownloadContinued -= OnBitsContinued;
+                BitsService.DownloadPaused -= OnBitsPaused;
+                BitsService.DownloadDeleted -= OnBitsDeleted;
+                BitsService.DownloadProgressing -= OnBitsProgressing;
+                BitsService.DownloadCompleted -= OnBitsCompleted;
+            }
         }
 
         /// <summary>
-        /// 添加下载任务
+        /// 创建下载任务
         /// </summary>
-        public static async Task<bool> AddTaskAsync(BackgroundModel backgroundItem, string operation)
+        public static void CreateDownload(string fileLink, string filePath)
         {
-            // 尝试进入写模式，该模式必须等待
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            bool result = false;
-
-            if (operation is "Add")
+            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
             {
-                // 在数据库中添加下载信息，并获取添加成功的结果
-                bool addResult = await DownloadXmlService.AddAsync(backgroundItem);
-
-                // 数据库添加成功后添加等待下载任务
-                if (addResult)
-                {
-                    WaitingCollection.Add(backgroundItem);
-                    result = true;
-                }
+                DeliveryOptimizationService.CreateDownload(fileLink, filePath);
             }
-            // 存在重复的下载记录
-            else if (operation is "Update")
+            else
             {
-                bool updateResult = await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 1);
-
-                // 数据库更新成功后添加等待下载任务
-                if (updateResult)
-                {
-                    WaitingCollection.Add(backgroundItem);
-                    result = true;
-                }
+                BitsService.CreateDownload(fileLink, filePath);
             }
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
-
-            return result;
         }
 
         /// <summary>
         /// 继续下载任务
         /// </summary>
-        public static async Task<bool> ContinueTaskAsync(BackgroundModel downloadItem)
+        public static void ContinueDownload(Guid downloadID)
         {
-            // 尝试进入写模式，该模式必须等待
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            // 将继续下载的任务状态标记为等待下载状态
-            bool updateResult = await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, 1);
-
-            // 数据库添加成功后添加等待下载任务
-            if (updateResult)
+            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
             {
-                WaitingCollection.Add(downloadItem);
+                DeliveryOptimizationService.ContinueDownload(downloadID);
             }
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
-
-            return updateResult;
+            else
+            {
+                BitsService.ContinueDownload(downloadID);
+            }
         }
 
         /// <summary>
         /// 暂停下载任务
         /// </summary>
-        public static async Task<bool> PauseTaskAsync(string downloadKey, string gID, int downloadFlag)
+        public static void PauseDownload(Guid downloadID)
         {
-            // 尝试进入写模式，该模式必须等待
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            bool result = true;
-
-            // 处于等待下载状态时，从等待下载列表中移除
-            if (downloadFlag is 1)
+            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
             {
-                try
-                {
-                    foreach (BackgroundModel backgroundItem in WaitingCollection)
-                    {
-                        if (backgroundItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
-                        {
-                            WaitingCollection.Remove(backgroundItem);
-                            break;
-                        }
-                    }
-                    result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Pause waiting list task failed.", e);
-                    result = false;
-                }
+                DeliveryOptimizationService.PauseDownload(downloadID);
             }
-
-            // 处于正在下载状态时，从正在下载列表中移除
-            else if (downloadFlag is 3)
+            else
             {
-                // 从下载进程中移除正在下载的任务
-                (bool, string) deleteResult = await Aria2Service.PauseAsync(gID);
-
-                if (deleteResult.Item1)
-                {
-                    try
-                    {
-                        foreach (BackgroundModel backgroundItem in DownloadingCollection)
-                        {
-                            if (backgroundItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
-                            {
-                                DownloadingCollection.Remove(backgroundItem);
-                                break;
-                            }
-                        }
-                        result = await DownloadXmlService.UpdateFlagAsync(downloadKey, 2);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Pause downloading list task failed.", e);
-                        result = false;
-                    }
-                }
-                else
-                {
-                    result = false;
-                }
+                BitsService.PauseDownload(downloadID);
             }
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
-
-            return result;
-        }
-
-        /// <summary>
-        /// 暂停全部下载任务
-        /// </summary>
-        public static async Task PauseAllTaskAsync()
-        {
-            // 尝试进入写模式，该模式必须等待
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            // 从正在下载列表中暂停所有正在下载任务
-            foreach (BackgroundModel backgroundItem in DownloadingCollection)
-            {
-                // 从下载进程中移除正在下载的任务
-                (bool, string) deleteResult = await Aria2Service.PauseAsync(backgroundItem.GID);
-
-                if (deleteResult.Item1)
-                {
-                    try
-                    {
-                        await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Pause all downloading list task failed.", e);
-                        continue;
-                    }
-                }
-            }
-
-            // 从等待下载列表中暂停所有等待下载任务
-            foreach (BackgroundModel backgroundItem in WaitingCollection)
-            {
-                try
-                {
-                    await DownloadXmlService.UpdateFlagAsync(backgroundItem.DownloadKey, 2);
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Pause all waiting list task failed.", e);
-                    continue;
-                }
-            }
-
-            // 清空所有正在下载和等待下载的列表内容
-            while (DownloadingCollection.Count > 0) DownloadingCollection.RemoveAt(0);
-            while (WaitingCollection.Count > 0) WaitingCollection.RemoveAt(0);
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
         }
 
         /// <summary>
         /// 删除下载任务
         /// </summary>
-        public static async Task<bool> DeleteTaskAsync(string downloadKey, string gID, int downloadFlag)
+        public static void DeleteDownload(Guid downloadID)
         {
-            // 尝试进入写模式，该模式必须等待
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            bool result = true;
-
-            // 处于等待下载状态时，从等待下载列表中移除
-            if (downloadFlag is 1)
+            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
             {
-                try
-                {
-                    List<BackgroundModel> waitingList = new List<BackgroundModel>();
-                    foreach (BackgroundModel waitingItem in WaitingCollection)
-                    {
-                        if (waitingItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
-                        {
-                            waitingList.Add(waitingItem);
-                        }
-                    }
-
-                    foreach (BackgroundModel backgroundItem in waitingList)
-                    {
-                        WaitingCollection.Remove(backgroundItem);
-                    }
-
-                    result = await DownloadXmlService.DeleteAsync(downloadKey);
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Delete waiting list task failed.", e);
-                    result = false;
-                }
-            }
-
-            // 处于正在下载状态时，从正在下载列表中移除
-            else if (downloadFlag is 3)
-            {
-                // 从下载进程中移除正在下载的任务
-                (bool, string) deleteResult = await Aria2Service.DeleteAsync(gID);
-
-                if (deleteResult.Item1)
-                {
-                    try
-                    {
-                        List<BackgroundModel> downloadingList = new List<BackgroundModel>();
-                        foreach (BackgroundModel downloadingItem in DownloadingCollection)
-                        {
-                            if (downloadingItem.DownloadKey.Equals(downloadKey, StringComparison.OrdinalIgnoreCase))
-                            {
-                                downloadingList.Add(downloadingItem);
-                            }
-                        }
-
-                        foreach (BackgroundModel backgroundItem in downloadingList)
-                        {
-                            DownloadingCollection.Remove(backgroundItem);
-                        }
-
-                        result = await DownloadXmlService.DeleteAsync(downloadKey);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Delete downloading list task failed.", e);
-                        result = false;
-                    }
-                }
-                else
-                {
-                    result = false;
-                }
-            }
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
-
-            return result;
-        }
-
-        /// <summary>
-        /// 安全获取正在下载中文件信息
-        /// </summary>
-        public static async Task<List<BackgroundModel>> GetDownloadingListAsync()
-        {
-            // 防止在列表被修改时进行读取
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            List<BackgroundModel> downloadingList = new List<BackgroundModel>();
-
-            foreach (BackgroundModel backgroundItem in DownloadingCollection)
-            {
-                downloadingList.Add(backgroundItem);
-            }
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
-
-            return downloadingList;
-        }
-
-        /// <summary>
-        /// 安全获取等待下载中文件信息
-        /// </summary>
-        public static async Task<List<BackgroundModel>> GetWaitingListAsync()
-        {
-            // 防止在列表被修改时进行读取
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            List<BackgroundModel> waitingList = new List<BackgroundModel>();
-
-            foreach (BackgroundModel backgroundItem in WaitingCollection)
-            {
-                waitingList.Add(backgroundItem);
-            }
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
-
-            return waitingList;
-        }
-
-        /// <summary>
-        /// 定时计划添加下载任务，更新下载任务信息
-        /// </summary>
-        private static async void DownloadSchedulerTimerElapsed(ThreadPoolTimer timer)
-        {
-            // 查看是否开启了网络监控服务
-            await ScheduledGetNetWorkAsync();
-
-            // 尝试进入写模式，该模式必须等待
-            while (isUpdatingNow) await Task.Delay(50);
-            lock (downloadSchedulerLock) isUpdatingNow = true;
-
-            await ScheduledUpdateStatusAsync();
-
-            await ScheduledAddTaskAsync();
-
-            // 信息更新完毕时，退出写模式，让其他线程执行操作
-            lock (downloadSchedulerLock) isUpdatingNow = false;
-        }
-
-        /// <summary>
-        /// 定时检查网络是否处于连接状态
-        /// </summary>
-        private static async Task ScheduledGetNetWorkAsync()
-        {
-            // 网络处于未连接状态，暂停所有任务
-            if (!NetWorkHelper.IsNetworkConnected(out bool checkFailed))
-            {
-                if (!checkFailed)
-                {
-                    // 暂停所有下载任务
-                    await PauseAllTaskAsync();
-                }
+                DeliveryOptimizationService.DeleteDownload(downloadID);
             }
             else
             {
-                // 如果网络处于断线状态，修改当前网络状态
-                if (!isNetWorkConnected)
-                {
-                    lock (isNetWorkConnectedLock)
-                    {
-                        isNetWorkConnected = true;
-                    }
-                }
+                BitsService.DeleteDownload(downloadID);
             }
         }
 
         /// <summary>
-        /// 定时计划添加下载任务
+        /// 终止所有下载任务，仅用于应用关闭时
         /// </summary>
-        private static async Task ScheduledAddTaskAsync()
+        public static void TerminateDownload()
         {
-            // 如果仍然存在等待下载的任务，并且当前正在下载的数量并未到达阈值时，开始下载
-            while (WaitingCollection.Count > 0 && DownloadingCollection.Count < DownloadOptionsService.DownloadItem)
+            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
             {
-                // 获取列表中的第一个元素
-                BackgroundModel downloadItem = WaitingCollection[0];
-
-                (bool, string) addResult = await Aria2Service.AddUriAsync(downloadItem.FileName, downloadItem.FileLink, DownloadOptionsService.DownloadFolder.Path);
-
-                if (addResult.Item1 && downloadItem is not null)
-                {
-                    try
-                    {
-                        List<BackgroundModel> waitingList = new List<BackgroundModel>();
-                        foreach (BackgroundModel waitingItem in WaitingCollection)
-                        {
-                            if (waitingItem.DownloadKey.Equals(downloadItem.DownloadKey, StringComparison.OrdinalIgnoreCase))
-                            {
-                                waitingList.Add(waitingItem);
-                            }
-                        }
-
-                        foreach (BackgroundModel backgroundItem in waitingList)
-                        {
-                            WaitingCollection.Remove(backgroundItem);
-                        }
-
-                        // 将当前任务的下载状态标记为正在下载状态
-                        downloadItem.DownloadFlag = 3;
-                        downloadItem.GID = addResult.Item2;
-
-                        DownloadingCollection.Add(downloadItem);
-
-                        await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Schedule add task failed.", e);
-                        continue;
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        downloadItem.DownloadFlag = 0;
-                        for (int index = 0; index < WaitingCollection.Count; index++)
-                        {
-                            if (downloadItem.DownloadKey.Equals(WaitingCollection[index].DownloadKey, StringComparison.OrdinalIgnoreCase))
-                            {
-                                WaitingCollection.RemoveAt(index);
-                                break;
-                            }
-                        }
-
-                        await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Schedule add task failed.", e);
-                        continue;
-                    }
-                }
+                DeliveryOptimizationService.TerminateDownload();
+            }
+            else
+            {
+                BitsService.TerminateDownload();
             }
         }
 
         /// <summary>
-        /// 定时计划更新下载队列信息
+        /// 获取当前下载调度的所有任务列表信息，为保证安全访问，需要手动对访问的锁进行加锁和释放
         /// </summary>
-        private static async Task ScheduledUpdateStatusAsync()
+        public static List<DownloadSchedulerModel> GetDownloadSchedulerList()
         {
-            // 当下载队列中仍然还存在下载任务时，更新正在下载的任务信息
-            if (DownloadingCollection.Count > 0)
+            List<DownloadSchedulerModel> downloadSchedulerList = new List<DownloadSchedulerModel>();
+
+            if (DownloadSchedulerSemaphoreSlim?.CurrentCount is 0)
             {
-                // 先更新下载的任务信息
-                foreach (BackgroundModel downloadItem in DownloadingCollection)
+                try
                 {
-                    (bool, string, double, double, double) tellStatusResult = await Aria2Service.TellStatusAsync(downloadItem.GID);
-
-                    if (tellStatusResult.Item1)
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        // 当下载任务处于活动状态时，更新下载任务信息
-                        if (tellStatusResult.Item2 is "active")
-                        {
-                            downloadItem.FinishedSize = tellStatusResult.Item3;
-                            downloadItem.TotalSize = tellStatusResult.Item4;
-                            downloadItem.CurrentSpeed = tellStatusResult.Item5;
-                        }
-
-                        // 当下载任务处于完成状态时，将当前任务标记为完成状态
-                        else if (tellStatusResult.Item2 is "complete")
-                        {
-                            downloadItem.DownloadFlag = 4;
-                            downloadItem.GID = string.Empty;
-                            downloadItem.FinishedSize = tellStatusResult.Item3;
-                            downloadItem.TotalSize = tellStatusResult.Item4;
-                            downloadItem.CurrentSpeed = tellStatusResult.Item5;
-
-                            await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                            await DownloadXmlService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
-                        }
-
-                        // 当下载任务处于错误状态时，将当前任务标记为错误状态
-                        else if (tellStatusResult.Item2 is "WARNING")
-                        {
-                            downloadItem.DownloadFlag = 0;
-                            downloadItem.GID = string.Empty;
-                            downloadItem.FinishedSize = tellStatusResult.Item3;
-                            downloadItem.TotalSize = tellStatusResult.Item4;
-                            downloadItem.CurrentSpeed = tellStatusResult.Item5;
-
-                            await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                            await DownloadXmlService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
-                        }
-                    }
-                    else
-                    {
-                        downloadItem.DownloadFlag = 2;
-                        downloadItem.GID = string.Empty;
-
-                        await DownloadXmlService.UpdateFlagAsync(downloadItem.DownloadKey, downloadItem.DownloadFlag);
-                        await DownloadXmlService.UpdateFileSizeAsync(downloadItem.DownloadKey, downloadItem.TotalSize);
+                        downloadSchedulerList.Add(downloadSchedulerItem);
                     }
                 }
-
-                // 正在下载列表中删除掉不是处于下载状态的任务
-                List<BackgroundModel> downloadingList = new List<BackgroundModel>();
-                foreach (BackgroundModel downloadingItem in DownloadingCollection)
+                catch (Exception e)
                 {
-                    if (downloadingItem.DownloadFlag is not 3)
-                    {
-                        downloadingList.Add(downloadingItem);
-                    }
-                }
-
-                foreach (BackgroundModel backgroundItem in downloadingList)
-                {
-                    DownloadingCollection.Remove(backgroundItem);
-                }
-
-                BadgeNotificationService.Show(DownloadingCollection.Count + WaitingCollection.Count);
-
-                // 下载完成后发送通知
-                if (DownloadingCollection.Count is 0 && WaitingCollection.Count is 0)
-                {
-                    ToastNotificationService.Show(NotificationKind.DownloadCompleted);
+                    LogService.WriteLog(LoggingLevel.Error, "Get download information failed", e);
                 }
             }
+
+            return downloadSchedulerList;
         }
     }
 }

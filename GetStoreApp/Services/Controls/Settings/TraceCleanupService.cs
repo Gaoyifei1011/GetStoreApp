@@ -2,7 +2,6 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
-using System.Threading.Tasks;
 using Windows.UI.Notifications;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -15,12 +14,12 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 根据传入的清理选项清理应用痕迹
         /// </summary>
-        public static async Task<bool> CleanAppTraceAsync(CleanKind cleanupArgs)
+        public static bool CleanAppTraceAsync(CleanKind cleanupArgs)
         {
             return cleanupArgs switch
             {
                 CleanKind.ActionCenter => ClearActionCenter(),
-                CleanKind.Download => await DownloadXmlService.ClearAsync(),
+                CleanKind.Download => DownloadStorageService.ClearDownloadData(),
                 CleanKind.History => HistoryStorageService.ClearData(),
                 CleanKind.LocalFile => IOHelper.CleanFolder(DownloadOptionsService.DefaultDownloadFolder),
                 _ => true,

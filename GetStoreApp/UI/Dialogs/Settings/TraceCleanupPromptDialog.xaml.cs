@@ -124,7 +124,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 foreach (CleanKind cleanArgs in selectedCleanList)
                 {
                     // 清理并反馈回结果，修改相应的状态信息
-                    bool cleanReusult = await TraceCleanupService.CleanAppTraceAsync(cleanArgs);
+                    bool cleanReusult = TraceCleanupService.CleanAppTraceAsync(cleanArgs);
                     cleanSuccessfullyDict.Add(new Tuple<CleanKind, bool>(cleanArgs, cleanReusult));
                 }
 

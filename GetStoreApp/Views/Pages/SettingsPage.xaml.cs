@@ -736,7 +736,7 @@ namespace GetStoreApp.Views.Pages
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Aria2 Process create failed.", e);
+                    LogService.WriteLog(LoggingLevel.Error, "WebViewHost Process create failed.", e);
                 }
             });
         }

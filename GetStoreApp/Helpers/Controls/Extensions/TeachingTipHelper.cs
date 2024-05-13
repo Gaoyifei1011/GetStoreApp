@@ -19,17 +19,17 @@ namespace GetStoreApp.Helpers.Controls.Extensions
             MainWindow.Current.DispatcherQueue.TryEnqueue(async () =>
             {
                 teachingTip.Name = "TeachingTip" + Guid.NewGuid().ToString();
-                (MainWindow.Current.Content as Grid).Children.Add(teachingTip);
+                ((MainWindow.Current.Content as Page).Content as Grid).Children.Add(teachingTip);
                 teachingTip.IsOpen = true;
                 teachingTip.Closed += (sender, args) =>
                 {
                     try
                     {
-                        foreach (UIElement uiElement in (MainWindow.Current.Content as Grid).Children)
+                        foreach (UIElement uiElement in ((MainWindow.Current.Content as Page).Content as Grid).Children)
                         {
                             if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
                             {
-                                (MainWindow.Current.Content as Grid).Children.Remove(uiElement);
+                                ((MainWindow.Current.Content as Page).Content as Grid).Children.Remove(uiElement);
                                 break;
                             }
                         }

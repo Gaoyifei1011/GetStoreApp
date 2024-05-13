@@ -35,7 +35,7 @@ namespace GetStoreApp
         /// <summary>
         /// 启动应用程序时调用，初始化应用主窗口
         /// </summary>
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
             Window = new MainWindow();
@@ -44,9 +44,6 @@ namespace GetStoreApp
             SetAppIcon();
 
             WinGetService.InitializeService();
-            DownloadSchedulerService.InitializeDownloadScheduler();
-            await Aria2Service.InitializeAria2ConfAsync();
-            Aria2Service.StartAria2Process();
         }
 
         /// <summary>
@@ -160,6 +157,7 @@ namespace GetStoreApp
         {
             if (!isDisposed && disposing)
             {
+                GlobalNotificationService.SendNotification();
                 if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
                 {
                     CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
@@ -169,7 +167,6 @@ namespace GetStoreApp
 
                 MainWindow.Current.SaveWindowInformation();
                 DownloadSchedulerService.CloseDownloadScheduler();
-
                 isDisposed = true;
             }
 

@@ -60,7 +60,6 @@ namespace GetStoreApp.Views.Pages
             new DictionaryEntry("Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"),
             new DictionaryEntry( "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
             new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),
-            new DictionaryEntry("Mile.Aria2", "https://github.com/ProjectMile/Mile.Aria2"),
         };
 
         //项目感谢者信息

@@ -115,7 +115,6 @@ All the content of the program has been developed
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
-> * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
 
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [Auxiliary Tools](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;
@@ -169,7 +168,7 @@ All the content of the program has been developed
 > * Back to Store.rg API parsing store application, provide a variety of channels to parse store application installation package
 > * Added support for Native AOT, reducing binary distribution while improving application speed
 > * Re-architecting the Web browsing section (introducing Edge legacy and WebView2)
-> * Rebuild the download management module, integrate the download page and the incomplete download display page, and replace Aria2 downloads with the delivery optimization that comes with Windows 11 22621+
+> * Rebuild the download management module, integrate the download page and the incomplete download display page, and use the delivery optimization or background intelligent transmission service of Windows 11 22621+ to replace Aria2 download
 
 ------
 

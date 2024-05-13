@@ -9,6 +9,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -59,6 +60,7 @@ namespace GetStoreApp
                 bool isDesktopProgram = args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
 
                 InitializeResourcesAsync(isDesktopProgram).Wait();
+                DownloadSchedulerService.InitializeDownloadScheduler();
 
                 // 以桌面应用程序方式正常启动
                 if (isDesktopProgram)
@@ -128,15 +130,14 @@ namespace GetStoreApp
                 LinkFilterService.InitializeLinkFilterValue();
                 QueryLinksModeService.InitializeQueryLinksMode();
                 await DownloadOptionsService.InitializeDownloadAsync();
+                DownloadStorageService.InitializeStorage();
             }
 
             // 初始化其他设置信息（桌面应用程序）
             if (isDesktopProgram)
             {
                 // 初始化存储数据信息
-                await XmlStorageService.InitializeXmlFileAsync();
                 HistoryStorageService.Initialize();
-                await DownloadXmlService.InitializeDownloadXmlAsync();
 
                 // 初始化应用配置信息
                 InstallModeService.InitializeInstallMode();

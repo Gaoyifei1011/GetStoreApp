@@ -49,9 +49,23 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         /// <summary>
-        /// 任务在下载状态时，获取的GID码。该值唯一
+        /// 是否正在进行操作
         /// </summary>
-        public string GID { get; set; }
+        private bool _isNotOperated;
+
+        public bool IsNotOperated
+        {
+            get { return _isNotOperated; }
+
+            set
+            {
+                if (!Equals(_isNotOperated, value))
+                {
+                    _isNotOperated = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotOperated)));
+                }
+            }
+        }
 
         /// <summary>
         /// 下载任务的唯一标识码，该值唯一
@@ -72,11 +86,6 @@ namespace GetStoreApp.Models.Controls.Download
         /// 文件下载保存的路径
         /// </summary>
         public string FilePath { get; set; }
-
-        /// <summary>
-        /// 文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载
-        /// </summary>
-        public int DownloadFlag { get; set; }
 
         /// <summary>
         /// 下载文件的总大小
