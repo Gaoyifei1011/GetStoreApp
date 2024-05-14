@@ -870,7 +870,19 @@ namespace GetStoreApp.UI.Controls.Store
                                 List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[channelIndex].InternalName);
                                 foreach (QueryLinksModel appxPackage in appxPackagesList)
                                 {
-                                    queryLinksList.Add(appxPackage);
+                                    bool isExisted = false;
+                                    foreach (QueryLinksModel queryLinksItem in queryLinksList)
+                                    {
+                                        if (queryLinksItem.FileName.Equals(appxPackage.FileName) && queryLinksItem.FileLink.Equals(appxPackage.FileLink) && queryLinksItem.FileSize.Equals(queryLinksItem.FileSize))
+                                        {
+                                            isExisted = true;
+                                        }
+                                    }
+
+                                    if (!isExisted)
+                                    {
+                                        queryLinksList.Add(appxPackage);
+                                    }
                                 }
                             }
                         }

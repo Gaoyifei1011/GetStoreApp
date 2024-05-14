@@ -101,6 +101,7 @@
     <None Remove="UI\TeachingTips\CheckUpdateTip.xaml" />
     <None Remove="UI\TeachingTips\DataCopyTip.xaml" />
     <None Remove="UI\TeachingTips\DownloadCreateTip.xaml" />
+    <None Remove="UI\TeachingTips\FileLostTip.xaml" />
     <None Remove="UI\TeachingTips\FolderPickerTip.xaml" />
     <None Remove="UI\TeachingTips\LanguageChangeTip.xaml" />
     <None Remove="UI\TeachingTips\LogCleanTip.xaml" />
@@ -150,6 +151,7 @@
     <Page Update="UI\TeachingTips\CheckUpdateTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\DataCopyTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\DownloadCreateTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\TeachingTips\FileLostTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\FolderPickerTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\LanguageChangeTip.xaml" Generator="MSBuild:Compile" />
     <Page Update="UI\TeachingTips\LogCleanTip.xaml" Generator="MSBuild:Compile" />

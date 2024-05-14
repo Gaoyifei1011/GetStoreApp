@@ -161,8 +161,9 @@ namespace GetStoreApp.Services.Controls.Download
                     downloadSchedulerItem.TotalSize = status.BytesTotal;
 
                     DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
                     DownloadStorageService.AddDownloadData(downloadSchedulerItem);
+                    DownloadSchedulerList.Remove(downloadSchedulerItem);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
                     break;
                 }
             }
@@ -292,8 +293,9 @@ namespace GetStoreApp.Services.Controls.Download
                     downloadSchedulerItem.TotalSize = progress.BytesTotal;
 
                     DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
                     DownloadStorageService.AddDownloadData(downloadSchedulerItem);
+                    DownloadSchedulerList.Remove(downloadSchedulerItem);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
                     break;
                 }
             }
@@ -323,7 +325,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// 初始化后台下载调度器
         /// 先检查当前网络状态信息，加载暂停任务信息，然后初始化下载监控任务
         /// </summary>
-        public static void InitializeDownloadScheduler()
+        public static void InitializeDownloadScheduler(bool isDesktopProgram)
         {
             // 获取当前下载引擎
             doEngineMode = DownloadOptionsService.DoEngineMode;
@@ -332,12 +334,14 @@ namespace GetStoreApp.Services.Controls.Download
             BadgeNotificationService.Show(badgeCount);
 
             // 挂载集合数量发生更改事件
-            CollectionCountChanged += OnCollectionCountChanged;
+            if (isDesktopProgram)
+            {
+                CollectionCountChanged += OnCollectionCountChanged;
+            }
 
             // 初始化下载服务
             if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
             {
-                DeliveryOptimizationService.InItialize();
                 DeliveryOptimizationService.DownloadCreated += OnDeliveryOptimizationCreated;
                 DeliveryOptimizationService.DownloadContinued += OnDeliveryOptimizationContinued;
                 DeliveryOptimizationService.DownloadPaused += OnDeliveryOptimizationPaused;
@@ -360,18 +364,20 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 关闭下载监控任务
         /// </summary>
-        public static void CloseDownloadScheduler()
+        public static void CloseDownloadScheduler(bool isDesktopProgram)
         {
             DownloadSchedulerSemaphoreSlim.Dispose();
             DownloadSchedulerSemaphoreSlim = null;
 
             // 卸载集合数量发生更改事件
-            CollectionCountChanged -= OnCollectionCountChanged;
+            if (isDesktopProgram)
+            {
+                CollectionCountChanged -= OnCollectionCountChanged;
+            }
 
             // 注销下载服务
             if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
             {
-                DeliveryOptimizationService.UnInitialize();
                 DeliveryOptimizationService.DownloadCreated -= OnDeliveryOptimizationCreated;
                 DeliveryOptimizationService.DownloadContinued -= OnDeliveryOptimizationContinued;
                 DeliveryOptimizationService.DownloadPaused -= OnDeliveryOptimizationPaused;
@@ -381,7 +387,6 @@ namespace GetStoreApp.Services.Controls.Download
             }
             else
             {
-                BitsService.UnInitialize();
                 BitsService.DownloadCreated -= OnBitsCreated;
                 BitsService.DownloadContinued -= OnBitsContinued;
                 BitsService.DownloadPaused -= OnBitsPaused;

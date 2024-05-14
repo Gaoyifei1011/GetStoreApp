@@ -142,13 +142,22 @@
     <value>There are four channels for download links: 1. Fast, 2. Slow, 3. Release Preview, and 4. Official Version</value>
   </data>
   <data name="DownloadCompleted" xml:space="preserve">
+    <value>File {0} download completed</value>
+  </data>
+  <data name="DownloadCompletedAll" xml:space="preserve">
     <value>All files have been downloaded, do you want to download other files? (Make sure to input "Y", exit entering other characters)</value>
+  </data>
+  <data name="DownloadCreated" xml:space="preserve">
+    <value>File download {0} task successfully created</value>
   </data>
   <data name="DownloadFile" xml:space="preserve">
     <value>Please input the serial number of the file you want to download, and if there are multiple files downloaded, separate them with English commas(",")</value>
   </data>
   <data name="DownloadingInformation" xml:space="preserve">
     <value>Downloading {0} file, {1} files in total</value>
+  </data>
+  <data name="DownloadProgressing" xml:space="preserve">
+    <value>Downloading, download completed {0}, file size {1}, current speed {2}, completion progress {3}%</value>
   </data>
   <data name="ExitPrompt" xml:space="preserve">
     <value>Are you sure want to quit?</value>

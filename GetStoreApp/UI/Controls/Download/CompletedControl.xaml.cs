@@ -189,9 +189,13 @@ namespace GetStoreApp.UI.Controls.Download
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
 
-            if (completedItem is not null)
+            if (completedItem is not null && File.Exists(completedItem.FilePath))
             {
                 await ContentDialogHelper.ShowAsync(new FileInformationDialog(completedItem), this);
+            }
+            else
+            {
+                TeachingTipHelper.Show(new FileLostTip());
             }
         }
 
@@ -201,7 +205,7 @@ namespace GetStoreApp.UI.Controls.Download
         private void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
-            if (completedItem is not null)
+            if (completedItem is not null && File.Exists(completedItem.FilePath))
             {
                 Task.Run(async () =>
                 {
@@ -330,6 +334,10 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                 });
             }
+            else
+            {
+                TeachingTipHelper.Show(new FileLostTip());
+            }
         }
 
         /// <summary>
@@ -340,10 +348,8 @@ namespace GetStoreApp.UI.Controls.Download
             string filePath = args.Parameter as string;
             Task.Run(async () =>
             {
-                if (filePath is not null)
+                if (File.Exists(filePath))
                 {
-                    filePath = filePath.Replace(@"\\", @"\");
-
                     // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
                     if (!string.IsNullOrEmpty(filePath))
                     {
@@ -366,6 +372,10 @@ namespace GetStoreApp.UI.Controls.Download
                         await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                     }
                 }
+                else
+                {
+                    await Launcher.LaunchFolderAsync(DownloadOptionsService.DownloadFolder);
+                }
             });
         }
 
@@ -376,7 +386,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
 
-            if (completedItem is not null)
+            if (completedItem is not null && File.Exists(completedItem.FilePath))
             {
                 try
                 {
@@ -398,6 +408,10 @@ namespace GetStoreApp.UI.Controls.Download
                     TeachingTipHelper.Show(new ShareFailedTip(false));
                     LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
                 }
+            }
+            else
+            {
+                TeachingTipHelper.Show(new FileLostTip());
             }
         }
 
@@ -636,7 +650,10 @@ namespace GetStoreApp.UI.Controls.Download
                             {
                                 try
                                 {
-                                    selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                                    if (File.Exists(completedItem.FilePath))
+                                    {
+                                        selectedFileList.Add(await StorageFile.GetFileFromPathAsync(completedItem.FilePath));
+                                    }
                                 }
                                 catch (Exception e)
                                 {

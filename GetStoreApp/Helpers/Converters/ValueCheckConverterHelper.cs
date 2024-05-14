@@ -1,5 +1,4 @@
 ﻿using Microsoft.UI.Xaml;
-using System.IO;
 using Windows.ApplicationModel;
 
 namespace GetStoreApp.Helpers.Converters
@@ -9,19 +8,6 @@ namespace GetStoreApp.Helpers.Converters
     /// </summary>
     public static class ValueCheckConverterHelper
     {
-        public static Visibility DownloadFlagCheck(int value, int checkValue)
-        {
-            return value == checkValue ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 检测文件是否存在（判断结果相反）
-        /// </summary>
-        public static bool FileExistReverseCheck(string path)
-        {
-            return !File.Exists(path);
-        }
-
         /// <summary>
         /// 检测当前页面是否为应用列表页面
         /// </summary>

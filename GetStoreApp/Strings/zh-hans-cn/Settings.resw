@@ -229,7 +229,7 @@
     <value>下载引擎方式</value>
   </data>
   <data name="DoEngineModeDescription" xml:space="preserve">
-    <value>设置下载文件时使用的下载引擎</value>
+    <value>设置下载文件时使用的下载引擎，重启后生效</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>下载</value>

@@ -279,6 +279,7 @@
                                 <TextBlock
                                     Grid.Column="1"
                                     MinWidth="50"
+                                    HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}"
@@ -298,6 +299,7 @@
                                 <TextBlock
                                     Grid.Column="2"
                                     MinWidth="50"
+                                    HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
@@ -316,6 +318,7 @@
                                 <TextBlock
                                     Grid.Column="3"
                                     MinWidth="50"
+                                    HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     FontSize="16"
                                     Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"

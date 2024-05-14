@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
     xmlns:helper="using:GetStoreApp.Helpers.Root"
-    xmlns:io="using:System.IO"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
@@ -293,26 +292,14 @@
                             </TextBlock>
                         </Grid>
 
-                        <StackPanel Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
+                        <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
                             <TextBlock
-                                x:Name="FileExist"
                                 MinWidth="50"
                                 VerticalAlignment="Center"
-                                x:Load="{x:Bind io:File.Exists(FilePath)}"
                                 FontSize="14"
                                 Text="{x:Bind root:ResourceService.GetLocalized('Download/CompleteDownload')}"
                                 TextAlignment="Left" />
-
-                            <TextBlock
-                                x:Name="FileNotExist"
-                                MinWidth="50"
-                                VerticalAlignment="Center"
-                                x:Load="{x:Bind converter:ValueCheckConverterHelper.FileExistReverseCheck(FilePath)}"
-                                FontSize="14"
-                                Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Download/FileNotExist')}"
-                                TextAlignment="Left" />
-                        </StackPanel>
+                        </Grid>
 
                         <Grid
                             x:Name="InstallInfo"
@@ -370,42 +357,35 @@
                         IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
 
                         <StackPanel Orientation="Horizontal">
+                            <Button
+                                Width="32"
+                                Height="32"
+                                Margin="5,0,0,0"
+                                Padding="0"
+                                Command="{StaticResource InstallCommand}"
+                                CommandParameter="{Binding}"
+                                CornerRadius="{StaticResource ControlCornerRadius}"
+                                IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}">
 
-                            <ContentControl IsEnabled="{x:Bind io:File.Exists(FilePath)}">
+                                <Button.Content>
+                                    <FontIcon FontSize="14" Glyph="&#xE710;" />
+                                </Button.Content>
+                            </Button>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <Button
-                                        Width="32"
-                                        Height="32"
-                                        Margin="5,0,0,0"
-                                        Padding="0"
-                                        Command="{StaticResource InstallCommand}"
-                                        CommandParameter="{Binding}"
-                                        CornerRadius="{StaticResource ControlCornerRadius}"
-                                        IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/InstallToolTip')}">
+                            <Button
+                                Width="32"
+                                Height="32"
+                                Margin="5,0,0,0"
+                                Padding="0"
+                                Command="{StaticResource OpenItemFolderCommand}"
+                                CornerRadius="{StaticResource ControlCornerRadius}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}">
 
-                                        <Button.Content>
-                                            <FontIcon FontSize="14" Glyph="&#xE710;" />
-                                        </Button.Content>
-                                    </Button>
-
-                                    <Button
-                                        Width="32"
-                                        Height="32"
-                                        Margin="5,0,0,0"
-                                        Padding="0"
-                                        Command="{StaticResource OpenItemFolderCommand}"
-                                        CommandParameter="{x:Bind FilePath}"
-                                        CornerRadius="{StaticResource ControlCornerRadius}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}">
-
-                                        <Button.Content>
-                                            <FontIcon FontSize="14" Glyph="&#xEC50;" />
-                                        </Button.Content>
-                                    </Button>
-                                </StackPanel>
-                            </ContentControl>
+                                <Button.Content>
+                                    <FontIcon FontSize="14" Glyph="&#xEC50;" />
+                                </Button.Content>
+                            </Button>
 
                             <Button
                                 Width="32"
@@ -439,7 +419,6 @@
                                             Padding="11,0"
                                             Command="{StaticResource DeleteWithFileCommand}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFile')}"
                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteWithFileToolTip')}">
 
@@ -455,7 +434,6 @@
                                             Padding="11,0"
                                             Command="{StaticResource ShareFileCommand}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/ShareFile')}">
 
                                             <MenuFlyoutItem.Icon>
@@ -468,7 +446,6 @@
                                             Padding="11,0"
                                             Command="{StaticResource FileInformationCommand}"
                                             CommandParameter="{Binding}"
-                                            IsEnabled="{x:Bind io:File.Exists(FilePath)}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Download/FileInformation')}">
 
                                             <MenuFlyoutItem.Icon>

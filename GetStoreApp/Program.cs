@@ -9,7 +9,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -33,6 +32,8 @@ namespace GetStoreApp
         [STAThread]
         public static void Main(string[] args)
         {
+            Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 0x20, 0);
+
             if (!RuntimeHelper.IsMSIX)
             {
                 PackageManager packageManager = new PackageManager();
@@ -58,13 +59,12 @@ namespace GetStoreApp
             if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_ClassicDesktop)
             {
                 bool isDesktopProgram = args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
-
                 InitializeResourcesAsync(isDesktopProgram).Wait();
-                DownloadSchedulerService.InitializeDownloadScheduler();
 
                 // 以桌面应用程序方式正常启动
                 if (isDesktopProgram)
                 {
+                    DownloadSchedulerService.InitializeDownloadScheduler(true);
                     DesktopLaunchService.InitializeLaunchAsync(args).Wait();
 
                     // 启动桌面程序
@@ -106,6 +106,9 @@ namespace GetStoreApp
             }
         }
 
+        /// <summary>
+        /// 处理控制台应用程序未知异常处理
+        /// </summary>
         private static void OnUnhandledException(object sender, System.UnhandledExceptionEventArgs args)
         {
             LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
@@ -130,7 +133,7 @@ namespace GetStoreApp
                 LinkFilterService.InitializeLinkFilterValue();
                 QueryLinksModeService.InitializeQueryLinksMode();
                 await DownloadOptionsService.InitializeDownloadAsync();
-                DownloadStorageService.InitializeStorage();
+                DownloadStorageService.Initialize();
             }
 
             // 初始化其他设置信息（桌面应用程序）

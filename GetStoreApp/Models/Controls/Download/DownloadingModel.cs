@@ -187,7 +187,7 @@ namespace GetStoreApp.Models.Controls.Download
         /// </summary>
         public double DownloadProgress(double finishedSize, double totalSize)
         {
-            return totalSize == default ? 0 : Math.Round(finishedSize / totalSize, 4) * 100;
+            return totalSize == default ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
         }
 
         /// <summary>

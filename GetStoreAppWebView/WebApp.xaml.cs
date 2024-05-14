@@ -54,7 +54,7 @@ namespace GetStoreAppWebView
         private void SetAppIcon()
         {
             // 选中文件中的图标总数
-            int iconTotalCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreAppWebView.exe"), 0, 0, 0, null, null, 0, 0);
+            int iconTotalCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), 0, 0, 0, null, null, 0, 0);
 
             // 用于接收获取到的图标指针
             hIcons = new IntPtr[iconTotalCount];
@@ -63,7 +63,7 @@ namespace GetStoreAppWebView
             int[] ids = new int[iconTotalCount];
 
             // 成功获取到的图标个数
-            int successCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.GetAppInstalledLocation(), "GetStoreAppWebView.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
+            int successCount = User32Library.PrivateExtractIcons(string.Format(@"{0}\{1}", InfoHelper.AppInstalledLocation, "GetStoreAppWebView.exe"), 0, 256, 256, hIcons, ids, iconTotalCount, 0);
 
             // GetStoreApp.exe 应用程序只有一个图标
             if (successCount >= 1 && hIcons[0] != IntPtr.Zero)

@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.Console;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
@@ -46,12 +47,20 @@ namespace GetStoreApp.Services.Root
             }
             ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
             Kernel32Library.SetConsoleCtrlHandler(Marshal.GetFunctionPointerForDelegate(ctrlDelegate), true);
+            DownloadSchedulerService.InitializeDownloadScheduler(false);
+            DownloadSchedulerService.DownloadCreated += DownloadService.OnDownloadCreated;
+            DownloadSchedulerService.DownloadProgressing += DownloadService.OnDownloadProgressing;
+            DownloadSchedulerService.DownloadCompleted += DownloadService.OnDownloadCompleted;
 
             InitializeIntroduction();
             InitializeRequestContent();
             await CharExtension.InitializeAsync();
             await RequestService.GetLinksAsync();
 
+            DownloadSchedulerService.CloseDownloadScheduler(false);
+            DownloadSchedulerService.DownloadCreated -= DownloadService.OnDownloadCreated;
+            DownloadSchedulerService.DownloadProgressing -= DownloadService.OnDownloadProgressing;
+            DownloadSchedulerService.DownloadCompleted -= DownloadService.OnDownloadCompleted;
             ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
         }
 
@@ -63,7 +72,19 @@ namespace GetStoreApp.Services.Root
             ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
             ConsoleHelper.IsExited = true;
             IsAppRunning = false;
-            DownloadService.StopDownloadFile();
+
+            try
+            {
+                DownloadSchedulerService.TerminateDownload();
+                DownloadSchedulerService.CloseDownloadScheduler(false);
+                DownloadSchedulerService.DownloadCreated -= DownloadService.OnDownloadCreated;
+                DownloadSchedulerService.DownloadProgressing -= DownloadService.OnDownloadProgressing;
+                DownloadSchedulerService.DownloadCompleted -= DownloadService.OnDownloadCompleted;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Unregister Download scheduler service event failed", e);
+            }
             return false;
         }
 

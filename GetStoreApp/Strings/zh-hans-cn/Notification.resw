@@ -199,6 +199,9 @@
   <data name="FileInformationCopy" xml:space="preserve">
     <value>文件信息复制成功</value>
   </data>
+  <data name="FileLost" xml:space="preserve">
+    <value>本地文件已发生移动或被删除</value>
+  </data>
   <data name="FolderPickerFailed" xml:space="preserve">
     <value>文件夹选取框打开失败</value>
   </data>

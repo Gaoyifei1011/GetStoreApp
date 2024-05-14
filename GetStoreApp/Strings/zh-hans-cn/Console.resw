@@ -142,13 +142,22 @@
     <value>下载链接共有四种通道：1.快速、2.慢速、3.发布预览、4.正式版</value>
   </data>
   <data name="DownloadCompleted" xml:space="preserve">
+    <value>文件 {0} 已下载完成</value>
+  </data>
+  <data name="DownloadCompletedAll" xml:space="preserve">
     <value>所有文件都已经下载完成，是否要下载其他文件？（确定输入“Y”，退出输入其他字符）</value>
+  </data>
+  <data name="DownloadCreated" xml:space="preserve">
+    <value>文件 {0} 已开始下载</value>
   </data>
   <data name="DownloadFile" xml:space="preserve">
     <value>请输入您要下载文件的序号，如果有多个文件下载请使用英文逗号隔开（“,”）</value>
   </data>
   <data name="DownloadingInformation" xml:space="preserve">
     <value>正在下载第{0}个文件，共{1}个文件</value>
+  </data>
+  <data name="DownloadProgressing" xml:space="preserve">
+    <value>正在下载中，已下载完成 {0}，文件大小 {1}，当前速度 {2}，完成进度 {3}%</value>
   </data>
   <data name="ExitPrompt" xml:space="preserve">
     <value>您确定要退出吗？</value>

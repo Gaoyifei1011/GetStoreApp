@@ -30,14 +30,6 @@ namespace GetStoreApp.Helpers.Root
         // 应用安装根目录
         public static string AppInstalledLocation { get; } = Package.Current.InstalledLocation.Path;
 
-        /// <summary>
-        /// 获取应用安装根目录
-        /// </summary>
-        public static string GetAppInstalledLocation()
-        {
-            return Package.Current.InstalledLocation.Path;
-        }
-
         static InfoHelper()
         {
             string systemVersion = AnalyticsInfo.VersionInfo.DeviceFamilyVersion;

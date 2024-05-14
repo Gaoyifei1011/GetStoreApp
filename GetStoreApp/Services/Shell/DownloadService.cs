@@ -1,10 +1,13 @@
 ﻿using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.System;
 
@@ -15,10 +18,39 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class DownloadService
     {
-        private static bool isFileDownloading = false;
+        private static AutoResetEvent autoResetEvent = new AutoResetEvent(false);
 
-        public static STARTUPINFO downloadStartupInfo;
-        public static PROCESS_INFORMATION downloadInformation;
+        /// <summary>
+        /// 下载任务已创建
+        /// </summary>
+        public static void OnDownloadCreated(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
+        {
+            ConsoleHelper.SetTextColor(0x01);
+            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCreated"), downloadSchedulerItem.FileName));
+            ConsoleHelper.ResetTextColor();
+        }
+
+        /// <summary>
+        /// 下载任务下载进度发生变化
+        /// </summary>
+
+        public static void OnDownloadProgressing(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
+        {
+            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadProgressing"), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.FinishedSize), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.TotalSize), SpeedHelper.ConvertSpeedToString(downloadSchedulerItem.CurrentSpeed), DownloadProgress(downloadSchedulerItem.FinishedSize, downloadSchedulerItem.TotalSize)));
+        }
+
+        /// <summary>
+        /// 下载任务已下载完成
+        /// </summary>
+
+        public static void OnDownloadCompleted(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
+        {
+            ConsoleHelper.SetTextColor(0x02);
+            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCompleted"), downloadSchedulerItem.FileName));
+            ConsoleHelper.ResetTextColor();
+            ConsoleHelper.Write(Environment.NewLine);
+            autoResetEvent?.Set();
+        }
 
         /// <summary>
         /// 下载相应的文件
@@ -59,7 +91,7 @@ namespace GetStoreApp.Services.Shell
                                 DownloadFile(queryLinksList[Convert.ToInt32(indexItem) - 1].FileName, queryLinksList[Convert.ToInt32(indexItem) - 1].FileLink);
                             }
                         }
-                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompleted"));
+                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompletedAll"));
                         string inputString = ConsoleHelper.ReadLine();
                         if (inputString is "Y" or "y")
                         {
@@ -107,7 +139,8 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void DownloadFile(string fileName, string fileLink)
         {
-            // TODO ：需要更新下载服务
+            DownloadSchedulerService.CreateDownload(fileLink, Path.Combine(DownloadOptionsService.DownloadFolder.Path, fileName));
+            autoResetEvent.WaitOne();
         }
 
         /// <summary>
@@ -119,22 +152,11 @@ namespace GetStoreApp.Services.Shell
         }
 
         /// <summary>
-        /// 程序即将退出，停止下载文件
+        /// 计算当前文件的下载进度
         /// </summary>
-        public static void StopDownloadFile()
+        private static double DownloadProgress(double finishedSize, double totalSize)
         {
-            if (isFileDownloading)
-            {
-                if (downloadInformation.dwProcessId is not 0)
-                {
-                    IntPtr hProcess = Kernel32Library.OpenProcess(EDESIREDACCESS.PROCESS_TERMINATE, false, downloadInformation.dwProcessId);
-                    if (hProcess != IntPtr.Zero)
-                    {
-                        Kernel32Library.TerminateProcess(hProcess, 0);
-                    }
-                    Kernel32Library.CloseHandle(hProcess);
-                }
-            }
+            return totalSize == default ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
         }
     }
 }

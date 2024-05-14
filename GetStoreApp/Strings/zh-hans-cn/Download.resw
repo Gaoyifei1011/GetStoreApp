@@ -222,9 +222,6 @@
   <data name="FileInformation" xml:space="preserve">
     <value>查看文件信息</value>
   </data>
-  <data name="FileNotExist" xml:space="preserve">
-    <value>已下载完成的文件可能已经被移除</value>
-  </data>
   <data name="FileNotExists" xml:space="preserve">
     <value>文件不存在</value>
   </data>

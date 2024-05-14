@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.UI.Controls.Download
 {
@@ -305,6 +306,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                         if (downloadingItem.IsSelected)
                         {
+                            downloadingItem.IsSelected = false;
                             downloadingItem.IsNotOperated = false;
 
                             if (downloadingItem.DownloadStatus is DownloadStatus.Downloading)
@@ -375,7 +377,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             catch (Exception e)
             {
-                LogService.WriteLog(Windows.Foundation.Diagnostics.LoggingLevel.Error, "Unregister downloading event failed", e);
+                LogService.WriteLog(LoggingLevel.Error, "Unregister Download scheduler service event failed", e);
             }
         }
 

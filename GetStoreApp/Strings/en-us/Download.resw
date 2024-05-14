@@ -222,9 +222,6 @@
   <data name="FileInformation" xml:space="preserve">
     <value>View file information</value>
   </data>
-  <data name="FileNotExist" xml:space="preserve">
-    <value>The downloaded file may have been removed</value>
-  </data>
   <data name="FileNotExists" xml:space="preserve">
     <value>The file does not exist</value>
   </data>

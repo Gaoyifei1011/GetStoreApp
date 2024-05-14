@@ -229,7 +229,7 @@
     <value>Download engine mode</value>
   </data>
   <data name="DoEngineModeDescription" xml:space="preserve">
-    <value>Set the download engine to use when downloading files</value>
+    <value>Set the download engine to use when downloading files,this parameter takes effect after a restart</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
     <value>Downloads</value>

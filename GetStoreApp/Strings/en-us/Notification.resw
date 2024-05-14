@@ -199,6 +199,9 @@
   <data name="FileInformationCopy" xml:space="preserve">
     <value>The file information is copied successfully</value>
   </data>
+  <data name="FileLost" xml:space="preserve">
+    <value>The local file has been moved or deleted</value>
+  </data>
   <data name="FolderPickerFailed" xml:space="preserve">
     <value>Folder picker open failed</value>
   </data>

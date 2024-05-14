@@ -21,7 +21,7 @@ namespace GetStoreApp.Services.Controls.Download
         private const string FilePath = "FilePath";
         private const string FileSize = "FileSize";
 
-        private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+        private static ApplicationDataContainer localSettingsContainer;
         private static ApplicationDataContainer downloadStorageContainer;
 
         public static SemaphoreSlim DownloadStorageSemaphoreSlim { get; private set; } = new SemaphoreSlim(1, 1);
@@ -35,8 +35,9 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 初始化下载记录服务
         /// </summary>
-        public static void InitializeStorage()
+        public static void Initialize()
         {
+            localSettingsContainer = ApplicationData.Current.LocalSettings;
             DownloadStorageSemaphoreSlim?.Wait();
 
             try
@@ -74,7 +75,7 @@ namespace GetStoreApp.Services.Controls.Download
                     compositeValue[FilePath] = downloadSchedulerItem.FilePath;
                     compositeValue[FileSize] = downloadSchedulerItem.TotalSize.ToString();
 
-                    if (downloadStorageContainer.Values.TryAdd(DownloadKey, compositeValue))
+                    if (downloadStorageContainer.Values.TryAdd(downloadSchedulerItem.DownloadKey, compositeValue))
                     {
                         StorageDataAdded?.Invoke(downloadSchedulerItem);
                     }
