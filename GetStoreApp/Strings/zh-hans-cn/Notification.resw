@@ -169,20 +169,6 @@
   <data name="DownloadCreateSuccessfully" xml:space="preserve">
     <value>下载任务创建成功</value>
   </data>
-  <data name="DownloadingNowOfflineMode" xml:space="preserve">
-    <value>&lt;toast launch="action=OpenApp"&gt;
-  &lt;visual&gt;
-    &lt;binding template="ToastGeneric"&gt;
-      &lt;text&gt;应用处于离线模式&lt;/text&gt;
-      &lt;text&gt;网络连接异常，当前正在下载中的任务已经全部暂停，请确保您的网络处于连接状态后再尝试下载。&lt;/text&gt;
-    &lt;/binding&gt;
-  &lt;/visual&gt;
-  &lt;actions&gt;
-    &lt;action content="打开下载页面" arguments=" action=ViewDownloadPage"/&gt;
-    &lt;action content="检查网络连接" arguments="action=CheckNetWorkConnection"/&gt;
-  &lt;/actions&gt;
-&lt;/toast&gt;</value>
-  </data>
   <data name="ElevatedRunning" xml:space="preserve">
     <value>&lt;toast launch="action=OpenApp"&gt;
   &lt;visual&gt;

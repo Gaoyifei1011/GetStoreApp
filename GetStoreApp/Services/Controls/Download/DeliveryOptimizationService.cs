@@ -78,8 +78,8 @@ namespace GetStoreApp.Services.Controls.Download
                         ComVariant urlVariant = ComVariant.Create(url);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_Uri, &urlVariant);
                         ComVariant filePathVariant = ComVariant.Create(saveFilePath);
-                        int result2 = doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, &filePathVariant);
-                        Marshal.ThrowExceptionForHR(result2);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, &filePathVariant);
+
                         DODownloadStatusCallback doDownloadStatusCallback = new DODownloadStatusCallback();
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
 
@@ -101,7 +101,7 @@ namespace GetStoreApp.Services.Controls.Download
                             DeliveryOptimizationDict.TryAdd(doDownloadStatusCallback.DownloadID, Tuple.Create(doDownload, doDownloadStatusCallback));
                         }
 
-                        int result = doDownload.Start(IntPtr.Zero);
+                        doDownload.Start(IntPtr.Zero);
                     }
                 }
                 catch (Exception e)

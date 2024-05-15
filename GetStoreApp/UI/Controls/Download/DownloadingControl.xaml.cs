@@ -53,45 +53,65 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 GlobalNotificationService.ApplicationExit += OnApplicationExit;
                 DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-                List<DownloadSchedulerModel> downloadingSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
-                AutoResetEvent autoResetEvent = new AutoResetEvent(false);
 
-                DispatcherQueue.TryEnqueue(() =>
+                try
                 {
-                    lock (downloadingLock)
+                    List<DownloadSchedulerModel> downloadingSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
+                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadingSchedulerList)
+                        try
                         {
-                            DownloadingCollection.Add(new DownloadingModel()
+                            lock (downloadingLock)
                             {
-                                DownloadID = downloadSchedulerItem.DownloadID,
-                                DownloadStatus = downloadSchedulerItem.DownloadStatus,
-                                FileName = downloadSchedulerItem.FileName,
-                                FilePath = downloadSchedulerItem.FilePath,
-                                FileLink = downloadSchedulerItem.FileLink,
-                                FinishedSize = downloadSchedulerItem.FinishedSize,
-                                IsNotOperated = true,
-                                CurrentSpeed = 0,
-                                TotalSize = downloadSchedulerItem.TotalSize,
-                                IsSelected = false,
-                                IsSelectMode = false
-                            });
+                                foreach (DownloadSchedulerModel downloadSchedulerItem in downloadingSchedulerList)
+                                {
+                                    DownloadingCollection.Add(new DownloadingModel()
+                                    {
+                                        DownloadID = downloadSchedulerItem.DownloadID,
+                                        DownloadStatus = downloadSchedulerItem.DownloadStatus,
+                                        FileName = downloadSchedulerItem.FileName,
+                                        FilePath = downloadSchedulerItem.FilePath,
+                                        FileLink = downloadSchedulerItem.FileLink,
+                                        FinishedSize = downloadSchedulerItem.FinishedSize,
+                                        IsNotOperated = true,
+                                        CurrentSpeed = 0,
+                                        TotalSize = downloadSchedulerItem.TotalSize,
+                                        IsSelected = false,
+                                        IsSelectMode = false
+                                    });
+                                }
+                            }
                         }
-                    }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Initialize downloading collection failed", e);
+                        }
+                        finally
+                        {
+                            autoResetEvent.Set();
+                        }
+                    });
 
-                    autoResetEvent.Set();
-                });
+                    autoResetEvent.WaitOne();
+                    autoResetEvent.Dispose();
 
-                autoResetEvent.WaitOne();
-                autoResetEvent.Dispose();
-
-                DownloadSchedulerService.DownloadCreated += OnDownloadCreated;
-                DownloadSchedulerService.DownloadContinued += OnDownloadContinued;
-                DownloadSchedulerService.DownloadPaused += OnDownloadPaused;
-                DownloadSchedulerService.DownloadDeleted += OnDownloadDeleted;
-                DownloadSchedulerService.DownloadProgressing += OnDownloadProgressing;
-                DownloadSchedulerService.DownloadCompleted += OnDownloadCompleted;
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                    DownloadSchedulerService.DownloadCreated += OnDownloadCreated;
+                    DownloadSchedulerService.DownloadContinued += OnDownloadContinued;
+                    DownloadSchedulerService.DownloadPaused += OnDownloadPaused;
+                    DownloadSchedulerService.DownloadDeleted += OnDownloadDeleted;
+                    DownloadSchedulerService.DownloadProgressing += OnDownloadProgressing;
+                    DownloadSchedulerService.DownloadCompleted += OnDownloadCompleted;
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Initialize DownloadingCollection failed", e);
+                }
+                finally
+                {
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                }
             });
         }
 
@@ -309,7 +329,7 @@ namespace GetStoreApp.UI.Controls.Download
                             downloadingItem.IsSelected = false;
                             downloadingItem.IsNotOperated = false;
 
-                            if (downloadingItem.DownloadStatus is DownloadStatus.Downloading)
+                            if (downloadingItem.DownloadStatus is DownloadStatus.Downloading || downloadingItem.DownloadStatus is DownloadStatus.Pause)
                             {
                                 DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
                             }
@@ -397,7 +417,7 @@ namespace GetStoreApp.UI.Controls.Download
                         FileName = downloadSchedulerItem.FileName,
                         FilePath = downloadSchedulerItem.FilePath,
                         FileLink = downloadSchedulerItem.FileLink,
-                        FinishedSize = downloadSchedulerItem.FinishedSize,
+                        FinishedSize = 0,
                         IsNotOperated = true,
                         CurrentSpeed = 0,
                         TotalSize = downloadSchedulerItem.TotalSize,

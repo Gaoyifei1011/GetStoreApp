@@ -4,6 +4,8 @@
 ------
 
 > * [开发人员主页（DevHome）](https://github.com/microsoft/devhome)&emsp;
+> * [BITS-Manager](https://github.com/Microsoft/BITS-Manager)&emsp;
+> * [DODownloaderDotNet](https://github.com/shishirb-MSFT/DODownloaderDotNet)&emsp;
 > * [Generating valid tokens to access Limited Access Features in Windows 10](https://www.withinrafael.com/2021/01/04/generating-valid-tokens-to-access-limited-access-features-in-windows-10)&emsp;
 > * [MS-Store-API](https://github.com/ThomasPe/MS-Store-API)&emsp;
 > * [MS-Store-Downloader](https://github.com/Caesar008/MS-Store-Downloader)&emsp;

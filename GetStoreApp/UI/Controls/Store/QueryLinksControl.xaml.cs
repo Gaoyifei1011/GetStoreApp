@@ -353,20 +353,41 @@ namespace GetStoreApp.UI.Controls.Store
                 Task.Run(() =>
                 {
                     List<DownloadSchedulerModel> downloadInfoList = new List<DownloadSchedulerModel>();
-
                     DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+
+                    try
                     {
-                        downloadInfoList.Add(downloadSchedulerItem);
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+                        {
+                            downloadInfoList.Add(downloadSchedulerItem);
+                        }
                     }
-                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
+                    }
+                    finally
+                    {
+                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                    }
 
                     DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+
+                    try
                     {
-                        downloadInfoList.Add(downloadSchedulerItem);
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+                        {
+                            downloadInfoList.Add(downloadSchedulerItem);
+                        }
                     }
-                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Query download storage data failed", e);
+                    }
+                    finally
+                    {
+                        DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+                    }
 
                     bool isDownloadSuccessfully = false;
                     bool isExisted = false;
@@ -706,20 +727,41 @@ namespace GetStoreApp.UI.Controls.Store
                 };
 
                 List<DownloadSchedulerModel> downloadInfoList = new List<DownloadSchedulerModel>();
-
                 DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+
+                try
                 {
-                    downloadInfoList.Add(downloadSchedulerItem);
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
+                    {
+                        downloadInfoList.Add(downloadSchedulerItem);
+                    }
                 }
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
+                }
+                finally
+                {
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                }
 
                 DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+
+                try
                 {
-                    downloadInfoList.Add(downloadSchedulerItem);
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+                    {
+                        downloadInfoList.Add(downloadSchedulerItem);
+                    }
                 }
-                DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Query download storage data failed", e);
+                }
+                finally
+                {
+                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+                }
 
                 bool isDownloadSuccessfully = false;
                 foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)

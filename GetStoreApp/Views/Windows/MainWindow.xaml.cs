@@ -265,12 +265,23 @@ namespace GetStoreApp.Views.Windows
         {
             args.Cancel = true;
 
+            List<DownloadSchedulerModel> downloadSchedulerList = null;
             DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-            List<DownloadSchedulerModel> downloadSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
-            DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+            try
+            {
+                downloadSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+            }
 
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-            if (downloadSchedulerList.Count > 0)
+            if (downloadSchedulerList is not null && downloadSchedulerList.Count > 0)
             {
                 Show();
 
@@ -554,6 +565,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
+            args.Handled = true;
             LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
             (Application.Current as WinUIApp).Dispose();
         }

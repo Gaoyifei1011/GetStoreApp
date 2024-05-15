@@ -2,6 +2,7 @@
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
 using System;
 using System.Collections;
@@ -46,21 +47,32 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnDeliveryOptimizationCreated(Guid downloadID, string fileName, string filePath, string url, double totalSize)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
-            {
-                DownloadID = downloadID,
-                DownloadStatus = DownloadStatus.Downloading,
-                FileName = fileName,
-                FilePath = filePath,
-                FileLink = url,
-                FinishedSize = 0,
-                TotalSize = totalSize
-            };
 
-            DownloadSchedulerList.Add(downloadSchedulerItem);
-            DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
-            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-            DownloadSchedulerSemaphoreSlim?.Release();
+            try
+            {
+                DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
+                {
+                    DownloadID = downloadID,
+                    DownloadStatus = DownloadStatus.Downloading,
+                    FileName = fileName,
+                    FilePath = filePath,
+                    FileLink = url,
+                    FinishedSize = 0,
+                    TotalSize = totalSize
+                };
+
+                DownloadSchedulerList.Add(downloadSchedulerItem);
+                DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
+                CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationCreated event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -69,18 +81,29 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnDeliveryOptimizationContinued(Guid downloadID)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
 
-                    DownloadContinued?.Invoke(downloadID);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+
+                        DownloadContinued?.Invoke(downloadID);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationContinued event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -89,18 +112,29 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnDeliveryOptimizationPaused(Guid downloadID)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
 
-                    DownloadPaused?.Invoke(downloadID);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
+
+                        DownloadPaused?.Invoke(downloadID);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationPaused event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -109,18 +143,29 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnDeliveryOptimizationDeleted(Guid downloadID)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    DownloadSchedulerList.Remove(downloadSchedulerItem);
 
-                    DownloadDeleted?.Invoke(downloadID);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        DownloadSchedulerList.Remove(downloadSchedulerItem);
+
+                        DownloadDeleted?.Invoke(downloadID);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationDeleted event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -129,20 +174,31 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnDeliveryOptimizationProgressing(Guid downloadID, DO_DOWNLOAD_STATUS status)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
-                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                    downloadSchedulerItem.FinishedSize = status.BytesTransferred;
-                    downloadSchedulerItem.TotalSize = status.BytesTotal;
 
-                    DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                        downloadSchedulerItem.FinishedSize = status.BytesTransferred;
+                        downloadSchedulerItem.TotalSize = status.BytesTotal;
+
+                        DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationProgressing event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -151,23 +207,42 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnDeliveryOptimizationCompleted(Guid downloadID, DO_DOWNLOAD_STATUS status)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
-                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                    downloadSchedulerItem.FinishedSize = status.BytesTransferred;
-                    downloadSchedulerItem.TotalSize = status.BytesTotal;
 
-                    DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
-                    DownloadStorageService.AddDownloadData(downloadSchedulerItem);
-                    DownloadSchedulerList.Remove(downloadSchedulerItem);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
+                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                        downloadSchedulerItem.FinishedSize = status.BytesTransferred;
+                        downloadSchedulerItem.TotalSize = status.BytesTotal;
+
+                        DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
+                        DownloadStorageService.AddDownloadData(downloadSchedulerItem);
+                        DownloadSchedulerList.Remove(downloadSchedulerItem);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
+                }
+
+                if (DownloadSchedulerList.Count is 0)
+                {
+                    MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
+                        {
+                            ToastNotificationService.Show(NotificationKind.DownloadCompleted);
+                        });
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationCompleted event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         #endregion 第一部分：传递优化服务挂载的事件
@@ -180,21 +255,32 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnBitsCreated(Guid downloadID, string fileName, string filePath, string url, double totalSize)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
-            {
-                DownloadID = downloadID,
-                DownloadStatus = DownloadStatus.Downloading,
-                FileName = fileName,
-                FilePath = filePath,
-                FileLink = url,
-                FinishedSize = 0,
-                TotalSize = totalSize
-            };
 
-            DownloadSchedulerList.Add(downloadSchedulerItem);
-            DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
-            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-            DownloadSchedulerSemaphoreSlim?.Release();
+            try
+            {
+                DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
+                {
+                    DownloadID = downloadID,
+                    DownloadStatus = DownloadStatus.Downloading,
+                    FileName = fileName,
+                    FilePath = filePath,
+                    FileLink = url,
+                    FinishedSize = 0,
+                    TotalSize = totalSize
+                };
+
+                DownloadSchedulerList.Add(downloadSchedulerItem);
+                DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
+                CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsCreated event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -203,17 +289,28 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnBitsContinued(Guid downloadID)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+
+            try
             {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
-                    DownloadContinued?.Invoke(downloadID);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+                        DownloadContinued?.Invoke(downloadID);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsContinued event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -222,17 +319,28 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnBitsPaused(Guid downloadID)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+
+            try
             {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
-                    DownloadPaused?.Invoke(downloadID);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
+                        DownloadPaused?.Invoke(downloadID);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsPaused event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -241,18 +349,29 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnBitsDeleted(Guid downloadID)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    DownloadSchedulerList.Remove(downloadSchedulerItem);
 
-                    DownloadDeleted?.Invoke(downloadID);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        DownloadSchedulerList.Remove(downloadSchedulerItem);
+
+                        DownloadDeleted?.Invoke(downloadID);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsDeleted event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -261,20 +380,31 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnBitsProgressing(Guid downloadID, BG_JOB_PROGRESS progress)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
-                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                    downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
-                    downloadSchedulerItem.TotalSize = progress.BytesTotal;
 
-                    DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                        downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
+                        downloadSchedulerItem.TotalSize = progress.BytesTotal;
+
+                        DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
+                        break;
+                    }
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsProgressing event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         /// <summary>
@@ -283,23 +413,42 @@ namespace GetStoreApp.Services.Controls.Download
         private static void OnBitsCompleted(Guid downloadID, BG_JOB_PROGRESS progress)
         {
             DownloadSchedulerSemaphoreSlim?.Wait();
-            foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-            {
-                if (downloadSchedulerItem.DownloadID.Equals(downloadID))
-                {
-                    downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
-                    downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                    downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
-                    downloadSchedulerItem.TotalSize = progress.BytesTotal;
 
-                    DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
-                    DownloadStorageService.AddDownloadData(downloadSchedulerItem);
-                    DownloadSchedulerList.Remove(downloadSchedulerItem);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                    break;
+            try
+            {
+                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                {
+                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    {
+                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
+                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
+                        downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
+                        downloadSchedulerItem.TotalSize = progress.BytesTotal;
+
+                        DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
+                        DownloadStorageService.AddDownloadData(downloadSchedulerItem);
+                        DownloadSchedulerList.Remove(downloadSchedulerItem);
+                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                        break;
+                    }
+                }
+
+                if (DownloadSchedulerList.Count is 0)
+                {
+                    MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        ToastNotificationService.Show(NotificationKind.DownloadCompleted);
+                    });
                 }
             }
-            DownloadSchedulerSemaphoreSlim?.Release();
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsCompleted event failed", e);
+            }
+            finally
+            {
+                DownloadSchedulerSemaphoreSlim?.Release();
+            }
         }
 
         #endregion 第二部分：后台智能传输服务挂载的事件

@@ -132,7 +132,7 @@ namespace GetStoreApp.Services.Controls.Download
                         downloadJob.SetNotifyInterface(strategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
 
                         downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
-                        DownloadCreated?.Invoke(backgroundCopyCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, progress.BytesTotal);
+                        DownloadCreated?.Invoke(backgroundCopyCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, progress.BytesTotal is ulong.MaxValue ? 0 : progress.BytesTotal);
 
                         lock (bitsLock)
                         {

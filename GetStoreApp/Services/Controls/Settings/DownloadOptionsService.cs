@@ -27,8 +27,6 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static DictionaryEntry DoEngineMode { get; private set; }
 
-        public static int DownloadItem { get; } = 1;
-
         public static List<DictionaryEntry> DoEngineModeList { get; } = ResourceService.DoEngineModeList;
 
         /// <summary>

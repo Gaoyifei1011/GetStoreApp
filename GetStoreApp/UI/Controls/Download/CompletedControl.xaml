@@ -279,7 +279,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="16"
                                 Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
-                                TextAlignment="Left">
+                                TextAlignment="Right">
 
                                 <ToolTipService.ToolTip>
                                     <ToolTip>

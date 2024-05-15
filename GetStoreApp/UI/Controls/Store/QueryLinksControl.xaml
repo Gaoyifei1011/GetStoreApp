@@ -832,6 +832,7 @@
                             Grid.Column="5"
                             VerticalAlignment="Center"
                             Command="{StaticResource CopyInformationCommand}"
+                            CommandParameter="{Binding}"
                             Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyInformation')}"
                             IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                             Style="{StaticResource HyperlinkButtonStyle}"
