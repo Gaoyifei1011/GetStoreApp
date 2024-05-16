@@ -835,14 +835,6 @@ namespace GetStoreApp.Views.Pages
         #endregion 第二部分：设置页面——挂载的事件
 
         /// <summary>
-        /// 判断传递优化下载引擎是否存在
-        /// </summary>
-        private bool IsDeliveryOptimizationExisted()
-        {
-            return InfoHelper.SystemVersion.Build >= 22621;
-        }
-
-        /// <summary>
         /// 判断两个版本是否共同存在
         /// </summary>
         private bool IsBothVersionExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)

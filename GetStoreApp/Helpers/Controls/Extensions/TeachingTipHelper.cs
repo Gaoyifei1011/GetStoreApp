@@ -11,6 +11,8 @@ namespace GetStoreApp.Helpers.Controls.Extensions
     /// </summary>
     public static class TeachingTipHelper
     {
+        private static readonly object teachingTipLock = new object();
+
         /// <summary>
         /// 使用教学提示显示应用内通知
         /// </summary>
@@ -19,18 +21,26 @@ namespace GetStoreApp.Helpers.Controls.Extensions
             MainWindow.Current.DispatcherQueue.TryEnqueue(async () =>
             {
                 teachingTip.Name = "TeachingTip" + Guid.NewGuid().ToString();
-                ((MainWindow.Current.Content as Page).Content as Grid).Children.Add(teachingTip);
+
+                lock (teachingTipLock)
+                {
+                    ((MainWindow.Current.Content as Page).Content as Grid).Children.Add(teachingTip);
+                }
+
                 teachingTip.IsOpen = true;
                 teachingTip.Closed += (sender, args) =>
                 {
                     try
                     {
-                        foreach (UIElement uiElement in ((MainWindow.Current.Content as Page).Content as Grid).Children)
+                        lock (teachingTipLock)
                         {
-                            if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
+                            foreach (UIElement uiElement in ((MainWindow.Current.Content as Page).Content as Grid).Children)
                             {
-                                ((MainWindow.Current.Content as Page).Content as Grid).Children.Remove(uiElement);
-                                break;
+                                if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    ((MainWindow.Current.Content as Page).Content as Grid).Children.Remove(uiElement);
+                                    break;
+                                }
                             }
                         }
                     }

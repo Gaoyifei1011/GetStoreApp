@@ -1328,8 +1328,7 @@
                                 <DropDownButton
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{x:Bind DoEngineMode.Key, Mode=OneWay}"
-                                    IsEnabled="{x:Bind IsDeliveryOptimizationExisted()}">
+                                    Content="{x:Bind DoEngineMode.Key, Mode=OneWay}">
 
                                     <DropDownButton.Flyout>
                                         <MenuFlyout Placement="Bottom">
