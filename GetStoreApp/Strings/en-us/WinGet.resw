@@ -157,7 +157,7 @@
     <value>Download progress: {0} completed</value>
   </data>
   <data name="DownloadFromGithub" xml:space="preserve">
-    <value>Download from Gtihub</value>
+    <value>Download from Github</value>
   </data>
   <data name="DownloadFromGithubToolTip" xml:space="preserve">
     <value>Download from Github (official, preview, developer, etc.)</value>

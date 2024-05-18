@@ -157,7 +157,7 @@
     <value>下载进度：已完成{0}%</value>
   </data>
   <data name="DownloadFromGithub" xml:space="preserve">
-    <value>从 Gtihub 中下载</value>
+    <value>从 Github 中下载</value>
   </data>
   <data name="DownloadFromGithubToolTip" xml:space="preserve">
     <value>从 Github 中下载（正式版、预览版、开发版等）</value>
