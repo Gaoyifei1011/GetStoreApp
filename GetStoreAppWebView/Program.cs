@@ -61,6 +61,14 @@ namespace GetStoreAppWebView
                     Environment.SetEnvironmentVariable("WEBVIEW2_BROWSER_EXECUTABLE_FOLDER", Path.Combine(SystemDataPaths.GetDefault().System, "Microsoft-Edge-WebView"));
                 }
             }
+            else
+            {
+                if (RuntimeHelper.IsElevated)
+                {
+                    global::Windows.System.Launcher.LaunchUriAsync(new Uri("https://store.rg-adguard.net")).AsTask().Wait();
+                    return;
+                }
+            }
 
             ComWrappersSupport.InitializeComWrappers();
 

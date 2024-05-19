@@ -188,7 +188,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </param>
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
         [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false)]
-        public static partial IntPtr OpenProcess(EDESIREDACCESS dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, int dwProcessId);
+        public static partial IntPtr OpenProcess(EDESIREDACCESS dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, uint dwProcessId);
 
         /// <summary>
         /// 检索有关系统快照中遇到的第一个进程的信息。
@@ -225,12 +225,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "ReadConsoleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool ReadConsole(
-            IntPtr hConsoleInput,
-            [In, Out] byte[] lpBuffer,
-            int nNumberOfCharsToRead,
-            out int lpNumberOfCharsRead,
-            IntPtr pInputControl);
+        public static partial bool ReadConsole(IntPtr hConsoleInput, [In, Out] byte[] lpBuffer, int nNumberOfCharsToRead, out int lpNumberOfCharsRead, IntPtr pInputControl);
 
         /// <summary>
         /// 设置由 WriteFile 或 WriteConsole 函数写入控制台屏幕缓冲区或由 ReadFile 或 ReadConsole 函数回显的字符的属性。 此函数会影响函数调用后写入的文本。
@@ -261,6 +256,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial bool SetConsoleCtrlHandler(IntPtr handlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
 
         /// <summary>
+        /// 终止指定的进程及其所有线程。
+        /// </summary>
+        /// <param name="hProcess">句柄必须具有 PROCESS_TERMINATE 访问权限。 有关详细信息，请参阅 进程安全性和访问权限。</param>
+        /// <param name="uExitCode">
+        /// 进程和线程因此调用而终止的退出代码。 使用 GetExitCodeProcess 函数检索进程的退出值。 使用 GetExitCodeThread 函数检索线程的退出值。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool TerminateProcess(IntPtr hProcess, uint uExitCode);
+
+        /// <summary>
         /// 从当前光标位置开始，将字符串写入控制台屏幕缓冲区。
         /// </summary>
         /// <param name="hConsoleOutput">控制台屏幕缓冲区的句柄。 此句柄必须具有 GENERIC_WRITE 访问权限。 有关详细信息，请参阅控制台缓冲区安全性和访问权限。</param>
@@ -271,11 +277,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "WriteConsoleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool WriteConsole(
-             IntPtr hConsoleOutput,
-             [MarshalAs(UnmanagedType.LPWStr)] string lpBuffer,
-             int nNumberOfCharsToWrite,
-             out int lpNumberOfCharsWritten,
-             IntPtr lpReservedMustBeNull);
+        public static partial bool WriteConsole(IntPtr hConsoleOutput, [MarshalAs(UnmanagedType.LPWStr)] string lpBuffer, int nNumberOfCharsToWrite, out int lpNumberOfCharsWritten, IntPtr lpReservedMustBeNull);
     }
 }

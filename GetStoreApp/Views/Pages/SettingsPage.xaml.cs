@@ -8,7 +8,6 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -705,34 +704,17 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    Kernel32Library.GetStartupInfo(out STARTUPINFO ProcessStartupInfo);
-                    ProcessStartupInfo.lpReserved = IntPtr.Zero;
-                    ProcessStartupInfo.lpDesktop = IntPtr.Zero;
-                    ProcessStartupInfo.lpTitle = IntPtr.Zero;
-                    ProcessStartupInfo.dwX = 0;
-                    ProcessStartupInfo.dwY = 0;
-                    ProcessStartupInfo.dwXSize = 0;
-                    ProcessStartupInfo.dwYSize = 0;
-                    ProcessStartupInfo.dwXCountChars = 500;
-                    ProcessStartupInfo.dwYCountChars = 500;
-                    ProcessStartupInfo.dwFlags = STARTF.STARTF_USESHOWWINDOW;
-                    ProcessStartupInfo.wShowWindow = WindowShowStyle.SW_HIDE;
-                    ProcessStartupInfo.cbReserved2 = 0;
-                    ProcessStartupInfo.lpReserved2 = IntPtr.Zero;
-                    ProcessStartupInfo.cb = Marshal.SizeOf<STARTUPINFO>();
+                    List<uint> processIdList = ProcessHelper.GetProcessPidByName("Win32WebViewHost.exe");
 
-                    bool result = Kernel32Library.CreateProcess(null, "taskkill /F /IM Win32WebViewHost.exe", IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.CREATE_NO_WINDOW, IntPtr.Zero, null, ref ProcessStartupInfo, out PROCESS_INFORMATION processInformation);
-
-                    if (result)
+                    foreach (uint processId in processIdList)
                     {
-                        if (processInformation.hProcess != IntPtr.Zero) Kernel32Library.CloseHandle(processInformation.hProcess);
-                        if (processInformation.hThread != IntPtr.Zero) Kernel32Library.CloseHandle(processInformation.hThread);
+                        IntPtr hProcess = Kernel32Library.OpenProcess(EDESIREDACCESS.PROCESS_TERMINATE, false, processId);
+
+                        if (hProcess != IntPtr.Zero)
+                        {
+                            Kernel32Library.TerminateProcess(hProcess, 0);
+                        }
                     }
-
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        TeachingTipHelper.Show(new TerminateProcessTip(result));
-                    });
                 }
                 catch (Exception e)
                 {

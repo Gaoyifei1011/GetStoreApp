@@ -107,7 +107,7 @@
 | 检查商店应用更新                 | 已完成                                                             |
 | WinGet 程序包管理               | 已完成                                                             |
 | 设备应用管理                    | 已完成                                                             |
-| 下载管理                        | 正在重构(4.0 版本完成)                                             |
+| 下载管理                        | 已完成                                                             |
 | 控制台应用程序                  | 已完成                                                             |
 | 程序性能优化                    | 已完成                                                             |
 | 界面现代化改造                  | 已完成                                                             |
@@ -182,6 +182,7 @@
 
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
 > * [cnbluefire](https://github.com/cnbluefire)&emsp;
+> * [hez2010](https://github.com/hez2010)&emsp;
 > * [飞翔](https://fionlen.azurewebsites.net)&emsp;
 > * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
 > * [TaylorShi](https://github.com/TaylorShi)&emsp;

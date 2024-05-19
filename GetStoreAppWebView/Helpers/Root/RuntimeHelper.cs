@@ -1,6 +1,7 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using GetStoreAppWebView.WindowsAPI.PInvoke.Advapi32;
+using Microsoft.Web.WebView2.Core;
 using System;
-using System.Security.Principal;
+using System.Runtime.InteropServices;
 using Windows.ApplicationModel;
 
 namespace GetStoreAppWebView.Helpers.Root
@@ -43,9 +44,28 @@ namespace GetStoreAppWebView.Helpers.Root
         /// </summary>
         private static void IsRunningElevated()
         {
-            WindowsIdentity identity = WindowsIdentity.GetCurrent();
-            WindowsPrincipal principal = new WindowsPrincipal(identity);
-            IsElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            bool success = Advapi32Library.OpenProcessToken(-1, 0x0008, out IntPtr tokenHandle);
+
+            TOKEN_ELEVATION_TYPE token_elevation_type = TOKEN_ELEVATION_TYPE.TokenElevationTypeDefault;
+            uint tetSize = (uint)Marshal.SizeOf((int)token_elevation_type);
+
+            if (success)
+            {
+                IntPtr token_elevation_type_Ptr = Marshal.AllocHGlobal((int)tetSize);
+                try
+                {
+                    if (Advapi32Library.GetTokenInformation(tokenHandle, TOKEN_INFORMATION_CLASS.TokenElevationType, token_elevation_type_Ptr, tetSize, out _))
+                    {
+                        token_elevation_type = (TOKEN_ELEVATION_TYPE)Marshal.ReadInt32(token_elevation_type_Ptr);
+                    }
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(token_elevation_type_Ptr);
+                }
+            }
+
+            IsElevated = token_elevation_type == TOKEN_ELEVATION_TYPE.TokenElevationTypeFull;
         }
 
         /// <summary>
