@@ -47,10 +47,10 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public ObservableCollection<DictionaryEntry> BreadCollection { get; } = new ObservableCollection<DictionaryEntry>()
-        {
+        public ObservableCollection<DictionaryEntry> BreadCollection { get; } =
+        [
             new DictionaryEntry(ResourceService.GetLocalized("UWPApp/AppList"), "AppList")
-        };
+        ];
 
         public event PropertyChangedEventHandler PropertyChanged;
 

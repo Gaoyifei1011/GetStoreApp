@@ -25,7 +25,7 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object installedAppsLock = new object();
+        private readonly object installedAppsLock = new();
 
         private bool isInitialized = false;
 
@@ -112,9 +112,9 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList { get; } = new List<MatchResult>();
+        private List<MatchResult> MatchResultList { get; } = [];
 
-        private ObservableCollection<InstalledAppsModel> InstalledAppsCollection { get; } = new ObservableCollection<InstalledAppsModel>();
+        private ObservableCollection<InstalledAppsModel> InstalledAppsCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -151,7 +151,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(async () =>
                 {
-                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                    AutoResetEvent autoResetEvent = new(false);
                     try
                     {
                         UninstallOptions uninstallOptions = WinGetService.CreateUninstallOptions();
@@ -391,7 +391,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                 if (MatchResultList.Count > 0)
                 {
-                    List<InstalledAppsModel> installedAppsList = new List<InstalledAppsModel>();
+                    List<InstalledAppsModel> installedAppsList = [];
 
                     if (hasSearchText)
                     {

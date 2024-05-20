@@ -23,7 +23,7 @@ namespace GetStoreApp.Services.Controls.Download
 
         public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new SemaphoreSlim(1, 1);
 
-        private static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = new List<DownloadSchedulerModel>();
+        private static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
 
         public static event Action<Guid, DownloadSchedulerModel> DownloadCreated;
 
@@ -50,7 +50,7 @@ namespace GetStoreApp.Services.Controls.Download
 
             try
             {
-                DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
+                DownloadSchedulerModel downloadSchedulerItem = new()
                 {
                     DownloadID = downloadID,
                     DownloadStatus = DownloadStatus.Downloading,
@@ -258,7 +258,7 @@ namespace GetStoreApp.Services.Controls.Download
 
             try
             {
-                DownloadSchedulerModel downloadSchedulerItem = new DownloadSchedulerModel()
+                DownloadSchedulerModel downloadSchedulerItem = new()
                 {
                     DownloadID = downloadID,
                     DownloadStatus = DownloadStatus.Downloading,
@@ -625,7 +625,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static List<DownloadSchedulerModel> GetDownloadSchedulerList()
         {
-            List<DownloadSchedulerModel> downloadSchedulerList = new List<DownloadSchedulerModel>();
+            List<DownloadSchedulerModel> downloadSchedulerList = [];
 
             if (DownloadSchedulerSemaphoreSlim?.CurrentCount is 0)
             {

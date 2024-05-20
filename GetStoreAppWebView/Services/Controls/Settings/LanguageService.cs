@@ -11,7 +11,7 @@ namespace GetStoreAppWebView.Services.Controls.Settings
     /// </summary>
     public static class LanguageService
     {
-        private static string settingsKey = ConfigKey.LanguageKey;
+        private static readonly string settingsKey = ConfigKey.LanguageKey;
 
         public static string DefaultAppLanguage { get; private set; }
 

@@ -9,15 +9,15 @@ namespace GetStoreApp.Helpers.Controls.Store
     /// </summary>
     public static partial class HtmlParseHelper
     {
-        [GeneratedRegex(@"<i>(.*?)<\/i>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        [GeneratedRegex(@"<index>(.*?)<\/index>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex CIDRegularExpression();
 
-        private static Regex CIDRegex = CIDRegularExpression();
+        private static readonly Regex CIDRegex = CIDRegularExpression();
 
         [GeneratedRegex(@"<tr\sstyle=\\?""background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"">\s{0,}<td>\s{0,}<a\shref=\\?""(.*?)\\?""\srel=\\?""noreferrer\\?"">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?GMT)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex ResultDataListRegularExpression();
 
-        private static Regex ResultDataListRegex = ResultDataListRegularExpression();
+        private static readonly Regex ResultDataListRegex = ResultDataListRegularExpression();
 
         private static string parseContent = string.Empty;
 
@@ -55,24 +55,27 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         public static List<QueryLinksModel> HtmlParseLinks()
         {
-            List<QueryLinksModel> resultDataList = new List<QueryLinksModel>();
+            List<QueryLinksModel> resultDataList = [];
 
             if (!string.IsNullOrEmpty(parseContent))
             {
                 MatchCollection resultDataListCollection = ResultDataListRegex.Matches(parseContent);
 
-                foreach (Match matchItem in resultDataListCollection)
+                for (int index = 0; index < resultDataListCollection.Count; index++)
                 {
+                    Match matchItem = resultDataListCollection[index];
                     GroupCollection ResultDataListGroups = matchItem.Groups;
 
                     if (ResultDataListGroups.Count is 6)
                     {
-                        QueryLinksModel queryLinksData = new QueryLinksModel();
-                        queryLinksData.FileLink = ResultDataListGroups[1].Value;
-                        queryLinksData.FileName = ResultDataListGroups[2].Value;
-                        queryLinksData.FileLinkExpireTime = ResultDataListGroups[3].Value;
-                        queryLinksData.FileSHA1 = ResultDataListGroups[4].Value;
-                        queryLinksData.FileSize = ResultDataListGroups[5].Value;
+                        QueryLinksModel queryLinksData = new()
+                        {
+                            FileLink = ResultDataListGroups[1].Value,
+                            FileName = ResultDataListGroups[2].Value,
+                            FileLinkExpireTime = ResultDataListGroups[3].Value,
+                            FileSHA1 = ResultDataListGroups[4].Value,
+                            FileSize = ResultDataListGroups[5].Value
+                        };
 
                         resultDataList.Add(queryLinksData);
                     }

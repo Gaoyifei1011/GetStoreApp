@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections;
@@ -17,8 +16,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class DownloadOptionsService
     {
-        private static string downloadFolderKey = ConfigKey.DownloadFolderKey;
-        private static string doEngineModeKey = ConfigKey.DoEngineModeKey;
+        private static readonly string downloadFolderKey = ConfigKey.DownloadFolderKey;
+        private static readonly string doEngineModeKey = ConfigKey.DoEngineModeKey;
+
         private static DictionaryEntry defaultDoEngineMode;
 
         public static StorageFolder DefaultDownloadFolder { get; private set; }

@@ -22,9 +22,9 @@ namespace GetStoreApp.Helpers.Controls.Store
     /// </summary>
     public static class QueryLinksHelper
     {
-        private static Uri cookieUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
-        private static Uri fileListXmlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
-        private static Uri urlUri = new Uri("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured");
+        private static readonly Uri cookieUri = new("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
+        private static readonly Uri fileListXmlUri = new("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx");
+        private static readonly Uri urlUri = new("https://fe3.delivery.mp.microsoft.com/ClientWebService/client.asmx/secured");
 
         /// <summary>
         /// 解析输入框输入的字符串
@@ -48,7 +48,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         public static async Task<string> GetCookieAsync()
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             string cookieResult = string.Empty;
@@ -57,19 +57,19 @@ namespace GetStoreApp.Helpers.Controls.Store
             {
                 byte[] contentBytes = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/cookie.xml");
 
-                HttpStringContent httpStringContent = new HttpStringContent(Encoding.UTF8.GetString(contentBytes));
+                HttpStringContent httpStringContent = new(Encoding.UTF8.GetString(contentBytes));
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
                 httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
-                HttpClient httpClient = new HttpClient();
+                HttpClient httpClient = new();
                 HttpResponseMessage responseMessage = await httpClient.PostAsync(cookieUri, httpStringContent).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new();
 
                     responseBuilder.Append("Status Code:");
                     responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
@@ -84,7 +84,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     httpClient.Dispose();
                     responseMessage.Dispose();
 
-                    XmlDocument responseStringDocument = new XmlDocument();
+                    XmlDocument responseStringDocument = new();
                     responseStringDocument.LoadXml(responseString);
 
                     XmlNodeList encryptedDataList = responseStringDocument.GetElementsByTagName("EncryptedData");
@@ -130,24 +130,24 @@ namespace GetStoreApp.Helpers.Controls.Store
         public static async Task<Tuple<bool, AppInfoModel>> GetAppInformationAsync(string productId)
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             Tuple<bool, AppInfoModel> appInformationResult = null;
-            AppInfoModel appInfoModel = new AppInfoModel();
+            AppInfoModel appInfoModel = new();
 
             try
             {
-                GeographicRegion geographicRegion = new GeographicRegion();
+                GeographicRegion geographicRegion = new();
                 string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market={1}&locale={2}&deviceFamily=Windows.Desktop", productId, geographicRegion.CodeTwoLetter, LanguageService.AppLanguage.Value);
 
-                HttpClient httpClient = new HttpClient();
-                HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri(categoryIDAPI)).AsTask(cancellationTokenSource.Token);
+                HttpClient httpClient = new();
+                HttpResponseMessage responseMessage = await httpClient.GetAsync(new(categoryIDAPI)).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new();
 
                     responseBuilder.Append("Status Code:");
                     responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
@@ -231,7 +231,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         public static async Task<string> GetFileListXmlAsync(string cookie, string categoryId, string ring)
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             string fileListXmlResult = string.Empty;
@@ -242,19 +242,19 @@ namespace GetStoreApp.Helpers.Controls.Store
                 string fileListXml = Encoding.UTF8.GetString(wubytesArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
                 byte[] contentBytes = Encoding.UTF8.GetBytes(fileListXml);
 
-                HttpStringContent httpStringContent = new HttpStringContent(fileListXml);
+                HttpStringContent httpStringContent = new(fileListXml);
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
                 httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
-                HttpClient httpClient = new HttpClient();
+                HttpClient httpClient = new();
                 HttpResponseMessage responseMessage = await httpClient.PostAsync(fileListXmlUri, httpStringContent).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new();
 
                     responseBuilder.Append("Status Code:");
                     responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
@@ -308,14 +308,14 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <returns>带解析后文件信息的列表</returns>
         public static List<QueryLinksModel> GetAppxPackages(string fileListXml, string ring)
         {
-            List<QueryLinksModel> appxPackagesList = new List<QueryLinksModel>();
+            List<QueryLinksModel> appxPackagesList = [];
 
             try
             {
-                XmlDocument fileListDocument = new XmlDocument();
+                XmlDocument fileListDocument = new();
                 fileListDocument.LoadXml(fileListXml);
 
-                Dictionary<string, Tuple<string, string, string>> appxPackagesInfoDict = new Dictionary<string, Tuple<string, string, string>>();
+                Dictionary<string, Tuple<string, string, string>> appxPackagesInfoDict = [];
                 XmlNodeList fileList = fileListDocument.GetElementsByTagName("File");
 
                 foreach (IXmlNode fileNode in fileList)
@@ -334,9 +334,9 @@ namespace GetStoreApp.Helpers.Controls.Store
                     }
                 }
 
-                object appxPackagesLock = new object();
+                object appxPackagesLock = new();
                 XmlNodeList securedFragmentList = fileListDocument.DocumentElement.GetElementsByTagName("SecuredFragment");
-                CountdownEvent countdownEvent = new CountdownEvent(securedFragmentList.Count);
+                CountdownEvent countdownEvent = new(securedFragmentList.Count);
 
                 foreach (IXmlNode securedFragmentNode in securedFragmentList)
                 {
@@ -399,7 +399,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         private static async Task<string> GetAppxUrlAsync(string updateID, string revisionNumber, string ring, string digest)
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             string urlResult = string.Empty;
@@ -410,19 +410,19 @@ namespace GetStoreApp.Helpers.Controls.Store
                 string url = Encoding.UTF8.GetString(urlbytesArray).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
                 byte[] contentBytes = Encoding.UTF8.GetBytes(url);
 
-                HttpStringContent httpContent = new HttpStringContent(url);
+                HttpStringContent httpContent = new(url);
                 httpContent.Headers.Expires = DateTime.Now;
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
                 httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
-                HttpClient httpClient = new HttpClient();
+                HttpClient httpClient = new();
                 HttpResponseMessage responseMessage = await httpClient.PostAsync(urlUri, httpContent).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new();
 
                     responseBuilder.Append("Status Code:");
                     responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
@@ -437,7 +437,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     httpClient.Dispose();
                     responseMessage.Dispose();
 
-                    XmlDocument responseStringDocument = new XmlDocument();
+                    XmlDocument responseStringDocument = new();
                     responseStringDocument.LoadXml(responseString);
 
                     XmlNodeList fileLocationList = responseStringDocument.DocumentElement.GetElementsByTagName("FileLocation");
@@ -488,22 +488,22 @@ namespace GetStoreApp.Helpers.Controls.Store
         public static async Task<List<QueryLinksModel>> GetNonAppxPackagesAsync(string productId)
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-            List<QueryLinksModel> nonAppxPackagesList = new List<QueryLinksModel>();
+            List<QueryLinksModel> nonAppxPackagesList = [];
 
             try
             {
                 string url = "https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/" + productId;
 
-                HttpClient httpClient = new HttpClient();
-                HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri(url)).AsTask(cancellationTokenSource.Token);
+                HttpClient httpClient = new();
+                HttpResponseMessage responseMessage = await httpClient.GetAsync(new(url)).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new();
 
                     responseBuilder.Append("Status Code:");
                     responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
@@ -524,8 +524,8 @@ namespace GetStoreApp.Helpers.Controls.Store
                         JsonObject versionsObject = dataObject.GetNamedValue("Versions").GetArray()[0].GetObject();
                         JsonArray installersArray = versionsObject.GetNamedValue("Installers").GetArray();
 
-                        object nonAppxPackagesLock = new object();
-                        CountdownEvent countdownEvent = new CountdownEvent(installersArray.Count);
+                        object nonAppxPackagesLock = new();
+                        CountdownEvent countdownEvent = new(installersArray.Count);
 
                         foreach (IJsonValue installer in installersArray)
                         {
@@ -609,21 +609,21 @@ namespace GetStoreApp.Helpers.Controls.Store
         private static async Task<string> GetNonAppxPackageFileSizeAsync(string url)
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             string fileSizeResult = "0";
 
             try
             {
-                HttpClient httpClient = new HttpClient();
-                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Head, new Uri(url));
+                HttpClient httpClient = new();
+                HttpRequestMessage requestMessage = new(HttpMethod.Head, new(url));
                 HttpResponseMessage responseMessage = await httpClient.SendRequestAsync(requestMessage).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new();
 
                     responseBuilder.Append("Status Code:");
                     responseBuilder.AppendLine(responseMessage.StatusCode.ToString());

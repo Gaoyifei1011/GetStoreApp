@@ -10,9 +10,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class TopMostService
     {
-        private static string settingsKey = ConfigKey.TopMostKey;
+        private static readonly string settingsKey = ConfigKey.TopMostKey;
 
-        private static bool defaultTopMostValue = false;
+        private static readonly bool defaultTopMostValue = false;
 
         private static bool _topMostValue;
 

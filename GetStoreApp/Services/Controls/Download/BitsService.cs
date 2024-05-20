@@ -17,15 +17,16 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class BitsService
     {
-        private static string displayName = "GetStoreApp";
-        private static object bitsLock = new object();
-        private static Guid CLSID_BackgroundCopyManager = new Guid("4991D34B-80A1-4291-83B6-3328366B9097");
-        private static Guid IID_IBackgroundCopyManager = new Guid("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C");
-        private static StrategyBasedComWrappers strategyBasedComWrappers = new StrategyBasedComWrappers();
+        private static readonly string displayName = "GetStoreApp";
+        private static readonly object bitsLock = new();
+        private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
+
+        private static Guid CLSID_BackgroundCopyManager = new("4991D34B-80A1-4291-83B6-3328366B9097");
+        private static Guid IID_IBackgroundCopyManager = new("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C");
 
         private static IBackgroundCopyManager backgroundCopyManager;
 
-        private static Dictionary<Guid, Tuple<IBackgroundCopyJob, BackgroundCopyCallback>> BitsDict { get; } = new Dictionary<Guid, Tuple<IBackgroundCopyJob, BackgroundCopyCallback>>();
+        private static Dictionary<Guid, Tuple<IBackgroundCopyJob, BackgroundCopyCallback>> BitsDict { get; } = [];
 
         public static event Action<Guid, string, string, string, double> DownloadCreated;
 
@@ -117,7 +118,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static unsafe void CreateDownload(string url, string saveFilePath)
         {
-            Task.Factory.StartNew((param) =>
+            _ = Task.Factory.StartNew((param) =>
             {
                 try
                 {
@@ -126,8 +127,10 @@ namespace GetStoreApp.Services.Controls.Download
                         backgroundCopyManager.CreateJob(displayName, BG_JOB_TYPE.BG_JOB_TYPE_DOWNLOAD, out Guid downloadID, out IBackgroundCopyJob downloadJob);
                         downloadJob.AddFile(url, saveFilePath);
                         downloadJob.SetNotifyFlags(BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_FILE_RANGES_TRANSFERRED | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_ERROR | BG_JOB_NOTIFICATION_TYPE.BG_NOTIFY_JOB_MODIFICATION);
-                        BackgroundCopyCallback backgroundCopyCallback = new BackgroundCopyCallback();
-                        backgroundCopyCallback.DownloadID = downloadID;
+                        BackgroundCopyCallback backgroundCopyCallback = new()
+                        {
+                            DownloadID = downloadID
+                        };
                         backgroundCopyCallback.StatusChanged += OnStatusChanged;
                         downloadJob.SetNotifyInterface(strategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
 

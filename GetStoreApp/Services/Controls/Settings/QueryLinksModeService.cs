@@ -11,7 +11,7 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class QueryLinksModeService
     {
-        private static string queryLinksModeSettingsKey = ConfigKey.QueryLinksModeKey;
+        private static readonly string queryLinksModeSettingsKey = ConfigKey.QueryLinksModeKey;
 
         private static DictionaryEntry defaultQueryLinksMode;
 

@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Controls.History
     /// </summary>
     public static class HistoryStorageService
     {
-        private static readonly object historyStorageLock = new object();
+        private static readonly object historyStorageLock = new();
 
         private const string QueryLinks = "QueryLinks";
         private const string SearchStore = "SearchStore";
@@ -25,7 +25,7 @@ namespace GetStoreApp.Services.Controls.History
         private const string HistoryChannel = "HistoryChannel";
         private const string HistoryLink = "HistoryLink";
 
-        private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer queryLinksContainer;
         private static ApplicationDataContainer searchStoreContainer;
 
@@ -47,7 +47,7 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         public static List<HistoryModel> GetQueryLinksData()
         {
-            List<HistoryModel> queryLinksHistoryList = new List<HistoryModel>();
+            List<HistoryModel> queryLinksHistoryList = [];
 
             lock (historyStorageLock)
             {
@@ -94,7 +94,7 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         public static List<HistoryModel> GetSearchStoreData()
         {
-            List<HistoryModel> searchStoreHistoryList = new List<HistoryModel>();
+            List<HistoryModel> searchStoreHistoryList = [];
 
             lock (historyStorageLock)
             {
@@ -143,14 +143,15 @@ namespace GetStoreApp.Services.Controls.History
                 {
                     for (int index = 1; index <= endIndex; index++)
                     {
-                        ApplicationDataCompositeValue compositeValue = new ApplicationDataCompositeValue();
-
-                        compositeValue[CreateTimeStamp] = queryLinksHistoryList[index - 1].CreateTimeStamp;
-                        compositeValue[HistoryKey] = queryLinksHistoryList[index - 1].HistoryKey;
-                        compositeValue[HistoryAppName] = queryLinksHistoryList[index - 1].HistoryAppName;
-                        compositeValue[HistoryType] = queryLinksHistoryList[index - 1].HistoryType.Key;
-                        compositeValue[HistoryChannel] = queryLinksHistoryList[index - 1].HistoryChannel.Key;
-                        compositeValue[HistoryLink] = queryLinksHistoryList[index - 1].HistoryLink;
+                        ApplicationDataCompositeValue compositeValue = new()
+                        {
+                            [CreateTimeStamp] = queryLinksHistoryList[index - 1].CreateTimeStamp,
+                            [HistoryKey] = queryLinksHistoryList[index - 1].HistoryKey,
+                            [HistoryAppName] = queryLinksHistoryList[index - 1].HistoryAppName,
+                            [HistoryType] = queryLinksHistoryList[index - 1].HistoryType.Key,
+                            [HistoryChannel] = queryLinksHistoryList[index - 1].HistoryChannel.Key,
+                            [HistoryLink] = queryLinksHistoryList[index - 1].HistoryLink
+                        };
 
                         string queryLinksKey = QueryLinks + index.ToString();
                         queryLinksContainer.Values[queryLinksKey] = compositeValue;
@@ -176,11 +177,12 @@ namespace GetStoreApp.Services.Controls.History
                 {
                     for (int index = 1; index <= endIndex; index++)
                     {
-                        ApplicationDataCompositeValue compositeValue = new ApplicationDataCompositeValue();
-
-                        compositeValue[CreateTimeStamp] = searchStoreHistoryList[index - 1].CreateTimeStamp;
-                        compositeValue[HistoryKey] = searchStoreHistoryList[index - 1].HistoryKey;
-                        compositeValue[HistoryContent] = searchStoreHistoryList[index - 1].HistoryContent;
+                        ApplicationDataCompositeValue compositeValue = new()
+                        {
+                            [CreateTimeStamp] = searchStoreHistoryList[index - 1].CreateTimeStamp,
+                            [HistoryKey] = searchStoreHistoryList[index - 1].HistoryKey,
+                            [HistoryContent] = searchStoreHistoryList[index - 1].HistoryContent
+                        };
 
                         string searchStoreKey = SearchStore + index.ToString();
                         searchStoreContainer.Values[searchStoreKey] = compositeValue;

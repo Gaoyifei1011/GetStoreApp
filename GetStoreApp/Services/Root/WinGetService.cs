@@ -14,25 +14,25 @@ namespace GetStoreApp.Services.Root
     public static class WinGetService
     {
         // 普通版本的GUID（CLSID）值
-        private static Guid clsid_PackageManager = new Guid("C53A4F16-787E-42A4-B304-29EFFB4BF597");
+        private static Guid clsid_PackageManager = new("C53A4F16-787E-42A4-B304-29EFFB4BF597");
 
-        private static Guid clsid_InstallOptions = new Guid("1095F097-EB96-453B-B4E6-1613637F3B14");
-        private static Guid clsid_UnInstallOptions = new Guid("E1D9A11E-9F85-4D87-9C17-2B93143ADB8D");
-        private static Guid clsid_FindPackagesOptions = new Guid("572DED96-9C60-4526-8F92-EE7D91D38C1A");
-        private static Guid clsid_PackageMatchFilter = new Guid("D02C9DAF-99DC-429C-B503-4E504E4AB000");
-        private static Guid clsid_CreateCompositePackageCatalogOptions = new Guid("526534B8-7E46-47C8-8416-B1685C327D37");
+        private static Guid clsid_InstallOptions = new("1095F097-EB96-453B-B4E6-1613637F3B14");
+        private static Guid clsid_UnInstallOptions = new("E1D9A11E-9F85-4D87-9C17-2B93143ADB8D");
+        private static Guid clsid_FindPackagesOptions = new("572DED96-9C60-4526-8F92-EE7D91D38C1A");
+        private static Guid clsid_PackageMatchFilter = new("D02C9DAF-99DC-429C-B503-4E504E4AB000");
+        private static Guid clsid_CreateCompositePackageCatalogOptions = new("526534B8-7E46-47C8-8416-B1685C327D37");
 
         // 开发版本的GUID（CLSID）值
-        private static Guid clsid_PackageManager_Dev = new Guid("74CB3139-B7C5-4B9E-9388-E6616DEA288C");
+        private static Guid clsid_PackageManager_Dev = new("74CB3139-B7C5-4B9E-9388-E6616DEA288C");
 
-        private static Guid clsid_InstallOptions_Dev = new Guid("44FE0580-62F7-44D4-9E91-AA9614AB3E86");
-        private static Guid clsid_UnInstallOptions_Dev = new Guid("AA2A5C04-1AD9-46C4-B74F-6B334AD7EB8C");
-        private static Guid clsid_FindPackagesOptions_Dev = new Guid("1BD8FF3A-EC50-4F69-AEEE-DF4C9D3BAA96");
-        private static Guid clsid_PackageMatchFilter_Dev = new Guid("3F85B9F4-487A-4C48-9035-2903F8A6D9E8");
-        private static Guid clsid_CreateCompositePackageCatalogOptions_Dev = new Guid("EE160901-B317-4EA7-9CC6-5355C6D7D8A7");
+        private static Guid clsid_InstallOptions_Dev = new("44FE0580-62F7-44D4-9E91-AA9614AB3E86");
+        private static Guid clsid_UnInstallOptions_Dev = new("AA2A5C04-1AD9-46C4-B74F-6B334AD7EB8C");
+        private static Guid clsid_FindPackagesOptions_Dev = new("1BD8FF3A-EC50-4F69-AEEE-DF4C9D3BAA96");
+        private static Guid clsid_PackageMatchFilter_Dev = new("3F85B9F4-487A-4C48-9035-2903F8A6D9E8");
+        private static Guid clsid_CreateCompositePackageCatalogOptions_Dev = new("EE160901-B317-4EA7-9CC6-5355C6D7D8A7");
 
         // COM接口：IUnknown 接口
-        private static Guid iid_IUnknown = new Guid("00000000-0000-0000-C000-000000000046");
+        private static Guid iid_IUnknown = new("00000000-0000-0000-C000-000000000046");
 
         private static bool actuallyUseDev = false;
 

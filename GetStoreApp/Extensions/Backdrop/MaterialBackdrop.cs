@@ -13,7 +13,7 @@ namespace GetStoreApp.Extensions.Backdrop
     /// </summary>
     public sealed class MaterialBackdrop : SystemBackdrop
     {
-        private bool isMicaBackdrop;
+        private readonly bool isMicaBackdrop;
         private readonly MicaKind micaBackdropKind;
         private readonly DesktopAcrylicKind desktopAcrylicBackdropKind;
         private ISystemBackdropControllerWithTargets systemBackdropController;

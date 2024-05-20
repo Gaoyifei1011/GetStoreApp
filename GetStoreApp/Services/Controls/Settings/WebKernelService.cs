@@ -10,7 +10,7 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class WebKernelService
     {
-        private static string webKernelSettingsKey = ConfigKey.WebKernelKey;
+        private static readonly string webKernelSettingsKey = ConfigKey.WebKernelKey;
 
         private static DictionaryEntry defaultWebKernel;
 

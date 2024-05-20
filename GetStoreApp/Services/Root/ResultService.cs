@@ -6,7 +6,7 @@ namespace GetStoreApp.Services.Root
     {
         private const string result = "Result";
 
-        private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer resultContainer;
 
         /// <summary>

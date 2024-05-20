@@ -34,11 +34,10 @@ namespace GetStoreAppWebView.Windows
     /// </summary>
     public sealed partial class WebWindow : Window, INotifyPropertyChanged
     {
-        private SUBCLASSPROC mainWindowSubClassProc;
-        private SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
-
-        private ContentCoordinateConverter contentCoordinateConverter;
-        private OverlappedPresenter overlappedPresenter;
+        private readonly SUBCLASSPROC mainWindowSubClassProc;
+        private readonly SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
+        private readonly ContentCoordinateConverter contentCoordinateConverter;
+        private readonly OverlappedPresenter overlappedPresenter;
 
         private WebViewControlProcess webViewControlProcess;
         private WebViewControl webViewControl;
@@ -526,7 +525,7 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
-            StringBuilder processFailedBuilder = new StringBuilder();
+            StringBuilder processFailedBuilder = new();
             processFailedBuilder.Append("ProcessFailedKind:");
             processFailedBuilder.Append(args.ProcessFailedKind.ToString());
             processFailedBuilder.Append(Environment.NewLine);
@@ -670,9 +669,11 @@ namespace GetStoreAppWebView.Windows
 
                         if (sysCommand is SystemCommand.SC_MOUSEMENU || sysCommand is SystemCommand.SC_KEYMENU)
                         {
-                            FlyoutShowOptions options = new FlyoutShowOptions();
-                            options.Position = new Point(0, 45);
-                            options.ShowMode = FlyoutShowMode.Standard;
+                            FlyoutShowOptions options = new()
+                            {
+                                Position = new Point(0, 45),
+                                ShowMode = FlyoutShowMode.Standard
+                            };
                             TitlebarMenuFlyout.ShowAt(null, options);
                             return IntPtr.Zero;
                         }
@@ -704,12 +705,14 @@ namespace GetStoreAppWebView.Windows
                     {
                         if (Content is not null && Content.XamlRoot is not null)
                         {
-                            PointInt32 screenPoint = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
+                            PointInt32 screenPoint = new(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
 
-                            FlyoutShowOptions options = new FlyoutShowOptions();
-                            options.ShowMode = FlyoutShowMode.Standard;
-                            options.Position = new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale);
+                            FlyoutShowOptions options = new()
+                            {
+                                ShowMode = FlyoutShowMode.Standard,
+                                Position = new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale)
+                            };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
                         }

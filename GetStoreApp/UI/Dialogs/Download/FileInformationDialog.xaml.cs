@@ -82,7 +82,7 @@ namespace GetStoreApp.UI.Dialogs.Download
 
             Task.Run(() =>
             {
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new();
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);

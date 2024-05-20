@@ -24,25 +24,25 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
-        private static readonly object appUpdateLock = new object();
+        private static readonly object appUpdateLock = new();
 
-        private static string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
-        private static string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
-        private static string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
-        private static string Downloading = ResourceService.GetLocalized("AppUpdate/Downloading");
-        private static string Error = ResourceService.GetLocalized("AppUpdate/Error");
-        private static string Installing = ResourceService.GetLocalized("AppUpdate/Installing");
-        private static string InstallingSubInformation = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
-        private static string Paused = ResourceService.GetLocalized("AppUpdate/Paused");
-        private static string Pending = ResourceService.GetLocalized("AppUpdate/Pending");
-        private static string ReadyToDownload = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
-        private static string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
-        private static string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
+        private static readonly string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
+        private static readonly string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
+        private static readonly string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
+        private static readonly string Downloading = ResourceService.GetLocalized("AppUpdate/Downloading");
+        private static readonly string Error = ResourceService.GetLocalized("AppUpdate/Error");
+        private static readonly string Installing = ResourceService.GetLocalized("AppUpdate/Installing");
+        private static readonly string InstallingSubInformation = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
+        private static readonly string Paused = ResourceService.GetLocalized("AppUpdate/Paused");
+        private static readonly string Pending = ResourceService.GetLocalized("AppUpdate/Pending");
+        private static readonly string ReadyToDownload = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
+        private static readonly string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
+        private static readonly string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
 
-        private AppInstallManager appInstallManager = new AppInstallManager();
-        private PackageManager packageManager = new PackageManager();
+        private readonly AppInstallManager appInstallManager = new();
+        private readonly PackageManager packageManager = new();
 
-        private Dictionary<string, AppInstallItem> AppInstallingDict = new Dictionary<string, AppInstallItem>();
+        private readonly Dictionary<string, AppInstallItem> AppInstallingDict = [];
 
         private bool _isInitialized;
 
@@ -92,7 +92,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private ObservableCollection<AppUpdateModel> AppUpdateCollection { get; } = new ObservableCollection<AppUpdateModel>();
+        private ObservableCollection<AppUpdateModel> AppUpdateCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -119,7 +119,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (appUpdateItem.PackageFamilyName == packageFamilyName)
                         {
-                            AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                            AutoResetEvent autoResetEvent = new(false);
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 lock (appUpdateLock)
@@ -231,11 +231,13 @@ namespace GetStoreApp.Views.Pages
 
             Task.Run(async () =>
             {
-                AppUpdateOptions updateOptions = new AppUpdateOptions();
-                updateOptions.AutomaticallyDownloadAndInstallUpdateIfFound = false;
-                updateOptions.AllowForcedAppRestart = false;
+                AppUpdateOptions updateOptions = new()
+                {
+                    AutomaticallyDownloadAndInstallUpdateIfFound = false,
+                    AllowForcedAppRestart = false
+                };
                 IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
-                List<AppUpdateModel> appUpdateList = new List<AppUpdateModel>();
+                List<AppUpdateModel> appUpdateList = [];
 
                 foreach (AppInstallItem upgradableApps in upgradableAppsList)
                 {
@@ -387,7 +389,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
                 {
-                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                    AutoResetEvent autoResetEvent = new(false);
                     AppInstallStatus appInstallStatus = sender.GetCurrentStatus();
                     string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
                     string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));

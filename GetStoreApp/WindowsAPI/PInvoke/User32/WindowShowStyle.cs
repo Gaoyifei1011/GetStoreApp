@@ -28,7 +28,7 @@
         /// <summary>
         /// 激活窗口并显示最大化的窗口。
         /// </summary>
-        SW_MAXIMIZE = 3,
+        SW_MAXIMIZE = SW_SHOWMAXIMIZED,
 
         /// <summary>
         /// 在其最近的大小和位置显示一个窗口。 此值类似于 SW_SHOWNORMAL，但窗口未激活。

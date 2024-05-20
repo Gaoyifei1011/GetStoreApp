@@ -10,15 +10,15 @@ namespace GetStoreApp.Models.Controls.WinGet
     /// </summary>
     public class InstallingAppsModel : INotifyPropertyChanged
     {
-        private static string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
-        private static string InstallStateToolTip = ResourceService.GetLocalized("WinGet/InstallStateToolTip");
-        private static string DownloadedProgressToolTip = ResourceService.GetLocalized("WinGet/DownloadedProgressToolTip");
-        private static string QueuedToolTip = ResourceService.GetLocalized("WinGet/QueuedToolTip");
-        private static string DownloadingToolTip = ResourceService.GetLocalized("WinGet/DownloadingToolTip");
-        private static string InstallingToolTip = ResourceService.GetLocalized("WinGet/InstallingToolTip");
-        private static string PostInstallToolTip = ResourceService.GetLocalized("WinGet/PostInstallToolTip");
-        private static string FinishedToolTip = ResourceService.GetLocalized("WinGet/FinishedToolTip");
-        private static string CancelingToolTip = ResourceService.GetLocalized("WinGet/CancelingToolTip");
+        private static readonly string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
+        private static readonly string InstallStateToolTip = ResourceService.GetLocalized("WinGet/InstallStateToolTip");
+        private static readonly string DownloadedProgressToolTip = ResourceService.GetLocalized("WinGet/DownloadedProgressToolTip");
+        private static readonly string QueuedToolTip = ResourceService.GetLocalized("WinGet/QueuedToolTip");
+        private static readonly string DownloadingToolTip = ResourceService.GetLocalized("WinGet/DownloadingToolTip");
+        private static readonly string InstallingToolTip = ResourceService.GetLocalized("WinGet/InstallingToolTip");
+        private static readonly string PostInstallToolTip = ResourceService.GetLocalized("WinGet/PostInstallToolTip");
+        private static readonly string FinishedToolTip = ResourceService.GetLocalized("WinGet/FinishedToolTip");
+        private static readonly string CancelingToolTip = ResourceService.GetLocalized("WinGet/CancelingToolTip");
 
         /// <summary>
         /// 应用ID
@@ -137,7 +137,7 @@ namespace GetStoreApp.Models.Controls.WinGet
         /// </summary>
         public string InstallToolTip(string appName, PackageInstallProgressState installProgressState, double downloadProgress, string downloadedFileSize, string totalFileSize, bool isCanceling)
         {
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new();
             builder.AppendLine(string.Format(AppNameToolTip, appName));
 
             if (isCanceling)

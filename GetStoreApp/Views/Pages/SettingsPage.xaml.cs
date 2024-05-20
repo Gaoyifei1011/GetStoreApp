@@ -302,7 +302,7 @@ namespace GetStoreApp.Views.Pages
             for (int index = 0; index < LanguageList.Count; index++)
             {
                 DictionaryEntry languageItem = LanguageList[index];
-                ToggleMenuFlyoutItem toggleMenuFlyoutItem = new ToggleMenuFlyoutItem()
+                ToggleMenuFlyoutItem toggleMenuFlyoutItem = new()
                 {
                     Text = languageItem.Key.ToString(),
                     Height = 32,
@@ -368,7 +368,7 @@ namespace GetStoreApp.Views.Pages
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
             double currentScrollPosition = SettingsScroll.VerticalOffset;
-            Point currentPoint = new Point(0, (int)currentScrollPosition);
+            Point currentPoint = new(0, (int)currentScrollPosition);
 
             if (settingNavigationArgs is AppNaviagtionArgs.DownloadOptions)
             {
@@ -549,7 +549,7 @@ namespace GetStoreApp.Views.Pages
                             // 使用 FolderPicker
                             try
                             {
-                                FolderPicker folderPicker = new FolderPicker();
+                                FolderPicker folderPicker = new();
                                 InitializeWithWindow.Initialize(folderPicker, (IntPtr)MainWindow.Current.AppWindow.Id.Value);
                                 folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
 
@@ -577,10 +577,12 @@ namespace GetStoreApp.Views.Pages
 
                                     try
                                     {
-                                        BROWSEINFO browseInfo = new BROWSEINFO();
-                                        browseInfo.hwndOwner = (IntPtr)MainWindow.Current.AppWindow.Id.Value;
-                                        browseInfo.lpszTitle = Marshal.StringToHGlobalUni(ResourceService.GetLocalized("Settings/SelectFolder"));
-                                        browseInfo.ulFlags = BROWSEINFOFLAGS.BIF_RETURNONLYFSDIRS | BROWSEINFOFLAGS.BIF_NEWDIALOGSTYLE;
+                                        BROWSEINFO browseInfo = new()
+                                        {
+                                            hwndOwner = (IntPtr)MainWindow.Current.AppWindow.Id.Value,
+                                            lpszTitle = Marshal.StringToHGlobalUni(ResourceService.GetLocalized("Settings/SelectFolder")),
+                                            ulFlags = BROWSEINFOFLAGS.BIF_RETURNONLYFSDIRS | BROWSEINFOFLAGS.BIF_NEWDIALOGSTYLE
+                                        };
                                         IntPtr resultPtr = Shell32Library.SHBrowseForFolder(ref browseInfo);
 
                                         if (resultPtr != IntPtr.Zero)

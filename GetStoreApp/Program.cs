@@ -32,11 +32,11 @@ namespace GetStoreApp
         [STAThread]
         public static void Main(string[] args)
         {
-            Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 0x20, 0);
+            _ = Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 0x20, 0);
 
             if (!RuntimeHelper.IsMSIX)
             {
-                PackageManager packageManager = new PackageManager();
+                PackageManager packageManager = new();
                 foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
                 {
                     if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
@@ -74,9 +74,8 @@ namespace GetStoreApp
 
                         Application.Start((param) =>
                         {
-                            DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
-                            SynchronizationContext.SetSynchronizationContext(context);
-                            new WinUIApp();
+                            SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+                            _ = new WinUIApp();
                         });
                     }
                 }
@@ -99,7 +98,7 @@ namespace GetStoreApp
             {
                 // WinUI 3 UWP 模式下，必须需要使用多线程公寓模型启动，所以必须卸载 STAThreadAttribute 属性默认初始化的单线程公寓模型，然后将其初始化为多线程公寓模型
                 Ole32Library.CoUninitialize();
-                Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_MULTITHREADED);
+                _ = Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_MULTITHREADED);
                 InitializeResourcesAsync(false).Wait();
                 CoreApplication.Run(new Views.Windows.FrameworkViewSource());
                 Ole32Library.CoUninitialize();

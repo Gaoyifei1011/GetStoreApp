@@ -30,13 +30,13 @@ namespace GetStoreApp.UI.Controls.UWPApp
     /// </summary>
     public sealed partial class AppListControl : Grid, INotifyPropertyChanged
     {
-        private readonly object uwpAppDataLock = new object();
+        private readonly object uwpAppDataLock = new();
 
         private bool isInitialized = false;
         private bool needToRefreshData = false;
 
         private AutoResetEvent autoResetEvent;
-        private PackageManager packageManager = new PackageManager();
+        private readonly PackageManager packageManager = new();
 
         private string Unknown { get; } = ResourceService.GetLocalized("UWPApp/Unknown");
         private string Yes { get; } = ResourceService.GetLocalized("UWPApp/Yes");
@@ -140,9 +140,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
             }
         }
 
-        private List<Package> MatchResultList = new List<Package>();
+        private readonly List<Package> MatchResultList = [];
 
-        private ObservableCollection<PackageModel> UwpAppDataCollection { get; } = new ObservableCollection<PackageModel>();
+        private ObservableCollection<PackageModel> UwpAppDataCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -299,7 +299,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     {
                         IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = packageManager.RemovePackageAsync(package.Id.FullName);
 
-                        ManualResetEvent uninstallCompletedEvent = new ManualResetEvent(false);
+                        ManualResetEvent uninstallCompletedEvent = new(false);
 
                         uninstallOperation.Completed = (result, progress) =>
                         {
@@ -379,9 +379,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
             {
                 Task.Run(() =>
                 {
-                    Dictionary<string, object> packageDict = new Dictionary<string, object>();
+                    Dictionary<string, object> packageDict = new()
+                    {
+                        ["DisplayName"] = packageItem.DisplayName
+                    };
 
-                    packageDict["DisplayName"] = packageItem.DisplayName;
                     try
                     {
                         packageDict["FamilyName"] = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
@@ -501,7 +503,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                     try
                     {
-                        List<AppListEntryModel> appListEntryList = new List<AppListEntryModel>();
+                        List<AppListEntryModel> appListEntryList = [];
                         IReadOnlyList<AppListEntry> appListEntriesList = packageItem.Package.GetAppListEntries();
                         for (int index = 0; index < appListEntriesList.Count; index++)
                         {
@@ -523,7 +525,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                     try
                     {
-                        List<PackageModel> dependenciesList = new List<PackageModel>();
+                        List<PackageModel> dependenciesList = [];
                         IReadOnlyList<Package> dependcies = packageItem.Package.Dependencies;
 
                         if (dependcies.Count > 0)
@@ -734,7 +736,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     // 备份数据
                     List<Package> backupList = MatchResultList;
-                    List<Package> appTypesList = new List<Package>();
+                    List<Package> appTypesList = [];
 
                     // 根据选项是否筛选包含框架包的数据
                     if (IsFramework)
@@ -752,7 +754,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                         appTypesList = backupList;
                     }
 
-                    List<Package> filteredList = new List<Package>();
+                    List<Package> filteredList = [];
                     foreach (Package packageItem in appTypesList)
                     {
                         if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && SignType.HasFlag(PackageSignKind.Store))
@@ -818,7 +820,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             }
                     }
 
-                    List<PackageModel> packageList = new List<PackageModel>();
+                    List<PackageModel> packageList = [];
 
                     // 根据搜索条件对搜索符合要求的数据
                     if (hasSearchText)

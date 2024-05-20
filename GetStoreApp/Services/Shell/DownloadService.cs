@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class DownloadService
     {
-        private static AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+        private static readonly AutoResetEvent autoResetEvent = new(false);
 
         /// <summary>
         /// 下载任务已创建
@@ -63,11 +63,7 @@ namespace GetStoreApp.Services.Shell
 
                 try
                 {
-                    List<string> indexList = new List<string>();
-                    foreach (string index in ConsoleHelper.ReadLine().Split(','))
-                    {
-                        indexList.Add(index);
-                    }
+                    List<string> indexList = [.. ConsoleHelper.ReadLine().Split(',')];
 
                     bool checkResult = true;
                     foreach (string indexItem in indexList)

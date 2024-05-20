@@ -22,7 +22,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "AllocConsole", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AllocConsole();
+        internal static partial bool AllocConsole();
 
         /// <summary>
         /// 检索一个值，该值指示进程是使用基于 CoreWindow 的窗口模型还是基于 HWND 的窗口模型。 可以使用 值来决定如何注册窗口状态更改通知 (大小更改、可见性更改等 ) 。
@@ -35,7 +35,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果 processToken 或 policy 为 null，则该函数返回ERROR_INVALID_PARAMETER。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "AppPolicyGetWindowingModel", SetLastError = false)]
-        public static partial int AppPolicyGetWindowingModel(IntPtr processToken, out AppPolicyWindowingModel policy);
+        internal static partial int AppPolicyGetWindowingModel(IntPtr processToken, out AppPolicyWindowingModel policy);
 
         /// <summary>
         /// 将调用进程附加到指定进程的控制台作为客户端应用程序
@@ -46,7 +46,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "AttachConsole", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AttachConsole(int dwProcessId = -1);
+        internal static partial bool AttachConsole(int dwProcessId = -1);
 
         /// <summary>
         /// 关闭打开的对象句柄。
@@ -59,7 +59,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CloseHandle", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool CloseHandle(IntPtr hObject);
+        internal static partial bool CloseHandle(IntPtr hObject);
 
         /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。
@@ -74,7 +74,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 如果函数成功，它将返回指定快照的打开句柄。如果函数失败，它将返回 INVALID_HANDLE_VALUE。 要获得更多的错误信息，请调用 GetLastError。 可能的错误代码包括 ERROR_BAD_LENGTH。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CreateToolhelp32Snapshot", SetLastError = false)]
-        public static partial IntPtr CreateToolhelp32Snapshot(CREATE_TOOLHELP32_SNAPSHOT_FLAGS dwFlags, uint th32ProcessID);
+        internal static partial IntPtr CreateToolhelp32Snapshot(CREATE_TOOLHELP32_SNAPSHOT_FLAGS dwFlags, uint th32ProcessID);
 
         /// <summary>
         /// 创建新进程及其主线程。 新进程在调用进程的安全上下文中运行。
@@ -145,7 +145,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CreateProcessW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool CreateProcess(string lpApplicationName, string lpCommandLine, IntPtr lpProcessAttributes, IntPtr lpThreadAttributes, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandles, CREATE_PROCESS_FLAGS dwCreationFlags, IntPtr lpEnvironment, string lpCurrentDirectory, ref STARTUPINFO lpStartupInfo, out PROCESS_INFORMATION lpProcessInformation);
+        internal static partial bool CreateProcess(string lpApplicationName, string lpCommandLine, IntPtr lpProcessAttributes, IntPtr lpThreadAttributes, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandles, CREATE_PROCESS_FLAGS dwCreationFlags, IntPtr lpEnvironment, string lpCurrentDirectory, ref STARTUPINFO lpStartupInfo, out PROCESS_INFORMATION lpProcessInformation);
 
         /// <summary>
         /// 从其控制台中分离调用进程。
@@ -153,14 +153,14 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "FreeConsole", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool FreeConsole();
+        internal static partial bool FreeConsole();
 
         /// <summary>
         /// 检索创建调用进程时指定的 STARTUPINFO 结构的内容。
         /// </summary>
         /// <param name="lpStartupInfo">指向接收启动信息的 STARTUPINFO 结构的指针。</param>
         [LibraryImport(Kernel32, EntryPoint = "GetStartupInfoW", SetLastError = false)]
-        public static partial void GetStartupInfo(out STARTUPINFO lpStartupInfo);
+        internal static partial void GetStartupInfo(out STARTUPINFO lpStartupInfo);
 
         /// <summary>
         /// 检索指定标准设备的句柄（标准输入、标准输出或标准错误）。
@@ -171,7 +171,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 除非应用程序已使用 SetStdHandle 来设置具有较少访问权限的标准句柄，否则该句柄具有 GENERIC_READ 和 GENERIC_WRITE 访问权限。
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "GetStdHandle", SetLastError = false)]
-        public static partial IntPtr GetStdHandle(STD_HANDLE nStdHandle);
+        internal static partial IntPtr GetStdHandle(STD_HANDLE nStdHandle);
 
         /// <summary>
         /// 打开现有的本地进程对象。
@@ -188,7 +188,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </param>
         /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
         [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false)]
-        public static partial IntPtr OpenProcess(EDESIREDACCESS dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, uint dwProcessId);
+        internal static partial IntPtr OpenProcess(EDESIREDACCESS dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, uint dwProcessId);
 
         /// <summary>
         /// 检索有关系统快照中遇到的第一个进程的信息。
@@ -200,7 +200,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "Process32FirstW", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool Process32First(IntPtr snapshot, ref PROCESSENTRY32 lppe);
+        internal static partial bool Process32First(IntPtr snapshot, ref PROCESSENTRY32 lppe);
 
         /// <summary>
         /// 检索有关系统快照中记录的下一个进程的信息。
@@ -212,7 +212,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "Process32NextW", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool Process32Next(IntPtr snapshot, ref PROCESSENTRY32 lppe);
+        internal static partial bool Process32Next(IntPtr snapshot, ref PROCESSENTRY32 lppe);
 
         /// <summary>
         /// 从控制台输入缓冲区读取字符输入，并将其从缓冲区中删除。
@@ -225,7 +225,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "ReadConsoleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool ReadConsole(IntPtr hConsoleInput, [In, Out] byte[] lpBuffer, int nNumberOfCharsToRead, out int lpNumberOfCharsRead, IntPtr pInputControl);
+        internal static partial bool ReadConsole(IntPtr hConsoleInput, [In, Out] byte[] lpBuffer, int nNumberOfCharsToRead, out int lpNumberOfCharsRead, IntPtr pInputControl);
 
         /// <summary>
         /// 设置由 WriteFile 或 WriteConsole 函数写入控制台屏幕缓冲区或由 ReadFile 或 ReadConsole 函数回显的字符的属性。 此函数会影响函数调用后写入的文本。
@@ -234,7 +234,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <param name="wAttributes">字符属性。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "SetConsoleTextAttribute", SetLastError = false)]
-        public static partial int SetConsoleTextAttribute(IntPtr hConsoleOutput, ushort wAttributes);
+        internal static partial int SetConsoleTextAttribute(IntPtr hConsoleOutput, ushort wAttributes);
 
         /// <summary>
         /// 设置当前控制台窗口的标题。
@@ -243,7 +243,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "SetConsoleTitleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetConsoleTitle(string lpConsoleTitle);
+        internal static partial bool SetConsoleTitle(string lpConsoleTitle);
 
         /// <summary>
         /// 从调用进程的处理程序函数列表中添加或删除应用程序定义的 HandlerRoutine 函数。如果未指定处理程序函数，则该函数将设置可继承的属性，该属性确定调用进程是否忽略 Ctrl+C 信号。
@@ -253,7 +253,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "SetConsoleCtrlHandler", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetConsoleCtrlHandler(IntPtr handlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
+        internal static partial bool SetConsoleCtrlHandler(IntPtr handlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
 
         /// <summary>
         /// 终止指定的进程及其所有线程。
@@ -264,7 +264,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool TerminateProcess(IntPtr hProcess, uint uExitCode);
+        internal static partial bool TerminateProcess(IntPtr hProcess, uint uExitCode);
 
         /// <summary>
         /// 从当前光标位置开始，将字符串写入控制台屏幕缓冲区。
@@ -277,6 +277,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "WriteConsoleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool WriteConsole(IntPtr hConsoleOutput, [MarshalAs(UnmanagedType.LPWStr)] string lpBuffer, int nNumberOfCharsToWrite, out int lpNumberOfCharsWritten, IntPtr lpReservedMustBeNull);
+        internal static partial bool WriteConsole(IntPtr hConsoleOutput, [MarshalAs(UnmanagedType.LPWStr)] string lpBuffer, int nNumberOfCharsToWrite, out int lpNumberOfCharsWritten, IntPtr lpReservedMustBeNull);
     }
 }

@@ -25,11 +25,11 @@ namespace GetStoreAppWebView
         /// 应用程序的主入口点
         /// </summary>
         [STAThread]
-        public static void Main(string[] args)
+        public static void Main()
         {
             if (!RuntimeHelper.IsMSIX)
             {
-                PackageManager packageManager = new PackageManager();
+                PackageManager packageManager = new();
                 foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
                 {
                     if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
@@ -74,9 +74,8 @@ namespace GetStoreAppWebView
 
             Application.Start((param) =>
             {
-                DispatcherQueueSynchronizationContext context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
-                SynchronizationContext.SetSynchronizationContext(context);
-                new WebApp();
+                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+                _ = new WebApp();
             });
         }
 

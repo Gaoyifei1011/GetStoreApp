@@ -17,13 +17,14 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class DeliveryOptimizationService
     {
-        private static string displayName = "GetStoreApp";
-        private static object deliveryOptimizationLock = new object();
-        private static Guid CLSID_DeliveryOptimization = new Guid("5B99FA76-721C-423C-ADAC-56D03C8A8007");
-        private static Guid IID_DOManager = new Guid("400E2D4A-1431-4C1A-A748-39CA472CFDB1");
-        private static StrategyBasedComWrappers strategyBasedComWrappers = new StrategyBasedComWrappers();
+        private static readonly string displayName = "GetStoreApp";
+        private static readonly object deliveryOptimizationLock = new();
+        private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
 
-        private static Dictionary<Guid, Tuple<IDODownload, DODownloadStatusCallback>> DeliveryOptimizationDict { get; } = new Dictionary<Guid, Tuple<IDODownload, DODownloadStatusCallback>>();
+        private static Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
+        private static Guid IID_DOManager = new("400E2D4A-1431-4C1A-A748-39CA472CFDB1");
+
+        private static Dictionary<Guid, Tuple<IDODownload, DODownloadStatusCallback>> DeliveryOptimizationDict { get; } = [];
 
         public static event Action<Guid, string, string, string, double> DownloadCreated;
 
@@ -70,7 +71,8 @@ namespace GetStoreApp.Services.Controls.Download
                         doManager = (IDOManager)strategyBasedComWrappers.GetOrCreateObjectForComInstance(doManagerPointer, CreateObjectFlags.None);
                         doManager.CreateDownload(out doDownload);
                         ComWrappers.TryGetComInstance(doDownload, out IntPtr doDownloadPointer);
-                        Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
+                        _ = Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
+                        _ = Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
 
                         // 添加下载信息
                         ComVariant displayNameVariant = ComVariant.Create(displayName);
@@ -80,7 +82,7 @@ namespace GetStoreApp.Services.Controls.Download
                         ComVariant filePathVariant = ComVariant.Create(saveFilePath);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, &filePathVariant);
 
-                        DODownloadStatusCallback doDownloadStatusCallback = new DODownloadStatusCallback();
+                        DODownloadStatusCallback doDownloadStatusCallback = new();
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
 
                         ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, strategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(doDownloadStatusCallback).WrappedObject, CreateComInterfaceFlags.None));
@@ -92,7 +94,7 @@ namespace GetStoreApp.Services.Controls.Download
                         doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, &idVariant);
                         ComVariant totalSizeVariant = ComVariant.Null;
                         doDownload.GetProperty(DODownloadProperty.DODownloadProperty_TotalSizeBytes, &totalSizeVariant);
-                        doDownloadStatusCallback.DownloadID = new Guid(idVariant.As<string>());
+                        doDownloadStatusCallback.DownloadID = new(idVariant.As<string>());
                         double size = Convert.ToDouble(totalSizeVariant.As<ulong>());
                         DownloadCreated?.Invoke(doDownloadStatusCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, Convert.ToDouble(totalSizeVariant.As<ulong>()));
 

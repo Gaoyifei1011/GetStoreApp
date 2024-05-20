@@ -12,10 +12,10 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class WinGetConfigService
     {
-        private static string winGetConfigSettingsKey = ConfigKey.WinGetConfigKey;
-        private static string winGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
+        private static readonly string winGetConfigSettingsKey = ConfigKey.WinGetConfigKey;
+        private static readonly string winGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
 
-        private static bool defaultUseDevVersion = false;
+        private static readonly bool defaultUseDevVersion = false;
 
         public static bool UseDevVersion { get; private set; }
 

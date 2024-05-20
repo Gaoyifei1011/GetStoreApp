@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class LanguageService
     {
-        private static string settingsKey = ConfigKey.LanguageKey;
+        private static readonly string settingsKey = ConfigKey.LanguageKey;
 
         public static DictionaryEntry DefaultAppLanguage { get; private set; }
 
@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
         private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
 
-        public static List<DictionaryEntry> LanguageList { get; } = new List<DictionaryEntry>();
+        public static List<DictionaryEntry> LanguageList { get; } = [];
 
         /// <summary>
         /// 初始化应用语言信息列表

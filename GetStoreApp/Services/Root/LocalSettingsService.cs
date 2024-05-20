@@ -7,7 +7,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class LocalSettingsService
     {
-        private static ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
+        private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
 
         /// <summary>
         /// 读取设置选项存储信息

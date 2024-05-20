@@ -22,8 +22,8 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class SearchStoreControl : StackPanel, INotifyPropertyChanged
     {
-        private readonly object historyLock = new object();
-        private readonly object searchStoreLock = new object();
+        private readonly object historyLock = new();
+        private readonly object searchStoreLock = new();
 
         private string SearchStoreCountInfo { get; } = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
 
@@ -141,9 +141,9 @@ namespace GetStoreApp.UI.Controls.Store
 
         private List<InfoBarModel> SearchStoreInfoList { get; } = ResourceService.SearchStoreInfoList;
 
-        private ObservableCollection<HistoryModel> HistoryCollection { get; } = new ObservableCollection<HistoryModel>();
+        private ObservableCollection<HistoryModel> HistoryCollection { get; } = [];
 
-        private ObservableCollection<SearchStoreModel> SearchStoreCollection { get; } = new ObservableCollection<SearchStoreModel>();
+        private ObservableCollection<SearchStoreModel> SearchStoreCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -333,18 +333,14 @@ namespace GetStoreApp.UI.Controls.Store
                 long timeStamp = Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(inputContent);
 
-                List<HistoryModel> historyList = new List<HistoryModel>();
-                foreach (HistoryModel historyItem in HistoryCollection)
-                {
-                    historyList.Add(historyItem);
-                }
+                List<HistoryModel> historyList = [.. HistoryCollection];
 
                 int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加
                 if (index is -1)
                 {
-                    HistoryModel historyItem = new HistoryModel()
+                    HistoryModel historyItem = new()
                     {
                         CreateTimeStamp = timeStamp,
                         HistoryKey = historyKey,

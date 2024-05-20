@@ -8,7 +8,7 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class SpeedHelper
     {
-        private static Dictionary<string, int> speedDict = new Dictionary<string, int>()
+        private static readonly Dictionary<string, int> speedDict = new()
         {
             { "GB/s",1024*1024*1024 },
             { "MB/s",1024*1024 },

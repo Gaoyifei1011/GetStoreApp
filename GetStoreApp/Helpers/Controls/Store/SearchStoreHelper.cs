@@ -18,9 +18,8 @@ namespace GetStoreApp.Helpers.Controls.Store
     /// </summary>
     public static class SearchStoreHelper
     {
-        private static string storeUri = "https://www.microsoft.com/store/productId/{0}";
-
-        private static Uri manifestSearchUri = new Uri("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
+        private static readonly string storeUri = "https://www.microsoft.com/store/productId/{0}";
+        private static readonly Uri manifestSearchUri = new("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
 
         /// <summary>
         /// 生成搜索应用的所需的字符串
@@ -29,12 +28,16 @@ namespace GetStoreApp.Helpers.Controls.Store
         {
             try
             {
-                JsonObject queryObject = new JsonObject();
-                queryObject["Keyword"] = JsonValue.CreateStringValue(content);
-                queryObject["MatchType"] = JsonValue.CreateStringValue("Substring");
+                JsonObject queryObject = new()
+                {
+                    ["Keyword"] = JsonValue.CreateStringValue(content),
+                    ["MatchType"] = JsonValue.CreateStringValue("Substring")
+                };
 
-                JsonObject jsonObject = new JsonObject();
-                jsonObject["Query"] = queryObject;
+                JsonObject jsonObject = new()
+                {
+                    ["Query"] = queryObject
+                };
 
                 return jsonObject.Stringify();
             }
@@ -47,29 +50,29 @@ namespace GetStoreApp.Helpers.Controls.Store
         public static async Task<Tuple<bool, List<SearchStoreModel>>> SerachStoreAppsAsync(string generatedContent)
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             bool requestResult = false;
-            List<SearchStoreModel> searchStoreList = new List<SearchStoreModel>();
+            List<SearchStoreModel> searchStoreList = [];
 
             try
             {
                 byte[] contentBytes = Encoding.UTF8.GetBytes(generatedContent);
 
-                HttpStringContent httpStringContent = new HttpStringContent(generatedContent);
+                HttpStringContent httpStringContent = new(generatedContent);
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("text/json");
                 httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
-                HttpClient httpClient = new HttpClient();
+                HttpClient httpClient = new();
                 HttpResponseMessage responseMessage = await httpClient.PostAsync(manifestSearchUri, httpStringContent).AsTask(cancellationTokenSource.Token);
 
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     requestResult = true;
-                    StringBuilder responseBuilder = new StringBuilder();
+                    StringBuilder responseBuilder = new();
 
                     responseBuilder.Append("Status Code:");
                     responseBuilder.AppendLine(responseMessage.StatusCode.ToString());

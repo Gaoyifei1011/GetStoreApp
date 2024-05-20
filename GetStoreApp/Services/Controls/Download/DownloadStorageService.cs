@@ -63,7 +63,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                 try
                 {
-                    ApplicationDataCompositeValue compositeValue = new ApplicationDataCompositeValue();
+                    ApplicationDataCompositeValue compositeValue = [];
 
                     downloadSchedulerItem.DownloadKey = string.IsNullOrEmpty(downloadSchedulerItem.DownloadKey)
                         ? HashAlgorithmHelper.GenerateDownloadKey(downloadSchedulerItem.FileName, downloadSchedulerItem.FilePath)
@@ -119,7 +119,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static List<DownloadSchedulerModel> GetDownloadData()
         {
-            List<DownloadSchedulerModel> downloadSchedulerList = new List<DownloadSchedulerModel>();
+            List<DownloadSchedulerModel> downloadSchedulerList = [];
 
             if (downloadStorageContainer is not null && DownloadStorageSemaphoreSlim?.CurrentCount is 0)
             {

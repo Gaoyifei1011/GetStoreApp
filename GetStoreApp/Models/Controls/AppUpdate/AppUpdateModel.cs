@@ -125,14 +125,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
 
         public Visibility IsDownloading(AppInstallState appInstallState)
         {
-            if (appInstallState is AppInstallState.Downloading)
-            {
-                return Visibility.Visible;
-            }
-            else
-            {
-                return Visibility.Collapsed;
-            }
+            return appInstallState is AppInstallState.Downloading ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// <param name="riid">对要用于与对象通信的接口标识符的引用。</param>
         /// <param name="ppv">接收 riid 中请求的接口指针的指针变量的地址。 成功返回后，*ppv 包含请求的接口指针。 失败后，*ppv 包含 NULL。</param>
         [LibraryImport(Ole32, EntryPoint = "CoCreateInstance", SetLastError = false)]
-        public static partial int CoCreateInstance(ref Guid rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, ref Guid riid, out IntPtr ppv);
+        internal static partial int CoCreateInstance(ref Guid rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, ref Guid riid, out IntPtr ppv);
 
         /// <summary>
         /// 初始化 COM 库以供调用线程使用，设置线程的并发模型，并根据需要为线程创建一个新单元。
@@ -31,7 +31,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// <param name="dwCoInit">线程的并发模型和初始化选项。 此参数的值取自 COINIT 枚举。 可以使用 COINIT 中值的任意组合，但不能同时设置COINIT_APARTMENTTHREADED和COINIT_MULTITHREADED标志。 默认值为 COINIT_MULTITHREADED。</param>
         /// <returns></returns>
         [LibraryImport(Ole32, EntryPoint = "CoInitializeEx", SetLastError = false)]
-        public static partial int CoInitializeEx(IntPtr pvReserved, COINIT dwCoInit);
+        internal static partial int CoInitializeEx(IntPtr pvReserved, COINIT dwCoInit);
 
         /// <summary>
         /// 注册安全性并设置进程的默认安全值。
@@ -50,7 +50,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// <param name="pReserved3">此参数是保留的，必须为 NULL。</param>
         /// <returns>此函数可以返回E_INVALIDARG的标准返回值和其他值。</returns>
         [LibraryImport(Ole32, EntryPoint = "CoInitializeSecurity", SetLastError = false)]
-        public static partial int CoInitializeSecurity(IntPtr pSecDesc, IntPtr cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1, int dwAuthnLevel, int dwImpLevel, IntPtr pAuthList, int dwCapabilities, IntPtr pReserved3);
+        internal static partial int CoInitializeSecurity(IntPtr pSecDesc, IntPtr cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1, int dwAuthnLevel, int dwImpLevel, IntPtr pAuthList, int dwCapabilities, IntPtr pReserved3);
 
         /// <summary>
         /// 设置将用于对指定代理进行调用的身份验证信息。 这是 IClientSecurity：：SetBlanket 的帮助程序函数。
@@ -77,12 +77,12 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// </param>
         /// <param name="dwCapabilities">此代理的功能。 有关可能值的列表，请参阅 EOLE_AUTHENTICATION_CAPABILITIES 枚举。 唯一可以通过此函数设置的标志是EOAC_MUTUAL_AUTH、EOAC_STATIC_CLOAKING、EOAC_DYNAMIC_CLOAKING，EOAC_ANY_AUTHORITY (此标志已弃用) 、EOAC_MAKE_FULLSIC和EOAC_DEFAULT。 如果未设置 pAuthInfo 且 Schannel 不是身份验证服务，则可以设置 EOAC_STATIC_CLOAKING 或 EOAC_DYNAMIC_CLOAKING。 (有关详细信息，请参阅 隐藏 。) 如果设置了此处提及的功能以外的任何功能标志， CoSetProxyBlanket 将失败。</param>
         [LibraryImport(Ole32, EntryPoint = "CoSetProxyBlanket", SetLastError = false)]
-        public static partial int CoSetProxyBlanket(IntPtr punk, uint dwAuthnSvc, uint dwAuthzSvc, IntPtr pServerPrincName, uint dwAuthLevel, uint dwImpLevel, IntPtr pAuthInfo, uint dwCapabilities);
+        internal static partial int CoSetProxyBlanket(IntPtr punk, uint dwAuthnSvc, uint dwAuthzSvc, IntPtr pServerPrincName, uint dwAuthLevel, uint dwImpLevel, IntPtr pAuthInfo, uint dwCapabilities);
 
         /// <summary>
         /// 关闭当前线程上的 COM 库，卸载线程加载的所有 DLL，释放线程维护的任何其他资源，并强制关闭线程上的所有 RPC 连接。
         /// </summary>
         [LibraryImport(Ole32, EntryPoint = "CoUninitialize", SetLastError = false)]
-        public static partial void CoUninitialize();
+        internal static partial void CoUninitialize();
     }
 }

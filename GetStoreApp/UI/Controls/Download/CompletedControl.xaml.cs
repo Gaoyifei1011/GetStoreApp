@@ -32,9 +32,9 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class CompletedControl : Grid, INotifyPropertyChanged
     {
-        private readonly object completedLock = new object();
+        private readonly object completedLock = new();
 
-        private PackageManager packageManager = new PackageManager();
+        private readonly PackageManager packageManager = new();
 
         private bool _isSelectMode = false;
 
@@ -52,7 +52,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
-        private ObservableCollection<CompletedModel> CompletedCollection { get; } = new ObservableCollection<CompletedModel>();
+        private ObservableCollection<CompletedModel> CompletedCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,7 +65,7 @@ namespace GetStoreApp.UI.Controls.Download
                 GlobalNotificationService.ApplicationExit += OnApplicationExit;
                 DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
                 List<DownloadSchedulerModel> downloadStorageList = DownloadStorageService.GetDownloadData();
-                AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                AutoResetEvent autoResetEvent = new(false);
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -232,7 +232,7 @@ namespace GetStoreApp.UI.Controls.Download
                                 // 标记安装状态
                                 try
                                 {
-                                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                                    AutoResetEvent autoResetEvent = new(false);
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
                                         lock (completedLock)
@@ -253,7 +253,7 @@ namespace GetStoreApp.UI.Controls.Download
                                     autoResetEvent.Dispose();
 
                                     // 更新安装进度
-                                    Progress<DeploymentProgress> progressCallBack = new Progress<DeploymentProgress>((installProgress) =>
+                                    Progress<DeploymentProgress> progressCallBack = new((installProgress) =>
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
@@ -357,7 +357,7 @@ namespace GetStoreApp.UI.Controls.Download
                         {
                             StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
                             StorageFolder folder = await file.GetParentAsync();
-                            FolderLauncherOptions options = new FolderLauncherOptions();
+                            FolderLauncherOptions options = new();
                             options.ItemsToSelect.Add(file);
                             await Launcher.LaunchFolderAsync(folder, options);
                         }
@@ -477,7 +477,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = new List<CompletedModel>();
+            List<CompletedModel> selectedCompletedDataList = [];
 
             lock (completedLock)
             {
@@ -536,7 +536,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedWithFileClicked(object sender, RoutedEventArgs args)
         {
-            List<CompletedModel> selectedCompletedDataList = new List<CompletedModel>();
+            List<CompletedModel> selectedCompletedDataList = [];
 
             lock (completedLock)
             {
@@ -610,7 +610,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             Task.Run(() =>
             {
-                List<CompletedModel> selectedCompletedDataList = new List<CompletedModel>();
+                List<CompletedModel> selectedCompletedDataList = [];
 
                 lock (completedLock)
                 {
@@ -645,7 +645,7 @@ namespace GetStoreApp.UI.Controls.Download
 
                             args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
 
-                            List<StorageFile> selectedFileList = new List<StorageFile>();
+                            List<StorageFile> selectedFileList = [];
                             foreach (CompletedModel completedItem in selectedCompletedDataList)
                             {
                                 try

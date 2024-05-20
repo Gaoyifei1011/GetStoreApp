@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class BackdropService
     {
-        private static string settingsKey = ConfigKey.BackdropKey;
+        private static readonly string settingsKey = ConfigKey.BackdropKey;
         private static DictionaryEntry defaultAppBackdrop;
 
         private static DictionaryEntry _appBackdrop;

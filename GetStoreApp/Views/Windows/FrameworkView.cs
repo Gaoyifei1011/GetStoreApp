@@ -52,7 +52,7 @@ namespace GetStoreApp.Views.Windows
 
                         if (taskbarInfoContents.Length is 2)
                         {
-                            PackageManager packageManager = new PackageManager();
+                            PackageManager packageManager = new();
                             Package package = packageManager.FindPackageForUser(string.Empty, taskbarInfoContents[0]);
 
                             if (package is not null)

@@ -25,34 +25,33 @@ namespace GetStoreApp.Services.Root
         private static DictionaryEntry _defaultAppLanguage;
         private static DictionaryEntry _currentAppLanguage;
 
-        private static ResourceContext defaultResourceContext = new ResourceContext();
-        private static ResourceContext currentResourceContext = new ResourceContext();
+        private static readonly ResourceContext defaultResourceContext = new();
+        private static readonly ResourceContext currentResourceContext = new();
+        private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
 
-        private static ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
+        public static List<TypeModel> TypeList { get; } = [];
 
-        public static List<TypeModel> TypeList { get; } = new List<TypeModel>();
+        public static List<ChannelModel> ChannelList { get; } = [];
 
-        public static List<ChannelModel> ChannelList { get; } = new List<ChannelModel>();
+        public static List<InfoBarModel> QueryLinksInfoList { get; } = [];
 
-        public static List<InfoBarModel> QueryLinksInfoList { get; } = new List<InfoBarModel>();
+        public static List<InfoBarModel> SearchStoreInfoList { get; } = [];
 
-        public static List<InfoBarModel> SearchStoreInfoList { get; } = new List<InfoBarModel>();
+        public static List<DictionaryEntry> BackdropList { get; } = [];
 
-        public static List<DictionaryEntry> BackdropList { get; } = new List<DictionaryEntry>();
+        public static List<DictionaryEntry> WebKernelList { get; } = [];
 
-        public static List<DictionaryEntry> WebKernelList { get; } = new List<DictionaryEntry>();
+        public static List<DictionaryEntry> QueryLinksModeList { get; } = [];
 
-        public static List<DictionaryEntry> QueryLinksModeList { get; } = new List<DictionaryEntry>();
+        public static List<DictionaryEntry> InstallModeList { get; } = [];
 
-        public static List<DictionaryEntry> InstallModeList { get; } = new List<DictionaryEntry>();
+        public static List<DictionaryEntry> ThemeList { get; } = [];
 
-        public static List<DictionaryEntry> ThemeList { get; } = new List<DictionaryEntry>();
+        public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
-        public static List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
+        public static List<DictionaryEntry> WinGetInstallModeList { get; } = [];
 
-        public static List<DictionaryEntry> WinGetInstallModeList { get; } = new List<DictionaryEntry>();
-
-        public static List<DictionaryEntry> DoEngineModeList { get; } = new List<DictionaryEntry>();
+        public static List<DictionaryEntry> DoEngineModeList { get; } = [];
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -352,7 +351,7 @@ namespace GetStoreApp.Services.Root
             try
             {
                 IRandomAccessStream randomAccessStream = await resourceMap.GetValue(resource).GetValueAsStreamAsync();
-                DataReader dataReader = new DataReader(randomAccessStream);
+                DataReader dataReader = new(randomAccessStream);
                 await dataReader.LoadAsync((uint)randomAccessStream.Size);
                 byte[] bytesArray = new byte[randomAccessStream.Size];
                 dataReader.ReadBytes(bytesArray);

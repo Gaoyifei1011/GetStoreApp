@@ -23,7 +23,7 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class DownloadingControl : Grid, INotifyPropertyChanged
     {
-        private readonly object downloadingLock = new object();
+        private readonly object downloadingLock = new();
 
         private bool _isSelectMode = false;
 
@@ -41,7 +41,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
         }
 
-        private ObservableCollection<DownloadingModel> DownloadingCollection { get; } = new ObservableCollection<DownloadingModel>();
+        private ObservableCollection<DownloadingModel> DownloadingCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -57,7 +57,7 @@ namespace GetStoreApp.UI.Controls.Download
                 try
                 {
                     List<DownloadSchedulerModel> downloadingSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
-                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                    AutoResetEvent autoResetEvent = new(false);
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -290,7 +290,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<DownloadingModel> selectedDownloadingList = new List<DownloadingModel>();
+            List<DownloadingModel> selectedDownloadingList = [];
 
             lock (downloadingLock)
             {

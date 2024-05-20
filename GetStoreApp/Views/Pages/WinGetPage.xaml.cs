@@ -17,13 +17,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page
     {
-        public readonly object installingAppsObject = new object();
+        public readonly object installingAppsObject = new();
 
         private bool isInitialized;
 
-        public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = new Dictionary<string, CancellationTokenSource>();
+        public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = [];
 
-        public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = new ObservableCollection<InstallingAppsModel>();
+        public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = [];
 
         public WinGetPage()
         {

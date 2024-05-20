@@ -14,9 +14,9 @@ namespace GetStoreAppWebView.Services.Root
         private static string _defaultAppLanguage;
         private static string _currentAppLanguage;
 
-        private static ResourceContext defaultResourceContext = new ResourceContext();
-        private static ResourceContext currentResourceContext = new ResourceContext();
-        private static ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
+        private static readonly ResourceContext defaultResourceContext = new();
+        private static readonly ResourceContext currentResourceContext = new();
+        private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
 
         /// <summary>
         /// 初始化应用本地化资源

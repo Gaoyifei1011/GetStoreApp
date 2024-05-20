@@ -21,9 +21,9 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class AppInformationDialog : ContentDialog, INotifyPropertyChanged
     {
-        private string fileVersionProperty = "System.FileVersion";
+        private readonly string fileVersionProperty = "System.FileVersion";
 
-        private List<string> PropertyNamesList => new List<string> { fileVersionProperty };
+        private List<string> PropertyNamesList => [fileVersionProperty];
 
         private string _windowsAppSDKVersion;
 
@@ -105,7 +105,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
             Task.Run(() =>
             {
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new();
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);

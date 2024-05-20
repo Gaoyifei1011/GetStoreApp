@@ -19,7 +19,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ToastNotificationService
     {
-        private static ToastNotifier appToastNotifier = ToastNotificationManager.CreateToastNotifier();
+        private static readonly ToastNotifier appToastNotifier = ToastNotificationManager.CreateToastNotifier();
 
         /// <summary>
         /// 处理应用通知
@@ -110,9 +110,9 @@ namespace GetStoreApp.Services.Root
                     {
                         case NotificationKind.AppUpdate:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), notificationContent[0]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
@@ -125,16 +125,16 @@ namespace GetStoreApp.Services.Root
                                 // 成功安装应用通知
                                 if (notificationContent[0] is "Successfully")
                                 {
-                                    XmlDocument notificationDocument = new XmlDocument();
+                                    XmlDocument notificationDocument = new();
                                     notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), notificationContent[1]));
-                                    ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                    ToastNotification notificaiton = new(notificationDocument);
                                     appToastNotifier.Show(notificaiton);
                                 }
                                 else if (notificationContent[0] is "Error")
                                 {
-                                    XmlDocument notificationDocument = new XmlDocument();
+                                    XmlDocument notificationDocument = new();
                                     notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/InstallError"), notificationContent[1], notificationContent[2]));
-                                    ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                    ToastNotification notificaiton = new(notificationDocument);
                                     appToastNotifier.Show(notificaiton);
                                 }
                                 break;
@@ -143,99 +143,99 @@ namespace GetStoreApp.Services.Root
                         // 所有任务下载完成时显示通知
                         case NotificationKind.DownloadCompleted:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/DownloadCompleted"));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // 管理员身份运行应用显示通知
                         case NotificationKind.RunAsAdministrator:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/ElevatedRunning"));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // 网络连接异常通知
                         case NotificationKind.NetworkError:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(ResourceService.GetLocalized("Notification/NetworkError"));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // UWP 应用卸载成功通知
                         case NotificationKind.UWPUnInstallSuccessfully:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallSuccessfully"), notificationContent[0]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // UWP 应用卸载失败通知
                         case NotificationKind.UWPUnInstallFailed:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed"), notificationContent[0], notificationContent[1], notificationContent[2]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // WinGet 应用安装成功通知
                         case NotificationKind.WinGetInstallSuccessfully:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), notificationContent[0]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // WinGet 应用安装失败通知
                         case NotificationKind.WinGetInstallFailed:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed"), notificationContent[0], notificationContent[1]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // WinGet 应用卸载成功通知
                         case NotificationKind.WinGetUnInstallSuccessfully:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallSuccessfully"), notificationContent[0]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // WinGet 应用卸载失败通知
                         case NotificationKind.WinGetUnInstallFailed:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed"), notificationContent[0]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // WinGet 应用升级成功通知
                         case NotificationKind.WinGetUpgradeSuccessfully:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), notificationContent[0]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }
                         // WinGet 应用升级失败通知
                         case NotificationKind.WinGetUpgradeFailed:
                             {
-                                XmlDocument notificationDocument = new XmlDocument();
+                                XmlDocument notificationDocument = new();
                                 notificationDocument.LoadXml(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed"), notificationContent[0], notificationContent[1]));
-                                ToastNotification notificaiton = new ToastNotification(notificationDocument);
+                                ToastNotification notificaiton = new(notificationDocument);
                                 appToastNotifier.Show(notificaiton);
                                 break;
                             }

@@ -8,9 +8,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class AlwaysShowBackdropService
     {
-        private static string settingsKey = ConfigKey.AlwaysShowBackdropKey;
+        private static readonly string settingsKey = ConfigKey.AlwaysShowBackdropKey;
 
-        private static bool defaultAlwaysShowBackdropValue = false;
+        private static readonly bool defaultAlwaysShowBackdropValue = false;
 
         public static bool AlwaysShowBackdropValue { get; private set; }
 

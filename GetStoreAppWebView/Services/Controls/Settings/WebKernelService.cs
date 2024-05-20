@@ -10,17 +10,13 @@ namespace GetStoreAppWebView.Services.Controls.Settings
     /// </summary>
     public static class WebKernelService
     {
-        private static string settingsKey = ConfigKey.WebKernelKey;
+        private static readonly string settingsKey = ConfigKey.WebKernelKey;
 
         private static object defaultWebKernel;
 
         public static object WebKernel { get; set; }
 
-        public static List<object> WebKernelList { get; } = new List<object>()
-        {
-            "WebView",
-            "WebView2",
-        };
+        public static List<object> WebKernelList { get; } = ["WebView", "WebView2",];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的网页浏览器内核选择值

@@ -9,9 +9,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class NotificationService
     {
-        private static string settingsKey = ConfigKey.NotificationKey;
+        private static readonly string settingsKey = ConfigKey.NotificationKey;
 
-        private static bool defaultAppNotification = true;
+        private static readonly bool defaultAppNotification = true;
 
         public static bool AppNotification { get; private set; }
 

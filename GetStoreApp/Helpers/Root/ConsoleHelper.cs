@@ -83,7 +83,7 @@ namespace GetStoreApp.Helpers.Root
             {
                 IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
 
-                StringBuilder valueBuilder = new StringBuilder();
+                StringBuilder valueBuilder = new();
                 valueBuilder.AppendLine(value);
 
                 return Kernel32Library.WriteConsole(consoleHandle, valueBuilder.ToString(), valueBuilder.Length, out _, IntPtr.Zero);

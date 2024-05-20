@@ -17,8 +17,10 @@ namespace GetStoreApp.Helpers.Root
         {
             try
             {
-                DataPackage dataPackage = new DataPackage();
-                dataPackage.RequestedOperation = DataPackageOperation.Copy;
+                DataPackage dataPackage = new()
+                {
+                    RequestedOperation = DataPackageOperation.Copy,
+                };
                 dataPackage.SetText(content);
                 Clipboard.SetContent(dataPackage);
                 return true;

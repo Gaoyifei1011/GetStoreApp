@@ -28,7 +28,7 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class UpgradableAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object upgradableAppsLock = new object();
+        private readonly object upgradableAppsLock = new();
 
         private bool isInitialized = false;
 
@@ -68,9 +68,9 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList { get; } = new List<MatchResult>();
+        private List<MatchResult> MatchResultList { get; } = [];
 
-        private ObservableCollection<UpgradableAppsModel> UpgradableAppsCollection { get; } = new ObservableCollection<UpgradableAppsModel>();
+        private ObservableCollection<UpgradableAppsModel> UpgradableAppsCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -121,7 +121,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(async () =>
                 {
-                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                    AutoResetEvent autoResetEvent = new(false);
                     try
                     {
                         DispatcherQueue.TryEnqueue(() =>
@@ -146,7 +146,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
                         // 更新升级进度
-                        Progress<InstallProgress> progressCallBack = new Progress<InstallProgress>((installProgress) =>
+                        Progress<InstallProgress> progressCallBack = new((installProgress) =>
                         {
                             switch (installProgress.State)
                             {
@@ -259,7 +259,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         });
 
                         // 任务取消执行操作
-                        CancellationTokenSource upgradeTokenSource = new CancellationTokenSource();
+                        CancellationTokenSource upgradeTokenSource = new();
 
                         // 添加任务
                         DispatcherQueue.TryEnqueue(() =>
@@ -585,7 +585,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                 if (MatchResultList is not null)
                 {
-                    List<UpgradableAppsModel> upgradableAppsList = new List<UpgradableAppsModel>();
+                    List<UpgradableAppsModel> upgradableAppsList = [];
                     foreach (MatchResult matchItem in MatchResultList)
                     {
                         bool isUpgrading = false;

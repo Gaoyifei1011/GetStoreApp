@@ -11,7 +11,7 @@ namespace Windows.ApplicationModel.DataTransfer
         internal static unsafe DataTransferManager GetForWindow(IObjectReference _obj, IntPtr appWindow, in Guid riid)
         {
             IntPtr thisPtr = _obj.ThisPtr;
-            IntPtr ptr = new IntPtr();
+            IntPtr ptr = new();
 
             try
             {

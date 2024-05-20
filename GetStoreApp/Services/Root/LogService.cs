@@ -13,13 +13,11 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class LogService
     {
-        private static readonly object logLock = new object();
+        private static readonly object logLock = new();
+        private static readonly string logName = "GetStoreApp";
+        private static readonly string unknown = "unknown";
 
         private static bool isInitialized = false;
-
-        private static string logName = "GetStoreApp";
-
-        private static string unknown = "unknown";
 
         private static StorageFolder logFolder;
 
@@ -86,7 +84,7 @@ namespace GetStoreApp.Services.Root
                 {
                     Task.Run(() =>
                     {
-                        StringBuilder exceptionBuilder = new StringBuilder();
+                        StringBuilder exceptionBuilder = new();
                         exceptionBuilder.Append("LogContent:");
                         exceptionBuilder.AppendLine(logContent);
                         exceptionBuilder.Append("HelpLink:");

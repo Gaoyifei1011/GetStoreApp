@@ -10,8 +10,8 @@ namespace GetStoreApp.UI.Dialogs.About
     /// </summary>
     public sealed partial class DesktopStartupArgsDialog : ContentDialog
     {
-        private List<StartupArgsModel> DesktopStartupArgsList { get; } = new List<StartupArgsModel>
-        {
+        private List<StartupArgsModel> DesktopStartupArgsList { get; } =
+        [
             new StartupArgsModel()
             {
                 ArgumentName = ResourceService.GetLocalized("Dialog/Type") ,
@@ -33,7 +33,7 @@ namespace GetStoreApp.UI.Dialogs.About
                 IsRequired = ResourceService.GetLocalized("Dialog/Yes"),
                 ArgumentContent = ResourceService.GetLocalized("Dialog/LinkContent")
             }
-        };
+        ];
 
         public DesktopStartupArgsDialog()
         {

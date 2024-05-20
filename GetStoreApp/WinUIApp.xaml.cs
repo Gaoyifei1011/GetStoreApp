@@ -160,8 +160,10 @@ namespace GetStoreApp
                 GlobalNotificationService.SendNotification();
                 if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
                 {
-                    CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
-                    changeFilterStatus.cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>();
+                    CHANGEFILTERSTRUCT changeFilterStatus = new()
+                    {
+                        cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>()
+                    };
                     User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
                 }
 

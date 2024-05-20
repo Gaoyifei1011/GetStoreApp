@@ -20,7 +20,8 @@ namespace GetStoreApp.Services.Root
     {
         private static IActivatedEventArgs activatedEventArgs;
         private static ActivationKind activationKind = ActivationKind.Launch;
-        private static List<string> desktopLaunchArgs = new List<string>();
+
+        private static readonly List<string> desktopLaunchArgs = [];
 
         // 应用启动时使用的参数
         public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
@@ -158,10 +159,12 @@ namespace GetStoreApp.Services.Root
                 string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
 
                 // 向主实例发送数据
-                COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                copyDataStruct.dwData = (IntPtr)activationKind;
-                copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
-                copyDataStruct.lpData = sendData;
+                COPYDATASTRUCT copyDataStruct = new()
+                {
+                    dwData = (IntPtr)activationKind,
+                    cbData = Encoding.Default.GetBytes(sendData).Length + 1,
+                    lpData = sendData
+                };
 
                 List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
 
@@ -207,10 +210,12 @@ namespace GetStoreApp.Services.Root
                     }
 
                     // 向主实例发送数据
-                    COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                    copyDataStruct.dwData = (IntPtr)activationKind;
-                    copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
-                    copyDataStruct.lpData = sendData;
+                    COPYDATASTRUCT copyDataStruct = new()
+                    {
+                        dwData = (IntPtr)activationKind,
+                        cbData = Encoding.Default.GetBytes(sendData).Length + 1,
+                        lpData = sendData
+                    };
 
                     List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
 
@@ -234,10 +239,12 @@ namespace GetStoreApp.Services.Root
                 string sendData = desktopLaunchArgs[0];
 
                 // 向主实例发送数据
-                COPYDATASTRUCT copyDataStruct = new COPYDATASTRUCT();
-                copyDataStruct.dwData = (IntPtr)activationKind;
-                copyDataStruct.cbData = Encoding.Default.GetBytes(sendData).Length + 1;
-                copyDataStruct.lpData = sendData;
+                COPYDATASTRUCT copyDataStruct = new()
+                {
+                    dwData = (IntPtr)activationKind,
+                    cbData = Encoding.Default.GetBytes(sendData).Length + 1,
+                    lpData = sendData
+                };
 
                 List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
 
@@ -268,7 +275,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static List<IntPtr> FindExistedWindowHandle(string processName)
         {
-            List<IntPtr> hwndList = new List<IntPtr>();
+            List<IntPtr> hwndList = [];
             List<uint> processPidList = ProcessHelper.GetProcessPidByName(processName);
 
             if (processPidList.Count > 0)

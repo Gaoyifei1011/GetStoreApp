@@ -46,11 +46,10 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private SUBCLASSPROC mainWindowSubClassProc;
-        private SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
-
-        private ContentCoordinateConverter contentCoordinateConverter;
-        private OverlappedPresenter overlappedPresenter;
+        private readonly SUBCLASSPROC mainWindowSubClassProc;
+        private readonly SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
+        private readonly ContentCoordinateConverter contentCoordinateConverter;
+        private readonly OverlappedPresenter overlappedPresenter;
 
         public new static MainWindow Current { get; private set; }
 
@@ -118,8 +117,8 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private List<KeyValuePair<string, Type>> PageList { get; } = new List<KeyValuePair<string, Type>>()
-        {
+        private List<KeyValuePair<string, Type>> PageList { get; } =
+        [
             new KeyValuePair<string, Type>("Store",typeof(StorePage)),
             new KeyValuePair<string, Type>("AppUpdate", typeof(AppUpdatePage)),
             new KeyValuePair<string, Type>("WinGet", typeof(WinGetPage)),
@@ -128,9 +127,9 @@ namespace GetStoreApp.Views.Windows
             new KeyValuePair<string, Type>("Web",null ),
             new KeyValuePair<string, Type>("About", typeof(AboutPage)),
             new KeyValuePair<string, Type>("Settings", typeof(SettingsPage))
-        };
+        ];
 
-        public List<NavigationModel> NavigationItemList { get; } = new List<NavigationModel>();
+        public List<NavigationModel> NavigationItemList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -177,8 +176,10 @@ namespace GetStoreApp.Views.Windows
             // 处理提权模式下运行应用
             if (RuntimeHelper.IsElevated)
             {
-                CHANGEFILTERSTRUCT changeFilterStatus = new CHANGEFILTERSTRUCT();
-                changeFilterStatus.cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>();
+                CHANGEFILTERSTRUCT changeFilterStatus = new()
+                {
+                    cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>()
+                };
                 User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
                 ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
             }
@@ -425,9 +426,11 @@ namespace GetStoreApp.Views.Windows
                 {
                     string tag = menuFlyoutItem.Tag as string;
 
-                    SecondaryTile secondaryTile = new SecondaryTile("GetStoreApp" + tag);
-                    secondaryTile.DisplayName = ResourceService.GetLocalized("Resources/AppDisplayName");
-                    secondaryTile.Arguments = "SecondaryTile " + tag;
+                    SecondaryTile secondaryTile = new("GetStoreApp" + tag)
+                    {
+                        DisplayName = ResourceService.GetLocalized("Resources/AppDisplayName"),
+                        Arguments = "SecondaryTile " + tag
+                    };
 
                     secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
                     secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/ControlIcon/{0}.png", tag));
@@ -913,17 +916,21 @@ namespace GetStoreApp.Views.Windows
 
                         if (sysCommand is SYSTEMCOMMAND.SC_MOUSEMENU)
                         {
-                            FlyoutShowOptions options = new FlyoutShowOptions();
-                            options.Position = new Point(0, 15);
-                            options.ShowMode = FlyoutShowMode.Standard;
+                            FlyoutShowOptions options = new()
+                            {
+                                Position = new Point(0, 15),
+                                ShowMode = FlyoutShowMode.Standard
+                            };
                             TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
                         else if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU)
                         {
-                            FlyoutShowOptions options = new FlyoutShowOptions();
-                            options.Position = new Point(0, 45);
-                            options.ShowMode = FlyoutShowMode.Standard;
+                            FlyoutShowOptions options = new()
+                            {
+                                Position = new Point(0, 45),
+                                ShowMode = FlyoutShowMode.Standard
+                            };
                             TitlebarMenuFlyout.ShowAt(null, options);
                             return 0;
                         }
@@ -954,14 +961,16 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (Content is not null && Content.XamlRoot is not null)
                         {
-                            PointInt32 screenPoint = new PointInt32(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
+                            PointInt32 screenPoint = new(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
 
-                            FlyoutShowOptions options = new FlyoutShowOptions();
-                            options.ShowMode = FlyoutShowMode.Standard;
-                            options.Position = InfoHelper.SystemVersion.Build >= 22000 ?
+                            FlyoutShowOptions options = new()
+                            {
+                                ShowMode = FlyoutShowMode.Standard,
+                                Position = InfoHelper.SystemVersion.Build >= 22000 ?
                             new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) :
-                            new Point(localPoint.X, localPoint.Y);
+                            new Point(localPoint.X, localPoint.Y)
+                            };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
                         }

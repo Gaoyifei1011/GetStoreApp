@@ -23,7 +23,8 @@ namespace GetStoreApp.Helpers.Root
                 processName += ".exe";
             }
 
-            List<uint> processEntry32PIDList = new List<uint>();
+            List<uint> processEntry32PIDList = [];
+
             try
             {
                 IntPtr hSnapshot = Kernel32Library.CreateToolhelp32Snapshot(CREATE_TOOLHELP32_SNAPSHOT_FLAGS.TH32CS_SNAPPROCESS, 0);
@@ -33,8 +34,10 @@ namespace GetStoreApp.Helpers.Root
                     return processEntry32PIDList;
                 }
 
-                PROCESSENTRY32 processEntry32 = new PROCESSENTRY32();
-                processEntry32.dwSize = Marshal.SizeOf<PROCESSENTRY32>();
+                PROCESSENTRY32 processEntry32 = new()
+                {
+                    dwSize = Marshal.SizeOf<PROCESSENTRY32>()
+                };
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref processEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref processEntry32))
                 {

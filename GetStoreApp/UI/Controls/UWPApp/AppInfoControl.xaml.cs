@@ -28,7 +28,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
     /// </summary>
     public sealed partial class AppInfoControl : Grid, INotifyPropertyChanged
     {
-        private readonly object appInfoLock = new object();
+        private readonly object appInfoLock = new();
 
         private string _displayName = string.Empty;
 
@@ -318,9 +318,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
             }
         }
 
-        private ObservableCollection<AppListEntryModel> AppListEntryCollection { get; } = new ObservableCollection<AppListEntryModel>();
+        private ObservableCollection<AppListEntryModel> AppListEntryCollection { get; } = [];
 
-        private ObservableCollection<PackageModel> DependenciesCollection { get; } = new ObservableCollection<PackageModel>();
+        private ObservableCollection<PackageModel> DependenciesCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -358,7 +358,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     try
                     {
-                        StringBuilder copyBuilder = new StringBuilder();
+                        StringBuilder copyBuilder = new();
                         copyBuilder.AppendLine(package.DisplayName);
                         copyBuilder.AppendLine(package.Id.FamilyName);
                         copyBuilder.AppendLine(package.Id.FullName);
@@ -568,7 +568,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         {
             Task.Run(() =>
             {
-                StringBuilder copyBuilder = new StringBuilder();
+                StringBuilder copyBuilder = new();
                 copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("UWPApp/DisplayName"), DisplayName));
                 copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("UWPApp/FamilyName"), FamilyName));
                 copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("UWPApp/FullName"), FullName));

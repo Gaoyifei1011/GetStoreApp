@@ -47,7 +47,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
         }
 
-        private List<TraceCleanupModel> TraceCleanupList { get; } = new List<TraceCleanupModel>();
+        private List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -110,7 +110,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         {
             Task.Run(async () =>
             {
-                List<CleanKind> selectedCleanList = new List<CleanKind>();
+                List<CleanKind> selectedCleanList = [];
 
                 foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
                 {
@@ -120,7 +120,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
                     }
                 }
 
-                List<Tuple<CleanKind, bool>> cleanSuccessfullyDict = new List<Tuple<CleanKind, bool>>();
+                List<Tuple<CleanKind, bool>> cleanSuccessfullyDict = [];
                 foreach (CleanKind cleanArgs in selectedCleanList)
                 {
                     // 清理并反馈回结果，修改相应的状态信息

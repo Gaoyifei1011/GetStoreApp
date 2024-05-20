@@ -9,10 +9,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class LinkFilterService
     {
-        private static string encryptedPackageSettingsKey = ConfigKey.EncryptedPackageFilterKey;
-        private static string blockMapSettingsKey = ConfigKey.BlockMapFilterKey;
-
-        private static bool defaultLinkFilterValue = true;
+        private static readonly string encryptedPackageSettingsKey = ConfigKey.EncryptedPackageFilterKey;
+        private static readonly string blockMapSettingsKey = ConfigKey.BlockMapFilterKey;
+        private static readonly bool defaultLinkFilterValue = true;
 
         public static bool EncryptedPackageFilterValue { get; private set; }
 

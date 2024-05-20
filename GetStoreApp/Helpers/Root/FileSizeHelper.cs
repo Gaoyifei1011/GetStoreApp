@@ -8,7 +8,7 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class FileSizeHelper
     {
-        private static Dictionary<string, int> sizeDict = new Dictionary<string, int>()
+        private static readonly Dictionary<string, int> sizeDict = new()
         {
             { "GB",1024*1024*1024 },
             { "MB",1024*1024 },

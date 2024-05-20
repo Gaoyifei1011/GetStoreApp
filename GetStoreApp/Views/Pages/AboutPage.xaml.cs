@@ -55,16 +55,16 @@ namespace GetStoreApp.Views.Pages
         }
 
         //项目引用信息
-        private List<DictionaryEntry> ReferenceList { get; } = new List<DictionaryEntry>()
-        {
+        private List<DictionaryEntry> ReferenceList { get; } =
+        [
             new DictionaryEntry("Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"),
             new DictionaryEntry( "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
             new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),
-        };
+        ];
 
         //项目感谢者信息
-        private List<DictionaryEntry> ThanksList { get; } = new List<DictionaryEntry>()
-        {
+        private List<DictionaryEntry> ThanksList { get; } =
+        [
             new DictionaryEntry("AndromedaMelody", "https://github.com/AndromedaMelody"),
             new DictionaryEntry("cnbluefire", "https://github.com/cnbluefire"),
             new DictionaryEntry("hez2010", "https://github.com/hez2010"),
@@ -72,7 +72,7 @@ namespace GetStoreApp.Views.Pages
             new DictionaryEntry("MouriNaruto", "https://github.com/MouriNaruto"),
             new DictionaryEntry("TaylorShi", "https://github.com/TaylorShi"),
             new DictionaryEntry("wherewhere", "https://github.com/wherewhere"),
-        };
+        ];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -109,7 +109,7 @@ namespace GetStoreApp.Views.Pages
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
             double currentScrollPosition = AboutScroll.VerticalOffset;
-            Point currentPoint = new Point(0, (int)currentScrollPosition);
+            Point currentPoint = new(0, (int)currentScrollPosition);
 
             switch (aboutNavigationArgs)
             {
@@ -294,19 +294,19 @@ namespace GetStoreApp.Views.Pages
                 Task.Run(async () =>
                 {
                     // 添加超时设置（半分钟后停止获取）
-                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                    CancellationTokenSource cancellationTokenSource = new();
                     cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
                     try
                     {
-                        HttpClient httpClient = new HttpClient();
+                        HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
                         HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest")).AsTask(cancellationTokenSource.Token);
 
                         // 请求成功
                         if (responseMessage.IsSuccessStatusCode)
                         {
-                            StringBuilder responseBuilder = new StringBuilder();
+                            StringBuilder responseBuilder = new();
 
                             responseBuilder.Append("Status Code:");
                             responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
@@ -322,7 +322,7 @@ namespace GetStoreApp.Views.Pages
                             if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
                             {
                                 string tag = responseStringObject.GetNamedString("tag_name").Remove(0, 1);
-                                Version tagVersion = new Version(tag);
+                                Version tagVersion = new(tag);
 
                                 if (tagVersion is not null)
                                 {

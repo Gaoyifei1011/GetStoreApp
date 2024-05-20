@@ -13,7 +13,7 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class ThemeService
     {
-        private static string themeSettingsKey = ConfigKey.ThemeKey;
+        private static readonly string themeSettingsKey = ConfigKey.ThemeKey;
 
         private static DictionaryEntry defaultAppTheme;
 

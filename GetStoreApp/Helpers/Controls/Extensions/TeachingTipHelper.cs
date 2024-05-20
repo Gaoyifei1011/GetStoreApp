@@ -11,7 +11,7 @@ namespace GetStoreApp.Helpers.Controls.Extensions
     /// </summary>
     public static class TeachingTipHelper
     {
-        private static readonly object teachingTipLock = new object();
+        private static readonly object teachingTipLock = new();
 
         /// <summary>
         /// 使用教学提示显示应用内通知

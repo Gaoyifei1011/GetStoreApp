@@ -28,7 +28,7 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class SearchAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object searchAppsLock = new object();
+        private readonly object searchAppsLock = new();
         private bool isInitialized = false;
         private string cachedSearchText;
 
@@ -84,9 +84,9 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList { get; } = new List<MatchResult>();
+        private List<MatchResult> MatchResultList { get; } = [];
 
-        private ObservableCollection<SearchAppsModel> SearchAppsCollection { get; } = new ObservableCollection<SearchAppsModel>();
+        private ObservableCollection<SearchAppsModel> SearchAppsCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -122,7 +122,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(async () =>
                 {
-                    AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+                    AutoResetEvent autoResetEvent = new(false);
                     try
                     {
                         DispatcherQueue.TryEnqueue(() =>
@@ -147,7 +147,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         installOptions.PackageInstallScope = PackageInstallScope.Any;
 
                         // 更新安装进度
-                        Progress<InstallProgress> progressCallBack = new Progress<InstallProgress>((installProgress) =>
+                        Progress<InstallProgress> progressCallBack = new((installProgress) =>
                         {
                             switch (installProgress.State)
                             {
@@ -258,7 +258,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         });
 
                         // 任务取消执行操作
-                        CancellationTokenSource installTokenSource = new CancellationTokenSource();
+                        CancellationTokenSource installTokenSource = new();
 
                         // 添加任务
                         DispatcherQueue.TryEnqueue(() =>
@@ -625,7 +625,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                 if (MatchResultList.Count > 0)
                 {
-                    List<SearchAppsModel> searchAppsList = new List<SearchAppsModel>();
+                    List<SearchAppsModel> searchAppsList = [];
                     foreach (MatchResult matchItem in MatchResultList)
                     {
                         if (matchItem.CatalogPackage.DefaultInstallVersion is not null)

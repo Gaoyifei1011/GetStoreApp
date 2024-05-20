@@ -60,7 +60,7 @@ namespace GetStoreApp.Helpers.Root
                 Stream stream = await File.OpenStreamForReadAsync();
                 IInputStream inputStream = stream.AsInputStream();
                 uint capacity = 100000000;
-                Windows.Storage.Streams.Buffer buffer = new Windows.Storage.Streams.Buffer(capacity);
+                Windows.Storage.Streams.Buffer buffer = new(capacity);
                 CryptographicHash buffHash = hashAlgorithmProvider.CreateHash();
 
                 while (true)

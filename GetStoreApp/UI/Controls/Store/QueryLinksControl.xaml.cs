@@ -32,11 +32,11 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
     {
-        private readonly object historyLock = new object();
-        private readonly object queryLinksLock = new object();
+        private readonly object historyLock = new();
+        private readonly object queryLinksLock = new();
 
         private string sampleLink;
-        private string sampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
+        private readonly string sampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
 
         private string QueryLinksCountInfo { get; } = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
 
@@ -120,7 +120,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private AppInfoModel _appInfo = new AppInfoModel();
+        private AppInfoModel _appInfo = new();
 
         public AppInfoModel AppInfo
         {
@@ -210,7 +210,7 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 if (!Equals(_isAppInfoVisible, value))
                 {
-                    _resultCotnrolVisable = value;
+                    _isAppInfoVisible = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInfoVisible)));
                 }
             }
@@ -248,21 +248,17 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private static List<string> SampleLinkList = new List<string>
-        {
-            "https://www.microsoft.com/store/productId/9WZDNCRFJBMP",
-            "9WZDNCRFJBMP",
-        };
+        private static readonly List<string> SampleLinkList = ["https://www.microsoft.com/store/productId/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
-        private List<InfoBarModel> QueryLinksInfoList = ResourceService.QueryLinksInfoList;
+        private readonly List<InfoBarModel> QueryLinksInfoList = ResourceService.QueryLinksInfoList;
 
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
         public List<ChannelModel> ChannelList { get; } = ResourceService.ChannelList;
 
-        private ObservableCollection<HistoryModel> HistoryCollection { get; } = new ObservableCollection<HistoryModel>();
+        private ObservableCollection<HistoryModel> HistoryCollection { get; } = [];
 
-        private ObservableCollection<QueryLinksModel> QueryLinksCollection { get; } = new ObservableCollection<QueryLinksModel>();
+        private ObservableCollection<QueryLinksModel> QueryLinksCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -352,7 +348,7 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 Task.Run(() =>
                 {
-                    List<DownloadSchedulerModel> downloadInfoList = new List<DownloadSchedulerModel>();
+                    List<DownloadSchedulerModel> downloadInfoList = [];
                     DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
                     try
@@ -536,7 +532,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
         {
-            StringBuilder appInformationBuilder = new StringBuilder();
+            StringBuilder appInformationBuilder = new();
             appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppName"));
             appInformationBuilder.AppendLine(AppInfo.Name);
             appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppPublisher"));
@@ -608,7 +604,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
+                List<QueryLinksModel> selectedQueryLinksList = [];
 
                 lock (queryLinksLock)
                 {
@@ -631,7 +627,7 @@ namespace GetStoreApp.UI.Controls.Store
                     return;
                 };
 
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new();
 
                 foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
@@ -657,7 +653,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
+                List<QueryLinksModel> selectedQueryLinksList = [];
 
                 lock (queryLinksLock)
                 {
@@ -680,7 +676,7 @@ namespace GetStoreApp.UI.Controls.Store
                     return;
                 };
 
-                StringBuilder stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new();
 
                 foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
@@ -702,7 +698,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(() =>
             {
-                List<QueryLinksModel> selectedQueryLinksList = new List<QueryLinksModel>();
+                List<QueryLinksModel> selectedQueryLinksList = [];
 
                 lock (queryLinksLock)
                 {
@@ -726,7 +722,7 @@ namespace GetStoreApp.UI.Controls.Store
                     return;
                 };
 
-                List<DownloadSchedulerModel> downloadInfoList = new List<DownloadSchedulerModel>();
+                List<DownloadSchedulerModel> downloadInfoList = [];
                 DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
                 try
@@ -876,7 +872,7 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 Task.Run(async () =>
                 {
-                    List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
+                    List<QueryLinksModel> queryLinksList = [];
 
                     // 记录当前选定的选项和填入的内容
                     int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
@@ -1106,18 +1102,14 @@ namespace GetStoreApp.UI.Controls.Store
                 long timeStamp = Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link);
 
-                List<HistoryModel> historyList = new List<HistoryModel>();
-                foreach (HistoryModel historyItem in HistoryCollection)
-                {
-                    historyList.Add(historyItem);
-                }
+                List<HistoryModel> historyList = [.. HistoryCollection];
 
                 int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加
                 if (index is -1)
                 {
-                    HistoryModel historyItem = new HistoryModel()
+                    HistoryModel historyItem = new()
                     {
                         CreateTimeStamp = timeStamp,
                         HistoryKey = historyKey,

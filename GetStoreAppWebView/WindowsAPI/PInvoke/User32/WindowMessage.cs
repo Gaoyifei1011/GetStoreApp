@@ -900,7 +900,7 @@
         /// <summary>
         /// 按下非系统键时，使用键盘焦点发布到窗口。 非系统键是未按下 ALT 键时按下的键。
         /// </summary>
-        WM_KEYDOWN = 0x0100,
+        WM_KEYDOWN = WM_KEYFIRST,
 
         /// <summary>
         /// 当释放非系统键时，发布到具有键盘焦点的窗口。 非系统键是当 Alt 键未按下时按下的键，或者当窗口具有键盘焦点时按下的键盘键。
@@ -947,7 +947,7 @@
         /// <summary>
         /// 此消息筛选键盘消息。
         /// </summary>
-        WM_KEYLAST = 0x0109,
+        WM_KEYLAST = WM_UNICHAR,
 
         WM_CONVERTREQUEST = 0x010A,
 
@@ -970,7 +970,7 @@
         /// </summary>
         WM_IME_COMPOSITION = 0x010F,
 
-        WM_IME_KEYLAST = 0x010F,
+        WM_IME_KEYLAST = WM_IME_COMPOSITION,
 
         /// <summary>
         /// 在显示对话框之前立即发送到对话框过程。 对话框过程通常使用此消息来初始化控件并执行影响对话框外观的任何其他初始化任务。
@@ -1558,7 +1558,7 @@
         /// <summary>
         /// 当光标移动时，WM_MOUSEMOVE 消息被发送到窗口。如果没有捕获鼠标，则将消息发送到包含光标的窗口。否则，消息将被发送到捕获了鼠标的窗口。
         /// </summary>
-        WM_MOUSEMOVE = 0x0200,
+        WM_MOUSEMOVE = WM_MOUSEFIRST,
 
         /// <summary>
         /// WM_LBUTTONDOWN 消息是当用户按下鼠标左键，而光标位于窗口的客户端区域时发出的。如果没有捕获鼠标，则消息将被发送到光标下方的窗口。
@@ -1642,7 +1642,7 @@
         /// <summary>
         /// 使用 WM_MOUSELAST 指定最后一条鼠标消息。与 PeekMessage() 函数一起使用。
         /// </summary>
-        WM_MOUSELAST = 0x020E,
+        WM_MOUSELAST = WM_MOUSEHWHEEL,
 
         // 0x020F 消息未定义
 

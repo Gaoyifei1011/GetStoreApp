@@ -32,7 +32,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         [GeneratedRegex("[\r\n]")]
         private static partial Regex WhiteSpace();
 
-        private static Regex WhiteSpaceRegex = WhiteSpace();
+        private static readonly Regex WhiteSpaceRegex = WhiteSpace();
 
         /// <summary>
         /// 生成要请求的内容
@@ -50,20 +50,20 @@ namespace GetStoreApp.Helpers.Controls.Store
             RequestModel httpRequestResult = null;
 
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource cancellationTokenSource = new();
             cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             try
             {
                 byte[] ContentBytes = Encoding.UTF8.GetBytes(content);
 
-                HttpStringContent httpContent = new HttpStringContent(content);
+                HttpStringContent httpContent = new(content);
                 httpContent.Headers.Expires = DateTime.Now;
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/x-www-form-urlencoded");
                 httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
-                HttpClient httpClient = new HttpClient();
+                HttpClient httpClient = new();
                 HttpResponseMessage response = await httpClient.PostAsync(new Uri(API), httpContent).AsTask(cancellationTokenSource.Token);
 
                 // 请求成功
@@ -73,7 +73,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     RequestStatusCode = string.Format("{0}", response.StatusCode);
                     RequestContent = await response.Content.ReadAsStringAsync();
 
-                    StringBuilder responseSuccessBuilder = new StringBuilder();
+                    StringBuilder responseSuccessBuilder = new();
                     responseSuccessBuilder.Append("Headers:");
                     responseSuccessBuilder.Append(response.Headers is null ? "" : WhiteSpaceRegex.Replace(response.Headers.ToString(), ""));
                     responseSuccessBuilder.Append('\n');

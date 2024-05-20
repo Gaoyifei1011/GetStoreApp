@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Root
 
         public static bool IsAppRunning { get; private set; } = true;
 
-        private static List<string> consoleLaunchArgs = new List<string>();
+        private static readonly List<string> consoleLaunchArgs = [];
 
         /// <summary>
         /// 应用启动时使用的参数
@@ -45,7 +45,7 @@ namespace GetStoreApp.Services.Root
             {
                 consoleLaunchArgs.Add(arg);
             }
-            ConsoleEventDelegate ctrlDelegate = new ConsoleEventDelegate(OnConsoleCtrlHandler);
+            ConsoleEventDelegate ctrlDelegate = new(OnConsoleCtrlHandler);
             Kernel32Library.SetConsoleCtrlHandler(Marshal.GetFunctionPointerForDelegate(ctrlDelegate), true);
             DownloadSchedulerService.InitializeDownloadScheduler(false);
             DownloadSchedulerService.DownloadCreated += DownloadService.OnDownloadCreated;

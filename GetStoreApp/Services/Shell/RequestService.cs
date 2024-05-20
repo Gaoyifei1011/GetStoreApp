@@ -20,19 +20,8 @@ namespace GetStoreApp.Services.Shell
         private static string selectedChannel;
         private static string linkText;
 
-        private static List<string> TypeList = new List<string>()
-        {
-            "url",
-            "ProductId",
-        };
-
-        private static List<string> ChannelList = new List<string>()
-        {
-            "WIF",
-            "WIS",
-            "RP",
-            "Retail"
-        };
+        private static readonly List<string> TypeList = ["url", "ProductId",];
+        private static readonly List<string> ChannelList = ["WIF", "WIS", "RP", "Retail"];
 
         /// <summary>
         /// 有参数模式下初始化请求的数据
@@ -73,7 +62,7 @@ namespace GetStoreApp.Services.Shell
                 {
                     string cookie = await QueryLinksHelper.GetCookieAsync();
 
-                    List<QueryLinksModel> queryLinksList = new List<QueryLinksModel>();
+                    List<QueryLinksModel> queryLinksList = [];
                     AppInfoModel appInfo = null;
 
                     // 获取应用信息

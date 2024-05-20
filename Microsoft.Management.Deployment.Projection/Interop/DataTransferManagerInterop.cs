@@ -12,11 +12,11 @@ namespace Windows.ApplicationModel.DataTransfer
     /// </summary>
     public static class DataTransferManagerInterop
     {
-        private static readonly Guid IDataTransferManagerInterop_IID = new Guid("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8");
+        private static readonly Guid IDataTransferManagerInterop_IID = new("3A3DCD6C-3EAB-43DC-BCDE-45671CE800C8");
 
-        private static readonly Guid riid = new Guid("A5CAEE9B-8708-49D1-8D36-67D25A8DA00C");
+        private static readonly Guid riid = new("A5CAEE9B-8708-49D1-8D36-67D25A8DA00C");
 
-        private static FactoryObjectReference<IObjectReference> factoryObjectReference;
+        private static readonly FactoryObjectReference<IObjectReference> factoryObjectReference;
 
         static DataTransferManagerInterop()
         {
