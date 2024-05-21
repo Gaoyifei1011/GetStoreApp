@@ -292,14 +292,14 @@
                             </TextBlock>
                         </Grid>
 
-                        <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
-                            <TextBlock
-                                MinWidth="50"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Download/CompleteDownload')}"
-                                TextAlignment="Left" />
-                        </Grid>
+                        <TextBlock
+                            Grid.Row="1"
+                            MinWidth="50"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Download/CompleteDownload')}"
+                            TextAlignment="Left"
+                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}" />
 
                         <Grid
                             x:Name="InstallInfo"

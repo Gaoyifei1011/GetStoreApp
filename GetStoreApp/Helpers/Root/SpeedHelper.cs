@@ -22,15 +22,15 @@ namespace GetStoreApp.Helpers.Root
         {
             if (speed / speedDict["GB/s"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(speed / speedDict["GB/s"], 2), "GB");
+                return string.Format("{0}{1}", Math.Round(speed / speedDict["GB/s"], 2), "GB/s");
             }
             else if (speed / speedDict["MB/s"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(speed / speedDict["MB/s"], 2), "MB");
+                return string.Format("{0}{1}", Math.Round(speed / speedDict["MB/s"], 2), "MB/s");
             }
             else if (speed / speedDict["KB/s"] >= 1)
             {
-                return string.Format("{0}{1}", Math.Round(speed / speedDict["KB/s"], 2), "KB");
+                return string.Format("{0}{1}", Math.Round(speed / speedDict["KB/s"], 2), "KB/s");
             }
             else
             {

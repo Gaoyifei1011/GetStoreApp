@@ -15,94 +15,93 @@
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
-    <StackPanel>
+    <StackPanel Spacing="5">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
             <TextBlock
+                Grid.Row="0"
                 Grid.Column="0"
-                Margin="0,0,0,5"
                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileName')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
+
             <TextBlock
+                Grid.Row="0"
                 Grid.Column="1"
-                Margin="0,0,0,5"
                 Text="{x:Bind FileName}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
-        </Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <TextBlock
+                Grid.Row="1"
                 Grid.Column="0"
-                Margin="0,0,0,5"
                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FilePath')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
+
             <TextBlock
+                Grid.Row="1"
                 Grid.Column="1"
-                Margin="0,0,0,5"
                 Text="{x:Bind FilePath}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
-        </Grid>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
             <TextBlock
+                Grid.Row="2"
                 Grid.Column="0"
-                Margin="0,0,0,5"
                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSize')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
+
             <TextBlock
+                Grid.Row="2"
                 Grid.Column="1"
-                Margin="0,0,0,5"
                 Text="{x:Bind FileSize}"
                 TextAlignment="DetectFromContent"
                 TextWrapping="Wrap" />
-        </Grid>
 
-        <StackPanel
-            x:Name="FileChecking"
-            x:Load="{x:Bind FileCheckState.Equals(x:False), Mode=OneWay}"
-            Orientation="Horizontal"
-            Spacing="5">
-            <ProgressRing
-                Width="20"
-                Height="20"
-                IsActive="True" />
             <TextBlock
-                Margin="0,0,0,5"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckingFile')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-        </StackPanel>
-
-        <Grid x:Name="FileChecked" x:Load="{x:Bind FileCheckState, Mode=OneWay}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
+                Grid.Row="3"
                 Grid.Column="0"
-                Margin="0,0,0,5"
                 Text="{x:Bind root:ResourceService.GetLocalized('Dialog/FileSHA1')}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
-            <TextBlock
+
+            <StackPanel
+                x:Name="FileChecking"
+                Grid.Row="3"
                 Grid.Column="1"
-                Margin="0,0,0,5"
+                x:Load="{x:Bind FileCheckState.Equals(x:False), Mode=OneWay}"
+                Orientation="Horizontal"
+                Spacing="5">
+
+                <ProgressRing
+                    Width="20"
+                    Height="20"
+                    IsActive="True" />
+
+                <TextBlock
+                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CheckingFile')}"
+                    TextAlignment="Justify"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <TextBlock
+                x:Name="FileChecked"
+                Grid.Row="3"
+                Grid.Column="1"
+                x:Load="{x:Bind FileCheckState, Mode=OneWay}"
                 Text="{x:Bind FileSHA1, Mode=OneWay}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />

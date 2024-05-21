@@ -717,10 +717,20 @@ namespace GetStoreApp.Views.Pages
                             Kernel32Library.TerminateProcess(hProcess, 0);
                         }
                     }
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        TeachingTipHelper.Show(new TerminateProcessTip(true));
+                    });
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, "WebViewHost Process create failed.", e);
+
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        TeachingTipHelper.Show(new TerminateProcessTip(false));
+                    });
                 }
             });
         }
