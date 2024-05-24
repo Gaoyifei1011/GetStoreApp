@@ -278,7 +278,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        WinGetInstance.InstallingStateDict.Add(upgradableApps.AppID, upgradeTokenSource);
+                        lock (WinGetInstance.installStateObject)
+                        {
+                            WinGetInstance.InstallingStateDict.Add(upgradableApps.AppID, upgradeTokenSource);
+                        }
 
                         InstallResult installResult = await UpgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, installOptions).AsTask(upgradeTokenSource.Token, progressCallBack);
 
@@ -304,6 +307,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 }
                             }
 
+                            lock (WinGetInstance.installStateObject)
+                            {
+                                WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                            }
+
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 // 完成任务后从任务管理中删除任务
@@ -317,7 +325,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                                             break;
                                         }
                                     }
-                                    WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                                 }
 
                                 lock (upgradableAppsLock)
@@ -337,6 +344,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         else
                         {
+                            lock (WinGetInstance.installStateObject)
+                            {
+                                WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                            }
+
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 lock (upgradableAppsLock)
@@ -362,7 +374,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                                             break;
                                         }
                                     }
-                                    WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                                 }
                             });
 
@@ -373,6 +384,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                     catch (OperationCanceledException e)
                     {
                         LogService.WriteLog(LoggingLevel.Information, "App installing operation canceled.", e);
+
+                        lock (WinGetInstance.installStateObject)
+                        {
+                            WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                        }
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
@@ -400,7 +416,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         break;
                                     }
                                 }
-                                WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
                         });
                     }
@@ -408,6 +423,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Error, "App installing failed.", e);
+
+                        lock (WinGetInstance.installStateObject)
+                        {
+                            WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
+                        }
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
@@ -435,7 +455,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         break;
                                     }
                                 }
-                                WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
                         });
 

@@ -1,7 +1,6 @@
-﻿using GetStoreApp.Services.Root;
-using Microsoft.Management.Deployment;
+﻿using Microsoft.Management.Deployment;
+using Microsoft.UI.Xaml;
 using System.ComponentModel;
-using System.Text;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
@@ -10,16 +9,6 @@ namespace GetStoreApp.Models.Controls.WinGet
     /// </summary>
     public class InstallingAppsModel : INotifyPropertyChanged
     {
-        private static readonly string AppNameToolTip = ResourceService.GetLocalized("WinGet/AppNameToolTip");
-        private static readonly string InstallStateToolTip = ResourceService.GetLocalized("WinGet/InstallStateToolTip");
-        private static readonly string DownloadedProgressToolTip = ResourceService.GetLocalized("WinGet/DownloadedProgressToolTip");
-        private static readonly string QueuedToolTip = ResourceService.GetLocalized("WinGet/QueuedToolTip");
-        private static readonly string DownloadingToolTip = ResourceService.GetLocalized("WinGet/DownloadingToolTip");
-        private static readonly string InstallingToolTip = ResourceService.GetLocalized("WinGet/InstallingToolTip");
-        private static readonly string PostInstallToolTip = ResourceService.GetLocalized("WinGet/PostInstallToolTip");
-        private static readonly string FinishedToolTip = ResourceService.GetLocalized("WinGet/FinishedToolTip");
-        private static readonly string CancelingToolTip = ResourceService.GetLocalized("WinGet/CancelingToolTip");
-
         /// <summary>
         /// 应用ID
         /// </summary>
@@ -125,7 +114,7 @@ namespace GetStoreApp.Models.Controls.WinGet
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// 获取应用是否处于下载状态
+        /// 检查应用是否处于下载状态
         /// </summary>
         public bool IsDownloading(PackageInstallProgressState installProgressState)
         {
@@ -133,53 +122,11 @@ namespace GetStoreApp.Models.Controls.WinGet
         }
 
         /// <summary>
-        /// 添加安装任务的详细文字信息提示
+        /// 检查应用的下载状态
         /// </summary>
-        public string InstallToolTip(string appName, PackageInstallProgressState installProgressState, double downloadProgress, string downloadedFileSize, string totalFileSize, bool isCanceling)
+        public Visibility CheckProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState)
         {
-            StringBuilder builder = new();
-            builder.AppendLine(string.Format(AppNameToolTip, appName));
-
-            if (isCanceling)
-            {
-                builder.Append(string.Format(InstallStateToolTip, CancelingToolTip));
-            }
-            else
-            {
-                switch (installProgressState)
-                {
-                    case PackageInstallProgressState.Queued:
-                        {
-                            builder.Append(string.Format(InstallStateToolTip, QueuedToolTip));
-                            break;
-                        }
-                    case PackageInstallProgressState.Downloading:
-                        {
-                            builder.AppendLine(string.Format(InstallStateToolTip, DownloadingToolTip));
-                            builder.Append(string.Format(DownloadedProgressToolTip, downloadProgress));
-                            builder.Append(string.Format(",{0}/{1}", downloadedFileSize, totalFileSize));
-                            break;
-                        }
-                    case PackageInstallProgressState.Installing:
-                        {
-                            builder.Append(string.Format(InstallStateToolTip, InstallingToolTip));
-                            break;
-                        }
-                    case PackageInstallProgressState.PostInstall:
-                        {
-                            builder.Append(string.Format(InstallStateToolTip, PostInstallToolTip));
-                            break;
-                        }
-                    case PackageInstallProgressState.Finished:
-                        {
-                            builder.Append(string.Format(InstallStateToolTip, FinishedToolTip));
-                            break;
-                        }
-                    default: break;
-                }
-            }
-
-            return builder.ToString();
+            return packageInstallProgressState.Equals(comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

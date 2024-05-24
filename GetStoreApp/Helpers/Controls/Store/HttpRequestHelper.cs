@@ -30,9 +30,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         private static string RequestExceptionContent;
 
         [GeneratedRegex("[\r\n]")]
-        private static partial Regex WhiteSpace();
-
-        private static readonly Regex WhiteSpaceRegex = WhiteSpace();
+        private static partial Regex WhiteSpaceRegex();
 
         /// <summary>
         /// 生成要请求的内容
@@ -75,10 +73,10 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                     StringBuilder responseSuccessBuilder = new();
                     responseSuccessBuilder.Append("Headers:");
-                    responseSuccessBuilder.Append(response.Headers is null ? "" : WhiteSpaceRegex.Replace(response.Headers.ToString(), ""));
+                    responseSuccessBuilder.Append(response.Headers is null ? "" : WhiteSpaceRegex().Replace(response.Headers.ToString(), ""));
                     responseSuccessBuilder.Append('\n');
                     responseSuccessBuilder.Append("ResponseMessage:");
-                    responseSuccessBuilder.Append(response.RequestMessage is null ? "" : WhiteSpaceRegex.Replace(response.RequestMessage.ToString(), ""));
+                    responseSuccessBuilder.Append(response.RequestMessage is null ? "" : WhiteSpaceRegex().Replace(response.RequestMessage.ToString(), ""));
                     responseSuccessBuilder.Append('\n');
 
                     LogService.WriteLog(LoggingLevel.Information, "Requested successfully.", responseSuccessBuilder);

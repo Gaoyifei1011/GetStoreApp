@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.System;
 
 namespace GetStoreApp.Views.Pages
@@ -18,7 +20,7 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class WinGetPage : Page
     {
         public readonly object installingAppsObject = new();
-
+        public readonly object installStateObject = new();
         private bool isInitialized;
 
         public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = [];
@@ -44,21 +46,34 @@ namespace GetStoreApp.Views.Pages
                 {
                     foreach (InstallingAppsModel installingAppsItem in InstallingAppsCollection)
                     {
-                        if (installingAppsItem.AppID == appId)
+                        if (installingAppsItem.AppID.Equals(appId))
                         {
                             installingAppsItem.IsCanceling = true;
                         }
                     }
+                }
 
-                    if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
+                Task.Run(() =>
+                {
+                    lock (installStateObject)
                     {
-                        if (!tokenSource.IsCancellationRequested)
+                        try
                         {
-                            tokenSource.Cancel();
-                            tokenSource.Dispose();
+                            if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
+                            {
+                                if (!tokenSource.IsCancellationRequested)
+                                {
+                                    tokenSource.Cancel();
+                                    tokenSource.Dispose();
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
                         }
                     }
-                }
+                });
             }
         }
 
@@ -135,7 +150,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager/"));
+            await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager"));
         }
 
         /// <summary>
@@ -162,14 +177,7 @@ namespace GetStoreApp.Views.Pages
         private bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted, bool needReverseValue)
         {
             bool result = isOfficialVersionExisted || isDevVersionExisted;
-            if (needReverseValue)
-            {
-                return !result;
-            }
-            else
-            {
-                return result;
-            }
+            return needReverseValue ? !result : result;
         }
     }
 }

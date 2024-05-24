@@ -277,7 +277,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        WinGetInstance.InstallingStateDict.Add(searchApps.AppID, installTokenSource);
+                        lock (WinGetInstance.installStateObject)
+                        {
+                            WinGetInstance.InstallingStateDict.Add(searchApps.AppID, installTokenSource);
+                        }
 
                         InstallResult installResult = await SearchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, installOptions).AsTask(installTokenSource.Token, progressCallBack);
 
@@ -310,6 +313,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             ToastNotificationService.Show(NotificationKind.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
                         }
 
+                        lock (WinGetInstance.installStateObject)
+                        {
+                            WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
+                        }
+
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             lock (searchAppsLock)
@@ -336,7 +344,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         break;
                                     }
                                 }
-                                WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                             }
                         });
                     }
@@ -345,6 +352,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         LogService.WriteLog(LoggingLevel.Information, "App installing operation canceled.", e);
 
+                        lock (WinGetInstance.installStateObject)
+                        {
+                            WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
+                        }
+
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             lock (searchAppsLock)
@@ -371,7 +383,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         break;
                                     }
                                 }
-                                WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                             }
                         });
                     }
@@ -380,6 +391,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         LogService.WriteLog(LoggingLevel.Error, "App installing failed.", e);
 
+                        lock (WinGetInstance.installStateObject)
+                        {
+                            WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
+                        }
+
                         DispatcherQueue.TryEnqueue(() =>
                         {
                             lock (searchAppsLock)
@@ -406,7 +422,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         break;
                                     }
                                 }
-                                WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
                             }
                         });
 

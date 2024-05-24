@@ -121,7 +121,7 @@
     <value>Current version: </value>
   </data>
   <data name="AppNameToolTip" xml:space="preserve">
-    <value>App name: </value>
+    <value>App name:</value>
   </data>
   <data name="AppNewestVersionToolTip" xml:space="preserve">
     <value>The newest version: </value>
@@ -132,11 +132,14 @@
   <data name="AppVersionToolTIp" xml:space="preserve">
     <value>App version: </value>
   </data>
-  <data name="CancelingToolTip" xml:space="preserve">
-    <value>Canceling...</value>
+  <data name="Canceling" xml:space="preserve">
+    <value>Canceling</value>
   </data>
   <data name="CancelInstall" xml:space="preserve">
     <value>Cancel the installation</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="ControlPanel" xml:space="preserve">
     <value>Control panel</value>
@@ -153,8 +156,8 @@
   <data name="CopyUpgradeText" xml:space="preserve">
     <value>Copy upgrade command</value>
   </data>
-  <data name="DownloadedProgressToolTip" xml:space="preserve">
-    <value>Download progress: {0} completed</value>
+  <data name="DownloadedFileSizeToolTip" xml:space="preserve">
+    <value>Download completed: </value>
   </data>
   <data name="DownloadFromGithub" xml:space="preserve">
     <value>Download from Github</value>
@@ -168,10 +171,13 @@
   <data name="DownloadFromMicrosoftStoreToolTip" xml:space="preserve">
     <value>Download from Microsoft Store (official version)</value>
   </data>
-  <data name="DownloadingToolTip" xml:space="preserve">
-    <value>Downloading...</value>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading</value>
   </data>
-  <data name="FinishedToolTip" xml:space="preserve">
+  <data name="DownloadProgressToolTip" xml:space="preserve">
+    <value>Download progress:</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
     <value>Finished</value>
   </data>
   <data name="InitializeFailedDescription" xml:space="preserve">
@@ -201,14 +207,11 @@
   <data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
     <value>The application you searched for has not been found, please change the search criteria and try again</value>
   </data>
+  <data name="Installing" xml:space="preserve">
+    <value>Installing</value>
+  </data>
   <data name="InstallingAppsListEmpty" xml:space="preserve">
     <value>There are currently no download and installation tasks</value>
-  </data>
-  <data name="InstallingToolTip" xml:space="preserve">
-    <value>Installing...</value>
-  </data>
-  <data name="InstallStateToolTip" xml:space="preserve">
-    <value>Install state: {0}</value>
   </data>
   <data name="InstallWithCmd" xml:space="preserve">
     <value>Install with command</value>
@@ -246,11 +249,11 @@
   <data name="Operation" xml:space="preserve">
     <value>Operation</value>
   </data>
-  <data name="PostInstallToolTip" xml:space="preserve">
-    <value>Wait for additional actions after the installation is completed</value>
+  <data name="PostInstall" xml:space="preserve">
+    <value>Install completing</value>
   </data>
-  <data name="QueuedToolTip" xml:space="preserve">
-    <value>Waiting...</value>
+  <data name="Queued" xml:space="preserve">
+    <value>Waiting</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Refresh</value>
@@ -308,6 +311,9 @@
   </data>
   <data name="TaskManager" xml:space="preserve">
     <value>Task manager</value>
+  </data>
+  <data name="TotalFileSizeToolTip" xml:space="preserve">
+    <value>Total size: </value>
   </data>
   <data name="UnInstall" xml:space="preserve">
     <value>Uninstall</value>

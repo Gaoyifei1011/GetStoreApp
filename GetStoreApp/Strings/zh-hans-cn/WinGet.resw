@@ -132,11 +132,14 @@
   <data name="AppVersionToolTip" xml:space="preserve">
     <value>应用版本：</value>
   </data>
-  <data name="CancelingToolTip" xml:space="preserve">
-    <value>取消中...</value>
+  <data name="Canceling" xml:space="preserve">
+    <value>取消中</value>
   </data>
   <data name="CancelInstall" xml:space="preserve">
     <value>取消安装</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
   </data>
   <data name="ControlPanel" xml:space="preserve">
     <value>控制面板</value>
@@ -153,8 +156,8 @@
   <data name="CopyUpgradeText" xml:space="preserve">
     <value>复制升级命令</value>
   </data>
-  <data name="DownloadedProgressToolTip" xml:space="preserve">
-    <value>下载进度：已完成{0}%</value>
+  <data name="DownloadedFileSizeToolTip" xml:space="preserve">
+    <value>已下载完成：</value>
   </data>
   <data name="DownloadFromGithub" xml:space="preserve">
     <value>从 Github 中下载</value>
@@ -168,10 +171,13 @@
   <data name="DownloadFromMicrosoftStoreToolTip" xml:space="preserve">
     <value>从微软商店中下载（正式版）</value>
   </data>
-  <data name="DownloadingToolTip" xml:space="preserve">
-    <value>下载中...</value>
+  <data name="Downloading" xml:space="preserve">
+    <value>下载中</value>
   </data>
-  <data name="FinishedToolTip" xml:space="preserve">
+  <data name="DownloadProgressToolTip" xml:space="preserve">
+    <value>下载进度：</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
     <value>已完成</value>
   </data>
   <data name="InitializeFailedDescription" xml:space="preserve">
@@ -201,14 +207,11 @@
   <data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
     <value>您搜索的应用暂未找到，请更改搜索条件后再进行尝试</value>
   </data>
-  <data name="InstallingAppsListEmpty" xml:space="preserve">
-    <value>当前暂无下载和安装任务</value>
-  </data>
-  <data name="InstallingToolTip" xml:space="preserve">
+  <data name="Installing" xml:space="preserve">
     <value>安装中...</value>
   </data>
-  <data name="InstallStateToolTip" xml:space="preserve">
-    <value>安装状态：{0}</value>
+  <data name="InstallingAppsListEmpty" xml:space="preserve">
+    <value>当前暂无下载和安装任务</value>
   </data>
   <data name="InstallWithCmd" xml:space="preserve">
     <value>使用命令安装</value>
@@ -246,11 +249,11 @@
   <data name="Operation" xml:space="preserve">
     <value>操作</value>
   </data>
-  <data name="PostInstallToolTip" xml:space="preserve">
-    <value>等待安装完成后的其他操作</value>
+  <data name="PostInstall" xml:space="preserve">
+    <value>完成安装中</value>
   </data>
-  <data name="QueuedToolTip" xml:space="preserve">
-    <value>等待中...</value>
+  <data name="Queued" xml:space="preserve">
+    <value>等待中</value>
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>
@@ -308,6 +311,9 @@
   </data>
   <data name="TaskManager" xml:space="preserve">
     <value>任务管理</value>
+  </data>
+  <data name="TotalFileSizeToolTip" xml:space="preserve">
+    <value>总大小：</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
     <value>卸载</value>

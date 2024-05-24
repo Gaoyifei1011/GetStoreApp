@@ -9,17 +9,13 @@ namespace GetStoreApp.Helpers.Controls.Store
     /// </summary>
     public static partial class HtmlParseHelper
     {
-        [GeneratedRegex(@"<index>(.*?)<\/index>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
-        private static partial Regex CIDRegularExpression();
+        private static string parseContent = string.Empty;
 
-        private static readonly Regex CIDRegex = CIDRegularExpression();
+        [GeneratedRegex(@"<index>(.*?)<\/index>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        private static partial Regex CIDRegex();
 
         [GeneratedRegex(@"<tr\sstyle=\\?""background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"">\s{0,}<td>\s{0,}<a\shref=\\?""(.*?)\\?""\srel=\\?""noreferrer\\?"">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?GMT)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
-        private static partial Regex ResultDataListRegularExpression();
-
-        private static readonly Regex ResultDataListRegex = ResultDataListRegularExpression();
-
-        private static string parseContent = string.Empty;
+        private static partial Regex ResultDataListRegex();
 
         /// <summary>
         /// 初始化HtmlParseService类时添加HtmlReqeustHelper生成的字符串数据
@@ -36,7 +32,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         {
             if (!string.IsNullOrEmpty(parseContent))
             {
-                MatchCollection cidCollection = CIDRegex.Matches(parseContent);
+                MatchCollection cidCollection = CIDRegex().Matches(parseContent);
                 if (cidCollection.Count > 0)
                 {
                     GroupCollection cidGroups = cidCollection[0].Groups;
@@ -59,7 +55,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             if (!string.IsNullOrEmpty(parseContent))
             {
-                MatchCollection resultDataListCollection = ResultDataListRegex.Matches(parseContent);
+                MatchCollection resultDataListCollection = ResultDataListRegex().Matches(parseContent);
 
                 for (int index = 0; index < resultDataListCollection.Count; index++)
                 {
