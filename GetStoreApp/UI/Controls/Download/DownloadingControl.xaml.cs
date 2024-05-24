@@ -362,11 +362,11 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        private void OnItemClicked(object sender, ItemClickEventArgs args)
+        private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
             lock (downloadingLock)
             {
-                DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
+                DownloadingModel downloadingItem = (DownloadingModel)args.InvokedItem;
                 int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
 
                 if (clickedIndex >= 0 && clickedIndex < DownloadingCollection.Count)

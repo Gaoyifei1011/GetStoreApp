@@ -344,6 +344,7 @@ namespace GetStoreApp.UI.Controls.Store
         private void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
+
             if (queryLinksItem is not null)
             {
                 Task.Run(() =>
@@ -440,7 +441,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             string fileLink = args.Parameter as string;
 
-            if (fileLink is not null)
+            if (!string.IsNullOrEmpty(fileLink))
             {
                 await Launcher.LaunchUriAsync(new Uri(fileLink));
             }
@@ -453,7 +454,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             string fileLink = args.Parameter as string;
 
-            if (fileLink is not null)
+            if (!string.IsNullOrEmpty(fileLink))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileLink);
                 TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, copyResult, false));
@@ -466,6 +467,7 @@ namespace GetStoreApp.UI.Controls.Store
         private void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
+
             if (queryLinksItem is not null)
             {
                 string copyInformation = string.Format("[\n{0}\n{1}\n{2}\n]\n",
@@ -489,6 +491,17 @@ namespace GetStoreApp.UI.Controls.Store
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
             LinkText = (sender as TextBox).Text;
+        }
+
+        /// <summary>
+        /// 点击回车键搜索应用
+        /// </summary>
+        private void OnKeyDown(object sender, KeyRoutedEventArgs args)
+        {
+            if (args.Key is VirtualKey.Enter)
+            {
+                QueryLinks();
+            }
         }
 
         /// <summary>
@@ -841,9 +854,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        private void OnItemClicked(object sender, ItemClickEventArgs args)
+        private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
-            QueryLinksModel queryLinksItem = args.ClickedItem as QueryLinksModel;
+            QueryLinksModel queryLinksItem = args.InvokedItem as QueryLinksModel;
 
             if (queryLinksItem is not null)
             {

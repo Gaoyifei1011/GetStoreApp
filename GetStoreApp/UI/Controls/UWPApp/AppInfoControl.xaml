@@ -21,6 +21,9 @@
         <XamlUICommand x:Name="PinToStartScreenCommand" ExecuteRequested="{x:Bind OnPinToStartScreenExecuteRequested}" />
         <XamlUICommand x:Name="PinToTaskbarCommand" ExecuteRequested="{x:Bind OnPinToTaskbarExecuteRequested}" />
         <XamlUICommand x:Name="ShowMoreCommand" ExecuteRequested="{x:Bind OnShowMoreExecuteRequested}" />
+
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </Grid.Resources>
 
     <ScrollViewer Margin="0,5,0,0">
@@ -375,246 +378,248 @@
                 </Expander.Header>
 
                 <Expander.Content>
-                    <ListView
-                        ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                        ItemsSource="{x:Bind AppListEntryCollection, Mode=OneWay}"
-                        SelectionMode="None">
+                    <StackPanel>
+                        <Grid Height="35" Padding="6,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="130" />
+                            </Grid.ColumnDefinitions>
 
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection />
-                        </ItemsControl.ItemContainerTransitions>
+                            <TextBlock
+                                x:Name="EntryNameHeaderText"
+                                Grid.Column="0"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryName')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                        <ListView.Header>
-                            <Grid Height="35" Padding="6,0,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="130" />
-                                </Grid.ColumnDefinitions>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryName')}" Visibility="{x:Bind EntryNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                <TextBlock
-                                    x:Name="EntryNameHeaderText"
-                                    Grid.Column="0"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryName')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                x:Name="EntryDescriptionHeaderText"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryDescription')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryName')}" Visibility="{x:Bind EntryNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryDescription')}" Visibility="{x:Bind EntryDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                <TextBlock
-                                    x:Name="EntryDescriptionHeaderText"
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryDescription')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                x:Name="AUMIDHeaderText"
+                                Grid.Column="2"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/AUMID')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/EntryDescription')}" Visibility="{x:Bind EntryDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/AUMID')}" Visibility="{x:Bind AUMIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                <TextBlock
-                                    x:Name="AUMIDHeaderText"
-                                    Grid.Column="2"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/AUMID')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                Grid.Column="3"
+                                Grid.ColumnSpan="2"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Options')}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/OptionsToolTip')}" />
+                        </Grid>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/AUMID')}" Visibility="{x:Bind AUMIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                        <ItemsView
+                            CornerRadius="0"
+                            ItemsSource="{x:Bind AppListEntryCollection, Mode=OneWay}"
+                            SelectionMode="None">
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    Grid.ColumnSpan="2"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Options')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/OptionsToolTip')}" />
-                            </Grid>
-                        </ListView.Header>
+                            <ItemsView.Layout>
+                                <StackLayout />
+                            </ItemsView.Layout>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:AppListEntryModel">
-                                <Grid
-                                    Height="35"
-                                    Padding="6,0,0,0"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="0,1,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="55" />
-                                        <ColumnDefinition Width="75" />
-                                    </Grid.ColumnDefinitions>
+                            <ItemsView.ItemTemplate>
+                                <DataTemplate x:DataType="model:AppListEntryModel">
+                                    <ItemContainer CornerRadius="0">
+                                        <Grid
+                                            Height="35"
+                                            Padding="6,0,0,0"
+                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            BorderThickness="0,1,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="55" />
+                                                <ColumnDefinition Width="75" />
+                                            </Grid.ColumnDefinitions>
 
-                                    <TextBlock
-                                        x:Name="EntryNameText"
-                                        Grid.Column="0"
-                                        MinWidth="50"
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind DisplayName}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind DisplayName}" Visibility="{Binding ElementName=EntryNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <TextBlock
-                                        x:Name="EntryDescriptionText"
-                                        Grid.Column="1"
-                                        MinWidth="50"
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind Description}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind Description}" Visibility="{Binding ElementName=EntryDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <TextBlock
-                                        x:Name="AUMIDText"
-                                        Grid.Column="2"
-                                        MinWidth="50"
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind AppUserModelId}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind AppUserModelId}" Visibility="{Binding ElementName=AUMIDText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <HyperlinkButton
-                                        Grid.Column="3"
-                                        Margin="10,0,0,0"
-                                        Command="{StaticResource LaunchCommand}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource HyperlinkButtonStyle}">
-
-                                        <HyperlinkButton.Content>
                                             <TextBlock
-                                                x:Name="LaunchText"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Launch')}"
+                                                x:Name="EntryNameText"
+                                                Grid.Column="0"
+                                                MinWidth="50"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind DisplayName}"
+                                                TextAlignment="Left"
                                                 TextTrimming="CharacterEllipsis"
                                                 TextWrapping="NoWrap">
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/Launch')}" Visibility="{Binding ElementName=LaunchText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                    <ToolTip Content="{x:Bind DisplayName}" Visibility="{Binding ElementName=EntryNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                 </ToolTipService.ToolTip>
                                             </TextBlock>
-                                        </HyperlinkButton.Content>
-                                    </HyperlinkButton>
 
-                                    <HyperlinkButton
-                                        Grid.Column="4"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Command="{StaticResource ShowMoreCommand}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                        Style="{StaticResource HyperlinkButtonStyle}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}">
+                                            <TextBlock
+                                                x:Name="EntryDescriptionText"
+                                                Grid.Column="1"
+                                                MinWidth="50"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind Description}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
-                                        <HyperlinkButton.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    x:Name="MoreText"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind Description}" Visibility="{Binding ElementName=EntryDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}" Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                            <TextBlock
+                                                x:Name="AUMIDText"
+                                                Grid.Column="2"
+                                                MinWidth="50"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind AppUserModelId}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
-                                                <AnimatedIcon
-                                                    Width="12"
-                                                    Height="12"
-                                                    Margin="8,0,0,0"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Center"
-                                                    AutomationProperties.AccessibilityView="Raw">
-                                                    <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                    <AnimatedIcon.FallbackIconSource>
-                                                        <FontIconSource
-                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                            FontSize="8"
-                                                            Glyph="&#xE96E;"
-                                                            IsTextScaleFactorEnabled="False" />
-                                                    </AnimatedIcon.FallbackIconSource>
-                                                </AnimatedIcon>
-                                            </StackPanel>
-                                        </HyperlinkButton.Content>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind AppUserModelId}" Visibility="{Binding ElementName=AUMIDText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
 
-                                        <FlyoutBase.AttachedFlyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource CopyAUMIDCommand}"
-                                                    CommandParameter="{x:Bind AppUserModelId}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyAUMID')}" />
+                                            <HyperlinkButton
+                                                Grid.Column="3"
+                                                Margin="10,0,0,0"
+                                                Command="{StaticResource LaunchCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                Style="{StaticResource HyperlinkButtonStyle}">
 
-                                                <MenuFlyoutSeparator />
+                                                <HyperlinkButton.Content>
+                                                    <TextBlock
+                                                        x:Name="LaunchText"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Launch')}"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
 
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource PinToDesktopCommand}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToDesktop')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToDesktopToolTip')}" />
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/Launch')}" Visibility="{Binding ElementName=LaunchText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+                                                </HyperlinkButton.Content>
+                                            </HyperlinkButton>
 
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource PinToStartScreenCommand}"
-                                                    CommandParameter="{Binding}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToStartScreen')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToStartScreenToolTip')}" />
+                                            <HyperlinkButton
+                                                Grid.Column="4"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                Command="{StaticResource ShowMoreCommand}"
+                                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                Style="{StaticResource HyperlinkButtonStyle}"
+                                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}">
 
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource PinToTaskbarCommand}"
-                                                    CommandParameter="{Binding}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToTaskbar')}"
-                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToTaskbarToolTip')}" />
-                                            </MenuFlyout>
-                                        </FlyoutBase.AttachedFlyout>
-                                    </HyperlinkButton>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                                <HyperlinkButton.Content>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            x:Name="MoreText"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}" Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <AnimatedIcon
+                                                            Width="12"
+                                                            Height="12"
+                                                            Margin="8,0,0,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            AutomationProperties.AccessibilityView="Raw">
+                                                            <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                                            <AnimatedIcon.FallbackIconSource>
+                                                                <FontIconSource
+                                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                    FontSize="8"
+                                                                    Glyph="&#xE96E;"
+                                                                    IsTextScaleFactorEnabled="False" />
+                                                            </AnimatedIcon.FallbackIconSource>
+                                                        </AnimatedIcon>
+                                                    </StackPanel>
+                                                </HyperlinkButton.Content>
+
+                                                <FlyoutBase.AttachedFlyout>
+                                                    <MenuFlyout Placement="Bottom">
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource CopyAUMIDCommand}"
+                                                            CommandParameter="{x:Bind AppUserModelId}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyAUMID')}" />
+
+                                                        <MenuFlyoutSeparator />
+
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource PinToDesktopCommand}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToDesktop')}"
+                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToDesktopToolTip')}" />
+
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource PinToStartScreenCommand}"
+                                                            CommandParameter="{x:Bind}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToStartScreen')}"
+                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToStartScreenToolTip')}" />
+
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource PinToTaskbarCommand}"
+                                                            CommandParameter="{x:Bind}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToTaskbar')}"
+                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/PinToTaskbarToolTip')}" />
+                                                    </MenuFlyout>
+                                                </FlyoutBase.AttachedFlyout>
+                                            </HyperlinkButton>
+                                        </Grid>
+                                    </ItemContainer>
+                                </DataTemplate>
+                            </ItemsView.ItemTemplate>
+                        </ItemsView>
+                    </StackPanel>
                 </Expander.Content>
             </Expander>
 
@@ -647,222 +652,224 @@
                 </Expander.Header>
 
                 <Expander.Content>
-                    <ListView
-                        ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
-                        ItemsSource="{x:Bind DependenciesCollection, Mode=OneWay}"
-                        SelectionMode="None">
+                    <StackPanel>
+                        <Grid Height="35" Padding="6,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="75" />
+                            </Grid.ColumnDefinitions>
 
-                        <ItemsControl.ItemContainerTransitions>
-                            <TransitionCollection />
-                        </ItemsControl.ItemContainerTransitions>
+                            <TextBlock
+                                x:Name="DependencyNameHeaderText"
+                                Grid.Column="0"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyName')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                        <ListView.Header>
-                            <Grid Height="35" Padding="6,0,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="75" />
-                                </Grid.ColumnDefinitions>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyName')}" Visibility="{x:Bind DependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                <TextBlock
-                                    x:Name="DependencyNameHeaderText"
-                                    Grid.Column="0"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyName')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                x:Name="DependencyDescriptionHeaderText"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyPublisher')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyName')}" Visibility="{x:Bind DependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyPublisher')}" Visibility="{x:Bind DependencyDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                <TextBlock
-                                    x:Name="DependencyDescriptionHeaderText"
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyPublisher')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                x:Name="DependencyVersionHeaderText"
+                                Grid.Column="2"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyVersion')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyPublisher')}" Visibility="{x:Bind DependencyDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyVersion')}" Visibility="{x:Bind DependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                <TextBlock
-                                    x:Name="DependencyVersionHeaderText"
-                                    Grid.Column="2"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyVersion')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                Grid.Column="3"
+                                Grid.ColumnSpan="2"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Options')}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/OptionsToolTip')}" />
+                        </Grid>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/DependencyVersion')}" Visibility="{x:Bind DependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                        <ItemsView
+                            CornerRadius="0"
+                            ItemsSource="{x:Bind DependenciesCollection, Mode=OneWay}"
+                            SelectionMode="None">
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    Grid.ColumnSpan="2"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Center"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/Options')}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/OptionsToolTip')}" />
-                            </Grid>
-                        </ListView.Header>
+                            <ItemsView.Layout>
+                                <StackLayout />
+                            </ItemsView.Layout>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="model:PackageModel">
-                                <Grid
-                                    Height="35"
-                                    Padding="6,0,0,0"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="0,1,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="75" />
-                                    </Grid.ColumnDefinitions>
+                            <ItemsView.ItemTemplate>
+                                <DataTemplate x:DataType="model:PackageModel">
+                                    <ItemContainer CornerRadius="0">
+                                        <Grid
+                                            Height="35"
+                                            Padding="6,0,0,0"
+                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            BorderThickness="0,1,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="75" />
+                                            </Grid.ColumnDefinitions>
 
-                                    <TextBlock
-                                        x:Name="DependencyNameText"
-                                        Grid.Column="0"
-                                        MinWidth="50"
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind DisplayName}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                            <TextBlock
+                                                x:Name="DependencyNameText"
+                                                Grid.Column="0"
+                                                MinWidth="50"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind DisplayName}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind DisplayName}" Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind DisplayName}" Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
 
-                                    <TextBlock
-                                        x:Name="DependencyPublisherText"
-                                        Grid.Column="1"
-                                        MinWidth="50"
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind PublisherName}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                            <TextBlock
+                                                x:Name="DependencyPublisherText"
+                                                Grid.Column="1"
+                                                MinWidth="50"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind PublisherName}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind PublisherName}" Visibility="{Binding ElementName=DependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind PublisherName}" Visibility="{Binding ElementName=DependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
 
-                                    <TextBlock
-                                        x:Name="DependencyVersionText"
-                                        Grid.Column="2"
-                                        MinWidth="50"
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind Version}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                            <TextBlock
+                                                x:Name="DependencyVersionText"
+                                                Grid.Column="2"
+                                                MinWidth="50"
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind Version}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind Version}" Visibility="{Binding ElementName=DependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip Content="{x:Bind Version}" Visibility="{Binding ElementName=DependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
 
-                                    <HyperlinkButton
-                                        Grid.Column="4"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Command="{StaticResource ShowMoreCommand}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                        Style="{StaticResource HyperlinkButtonStyle}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}">
+                                            <HyperlinkButton
+                                                Grid.Column="4"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                Command="{StaticResource ShowMoreCommand}"
+                                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                Style="{StaticResource HyperlinkButtonStyle}"
+                                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}">
 
-                                        <HyperlinkButton.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    x:Name="MoreText"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap">
+                                                <HyperlinkButton.Content>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            x:Name="MoreText"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}" Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/More')}" Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
 
-                                                <AnimatedIcon
-                                                    Width="12"
-                                                    Height="12"
-                                                    Margin="8,0,0,0"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Center"
-                                                    AutomationProperties.AccessibilityView="Raw">
-                                                    <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                    <AnimatedIcon.FallbackIconSource>
-                                                        <FontIconSource
-                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                            FontSize="8"
-                                                            Glyph="&#xE96E;"
-                                                            IsTextScaleFactorEnabled="False" />
-                                                    </AnimatedIcon.FallbackIconSource>
-                                                </AnimatedIcon>
-                                            </StackPanel>
-                                        </HyperlinkButton.Content>
+                                                        <AnimatedIcon
+                                                            Width="12"
+                                                            Height="12"
+                                                            Margin="8,0,0,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            AutomationProperties.AccessibilityView="Raw">
+                                                            <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                                            <AnimatedIcon.FallbackIconSource>
+                                                                <FontIconSource
+                                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                    FontSize="8"
+                                                                    Glyph="&#xE96E;"
+                                                                    IsTextScaleFactorEnabled="False" />
+                                                            </AnimatedIcon.FallbackIconSource>
+                                                        </AnimatedIcon>
+                                                    </StackPanel>
+                                                </HyperlinkButton.Content>
 
-                                        <FlyoutBase.AttachedFlyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource OpenStoreCommand}"
-                                                    CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}" />
+                                                <FlyoutBase.AttachedFlyout>
+                                                    <MenuFlyout Placement="Bottom">
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource OpenStoreCommand}"
+                                                            CommandParameter="{x:Bind Package}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}" />
 
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource OpenFolderCommand}"
-                                                    CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenFolder')}" />
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource OpenFolderCommand}"
+                                                            CommandParameter="{x:Bind Package}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenFolder')}" />
 
-                                                <MenuFlyoutSeparator />
+                                                        <MenuFlyoutSeparator />
 
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource CopyDependencyNameCommand}"
-                                                    CommandParameter="{x:Bind DisplayName}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyDependencyName')}" />
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource CopyDependencyNameCommand}"
+                                                            CommandParameter="{x:Bind DisplayName}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyDependencyName')}" />
 
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource CopyDependencyInformationCommand}"
-                                                    CommandParameter="{x:Bind Package}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyDependencyInformation')}" />
-                                            </MenuFlyout>
-                                        </FlyoutBase.AttachedFlyout>
-                                    </HyperlinkButton>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                                        <MenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource CopyDependencyInformationCommand}"
+                                                            CommandParameter="{x:Bind Package}"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/CopyDependencyInformation')}" />
+                                                    </MenuFlyout>
+                                                </FlyoutBase.AttachedFlyout>
+                                            </HyperlinkButton>
+                                        </Grid>
+                                    </ItemContainer>
+                                </DataTemplate>
+                            </ItemsView.ItemTemplate>
+                        </ItemsView>
+                    </StackPanel>
                 </Expander.Content>
             </Expander>
         </StackPanel>

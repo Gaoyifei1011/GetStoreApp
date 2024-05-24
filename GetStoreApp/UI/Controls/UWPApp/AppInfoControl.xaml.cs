@@ -338,7 +338,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         {
             string aumid = args.Parameter as string;
 
-            if (aumid is not null)
+            if (!string.IsNullOrEmpty(aumid))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(aumid);
                 TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppUserModelId, copyResult));
@@ -396,6 +396,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+
             Task.Run(async () =>
             {
                 try
@@ -526,7 +527,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
-            string actualTheme = ActualTheme.ToString();
 
             Task.Run(async () =>
             {

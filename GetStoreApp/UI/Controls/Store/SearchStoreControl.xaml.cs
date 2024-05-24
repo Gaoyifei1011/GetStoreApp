@@ -182,14 +182,14 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            HistoryModel historyItem = args.Parameter as HistoryModel;
+            string historyContent = args.Parameter as string;
 
-            if (historyItem is not null)
+            if (!string.IsNullOrEmpty(historyContent))
             {
                 StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
                 if (storePage is not null)
                 {
-                    SearchText = historyItem.HistoryContent;
+                    SearchText = historyContent;
                 }
             }
         }
@@ -236,6 +236,17 @@ namespace GetStoreApp.UI.Controls.Store
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
             SearchText = (sender as TextBox).Text;
+        }
+
+        /// <summary>
+        /// 点击回车键搜索应用
+        /// </summary>
+        private void OnKeyDown(object sender, KeyRoutedEventArgs args)
+        {
+            if (args.Key is VirtualKey.Enter)
+            {
+                SearchStore();
+            }
         }
 
         /// <summary>

@@ -16,6 +16,12 @@
         <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
         <XamlUICommand x:Name="QueryLinksCommand" ExecuteRequested="{x:Bind OnQueryLinksExecuteRequested}" />
+
+        <SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </StackPanel.Resources>
 
     <Grid Margin="0,0,1,0" ColumnSpacing="6">
@@ -28,6 +34,7 @@
         <TextBox
             Grid.Column="0"
             IsEnabled="{x:Bind IsSeachingStore.Equals(x:False), Mode=OneWay}"
+            KeyDown="{x:Bind OnKeyDown}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('Store/SearchPlaceHolderText')}"
             Text="{x:Bind SearchText, Mode=OneWay}"
             TextChanged="{x:Bind OnTextChanged}" />
@@ -64,12 +71,6 @@
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         IsExpanded="True">
 
-        <Expander.Resources>
-            <SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
-            <SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
-            <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
-        </Expander.Resources>
-
         <Expander.Header>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -91,7 +92,7 @@
         </Expander.Header>
 
         <Expander.Content>
-            <Grid>
+            <StackPanel>
                 <TextBlock
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
@@ -99,95 +100,100 @@
                     TextAlignment="Center"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(HistoryCollection.Count), Mode=OneWay}" />
 
-                <ListView
-                    ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
+                <Grid
+                    Height="35"
+                    Padding="6,0,0,0"
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="85" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        x:Name="HistoryContentHeaderText"
+                        Grid.Column="0"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryContent')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryContent')}" Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/Options')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
+                </Grid>
+
+                <ItemsView
+                    CornerRadius="0"
                     ItemsSource="{x:Bind HistoryCollection, Mode=OneWay}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
 
-                    <ItemsControl.ItemContainerTransitions>
-                        <TransitionCollection />
-                    </ItemsControl.ItemContainerTransitions>
+                    <ItemsView.Layout>
+                        <StackLayout />
+                    </ItemsView.Layout>
 
-                    <ListView.Header>
-                        <Grid Height="35" Padding="6,0,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="85" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock
-                                x:Name="HistoryContentHeaderText"
-                                Grid.Column="0"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/HistoryContent')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
-
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryContent')}" Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-
-                            <TextBlock
-                                Grid.Column="1"
-                                Grid.ColumnSpan="2"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/Options')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
-                        </Grid>
-                    </ListView.Header>
-
-                    <ListView.ItemTemplate>
+                    <ItemsView.ItemTemplate>
                         <DataTemplate x:DataType="store:HistoryModel">
-                            <Grid
-                                Height="35"
-                                Padding="6,0,0,0"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                BorderThickness="0,1,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="85" />
-                                </Grid.ColumnDefinitions>
+                            <ItemContainer CornerRadius="0">
+                                <Grid
+                                    Height="35"
+                                    Padding="6,0,0,0"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="0,1,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="85" />
+                                    </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    x:Name="HistoryContentText"
-                                    Grid.Column="0"
-                                    MinWidth="50"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind HistoryContent}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                    <TextBlock
+                                        x:Name="HistoryContentText"
+                                        Grid.Column="0"
+                                        MinWidth="50"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="{x:Bind HistoryContent}"
+                                        TextAlignment="Left"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind HistoryContent}" Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind HistoryContent}" Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
-                                <HyperlinkButton
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    Command="{StaticResource FillinCommand}"
-                                    CommandParameter="{Binding}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
-                            </Grid>
+                                    <HyperlinkButton
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        Command="{StaticResource FillinCommand}"
+                                        CommandParameter="{x:Bind HistoryContent}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
+                                        Style="{StaticResource HyperlinkButtonStyle}" />
+                                </Grid>
+                            </ItemContainer>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                    </ItemsView.ItemTemplate>
+                </ItemsView>
+            </StackPanel>
         </Expander.Content>
     </Expander>
 
     <Grid CornerRadius="{ThemeResource ControlCornerRadius}" Visibility="{x:Bind ResultControlVisable, Mode=OneWay}">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -200,6 +206,7 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="4,4,0,0">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -233,165 +240,171 @@
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchStoreCollection.Count), Mode=OneWay}" />
         </Grid>
 
-        <ListView
+        <Grid
             Grid.Row="1"
-            ItemContainerStyle="{StaticResource DataGridListViewItemStyle}"
+            Height="35"
+            Padding="6,0,0,0"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1,0,1,1"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchStoreCollection.Count), Mode=OneWay}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="95" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                x:Name="StoreAppNameHeaderText"
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppName')}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="NoWrap">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppName')}" Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
+            </TextBlock>
+
+            <TextBlock
+                x:Name="StoreAppPublisherHeaderText"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppPublisher')}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="NoWrap">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppPublisher')}" Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
+            </TextBlock>
+
+            <TextBlock
+                x:Name="StoreAppLinkHeaderText"
+                Grid.Column="2"
+                Margin="10,0,0,0"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppLink')}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="NoWrap">
+
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppLink')}" Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Column="3"
+                Grid.ColumnSpan="3"
+                Margin="0,0,10,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('Store/Options')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
+        </Grid>
+
+        <ItemsView
+            Grid.Row="2"
             ItemsSource="{x:Bind SearchStoreCollection, Mode=OneWay}"
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchStoreCollection.Count), Mode=OneWay}">
 
-            <ListView.Header>
-                <Grid
-                    Height="35"
-                    Padding="6,0,0,0"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1,0,1,1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition Width="1.5*" />
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="95" />
-                    </Grid.ColumnDefinitions>
+            <ItemsView.Layout>
+                <StackLayout />
+            </ItemsView.Layout>
 
-                    <TextBlock
-                        x:Name="StoreAppNameHeaderText"
-                        Grid.Column="0"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppName')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppName')}" Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        x:Name="StoreAppPublisherHeaderText"
-                        Grid.Column="1"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppPublisher')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppPublisher')}" Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        x:Name="StoreAppLinkHeaderText"
-                        Grid.Column="2"
-                        Margin="10,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppLink')}"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppLink')}" Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </TextBlock>
-
-                    <TextBlock
-                        Grid.Column="3"
-                        Grid.ColumnSpan="3"
-                        Margin="0,0,10,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('Store/Options')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
-                </Grid>
-            </ListView.Header>
-
-            <ListView.ItemTemplate>
+            <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="store:SearchStoreModel">
-                    <Grid
-                        Height="35"
-                        Padding="6,0,0,0"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1,0,1,1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="95" />
-                        </Grid.ColumnDefinitions>
+                    <ItemContainer CornerRadius="0">
+                        <Grid
+                            Height="35"
+                            Padding="6,0,0,0"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1,0,1,1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="95" />
+                            </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            x:Name="StoreAppNameText"
-                            Grid.Column="0"
-                            MinWidth="50"
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{x:Bind StoreAppName}"
-                            TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
+                            <TextBlock
+                                x:Name="StoreAppNameText"
+                                Grid.Column="0"
+                                MinWidth="50"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{x:Bind StoreAppName}"
+                                TextAlignment="Left"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind StoreAppName}" Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind StoreAppName}" Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                        <TextBlock
-                            x:Name="StoreAppPublisherText"
-                            Grid.Column="1"
-                            MinWidth="50"
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{x:Bind StoreAppPublisher}"
-                            TextAlignment="Left"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
+                            <TextBlock
+                                x:Name="StoreAppPublisherText"
+                                Grid.Column="1"
+                                MinWidth="50"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{x:Bind StoreAppPublisher}"
+                                TextAlignment="Left"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind StoreAppPublisher}" Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind StoreAppPublisher}" Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                        <HyperlinkButton
-                            Grid.Column="2"
-                            Margin="10,0"
-                            VerticalAlignment="Center"
-                            Command="{StaticResource OpenLinkCommand}"
-                            CommandParameter="{x:Bind StoreAppLink}"
-                            Style="{StaticResource HyperlinkButtonStyle}">
+                            <HyperlinkButton
+                                Grid.Column="2"
+                                Margin="10,0"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource OpenLinkCommand}"
+                                CommandParameter="{x:Bind StoreAppLink}"
+                                Style="{StaticResource HyperlinkButtonStyle}">
 
-                            <HyperlinkButton.Content>
-                                <TextBlock
-                                    Text="{x:Bind StoreAppLink}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <ToolTip.Content>
-                                                <TextBlock Text="{x:Bind StoreAppLink}" />
-                                            </ToolTip.Content>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </HyperlinkButton.Content>
-                        </HyperlinkButton>
+                                <HyperlinkButton.Content>
+                                    <TextBlock
+                                        Text="{x:Bind StoreAppLink}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <ToolTip.Content>
+                                                    <TextBlock Text="{x:Bind StoreAppLink}" />
+                                                </ToolTip.Content>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </HyperlinkButton.Content>
+                            </HyperlinkButton>
 
-                        <HyperlinkButton
-                            Grid.Column="3"
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Command="{StaticResource QueryLinksCommand}"
-                            CommandParameter="{x:Bind StoreAppLink}"
-                            Content="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}"
-                            Style="{StaticResource HyperlinkButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksToolTip')}" />
-                    </Grid>
+                            <HyperlinkButton
+                                Grid.Column="3"
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                Command="{StaticResource QueryLinksCommand}"
+                                CommandParameter="{x:Bind StoreAppLink}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}"
+                                Style="{StaticResource HyperlinkButtonStyle}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksToolTip')}" />
+                        </Grid>
+                    </ItemContainer>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ItemsView.ItemTemplate>
+        </ItemsView>
     </Grid>
 </StackPanel>

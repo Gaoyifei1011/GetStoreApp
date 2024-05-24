@@ -695,11 +695,11 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        private void OnItemClicked(object sender, ItemClickEventArgs args)
+        private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
             lock (completedLock)
             {
-                CompletedModel completedItem = (CompletedModel)args.ClickedItem;
+                CompletedModel completedItem = (CompletedModel)args.InvokedItem;
                 int clickedIndex = CompletedCollection.IndexOf(completedItem);
 
                 if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)

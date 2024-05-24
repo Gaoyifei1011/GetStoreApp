@@ -17,6 +17,9 @@
         <XamlUICommand x:Name="ContinueCommand" ExecuteRequested="{x:Bind OnContinueExecuteRequested}" />
         <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
         <XamlUICommand x:Name="PauseCommand" ExecuteRequested="{x:Bind OnPauseExecuteRequested}" />
+
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </Grid.Resources>
 
     <Grid Padding="0">
@@ -190,12 +193,11 @@
                 TextAlignment="Center" />
         </Grid>
 
-        <ListView
+        <ItemsView
             Grid.Row="2"
             Padding="30,3,30,30"
-            IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
-            ItemClick="{x:Bind OnItemClicked}"
-            ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+            IsItemInvokedEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
+            ItemInvoked="{x:Bind OnItemInvoked}"
             ItemsSource="{x:Bind DownloadingCollection, Mode=OneWay}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.HorizontalScrollMode="Disabled"
@@ -204,216 +206,218 @@
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}">
 
-            <ListView.ItemTemplate>
+            <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="download:DownloadingModel">
-                    <Grid
-                        Height="66"
-                        Padding="16,12"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="{StaticResource ControlCornerRadius}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <CheckBox
-                            Grid.Column="0"
-                            MinWidth="0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
-                            IsThreeState="False"
-                            Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip>
-                                    <Grid>
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
-                                        <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                        </CheckBox>
-
+                    <ItemContainer Margin="0,0,0,2">
                         <Grid
-                            Grid.Column="1"
-                            Margin="0,0,10,0"
-                            VerticalAlignment="Center"
-                            RowSpacing="4">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+                            Height="66"
+                            Padding="16,12"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource ControlCornerRadius}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                            <Grid Grid.Row="0" Margin="0,0,0,6">
+                            <CheckBox
+                                Grid.Column="0"
+                                MinWidth="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                IsThreeState="False"
+                                Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>
+                                        <Grid>
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
+                                        </Grid>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </CheckBox>
 
-                                <TextBlock
-                                    x:Name="FileNameText"
-                                    Grid.Column="0"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind FileName}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <Grid
+                                Grid.Column="1"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                RowSpacing="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                <Grid Grid.Row="0" Margin="0,0,0,6">
 
-                                <FontIcon
-                                    Grid.Column="1"
-                                    Margin="0,0,2,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Glyph="&#xE74B;"
-                                    Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}" />
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"
-                                    TextAlignment="Right"
-                                    Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
+                                    <TextBlock
+                                        x:Name="FileNameText"
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind FileName}"
+                                        TextAlignment="Left"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
-                                                <Run Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}"
-                                    TextAlignment="Right">
+                                    <FontIcon
+                                        Grid.Column="1"
+                                        Margin="0,0,2,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Glyph="&#xE74B;"
+                                        Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}" />
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
-                                                <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="0,0,8,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"
+                                        TextAlignment="Right"
+                                        Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
 
-                                <TextBlock
-                                    Grid.Column="4"
-                                    Margin="2,0,2,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="/"
-                                    TextAlignment="Right" />
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
+                                                    <Run Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
-                                <TextBlock
-                                    Grid.Column="5"
-                                    VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
-                                    TextAlignment="Right">
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}"
+                                        TextAlignment="Right">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/TotalSizeToolTip')}" />
-                                                <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
+                                                    <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Column="4"
+                                        Margin="2,0,2,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="/"
+                                        TextAlignment="Right" />
+
+                                    <TextBlock
+                                        Grid.Column="5"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}"
+                                        TextAlignment="Right">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/TotalSizeToolTip')}" />
+                                                    <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </Grid>
+
+                                <ProgressBar
+                                    Grid.Row="1"
+                                    IsIndeterminate="False"
+                                    ShowPaused="{x:Bind sys:Object.Equals(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}"
+                                    Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
                             </Grid>
 
-                            <ProgressBar
-                                Grid.Row="1"
-                                IsIndeterminate="False"
-                                ShowPaused="{x:Bind sys:Object.Equals(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}"
-                                Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
+                            <ContentControl
+                                Grid.Column="2"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Command="{StaticResource ContinueCommand}"
+                                        CommandParameter="{x:Bind DownloadID}"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
+                                        Visibility="{x:Bind IsPaused(DownloadStatus), Mode=OneWay}">
+
+                                        <Button.Content>
+                                            <FontIcon FontSize="14" Glyph="&#xE768;" />
+                                        </Button.Content>
+                                    </Button>
+
+                                    <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Command="{StaticResource PauseCommand}"
+                                        CommandParameter="{x:Bind DownloadID}"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}"
+                                        Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
+
+                                        <Button.Content>
+                                            <FontIcon FontSize="14" Glyph="&#xE769;" />
+                                        </Button.Content>
+                                    </Button>
+
+                                    <Button
+                                        Width="32"
+                                        Height="32"
+                                        Margin="5,0,0,0"
+                                        Padding="0"
+                                        Command="{StaticResource DeleteCommand}"
+                                        CommandParameter="{x:Bind DownloadID}"
+                                        CornerRadius="{StaticResource ControlCornerRadius}"
+                                        IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteDownloadingToolTip')}">
+
+                                        <Button.Content>
+                                            <FontIcon FontSize="14" Glyph="&#xE711;" />
+                                        </Button.Content>
+                                    </Button>
+                                </StackPanel>
+                            </ContentControl>
                         </Grid>
-
-                        <ContentControl
-                            Grid.Column="2"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
-
-                            <StackPanel Orientation="Horizontal">
-
-                                <Button
-                                    Width="32"
-                                    Height="32"
-                                    Margin="5,0,0,0"
-                                    Padding="0"
-                                    Command="{StaticResource ContinueCommand}"
-                                    CommandParameter="{x:Bind DownloadID}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
-                                    Visibility="{x:Bind IsPaused(DownloadStatus), Mode=OneWay}">
-
-                                    <Button.Content>
-                                        <FontIcon FontSize="14" Glyph="&#xE768;" />
-                                    </Button.Content>
-                                </Button>
-
-                                <Button
-                                    Width="32"
-                                    Height="32"
-                                    Margin="5,0,0,0"
-                                    Padding="0"
-                                    Command="{StaticResource PauseCommand}"
-                                    CommandParameter="{x:Bind DownloadID}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}"
-                                    Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
-
-                                    <Button.Content>
-                                        <FontIcon FontSize="14" Glyph="&#xE769;" />
-                                    </Button.Content>
-                                </Button>
-
-                                <Button
-                                    Width="32"
-                                    Height="32"
-                                    Margin="5,0,0,0"
-                                    Padding="0"
-                                    Command="{StaticResource DeleteCommand}"
-                                    CommandParameter="{x:Bind DownloadID}"
-                                    CornerRadius="{StaticResource ControlCornerRadius}"
-                                    IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteDownloadingToolTip')}">
-
-                                    <Button.Content>
-                                        <FontIcon FontSize="14" Glyph="&#xE711;" />
-                                    </Button.Content>
-                                </Button>
-                            </StackPanel>
-                        </ContentControl>
-                    </Grid>
+                    </ItemContainer>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ItemsView.ItemTemplate>
+        </ItemsView>
     </Grid>
 </Grid>

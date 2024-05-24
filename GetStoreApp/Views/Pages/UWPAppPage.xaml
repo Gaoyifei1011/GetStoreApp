@@ -11,6 +11,11 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <x:Double x:Key="BreadcrumbBarChevronFontSize">16</x:Double>
+        <Thickness x:Key="BreadcrumbBarChevronPadding">8,0</Thickness>
+    </Page.Resources>
+
     <Grid Padding="0">
 
         <Grid.RowDefinitions>
@@ -37,11 +42,6 @@
                 <BreadcrumbBar.ItemTemplate>
                     <DataTemplate x:DataType="collection:DictionaryEntry">
                         <BreadcrumbBarItem Content="{Binding}">
-                            <BreadcrumbBarItem.Resources>
-                                <x:Double x:Key="BreadcrumbBarChevronFontSize">16</x:Double>
-                                <Thickness x:Key="BreadcrumbBarChevronPadding">8,0</Thickness>
-                            </BreadcrumbBarItem.Resources>
-
                             <BreadcrumbBarItem.ContentTemplate>
                                 <DataTemplate x:DataType="collection:DictionaryEntry">
                                     <TextBlock FontSize="18" Text="{x:Bind Key}" />

@@ -16,26 +16,98 @@
         KeyDown="{x:Bind OnKeyDown}"
         RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}">
 
-        <Grid>
-            <Grid.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Default">
-                            <Color x:Key="DefaultBackgroundColor">#141414</Color>
-                            <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="HighConstract">
-                            <Color x:Key="DefaultBackgroundColor">#FF0000</Color>
-                            <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
-                        </ResourceDictionary>
-                        <ResourceDictionary x:Key="Light">
-                            <Color x:Key="DefaultBackgroundColor">#F0F3F9</Color>
-                            <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
-                        </ResourceDictionary>
-                    </ResourceDictionary.ThemeDictionaries>
-                </ResourceDictionary>
-            </Grid.Resources>
+        <Page.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.ThemeDictionaries>
+                    <ResourceDictionary x:Key="Default">
+                        <Color x:Key="DefaultBackgroundColor">#141414</Color>
+                        <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                    </ResourceDictionary>
+                    <ResourceDictionary x:Key="HighConstract">
+                        <Color x:Key="DefaultBackgroundColor">#FF0000</Color>
+                        <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                    </ResourceDictionary>
+                    <ResourceDictionary x:Key="Light">
+                        <Color x:Key="DefaultBackgroundColor">#F0F3F9</Color>
+                        <SolidColorBrush x:Key="DefaultBackgroundColorBrush" Color="{ThemeResource DefaultBackgroundColor}" />
+                    </ResourceDictionary>
+                </ResourceDictionary.ThemeDictionaries>
 
+                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+                <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
+                <Thickness x:Key="NavigationViewContentMargin">0,30,0,0</Thickness>
+
+                <!--  标题栏右键菜单  -->
+                <MenuFlyout
+                    x:Name="TitlebarMenuFlyout"
+                    x:FieldModifier="public"
+                    Placement="BottomEdgeAlignedLeft">
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind OnRestoreClicked}"
+                        IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
+
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE923;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind OnMoveClicked}"
+                        IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Tag="{x:Bind TitlebarMenuFlyout}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind OnSizeClicked}"
+                        IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Tag="{x:Bind TitlebarMenuFlyout}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind OnMinimizeClicked}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE921;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind OnMaximizeClicked}"
+                        IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
+
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE922;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutSeparator Width="200" />
+
+                    <MenuFlyoutItem
+                        Click="{x:Bind OnCloseClicked}"
+                        Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
+
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE8BB;" />
+                        </MenuFlyoutItem.Icon>
+
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F4" Modifiers="Menu" />
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </ResourceDictionary>
+        </Page.Resources>
+
+        <Grid>
             <!--  应用标题栏内容  -->
             <Grid
                 x:Name="AppTitlebar"
@@ -66,76 +138,6 @@
                         Style="{StaticResource CaptionTextBlockStyle}"
                         Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
                         TextWrapping="NoWrap" />
-
-                    <!--  标题栏右键菜单  -->
-                    <Grid.Resources>
-                        <MenuFlyout
-                            x:Name="TitlebarMenuFlyout"
-                            x:FieldModifier="public"
-                            Placement="BottomEdgeAlignedLeft">
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnRestoreClicked}"
-                                IsEnabled="{x:Bind IsWindowMaximized, Mode=OneWay}"
-                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Restore')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE923;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnMoveClicked}"
-                                IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                                Tag="{x:Bind TitlebarMenuFlyout}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Move')}" />
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnSizeClicked}"
-                                IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                                Tag="{x:Bind TitlebarMenuFlyout}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Size')}" />
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnMinimizeClicked}"
-                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Minimize')}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE921;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnMaximizeClicked}"
-                                IsEnabled="{x:Bind IsWindowMaximized.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Maximize')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE922;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-
-                            <MenuFlyoutSeparator Width="200" />
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnCloseClicked}"
-                                Style="{StaticResource AppTitleBarMenuFlyoutItemStyle}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/Close')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE8BB;" />
-                                </MenuFlyoutItem.Icon>
-
-                                <MenuFlyoutItem.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="F4" Modifiers="Menu" />
-                                </MenuFlyoutItem.KeyboardAccelerators>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </Grid.Resources>
                 </Grid>
             </Grid>
 
@@ -152,12 +154,6 @@
                 PaneDisplayMode="Left"
                 SelectedItem="{x:Bind SelectedItem, Mode=OneWay}"
                 SelectionChanged="{x:Bind OnSelectionChanged}">
-
-                <NavigationView.Resources>
-                    <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
-                    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
-                    <Thickness x:Key="NavigationViewContentMargin">0,30,0,0</Thickness>
-                </NavigationView.Resources>
 
                 <NavigationView.MenuItems>
                     <NavigationViewItem Tag="0">

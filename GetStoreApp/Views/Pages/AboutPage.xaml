@@ -29,6 +29,9 @@
                     </LinearGradientBrush>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
+
+            <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+            <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -329,7 +332,7 @@
                     </Expander.Header>
 
                     <Expander.Content>
-                        <GridView
+                        <ItemsView
                             Margin="26,0,16,0"
                             Padding="5"
                             HorizontalAlignment="Stretch"
@@ -337,45 +340,44 @@
                             ItemsSource="{x:Bind ReferenceList}"
                             SelectionMode="None">
 
-                            <GridView.ItemContainerStyle>
-                                <Style TargetType="GridViewItem">
-                                    <Setter Property="Margin" Value="0" />
-                                    <Setter Property="MinHeight" Value="0" />
-                                </Style>
-                            </GridView.ItemContainerStyle>
+                            <ItemsView.Layout>
+                                <UniformGridLayout />
+                            </ItemsView.Layout>
 
-                            <GridView.ItemTemplate>
+                            <ItemsView.ItemTemplate>
                                 <DataTemplate x:DataType="collection:DictionaryEntry">
-                                    <HyperlinkButton
-                                        Width="320"
-                                        Padding="5,8"
-                                        HorizontalContentAlignment="Center"
-                                        NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
+                                    <ItemContainer>
+                                        <HyperlinkButton
+                                            Width="320"
+                                            Padding="5,8"
+                                            HorizontalContentAlignment="Center"
+                                            NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
 
-                                        <HyperlinkButton.Content>
-                                            <TextBlock
-                                                Text="{x:Bind Key}"
-                                                TextTrimming="CharacterEllipsis"
-                                                TextWrapping="NoWrap" />
-                                        </HyperlinkButton.Content>
+                                            <HyperlinkButton.Content>
+                                                <TextBlock
+                                                    Text="{x:Bind Key}"
+                                                    TextTrimming="CharacterEllipsis"
+                                                    TextWrapping="NoWrap" />
+                                            </HyperlinkButton.Content>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip>
-                                                <ToolTip.Content>
-                                                    <StackPanel>
-                                                        <TextBlock>
-                                                            <Run Text="{x:Bind Key}" />
-                                                            <LineBreak />
-                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
-                                                        </TextBlock>
-                                                    </StackPanel>
-                                                </ToolTip.Content>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </HyperlinkButton>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip>
+                                                    <ToolTip.Content>
+                                                        <StackPanel>
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind Key}" />
+                                                                <LineBreak />
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                            </TextBlock>
+                                                        </StackPanel>
+                                                    </ToolTip.Content>
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
+                                        </HyperlinkButton>
+                                    </ItemContainer>
                                 </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
+                            </ItemsView.ItemTemplate>
+                        </ItemsView>
                     </Expander.Content>
                 </Expander>
 
@@ -872,7 +874,7 @@
 
                             <MenuFlyoutSeparator />
 
-                            <GridView
+                            <ItemsView
                                 Margin="26,0,16,0"
                                 Padding="5"
                                 HorizontalAlignment="Stretch"
@@ -880,45 +882,44 @@
                                 ItemsSource="{x:Bind ThanksList}"
                                 SelectionMode="None">
 
-                                <GridView.ItemContainerStyle>
-                                    <Style TargetType="GridViewItem">
-                                        <Setter Property="Margin" Value="0" />
-                                        <Setter Property="MinHeight" Value="0" />
-                                    </Style>
-                                </GridView.ItemContainerStyle>
+                                <ItemsView.Layout>
+                                    <UniformGridLayout />
+                                </ItemsView.Layout>
 
-                                <GridView.ItemTemplate>
+                                <ItemsView.ItemTemplate>
                                     <DataTemplate x:DataType="collection:DictionaryEntry">
-                                        <HyperlinkButton
-                                            Width="150"
-                                            Padding="5,8"
-                                            HorizontalContentAlignment="Center"
-                                            NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
+                                        <ItemContainer>
+                                            <HyperlinkButton
+                                                Width="150"
+                                                Padding="5,8"
+                                                HorizontalContentAlignment="Center"
+                                                NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
 
-                                            <HyperlinkButton.Content>
-                                                <TextBlock
-                                                    Text="{x:Bind Key}"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap" />
-                                            </HyperlinkButton.Content>
+                                                <HyperlinkButton.Content>
+                                                    <TextBlock
+                                                        Text="{x:Bind Key}"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap" />
+                                                </HyperlinkButton.Content>
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip>
-                                                    <ToolTip.Content>
-                                                        <StackPanel>
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind Key}" />
-                                                                <LineBreak />
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
-                                                            </TextBlock>
-                                                        </StackPanel>
-                                                    </ToolTip.Content>
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
-                                        </HyperlinkButton>
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip>
+                                                        <ToolTip.Content>
+                                                            <StackPanel>
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind Key}" />
+                                                                    <LineBreak />
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </ToolTip.Content>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                            </HyperlinkButton>
+                                        </ItemContainer>
                                     </DataTemplate>
-                                </GridView.ItemTemplate>
-                            </GridView>
+                                </ItemsView.ItemTemplate>
+                            </ItemsView>
                         </StackPanel>
                     </Expander.Content>
                 </Expander>
