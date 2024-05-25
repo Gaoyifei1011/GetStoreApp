@@ -23,8 +23,6 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class DownloadingControl : Grid, INotifyPropertyChanged
     {
-        private readonly object downloadingLock = new();
-
         private bool _isSelectMode = false;
 
         public bool IsSelectMode
@@ -63,25 +61,22 @@ namespace GetStoreApp.UI.Controls.Download
                     {
                         try
                         {
-                            lock (downloadingLock)
+                            foreach (DownloadSchedulerModel downloadSchedulerItem in downloadingSchedulerList)
                             {
-                                foreach (DownloadSchedulerModel downloadSchedulerItem in downloadingSchedulerList)
+                                DownloadingCollection.Add(new DownloadingModel()
                                 {
-                                    DownloadingCollection.Add(new DownloadingModel()
-                                    {
-                                        DownloadID = downloadSchedulerItem.DownloadID,
-                                        DownloadStatus = downloadSchedulerItem.DownloadStatus,
-                                        FileName = downloadSchedulerItem.FileName,
-                                        FilePath = downloadSchedulerItem.FilePath,
-                                        FileLink = downloadSchedulerItem.FileLink,
-                                        FinishedSize = downloadSchedulerItem.FinishedSize,
-                                        IsNotOperated = true,
-                                        CurrentSpeed = 0,
-                                        TotalSize = downloadSchedulerItem.TotalSize,
-                                        IsSelected = false,
-                                        IsSelectMode = false
-                                    });
-                                }
+                                    DownloadID = downloadSchedulerItem.DownloadID,
+                                    DownloadStatus = downloadSchedulerItem.DownloadStatus,
+                                    FileName = downloadSchedulerItem.FileName,
+                                    FilePath = downloadSchedulerItem.FilePath,
+                                    FileLink = downloadSchedulerItem.FileLink,
+                                    FinishedSize = downloadSchedulerItem.FinishedSize,
+                                    IsNotOperated = true,
+                                    CurrentSpeed = 0,
+                                    TotalSize = downloadSchedulerItem.TotalSize,
+                                    IsSelected = false,
+                                    IsSelectMode = false
+                                });
                             }
                         }
                         catch (Exception e)
@@ -126,15 +121,12 @@ namespace GetStoreApp.UI.Controls.Download
 
             if (downloadID != Guid.Empty)
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            downloadingItem.IsNotOperated = false;
-                            break;
-                        }
+                        downloadingItem.IsNotOperated = false;
+                        break;
                     }
                 }
 
@@ -151,15 +143,12 @@ namespace GetStoreApp.UI.Controls.Download
 
             if (downloadID != Guid.Empty)
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            downloadingItem.IsNotOperated = false;
-                            break;
-                        }
+                        downloadingItem.IsNotOperated = false;
+                        break;
                     }
                 }
 
@@ -176,15 +165,12 @@ namespace GetStoreApp.UI.Controls.Download
 
             if (downloadID != Guid.Empty)
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            downloadingItem.IsNotOperated = false;
-                            break;
-                        }
+                        downloadingItem.IsNotOperated = false;
+                        break;
                     }
                 }
 
@@ -209,15 +195,12 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnContinueAllClicked(object sender, RoutedEventArgs args)
         {
-            lock (downloadingLock)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                if (downloadingItem.DownloadStatus is DownloadStatus.Pause)
                 {
-                    if (downloadingItem.DownloadStatus is DownloadStatus.Pause)
-                    {
-                        downloadingItem.IsNotOperated = false;
-                        DownloadSchedulerService.ContinueDownload(downloadingItem.DownloadID);
-                    }
+                    downloadingItem.IsNotOperated = false;
+                    DownloadSchedulerService.ContinueDownload(downloadingItem.DownloadID);
                 }
             }
         }
@@ -227,15 +210,12 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnPauseAllClicked(object sender, RoutedEventArgs args)
         {
-            lock (downloadingLock)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                if (downloadingItem.DownloadStatus is DownloadStatus.Downloading)
                 {
-                    if (downloadingItem.DownloadStatus is DownloadStatus.Downloading)
-                    {
-                        downloadingItem.IsNotOperated = false;
-                        DownloadSchedulerService.PauseDownload(downloadingItem.DownloadID);
-                    }
+                    downloadingItem.IsNotOperated = false;
+                    DownloadSchedulerService.PauseDownload(downloadingItem.DownloadID);
                 }
             }
         }
@@ -245,13 +225,10 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
-            lock (downloadingLock)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
-                {
-                    downloadingItem.IsSelectMode = true;
-                    downloadingItem.IsSelected = false;
-                }
+                downloadingItem.IsSelectMode = true;
+                downloadingItem.IsSelected = false;
             }
 
             IsSelectMode = true;
@@ -262,12 +239,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            lock (downloadingLock)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
-                {
-                    downloadingItem.IsSelected = true;
-                }
+                downloadingItem.IsSelected = true;
             }
         }
 
@@ -276,12 +250,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            lock (downloadingLock)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
-                {
-                    downloadingItem.IsSelected = false;
-                }
+                downloadingItem.IsSelected = false;
             }
         }
 
@@ -292,14 +263,11 @@ namespace GetStoreApp.UI.Controls.Download
         {
             List<DownloadingModel> selectedDownloadingList = [];
 
-            lock (downloadingLock)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                if (downloadingItem.IsSelected is true)
                 {
-                    if (downloadingItem.IsSelected is true)
-                    {
-                        selectedDownloadingList.Add(downloadingItem);
-                    }
+                    selectedDownloadingList.Add(downloadingItem);
                 }
             }
 
@@ -317,26 +285,23 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 IsSelectMode = false;
 
-                lock (downloadingLock)
+                for (int index = DownloadingCollection.Count - 1; index >= 0; index--)
                 {
-                    for (int index = DownloadingCollection.Count - 1; index >= 0; index--)
+                    DownloadingModel downloadingItem = DownloadingCollection[index];
+                    downloadingItem.IsSelectMode = false;
+
+                    if (downloadingItem.IsSelected)
                     {
-                        DownloadingModel downloadingItem = DownloadingCollection[index];
-                        downloadingItem.IsSelectMode = false;
+                        downloadingItem.IsSelected = false;
+                        downloadingItem.IsNotOperated = false;
 
-                        if (downloadingItem.IsSelected)
+                        if (downloadingItem.DownloadStatus is DownloadStatus.Downloading || downloadingItem.DownloadStatus is DownloadStatus.Pause)
                         {
-                            downloadingItem.IsSelected = false;
-                            downloadingItem.IsNotOperated = false;
-
-                            if (downloadingItem.DownloadStatus is DownloadStatus.Downloading || downloadingItem.DownloadStatus is DownloadStatus.Pause)
-                            {
-                                DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
-                            }
-                            else
-                            {
-                                DownloadingCollection.RemoveAt(index);
-                            }
+                            DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
+                        }
+                        else
+                        {
+                            DownloadingCollection.RemoveAt(index);
                         }
                     }
                 }
@@ -350,12 +315,9 @@ namespace GetStoreApp.UI.Controls.Download
         {
             IsSelectMode = false;
 
-            lock (downloadingLock)
+            foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
-                {
-                    downloadingItem.IsSelectMode = false;
-                }
+                downloadingItem.IsSelectMode = false;
             }
         }
 
@@ -364,15 +326,12 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
-            lock (downloadingLock)
-            {
-                DownloadingModel downloadingItem = (DownloadingModel)args.InvokedItem;
-                int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
+            DownloadingModel downloadingItem = (DownloadingModel)args.InvokedItem;
+            int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
 
-                if (clickedIndex >= 0 && clickedIndex < DownloadingCollection.Count)
-                {
-                    DownloadingCollection[clickedIndex].IsSelected = !DownloadingCollection[clickedIndex].IsSelected;
-                }
+            if (clickedIndex >= 0 && clickedIndex < DownloadingCollection.Count)
+            {
+                DownloadingCollection[clickedIndex].IsSelected = !DownloadingCollection[clickedIndex].IsSelected;
             }
         }
 
@@ -408,23 +367,20 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (downloadingLock)
+                DownloadingCollection.Add(new DownloadingModel()
                 {
-                    DownloadingCollection.Add(new DownloadingModel()
-                    {
-                        DownloadID = downloadSchedulerItem.DownloadID,
-                        DownloadStatus = downloadSchedulerItem.DownloadStatus,
-                        FileName = downloadSchedulerItem.FileName,
-                        FilePath = downloadSchedulerItem.FilePath,
-                        FileLink = downloadSchedulerItem.FileLink,
-                        FinishedSize = 0,
-                        IsNotOperated = true,
-                        CurrentSpeed = 0,
-                        TotalSize = downloadSchedulerItem.TotalSize,
-                        IsSelected = false,
-                        IsSelectMode = false
-                    });
-                }
+                    DownloadID = downloadSchedulerItem.DownloadID,
+                    DownloadStatus = downloadSchedulerItem.DownloadStatus,
+                    FileName = downloadSchedulerItem.FileName,
+                    FilePath = downloadSchedulerItem.FilePath,
+                    FileLink = downloadSchedulerItem.FileLink,
+                    FinishedSize = 0,
+                    IsNotOperated = true,
+                    CurrentSpeed = 0,
+                    TotalSize = downloadSchedulerItem.TotalSize,
+                    IsSelected = false,
+                    IsSelectMode = false
+                });
             });
         }
 
@@ -435,15 +391,12 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            downloadingItem.IsNotOperated = true;
-                            downloadingItem.DownloadStatus = DownloadStatus.Downloading;
-                        }
+                        downloadingItem.IsNotOperated = true;
+                        downloadingItem.DownloadStatus = DownloadStatus.Downloading;
                     }
                 }
             });
@@ -457,15 +410,12 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            downloadingItem.IsNotOperated = true;
-                            downloadingItem.DownloadStatus = DownloadStatus.Pause;
-                        }
+                        downloadingItem.IsNotOperated = true;
+                        downloadingItem.DownloadStatus = DownloadStatus.Pause;
                     }
                 }
             });
@@ -478,15 +428,12 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            DownloadingCollection.Remove(downloadingItem);
-                            break;
-                        }
+                        DownloadingCollection.Remove(downloadingItem);
+                        break;
                     }
                 }
             });
@@ -500,18 +447,15 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            downloadingItem.IsNotOperated = true;
-                            downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;
-                            downloadingItem.CurrentSpeed = downloadSchedulerItem.CurrentSpeed;
-                            downloadingItem.FinishedSize = downloadSchedulerItem.FinishedSize;
-                            downloadingItem.TotalSize = downloadSchedulerItem.TotalSize;
-                        }
+                        downloadingItem.IsNotOperated = true;
+                        downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;
+                        downloadingItem.CurrentSpeed = downloadSchedulerItem.CurrentSpeed;
+                        downloadingItem.FinishedSize = downloadSchedulerItem.FinishedSize;
+                        downloadingItem.TotalSize = downloadSchedulerItem.TotalSize;
                     }
                 }
             });
@@ -525,20 +469,17 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (downloadingLock)
+                foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    if (downloadingItem.DownloadID.Equals(downloadID))
                     {
-                        if (downloadingItem.DownloadID.Equals(downloadID))
-                        {
-                            downloadingItem.IsNotOperated = true;
-                            downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;
-                            downloadingItem.CurrentSpeed = downloadSchedulerItem.CurrentSpeed;
-                            downloadingItem.FinishedSize = downloadSchedulerItem.FinishedSize;
-                            downloadingItem.TotalSize = downloadSchedulerItem.TotalSize;
-                            DownloadingCollection.Remove(downloadingItem);
-                            break;
-                        }
+                        downloadingItem.IsNotOperated = true;
+                        downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;
+                        downloadingItem.CurrentSpeed = downloadSchedulerItem.CurrentSpeed;
+                        downloadingItem.FinishedSize = downloadSchedulerItem.FinishedSize;
+                        downloadingItem.TotalSize = downloadSchedulerItem.TotalSize;
+                        DownloadingCollection.Remove(downloadingItem);
+                        break;
                     }
                 }
             });

@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
@@ -12,8 +13,6 @@ namespace GetStoreApp.Services.Controls.History
     /// </summary>
     public static class HistoryStorageService
     {
-        private static readonly object historyStorageLock = new();
-
         private const string QueryLinks = "QueryLinks";
         private const string SearchStore = "SearchStore";
 
@@ -25,6 +24,7 @@ namespace GetStoreApp.Services.Controls.History
         private const string HistoryChannel = "HistoryChannel";
         private const string HistoryLink = "HistoryLink";
 
+        private static Lock historyStorageLock = new();
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer queryLinksContainer;
         private static ApplicationDataContainer searchStoreContainer;
@@ -49,41 +49,44 @@ namespace GetStoreApp.Services.Controls.History
         {
             List<HistoryModel> queryLinksHistoryList = [];
 
-            lock (historyStorageLock)
+            historyStorageLock.Enter();
+
+            try
             {
-                try
+                if (queryLinksContainer is not null)
                 {
-                    if (queryLinksContainer is not null)
+                    for (int index = 1; index <= 3; index++)
                     {
-                        for (int index = 1; index <= 3; index++)
+                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value))
                         {
-                            if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value))
+                            ApplicationDataCompositeValue compositeValue = value as ApplicationDataCompositeValue;
+
+                            if (compositeValue is not null)
                             {
-                                ApplicationDataCompositeValue compositeValue = value as ApplicationDataCompositeValue;
+                                TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
+                                ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
 
-                                if (compositeValue is not null)
+                                queryLinksHistoryList.Add(new HistoryModel()
                                 {
-                                    TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
-                                    ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
-
-                                    queryLinksHistoryList.Add(new HistoryModel()
-                                    {
-                                        CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
-                                        HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
-                                        HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
-                                        HistoryType = new KeyValuePair<string, string>(typeItem.InternalName, typeItem.DisplayName),
-                                        HistoryChannel = new KeyValuePair<string, string>(channelItem.InternalName, channelItem.DisplayName),
-                                        HistoryLink = Convert.ToString(compositeValue[HistoryLink])
-                                    });
-                                }
+                                    CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
+                                    HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
+                                    HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
+                                    HistoryType = new KeyValuePair<string, string>(typeItem.InternalName, typeItem.DisplayName),
+                                    HistoryChannel = new KeyValuePair<string, string>(channelItem.InternalName, channelItem.DisplayName),
+                                    HistoryLink = Convert.ToString(compositeValue[HistoryLink])
+                                });
                             }
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Get query links history data failed", e);
-                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Get query links history data failed", e);
+            }
+            finally
+            {
+                historyStorageLock.Exit();
             }
 
             return queryLinksHistoryList;
@@ -96,35 +99,37 @@ namespace GetStoreApp.Services.Controls.History
         {
             List<HistoryModel> searchStoreHistoryList = [];
 
-            lock (historyStorageLock)
+            historyStorageLock.Enter();
+            try
             {
-                try
+                for (int index = 1; index <= 3; index++)
                 {
-                    for (int index = 1; index <= 3; index++)
+                    if (searchStoreContainer.Values.TryGetValue(SearchStore + index.ToString(), out object value))
                     {
-                        if (searchStoreContainer.Values.TryGetValue(SearchStore + index.ToString(), out object value))
+                        ApplicationDataCompositeValue compositeValue = value as ApplicationDataCompositeValue;
+
+                        if (compositeValue is not null)
                         {
-                            ApplicationDataCompositeValue compositeValue = value as ApplicationDataCompositeValue;
+                            TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
+                            ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
 
-                            if (compositeValue is not null)
+                            searchStoreHistoryList.Add(new HistoryModel()
                             {
-                                TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
-                                ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
-
-                                searchStoreHistoryList.Add(new HistoryModel()
-                                {
-                                    CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
-                                    HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
-                                    HistoryContent = Convert.ToString(compositeValue[HistoryContent]),
-                                });
-                            }
+                                CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
+                                HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
+                                HistoryContent = Convert.ToString(compositeValue[HistoryContent]),
+                            });
                         }
                     }
                 }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Get query links history data failed", e);
-                }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Get query links history data failed", e);
+            }
+            finally
+            {
+                historyStorageLock.Exit();
             }
 
             return searchStoreHistoryList;
@@ -137,30 +142,33 @@ namespace GetStoreApp.Services.Controls.History
         {
             int endIndex = queryLinksHistoryList.Count >= 3 ? 3 : queryLinksHistoryList.Count;
 
-            lock (historyStorageLock)
-            {
-                try
-                {
-                    for (int index = 1; index <= endIndex; index++)
-                    {
-                        ApplicationDataCompositeValue compositeValue = new()
-                        {
-                            [CreateTimeStamp] = queryLinksHistoryList[index - 1].CreateTimeStamp,
-                            [HistoryKey] = queryLinksHistoryList[index - 1].HistoryKey,
-                            [HistoryAppName] = queryLinksHistoryList[index - 1].HistoryAppName,
-                            [HistoryType] = queryLinksHistoryList[index - 1].HistoryType.Key,
-                            [HistoryChannel] = queryLinksHistoryList[index - 1].HistoryChannel.Key,
-                            [HistoryLink] = queryLinksHistoryList[index - 1].HistoryLink
-                        };
+            historyStorageLock.Enter();
 
-                        string queryLinksKey = QueryLinks + index.ToString();
-                        queryLinksContainer.Values[queryLinksKey] = compositeValue;
-                    }
-                }
-                catch (Exception e)
+            try
+            {
+                for (int index = 1; index <= endIndex; index++)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Save query links history data failed", e);
+                    ApplicationDataCompositeValue compositeValue = new()
+                    {
+                        [CreateTimeStamp] = queryLinksHistoryList[index - 1].CreateTimeStamp,
+                        [HistoryKey] = queryLinksHistoryList[index - 1].HistoryKey,
+                        [HistoryAppName] = queryLinksHistoryList[index - 1].HistoryAppName,
+                        [HistoryType] = queryLinksHistoryList[index - 1].HistoryType.Key,
+                        [HistoryChannel] = queryLinksHistoryList[index - 1].HistoryChannel.Key,
+                        [HistoryLink] = queryLinksHistoryList[index - 1].HistoryLink
+                    };
+
+                    string queryLinksKey = QueryLinks + index.ToString();
+                    queryLinksContainer.Values[queryLinksKey] = compositeValue;
                 }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Save query links history data failed", e);
+            }
+            finally
+            {
+                historyStorageLock.Exit();
             }
         }
 
@@ -171,27 +179,30 @@ namespace GetStoreApp.Services.Controls.History
         {
             int endIndex = searchStoreHistoryList.Count > 3 ? 3 : searchStoreHistoryList.Count;
 
-            lock (historyStorageLock)
-            {
-                try
-                {
-                    for (int index = 1; index <= endIndex; index++)
-                    {
-                        ApplicationDataCompositeValue compositeValue = new()
-                        {
-                            [CreateTimeStamp] = searchStoreHistoryList[index - 1].CreateTimeStamp,
-                            [HistoryKey] = searchStoreHistoryList[index - 1].HistoryKey,
-                            [HistoryContent] = searchStoreHistoryList[index - 1].HistoryContent
-                        };
+            historyStorageLock.Enter();
 
-                        string searchStoreKey = SearchStore + index.ToString();
-                        searchStoreContainer.Values[searchStoreKey] = compositeValue;
-                    }
-                }
-                catch (Exception e)
+            try
+            {
+                for (int index = 1; index <= endIndex; index++)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Save search store history data failed", e);
+                    ApplicationDataCompositeValue compositeValue = new()
+                    {
+                        [CreateTimeStamp] = searchStoreHistoryList[index - 1].CreateTimeStamp,
+                        [HistoryKey] = searchStoreHistoryList[index - 1].HistoryKey,
+                        [HistoryContent] = searchStoreHistoryList[index - 1].HistoryContent
+                    };
+
+                    string searchStoreKey = SearchStore + index.ToString();
+                    searchStoreContainer.Values[searchStoreKey] = compositeValue;
                 }
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Save search store history data failed", e);
+            }
+            finally
+            {
+                historyStorageLock.Exit();
             }
         }
 
@@ -200,21 +211,24 @@ namespace GetStoreApp.Services.Controls.History
         /// </summary>
         public static bool ClearData()
         {
-            lock (historyStorageLock)
+            historyStorageLock.Enter();
+
+            try
             {
-                try
-                {
-                    queryLinksContainer.Values.Clear();
-                    QueryLinksCleared?.Invoke();
-                    searchStoreContainer.Values.Clear();
-                    SearchStoreCleared?.Invoke();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Clear history record failed", e);
-                    return false;
-                }
+                queryLinksContainer.Values.Clear();
+                QueryLinksCleared?.Invoke();
+                searchStoreContainer.Values.Clear();
+                SearchStoreCleared?.Invoke();
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Clear history record failed", e);
+                return false;
+            }
+            finally
+            {
+                historyStorageLock.Exit();
             }
         }
     }

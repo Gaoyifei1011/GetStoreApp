@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Controls.Download
     public static class DeliveryOptimizationService
     {
         private static readonly string displayName = "GetStoreApp";
-        private static readonly object deliveryOptimizationLock = new();
+        private static readonly Lock deliveryOptimizationLock = new();
         private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
 
         private static Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
@@ -44,11 +44,49 @@ namespace GetStoreApp.Services.Controls.Download
         public static int GetDownloadCount()
         {
             int count = 0;
-            lock (deliveryOptimizationLock)
+            deliveryOptimizationLock.Enter();
+
+            try
             {
                 count = DeliveryOptimizationDict.Count;
             }
+            catch (Exception) { }
+            finally
+            {
+                deliveryOptimizationLock.Exit();
+            }
+
             return count;
+        }
+
+        /// <summary>
+        /// 终止所有下载任务，仅用于应用关闭时
+        /// </summary>
+        public static void TerminateDownload()
+        {
+            Task.Factory.StartNew((param) =>
+            {
+                if (GetDownloadCount() > 0)
+                {
+                    deliveryOptimizationLock.Enter();
+
+                    try
+                    {
+                        foreach (KeyValuePair<Guid, Tuple<IDODownload, DODownloadStatusCallback>> deliveryOptimizationKeyValue in DeliveryOptimizationDict)
+                        {
+                            deliveryOptimizationKeyValue.Value.Item1.Abort();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
+                    }
+                    finally
+                    {
+                        deliveryOptimizationLock.Exit();
+                    }
+                }
+            }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
 
         /// <summary>
@@ -98,9 +136,16 @@ namespace GetStoreApp.Services.Controls.Download
                         double size = Convert.ToDouble(totalSizeVariant.As<ulong>());
                         DownloadCreated?.Invoke(doDownloadStatusCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, Convert.ToDouble(totalSizeVariant.As<ulong>()));
 
-                        lock (deliveryOptimizationLock)
+                        deliveryOptimizationLock.Enter();
+
+                        try
                         {
                             DeliveryOptimizationDict.TryAdd(doDownloadStatusCallback.DownloadID, Tuple.Create(doDownload, doDownloadStatusCallback));
+                        }
+                        catch (Exception) { }
+                        finally
+                        {
+                            deliveryOptimizationLock.Exit();
                         }
 
                         doDownload.Start(IntPtr.Zero);
@@ -120,24 +165,27 @@ namespace GetStoreApp.Services.Controls.Download
         {
             Task.Factory.StartNew((param) =>
             {
+                deliveryOptimizationLock.Enter();
+
                 try
                 {
-                    lock (deliveryOptimizationLock)
+                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
                     {
-                        if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
-                        {
-                            int continueResult = downloadValue.Item1.Start(IntPtr.Zero);
+                        int continueResult = downloadValue.Item1.Start(IntPtr.Zero);
 
-                            if (continueResult is 0)
-                            {
-                                DownloadContinued?.Invoke(downloadID);
-                            }
+                        if (continueResult is 0)
+                        {
+                            DownloadContinued?.Invoke(downloadID);
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Continue delivery optimization download failed", e);
+                }
+                finally
+                {
+                    deliveryOptimizationLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -149,24 +197,27 @@ namespace GetStoreApp.Services.Controls.Download
         {
             Task.Factory.StartNew((param) =>
             {
+                deliveryOptimizationLock.Enter();
+
                 try
                 {
-                    lock (deliveryOptimizationLock)
+                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
                     {
-                        if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
-                        {
-                            int pauseResult = downloadValue.Item1.Pause();
+                        int pauseResult = downloadValue.Item1.Pause();
 
-                            if (pauseResult is 0)
-                            {
-                                DownloadPaused?.Invoke(downloadID);
-                            }
+                        if (pauseResult is 0)
+                        {
+                            DownloadPaused?.Invoke(downloadID);
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Pause delivery optimization download failed", e);
+                }
+                finally
+                {
+                    deliveryOptimizationLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -178,20 +229,19 @@ namespace GetStoreApp.Services.Controls.Download
         {
             Task.Factory.StartNew((param) =>
             {
+                deliveryOptimizationLock.Enter();
+
                 try
                 {
-                    lock (deliveryOptimizationLock)
+                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
                     {
-                        if (DeliveryOptimizationDict.TryGetValue(downloadID, out Tuple<IDODownload, DODownloadStatusCallback> downloadValue))
-                        {
-                            int deleteResult = downloadValue.Item1.Abort();
+                        int deleteResult = downloadValue.Item1.Abort();
 
-                            if (deleteResult is 0)
-                            {
-                                downloadValue.Item2.StatusChanged -= OnStatusChanged;
-                                DownloadDeleted?.Invoke(downloadID);
-                                DeliveryOptimizationDict.Remove(downloadID);
-                            }
+                        if (deleteResult is 0)
+                        {
+                            downloadValue.Item2.StatusChanged -= OnStatusChanged;
+                            DownloadDeleted?.Invoke(downloadID);
+                            DeliveryOptimizationDict.Remove(downloadID);
                         }
                     }
                 }
@@ -199,32 +249,9 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Delete delivery optimization download failed", e);
                 }
-            }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
-        }
-
-        /// <summary>
-        /// 终止所有下载任务，仅用于应用关闭时
-        /// </summary>
-        public static void TerminateDownload()
-        {
-            Task.Factory.StartNew((param) =>
-            {
-                if (GetDownloadCount() > 0)
+                finally
                 {
-                    lock (deliveryOptimizationLock)
-                    {
-                        try
-                        {
-                            foreach (KeyValuePair<Guid, Tuple<IDODownload, DODownloadStatusCallback>> deliveryOptimizationKeyValue in DeliveryOptimizationDict)
-                            {
-                                deliveryOptimizationKeyValue.Value.Item1.Abort();
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
-                        }
-                    }
+                    deliveryOptimizationLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -246,12 +273,19 @@ namespace GetStoreApp.Services.Controls.Download
                     callback.StatusChanged -= OnStatusChanged;
                     doDownload.Finalize();
 
-                    lock (deliveryOptimizationLock)
+                    deliveryOptimizationLock.Enter();
+
+                    try
                     {
                         if (DeliveryOptimizationDict.ContainsKey(callback.DownloadID))
                         {
                             DeliveryOptimizationDict.Remove(callback.DownloadID);
                         }
+                    }
+                    catch (Exception) { }
+                    finally
+                    {
+                        deliveryOptimizationLock.Exit();
                     }
                 }
                 catch (Exception e)

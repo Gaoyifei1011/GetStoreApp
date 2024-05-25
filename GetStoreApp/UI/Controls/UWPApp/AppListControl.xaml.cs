@@ -30,8 +30,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
     /// </summary>
     public sealed partial class AppListControl : Grid, INotifyPropertyChanged
     {
-        private readonly object uwpAppDataLock = new();
-
         private bool isInitialized = false;
         private bool needToRefreshData = false;
 
@@ -285,11 +283,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     if (packageItem.Package.Id.FullName == package.Id.FullName)
                     {
-                        lock (uwpAppDataLock)
-                        {
-                            packageItem.IsUnInstalling = true;
-                            break;
-                        }
+                        packageItem.IsUnInstalling = true;
+                        break;
                     }
                 }
 
@@ -299,7 +294,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     {
                         IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = packageManager.RemovePackageAsync(package.Id.FullName);
 
-                        ManualResetEvent uninstallCompletedEvent = new(false);
+                        AutoResetEvent uninstallCompletedEvent = new(false);
 
                         uninstallOperation.Completed = (result, progress) =>
                         {
@@ -308,17 +303,14 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             {
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
                                 {
-                                    lock (uwpAppDataLock)
+                                    foreach (PackageModel pacakgeItem in UwpAppDataCollection)
                                     {
-                                        foreach (PackageModel pacakgeItem in UwpAppDataCollection)
+                                        if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                         {
-                                            if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
-                                            {
-                                                ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
+                                            ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
 
-                                                UwpAppDataCollection.Remove(pacakgeItem);
-                                                break;
-                                            }
+                                            UwpAppDataCollection.Remove(pacakgeItem);
+                                            break;
                                         }
                                     }
                                 });
@@ -331,23 +323,20 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
                                 {
-                                    lock (uwpAppDataLock)
+                                    foreach (PackageModel pacakgeItem in UwpAppDataCollection)
                                     {
-                                        foreach (PackageModel pacakgeItem in UwpAppDataCollection)
+                                        if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                         {
-                                            if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
-                                            {
-                                                ToastNotificationService.Show(NotificationKind.UWPUnInstallFailed,
-                                                    pacakgeItem.Package.DisplayName,
-                                                    uninstallResult.ExtendedErrorCode.HResult.ToString(),
-                                                    uninstallResult.ErrorText
-                                                    );
+                                            ToastNotificationService.Show(NotificationKind.UWPUnInstallFailed,
+                                                pacakgeItem.Package.DisplayName,
+                                                uninstallResult.ExtendedErrorCode.HResult.ToString(),
+                                                uninstallResult.ErrorText
+                                                );
 
-                                                LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
+                                            LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
 
-                                                pacakgeItem.IsUnInstalling = false;
-                                                break;
-                                            }
+                                            pacakgeItem.IsUnInstalling = false;
+                                            break;
                                         }
                                     }
                                 });
@@ -720,11 +709,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         public void InitializeData(bool hasSearchText = false)
         {
-            lock (uwpAppDataLock)
-            {
-                IsLoadedCompleted = false;
-                UwpAppDataCollection.Clear();
-            }
+            IsLoadedCompleted = false;
+            UwpAppDataCollection.Clear();
 
             Task.Run(() =>
             {
@@ -853,12 +839,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (uwpAppDataLock)
+                        foreach (PackageModel packageItem in packageList)
                         {
-                            foreach (PackageModel packageItem in packageList)
-                            {
-                                UwpAppDataCollection.Add(packageItem);
-                            }
+                            UwpAppDataCollection.Add(packageItem);
                         }
 
                         IsLoadedCompleted = true;

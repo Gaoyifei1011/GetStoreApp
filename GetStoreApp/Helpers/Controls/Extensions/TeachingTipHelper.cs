@@ -11,8 +11,6 @@ namespace GetStoreApp.Helpers.Controls.Extensions
     /// </summary>
     public static class TeachingTipHelper
     {
-        private static readonly object teachingTipLock = new();
-
         /// <summary>
         /// 使用教学提示显示应用内通知
         /// </summary>
@@ -22,25 +20,19 @@ namespace GetStoreApp.Helpers.Controls.Extensions
             {
                 teachingTip.Name = "TeachingTip" + Guid.NewGuid().ToString();
 
-                lock (teachingTipLock)
-                {
-                    ((MainWindow.Current.Content as Page).Content as Grid).Children.Add(teachingTip);
-                }
+                ((MainWindow.Current.Content as Page).Content as Grid).Children.Add(teachingTip);
 
                 teachingTip.IsOpen = true;
                 teachingTip.Closed += (sender, args) =>
                 {
                     try
                     {
-                        lock (teachingTipLock)
+                        foreach (UIElement uiElement in ((MainWindow.Current.Content as Page).Content as Grid).Children)
                         {
-                            foreach (UIElement uiElement in ((MainWindow.Current.Content as Page).Content as Grid).Children)
+                            if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
                             {
-                                if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
-                                {
-                                    ((MainWindow.Current.Content as Page).Content as Grid).Children.Remove(uiElement);
-                                    break;
-                                }
+                                ((MainWindow.Current.Content as Page).Content as Grid).Children.Remove(uiElement);
+                                break;
                             }
                         }
                     }

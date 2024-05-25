@@ -32,8 +32,6 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class CompletedControl : Grid, INotifyPropertyChanged
     {
-        private readonly object completedLock = new();
-
         private readonly PackageManager packageManager = new();
 
         private bool _isSelectMode = false;
@@ -69,25 +67,22 @@ namespace GetStoreApp.UI.Controls.Download
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (completedLock)
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageList)
                     {
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadStorageList)
+                        CompletedCollection.Add(new CompletedModel()
                         {
-                            CompletedCollection.Add(new CompletedModel()
-                            {
-                                DownloadKey = downloadSchedulerItem.DownloadKey,
-                                FileName = downloadSchedulerItem.FileName,
-                                FilePath = downloadSchedulerItem.FilePath,
-                                FileLink = downloadSchedulerItem.FileLink,
-                                TotalSize = downloadSchedulerItem.TotalSize,
-                                IsNotOperated = true,
-                                IsSelected = false,
-                                IsSelectMode = false
-                            });
-                        }
-
-                        autoResetEvent.Set();
+                            DownloadKey = downloadSchedulerItem.DownloadKey,
+                            FileName = downloadSchedulerItem.FileName,
+                            FilePath = downloadSchedulerItem.FilePath,
+                            FileLink = downloadSchedulerItem.FileLink,
+                            TotalSize = downloadSchedulerItem.TotalSize,
+                            IsNotOperated = true,
+                            IsSelected = false,
+                            IsSelectMode = false
+                        });
                     }
+
+                    autoResetEvent.Set();
                 });
 
                 autoResetEvent.WaitOne();
@@ -117,15 +112,12 @@ namespace GetStoreApp.UI.Controls.Download
                     return;
                 }
 
-                lock (completedLock)
+                foreach (CompletedModel item in CompletedCollection)
                 {
-                    foreach (CompletedModel item in CompletedCollection)
+                    if (item.DownloadKey.Equals(item.DownloadKey))
                     {
-                        if (item.DownloadKey.Equals(item.DownloadKey))
-                        {
-                            item.IsNotOperated = false;
-                            break;
-                        }
+                        item.IsNotOperated = false;
+                        break;
                     }
                 }
 
@@ -150,15 +142,12 @@ namespace GetStoreApp.UI.Controls.Download
                     return;
                 }
 
-                lock (completedLock)
+                foreach (CompletedModel item in CompletedCollection)
                 {
-                    foreach (CompletedModel item in CompletedCollection)
+                    if (item.DownloadKey.Equals(item.DownloadKey))
                     {
-                        if (item.DownloadKey.Equals(item.DownloadKey))
-                        {
-                            item.IsNotOperated = false;
-                            break;
-                        }
+                        item.IsNotOperated = false;
+                        break;
                     }
                 }
 
@@ -235,17 +224,15 @@ namespace GetStoreApp.UI.Controls.Download
                                     AutoResetEvent autoResetEvent = new(false);
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        lock (completedLock)
+                                        for (int index = 0; index < CompletedCollection.Count; index++)
                                         {
-                                            for (int index = 0; index < CompletedCollection.Count; index++)
+                                            if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                             {
-                                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
-                                                {
-                                                    CompletedCollection[index].IsInstalling = true;
-                                                    break;
-                                                }
+                                                CompletedCollection[index].IsInstalling = true;
+                                                break;
                                             }
                                         }
+
                                         autoResetEvent.Set();
                                     });
 
@@ -257,16 +244,13 @@ namespace GetStoreApp.UI.Controls.Download
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (completedLock)
+                                            for (int index = 0; index < CompletedCollection.Count; index++)
                                             {
-                                                for (int index = 0; index < CompletedCollection.Count; index++)
+                                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                                 {
-                                                    if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
-                                                    {
-                                                        CompletedCollection[index].InstallValue = installProgress.percentage;
-                                                        break;
-                                                    };
-                                                }
+                                                    CompletedCollection[index].InstallValue = installProgress.percentage;
+                                                    break;
+                                                };
                                             }
                                         });
                                     });
@@ -283,14 +267,11 @@ namespace GetStoreApp.UI.Controls.Download
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (completedLock)
+                                            for (int index = 0; index < CompletedCollection.Count; index++)
                                             {
-                                                for (int index = 0; index < CompletedCollection.Count; index++)
+                                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                                 {
-                                                    if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
-                                                    {
-                                                        CompletedCollection[index].InstallError = true;
-                                                    }
+                                                    CompletedCollection[index].InstallError = true;
                                                 }
                                             }
                                         });
@@ -304,16 +285,13 @@ namespace GetStoreApp.UI.Controls.Download
                                         await Task.Delay(500);
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
-                                            lock (completedLock)
+                                            for (int index = 0; index < CompletedCollection.Count; index++)
                                             {
-                                                for (int index = 0; index < CompletedCollection.Count; index++)
+                                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                                 {
-                                                    if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
-                                                    {
-                                                        CompletedCollection[index].IsInstalling = false;
-                                                        CompletedCollection[index].InstallError = false;
-                                                        break;
-                                                    }
+                                                    CompletedCollection[index].IsInstalling = false;
+                                                    CompletedCollection[index].InstallError = false;
+                                                    break;
                                                 }
                                             }
                                         });
@@ -432,13 +410,10 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
-            lock (completedLock)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                foreach (CompletedModel completedItem in CompletedCollection)
-                {
-                    completedItem.IsSelectMode = true;
-                    completedItem.IsSelected = false;
-                }
+                completedItem.IsSelectMode = true;
+                completedItem.IsSelected = false;
             }
 
             IsSelectMode = true;
@@ -449,12 +424,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            lock (completedLock)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                foreach (CompletedModel completedItem in CompletedCollection)
-                {
-                    completedItem.IsSelected = true;
-                }
+                completedItem.IsSelected = true;
             }
         }
 
@@ -463,12 +435,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            lock (completedLock)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                foreach (CompletedModel completedItem in CompletedCollection)
-                {
-                    completedItem.IsSelected = false;
-                }
+                completedItem.IsSelected = false;
             }
         }
 
@@ -479,14 +448,11 @@ namespace GetStoreApp.UI.Controls.Download
         {
             List<CompletedModel> selectedCompletedDataList = [];
 
-            lock (completedLock)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                foreach (CompletedModel completedItem in CompletedCollection)
+                if (completedItem.IsSelected is true)
                 {
-                    if (completedItem.IsSelected is true)
-                    {
-                        selectedCompletedDataList.Add(completedItem);
-                    }
+                    selectedCompletedDataList.Add(completedItem);
                 }
             }
 
@@ -511,21 +477,18 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 IsSelectMode = false;
 
-                lock (completedLock)
+                for (int index = CompletedCollection.Count - 1; index >= 0; index--)
                 {
-                    for (int index = CompletedCollection.Count - 1; index >= 0; index--)
-                    {
-                        CompletedModel completedItem = CompletedCollection[index];
-                        completedItem.IsSelectMode = false;
+                    CompletedModel completedItem = CompletedCollection[index];
+                    completedItem.IsSelectMode = false;
 
-                        if (completedItem.IsSelected)
+                    if (completedItem.IsSelected)
+                    {
+                        completedItem.IsNotOperated = false;
+                        await Task.Run(() =>
                         {
-                            completedItem.IsNotOperated = false;
-                            Task.Run(() =>
-                            {
-                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                            });
-                        }
+                            DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                        });
                     }
                 }
             }
@@ -538,14 +501,11 @@ namespace GetStoreApp.UI.Controls.Download
         {
             List<CompletedModel> selectedCompletedDataList = [];
 
-            lock (completedLock)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                foreach (CompletedModel completedItem in CompletedCollection)
+                if (completedItem.IsSelected is true)
                 {
-                    if (completedItem.IsSelected is true)
-                    {
-                        selectedCompletedDataList.Add(completedItem);
-                    }
+                    selectedCompletedDataList.Add(completedItem);
                 }
             }
 
@@ -570,34 +530,31 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 IsSelectMode = false;
 
-                lock (completedLock)
+                for (int index = CompletedCollection.Count - 1; index >= 0; index--)
                 {
-                    for (int index = CompletedCollection.Count - 1; index >= 0; index--)
+                    CompletedModel completedItem = CompletedCollection[index];
+                    completedItem.IsSelectMode = false;
+
+                    if (completedItem.IsSelected)
                     {
-                        CompletedModel completedItem = CompletedCollection[index];
-                        completedItem.IsSelectMode = false;
-
-                        if (completedItem.IsSelected)
+                        completedItem.IsNotOperated = false;
+                        await Task.Run(() =>
                         {
-                            completedItem.IsNotOperated = false;
-                            Task.Run(() =>
+                            // 删除文件
+                            try
                             {
-                                // 删除文件
-                                try
+                                if (File.Exists(completedItem.FilePath))
                                 {
-                                    if (File.Exists(completedItem.FilePath))
-                                    {
-                                        File.Delete(completedItem.FilePath);
-                                    }
+                                    File.Delete(completedItem.FilePath);
                                 }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
-                                }
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Delete completed download file failed.", e);
+                            }
 
-                                DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
-                            });
-                        }
+                            DownloadStorageService.DeleteDownloadData(completedItem.DownloadKey);
+                        });
                     }
                 }
             }
@@ -612,14 +569,11 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 List<CompletedModel> selectedCompletedDataList = [];
 
-                lock (completedLock)
+                foreach (CompletedModel completedItem in CompletedCollection)
                 {
-                    foreach (CompletedModel completedItem in CompletedCollection)
+                    if (completedItem.IsSelected is true)
                     {
-                        if (completedItem.IsSelected is true)
-                        {
-                            selectedCompletedDataList.Add(completedItem);
-                        }
+                        selectedCompletedDataList.Add(completedItem);
                     }
                 }
 
@@ -683,12 +637,9 @@ namespace GetStoreApp.UI.Controls.Download
         {
             IsSelectMode = false;
 
-            lock (completedLock)
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                foreach (CompletedModel completedItem in CompletedCollection)
-                {
-                    completedItem.IsSelectMode = false;
-                }
+                completedItem.IsSelectMode = false;
             }
         }
 
@@ -697,15 +648,12 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
-            lock (completedLock)
-            {
-                CompletedModel completedItem = (CompletedModel)args.InvokedItem;
-                int clickedIndex = CompletedCollection.IndexOf(completedItem);
+            CompletedModel completedItem = (CompletedModel)args.InvokedItem;
+            int clickedIndex = CompletedCollection.IndexOf(completedItem);
 
-                if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)
-                {
-                    CompletedCollection[clickedIndex].IsSelected = !CompletedCollection[clickedIndex].IsSelected;
-                }
+            if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)
+            {
+                CompletedCollection[clickedIndex].IsSelected = !CompletedCollection[clickedIndex].IsSelected;
             }
         }
 
@@ -738,20 +686,17 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (completedLock)
+                CompletedCollection.Add(new CompletedModel()
                 {
-                    CompletedCollection.Add(new CompletedModel()
-                    {
-                        DownloadKey = downloadSchedulerItem.DownloadKey,
-                        FileName = downloadSchedulerItem.FileName,
-                        FilePath = downloadSchedulerItem.FilePath,
-                        FileLink = downloadSchedulerItem.FileLink,
-                        TotalSize = downloadSchedulerItem.TotalSize,
-                        IsNotOperated = true,
-                        IsSelected = false,
-                        IsSelectMode = false
-                    });
-                }
+                    DownloadKey = downloadSchedulerItem.DownloadKey,
+                    FileName = downloadSchedulerItem.FileName,
+                    FilePath = downloadSchedulerItem.FilePath,
+                    FileLink = downloadSchedulerItem.FileLink,
+                    TotalSize = downloadSchedulerItem.TotalSize,
+                    IsNotOperated = true,
+                    IsSelected = false,
+                    IsSelectMode = false
+                });
             });
         }
 
@@ -762,15 +707,12 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (completedLock)
+                foreach (CompletedModel completedItem in CompletedCollection)
                 {
-                    foreach (CompletedModel completedItem in CompletedCollection)
+                    if (completedItem.DownloadKey.Equals(downloadKey))
                     {
-                        if (completedItem.DownloadKey.Equals(downloadKey))
-                        {
-                            CompletedCollection.Remove(completedItem);
-                            break;
-                        }
+                        CompletedCollection.Remove(completedItem);
+                        break;
                     }
                 }
             });
@@ -783,10 +725,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (completedLock)
-                {
-                    CompletedCollection.Clear();
-                }
+                CompletedCollection.Clear();
             });
         }
 

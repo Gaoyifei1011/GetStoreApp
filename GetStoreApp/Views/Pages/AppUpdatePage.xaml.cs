@@ -24,8 +24,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
-        private static readonly object appUpdateLock = new();
-
         private static readonly string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
         private static readonly string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
         private static readonly string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
@@ -122,13 +120,11 @@ namespace GetStoreApp.Views.Pages
                             AutoResetEvent autoResetEvent = new(false);
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (appUpdateLock)
-                                {
-                                    appUpdateItem.AppInstallState = AppInstallState.Pending;
-                                    appUpdateItem.IsUpdating = true;
-                                    appUpdateItem.InstallInformation = Pending;
-                                    appUpdateItem.PercentComplete = 0;
-                                }
+                                appUpdateItem.AppInstallState = AppInstallState.Pending;
+                                appUpdateItem.IsUpdating = true;
+                                appUpdateItem.InstallInformation = Pending;
+                                appUpdateItem.PercentComplete = 0;
+
                                 autoResetEvent.Set();
                             });
 
@@ -181,18 +177,15 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (appUpdateLock)
+                        foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                         {
-                            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                            if (appUpdateItem.PackageFamilyName == packageFamilyName)
                             {
-                                if (appUpdateItem.PackageFamilyName == packageFamilyName)
-                                {
-                                    appUpdateItem.AppInstallState = AppInstallState.Canceled;
-                                    appUpdateItem.IsUpdating = false;
-                                    appUpdateItem.InstallInformation = Canceled;
-                                    appUpdateItem.PercentComplete = 0;
-                                    break;
-                                }
+                                appUpdateItem.AppInstallState = AppInstallState.Canceled;
+                                appUpdateItem.IsUpdating = false;
+                                appUpdateItem.InstallInformation = Canceled;
+                                appUpdateItem.PercentComplete = 0;
+                                break;
                             }
                         }
                     });
@@ -286,12 +279,9 @@ namespace GetStoreApp.Views.Pages
                 // 只添加未有的项
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (appUpdateLock)
+                    foreach (AppUpdateModel appUpdateItem in appUpdateList)
                     {
-                        foreach (AppUpdateModel appUpdateItem in appUpdateList)
-                        {
-                            AppUpdateCollection.Add(appUpdateItem);
-                        }
+                        AppUpdateCollection.Add(appUpdateItem);
                     }
 
                     IsLoadedCompleted = true;
@@ -308,13 +298,10 @@ namespace GetStoreApp.Views.Pages
             {
                 if (!appUpdateItem.IsUpdating)
                 {
-                    lock (appUpdateLock)
-                    {
-                        appUpdateItem.AppInstallState = AppInstallState.Pending;
-                        appUpdateItem.IsUpdating = true;
-                        appUpdateItem.InstallInformation = Pending;
-                        appUpdateItem.PercentComplete = 0;
-                    }
+                    appUpdateItem.AppInstallState = AppInstallState.Pending;
+                    appUpdateItem.IsUpdating = true;
+                    appUpdateItem.InstallInformation = Pending;
+                    appUpdateItem.PercentComplete = 0;
                 }
             }
 
@@ -355,21 +342,18 @@ namespace GetStoreApp.Views.Pages
 
             DispatcherQueue.TryEnqueue(() =>
             {
-                lock (appUpdateLock)
+                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                 {
-                    foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                    if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
                     {
-                        if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
+                        try
                         {
-                            try
-                            {
-                                AppUpdateCollection.Remove(appUpdateItem);
-                                break;
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Warning, "AppUpdateCollection remove items failed", e);
-                            }
+                            AppUpdateCollection.Remove(appUpdateItem);
+                            break;
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "AppUpdateCollection remove items failed", e);
                         }
                     }
                 }
@@ -396,19 +380,17 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (appUpdateLock)
-                        {
-                            appUpdateItem.AppInstallState = appInstallStatus.InstallState;
-                            appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
-                            appUpdateItem.InstallInformation = installInformation;
-                            appUpdateItem.InstallSubInformation = installSubInformation;
-                            appUpdateItem.IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
-                                appInstallStatus.InstallState is AppInstallState.Error ||
-                                appInstallStatus.InstallState is AppInstallState.Paused ||
-                                appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
-                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
-                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired);
-                        }
+                        appUpdateItem.AppInstallState = appInstallStatus.InstallState;
+                        appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
+                        appUpdateItem.InstallInformation = installInformation;
+                        appUpdateItem.InstallSubInformation = installSubInformation;
+                        appUpdateItem.IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
+                            appInstallStatus.InstallState is AppInstallState.Error ||
+                            appInstallStatus.InstallState is AppInstallState.Paused ||
+                            appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
+                            appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
+                            appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired);
+
                         autoResetEvent.Set();
                     });
 

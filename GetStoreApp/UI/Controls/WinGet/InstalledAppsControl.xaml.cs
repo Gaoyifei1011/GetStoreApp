@@ -25,8 +25,6 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly object installedAppsLock = new();
-
         private bool isInitialized = false;
 
         private AutoResetEvent autoResetEvent;
@@ -188,17 +186,14 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                lock (installedAppsLock)
+                                // 从已安装应用列表中移除已卸载完成的应用
+                                foreach (InstalledAppsModel installedAppsItem in InstalledAppsCollection)
                                 {
-                                    // 从已安装应用列表中移除已卸载完成的应用
-                                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsCollection)
+                                    if (installedAppsItem.AppID == installedApps.AppID)
                                     {
-                                        if (installedAppsItem.AppID == installedApps.AppID)
-                                        {
-                                            InstalledAppsCollection.Remove(installedAppsItem);
-                                            IsInstalledAppsEmpty = InstalledAppsCollection.Count is 0;
-                                            break;
-                                        }
+                                        InstalledAppsCollection.Remove(installedAppsItem);
+                                        IsInstalledAppsEmpty = InstalledAppsCollection.Count is 0;
+                                        break;
                                     }
                                 }
                             });
@@ -378,10 +373,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void InitializeData(bool hasSearchText = false)
         {
-            lock (installedAppsLock)
-            {
-                InstalledAppsCollection.Clear();
-            }
+            InstalledAppsCollection.Clear();
 
             Task.Run(() =>
             {
@@ -453,26 +445,20 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (installedAppsLock)
+                        foreach (InstalledAppsModel installedApps in installedAppsList)
                         {
-                            foreach (InstalledAppsModel installedApps in installedAppsList)
-                            {
-                                InstalledAppsCollection.Add(installedApps);
-                            }
-                            IsInstalledAppsEmpty = MatchResultList.Count is 0;
-                            IsLoadedCompleted = true;
+                            InstalledAppsCollection.Add(installedApps);
                         }
+                        IsInstalledAppsEmpty = MatchResultList.Count is 0;
+                        IsLoadedCompleted = true;
                     });
                 }
                 else
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (installedAppsLock)
-                        {
-                            IsInstalledAppsEmpty = true;
-                            IsLoadedCompleted = true;
-                        }
+                        IsInstalledAppsEmpty = true;
+                        IsLoadedCompleted = true;
                     });
                 }
             });

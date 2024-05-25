@@ -22,9 +22,6 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class SearchStoreControl : StackPanel, INotifyPropertyChanged
     {
-        private readonly object historyLock = new();
-        private readonly object searchStoreLock = new();
-
         private string SearchStoreCountInfo { get; } = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
 
         private bool _isSearchingStore = false;
@@ -162,14 +159,11 @@ namespace GetStoreApp.UI.Controls.Store
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (historyLock)
+                    HistoryCollection.Clear();
+                    Task.Delay(10);
+                    foreach (HistoryModel historyItem in searchStoreHistoryList)
                     {
-                        HistoryCollection.Clear();
-                        Task.Delay(10);
-                        foreach (HistoryModel historyItem in searchStoreHistoryList)
-                        {
-                            HistoryCollection.Add(historyItem);
-                        }
+                        HistoryCollection.Add(historyItem);
                     }
                 });
             });
@@ -287,13 +281,10 @@ namespace GetStoreApp.UI.Controls.Store
                             ResultControlVisable = true;
                             UpdateHistory(searchText);
 
-                            lock (searchStoreLock)
+                            SearchStoreCollection.Clear();
+                            foreach (SearchStoreModel searchStoreItem in searchStoreResult.Item2)
                             {
-                                SearchStoreCollection.Clear();
-                                foreach (SearchStoreModel searchStoreItem in searchStoreResult.Item2)
-                                {
-                                    SearchStoreCollection.Add(searchStoreItem);
-                                }
+                                SearchStoreCollection.Add(searchStoreItem);
                             }
                         });
                     }
@@ -363,15 +354,12 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (historyLock)
+                        if (HistoryCollection.Count is 3)
                         {
-                            if (HistoryCollection.Count is 3)
-                            {
-                                HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
-                            }
-
-                            HistoryCollection.Insert(0, historyItem);
+                            HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
                         }
+
+                        HistoryCollection.Insert(0, historyItem);
                     });
                 }
                 // 存在则修改原来项的时间戳，并调整顺序
@@ -385,11 +373,8 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (historyLock)
-                        {
-                            HistoryCollection.RemoveAt(index);
-                            HistoryCollection.Insert(0, historyItem);
-                        }
+                        HistoryCollection.RemoveAt(index);
+                        HistoryCollection.Insert(0, historyItem);
                     });
                 }
             });

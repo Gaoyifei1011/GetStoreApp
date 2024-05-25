@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
+using Windows.System;
 
 namespace GetStoreAppWebView.Services.Root
 {
@@ -14,8 +16,7 @@ namespace GetStoreAppWebView.Services.Root
     {
         private static readonly string logName = "GetStoreApp";
         private static readonly string unknown = "unknown";
-
-        private static readonly object logLock = new();
+        private static readonly Lock logLock = new();
 
         private static bool isInitialized = false;
 
@@ -44,13 +45,13 @@ namespace GetStoreAppWebView.Services.Root
         {
             if (isInitialized)
             {
-                try
+                Task.Run(() =>
                 {
-                    Task.Run(() =>
+                    logLock.Enter();
+
+                    try
                     {
-                        lock (logLock)
-                        {
-                            File.AppendAllText(
+                        File.AppendAllText(
                                 Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
                                 string.Format("{0}\t{1}:{2}{3}{4}{5}{6}{7}{8}",
                                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
@@ -63,13 +64,16 @@ namespace GetStoreAppWebView.Services.Root
                                     logBuilder,
                                     Environment.NewLine)
                                 );
-                        }
-                    });
-                }
-                catch (Exception)
-                {
-                    return;
-                }
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
+                    finally
+                    {
+                        logLock.Exit();
+                    }
+                });
             }
         }
 
@@ -80,9 +84,11 @@ namespace GetStoreAppWebView.Services.Root
         {
             if (isInitialized)
             {
-                try
+                Task.Run(() =>
                 {
-                    Task.Run(() =>
+                    logLock.Enter();
+
+                    try
                     {
                         StringBuilder exceptionBuilder = new();
                         exceptionBuilder.Append("LogContent:");
@@ -98,25 +104,60 @@ namespace GetStoreAppWebView.Services.Root
                         exceptionBuilder.Append("StackTrace:");
                         exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 
-                        lock (logLock)
-                        {
-                            File.AppendAllText(
-                                Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
-                                string.Format("{0}\t{1}:{2}{3}{4}{5}",
-                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                                    "LogLevel",
-                                    Convert.ToString(logLevel),
-                                    Environment.NewLine,
-                                    exceptionBuilder.ToString(),
-                                    Environment.NewLine)
-                                );
-                        }
-                    });
-                }
-                catch (Exception)
+                        File.AppendAllText(
+                            Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
+                            string.Format("{0}\t{1}:{2}{3}{4}{5}",
+                                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                "LogLevel",
+                                Convert.ToString(logLevel),
+                                Environment.NewLine,
+                                exceptionBuilder.ToString(),
+                                Environment.NewLine)
+                            );
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
+                    finally
+                    {
+                        logLock.Exit();
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开日志记录文件夹
+        /// </summary>
+        public static async Task OpenLogFolderAsync()
+        {
+            if (isInitialized)
+            {
+                await Launcher.LaunchFolderAsync(logFolder);
+            }
+        }
+
+        /// <summary>
+        /// 清除所有的日志文件
+        /// </summary>
+        public static bool ClearLog()
+        {
+            try
+            {
+                Task.Run(() =>
                 {
-                    return;
-                }
+                    string[] logFiles = Directory.GetFiles(logFolder.Path, "*.log");
+                    foreach (string logFile in logFiles)
+                    {
+                        File.Delete(logFile);
+                    }
+                });
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

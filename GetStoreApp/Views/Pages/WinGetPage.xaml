@@ -17,9 +17,6 @@
 
     <Page.Resources>
         <XamlUICommand x:Name="CancelInstallCommand" ExecuteRequested="{x:Bind OnCancelInstallExecuteRequested}" />
-
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </Page.Resources>
 
     <Grid Padding="0">
@@ -97,6 +94,11 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
+                            <Grid.Resources>
+                                <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+                                <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+                            </Grid.Resources>
+
                             <Grid
                                 Grid.Row="0"
                                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -125,6 +127,7 @@
                                     Grid.Column="2"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    Click="{x:Bind OnCloseClicked}"
                                     Style="{StaticResource AlternateCloseButtonStyle}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Close')}">
 

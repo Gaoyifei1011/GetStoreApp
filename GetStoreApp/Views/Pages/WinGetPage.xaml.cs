@@ -19,8 +19,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page
     {
-        public readonly object installingAppsObject = new();
-        public readonly object installStateObject = new();
+        public readonly Lock installStateLock = new();
         private bool isInitialized;
 
         public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = [];
@@ -42,36 +41,36 @@ namespace GetStoreApp.Views.Pages
             string appId = args.Parameter as string;
             if (appId is not null)
             {
-                lock (installingAppsObject)
+                foreach (InstallingAppsModel installingAppsItem in InstallingAppsCollection)
                 {
-                    foreach (InstallingAppsModel installingAppsItem in InstallingAppsCollection)
+                    if (installingAppsItem.AppID.Equals(appId))
                     {
-                        if (installingAppsItem.AppID.Equals(appId))
-                        {
-                            installingAppsItem.IsCanceling = true;
-                        }
+                        installingAppsItem.IsCanceling = true;
                     }
                 }
 
                 Task.Run(() =>
                 {
-                    lock (installStateObject)
+                    installStateLock.Enter();
+
+                    try
                     {
-                        try
+                        if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
                         {
-                            if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
+                            if (!tokenSource.IsCancellationRequested)
                             {
-                                if (!tokenSource.IsCancellationRequested)
-                                {
-                                    tokenSource.Cancel();
-                                    tokenSource.Dispose();
-                                }
+                                tokenSource.Cancel();
+                                tokenSource.Dispose();
                             }
                         }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
-                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
+                    }
+                    finally
+                    {
+                        installStateLock.Exit();
                     }
                 });
             }
@@ -135,6 +134,14 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetSelectorBar.SelectedItem = WinGetSelectorBar.Items[0];
             }
+        }
+
+        /// <summary>
+        /// 点击关闭按钮关闭任务管理
+        /// </summary>
+        private void OnCloseClicked(object sender, RoutedEventArgs args)
+        {
+            TaskManagerFlyout.Hide();
         }
 
         /// <summary>

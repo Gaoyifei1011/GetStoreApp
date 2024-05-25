@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Controls.Download
     public static class BitsService
     {
         private static readonly string displayName = "GetStoreApp";
-        private static readonly object bitsLock = new();
+        private static readonly Lock bitsLock = new();
         private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
 
         private static Guid CLSID_BackgroundCopyManager = new("4991D34B-80A1-4291-83B6-3328366B9097");
@@ -72,10 +72,18 @@ namespace GetStoreApp.Services.Controls.Download
         public static int GetDownloadCount()
         {
             int count = 0;
-            lock (bitsLock)
+            bitsLock.Enter();
+
+            try
             {
                 count = BitsDict.Count;
             }
+            catch (Exception) { }
+            finally
+            {
+                bitsLock.Exit();
+            }
+
             return count;
         }
 
@@ -90,19 +98,22 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     if (GetDownloadCount() > 0)
                     {
-                        lock (bitsLock)
+                        bitsLock.Enter();
+
+                        try
                         {
-                            try
+                            foreach (KeyValuePair<Guid, Tuple<IBackgroundCopyJob, BackgroundCopyCallback>> bitsKeyValue in BitsDict)
                             {
-                                foreach (KeyValuePair<Guid, Tuple<IBackgroundCopyJob, BackgroundCopyCallback>> bitsKeyValue in BitsDict)
-                                {
-                                    bitsKeyValue.Value.Item1.Cancel();
-                                }
+                                bitsKeyValue.Value.Item1.Cancel();
                             }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
-                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
+                        }
+                        finally
+                        {
+                            bitsLock.Exit();
                         }
                     }
                 }
@@ -118,7 +129,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static unsafe void CreateDownload(string url, string saveFilePath)
         {
-            _ = Task.Factory.StartNew((param) =>
+            Task.Factory.StartNew((param) =>
             {
                 try
                 {
@@ -137,9 +148,16 @@ namespace GetStoreApp.Services.Controls.Download
                         downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
                         DownloadCreated?.Invoke(backgroundCopyCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, progress.BytesTotal is ulong.MaxValue ? 0 : progress.BytesTotal);
 
-                        lock (bitsLock)
+                        bitsLock.Enter();
+
+                        try
                         {
                             BitsDict.TryAdd(downloadID, Tuple.Create(downloadJob, backgroundCopyCallback));
+                        }
+                        catch (Exception) { }
+                        finally
+                        {
+                            bitsLock.Exit();
                         }
 
                         downloadJob.Resume();
@@ -159,24 +177,27 @@ namespace GetStoreApp.Services.Controls.Download
         {
             Task.Factory.StartNew((param) =>
             {
+                bitsLock.Enter();
+
                 try
                 {
-                    lock (bitsLock)
+                    if (BitsDict.TryGetValue(downloadID, out Tuple<IBackgroundCopyJob, BackgroundCopyCallback> downloadValue))
                     {
-                        if (BitsDict.TryGetValue(downloadID, out Tuple<IBackgroundCopyJob, BackgroundCopyCallback> downloadValue))
-                        {
-                            int continueResult = downloadValue.Item1.Resume();
+                        int continueResult = downloadValue.Item1.Resume();
 
-                            if (continueResult is 0)
-                            {
-                                DownloadContinued?.Invoke(downloadID);
-                            }
+                        if (continueResult is 0)
+                        {
+                            DownloadContinued?.Invoke(downloadID);
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Continue background intelligent transfer service download failed", e);
+                }
+                finally
+                {
+                    bitsLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -188,24 +209,27 @@ namespace GetStoreApp.Services.Controls.Download
         {
             Task.Factory.StartNew((param) =>
             {
+                bitsLock.Enter();
+
                 try
                 {
-                    lock (bitsLock)
+                    if (BitsDict.TryGetValue(downloadID, out Tuple<IBackgroundCopyJob, BackgroundCopyCallback> downloadValue))
                     {
-                        if (BitsDict.TryGetValue(downloadID, out Tuple<IBackgroundCopyJob, BackgroundCopyCallback> downloadValue))
-                        {
-                            int pauseResult = downloadValue.Item1.Suspend();
+                        int pauseResult = downloadValue.Item1.Suspend();
 
-                            if (pauseResult is 0)
-                            {
-                                DownloadPaused?.Invoke(downloadID);
-                            }
+                        if (pauseResult is 0)
+                        {
+                            DownloadPaused?.Invoke(downloadID);
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Pause background intelligent transfer service download failed", e);
+                }
+                finally
+                {
+                    bitsLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -217,26 +241,29 @@ namespace GetStoreApp.Services.Controls.Download
         {
             Task.Factory.StartNew((param) =>
             {
+                bitsLock.Enter();
+
                 try
                 {
-                    lock (bitsLock)
+                    if (BitsDict.TryGetValue(downloadID, out Tuple<IBackgroundCopyJob, BackgroundCopyCallback> downloadValue))
                     {
-                        if (BitsDict.TryGetValue(downloadID, out Tuple<IBackgroundCopyJob, BackgroundCopyCallback> downloadValue))
-                        {
-                            int deleteResult = downloadValue.Item1.Cancel();
+                        int deleteResult = downloadValue.Item1.Cancel();
 
-                            if (deleteResult is 0)
-                            {
-                                downloadValue.Item2.StatusChanged -= OnStatusChanged;
-                                DownloadDeleted?.Invoke(downloadID);
-                                BitsDict.Remove(downloadID);
-                            }
+                        if (deleteResult is 0)
+                        {
+                            downloadValue.Item2.StatusChanged -= OnStatusChanged;
+                            DownloadDeleted?.Invoke(downloadID);
+                            BitsDict.Remove(downloadID);
                         }
                     }
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Delete background intelligent transfer service download failed", e);
+                }
+                finally
+                {
+                    bitsLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -261,12 +288,19 @@ namespace GetStoreApp.Services.Controls.Download
                     callback.StatusChanged -= OnStatusChanged;
                     downloadJob.Complete();
 
-                    lock (bitsLock)
+                    bitsLock.Enter();
+
+                    try
                     {
                         if (BitsDict.ContainsKey(callback.DownloadID))
                         {
                             BitsDict.Remove(callback.DownloadID);
                         }
+                    }
+                    catch (Exception) { }
+                    finally
+                    {
+                        bitsLock.Exit();
                     }
                 }
                 catch (Exception e)

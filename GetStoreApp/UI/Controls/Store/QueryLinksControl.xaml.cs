@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
@@ -32,8 +33,7 @@ namespace GetStoreApp.UI.Controls.Store
     /// </summary>
     public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
     {
-        private readonly object historyLock = new();
-        private readonly object queryLinksLock = new();
+        private readonly Lock queryLinksLock = new();
 
         private string sampleLink;
         private readonly string sampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
@@ -284,14 +284,11 @@ namespace GetStoreApp.UI.Controls.Store
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    lock (historyLock)
-                    {
-                        HistoryCollection.Clear();
+                    HistoryCollection.Clear();
 
-                        foreach (HistoryModel historyItem in queryLinksHistoryList)
-                        {
-                            HistoryCollection.Add(historyItem);
-                        }
+                    foreach (HistoryModel historyItem in queryLinksHistoryList)
+                    {
+                        HistoryCollection.Add(historyItem);
                     }
                 });
             });
@@ -570,7 +567,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
-            lock (queryLinksLock)
+            queryLinksLock.Enter();
+
+            try
             {
                 foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
@@ -580,6 +579,11 @@ namespace GetStoreApp.UI.Controls.Store
 
                 IsSelectMode = true;
             }
+            catch (Exception) { }
+            finally
+            {
+                queryLinksLock.Exit();
+            }
         }
 
         /// <summary>
@@ -587,12 +591,19 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            lock (queryLinksLock)
+            queryLinksLock.Enter();
+
+            try
             {
                 foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
                     queryLinksItem.IsSelected = true;
                 }
+            }
+            catch (Exception) { }
+            finally
+            {
+                queryLinksLock.Exit();
             }
         }
 
@@ -601,12 +612,19 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            lock (queryLinksLock)
+            queryLinksLock.Enter();
+
+            try
             {
                 foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
                     queryLinksItem.IsSelected = false;
                 }
+            }
+            catch (Exception) { }
+            finally
+            {
+                queryLinksLock.Exit();
             }
         }
 
@@ -619,7 +637,9 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 List<QueryLinksModel> selectedQueryLinksList = [];
 
-                lock (queryLinksLock)
+                queryLinksLock.Enter();
+
+                try
                 {
                     foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
@@ -628,6 +648,11 @@ namespace GetStoreApp.UI.Controls.Store
                             selectedQueryLinksList.Add(queryLinksItem);
                         }
                     }
+                }
+                catch (Exception) { }
+                finally
+                {
+                    queryLinksLock.Exit();
                 }
 
                 // 内容为空时显示空提示对话框
@@ -668,7 +693,9 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 List<QueryLinksModel> selectedQueryLinksList = [];
 
-                lock (queryLinksLock)
+                queryLinksLock.Enter();
+
+                try
                 {
                     foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
@@ -677,6 +704,11 @@ namespace GetStoreApp.UI.Controls.Store
                             selectedQueryLinksList.Add(queryLinksItem);
                         }
                     }
+                }
+                catch (Exception) { }
+                finally
+                {
+                    queryLinksLock.Exit();
                 }
 
                 // 内容为空时显示空提示对话框
@@ -713,7 +745,9 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 List<QueryLinksModel> selectedQueryLinksList = [];
 
-                lock (queryLinksLock)
+                queryLinksLock.Enter();
+
+                try
                 {
                     foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
@@ -722,6 +756,11 @@ namespace GetStoreApp.UI.Controls.Store
                             selectedQueryLinksList.Add(queryLinksItem);
                         }
                     }
+                }
+                catch (Exception) { }
+                finally
+                {
+                    queryLinksLock.Exit();
                 }
 
                 // 内容为空时显示空提示对话框
@@ -820,13 +859,19 @@ namespace GetStoreApp.UI.Controls.Store
                     // 显示下载任务创建成功消息
                     TeachingTipHelper.Show(new DownloadCreateTip(isDownloadSuccessfully));
                     IsSelectMode = false;
+                    queryLinksLock.Enter();
 
-                    lock (queryLinksLock)
+                    try
                     {
                         foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                         {
                             queryLinksItem.IsSelectMode = false;
                         }
+                    }
+                    catch (Exception) { }
+                    finally
+                    {
+                        queryLinksLock.Exit();
                     }
                 });
             });
@@ -837,17 +882,21 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
-            lock (queryLinksLock)
+            queryLinksLock.Enter();
+
+            try
             {
                 IsSelectMode = false;
 
-                lock (queryLinksLock)
+                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                 {
-                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
-                    {
-                        queryLinksItem.IsSelectMode = false;
-                    }
+                    queryLinksItem.IsSelectMode = false;
                 }
+            }
+            catch (Exception) { }
+            finally
+            {
+                queryLinksLock.Exit();
             }
         }
 
@@ -860,10 +909,17 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (queryLinksItem is not null)
             {
-                lock (queryLinksLock)
+                queryLinksLock.Enter();
+
+                try
                 {
                     int ClickedIndex = QueryLinksCollection.IndexOf(queryLinksItem);
                     QueryLinksCollection[ClickedIndex].IsSelected = !QueryLinksCollection[ClickedIndex].IsSelected;
+                }
+                catch (Exception) { }
+                finally
+                {
+                    queryLinksLock.Exit();
                 }
             }
         }
@@ -974,7 +1030,9 @@ namespace GetStoreApp.UI.Controls.Store
                                 AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
                                 AppInfo.ProductID = appInformationResult.Item2.ProductID;
 
-                                lock (queryLinksLock)
+                                queryLinksLock.Enter();
+
+                                try
                                 {
                                     QueryLinksCollection.Clear();
                                     foreach (QueryLinksModel resultItem in queryLinksList)
@@ -982,6 +1040,11 @@ namespace GetStoreApp.UI.Controls.Store
                                         QueryLinksCollection.Add(resultItem);
                                         Task.Delay(1);
                                     }
+                                }
+                                catch (Exception) { }
+                                finally
+                                {
+                                    queryLinksLock.Exit();
                                 }
                             }
                             else
@@ -1057,7 +1120,9 @@ namespace GetStoreApp.UI.Controls.Store
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
 
-                            lock (queryLinksLock)
+                            queryLinksLock.Enter();
+
+                            try
                             {
                                 QueryLinksCollection.Clear();
                                 foreach (QueryLinksModel resultItem in queryLinksList)
@@ -1065,6 +1130,11 @@ namespace GetStoreApp.UI.Controls.Store
                                     QueryLinksCollection.Add(resultItem);
                                     Task.Delay(1);
                                 }
+                            }
+                            catch (Exception) { }
+                            finally
+                            {
+                                queryLinksLock.Exit();
                             }
                         });
                     }
@@ -1141,15 +1211,12 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (historyLock)
+                        if (HistoryCollection.Count is 3)
                         {
-                            if (HistoryCollection.Count is 3)
-                            {
-                                HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
-                            }
-
-                            HistoryCollection.Insert(0, historyItem);
+                            HistoryCollection.RemoveAt(HistoryCollection.Count - 1);
                         }
+
+                        HistoryCollection.Insert(0, historyItem);
                     });
                 }
                 // 存在则修改原来项的时间戳，并调整顺序
@@ -1164,11 +1231,8 @@ namespace GetStoreApp.UI.Controls.Store
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        lock (historyLock)
-                        {
-                            HistoryCollection.RemoveAt(index);
-                            HistoryCollection.Insert(0, historyItem);
-                        }
+                        HistoryCollection.RemoveAt(index);
+                        HistoryCollection.Insert(0, historyItem);
                     });
                 }
             });
