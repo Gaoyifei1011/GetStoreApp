@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
     Padding="0"
     Loaded="{x:Bind OnLoaded}"
@@ -62,14 +63,21 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeSearchAppsCountInfo(SearchAppsCollection.Count), Mode=OneWay}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchedAppsCountEmpty')}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchAppsCollection.Count), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Column="3"
+            VerticalAlignment="Center"
+            Text="{x:Bind sys:String.Format(SearchedAppsCountInfo, SearchAppsCollection.Count), Mode=OneWay}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchAppsCollection.Count), Mode=OneWay}" />
 
         <AutoSuggestBox
             Grid.Column="4"
             Width="170"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            IsEnabled="{x:Bind IsSearchBoxEnabled(NotSearched, IsSearchCompleted), Mode=OneWay}"
+            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.IsSearchBoxEnabled(NotSearched, IsSearchCompleted), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsPlaceHolderText')}"
             QuerySubmitted="{x:Bind OnQuerySubmitted}"
             Text="{x:Bind SearchText, Mode=OneWay}"

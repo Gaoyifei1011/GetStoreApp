@@ -125,6 +125,9 @@ namespace GetStoreApp.UI.Dialogs.About
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(async () =>
             {
                 IReadOnlyList<Package> dependencyList = Package.Current.Dependencies;

@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Controls.History
         private const string HistoryChannel = "HistoryChannel";
         private const string HistoryLink = "HistoryLink";
 
-        private static Lock historyStorageLock = new();
+        private static readonly Lock historyStorageLock = new();
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer queryLinksContainer;
         private static ApplicationDataContainer searchStoreContainer;

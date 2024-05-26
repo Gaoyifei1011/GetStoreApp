@@ -1,3 +1,4 @@
+using GetStoreApp.Helpers.Converters;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
@@ -38,6 +39,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             string appId = args.Parameter as string;
             if (appId is not null)
             {
@@ -85,6 +88,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             SelectorBar selectorBar = sender as SelectorBar;
 
             if (selectorBar is not null && selectorBar.SelectedItem is not null)
@@ -120,7 +125,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (IsWinGetExisted(WinGetService.IsOfficialVersionExisted, WinGetService.IsDevVersionExisted, false))
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
+            if (ValueCheckConverterHelper.IsWinGetExisted(WinGetService.IsOfficialVersionExisted, WinGetService.IsDevVersionExisted, false))
             {
                 if (!isInitialized)
                 {
@@ -141,6 +149,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             TaskManagerFlyout.Hide();
         }
 
@@ -149,7 +160,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnControlPanelClicked(object sender, RoutedEventArgs args)
         {
-            ProcessHelper.StartProcess("control.exe", "appwiz.cpl", out _);
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
+            ProcessHelper.StartProcess("control.exe", "appwiz.cpl", out int processid);
+            UnreferenceHelper.Unreference(processid);
         }
 
         /// <summary>
@@ -157,6 +172,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager"));
         }
 
@@ -165,6 +183,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/ProductId=9NBLGGH4NNS1"));
         }
 
@@ -173,18 +194,12 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
         }
 
         #endregion 第二部分：WinGet 程序包页面——挂载的事件
-
-        /// <summary>
-        /// 判断 WinGet 程序包是否存在
-        /// </summary>
-        private bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted, bool needReverseValue)
-        {
-            bool result = isOfficialVersionExisted || isDevVersionExisted;
-            return needReverseValue ? !result : result;
-        }
     }
 }

@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -89,7 +90,14 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeAppUpdateCountInfo(AppUpdateCollection.Count), Mode=OneWay}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('AppUpdate/AppUpdateEmpty')}"
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppUpdateCollection.Count), Mode=OneWay}" />
+
+            <TextBlock
+                Grid.Column="3"
+                VerticalAlignment="Center"
+                Text="{x:Bind sys:String.Format(AppUpdateCountInfo, AppUpdateCollection.Count), Mode=OneWay}"
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
             <StackPanel
                 Grid.Column="4"
@@ -260,7 +268,7 @@
                                             TextAlignment="Left"
                                             TextTrimming="CharacterEllipsis"
                                             TextWrapping="NoWrap"
-                                            Visibility="{x:Bind IsDownloading(AppInstallState), Mode=OneWay}" />
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppInstallDownloading(AppInstallState), Mode=OneWay}" />
                                     </StackPanel>
 
                                     <Button

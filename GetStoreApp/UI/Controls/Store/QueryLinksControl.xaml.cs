@@ -301,6 +301,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             HistoryModel historyItem = args.Parameter as HistoryModel;
 
             if (historyItem is not null)
@@ -321,6 +324,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             HistoryModel historyItem = args.Parameter as HistoryModel;
 
             if (historyItem is not null)
@@ -340,6 +345,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
 
             if (queryLinksItem is not null)
@@ -436,6 +443,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string fileLink = args.Parameter as string;
 
             if (!string.IsNullOrEmpty(fileLink))
@@ -449,6 +459,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string fileLink = args.Parameter as string;
 
             if (!string.IsNullOrEmpty(fileLink))
@@ -463,6 +476,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
 
             if (queryLinksItem is not null)
@@ -487,6 +503,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             LinkText = (sender as TextBox).Text;
         }
 
@@ -495,6 +513,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             if (args.Key is VirtualKey.Enter)
             {
                 QueryLinks();
@@ -506,6 +526,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -522,6 +544,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -534,6 +558,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnQueryLinksClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             QueryLinks();
         }
 
@@ -542,6 +569,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             StringBuilder appInformationBuilder = new();
             appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppName"));
             appInformationBuilder.AppendLine(AppInfo.Name);
@@ -559,6 +589,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri(string.Format("https://www.microsoft.com/store/productId/{0}", AppInfo.ProductID)));
         }
 
@@ -567,6 +600,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             queryLinksLock.Enter();
 
             try
@@ -591,6 +627,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             queryLinksLock.Enter();
 
             try
@@ -612,6 +651,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             queryLinksLock.Enter();
 
             try
@@ -633,6 +675,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(() =>
             {
                 List<QueryLinksModel> selectedQueryLinksList = [];
@@ -689,6 +734,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(() =>
             {
                 List<QueryLinksModel> selectedQueryLinksList = [];
@@ -741,6 +789,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(() =>
             {
                 List<QueryLinksModel> selectedQueryLinksList = [];
@@ -882,6 +933,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             queryLinksLock.Enter();
 
             try
@@ -905,6 +959,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             QueryLinksModel queryLinksItem = args.InvokedItem as QueryLinksModel;
 
             if (queryLinksItem is not null)

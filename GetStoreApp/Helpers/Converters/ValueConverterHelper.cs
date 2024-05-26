@@ -8,9 +8,12 @@ namespace GetStoreApp.Helpers.Converters
     /// </summary>
     public static class ValueConverterHelper
     {
-        public static bool ObjectCompareReverseConvert(object value, object comparedValue)
+        /// <summary>
+        /// 计算当前文件的下载进度
+        /// </summary>
+        public static double DownloadProgress(double finishedSize, double totalSize)
         {
-            return !Equals(value, comparedValue);
+            return totalSize.Equals(default) ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
         }
 
         public static Uri UriConvert(object uri)

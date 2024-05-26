@@ -367,6 +367,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             double currentScrollPosition = SettingsScroll.VerticalOffset;
             Point currentPoint = new(0, (int)currentScrollPosition);
 
@@ -386,6 +389,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await ContentDialogHelper.ShowAsync(new RestartAppsDialog(), this);
         }
 
@@ -394,6 +400,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSettingsInstructionClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
@@ -402,6 +411,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnSystemThemeSettingsClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-settings:colors"));
         }
 
@@ -410,6 +422,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -423,6 +437,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -436,6 +452,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnSystemBackdropSettingsClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-settings:easeofaccess-visualeffects"));
         }
 
@@ -444,6 +463,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnSystemNotificationSettingsClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-settings:notifications"));
         }
 
@@ -452,6 +474,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnSystemLanguageSettingsClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-settings:regionlanguage-languageoptions"));
         }
 
@@ -460,6 +485,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWebKernelSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -473,6 +500,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -486,6 +515,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -499,9 +530,13 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(() =>
             {
-                ProcessHelper.StartProcess("winget.exe", "settings", out _);
+                ProcessHelper.StartProcess("winget.exe", "settings", out int processid);
+                UnreferenceHelper.Unreference(processid);
             });
         }
 
@@ -510,6 +545,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
         }
 
@@ -634,6 +672,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnOpenDeliveryOptimizationClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-settings:delivery-optimization"));
         }
 
@@ -642,6 +683,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLearnDoEngineClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
@@ -651,6 +695,8 @@ namespace GetStoreApp.Views.Pages
 
         private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -664,6 +710,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem.Tag is not null)
             {
@@ -677,6 +725,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnTraceCleanupClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await ContentDialogHelper.ShowAsync(new TraceCleanupPromptDialog(), this);
         }
 
@@ -685,6 +736,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnOpenLogFolderClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await LogService.OpenLogFolderAsync();
         }
 
@@ -693,6 +747,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnClearClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             bool result = LogService.ClearLog();
             TeachingTipHelper.Show(new LogCleanTip(result));
         }
@@ -702,6 +759,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTerminateWebViewProcessClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(() =>
             {
                 try
@@ -740,6 +800,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
@@ -753,6 +815,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTopMostToggled(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
@@ -766,6 +830,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNotificationToggled(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
@@ -779,6 +845,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
@@ -792,6 +860,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
@@ -805,6 +875,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetConfigToggled(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
@@ -818,6 +890,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch is not null)
             {
@@ -827,22 +901,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：设置页面——挂载的事件
-
-        /// <summary>
-        /// 判断两个版本是否共同存在
-        /// </summary>
-        private bool IsBothVersionExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
-        {
-            return isOfficialVersionExisted && isDevVersionExisted;
-        }
-
-        /// <summary>
-        /// 判断 WinGet 程序包是否存在
-        /// </summary>
-        private bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
-        {
-            return isOfficialVersionExisted || isDevVersionExisted;
-        }
 
         private string LocalizeDisplayNumber(DictionaryEntry selectedBackdrop)
         {

@@ -1,4 +1,5 @@
 using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Pages;
@@ -37,8 +38,12 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private readonly PackageManager packageManager = new();
 
         private string Unknown { get; } = ResourceService.GetLocalized("UWPApp/Unknown");
+
         private string Yes { get; } = ResourceService.GetLocalized("UWPApp/Yes");
+
         private string No { get; } = ResourceService.GetLocalized("UWPApp/No");
+
+        private string PackageCountInfo { get; } = ResourceService.GetLocalized("UWPApp/PackageCountInfo");
 
         public string SearchText { get; set; } = string.Empty;
 
@@ -156,6 +161,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -179,6 +187,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -203,6 +214,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -226,6 +240,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
             if (package is not null)
             {
@@ -252,6 +269,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -276,6 +296,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
+            UnreferenceHelper.Unreference(sender);
 
             if (package is not null)
             {
@@ -361,6 +382,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             PackageModel packageItem = args.Parameter as PackageModel;
             UWPAppPage uwpAppPage = MainWindow.Current.GetFrameContent() as UWPAppPage;
 
@@ -568,6 +591,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             if (!isInitialized)
             {
                 Task.Delay(500);
@@ -582,6 +608,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -595,6 +623,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -608,6 +638,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnFilterWayClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             IsFramework = !IsFramework;
             needToRefreshData = true;
         }
@@ -617,6 +650,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleButton toggleButton = sender as ToggleButton;
             if (toggleButton is not null)
             {
@@ -638,6 +673,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
@@ -651,6 +689,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnClosed(object sender, object args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             if (needToRefreshData)
             {
                 InitializeData();
@@ -660,26 +701,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         }
 
         #endregion 第二部分：应用列表控件——挂载的事件
-
-        /// <summary>
-        /// 本地化应用管理记录数量统计信息
-        /// </summary>
-        public string LocalizeUWPAppCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("UWPApp/PackageEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("UWPApp/PackageCountInfo"), count);
-            }
-        }
-
-        public bool IsSelected(Enum value, Enum comparedValue)
-        {
-            return value.HasFlag(comparedValue);
-        }
 
         /// <summary>
         /// 加载系统已安装的应用信息
@@ -860,7 +881,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用包是否为框架包
         /// </summary>
-        public bool GetIsFramework(Package package)
+        public static bool GetIsFramework(Package package)
         {
             try
             {
@@ -875,7 +896,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用包的入口数
         /// </summary>
-        public int GetAppListEntriesCount(Package package)
+        public static int GetAppListEntriesCount(Package package)
         {
             try
             {
@@ -920,7 +941,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用的版本信息
         /// </summary>
-        public string GetVersion(Package package)
+        public static string GetVersion(Package package)
         {
             try
             {
@@ -935,7 +956,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用的安装日期
         /// </summary>
-        public string GetInstallDate(Package package)
+        public static string GetInstallDate(Package package)
         {
             try
             {
@@ -950,7 +971,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用包签名方式
         /// </summary>
-        public PackageSignatureKind GetSignatureKind(Package package)
+        public static PackageSignatureKind GetSignatureKind(Package package)
         {
             try
             {
@@ -965,7 +986,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用包安装日期
         /// </summary>
-        public DateTimeOffset GetInstalledDate(Package package)
+        public static DateTimeOffset GetInstalledDate(Package package)
         {
             try
             {

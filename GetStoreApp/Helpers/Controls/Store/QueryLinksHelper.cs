@@ -334,7 +334,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     }
                 }
 
-                object appxPackagesLock = new();
+                Lock appxPackagesLock = new();
                 XmlNodeList securedFragmentList = fileListDocument.DocumentElement.GetElementsByTagName("SecuredFragment");
                 CountdownEvent countdownEvent = new(securedFragmentList.Count);
 
@@ -343,7 +343,6 @@ namespace GetStoreApp.Helpers.Controls.Store
                     IXmlNode securedFragmentCloneNode = securedFragmentNode;
                     Task.Run(async () =>
                     {
-                        ;
                         IXmlNode xmlNode = securedFragmentCloneNode.ParentNode.ParentNode;
 
                         if (xmlNode.GetElementsByName("ApplicabilityRules").GetElementsByName("Metadata").GetElementsByName("AppxPackageMetadata").GetElementsByName("AppxMetadata").Attributes.GetNamedItem("PackageMoniker") is not null)
@@ -360,7 +359,9 @@ namespace GetStoreApp.Helpers.Controls.Store
                                 string uri = await GetAppxUrlAsync(updateID, revisionNumber, ring, digest);
                                 string fileSizeString = FileSizeHelper.ConvertFileSizeToString(double.TryParse(fileSize, out double size) == true ? size : 0);
 
-                                lock (appxPackagesLock)
+                                appxPackagesLock.Enter();
+
+                                try
                                 {
                                     appxPackagesList.Add(new QueryLinksModel()
                                     {
@@ -371,6 +372,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                                         IsSelectMode = false
                                     });
                                     countdownEvent.Signal();
+                                }
+                                catch (Exception) { }
+                                finally
+                                {
+                                    appxPackagesLock.Exit();
                                 }
                             }
                             else
@@ -524,7 +530,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                         JsonObject versionsObject = dataObject.GetNamedValue("Versions").GetArray()[0].GetObject();
                         JsonArray installersArray = versionsObject.GetNamedValue("Installers").GetArray();
 
-                        object nonAppxPackagesLock = new();
+                        Lock nonAppxPackagesLock = new();
                         CountdownEvent countdownEvent = new(installersArray.Count);
 
                         foreach (IJsonValue installer in installersArray)
@@ -538,7 +544,9 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                             if (Equals(installerType, string.Empty) || installerUrl.ToLower().EndsWith(".exe") || installerUrl.ToLower().EndsWith(".msi"))
                             {
-                                lock (nonAppxPackagesLock)
+                                nonAppxPackagesLock.Enter();
+
+                                try
                                 {
                                     nonAppxPackagesList.Add(new QueryLinksModel()
                                     {
@@ -550,12 +558,19 @@ namespace GetStoreApp.Helpers.Controls.Store
                                     });
                                     countdownEvent.Signal();
                                 }
+                                catch (Exception) { }
+                                finally
+                                {
+                                    nonAppxPackagesLock.Exit();
+                                }
                             }
                             else
                             {
                                 string name = installerUrl.Split('/')[^1];
 
-                                lock (nonAppxPackagesLock)
+                                nonAppxPackagesLock.Enter();
+
+                                try
                                 {
                                     nonAppxPackagesList.Add(new QueryLinksModel()
                                     {
@@ -566,6 +581,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                                         IsSelectMode = false,
                                     });
                                     countdownEvent.Signal();
+                                }
+                                catch (Exception) { }
+                                finally
+                                {
+                                    nonAppxPackagesLock.Exit();
                                 }
                             }
                         }

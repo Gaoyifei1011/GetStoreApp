@@ -176,6 +176,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             string historyContent = args.Parameter as string;
 
             if (!string.IsNullOrEmpty(historyContent))
@@ -193,6 +195,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string appLink = args.Parameter as string;
 
             if (appLink is not null)
@@ -206,6 +211,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnQueryLinksExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string appLink = args.Parameter as string;
 
             if (appLink is not null)
@@ -229,6 +237,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             SearchText = (sender as TextBox).Text;
         }
 
@@ -237,6 +247,8 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             if (args.Key is VirtualKey.Enter)
             {
                 SearchStore();
@@ -248,6 +260,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnSearchStoreClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             SearchStore();
         }
 

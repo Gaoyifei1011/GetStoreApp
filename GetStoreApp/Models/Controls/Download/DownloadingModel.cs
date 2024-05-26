@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using Microsoft.UI.Xaml;
 using System;
 using System.ComponentModel;
 
@@ -181,29 +180,5 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 计算当前文件的下载进度
-        /// </summary>
-        public double DownloadProgress(double finishedSize, double totalSize)
-        {
-            return totalSize == default ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
-        }
-
-        /// <summary>
-        /// 检查任务是否处于下载中
-        /// </summary>
-        public Visibility IsDownloading(DownloadStatus downloadStatus)
-        {
-            return downloadStatus is DownloadStatus.Downloading ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 检查任务是否处于暂停中
-        /// </summary>
-        public Visibility IsPaused(DownloadStatus downloadStatus)
-        {
-            return downloadStatus is DownloadStatus.Pause ? Visibility.Visible : Visibility.Collapsed;
-        }
     }
 }

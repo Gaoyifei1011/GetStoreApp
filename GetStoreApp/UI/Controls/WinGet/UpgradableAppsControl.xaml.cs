@@ -34,6 +34,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         private PackageManager UpgradableAppsManager;
         private WinGetPage WinGetInstance;
 
+        private string UpgradableAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo");
+
         private bool _isLoadedCompleted = false;
 
         public bool IsLoadedCompleted
@@ -84,6 +86,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnCopyUpgradeTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string appId = args.Parameter as string;
             if (appId is not null)
             {
@@ -99,12 +104,16 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string appId = args.Parameter as string;
             if (appId is not null)
             {
                 Task.Run(() =>
                 {
-                    ProcessHelper.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
+                    ProcessHelper.StartProcess("winget.exe", string.Format("install {0}", appId), out int processid);
+                    UnreferenceHelper.Unreference(processid);
                 });
             }
         }
@@ -114,6 +123,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             UpgradableAppsModel upgradableApps = args.Parameter as UpgradableAppsModel;
             if (upgradableApps is not null)
             {
@@ -287,7 +298,8 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
+                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out int processid);
+                                    UnreferenceHelper.Unreference(processid);
                                 }
                             }
 
@@ -461,6 +473,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             if (!isInitialized)
             {
                 try
@@ -483,6 +498,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
             if (Directory.Exists(wingetTempPath))
             {
@@ -499,6 +517,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             GetUpgradableApps();
@@ -506,21 +527,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         #endregion 第二部分：可升级应用控件——挂载的事件
-
-        /// <summary>
-        /// 本地化应用数量统计信息
-        /// </summary>
-        private string LocalizeUpgradableAppsCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("WinGet/UpgradableAppsCountEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo"), count);
-            }
-        }
 
         public void InitializeWingetInstance(WinGetPage wingetInstance)
         {

@@ -25,6 +25,8 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static void OnDownloadCreated(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
         {
+            UnreferenceHelper.Unreference(downloadID);
+
             ConsoleHelper.SetTextColor(0x01);
             ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCreated"), downloadSchedulerItem.FileName));
             ConsoleHelper.ResetTextColor();
@@ -36,6 +38,8 @@ namespace GetStoreApp.Services.Shell
 
         public static void OnDownloadProgressing(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
         {
+            UnreferenceHelper.Unreference(downloadID);
+
             ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadProgressing"), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.FinishedSize), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.TotalSize), SpeedHelper.ConvertSpeedToString(downloadSchedulerItem.CurrentSpeed), DownloadProgress(downloadSchedulerItem.FinishedSize, downloadSchedulerItem.TotalSize)));
         }
 
@@ -45,6 +49,8 @@ namespace GetStoreApp.Services.Shell
 
         public static void OnDownloadCompleted(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
         {
+            UnreferenceHelper.Unreference(downloadID);
+
             ConsoleHelper.SetTextColor(0x02);
             ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCompleted"), downloadSchedulerItem.FileName));
             ConsoleHelper.ResetTextColor();

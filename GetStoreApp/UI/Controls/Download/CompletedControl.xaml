@@ -63,7 +63,14 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeCompletedCountInfo(CompletedCollection.Count), Mode=OneWay}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Download/CompletedEmpty')}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(CompletedCollection.Count), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Column="3"
+            VerticalAlignment="Center"
+            Text="{x:Bind sys:String.Format(CompletedCountInfo, CompletedCollection.Count), Mode=OneWay}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}" />
 
         <StackPanel
             x:Name="NormalMode"

@@ -61,7 +61,7 @@
                 QuerySubmitted="{x:Bind OnQuerySubmitted}"
                 Text="{x:Bind SearchText, Mode=OneWay}"
                 TextChanged="{x:Bind OnTextChanged}"
-                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppListPageCheck(BreadCollection.Count), Mode=OneWay}">
+                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}">
 
                 <AutoSuggestBox.QueryIcon>
                     <FontIcon FontSize="14" Glyph="&#xE71E;" />
@@ -73,17 +73,17 @@
                 Click="{x:Bind OnInstalledAppsClicked}"
                 Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstalledApps')}"
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstalledAppsToolTip')}"
-                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppListPageCheck(BreadCollection.Count), Mode=OneWay}" />
+                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}" />
         </Grid>
 
         <uc:AppListControl
             x:Name="AppList"
             Grid.Row="1"
-            Visibility="{x:Bind IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}" />
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}" />
 
         <uc:AppInfoControl
             x:Name="AppInfo"
             Grid.Row="1"
-            Visibility="{x:Bind IsCurrentControl(BreadCollection.Count, 2), Mode=OneWay}" />
+            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 2), Mode=OneWay}" />
     </Grid>
 </Page>

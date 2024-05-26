@@ -788,9 +788,15 @@
 
                                 <HyperlinkButton.Content>
                                     <TextBlock
+                                        x:Name="FileNameText"
                                         Text="{x:Bind FileName}"
                                         TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap" />
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
                                 </HyperlinkButton.Content>
                             </HyperlinkButton>
 

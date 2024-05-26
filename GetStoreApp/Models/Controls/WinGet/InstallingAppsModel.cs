@@ -1,5 +1,4 @@
 ﻿using Microsoft.Management.Deployment;
-using Microsoft.UI.Xaml;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.WinGet
@@ -112,21 +111,5 @@ namespace GetStoreApp.Models.Controls.WinGet
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// 检查应用是否处于下载状态
-        /// </summary>
-        public bool IsDownloading(PackageInstallProgressState installProgressState)
-        {
-            return installProgressState is not PackageInstallProgressState.Downloading;
-        }
-
-        /// <summary>
-        /// 检查应用的下载状态
-        /// </summary>
-        public Visibility CheckProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState)
-        {
-            return packageInstallProgressState.Equals(comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
-        }
     }
 }

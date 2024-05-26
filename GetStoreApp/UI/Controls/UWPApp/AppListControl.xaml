@@ -65,7 +65,14 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeUWPAppCountInfo(UwpAppDataCollection.Count), Mode=OneWay}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PackageEmpty')}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(UwpAppDataCollection.Count), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Column="3"
+            VerticalAlignment="Center"
+            Text="{x:Bind sys:String.Format(PackageCountInfo, UwpAppDataCollection.Count), Mode=OneWay}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UwpAppDataCollection.Count), Mode=OneWay}" />
 
         <StackPanel
             Grid.Column="4"
@@ -198,7 +205,7 @@
                                     HorizontalAlignment="Stretch"
                                     Click="{x:Bind OnSignatureRuleClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureStore')}"
-                                    IsChecked="{x:Bind IsSelected(SignType, enum:PackageSignKind.Store), Mode=OneWay}"
+                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Store), Mode=OneWay}"
                                     Tag="{x:Bind enum:PackageSignKind.Store}" />
 
                                 <ToggleButton
@@ -207,7 +214,7 @@
                                     HorizontalAlignment="Stretch"
                                     Click="{x:Bind OnSignatureRuleClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureSystem')}"
-                                    IsChecked="{x:Bind IsSelected(SignType, enum:PackageSignKind.System), Mode=OneWay}"
+                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.System), Mode=OneWay}"
                                     Tag="{x:Bind enum:PackageSignKind.System}" />
 
                                 <ToggleButton
@@ -216,7 +223,7 @@
                                     HorizontalAlignment="Stretch"
                                     Click="{x:Bind OnSignatureRuleClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureEnterprise')}"
-                                    IsChecked="{x:Bind IsSelected(SignType, enum:PackageSignKind.Enterprise), Mode=OneWay}"
+                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Enterprise), Mode=OneWay}"
                                     Tag="{x:Bind enum:PackageSignKind.Enterprise}" />
 
                                 <ToggleButton
@@ -225,7 +232,7 @@
                                     HorizontalAlignment="Stretch"
                                     Click="{x:Bind OnSignatureRuleClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureDeveloper')}"
-                                    IsChecked="{x:Bind IsSelected(SignType, enum:PackageSignKind.Developer), Mode=OneWay}"
+                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Developer), Mode=OneWay}"
                                     Tag="{x:Bind enum:PackageSignKind.Developer}" />
 
                                 <ToggleButton
@@ -234,7 +241,7 @@
                                     HorizontalAlignment="Stretch"
                                     Click="{x:Bind OnSignatureRuleClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('UWPApp/SignatureNone')}"
-                                    IsChecked="{x:Bind IsSelected(SignType, enum:PackageSignKind.None), Mode=OneWay}"
+                                    IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.None), Mode=OneWay}"
                                     Tag="{x:Bind enum:PackageSignKind.None}" />
                             </Grid>
                         </StackPanel>
@@ -511,7 +518,7 @@
                                                             Command="{StaticResource OpenStoreCommand}"
                                                             CommandParameter="{x:Bind Package}"
                                                             Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/OpenStore')}"
-                                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStoreAppCheck(SignatureKind)}" />
+                                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStorePackage(SignatureKind)}" />
 
                                                         <MenuFlyoutItem
                                                             Height="32"
@@ -546,7 +553,7 @@
                                                             Command="{StaticResource UnInstallCommand}"
                                                             CommandParameter="{x:Bind Package}"
                                                             Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/UnInstall')}"
-                                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemAppCheck(SignatureKind)}" />
+                                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}" />
                                                     </MenuFlyout>
                                                 </Button.Flyout>
                                             </Button>

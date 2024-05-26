@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 
 namespace GetStoreApp.Models.Controls.AppUpdate
@@ -122,10 +121,5 @@ namespace GetStoreApp.Models.Controls.AppUpdate
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public Visibility IsDownloading(AppInstallState appInstallState)
-        {
-            return appInstallState is AppInstallState.Downloading ? Visibility.Visible : Visibility.Collapsed;
-        }
     }
 }

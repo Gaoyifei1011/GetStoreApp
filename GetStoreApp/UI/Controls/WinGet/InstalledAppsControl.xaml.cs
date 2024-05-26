@@ -30,6 +30,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         private AutoResetEvent autoResetEvent;
         private PackageManager installedAppsManager;
 
+        private string InstalledAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo");
+
         private bool _isLoadedCompleted = false;
 
         public bool IsLoadedCompleted
@@ -128,6 +130,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string appId = args.Parameter as string;
             if (appId is not null)
             {
@@ -143,6 +148,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
 
             if (installedApps is not null)
@@ -180,7 +187,8 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
+                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out int processid);
+                                    UnreferenceHelper.Unreference(processid);
                                 }
                             }
 
@@ -228,6 +236,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             if (!isInitialized)
             {
                 try
@@ -250,6 +261,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -263,6 +276,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -276,6 +291,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
@@ -288,6 +306,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             if (!string.IsNullOrEmpty(SearchText))
             {
                 InitializeData(true);
@@ -299,6 +320,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null)
             {
@@ -311,21 +334,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         #endregion 第二部分：已安装应用控件——挂载的事件
-
-        /// <summary>
-        /// 本地化应用数量统计信息
-        /// </summary>
-        private string LocalizeInstalledAppsCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("WinGet/InstalledAppsCountEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo"), count);
-            }
-        }
 
         /// <summary>
         /// 加载系统已安装的应用信息

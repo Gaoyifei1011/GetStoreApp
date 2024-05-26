@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Helpers.Root;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace GetStoreApp.UI.Dialogs.Settings
@@ -18,6 +19,10 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void OnRestartAppsClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             (Application.Current as WinUIApp).Restart();
         }
     }

@@ -197,6 +197,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnActivated(object sender, WindowActivatedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             try
             {
                 if (Visible && SystemBackdrop is not null)
@@ -224,6 +226,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             if (TitlebarMenuFlyout.IsOpen)
             {
                 TitlebarMenuFlyout.Hide();
@@ -327,6 +332,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             overlappedPresenter.Restore();
         }
 
@@ -335,6 +343,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
@@ -348,6 +358,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
@@ -361,6 +373,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             overlappedPresenter.Minimize();
         }
 
@@ -369,6 +384,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             overlappedPresenter.Maximize();
         }
 
@@ -377,6 +395,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             (Application.Current as WinUIApp).Dispose();
         }
 
@@ -389,6 +410,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
+            UnreferenceHelper.Unreference(args);
+
             SetTitleBarColor(sender.ActualTheme);
         }
 
@@ -397,6 +420,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             if (args.Key is VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
             {
                 UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
@@ -416,6 +441,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             bool isPinnedSuccessfully = false;
 
             try
@@ -465,6 +492,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             // 导航控件加载完成后初始化内容
 
             NavigationView navigationView = sender as NavigationView;
@@ -517,6 +546,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
             if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)
             {
@@ -558,6 +590,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Type CurrentPageType = GetCurrentPageType();
             SelectedItem = NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
             IsBackEnabled = CanGoBack();
@@ -568,6 +603,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
             (Application.Current as WinUIApp).Dispose();
@@ -967,9 +1004,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = InfoHelper.SystemVersion.Build >= 22000 ?
-                            new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) :
-                            new Point(localPoint.X, localPoint.Y)
+                                Position = InfoHelper.SystemVersion.Build >= 22000 ? new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new Point(localPoint.X, localPoint.Y)
                             };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);

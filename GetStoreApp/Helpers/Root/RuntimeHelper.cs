@@ -54,7 +54,7 @@ namespace GetStoreApp.Helpers.Root
                 IntPtr token_elevation_type_Ptr = Marshal.AllocHGlobal((int)tetSize);
                 try
                 {
-                    if (Advapi32Library.GetTokenInformation(tokenHandle, TOKEN_INFORMATION_CLASS.TokenElevationType, token_elevation_type_Ptr, tetSize, out _))
+                    if (Advapi32Library.GetTokenInformation(tokenHandle, TOKEN_INFORMATION_CLASS.TokenElevationType, token_elevation_type_Ptr, tetSize, out uint returnLength))
                     {
                         token_elevation_type = (TOKEN_ELEVATION_TYPE)Marshal.ReadInt32(token_elevation_type_Ptr);
                     }

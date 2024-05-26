@@ -57,12 +57,20 @@
             Grid.Column="1"
             VerticalAlignment="Center"
             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Operation')}" />
+
         <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind LocalizeInstalledAppsCountInfo(InstalledAppsCollection.Count), Mode=OneWay}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsCountEmpty')}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstalledAppsCollection.Count), Mode=OneWay}" />
+
+        <TextBlock
+            Grid.Column="3"
+            VerticalAlignment="Center"
+            Text="{x:Bind sys:String.Format(InstalledAppsCountInfo, InstalledAppsCollection.Count), Mode=OneWay}"
+            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstalledAppsCollection.Count), Mode=OneWay}" />
 
         <AutoSuggestBox
             Grid.Column="4"

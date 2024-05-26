@@ -42,6 +42,8 @@ namespace GetStoreApp.Views.Pages
 
         private readonly Dictionary<string, AppInstallItem> AppInstallingDict = [];
 
+        private string AppUpdateCountInfo { get; } = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
+
         private bool _isInitialized;
 
         public bool IsInitialized
@@ -106,6 +108,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             string packageFamilyName = args.Parameter as string;
 
             if (packageFamilyName is not null)
@@ -153,6 +157,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             string packageFamilyName = args.Parameter as string;
 
             if (packageFamilyName is not null)
@@ -202,6 +208,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnOpenStoreClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
         }
 
@@ -210,6 +219,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnInsiderProgramClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsinsider"));
         }
 
@@ -218,6 +230,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             IsLoadedCompleted = false;
 
             if (!IsInitialized) IsInitialized = true;
@@ -294,6 +309,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUpdateAllClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
             {
                 if (!appUpdateItem.IsUpdating)
@@ -403,24 +421,9 @@ namespace GetStoreApp.Views.Pages
         #endregion 第三部分：自定义事件
 
         /// <summary>
-        /// 本地化应用更新数量统计信息
-        /// </summary>
-        public string LocalizeAppUpdateCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("AppUpdate/AppUpdateEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo"), count);
-            }
-        }
-
-        /// <summary>
         /// 获取应用安装的描述信息
         /// </summary>
-        private string GetInstallInformation(AppInstallState appInstallState, AppInstallStatus appInstallStatus)
+        private static string GetInstallInformation(AppInstallState appInstallState, AppInstallStatus appInstallStatus)
         {
             return appInstallState switch
             {

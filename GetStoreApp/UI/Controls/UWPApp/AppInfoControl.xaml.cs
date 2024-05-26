@@ -334,6 +334,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string aumid = args.Parameter as string;
 
             if (!string.IsNullOrEmpty(aumid))
@@ -348,6 +351,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -380,6 +385,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             string displayName = args.Parameter as string;
             if (displayName is not null)
             {
@@ -393,6 +401,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
 
             Task.Run(async () =>
@@ -413,6 +424,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -436,6 +450,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -459,6 +476,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(() =>
             {
                 bool isPinnedSuccessfully = false;
@@ -490,6 +510,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
 
             if (appListEntryItem is not null)
@@ -524,6 +546,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(this);
+            UnreferenceHelper.Unreference(sender);
+
             AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
 
             Task.Run(async () =>
@@ -548,6 +573,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnShowMoreExecuteRequested(object sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             HyperlinkButton hyperlinkButton = args.Parameter as HyperlinkButton;
             if (hyperlinkButton is not null)
             {
@@ -564,6 +591,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnCopyClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             Task.Run(() =>
             {
                 StringBuilder copyBuilder = new();

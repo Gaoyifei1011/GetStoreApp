@@ -30,7 +30,7 @@
             x:Name="WinGetHeader"
             Grid.Row="0"
             Margin="20,0,30,3"
-            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}"
+            x:Load="{x:Bind converter:ValueCheckConverterHelper.IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}"
             ColumnSpacing="5">
 
             <Grid.ColumnDefinitions>
@@ -235,7 +235,7 @@
                                                             FontSize="14"
                                                             Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
                                                             TextAlignment="Right"
-                                                            Visibility="{x:Bind CheckProgressState(InstallProgressState, enum:PackageInstallProgressState.Downloading), Mode=OneWay}">
+                                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.Downloading), Mode=OneWay}">
 
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip>
@@ -254,7 +254,7 @@
                                                             FontSize="14"
                                                             Text="/"
                                                             TextAlignment="Right"
-                                                            Visibility="{x:Bind CheckProgressState(InstallProgressState, enum:PackageInstallProgressState.Downloading), Mode=OneWay}" />
+                                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.Downloading), Mode=OneWay}" />
 
                                                         <TextBlock
                                                             Grid.Column="4"
@@ -291,32 +291,32 @@
                                                             <TextBlock
                                                                 FontSize="14"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Queued')}"
-                                                                Visibility="{x:Bind CheckProgressState(InstallProgressState, enum:PackageInstallProgressState.Queued), Mode=OneWay}" />
+                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.Queued), Mode=OneWay}" />
 
                                                             <TextBlock
                                                                 FontSize="14"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Downloading')}"
-                                                                Visibility="{x:Bind CheckProgressState(InstallProgressState, enum:PackageInstallProgressState.Downloading), Mode=OneWay}" />
+                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.Downloading), Mode=OneWay}" />
 
                                                             <TextBlock
                                                                 FontSize="14"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Installing')}"
-                                                                Visibility="{x:Bind CheckProgressState(InstallProgressState, enum:PackageInstallProgressState.Installing), Mode=OneWay}" />
+                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.Installing), Mode=OneWay}" />
 
                                                             <TextBlock
                                                                 FontSize="14"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PostInstall')}"
-                                                                Visibility="{x:Bind CheckProgressState(InstallProgressState, enum:PackageInstallProgressState.PostInstall), Mode=OneWay}" />
+                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.PostInstall), Mode=OneWay}" />
 
                                                             <TextBlock
                                                                 FontSize="14"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Finished')}"
-                                                                Visibility="{x:Bind CheckProgressState(InstallProgressState, enum:PackageInstallProgressState.Finished), Mode=OneWay}" />
+                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.Finished), Mode=OneWay}" />
                                                         </Grid>
 
                                                         <ProgressBar
                                                             Grid.Column="1"
-                                                            IsIndeterminate="{x:Bind IsDownloading(InstallProgressState), Mode=OneWay}"
+                                                            IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageInstallDownloading(InstallProgressState), Mode=OneWay}"
                                                             Value="{x:Bind DownloadProgress, Mode=OneWay}" />
                                                     </Grid>
                                                 </Grid>
@@ -355,7 +355,7 @@
         <Grid
             x:Name="WinGetContent"
             Grid.Row="1"
-            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}">
+            x:Load="{x:Bind converter:ValueCheckConverterHelper.IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}">
 
             <wc:SearchAppsControl x:Name="SearchApps" />
             <wc:InstalledAppsControl x:Name="InstalledApps" />
@@ -369,7 +369,7 @@
             Grid.RowSpan="2"
             Padding="30,0"
             HorizontalAlignment="Center"
-            x:Load="{x:Bind IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:True)}">
+            x:Load="{x:Bind converter:ValueCheckConverterHelper.IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:True)}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

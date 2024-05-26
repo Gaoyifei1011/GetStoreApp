@@ -57,12 +57,20 @@
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('Download/Operation')}" />
+
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind LocalizeDownloadingCountInfo(DownloadingCollection.Count), Mode=OneWay}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadingEmpty')}"
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(DownloadingCollection.Count), Mode=OneWay}" />
+
+            <TextBlock
+                Grid.Column="3"
+                VerticalAlignment="Center"
+                Text="{x:Bind sys:String.Format(DownloadingCountInfo, DownloadingCollection.Count), Mode=OneWay}"
+                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}" />
 
             <StackPanel
                 x:Name="NormalMode"
@@ -283,7 +291,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         Glyph="&#xE74B;"
-                                        Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}" />
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}" />
 
                                     <TextBlock
                                         Grid.Column="2"
@@ -292,7 +300,7 @@
                                         FontSize="16"
                                         Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"
                                         TextAlignment="Right"
-                                        Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip>
@@ -351,7 +359,7 @@
                                     Grid.Row="1"
                                     IsIndeterminate="False"
                                     ShowPaused="{x:Bind sys:Object.Equals(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}"
-                                    Value="{x:Bind DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
+                                    Value="{x:Bind converter:ValueConverterHelper.DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
                             </Grid>
 
                             <ContentControl
@@ -373,7 +381,7 @@
                                         CornerRadius="{StaticResource ControlCornerRadius}"
                                         IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
-                                        Visibility="{x:Bind IsPaused(DownloadStatus), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}">
 
                                         <Button.Content>
                                             <FontIcon FontSize="14" Glyph="&#xE768;" />
@@ -390,7 +398,7 @@
                                         CornerRadius="{StaticResource ControlCornerRadius}"
                                         IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}"
-                                        Visibility="{x:Bind IsDownloading(DownloadStatus), Mode=OneWay}">
+                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}">
 
                                         <Button.Content>
                                             <FontIcon FontSize="14" Glyph="&#xE769;" />

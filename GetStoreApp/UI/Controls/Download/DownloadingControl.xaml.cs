@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
@@ -23,6 +24,8 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class DownloadingControl : Grid, INotifyPropertyChanged
     {
+        private string DownloadingCountInfo { get; } = ResourceService.GetLocalized("Download/DownloadingCountInfo");
+
         private bool _isSelectMode = false;
 
         public bool IsSelectMode
@@ -117,6 +120,8 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             Guid downloadID = (Guid)args.Parameter;
 
             if (downloadID != Guid.Empty)
@@ -139,6 +144,8 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             Guid downloadID = (Guid)args.Parameter;
 
             if (downloadID != Guid.Empty)
@@ -161,6 +168,8 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnPauseExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             Guid downloadID = (Guid)args.Parameter;
 
             if (downloadID != Guid.Empty)
@@ -187,6 +196,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         }
 
@@ -195,6 +207,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnContinueAllClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
                 if (downloadingItem.DownloadStatus is DownloadStatus.Pause)
@@ -210,6 +225,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnPauseAllClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
                 if (downloadingItem.DownloadStatus is DownloadStatus.Downloading)
@@ -225,6 +243,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
                 downloadingItem.IsSelectMode = true;
@@ -239,6 +260,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
                 downloadingItem.IsSelected = true;
@@ -250,6 +274,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
                 downloadingItem.IsSelected = false;
@@ -261,6 +288,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             List<DownloadingModel> selectedDownloadingList = [];
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
@@ -313,6 +343,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             IsSelectMode = false;
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
@@ -326,6 +359,8 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             DownloadingModel downloadingItem = (DownloadingModel)args.InvokedItem;
             int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
 
@@ -486,20 +521,5 @@ namespace GetStoreApp.UI.Controls.Download
         }
 
         #endregion 第三部分：自定义事件
-
-        /// <summary>
-        /// 本地化正在下载完成数量统计信息
-        /// </summary>
-        private string LocalizeDownloadingCountInfo(int count)
-        {
-            if (count is 0)
-            {
-                return ResourceService.GetLocalized("Download/DownloadingEmpty");
-            }
-            else
-            {
-                return string.Format(ResourceService.GetLocalized("Download/DownloadingCountInfo"), count);
-            }
-        }
     }
 }

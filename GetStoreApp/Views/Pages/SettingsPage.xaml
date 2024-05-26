@@ -334,7 +334,7 @@
                         MinWidth="0"
                         Margin="0,-2,0,0"
                         FlowDirection="RightToLeft"
-                        IsEnabled="{x:Bind converter:ValueConverterHelper.ObjectCompareReverseConvert(Backdrop.Value, BackdropList[0].Value), Mode=OneWay}"
+                        IsEnabled="{x:Bind converter:ValueCheckConverterHelper.ObjectCompareReverseConvert(Backdrop.Value, BackdropList[0].Value), Mode=OneWay}"
                         IsEnabledChanged="{x:Bind OnIsEnabledChanged}"
                         IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
@@ -968,10 +968,10 @@
 
                                                 <MenuFlyoutSeparator
                                                     x:Name="FlyoutSeperator"
-                                                    x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
+                                                    x:Load="{x:Bind converter:ValueCheckConverterHelper.IsVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
                                                     Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-                                                <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind IsBothVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}">
+                                                <Grid x:Name="WinGetVersionSwitch" x:Load="{x:Bind converter:ValueCheckConverterHelper.IsVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
                                                         <ColumnDefinition Width="Auto" />
@@ -1100,7 +1100,7 @@
                                     Grid.Column="1"
                                     Click="{x:Bind OnOpenWinGetSettingsClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
-                                    IsEnabled="{x:Bind IsWinGetExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
+                                    IsEnabled="{x:Bind converter:ValueCheckConverterHelper.IsVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
                             </Grid>
                         </StackPanel>

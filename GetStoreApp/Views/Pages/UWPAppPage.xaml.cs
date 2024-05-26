@@ -1,3 +1,4 @@
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -66,6 +67,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnInstalledAppsClicked(object sender, RoutedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
         }
 
@@ -74,6 +78,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             DictionaryEntry breadItem = (DictionaryEntry)args.Item;
             if (BreadCollection.Count is 2)
             {
@@ -89,6 +96,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+            UnreferenceHelper.Unreference(args);
+
             if (!string.IsNullOrEmpty(SearchText))
             {
                 AppList.SearchText = SearchText;
@@ -101,6 +111,8 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            UnreferenceHelper.Unreference(args);
+
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null)
             {
@@ -136,14 +148,6 @@ namespace GetStoreApp.Views.Pages
             {
                 BreadCollection.RemoveAt(1);
             }
-        }
-
-        /// <summary>
-        /// 确定当前选择的索引是否为目标控件
-        /// </summary>
-        private Visibility IsCurrentControl(int selectedIndex, int index)
-        {
-            return selectedIndex.Equals(index) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

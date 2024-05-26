@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
@@ -73,6 +74,8 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            UnreferenceHelper.Unreference(sender);
+
             args.Cancel = true;
 
             foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
@@ -82,25 +85,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
             IsCleaning = true;
             TraceCleanup();
-        }
-
-        private bool IsButtonEnabled(bool isSelected, bool isCleaning)
-        {
-            if (isCleaning)
-            {
-                return false;
-            }
-            else
-            {
-                if (isSelected)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
         }
 
         /// <summary>
