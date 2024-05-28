@@ -25,6 +25,9 @@ using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
 
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
+
 namespace GetStoreApp.UI.Controls.Download
 {
     /// <summary>
@@ -105,8 +108,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             CompletedModel completedItem = args.Parameter as CompletedModel;
             if (completedItem is not null)
             {
@@ -137,8 +138,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteWithFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             CompletedModel completedItem = args.Parameter as CompletedModel;
             if (completedItem is not null)
             {
@@ -182,8 +181,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnFileInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             CompletedModel completedItem = args.Parameter as CompletedModel;
 
             if (completedItem is not null && File.Exists(completedItem.FilePath))
@@ -201,8 +198,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             CompletedModel completedItem = args.Parameter as CompletedModel;
             if (completedItem is not null && File.Exists(completedItem.FilePath))
             {
@@ -211,8 +206,7 @@ namespace GetStoreApp.UI.Controls.Download
                     // 普通应用：直接安装
                     if (completedItem.FilePath.EndsWith(".exe") || completedItem.FileName.EndsWith(".msi"))
                     {
-                        ProcessHelper.StartProcess("explorer.exe ", completedItem.FilePath, out int processid);
-                        UnreferenceHelper.Unreference(processid);
+                        ProcessHelper.StartProcess("explorer.exe ", completedItem.FilePath, out _);
                     }
                     // 商店打包应用：使用应用安装程序安装或直接安装
                     else
@@ -334,9 +328,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnOpenItemFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             string filePath = args.Parameter as string;
             Task.Run(async () =>
             {
@@ -376,9 +367,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             CompletedModel completedItem = args.Parameter as CompletedModel;
 
             if (completedItem is not null && File.Exists(completedItem.FilePath))
@@ -419,9 +407,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
         }
 
@@ -430,9 +415,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelectMode = true;
@@ -447,9 +429,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectAllClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelected = true;
@@ -461,9 +440,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             foreach (CompletedModel completedItem in CompletedCollection)
             {
                 completedItem.IsSelected = false;
@@ -475,9 +451,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             List<CompletedModel> selectedCompletedDataList = [];
 
             foreach (CompletedModel completedItem in CompletedCollection)
@@ -531,9 +504,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteSelectedWithFileClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             List<CompletedModel> selectedCompletedDataList = [];
 
             foreach (CompletedModel completedItem in CompletedCollection)
@@ -600,9 +570,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnShareSelectedFileClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             Task.Run(() =>
             {
                 List<CompletedModel> selectedCompletedDataList = [];
@@ -673,9 +640,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnCancelClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             IsSelectMode = false;
 
             foreach (CompletedModel completedItem in CompletedCollection)
@@ -689,8 +653,6 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             CompletedModel completedItem = (CompletedModel)args.InvokedItem;
             int clickedIndex = CompletedCollection.IndexOf(completedItem);
 

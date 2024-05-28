@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
@@ -39,8 +42,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             string appId = args.Parameter as string;
             if (appId is not null)
             {
@@ -88,8 +89,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             SelectorBar selectorBar = sender as SelectorBar;
 
             if (selectorBar is not null && selectorBar.SelectedItem is not null)
@@ -125,9 +124,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (ValueCheckConverterHelper.IsWinGetExisted(WinGetService.IsOfficialVersionExisted, WinGetService.IsDevVersionExisted, false))
             {
                 if (!isInitialized)
@@ -149,9 +145,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             TaskManagerFlyout.Hide();
         }
 
@@ -160,11 +153,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnControlPanelClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
-            ProcessHelper.StartProcess("control.exe", "appwiz.cpl", out int processid);
-            UnreferenceHelper.Unreference(processid);
+            ProcessHelper.StartProcess("control.exe", "appwiz.cpl", out _);
         }
 
         /// <summary>
@@ -172,9 +161,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager"));
         }
 
@@ -183,9 +169,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/ProductId=9NBLGGH4NNS1"));
         }
 
@@ -194,9 +177,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
         }
 

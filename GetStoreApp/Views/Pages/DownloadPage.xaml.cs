@@ -1,9 +1,11 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -37,8 +39,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             SelectorBar selectorBar = sender as SelectorBar;
 
             if (selectorBar is not null && selectorBar.SelectedItem is not null)
@@ -63,9 +63,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             DownloadFlyout.Hide();
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
@@ -75,9 +72,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             DownloadFlyout.Hide();
             MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }

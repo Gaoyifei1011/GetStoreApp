@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Dialogs.Settings;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
@@ -8,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
 
 namespace GetStoreApp.UI.Dialogs.Settings
 {
@@ -74,8 +76,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             args.Cancel = true;
 
             foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)

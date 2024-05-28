@@ -29,6 +29,9 @@ using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 using Windows.Web.Http;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
@@ -108,9 +111,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             double currentScrollPosition = AboutScroll.VerticalOffset;
             Point currentPoint = new(0, (int)currentScrollPosition);
 
@@ -141,9 +141,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             Task.Run(() =>
             {
                 bool isCreatedSuccessfully = false;
@@ -175,9 +172,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             Task.Run(async () =>
             {
                 bool isPinnedSuccessfully = false;
@@ -214,9 +208,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             Task.Run(async () =>
             {
                 bool isPinnedSuccessfully = false;
@@ -259,9 +250,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
         }
 
@@ -270,9 +258,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnShowLicenseClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await ContentDialogHelper.ShowAsync(new LicenseDialog(), this);
         }
 
@@ -281,9 +266,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnHelpTranslateClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/pulls"));
         }
 
@@ -292,9 +274,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnProjectDescriptionClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
         }
 
@@ -303,9 +282,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnSendFeedbackClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/issues"));
         }
 
@@ -314,9 +290,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (!IsChecking)
             {
                 IsChecking = true;
@@ -405,9 +378,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDesktopLaunchClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await ContentDialogHelper.ShowAsync(new DesktopStartupArgsDialog(), this);
         }
 
@@ -416,9 +386,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnConsoleLaunchClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await ContentDialogHelper.ShowAsync(new ConsoleStartupArgsDialog(), this);
         }
 
@@ -427,9 +394,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCheckNetWorkClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
         }
 
@@ -438,9 +402,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnTroubleShootClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
         }
 
@@ -449,9 +410,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
 
@@ -460,9 +418,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnSystemInformationClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
         }
 
@@ -471,9 +426,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnAppInformationClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await ContentDialogHelper.ShowAsync(new AppInformationDialog(), this);
         }
 
@@ -482,9 +434,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnAppSettingsClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         }
 

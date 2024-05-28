@@ -1,5 +1,4 @@
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.UWPApp;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Pages;
@@ -23,6 +22,9 @@ using Windows.Management.Core;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
+
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.UI.Controls.UWPApp
 {
@@ -161,9 +163,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -187,9 +186,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -214,9 +210,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -240,9 +233,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             Package package = args.Parameter as Package;
             if (package is not null)
             {
@@ -269,9 +259,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             Package package = args.Parameter as Package;
 
             if (package is not null)
@@ -296,7 +283,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             Package package = args.Parameter as Package;
-            UnreferenceHelper.Unreference(sender);
 
             if (package is not null)
             {
@@ -382,8 +368,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             PackageModel packageItem = args.Parameter as PackageModel;
             UWPAppPage uwpAppPage = MainWindow.Current.GetFrameContent() as UWPAppPage;
 
@@ -591,9 +575,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (!isInitialized)
             {
                 Task.Delay(500);
@@ -608,8 +589,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -623,8 +602,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -638,9 +615,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnFilterWayClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             IsFramework = !IsFramework;
             needToRefreshData = true;
         }
@@ -650,8 +624,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             ToggleButton toggleButton = sender as ToggleButton;
             if (toggleButton is not null)
             {
@@ -673,9 +645,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
@@ -689,9 +658,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnClosed(object sender, object args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (needToRefreshData)
             {
                 InitializeData();

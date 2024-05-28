@@ -18,6 +18,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
+
 namespace GetStoreApp.UI.Controls.WinGet
 {
     /// <summary>
@@ -130,9 +133,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(this);
-            UnreferenceHelper.Unreference(sender);
-
             string appId = args.Parameter as string;
             if (appId is not null)
             {
@@ -148,8 +148,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
 
             if (installedApps is not null)
@@ -187,8 +185,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out int processid);
-                                    UnreferenceHelper.Unreference(processid);
+                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
                                 }
                             }
 
@@ -236,9 +233,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (!isInitialized)
             {
                 try
@@ -261,8 +255,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -276,8 +268,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
             if (toggleMenuFlyoutItem is not null)
             {
@@ -291,9 +281,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
@@ -306,9 +293,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (!string.IsNullOrEmpty(SearchText))
             {
                 InitializeData(true);
@@ -320,8 +304,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null)
             {

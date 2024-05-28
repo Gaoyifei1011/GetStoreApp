@@ -6,11 +6,11 @@ using System.Runtime.Versioning;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("Copyright ©2022-2024 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("获取商店应用")]
-[assembly: AssemblyFileVersion("3.10.526.0")]
-[assembly: AssemblyInformationalVersion("3.10.526.0")]
+[assembly: AssemblyFileVersion("3.10.528.0")]
+[assembly: AssemblyInformationalVersion("3.10.528.0")]
 [assembly: AssemblyProduct("获取商店应用")]
 [assembly: AssemblyTitle("获取商店应用")]
-[assembly: AssemblyVersion("3.10.526.0")]
+[assembly: AssemblyVersion("3.10.528.0")]
 
 // 应用程序默认区域性的资源控制器设置
 [assembly: NeutralResourcesLanguage("en-us")]

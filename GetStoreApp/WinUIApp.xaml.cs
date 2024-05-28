@@ -125,8 +125,8 @@ namespace GetStoreApp
         public void Restart()
         {
             MainWindow.Current.AppWindow.Hide();
-            ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), "Restart", out int processid);
-            UnreferenceHelper.Unreference(processid);
+            ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), "Restart", out _);
+
             Dispose();
         }
 

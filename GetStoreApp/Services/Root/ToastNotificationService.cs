@@ -57,8 +57,7 @@ namespace GetStoreApp.Services.Root
                 if (splitList.Length > 1)
                 {
                     string appId = splitList[1];
-                    ProcessHelper.StartProcess("winget.exe", string.Format("install {0}", appId), out int processid);
-                    UnreferenceHelper.Unreference(processid);
+                    ProcessHelper.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
                 }
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }

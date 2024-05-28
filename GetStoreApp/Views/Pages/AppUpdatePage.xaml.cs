@@ -17,6 +17,9 @@ using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.System;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
@@ -108,8 +111,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             string packageFamilyName = args.Parameter as string;
 
             if (packageFamilyName is not null)
@@ -157,8 +158,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             string packageFamilyName = args.Parameter as string;
 
             if (packageFamilyName is not null)
@@ -208,9 +207,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnOpenStoreClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-windows-store://downloadsandupdates"));
         }
 
@@ -219,9 +215,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnInsiderProgramClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-settings:windowsinsider"));
         }
 
@@ -230,9 +223,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             IsLoadedCompleted = false;
 
             if (!IsInitialized) IsInitialized = true;
@@ -309,9 +299,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUpdateAllClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
             {
                 if (!appUpdateItem.IsUpdating)

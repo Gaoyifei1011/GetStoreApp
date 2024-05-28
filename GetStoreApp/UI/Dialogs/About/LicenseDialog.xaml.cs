@@ -1,9 +1,11 @@
-﻿using GetStoreApp.Helpers.Root;
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Text;
+
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
 
 namespace GetStoreApp.UI.Dialogs.About
 {
@@ -40,9 +42,6 @@ namespace GetStoreApp.UI.Dialogs.About
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/LICENSE"));
         }
     }

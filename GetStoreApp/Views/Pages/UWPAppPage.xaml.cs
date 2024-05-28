@@ -1,4 +1,3 @@
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,6 +7,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Windows.System;
+
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -67,9 +69,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnInstalledAppsClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
         }
 
@@ -78,9 +77,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             DictionaryEntry breadItem = (DictionaryEntry)args.Item;
             if (BreadCollection.Count is 2)
             {
@@ -96,9 +92,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (!string.IsNullOrEmpty(SearchText))
             {
                 AppList.SearchText = SearchText;
@@ -111,8 +104,6 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
             if (autoSuggestBox is not null)
             {

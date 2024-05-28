@@ -1,6 +1,5 @@
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreAppWebView.Helpers.Controls.Extensions;
-using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.UI.Dialogs.Common;
@@ -27,6 +26,9 @@ using Windows.System;
 using Windows.UI;
 using Windows.Web.UI;
 using Windows.Web.UI.Interop;
+
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
 
 namespace GetStoreAppWebView.Windows
 {
@@ -171,9 +173,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnSizeChanged(object sender, WindowSizeChangedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (TitlebarMenuFlyout.IsOpen)
             {
                 TitlebarMenuFlyout.Hide();
@@ -244,9 +243,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             overlappedPresenter.Restore();
         }
 
@@ -255,8 +251,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
@@ -270,8 +264,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(args);
-
             MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
             if (menuItem.Tag is not null)
             {
@@ -285,9 +277,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             overlappedPresenter.Minimize();
         }
 
@@ -296,9 +285,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             overlappedPresenter.Maximize();
         }
 
@@ -307,9 +293,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             (Application.Current as WebApp).Dispose();
         }
 
@@ -322,8 +305,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
-            UnreferenceHelper.Unreference(args);
-
             SetTitleBarColor(sender.ActualTheme);
         }
 
@@ -336,9 +317,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 webViewControlProcess = new WebViewControlProcess();
@@ -434,9 +412,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnBrowserBackClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 if (webViewControl is not null && webViewControl.CanGoBack)
@@ -458,9 +433,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnBrowserForwardClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 if (webViewControl is not null && webViewControl.CanGoForward)
@@ -482,9 +454,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 webViewControl?.Refresh();
@@ -501,9 +470,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private async void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
             {
                 await Launcher.LaunchFolderPathAsync(UserDataPaths.GetDefault().Downloads);
@@ -522,9 +488,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private async void OnOpenWithBrowserClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             await Launcher.LaunchUriAsync(new Uri("https://store.rg-adguard.net"));
         }
 
@@ -533,9 +496,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnOpenCacheFolderClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             Task.Run(async () =>
             {
                 if (Directory.Exists(Path.Combine(ApplicationData.Current.LocalFolder.Path, "EbWebView")))
@@ -554,9 +514,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private async void OnClearWebCacheClicked(object sender, RoutedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
                 if (WebView2Browser is not null && WebView2Browser.CoreWebView2 is not null)
@@ -571,8 +528,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-
             StringBuilder processFailedBuilder = new();
             processFailedBuilder.Append("ProcessFailedKind:");
             processFailedBuilder.Append(args.ProcessFailedKind.ToString());
@@ -598,9 +553,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnCoreWebView2Initialized(object sender, CoreWebView2InitializedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             WebView2Browser.CoreWebView2.NewWindowRequested += OnNewWindowRequested;
             WebView2Browser.CoreWebView2.SourceChanged += OnSourceChanged;
             IsEnabled = true;
@@ -611,9 +563,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnWebView2NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             IsLoading = true;
         }
 
@@ -622,9 +571,6 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnWebView2NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
-            UnreferenceHelper.Unreference(sender);
-            UnreferenceHelper.Unreference(args);
-
             IsLoading = false;
             Title = string.Format("{0} - {1}", WebView2Browser.CoreWebView2.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
         }
