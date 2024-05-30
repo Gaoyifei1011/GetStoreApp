@@ -27,8 +27,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <SelfContained>true</SelfContained>
     <StartupObject>GetStoreApp.Program</StartupObject>
-    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
@@ -38,7 +39,7 @@
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.22621.33</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.1</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -62,13 +63,13 @@
     <Content Remove="EmbedAssets\wu.xml" />
 
     <Manifest Include="$(ApplicationManifest)" />
-    
+
     <MyEmbeddedItems Include="EmbedAssets\cookie.xml" />
     <MyEmbeddedItems Include="EmbedAssets\Lengths.bin" />
     <MyEmbeddedItems Include="EmbedAssets\LICENSE" />
     <MyEmbeddedItems Include="EmbedAssets\url.xml" />
     <MyEmbeddedItems Include="EmbedAssets\wu.xml" />
-    
+
     <None Remove="Assets\LICENSE" />
     <None Remove="Styles\AppbarButton.xaml" />
     <None Remove="Styles\Flyout.xaml" />
@@ -185,6 +186,9 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="WinRT.Host.Shim" />
     <TrimmableAssembly Include="WinRT.Runtime" />
+
+    <WindowsSdkSupportedTargetPlatformVersion Include="10.0.26100.0" WindowsSdkPackageVersion="10.0.26100.1" MinimumNETVersion="6.0" />
+    <SdkSupportedTargetPlatformVersion Include="10.0.26100.0" />
   </ItemGroup>
 
   <!-- 捆绑前对二进制文件进行后处理 -->
@@ -199,7 +203,7 @@
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
     </ItemGroup>
   </Target>
-  
+
   <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->
   <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
     <Copy SourceFiles="@(MyEmbeddedItems)" DestinationFiles="@(MyEmbeddedItems->'$(IntermediateOutputPath)embed\EmbedAssets\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />

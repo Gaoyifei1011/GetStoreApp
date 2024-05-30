@@ -287,7 +287,7 @@
 
                                     <FontIcon
                                         Grid.Column="1"
-                                        Margin="0,0,2,0"
+                                        Margin="0,2,2,0"
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         Glyph="&#xE74B;"

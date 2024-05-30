@@ -28,7 +28,7 @@
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <StartupObject>GetStoreAppWebView.Program</StartupObject>
-    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
@@ -38,7 +38,7 @@
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.22621.33</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.1</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -86,6 +86,9 @@
     <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
     <TrimmableAssembly Include="WinRT.Host.Shim" />
     <TrimmableAssembly Include="WinRT.Runtime" />
+
+    <WindowsSdkSupportedTargetPlatformVersion Include="10.0.26100.0" WindowsSdkPackageVersion="10.0.26100.1" MinimumNETVersion="6.0" />
+    <SdkSupportedTargetPlatformVersion Include="10.0.26100.0" />
   </ItemGroup>
 
   <!-- 捆绑前对二进制文件进行后处理 -->
