@@ -164,14 +164,6 @@ All the content of the program has been developed
 
 ------
 
-### Planned update for version 4.0 (expected to be completed around the release of Windows App SDK 1.6, around September)
-> * Back to Store.rg API parsing store application, provide a variety of channels to parse store application installation package
-> * Added support for Native AOT, reducing binary distribution while improving application speed
-> * Re-architecting the Web browsing section (introducing Edge legacy and WebView2)
-> * Rebuild the download management module, integrate the download page and the incomplete download display page, and use the delivery optimization or background intelligent transmission service of Windows 11 22621+ to replace Aria2 download
-
-------
-
 ### Thanks (Sort by alphabetical order)
 
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;

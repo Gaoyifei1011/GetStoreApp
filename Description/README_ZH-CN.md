@@ -163,14 +163,6 @@
 
 ------
 
-### Planned update for version 4.0 (expected to be completed around the release of Windows App SDK 1.6, around September)
-> * 带回 Store.rg API 的解析商店应用方式，提供多种渠道解析商店应用安装包
-> * 添加对 Native AOT 的支持，减少二进制分发的同时，提升应用的运行速度
-> * 重新构建网页浏览部分（引入 Edge legacy 和 WebView2）
-> * 重新构建下载管理模块，整合正在下载页面和未完成下载展示页面，使用 Windows 11 22621+ 自带的传递优化或后台智能传输服务替代 Aria2 下载
-
-------
-
 ### 感谢（按英文首字母排序）
 
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
