@@ -70,6 +70,7 @@ namespace GetStoreApp.Views.Pages
         [
             new DictionaryEntry("AndromedaMelody", "https://github.com/AndromedaMelody"),
             new DictionaryEntry("cnbluefire", "https://github.com/cnbluefire"),
+            new DictionaryEntry("GreenShadeZhang", "https://github.com/GreenShadeZhang"),
             new DictionaryEntry("hez2010", "https://github.com/hez2010"),
             new DictionaryEntry("飞翔", "https://fionlen.azurewebsites.net"),
             new DictionaryEntry("MouriNaruto", "https://github.com/MouriNaruto"),
