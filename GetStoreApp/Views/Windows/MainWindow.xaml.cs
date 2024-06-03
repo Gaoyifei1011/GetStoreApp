@@ -13,6 +13,7 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -37,6 +38,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.StartScreen;
+
 using WinRT.Interop;
 
 // 抑制 IDE0060 警告
@@ -150,9 +152,10 @@ namespace GetStoreApp.Views.Windows
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
-            // 标题栏设置
+            // 标题栏和右键菜单设置
             SetTitleBar(AppTitlebar);
-            SetTitleBarColor((Content as FrameworkElement).ActualTheme);
+            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -392,7 +395,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
-            SetTitleBarColor(sender.ActualTheme);
+            SetTitleBarTheme(sender.ActualTheme);
+            SetClassicMenuTheme(sender.ActualTheme);
         }
 
         /// <summary>
@@ -683,9 +687,9 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 设置标题栏按钮的颜色
+        /// 设置标题栏按钮的主题色
         /// </summary>
-        private void SetTitleBarColor(ElementTheme theme)
+        private void SetTitleBarTheme(ElementTheme theme)
         {
             AppWindowTitleBar titleBar = AppWindow.TitleBar;
 
@@ -714,6 +718,23 @@ namespace GetStoreApp.Views.Windows
                 titleBar.ButtonPressedForegroundColor = Colors.White;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
             }
+        }
+
+        /// <summary>
+        /// 设置传统菜单标题栏按钮的主题色
+        /// </summary>
+        private static void SetClassicMenuTheme(ElementTheme theme)
+        {
+            if (theme is ElementTheme.Light)
+            {
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+            }
+            else
+            {
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+            }
+
+            UxthemeLibrary.FlushMenuThemes();
         }
 
         /// <summary>

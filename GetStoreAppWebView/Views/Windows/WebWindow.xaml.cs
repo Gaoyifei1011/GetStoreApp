@@ -5,6 +5,7 @@ using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.UI.Dialogs.Common;
 using GetStoreAppWebView.WindowsAPI.PInvoke.Comctl32;
 using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
+using GetStoreAppWebView.WindowsAPI.PInvoke.Uxtheme;
 using Microsoft.UI;
 using Microsoft.UI.Content;
 using Microsoft.UI.Windowing;
@@ -144,9 +145,10 @@ namespace GetStoreAppWebView.Windows
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
-            // 标题栏设置
+            // 标题栏和右键菜单设置
             SetTitleBar(AppTitlebar);
-            SetTitleBarColor((Content as FrameworkElement).ActualTheme);
+            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+            SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -305,7 +307,8 @@ namespace GetStoreAppWebView.Windows
         /// </summary>
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
-            SetTitleBarColor(sender.ActualTheme);
+            SetTitleBarTheme(sender.ActualTheme);
+            SetClassicMenuTheme(sender.ActualTheme);
         }
 
         #endregion 第四部分：窗口内容挂载的事件
@@ -605,9 +608,9 @@ namespace GetStoreAppWebView.Windows
         #region 第六部分：窗口属性设置
 
         /// <summary>
-        /// 设置标题栏按钮的颜色
+        /// 设置标题栏按钮的主题色
         /// </summary>
-        private void SetTitleBarColor(ElementTheme theme)
+        private void SetTitleBarTheme(ElementTheme theme)
         {
             AppWindowTitleBar titleBar = AppWindow.TitleBar;
 
@@ -638,6 +641,23 @@ namespace GetStoreAppWebView.Windows
                 titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
             }
+        }
+
+        /// <summary>
+        /// 设置传统菜单标题栏按钮的主题色
+        /// </summary>
+        private static void SetClassicMenuTheme(ElementTheme theme)
+        {
+            if (theme is ElementTheme.Light)
+            {
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+            }
+            else
+            {
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+            }
+
+            UxthemeLibrary.FlushMenuThemes();
         }
 
         #endregion 第六部分：窗口属性设置
