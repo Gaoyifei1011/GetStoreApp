@@ -38,6 +38,7 @@ namespace GetStoreApp
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             base.OnLaunched(args);
+
             Window = new MainWindow();
             MainWindow.Current.Show(true);
             SetAppIcon();
@@ -161,12 +162,12 @@ namespace GetStoreApp
                     User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
                 }
 
-                MainWindow.Current.SaveWindowInformation();
+                MainWindow.Current?.SaveWindowInformation();
                 DownloadSchedulerService.CloseDownloadScheduler(true);
                 isDisposed = true;
             }
 
-            Environment.Exit(Environment.ExitCode);
+            Exit();
         }
     }
 }

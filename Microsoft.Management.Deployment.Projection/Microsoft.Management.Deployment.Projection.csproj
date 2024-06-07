@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
-    <CSWinRTWindowsMetadata>10.0.26100.0</CSWinRTWindowsMetadata>
+    <CSWinRTWindowsMetadata>10.0.22621.0</CSWinRTWindowsMetadata>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsTrimmable>true</IsTrimmable>
     <Platforms>x64;x86;ARM64</Platforms>
-    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+	<PublishTrimmed>true</PublishTrimmed>
+	<TrimMode>full</TrimMode>
+    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <WindowsSdkPackageVersion>10.0.26100.1</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.22621.35-preview</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -35,7 +36,7 @@
     <Content Include="$(TargetDir)\winrtact.dll" ExcludeFromSingleFile="true" Link="winrtact.dll" CopyToOutputDirectory="Always" />
 
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.7.11261" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.7" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.0-prerelease.240602.1" />
     
     <WindowsSdkSupportedTargetPlatformVersion Include="10.0.26100.0" WindowsSdkPackageVersion="10.0.26100.1" MinimumNETVersion="6.0" />
     <SdkSupportedTargetPlatformVersion Include="10.0.26100.0" />

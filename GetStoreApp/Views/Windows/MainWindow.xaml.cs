@@ -38,7 +38,6 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.StartScreen;
-
 using WinRT.Interop;
 
 // 抑制 IDE0060 警告
@@ -153,8 +152,6 @@ namespace GetStoreApp.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
             // 标题栏和右键菜单设置
-            SetTitleBar(AppTitlebar);
-            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
             // 挂载相应的事件
@@ -472,6 +469,8 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+
             // 导航控件加载完成后初始化内容
 
             NavigationView navigationView = sender as NavigationView;

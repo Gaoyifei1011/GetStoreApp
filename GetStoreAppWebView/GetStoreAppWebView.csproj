@@ -23,14 +23,14 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSingleFile>True</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
+	<PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <StartupObject>GetStoreAppWebView.Program</StartupObject>
-    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <TrimMode>partial</TrimMode>
+    <TrimMode>full</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
@@ -38,7 +38,7 @@
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.26100.1</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.22621.35-preview</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -62,12 +62,12 @@
     <None Remove="WebApp.xaml" />
     <None Remove="WebWindow.xaml" />
 
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240428000" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240531000-experimental1" GeneratePathProperty="true" />
 
     <Page Remove="WebApp.xaml" />
 
-    <Page Update="UI\Dialogs\ProcessFailedDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="WebWindow.xaml" Generator="MSBuild:Compile" />
+    <Page Update="UI\Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="WebWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
     <TrimmableAssembly Include="Microsoft.Management.Deployment.Projection" />
@@ -95,12 +95,5 @@
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
     <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
-  </Target>
-
-  <!-- 不要复制本机引导文件 -->
-  <Target Name="_RemoveWasdkBootstrapDll" BeforeTargets="ResolveReferences">
-    <ItemGroup>
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
-    </ItemGroup>
   </Target>
 </Project>

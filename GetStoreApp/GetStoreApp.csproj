@@ -22,14 +22,14 @@
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>False</PublishReadyToRun>
+	<PublishSelfContained>true</PublishSelfContained>
     <PublishSingleFile>True</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <SelfContained>true</SelfContained>
     <StartupObject>GetStoreApp.Program</StartupObject>
-    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimMode>partial</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
@@ -39,7 +39,7 @@
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.26100.1</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.22621.35-preview</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -118,53 +118,53 @@
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="WinUIApp.xaml" />
 
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240428000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240531000-experimental1" />
 
-    <Page Update="Styles\AppBarButton.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\Flyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\HyperlinkButton.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\InfoBar.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Styles\MenuFlyout.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Download\CompletedControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Store\QueryLinksControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\Store\SearchStoreControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\UWPApp\AppInfoControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Controls\UWPApp\AppListControl.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\About\LicenseDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Common\AppRunningDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\CheckUpdateTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\DataCopyTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\DownloadCreateTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\FileLostTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\FolderPickerTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\LanguageChangeTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\LogCleanTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\QuickOperationTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\ShareFailedTip.xaml" Generator="MSBuild:Compile" />
-    <Page Update="UI\TeachingTips\TerminateProcessTip.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Styles\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\Flyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\InfoBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\Store\QueryLinksControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\Store\SearchStoreControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\UWPApp\AppInfoControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Controls\UWPApp\AppListControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\About\LicenseDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Common\AppRunningDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\CheckUpdateTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\DataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\DownloadCreateTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\FileLostTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\FolderPickerTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\LanguageChangeTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\LogCleanTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\QuickOperationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\ShareFailedTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\TerminateProcessTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AboutPage.xaml" />
-    <Page Update="Views\Pages\AppUpdatePage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\DownloadPage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\UWPAppPage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\SettingsPage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\StorePage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Pages\WinGetPage.xaml" Generator="MSBuild:Compile" />
-    <Page Update="Views\Windows\MainWindow.xaml" Generator="MSBuild:Compile" />
+    <Page Update="Views\Pages\AppUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\UWPAppPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\SettingsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\StorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="WinUIApp.xaml" />
 
     <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
