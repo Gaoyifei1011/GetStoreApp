@@ -6,7 +6,6 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -118,17 +117,6 @@ namespace GetStoreApp
             {
                 MainWindow.Current.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
             }
-        }
-
-        /// <summary>
-        /// 重启应用
-        /// </summary>
-        public void Restart()
-        {
-            MainWindow.Current.AppWindow.Hide();
-            ProcessHelper.StartProcess(Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreApp.exe"), "Restart", out _);
-
-            Dispose();
         }
 
         /// <summary>

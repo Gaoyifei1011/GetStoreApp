@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
+	  <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <CSWinRTWindowsMetadata>10.0.22621.0</CSWinRTWindowsMetadata>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsTrimmable>true</IsTrimmable>
     <Platforms>x64;x86;ARM64</Platforms>
-	<PublishTrimmed>true</PublishTrimmed>
-	<TrimMode>full</TrimMode>
+	  <PublishTrimmed>true</PublishTrimmed>
+	  <TrimMode>full</TrimMode>
     <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <WindowsSdkPackageVersion>10.0.22621.35-preview</WindowsSdkPackageVersion>

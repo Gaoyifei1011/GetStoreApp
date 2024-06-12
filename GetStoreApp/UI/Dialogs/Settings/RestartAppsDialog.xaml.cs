@@ -1,5 +1,5 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.AppLifecycle;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -21,7 +21,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// </summary>
         private void OnRestartAppsClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            (Application.Current as WinUIApp).Restart();
+            AppInstance.Restart("Restart");
         }
     }
 }
