@@ -379,7 +379,7 @@ namespace GetStoreApp.UI.Controls.Download
                     {
                         DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                        args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+                        args.Request.Data.Properties.Title = ResourceService.GetLocalized("Download/ShareFileTitle");
                         args.Request.Data.SetStorageItems(new List<StorageFile>() { await StorageFile.GetFileFromPathAsync(completedItem.FilePath) });
                         deferral.Complete();
                     };
@@ -602,7 +602,7 @@ namespace GetStoreApp.UI.Controls.Download
                         {
                             DataRequestDeferral deferral = args.Request.GetDeferral();
 
-                            args.Request.Data.Properties.Title = string.Format(ResourceService.GetLocalized("Download/ShareFileTitle"));
+                            args.Request.Data.Properties.Title = ResourceService.GetLocalized("Download/ShareFileTitle");
 
                             List<StorageFile> selectedFileList = [];
                             foreach (CompletedModel completedItem in selectedCompletedDataList)

@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Shell
 
         public static void OnDownloadProgressing(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
         {
-            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadProgressing"), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.FinishedSize), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.TotalSize), SpeedHelper.ConvertSpeedToString(downloadSchedulerItem.CurrentSpeed), DownloadProgress(downloadSchedulerItem.FinishedSize, downloadSchedulerItem.TotalSize)));
+            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadProgressing"), [FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.FinishedSize), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.TotalSize), SpeedHelper.ConvertSpeedToString(downloadSchedulerItem.CurrentSpeed), DownloadProgress(downloadSchedulerItem.FinishedSize, downloadSchedulerItem.TotalSize)]));
         }
 
         /// <summary>

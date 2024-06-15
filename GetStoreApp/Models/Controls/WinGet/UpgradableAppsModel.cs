@@ -5,7 +5,7 @@ namespace GetStoreApp.Models.Controls.WinGet
     /// <summary>
     /// 可升级应用数据模型
     /// </summary>
-    public class UpgradableAppsModel : INotifyPropertyChanged
+    public partial class UpgradableAppsModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 应用ID

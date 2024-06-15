@@ -6,7 +6,7 @@ namespace GetStoreApp.Models.Dialogs.Settings
     /// <summary>
     /// 清理选项数据模型
     /// </summary>
-    public class TraceCleanupModel : INotifyPropertyChanged
+    public partial class TraceCleanupModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 清理选项是否被选择的标志

@@ -6,7 +6,7 @@ namespace GetStoreApp.Models.Controls.WinGet
     /// <summary>
     /// 正在安装中应用的数据模型
     /// </summary>
-    public class InstallingAppsModel : INotifyPropertyChanged
+    public partial class InstallingAppsModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 应用ID

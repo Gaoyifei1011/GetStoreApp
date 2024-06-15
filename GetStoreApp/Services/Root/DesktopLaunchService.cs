@@ -202,7 +202,7 @@ namespace GetStoreApp.Services.Root
                     // 辅助磁贴启动
                     else if (desktopLaunchArgs.Count is 4 && desktopLaunchArgs[0] is "SecondaryTile")
                     {
-                        sendData = string.Join(' ', desktopLaunchArgs[0], desktopLaunchArgs[1]);
+                        sendData = string.Join(' ', new string[] { desktopLaunchArgs[0], desktopLaunchArgs[1] });
                     }
                     else
                     {

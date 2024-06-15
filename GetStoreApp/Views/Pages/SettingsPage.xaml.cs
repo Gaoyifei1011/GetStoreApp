@@ -351,14 +351,7 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            if (args.Parameter is not null)
-            {
-                settingNavigationArgs = Enum.Parse<AppNaviagtionArgs>(Convert.ToString(args.Parameter));
-            }
-            else
-            {
-                settingNavigationArgs = AppNaviagtionArgs.None;
-            }
+            settingNavigationArgs = args.Parameter is not null ? Enum.Parse<AppNaviagtionArgs>(Convert.ToString(args.Parameter)) : AppNaviagtionArgs.None;
         }
 
         #endregion 第一部分：重写父类事件

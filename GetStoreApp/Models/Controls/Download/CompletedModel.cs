@@ -6,7 +6,7 @@ namespace GetStoreApp.Models.Controls.Download
     /// <summary>
     /// 已下载完成文件信息数据模型
     /// </summary>
-    public class CompletedModel : INotifyPropertyChanged
+    public partial class CompletedModel : INotifyPropertyChanged
     {
         public string InstalledValue = ResourceService.GetLocalized("Download/InstallValue");
 

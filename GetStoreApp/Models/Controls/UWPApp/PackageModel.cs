@@ -7,7 +7,7 @@ namespace GetStoreApp.Models.Controls.UWPApp
     /// <summary>
     /// 应用管理数据模型
     /// </summary>
-    public class PackageModel : INotifyPropertyChanged
+    public partial class PackageModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 是否为框架包

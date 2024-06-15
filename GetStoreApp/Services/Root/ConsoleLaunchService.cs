@@ -96,11 +96,14 @@ namespace GetStoreApp.Services.Root
             ConsoleHelper.SetTitle(ResourceService.GetLocalized("Console/Title"));
 
             ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"),
-                InfoHelper.AppVersion.Major,
-                InfoHelper.AppVersion.Minor,
-                InfoHelper.AppVersion.Build,
-                InfoHelper.AppVersion.Revision
-                ) + Environment.NewLine);
+                new int[]
+                {
+                    InfoHelper.AppVersion.Major,
+                    InfoHelper.AppVersion.Minor,
+                    InfoHelper.AppVersion.Build,
+                    InfoHelper.AppVersion.Revision,
+                }));
+            ConsoleHelper.Write(Environment.NewLine);
             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + Environment.NewLine);
         }

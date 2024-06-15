@@ -7,7 +7,7 @@ namespace GetStoreApp.Models.Controls.Download
     /// <summary>
     /// 正在下载文件信息数据模型
     /// </summary>
-    public class DownloadingModel : INotifyPropertyChanged
+    public partial class DownloadingModel : INotifyPropertyChanged
     {
         /*
         1.下载的通用信息

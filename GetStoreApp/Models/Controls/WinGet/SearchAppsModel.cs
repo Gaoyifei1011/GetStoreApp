@@ -5,7 +5,7 @@ namespace GetStoreApp.Models.Controls.WinGet
     /// <summary>
     /// 搜索应用数据模型
     /// </summary>
-    public class SearchAppsModel : INotifyPropertyChanged
+    public partial class SearchAppsModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 应用ID

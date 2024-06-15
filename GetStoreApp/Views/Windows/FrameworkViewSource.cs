@@ -5,7 +5,7 @@ namespace GetStoreApp.Views.Windows
     /// <summary>
     /// 创建视图，特别是 FrameworkView 实例
     /// </summary>
-    public sealed class FrameworkViewSource : IFrameworkViewSource
+    public sealed partial class FrameworkViewSource : IFrameworkViewSource
     {
         /// <summary>
         /// 创建 FrameworkView

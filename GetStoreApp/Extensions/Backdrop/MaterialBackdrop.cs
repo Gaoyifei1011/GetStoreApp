@@ -11,7 +11,7 @@ namespace GetStoreApp.Extensions.Backdrop
     /// <summary>
     /// 自定义扩展的背景色
     /// </summary>
-    public sealed class MaterialBackdrop : SystemBackdrop
+    public sealed partial class MaterialBackdrop : SystemBackdrop
     {
         private readonly bool isMicaBackdrop;
         private readonly MicaKind micaBackdropKind;

@@ -14,7 +14,7 @@ namespace GetStoreApp.Views.Windows
     /// <summary>
     /// 表示应用程序的 UI 窗口
     /// </summary>
-    public sealed class FrameworkView : IFrameworkView
+    public sealed partial class FrameworkView : IFrameworkView
     {
         /// <summary>
         /// 初始化视图

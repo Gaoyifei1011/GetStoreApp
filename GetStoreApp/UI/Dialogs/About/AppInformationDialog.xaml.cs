@@ -139,11 +139,7 @@ namespace GetStoreApp.UI.Dialogs.About
                         // Windows 应用 SDK 版本信息
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            WindowsAppSDKVersion = string.Format("{0}.{1}.{2}.{3}",
-                                dependency.Id.Version.Major,
-                                dependency.Id.Version.Minor,
-                                dependency.Id.Version.Build,
-                                dependency.Id.Version.Revision);
+                            WindowsAppSDKVersion = new Version(dependency.Id.Version.Major, dependency.Id.Version.Minor, dependency.Id.Version.Build, dependency.Id.Version.Revision).ToString();
                         });
 
                         // WinUI 3 版本信息

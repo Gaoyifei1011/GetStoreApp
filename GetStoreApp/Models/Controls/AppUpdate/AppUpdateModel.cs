@@ -6,7 +6,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
     /// <summary>
     /// 商店应用更新数据模型
     /// </summary>
-    public class AppUpdateModel : INotifyPropertyChanged
+    public partial class AppUpdateModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 标志应用是否处于升级状态

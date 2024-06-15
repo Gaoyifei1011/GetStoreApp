@@ -308,11 +308,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             if (historyItem is not null)
             {
-                string copyContent = string.Format("{0}\t{1}\t{2}\t{3}",
-                    historyItem.HistoryAppName,
-                    historyItem.HistoryType.Value,
-                    historyItem.HistoryChannel.Value,
-                    historyItem.HistoryLink);
+                string copyContent = string.Join('\t', new object[] { historyItem.HistoryAppName, historyItem.HistoryType.Value, historyItem.HistoryChannel.Value, historyItem.HistoryLink });
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
                 TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.History, copyResult, false));

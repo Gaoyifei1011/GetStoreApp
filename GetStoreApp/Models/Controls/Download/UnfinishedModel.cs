@@ -5,7 +5,7 @@ namespace GetStoreApp.Models.Controls.Download
     /// <summary>
     /// 未下载完成文件信息数据模型
     /// </summary>
-    public class UnfinishedModel : INotifyPropertyChanged
+    public partial class UnfinishedModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志

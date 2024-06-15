@@ -360,7 +360,7 @@ namespace GetStoreApp.Services.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource embedData failed."), e);
+                LogService.WriteLog(LoggingLevel.Warning, "Get resource embedData failed.", e);
                 return [];
             }
         }

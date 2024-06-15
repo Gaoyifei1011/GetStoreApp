@@ -20,19 +20,7 @@ namespace GetStoreApp.Views.Pages
             DownloadSelctorBar.SelectedItem = DownloadSelctorBar.Items[0];
         }
 
-        #region 第一部分：重写父类事件
-
-        /// <summary>
-        /// 导航到该页面触发的事件
-        /// </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs args)
-        {
-            base.OnNavigatedTo(args);
-        }
-
-        #endregion 第一部分：重写父类事件
-
-        #region 第二部分：下载页面——挂载的事件
+        #region 第一部分：下载页面——挂载的事件
 
         /// <summary>
         /// 下载透视控件选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
@@ -76,6 +64,6 @@ namespace GetStoreApp.Views.Pages
             MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
-        #endregion 第二部分：下载页面——挂载的事件
+        #endregion 第一部分：下载页面——挂载的事件
     }
 }

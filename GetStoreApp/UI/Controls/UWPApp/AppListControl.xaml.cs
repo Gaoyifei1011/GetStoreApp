@@ -534,12 +534,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                                     {
                                         DisplayName = dependcies[index].DisplayName,
                                         PublisherName = dependcies[index].PublisherDisplayName,
-                                        Version = string.Format("{0}.{1}.{2}.{3}",
-                                            dependcies[index].Id.Version.Major,
-                                            dependcies[index].Id.Version.Minor,
-                                            dependcies[index].Id.Version.Build,
-                                            dependcies[index].Id.Version.Revision
-                                            ),
+                                        Version = new Version(dependcies[index].Id.Version.Major, dependcies[index].Id.Version.Minor, dependcies[index].Id.Version.Build, dependcies[index].Id.Version.Revision).ToString(),
                                         Package = dependcies[index]
                                     });
                                 }
@@ -911,7 +906,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         {
             try
             {
-                return string.Format("{0}.{1}.{2}.{3}", package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision);
+                return new Version(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision).ToString();
             }
             catch
             {
