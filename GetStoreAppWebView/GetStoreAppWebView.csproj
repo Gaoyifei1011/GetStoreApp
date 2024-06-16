@@ -4,6 +4,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppWebView</AssemblyName>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <DebugType>portable</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
@@ -23,14 +24,13 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSingleFile>True</PublishSingleFile>
-	<PublishTrimmed>true</PublishTrimmed>
+    <PublishTrimmed>true</PublishTrimmed>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <StartupObject>GetStoreAppWebView.Program</StartupObject>
     <TargetFramework>net9.0-windows10.0.22621.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <TrimMode>full</TrimMode>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>

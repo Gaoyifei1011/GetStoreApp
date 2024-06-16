@@ -2,7 +2,6 @@
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060

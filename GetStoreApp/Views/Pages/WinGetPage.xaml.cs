@@ -26,7 +26,7 @@ namespace GetStoreApp.Views.Pages
         public readonly Lock installStateLock = new();
         private bool isInitialized;
 
-        public Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = [];
+        internal Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = [];
 
         public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = [];
 
