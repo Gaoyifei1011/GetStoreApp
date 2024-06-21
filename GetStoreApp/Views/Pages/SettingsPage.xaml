@@ -1100,7 +1100,7 @@
                                     Grid.Column="1"
                                     Click="{x:Bind OnOpenWinGetSettingsClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
-                                    IsEnabled="{x:Bind converter:ValueCheckConverterHelper.IsVersionExisted(IsOfficialVersionExisted, IsDevVersionExisted)}"
+                                    IsEnabled="{x:Bind converter:ValueCheckConverterHelper.IsWinGetExisted(IsOfficialVersionExisted, IsDevVersionExisted, x:False)}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
                             </Grid>
                         </StackPanel>

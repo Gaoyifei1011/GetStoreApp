@@ -21,7 +21,7 @@ namespace GetStoreApp.Services.Controls.Download
 
         private static DictionaryEntry doEngineMode;
 
-        public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new SemaphoreSlim(1, 1);
+        public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
 
         private static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
 

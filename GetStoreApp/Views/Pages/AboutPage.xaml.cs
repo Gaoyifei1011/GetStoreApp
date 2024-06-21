@@ -303,15 +303,6 @@ namespace GetStoreApp.Views.Pages
                         // 请求成功
                         if (responseMessage.IsSuccessStatusCode)
                         {
-                            StringBuilder responseBuilder = new();
-
-                            responseBuilder.Append("Status Code:");
-                            responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                            responseBuilder.Append("Headers:");
-                            responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                            responseBuilder.Append("ResponseMessage:");
-                            responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
                             string responseString = await responseMessage.Content.ReadAsStringAsync();
                             httpClient.Dispose();
                             responseMessage.Dispose();

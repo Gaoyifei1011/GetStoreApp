@@ -120,7 +120,6 @@ namespace GetStoreApp
         private static async Task InitializeResourcesAsync(bool isDesktopProgram)
         {
             // 初始化应用资源，应用使用的语言信息和启动参数
-            await LogService.InitializeAsync();
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             ResultService.Initialize();

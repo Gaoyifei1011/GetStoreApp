@@ -72,16 +72,14 @@ namespace GetStoreApp.Helpers.Controls.Store
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     requestResult = true;
-                    StringBuilder responseBuilder = new();
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", responseMessage.StatusCode.ToString() },
+                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                    responseBuilder.Append("Status Code:");
-                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    responseBuilder.Append("Headers:");
-                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    responseBuilder.Append("ResponseMessage:");
-                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
-                    LogService.WriteLog(LoggingLevel.Information, "Search store apps request successfully.", responseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Search store apps request successfully.", responseDict);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();

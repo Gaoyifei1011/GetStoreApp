@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -14,69 +14,58 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class LogService
     {
-        private static readonly string logName = "GetStoreApp";
         private static readonly string unknown = "unknown";
-        private static readonly Lock logLock = new();
-
-        private static bool isInitialized = false;
-
-        private static StorageFolder logFolder;
-
-        /// <summary>
-        /// 初始化日志记录
-        /// </summary>
-        public static async Task InitializeAsync()
-        {
-            try
-            {
-                logFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
-                isInitialized = true;
-            }
-            catch (Exception)
-            {
-                isInitialized = false;
-            }
-        }
+        private static readonly string httpRequestFolderPath = Path.Combine(new string[] { ApplicationData.Current.LocalCacheFolder.Path, "Logs", "HttpRequest" });
+        private static readonly string exceptionFolderPath = Path.Combine(new string[] { ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception" });
+        private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string logContent, StringBuilder logBuilder)
+        public static void WriteLog(LoggingLevel logLevel, string logContent, Dictionary<string, string> loggingInformationDict)
         {
-            if (isInitialized)
+            Task.Run(async () =>
             {
-                Task.Run(() =>
-                {
-                    logLock.Enter();
+                logSemaphoreSlim?.Wait();
 
-                    try
+                try
+                {
+                    if (!Directory.Exists(httpRequestFolderPath))
                     {
-                        File.AppendAllText(
-                            Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}{3}{4}{5}{6}{7}{8}",
-                                new string[]
-                                {
-                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                                    "LogLevel",
-                                    Convert.ToString(logLevel),
-                                    Environment.NewLine,
-                                    "LogContent:",
-                                    logContent,
-                                    Environment.NewLine,
-                                    logBuilder.ToString(),
-                                    Environment.NewLine
-                                }));
+                        Directory.CreateDirectory(httpRequestFolderPath);
                     }
-                    catch (Exception)
+
+                    LoggingSession httpRequestSession = new("Http request log session");
+                    LoggingChannel httpRequestChannel = new("Http request log channel");
+                    LoggingFields httpRequestFields = new();
+                    Guid httpRequestGuid = Guid.NewGuid();
+                    LoggingOptions httpRequestOptions = new()
                     {
-                        return;
-                    }
-                    finally
+                        ActivityId = httpRequestGuid,
+                        RelatedActivityId = httpRequestGuid
+                    };
+
+                    httpRequestSession.AddLoggingChannel(httpRequestChannel);
+                    httpRequestFields.AddString("LogLevel", logLevel.ToString());
+
+                    foreach (KeyValuePair<string, string> logInformationKeyValueItem in loggingInformationDict)
                     {
-                        logLock.Exit();
+                        httpRequestFields.AddString(logInformationKeyValueItem.Key, logInformationKeyValueItem.Value);
                     }
-                });
-            }
+
+                    httpRequestChannel.LogEvent(logContent, httpRequestFields, logLevel, httpRequestOptions);
+                    await httpRequestSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(httpRequestFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), httpRequestGuid.ToString().ToUpper()));
+                    httpRequestSession.Dispose();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                finally
+                {
+                    logSemaphoreSlim?.Release();
+                }
+            });
         }
 
         /// <summary>
@@ -84,51 +73,48 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static void WriteLog(LoggingLevel logLevel, string logContent, Exception exception)
         {
-            if (isInitialized)
+            Task.Run(async () =>
             {
-                Task.Run(() =>
+                logSemaphoreSlim?.Wait();
+
+                try
                 {
-                    logLock.Enter();
+                    if (!Directory.Exists(exceptionFolderPath))
+                    {
+                        Directory.CreateDirectory(exceptionFolderPath);
+                    }
 
-                    try
+                    LoggingSession exceptionSession = new("Exception log session");
+                    LoggingChannel exceptionChannel = new("Exception log channel");
+                    LoggingFields exceptionFields = new();
+                    Guid exceptionGuid = Guid.NewGuid();
+                    LoggingOptions exceptionOptions = new()
                     {
-                        StringBuilder exceptionBuilder = new();
-                        exceptionBuilder.Append("LogContent:");
-                        exceptionBuilder.AppendLine(logContent);
-                        exceptionBuilder.Append("HelpLink:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
-                        exceptionBuilder.Append("Message:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
-                        exceptionBuilder.Append("HResult:");
-                        exceptionBuilder.AppendLine(exception.HResult.ToString());
-                        exceptionBuilder.Append("Source:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
-                        exceptionBuilder.Append("StackTrace:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
+                        ActivityId = exceptionGuid,
+                        RelatedActivityId = exceptionGuid
+                    };
 
-                        File.AppendAllText(
-                            Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}{3}{4}{5}",
-                                new string[]
-                                {
-                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                                    "LogLevel",
-                                    Convert.ToString(logLevel),
-                                    Environment.NewLine,
-                                    exceptionBuilder.ToString(),
-                                    Environment.NewLine
-                                }));
-                    }
-                    catch (Exception)
-                    {
-                        return;
-                    }
-                    finally
-                    {
-                        logLock.Exit();
-                    }
-                });
-            }
+                    exceptionSession.AddLoggingChannel(exceptionChannel);
+                    exceptionFields.AddString("LogLevel", logLevel.ToString());
+                    exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("HResult", exception.HResult.ToString());
+                    exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
+
+                    exceptionChannel.LogEvent(logContent, exceptionFields, logLevel, exceptionOptions);
+                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpper()));
+                    exceptionSession.Dispose();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                finally
+                {
+                    logSemaphoreSlim?.Release();
+                }
+            });
         }
 
         /// <summary>
@@ -136,9 +122,15 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task OpenLogFolderAsync()
         {
-            if (isInitialized)
+            string logFolderPath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "Logs");
+
+            if (Directory.Exists(logFolderPath))
             {
-                await Launcher.LaunchFolderAsync(logFolder);
+                await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(logFolderPath));
+            }
+            else
+            {
+                await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalCacheFolder);
             }
         }
 
@@ -151,10 +143,24 @@ namespace GetStoreApp.Services.Root
             {
                 Task.Run(() =>
                 {
-                    string[] logFiles = Directory.GetFiles(logFolder.Path, "*.log");
-                    foreach (string logFile in logFiles)
+                    if (Directory.Exists(httpRequestFolderPath))
                     {
-                        File.Delete(logFile);
+                        string[] httpRequestLogFiles = Directory.GetFiles(httpRequestFolderPath, "*.etl");
+
+                        foreach (string httpRequestLogFile in httpRequestLogFiles)
+                        {
+                            File.Delete(httpRequestLogFile);
+                        }
+                    }
+
+                    if (Directory.Exists(exceptionFolderPath))
+                    {
+                        string[] exceptionLogFiles = Directory.GetFiles(exceptionFolderPath, "*.etl");
+
+                        foreach (string exceptionLogFile in exceptionLogFiles)
+                        {
+                            File.Delete(exceptionLogFile);
+                        }
                     }
                 });
                 return true;
@@ -163,6 +169,15 @@ namespace GetStoreApp.Services.Root
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 关闭日志记录服务
+        /// </summary>
+        public static void CloseLog()
+        {
+            logSemaphoreSlim.Dispose();
+            logSemaphoreSlim = null;
         }
     }
 }

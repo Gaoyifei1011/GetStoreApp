@@ -69,16 +69,14 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new();
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", responseMessage.StatusCode.ToString() },
+                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                    responseBuilder.Append("Status Code:");
-                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    responseBuilder.Append("Headers:");
-                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    responseBuilder.Append("ResponseMessage:");
-                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
-                    LogService.WriteLog(LoggingLevel.Information, "Cookie request successfully.", responseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Cookie request successfully.", responseDict);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -147,16 +145,14 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new();
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", responseMessage.StatusCode.ToString() },
+                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                    responseBuilder.Append("Status Code:");
-                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    responseBuilder.Append("Headers:");
-                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    responseBuilder.Append("ResponseMessage:");
-                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
-                    LogService.WriteLog(LoggingLevel.Information, "App Information request successfully.", responseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "App Information request successfully.", responseDict);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -254,16 +250,14 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new();
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", responseMessage.StatusCode.ToString() },
+                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                    responseBuilder.Append("Status Code:");
-                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    responseBuilder.Append("Headers:");
-                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    responseBuilder.Append("ResponseMessage:");
-                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
-                    LogService.WriteLog(LoggingLevel.Information, "FileListXml request successfully.", responseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "FileListXml request successfully.", responseDict);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -428,16 +422,14 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new();
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", responseMessage.StatusCode.ToString() },
+                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                    responseBuilder.Append("Status Code:");
-                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    responseBuilder.Append("Headers:");
-                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    responseBuilder.Append("ResponseMessage:");
-                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
-                    LogService.WriteLog(LoggingLevel.Information, "Appx Url request successfully.", responseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Appx Url request successfully.", responseDict);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -509,16 +501,14 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new();
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", responseMessage.StatusCode.ToString() },
+                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                    responseBuilder.Append("Status Code:");
-                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    responseBuilder.Append("Headers:");
-                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    responseBuilder.Append("ResponseMessage:");
-                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
-                    LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request successfully.", responseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request successfully.", responseDict);
 
                     string responseString = await responseMessage.Content.ReadAsStringAsync();
                     httpClient.Dispose();
@@ -643,16 +633,14 @@ namespace GetStoreApp.Helpers.Controls.Store
                 // 请求成功
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    StringBuilder responseBuilder = new();
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Status code", responseMessage.StatusCode.ToString() },
+                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                    responseBuilder.Append("Status Code:");
-                    responseBuilder.AppendLine(responseMessage.StatusCode.ToString());
-                    responseBuilder.Append("Headers:");
-                    responseBuilder.AppendLine(responseMessage.Headers is null ? "" : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' '));
-                    responseBuilder.Append("ResponseMessage:");
-                    responseBuilder.AppendLine(responseMessage.RequestMessage is null ? "" : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' '));
-
-                    LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request successfully.", responseBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request successfully.", responseDict);
 
                     fileSizeResult = Convert.ToString(responseMessage.Content.Headers.ContentLength);
                     httpClient.Dispose();

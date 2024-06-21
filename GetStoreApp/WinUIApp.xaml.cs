@@ -152,6 +152,7 @@ namespace GetStoreApp
 
                 MainWindow.Current?.SaveWindowInformation();
                 DownloadSchedulerService.CloseDownloadScheduler(true);
+                LogService.CloseLog();
                 isDisposed = true;
             }
 

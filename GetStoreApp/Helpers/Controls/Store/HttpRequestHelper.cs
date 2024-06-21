@@ -2,6 +2,7 @@
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -71,15 +72,13 @@ namespace GetStoreApp.Helpers.Controls.Store
                     RequestStatusCode = string.Format("{0}", response.StatusCode);
                     RequestContent = await response.Content.ReadAsStringAsync();
 
-                    StringBuilder responseSuccessBuilder = new();
-                    responseSuccessBuilder.Append("Headers:");
-                    responseSuccessBuilder.Append(response.Headers is null ? "" : WhiteSpaceRegex().Replace(response.Headers.ToString(), ""));
-                    responseSuccessBuilder.Append('\n');
-                    responseSuccessBuilder.Append("ResponseMessage:");
-                    responseSuccessBuilder.Append(response.RequestMessage is null ? "" : WhiteSpaceRegex().Replace(response.RequestMessage.ToString(), ""));
-                    responseSuccessBuilder.Append('\n');
+                    Dictionary<string, string> responseDict = new()
+                    {
+                        { "Headers", response.Headers is null ? string.Empty : WhiteSpaceRegex().Replace(response.Headers.ToString(), string.Empty) },
+                        { "Response message:", response.RequestMessage is null ? string.Empty : WhiteSpaceRegex().Replace(response.RequestMessage.ToString(), string.Empty) }
+                    };
 
-                    LogService.WriteLog(LoggingLevel.Information, "Requested successfully.", responseSuccessBuilder);
+                    LogService.WriteLog(LoggingLevel.Information, "Requested successfully.", responseDict);
                 }
 
                 // 请求失败
