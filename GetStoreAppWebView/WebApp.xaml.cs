@@ -96,7 +96,8 @@ namespace GetStoreAppWebView
                 isDisposed = true;
             }
 
-            Environment.Exit(Environment.ExitCode);
+            LogService.CloseLog();
+            Exit();
         }
     }
 }

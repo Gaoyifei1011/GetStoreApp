@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections;
@@ -36,7 +37,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
 
-            defaultDoEngineMode = DoEngineModeList[0];
+            defaultDoEngineMode = InfoHelper.IsDeliveryOptimizationEnabled ? DoEngineModeList[0] : DoEngineModeList[1];
 
             DownloadFolder = await GetFolderAsync();
 

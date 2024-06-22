@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
-using Windows.System;
 
 namespace GetStoreAppWebView.Services.Root
 {
@@ -14,69 +13,57 @@ namespace GetStoreAppWebView.Services.Root
     /// </summary>
     public static class LogService
     {
-        private static readonly string logName = "GetStoreApp";
         private static readonly string unknown = "unknown";
-        private static readonly Lock logLock = new();
-
-        private static bool isInitialized = false;
-
-        private static StorageFolder logFolder;
-
-        /// <summary>
-        /// 初始化日志记录
-        /// </summary>
-        public static async Task InitializeAsync()
-        {
-            try
-            {
-                logFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
-                isInitialized = true;
-            }
-            catch (Exception)
-            {
-                isInitialized = false;
-            }
-        }
+        private static readonly string exceptionFolderPath = Path.Combine(new string[] { ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception" });
+        private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
         /// <summary>
         /// 写入日志
         /// </summary>
-        public static void WriteLog(LoggingLevel logLevel, string logContent, StringBuilder logBuilder)
+        public static void WriteLog(LoggingLevel logLevel, string logContent, Dictionary<string, string> loggingInformationDict)
         {
-            if (isInitialized)
+            Task.Run(async () =>
             {
-                Task.Run(() =>
-                {
-                    logLock.Enter();
+                logSemaphoreSlim?.Wait();
 
-                    try
+                try
+                {
+                    if (!Directory.Exists(exceptionFolderPath))
                     {
-                        File.AppendAllText(
-                            Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}{3}{4}{5}{6}{7}{8}",
-                                new string[]
-                                {
-                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                                    "LogLevel",
-                                    Convert.ToString(logLevel),
-                                    Environment.NewLine,
-                                    "LogContent:",
-                                    logContent,
-                                    Environment.NewLine,
-                                    logBuilder.ToString(),
-                                    Environment.NewLine
-                                }));
+                        Directory.CreateDirectory(exceptionFolderPath);
                     }
-                    catch (Exception)
+
+                    LoggingSession exceptionSession = new("Exception log session");
+                    LoggingChannel exceptionChannel = new("Exception log channel");
+                    LoggingFields exceptionFields = new();
+                    Guid exceptionGuid = Guid.NewGuid();
+                    LoggingOptions exceptionOptions = new()
                     {
-                        return;
-                    }
-                    finally
+                        ActivityId = exceptionGuid,
+                        RelatedActivityId = exceptionGuid
+                    };
+
+                    exceptionSession.AddLoggingChannel(exceptionChannel);
+                    exceptionFields.AddString("LogLevel", logLevel.ToString());
+
+                    foreach (KeyValuePair<string, string> logInformationKeyValueItem in loggingInformationDict)
                     {
-                        logLock.Exit();
+                        exceptionFields.AddString(logInformationKeyValueItem.Key, logInformationKeyValueItem.Value);
                     }
-                });
-            }
+
+                    exceptionChannel.LogEvent(logContent, exceptionFields, logLevel, exceptionOptions);
+                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpper()));
+                    exceptionSession.Dispose();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                finally
+                {
+                    logSemaphoreSlim?.Release();
+                }
+            });
         }
 
         /// <summary>
@@ -84,85 +71,57 @@ namespace GetStoreAppWebView.Services.Root
         /// </summary>
         public static void WriteLog(LoggingLevel logLevel, string logContent, Exception exception)
         {
-            if (isInitialized)
+            Task.Run(async () =>
             {
-                Task.Run(() =>
+                logSemaphoreSlim?.Wait();
+
+                try
                 {
-                    logLock.Enter();
+                    if (!Directory.Exists(exceptionFolderPath))
+                    {
+                        Directory.CreateDirectory(exceptionFolderPath);
+                    }
 
-                    try
+                    LoggingSession exceptionSession = new("Exception log session");
+                    LoggingChannel exceptionChannel = new("Exception log channel");
+                    LoggingFields exceptionFields = new();
+                    Guid exceptionGuid = Guid.NewGuid();
+                    LoggingOptions exceptionOptions = new()
                     {
-                        StringBuilder exceptionBuilder = new();
-                        exceptionBuilder.Append("LogContent:");
-                        exceptionBuilder.AppendLine(logContent);
-                        exceptionBuilder.Append("HelpLink:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
-                        exceptionBuilder.Append("Message:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
-                        exceptionBuilder.Append("HResult:");
-                        exceptionBuilder.AppendLine(exception.HResult.ToString());
-                        exceptionBuilder.Append("Source:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
-                        exceptionBuilder.Append("StackTrace:");
-                        exceptionBuilder.AppendLine(string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
+                        ActivityId = exceptionGuid,
+                        RelatedActivityId = exceptionGuid
+                    };
 
-                        File.AppendAllText(
-                            Path.Combine(logFolder.Path, string.Format("{0}_{1}.log", logName, DateTime.Now.ToString("yyyy_MM_dd"))),
-                            string.Format("{0}\t{1}:{2}{3}{4}{5}",
-                                new string[]
-                                {
-                                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                                    "LogLevel",
-                                    Convert.ToString(logLevel),
-                                    Environment.NewLine,
-                                    exceptionBuilder.ToString(),
-                                    Environment.NewLine
-                                }));
-                    }
-                    catch (Exception)
-                    {
-                        return;
-                    }
-                    finally
-                    {
-                        logLock.Exit();
-                    }
-                });
-            }
+                    exceptionSession.AddLoggingChannel(exceptionChannel);
+                    exceptionFields.AddString("LogLevel", logLevel.ToString());
+                    exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("HResult", exception.HResult.ToString());
+                    exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
+                    exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
+
+                    exceptionChannel.LogEvent(logContent, exceptionFields, logLevel, exceptionOptions);
+                    await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpper()));
+                    exceptionSession.Dispose();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                finally
+                {
+                    logSemaphoreSlim?.Release();
+                }
+            });
         }
 
         /// <summary>
-        /// 打开日志记录文件夹
+        /// 关闭日志记录服务
         /// </summary>
-        public static async Task OpenLogFolderAsync()
+        public static void CloseLog()
         {
-            if (isInitialized)
-            {
-                await Launcher.LaunchFolderAsync(logFolder);
-            }
-        }
-
-        /// <summary>
-        /// 清除所有的日志文件
-        /// </summary>
-        public static bool ClearLog()
-        {
-            try
-            {
-                Task.Run(() =>
-                {
-                    string[] logFiles = Directory.GetFiles(logFolder.Path, "*.log");
-                    foreach (string logFile in logFiles)
-                    {
-                        File.Delete(logFile);
-                    }
-                });
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            logSemaphoreSlim.Dispose();
+            logSemaphoreSlim = null;
         }
     }
 }

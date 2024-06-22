@@ -48,7 +48,7 @@ namespace GetStoreAppWebView
                 return;
             }
 
-            InitializeResourcesAsync().Wait();
+            InitializeResources();
 
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {
@@ -82,12 +82,11 @@ namespace GetStoreAppWebView
         /// <summary>
         /// 加载应用程序所需的资源
         /// </summary>
-        private static async Task InitializeResourcesAsync()
+        private static void InitializeResources()
         {
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             WebKernelService.InitializeWebKernel();
-            await LogService.InitializeAsync();
         }
     }
 }

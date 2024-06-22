@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
@@ -1328,7 +1329,8 @@
                                 <DropDownButton
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{x:Bind DoEngineMode.Key, Mode=OneWay}">
+                                    Content="{x:Bind DoEngineMode.Key, Mode=OneWay}"
+                                    IsEnabled="{x:Bind helper:InfoHelper.IsDeliveryOptimizationEnabled}">
 
                                     <DropDownButton.Flyout>
                                         <MenuFlyout Placement="Bottom">

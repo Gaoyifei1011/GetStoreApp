@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.Web.WebView2.Core;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -146,7 +147,6 @@ namespace GetStoreAppWebView.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
             // 标题栏和右键菜单设置
-            SetTitleBar(AppTitlebar);
             SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
 
@@ -545,7 +545,15 @@ namespace GetStoreAppWebView.Windows
             processFailedBuilder.Append(args.ProcessDescription);
             processFailedBuilder.Append(Environment.NewLine);
 
-            LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", processFailedBuilder);
+            Dictionary<string, string> logInformationDict = new()
+            {
+                { "Process failed kind", args.ProcessFailedKind.ToString() },
+                { "Reason", args.Reason.ToString() },
+                { "Exit code", args.ExitCode.ToString() },
+                { "Process description", args.ProcessDescription },
+            };
+
+            LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", logInformationDict);
 
             await ContentDialogHelper.ShowAsync(new ProcessFailedDialog(), Content as FrameworkElement);
             (Application.Current as WebApp).Dispose();

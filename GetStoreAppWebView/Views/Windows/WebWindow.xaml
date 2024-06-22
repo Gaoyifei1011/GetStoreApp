@@ -91,23 +91,12 @@
             </MenuFlyout>
         </Grid.Resources>
 
-        <!--  应用标题栏内容  -->
-        <Grid
-            x:Name="AppTitlebar"
-            Height="45"
-            Margin="16,0,0,0"
+        <TitleBar
+            Title="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
+            Height="48"
+            Margin="6,0,0,0"
             VerticalAlignment="Top"
-            x:FieldModifier="public">
-
-            <!--  标题栏应用名称  -->
-            <TextBlock
-                Grid.Column="1"
-                Margin="0,2,0,0"
-                VerticalAlignment="Center"
-                Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
-                TextWrapping="NoWrap" />
-        </Grid>
+            VerticalContentAlignment="Center" />
 
         <Grid
             Grid.Row="1"
