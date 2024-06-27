@@ -12,9 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -23,7 +21,6 @@ using Windows.ApplicationModel.Store.Preview;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
@@ -219,9 +216,6 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        string tempFilePath = Path.Combine(ApplicationData.Current.LocalCacheFolder.Path, "GetStoreAppTemp.txt");
-                        File.WriteAllText(tempFilePath, string.Format("{0}{1}{2}", Package.Current.Id.FullName, Environment.NewLine, Package.Current.GetAppListEntries()[0].AppUserModelId));
-
                         await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"));
                     }
                 }

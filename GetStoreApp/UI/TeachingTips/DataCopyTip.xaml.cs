@@ -60,14 +60,7 @@ namespace GetStoreApp.UI.TeachingTips
                         }
                     case DataCopyKind.History:
                         {
-                            if (isMultiSelected)
-                            {
-                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), count);
-                            }
-                            else
-                            {
-                                CopySuccess.Text = ResourceService.GetLocalized("Notification/HistoryCopy");
-                            }
+                            CopySuccess.Text = isMultiSelected ? string.Format(ResourceService.GetLocalized("Notification/HistorySelectedCopy"), count) : ResourceService.GetLocalized("Notification/HistoryCopy");
                             break;
                         }
                     case DataCopyKind.PackageInformation:
@@ -77,14 +70,7 @@ namespace GetStoreApp.UI.TeachingTips
                         }
                     case DataCopyKind.ResultInformation:
                         {
-                            if (isMultiSelected)
-                            {
-                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), count);
-                            }
-                            else
-                            {
-                                CopySuccess.Text = ResourceService.GetLocalized("Notification/ResultContentCopy");
-                            }
+                            CopySuccess.Text = isMultiSelected ? string.Format(ResourceService.GetLocalized("Notification/ResultContentSelectedCopy"), count) : ResourceService.GetLocalized("Notification/ResultContentCopy");
                             break;
                         }
                     case DataCopyKind.ResultID:
@@ -94,14 +80,7 @@ namespace GetStoreApp.UI.TeachingTips
                         }
                     case DataCopyKind.ResultLink:
                         {
-                            if (isMultiSelected)
-                            {
-                                CopySuccess.Text = string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count);
-                            }
-                            else
-                            {
-                                CopySuccess.Text = ResourceService.GetLocalized("Notification/ResultLinkCopy");
-                            }
+                            CopySuccess.Text = isMultiSelected ? string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count) : ResourceService.GetLocalized("Notification/ResultLinkCopy");
                             break;
                         }
                     case DataCopyKind.WinGetSearchInstall:

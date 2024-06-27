@@ -208,14 +208,7 @@ namespace GetStoreApp.Views.Windows
 
                     if (materialBackdrop is not null && materialBackdrop.BackdropConfiguration is not null)
                     {
-                        if (AlwaysShowBackdropService.AlwaysShowBackdropValue)
-                        {
-                            materialBackdrop.BackdropConfiguration.IsInputActive = true;
-                        }
-                        else
-                        {
-                            materialBackdrop.BackdropConfiguration.IsInputActive = args.WindowActivationState is not WindowActivationState.Deactivated;
-                        }
+                        materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue ? true : args.WindowActivationState is not WindowActivationState.Deactivated;
                     }
                 }
             }
@@ -633,14 +626,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void SetWindowTheme()
         {
-            if (ThemeService.AppTheme.Value.Equals(ThemeService.ThemeList[0].Value))
-            {
-                WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-            }
-            else
-            {
-                WindowTheme = Enum.Parse<ElementTheme>(ThemeService.AppTheme.Value.ToString());
-            }
+            WindowTheme = ThemeService.AppTheme.Value.Equals(ThemeService.ThemeList[0].Value)
+                ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark
+                : Enum.Parse<ElementTheme>(ThemeService.AppTheme.Value.ToString());
         }
 
         /// <summary>
@@ -827,14 +815,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (ThemeService.AppTheme.Value == ThemeService.ThemeList[0].Value)
                         {
-                            if (Application.Current.RequestedTheme is ApplicationTheme.Light)
-                            {
-                                WindowTheme = ElementTheme.Light;
-                            }
-                            else
-                            {
-                                WindowTheme = ElementTheme.Dark;
-                            }
+                            WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                         }
                         break;
                     }

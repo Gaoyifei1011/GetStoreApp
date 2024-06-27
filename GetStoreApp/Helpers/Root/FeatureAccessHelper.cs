@@ -53,14 +53,7 @@ namespace GetStoreApp.Helpers.Root
         public static string GenerateAttestation(string featureId)
         {
             string[] packageFamilyNameArray = packageFamilyName.Split('_');
-            if (packageFamilyNameArray.Length > 0)
-            {
-                return string.Format("{0} has registered their use of {1} with Microsoft and agrees to the terms of use.", packageFamilyNameArray[^1], featureId);
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return packageFamilyNameArray.Length > 0 ? string.Format("{0} has registered their use of {1} with Microsoft and agrees to the terms of use.", packageFamilyNameArray[^1], featureId) : string.Empty;
         }
     }
 }
