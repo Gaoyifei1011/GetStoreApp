@@ -195,7 +195,10 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryAppName')}" Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryAppName')}"
+                                Visibility="{x:Bind HistoryAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -209,7 +212,10 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryType')}" Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryType')}"
+                                Visibility="{x:Bind HistoryTypeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -223,7 +229,10 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryChannel')}" Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryChannel')}"
+                                Visibility="{x:Bind HistoryChannelHeaderText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -237,7 +246,10 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLink')}" Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryLink')}"
+                                Visibility="{x:Bind HistoryLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -291,7 +303,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind HistoryAppName}" Visibility="{Binding ElementName=HistoryAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind HistoryAppName}"
+                                                Visibility="{Binding ElementName=HistoryAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -308,7 +323,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind HistoryType.Value}" Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind HistoryType.Value}"
+                                                Visibility="{Binding ElementName=HistoryTypeText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -325,7 +343,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind HistoryChannel.Value}" Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind HistoryChannel.Value}"
+                                                Visibility="{Binding ElementName=HistoryChannelText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -342,7 +363,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind HistoryLink}" Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind HistoryLink}"
+                                                Visibility="{Binding ElementName=HistoryLinkText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -683,7 +707,10 @@
                 Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}" Visibility="{x:Bind SelectHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
+                        Visibility="{x:Bind SelectHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -697,7 +724,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}" Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Store/FileName')}"
+                        Visibility="{x:Bind FileNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -711,7 +741,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}" Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Store/FileSize')}"
+                        Visibility="{x:Bind FileSizeHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -768,7 +801,7 @@
                                 Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip>
+                                    <ToolTip MaxWidth="9999">
                                         <Grid>
                                             <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Store/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
                                             <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Store/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
@@ -794,7 +827,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind FileName}"
+                                                Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </HyperlinkButton.Content>
@@ -813,7 +849,10 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind FileSize}" Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind FileSize}"
+                                        Visibility="{Binding ElementName=FileSizeText, Path=IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 

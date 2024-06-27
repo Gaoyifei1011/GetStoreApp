@@ -240,7 +240,7 @@
                                 Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip>
+                                    <ToolTip MaxWidth="9999">
                                         <Grid>
                                             <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/SelectedToolTip')}" Visibility="{x:Bind IsSelected, Mode=OneWay}" />
                                             <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Download/UnSelectedToolTip')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelected), Mode=OneWay}" />
@@ -281,7 +281,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind FileName}" Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind FileName}"
+                                                Visibility="{Binding ElementName=FileNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -303,7 +306,7 @@
                                         Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip>
+                                            <ToolTip MaxWidth="9999">
                                                 <TextBlock>
                                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
                                                     <Run Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}" />
@@ -320,7 +323,7 @@
                                         TextAlignment="Right">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip>
+                                            <ToolTip MaxWidth="9999">
                                                 <TextBlock>
                                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
                                                     <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}" />
@@ -345,7 +348,7 @@
                                         TextAlignment="Right">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip>
+                                            <ToolTip MaxWidth="9999">
                                                 <TextBlock>
                                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/TotalSizeToolTip')}" />
                                                     <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(TotalSize), Mode=OneWay}" />

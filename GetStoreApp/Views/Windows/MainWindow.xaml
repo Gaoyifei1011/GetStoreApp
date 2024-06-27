@@ -159,7 +159,10 @@
                         </NavigationViewItem.ContextFlyout>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}" Visibility="{x:Bind WindowStoreText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Store')}"
+                                Visibility="{x:Bind WindowStoreText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
@@ -187,7 +190,10 @@
                         </NavigationViewItem.ContextFlyout>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}" Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/AppUpdate')}"
+                                Visibility="{x:Bind WindowAppUpdateText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
@@ -217,7 +223,10 @@
                         </NavigationViewItem.ContextFlyout>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}" Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/WinGet')}"
+                                Visibility="{x:Bind WindowWinGetText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
@@ -245,7 +254,10 @@
                         </NavigationViewItem.ContextFlyout>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}" Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
+                                Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
@@ -275,7 +287,10 @@
                         </NavigationViewItem.ContextFlyout>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}" Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Download')}"
+                                Visibility="{x:Bind WindowDownloadText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
@@ -303,7 +318,10 @@
                         </NavigationViewItem.ContextFlyout>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}" Visibility="{x:Bind WindowWebText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Web')}"
+                                Visibility="{x:Bind WindowWebText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
                 </NavigationView.MenuItems>
@@ -324,7 +342,10 @@
                         </NavigationViewItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}" Visibility="{x:Bind WindowAboutText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
+                                Visibility="{x:Bind WindowAboutText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
@@ -343,7 +364,10 @@
                         </NavigationViewItem.Icon>
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}" Visibility="{x:Bind WindowSettingsText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/Settings')}"
+                                Visibility="{x:Bind WindowSettingsText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
                 </NavigationView.FooterMenuItems>

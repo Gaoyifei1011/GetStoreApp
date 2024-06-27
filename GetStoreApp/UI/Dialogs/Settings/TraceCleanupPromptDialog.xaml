@@ -57,7 +57,10 @@
                                     Visibility="{x:Bind IsCleanFailed, Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind CleanFailedText}" Visibility="{Binding ElementName=CleanFailed, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Content="{x:Bind CleanFailedText}"
+                                            Visibility="{Binding ElementName=CleanFailed, Path=IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </ContentControl>

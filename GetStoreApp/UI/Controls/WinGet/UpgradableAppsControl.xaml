@@ -199,7 +199,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip>
+                                    <ToolTip MaxWidth="9999">
                                         <TextBlock>
                                             <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
                                             <Run Text="{x:Bind AppName}" />
@@ -220,7 +220,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip>
+                                    <ToolTip MaxWidth="9999">
                                         <TextBlock>
                                             <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
                                             <Run Text="{x:Bind AppPublisher}" />
@@ -242,7 +242,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip>
+                                    <ToolTip MaxWidth="9999">
                                         <TextBlock>
                                             <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCurrentVersionToolTip')}" />
                                             <Run Text="{x:Bind AppCurrentVersion}" />
@@ -265,7 +265,7 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip>
+                                    <ToolTip MaxWidth="9999">
                                         <TextBlock>
                                             <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNewestVersionToolTip')}" />
                                             <Run Text="{x:Bind AppNewestVersion}" />

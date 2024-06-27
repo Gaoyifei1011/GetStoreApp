@@ -361,16 +361,14 @@
                                             </HyperlinkButton.Content>
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip>
-                                                    <ToolTip.Content>
-                                                        <StackPanel>
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind Key}" />
-                                                                <LineBreak />
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
-                                                            </TextBlock>
-                                                        </StackPanel>
-                                                    </ToolTip.Content>
+                                                <ToolTip MaxWidth="9999">
+                                                    <StackPanel>
+                                                        <TextBlock>
+                                                            <Run Text="{x:Bind Key}" />
+                                                            <LineBreak />
+                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                        </TextBlock>
+                                                    </StackPanel>
                                                 </ToolTip>
                                             </ToolTipService.ToolTip>
                                         </HyperlinkButton>
@@ -903,16 +901,14 @@
                                                 </HyperlinkButton.Content>
 
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip>
-                                                        <ToolTip.Content>
-                                                            <StackPanel>
-                                                                <TextBlock>
-                                                                    <Run Text="{x:Bind Key}" />
-                                                                    <LineBreak />
-                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
-                                                                </TextBlock>
-                                                            </StackPanel>
-                                                        </ToolTip.Content>
+                                                    <ToolTip MaxWidth="9999">
+                                                        <StackPanel>
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind Key}" />
+                                                                <LineBreak />
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                            </TextBlock>
+                                                        </StackPanel>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
                                             </HyperlinkButton>

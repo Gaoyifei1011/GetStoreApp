@@ -116,7 +116,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}" Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/ThemeDescription')}"
+                                    Visibility="{x:Bind ThemeDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -201,7 +204,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}" Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/BackdropDescription')}"
+                                    Visibility="{x:Bind BackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -325,7 +331,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropDescription')}" Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropDescription')}"
+                                    Visibility="{x:Bind AlwaysShowBackdropDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -382,7 +391,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}" Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/LanguageDescription')}"
+                                    Visibility="{x:Bind LanguageDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -448,7 +460,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostDescription')}" Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostDescription')}"
+                                    Visibility="{x:Bind TopMostDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -522,7 +537,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}" Visibility="{x:Bind NotificationDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationDescription')}"
+                                    Visibility="{x:Bind NotificationDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -581,7 +599,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernelDescription')}" Visibility="{x:Bind WebKernelDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/WebKernelDescription')}"
+                                    Visibility="{x:Bind WebKernelDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -649,7 +670,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}" Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeDescription')}"
+                                    Visibility="{x:Bind QueryLinksModeDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -719,7 +743,10 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}" Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/LinkFilterDescription')}"
+                                            Visibility="{x:Bind LinkFilterDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </StackPanel>
@@ -757,7 +784,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}" Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageDescription')}"
+                                                Visibility="{x:Bind EncryptedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -802,7 +832,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}" Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapDescription')}"
+                                                Visibility="{x:Bind BlockMapDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -858,7 +891,10 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigDescription')}" Visibility="{x:Bind WinGetConfigDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetConfigDescription')}"
+                                            Visibility="{x:Bind WinGetConfigDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </StackPanel>
@@ -896,7 +932,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}" Visibility="{x:Bind WinGetVersionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetVersionDescription')}"
+                                                Visibility="{x:Bind WinGetVersionDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -1029,7 +1068,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}" Visibility="{x:Bind WinGetInstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}"
+                                                Visibility="{x:Bind WinGetInstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -1092,7 +1134,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}" Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
+                                                Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -1147,7 +1192,10 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}" Visibility="{x:Bind DownloadOptionsDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadOptionsDescription')}"
+                                            Visibility="{x:Bind DownloadOptionsDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </StackPanel>
@@ -1271,7 +1319,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DeliveryOptimizationDescription')}" Visibility="{x:Bind DeliveryOptimizationDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/DeliveryOptimizationDescription')}"
+                                                Visibility="{x:Bind DeliveryOptimizationDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -1314,7 +1365,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/DoEngineModeDescription')}" Visibility="{x:Bind DoEngineModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/DoEngineModeDescription')}"
+                                                Visibility="{x:Bind DoEngineModeDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -1414,7 +1468,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}" Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/InstallModeDescription')}"
+                                    Visibility="{x:Bind InstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -1483,7 +1540,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}" Visibility="{x:Bind TraceCleanupDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceCleanupDescription')}"
+                                    Visibility="{x:Bind TraceCleanupDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -1532,7 +1592,10 @@
                             TextWrapping="NoWrap">
 
                             <ToolTipService.ToolTip>
-                                <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcessDescription')}" Visibility="{x:Bind TerminateWebViewProcessDescription.IsTextTrimmed, Mode=OneWay}" />
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcessDescription')}"
+                                    Visibility="{x:Bind TerminateWebViewProcessDescription.IsTextTrimmed, Mode=OneWay}" />
                             </ToolTipService.ToolTip>
                         </TextBlock>
                     </StackPanel>
@@ -1582,7 +1645,10 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecordDescription')}" Visibility="{x:Bind LogRecordDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogRecordDescription')}"
+                                            Visibility="{x:Bind LogRecordDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </StackPanel>
@@ -1621,7 +1687,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}" Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/LogFolderDescription')}"
+                                                Visibility="{x:Bind LogFolderDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
@@ -1665,7 +1734,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}" Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/ClearLogDescription')}"
+                                                Visibility="{x:Bind ClearLogDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>

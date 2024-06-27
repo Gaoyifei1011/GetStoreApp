@@ -63,7 +63,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}" Visibility="{x:Bind ArgumentNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/ArgumentName')}"
+                        Visibility="{x:Bind ArgumentNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -77,7 +80,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}" Visibility="{x:Bind ArgumentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/Argument')}"
+                        Visibility="{x:Bind ArgumentHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -91,7 +97,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}" Visibility="{x:Bind IsRequiredHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/IsRequired')}"
+                        Visibility="{x:Bind IsRequiredHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -105,7 +114,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}" Visibility="{x:Bind InputContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Dialog/InputContent')}"
+                        Visibility="{x:Bind InputContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
         </Grid>
@@ -150,7 +162,10 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind ArgumentName}" Visibility="{Binding ElementName=ArgumentNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind ArgumentName}"
+                                        Visibility="{Binding ElementName=ArgumentNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -167,7 +182,10 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind Argument}" Visibility="{Binding ElementName=ArgumentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind Argument}"
+                                        Visibility="{Binding ElementName=ArgumentText, Path=IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -184,7 +202,10 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind IsRequired}" Visibility="{Binding ElementName=IsRequiredText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind IsRequired}"
+                                        Visibility="{Binding ElementName=IsRequiredText, Path=IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -201,7 +222,10 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind ArgumentContent}" Visibility="{Binding ElementName=ArgumentContentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind ArgumentContent}"
+                                        Visibility="{Binding ElementName=ArgumentContentText, Path=IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
                         </Grid>

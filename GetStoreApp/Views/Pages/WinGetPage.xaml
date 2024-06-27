@@ -220,7 +220,7 @@
                                                             TextAlignment="Right">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip>
+                                                                <ToolTip MaxWidth="9999">
                                                                     <TextBlock>
                                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadProgressToolTip')}" />
                                                                         <Run Text="{x:Bind sys:String.Format('{0}%', DownloadProgress), Mode=OneWay}" />
@@ -238,7 +238,7 @@
                                                             Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(InstallProgressState, enum:PackageInstallProgressState.Downloading), Mode=OneWay}">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip>
+                                                                <ToolTip MaxWidth="9999">
                                                                     <TextBlock>
                                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
                                                                         <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
@@ -264,7 +264,7 @@
                                                             TextAlignment="Right">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip>
+                                                                <ToolTip MaxWidth="9999">
                                                                     <TextBlock>
                                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
                                                                         <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />

@@ -385,7 +385,7 @@
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip>
+                                                <ToolTip MaxWidth="9999">
                                                     <TextBlock>
                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/DisplayNameToolTip')}" />
                                                         <Run Text="{x:Bind DisplayName}" />
@@ -406,7 +406,7 @@
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip>
+                                                <ToolTip MaxWidth="9999">
                                                     <TextBlock>
                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/PublisherNameToolTip')}" />
                                                         <Run Text="{x:Bind PublisherName}" />
@@ -428,7 +428,7 @@
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip>
+                                                <ToolTip MaxWidth="9999">
                                                     <TextBlock>
                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/VersionToolTip')}" />
                                                         <Run Text="{x:Bind Version}" />
@@ -450,7 +450,7 @@
                                             TextWrapping="NoWrap">
 
                                             <ToolTipService.ToolTip>
-                                                <ToolTip>
+                                                <ToolTip MaxWidth="9999">
                                                     <TextBlock>
                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('UWPApp/InstallDateToolTip')}" />
                                                         <Run Text="{x:Bind InstallDate}" />

@@ -251,7 +251,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip>
+                                        <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
                                                 <Run Text="{x:Bind AppName}" />
@@ -272,7 +272,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip>
+                                        <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
                                                 <Run Text="{x:Bind AppPublisher}" />
@@ -294,7 +294,7 @@
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
-                                        <ToolTip>
+                                        <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
                                                 <Run Text="{x:Bind AppVersion}" />

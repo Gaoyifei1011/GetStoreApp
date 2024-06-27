@@ -120,7 +120,10 @@
                         TextWrapping="NoWrap">
 
                         <ToolTipService.ToolTip>
-                            <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryContent')}" Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Store/HistoryContent')}"
+                                Visibility="{x:Bind HistoryContentHeaderText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </TextBlock>
 
@@ -170,7 +173,10 @@
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
-                                            <ToolTip Content="{x:Bind HistoryContent}" Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind HistoryContent}"
+                                                Visibility="{Binding ElementName=HistoryContentText, Path=IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
 
@@ -266,7 +272,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppName')}" Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppName')}"
+                        Visibility="{x:Bind StoreAppNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -280,7 +289,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppPublisher')}" Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppPublisher')}"
+                        Visibility="{x:Bind StoreAppPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -294,7 +306,10 @@
                 TextWrapping="NoWrap">
 
                 <ToolTipService.ToolTip>
-                    <ToolTip Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppLink')}" Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                    <ToolTip
+                        MaxWidth="9999"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Store/StoreAppLink')}"
+                        Visibility="{x:Bind StoreAppLinkHeaderText.IsTextTrimmed, Mode=OneWay}" />
                 </ToolTipService.ToolTip>
             </TextBlock>
 
@@ -347,7 +362,10 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind StoreAppName}" Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind StoreAppName}"
+                                        Visibility="{Binding ElementName=StoreAppNameText, Path=IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -364,7 +382,10 @@
                                 TextWrapping="NoWrap">
 
                                 <ToolTipService.ToolTip>
-                                    <ToolTip Content="{x:Bind StoreAppPublisher}" Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind StoreAppPublisher}"
+                                        Visibility="{Binding ElementName=StoreAppPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
                                 </ToolTipService.ToolTip>
                             </TextBlock>
 
@@ -382,7 +403,7 @@
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
                                         <ToolTipService.ToolTip>
-                                            <ToolTip>
+                                            <ToolTip MaxWidth="9999">
                                                 <ToolTip.Content>
                                                     <TextBlock Text="{x:Bind StoreAppLink}" />
                                                 </ToolTip.Content>
