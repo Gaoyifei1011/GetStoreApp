@@ -189,7 +189,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             else
             {
-                TeachingTipHelper.Show(new FileLostTip());
+                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -319,7 +319,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             else
             {
-                TeachingTipHelper.Show(new FileLostTip());
+                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -388,13 +388,13 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    TeachingTipHelper.Show(new ShareFailedTip(false));
+                    TeachingTipHelper.Show(new OperationResultTip(OperationKind.ShareFailed, false, 1));
                     LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
                 }
             }
             else
             {
-                TeachingTipHelper.Show(new FileLostTip());
+                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -628,7 +628,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        TeachingTipHelper.Show(new ShareFailedTip(true, selectedCompletedDataList.Count));
+                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
                         LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
                     }
                 });

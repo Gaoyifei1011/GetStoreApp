@@ -312,7 +312,7 @@ namespace GetStoreApp.Views.Pages
 
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        TeachingTipHelper.Show(new CheckUpdateTip(isNewest));
+                                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
                                     });
                                 }
                             }

@@ -424,7 +424,7 @@ namespace GetStoreApp.UI.Controls.Store
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         // 显示下载任务创建成功消息
-                        TeachingTipHelper.Show(new DownloadCreateTip(isDownloadSuccessfully));
+                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
                     });
                 });
             }
@@ -856,7 +856,7 @@ namespace GetStoreApp.UI.Controls.Store
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     // 显示下载任务创建成功消息
-                    TeachingTipHelper.Show(new DownloadCreateTip(isDownloadSuccessfully));
+                    TeachingTipHelper.Show(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
                     IsSelectMode = false;
                     queryLinksLock.Enter();
 

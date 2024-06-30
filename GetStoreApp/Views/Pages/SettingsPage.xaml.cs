@@ -336,7 +336,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         AppLanguage = LanguageList[selectedIndex];
                         LanguageService.SetLanguage(AppLanguage);
-                        TeachingTipHelper.Show(new LanguageChangeTip());
+                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.LanguageChange));
                     }
                 };
                 LanguageFlyout.Items.Add(toggleMenuFlyoutItem);
@@ -594,7 +594,7 @@ namespace GetStoreApp.Views.Pages
                                     catch (Exception e)
                                     {
                                         LogService.WriteLog(LoggingLevel.Error, "Open SHBrowseForFolder failed", e);
-                                        TeachingTipHelper.Show(new FolderPickerTip());
+                                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.FolderPicker));
                                     }
                                 };
 
@@ -616,7 +616,7 @@ namespace GetStoreApp.Views.Pages
                             // 选取文件夹失败，显示提示
                             if (!result)
                             {
-                                TeachingTipHelper.Show(new FolderPickerTip());
+                                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FolderPicker));
                             }
 
                             break;
@@ -690,7 +690,7 @@ namespace GetStoreApp.Views.Pages
         private void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = LogService.ClearLog();
-            TeachingTipHelper.Show(new LogCleanTip(result));
+            TeachingTipHelper.Show(new OperationResultTip(OperationKind.LogClean, result));
         }
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        TeachingTipHelper.Show(new TerminateProcessTip(true));
+                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.TerminateProcess, true));
                     });
                 }
                 catch (Exception e)
@@ -725,7 +725,7 @@ namespace GetStoreApp.Views.Pages
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        TeachingTipHelper.Show(new TerminateProcessTip(false));
+                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.TerminateProcess, false));
                     });
                 }
             });

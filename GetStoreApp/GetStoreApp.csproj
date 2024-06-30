@@ -98,16 +98,8 @@
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
-    <None Remove="UI\TeachingTips\CheckUpdateTip.xaml" />
     <None Remove="UI\TeachingTips\DataCopyTip.xaml" />
-    <None Remove="UI\TeachingTips\DownloadCreateTip.xaml" />
-    <None Remove="UI\TeachingTips\FileLostTip.xaml" />
-    <None Remove="UI\TeachingTips\FolderPickerTip.xaml" />
-    <None Remove="UI\TeachingTips\LanguageChangeTip.xaml" />
-    <None Remove="UI\TeachingTips\LogCleanTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
-    <None Remove="UI\TeachingTips\ShareFailedTip.xaml" />
-    <None Remove="UI\TeachingTips\TerminateProcessTip.xaml" />
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -148,16 +140,9 @@
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\CheckUpdateTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\DataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\DownloadCreateTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\FileLostTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\FolderPickerTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\LanguageChangeTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\LogCleanTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\OperationResultTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\ShareFailedTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\TerminateProcessTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AboutPage.xaml" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
