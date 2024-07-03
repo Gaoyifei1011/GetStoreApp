@@ -63,15 +63,16 @@
     <None Remove="WebWindow.xaml" />
 	  
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.0-prerelease.240602.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240531000-experimental1" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" GeneratePathProperty="true" />
 
     <Page Remove="WebApp.xaml" />
 
     <Page Update="UI\Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="WebWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    
+
     <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
     <TrimmableAssembly Include="Microsoft.Management.Deployment.Projection" />
+    <TrimmableAssembly Include="Microsoft.Web.WebView2.Core.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
     <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />

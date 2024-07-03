@@ -107,6 +107,7 @@
   <Target Name="_RemoveFilesFromPayload" AfterTargets="_CalculateInputsForGenerateAppxPackageRecipe" Condition="'$(MSBuildProjectExtension)' == '.wapproj' and '$(_IsGeneratingAppxPackage)' == 'true'">
     <ItemGroup>
       <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
+      <AppxPackagePayload Remove="@(AppxPackagePayload)" Condition="'%(FileName)%(Extension)'=='WebView2Loader.dll'" />
     </ItemGroup>
   </Target>
 </Project>

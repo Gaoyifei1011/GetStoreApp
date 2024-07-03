@@ -351,13 +351,13 @@ namespace GetStoreApp.UI.Controls.Download
         {
             try
             {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
                 DownloadSchedulerService.DownloadCreated -= OnDownloadCreated;
                 DownloadSchedulerService.DownloadContinued -= OnDownloadContinued;
                 DownloadSchedulerService.DownloadPaused -= OnDownloadPaused;
                 DownloadSchedulerService.DownloadDeleted -= OnDownloadDeleted;
                 DownloadSchedulerService.DownloadProgressing -= OnDownloadProgressing;
                 DownloadSchedulerService.DownloadCompleted -= OnDownloadCompleted;
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
             }
             catch (Exception e)
             {

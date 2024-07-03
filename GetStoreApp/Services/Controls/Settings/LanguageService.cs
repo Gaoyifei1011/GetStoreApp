@@ -1,9 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using Microsoft.Windows.Globalization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Windows.Globalization;
 
 namespace GetStoreApp.Services.Controls.Settings
 {
@@ -29,7 +29,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             foreach (string applanguage in AppLanguagesList)
             {
-                LanguageList.Add(new DictionaryEntry(new Language(applanguage).NativeName, applanguage));
+                LanguageList.Add(new DictionaryEntry(new Windows.Globalization.Language(applanguage).NativeName, applanguage));
             }
         }
 
@@ -100,8 +100,8 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void SetLanguage(DictionaryEntry language)
         {
             AppLanguage = language;
-
             LocalSettingsService.SaveSetting(settingsKey, language.Value);
+            ApplicationLanguages.PrimaryLanguageOverride = language.Value.ToString();
         }
     }
 }

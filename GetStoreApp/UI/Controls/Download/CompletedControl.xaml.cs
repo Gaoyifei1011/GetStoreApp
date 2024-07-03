@@ -673,10 +673,10 @@ namespace GetStoreApp.UI.Controls.Download
         {
             try
             {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
                 DownloadStorageService.StorageDataAdded -= OnStorageDataAdded;
                 DownloadStorageService.StorageDataDeleted -= OnStorageDataDeleted;
                 DownloadStorageService.StorageDataCleared -= OnStorageDataCleared;
-                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
             }
             catch (Exception e)
             {

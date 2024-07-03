@@ -5,13 +5,11 @@ using Microsoft.Management.Deployment;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage.Streams;
 
 namespace GetStoreApp.Services.Root
 {
@@ -25,9 +23,10 @@ namespace GetStoreApp.Services.Root
         private static DictionaryEntry _defaultAppLanguage;
         private static DictionaryEntry _currentAppLanguage;
 
-        private static readonly ResourceContext defaultResourceContext = new();
-        private static readonly ResourceContext currentResourceContext = new();
-        private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
+        private static readonly ResourceManager resourceManager = new();
+        private static readonly ResourceContext defaultResourceContext;
+        private static readonly ResourceContext currentResourceContext;
+        private static readonly ResourceMap resourceMap = new ResourceManager().MainResourceMap;
 
         public static List<TypeModel> TypeList { get; } = [];
 
@@ -52,6 +51,45 @@ namespace GetStoreApp.Services.Root
         public static List<DictionaryEntry> WinGetInstallModeList { get; } = [];
 
         public static List<DictionaryEntry> DoEngineModeList { get; } = [];
+
+        static ResourceService()
+        {
+            defaultResourceContext = resourceManager.CreateResourceContext();
+            currentResourceContext = resourceManager.CreateResourceContext();
+            resourceMap = resourceManager.MainResourceMap;
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            resourceManager.ResourceNotFound += OnResourceNotFound;
+        }
+
+        /// <summary>
+        /// 应用程序退出时触发的事件
+        /// </summary>
+        private static void OnApplicationExit(object sender, EventArgs args)
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                resourceManager.ResourceNotFound -= OnResourceNotFound;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Unregister resource service event failed", e);
+            }
+        }
+
+        /// <summary>
+        /// 找不到指定的资源而尝试获取资源失败时发生的事件
+        /// </summary>
+        private static void OnResourceNotFound(ResourceManager sender, ResourceNotFoundEventArgs args)
+        {
+            Dictionary<string, string> loggingInformationDict = new()
+            {
+                { "ResourceName", args.Name },
+                { "ResourceContext", args.Context.QualifierValues["language"] }
+            };
+
+            LogService.WriteLog(LoggingLevel.Warning, string.Format("No value for resource {0} could be found.", args.Name), loggingInformationDict);
+        }
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -320,20 +358,26 @@ namespace GetStoreApp.Services.Root
             {
                 try
                 {
-                    return resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
+                    string currentResourceString = resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
+
+                    if (!string.IsNullOrEmpty(currentResourceString))
+                    {
+                        return currentResourceString;
+                    }
+
+                    string defaultResourceString = resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
+
+                    if (!string.IsNullOrEmpty(defaultResourceString))
+                    {
+                        return defaultResourceString;
+                    }
+
+                    return resource;
                 }
-                catch (Exception currentResourceException)
+                catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _currentAppLanguage.Value), currentResourceException);
-                    try
-                    {
-                        return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
-                    }
-                    catch (Exception defaultResourceException)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context string with langauge {0} failed.", _defaultAppLanguage.Value), defaultResourceException);
-                        return resource;
-                    }
+                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with resource {0} failed.", resource), e);
+                    return resource;
                 }
             }
             else
@@ -346,17 +390,11 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 获取嵌入的数据
         /// </summary>
-        public static async Task<byte[]> GetEmbeddedDataAsync(string resource)
+        public static byte[] GetEmbeddedData(string resource)
         {
             try
             {
-                IRandomAccessStream randomAccessStream = await resourceMap.GetValue(resource).GetValueAsStreamAsync();
-                DataReader dataReader = new(randomAccessStream);
-                await dataReader.LoadAsync((uint)randomAccessStream.Size);
-                byte[] bytesArray = new byte[randomAccessStream.Size];
-                dataReader.ReadBytes(bytesArray);
-                dataReader.Dispose();
-                return bytesArray;
+                return resourceMap.GetValue(resource).ValueAsBytes;
             }
             catch (Exception e)
             {

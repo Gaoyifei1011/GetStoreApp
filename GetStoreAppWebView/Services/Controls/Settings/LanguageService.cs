@@ -1,8 +1,8 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Constant;
 using GetStoreAppWebView.Services.Root;
+using Microsoft.Windows.Globalization;
 using System;
 using System.Collections.Generic;
-using Windows.Globalization;
 
 namespace GetStoreAppWebView.Services.Controls.Settings
 {

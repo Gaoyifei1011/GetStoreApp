@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Services.Root;
-using System.Threading.Tasks;
 
 namespace GetStoreApp.Extensions.Console
 {
@@ -10,9 +9,9 @@ namespace GetStoreApp.Extensions.Console
     {
         private static byte[] lengths;
 
-        public static async Task InitializeAsync()
+        public static void Initialize()
         {
-            lengths = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/Lengths.bin");
+            lengths = ResourceService.GetEmbeddedData("Files/EmbedAssets/Lengths.bin");
         }
 
         /// <summary>
