@@ -33,6 +33,7 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
+    <WebView2EnableCsWinRTProjection>True</WebView2EnableCsWinRTProjection>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
