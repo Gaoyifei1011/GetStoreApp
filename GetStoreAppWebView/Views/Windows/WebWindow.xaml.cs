@@ -507,7 +507,7 @@ namespace GetStoreAppWebView.Windows
                 }
                 else
                 {
-                    await Launcher.LaunchFolderPathAsync(ApplicationData.Current.LocalFolder.Path);
+                    await Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);
                 }
             });
         }
