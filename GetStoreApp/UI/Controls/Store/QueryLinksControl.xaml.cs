@@ -1088,7 +1088,7 @@ namespace GetStoreApp.UI.Controls.Store
                     if (requestState is InfoBarSeverity.Success)
                     {
                         HtmlParseHelper.InitializeParseData(httpRequestData);
-                        string categoryId = HtmlParseHelper.HtmlParseCID();
+                        string categoryId = HtmlParseHelper.HtmlParseCID().ToUpper();
                         List<QueryLinksModel> queryLinksList = HtmlParseHelper.HtmlParseLinks();
 
                         // 按设置选项设置的内容过滤列表
