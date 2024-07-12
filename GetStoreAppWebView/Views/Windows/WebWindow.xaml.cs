@@ -209,16 +209,21 @@ namespace GetStoreAppWebView.Windows
                 }
             }
 
-            if (Content is not null && Content.XamlRoot is not null && webViewControl is not null)
+            try
             {
-                webViewControl.Bounds = new Rect()
+                if (Content is not null && Content.XamlRoot is not null && webViewControl is not null)
                 {
-                    Width = sender.ClientSize.Width,
-                    Height = sender.ClientSize.Height - 90 * Content.XamlRoot.RasterizationScale,
-                    X = 0,
-                    Y = 90 * Content.XamlRoot.RasterizationScale
-                };
+                    webViewControl.Bounds = new Rect()
+                    {
+                        Width = sender.ClientSize.Width,
+                        Height = sender.ClientSize.Height - 90 * Content.XamlRoot.RasterizationScale,
+                        X = 0,
+                        Y = 90 * Content.XamlRoot.RasterizationScale
+                    };
+                }
             }
+            catch (Exception)
+            { }
 
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
             {

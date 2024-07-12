@@ -8,78 +8,78 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="com uap uap5 rescap">
 
-	<Identity
+  <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="4.2.711.0" />
+	  Version="4.2.712.0" />
 
-	<Properties>
-		<DisplayName>ms-resource:PackageDisplayName</DisplayName>
-		<PublisherDisplayName>高怡飞</PublisherDisplayName>
-		<Logo>Assets\StoreLogo.png</Logo>
-	</Properties>
+  <Properties>
+    <DisplayName>ms-resource:PackageDisplayName</DisplayName>
+    <PublisherDisplayName>高怡飞</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
 
-	<Dependencies>
-		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
-		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
-	</Dependencies>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
 
-	<Resources>
-		<Resource Language="EN-US" />
-		<Resource Language="ZH-HANS-CN" />
-	</Resources>
+  <Resources>
+    <Resource Language="EN-US" />
+    <Resource Language="ZH-HANS-CN" />
+  </Resources>
 
-	<Applications>
-		<Application Id="GetStoreApp"
+  <Applications>
+    <Application Id="GetStoreApp"
 		  Executable="GetStoreApp.exe"
 		  EntryPoint="Windows.FullTrustApplication">
-			<uap:VisualElements
+      <uap:VisualElements
 			  DisplayName="ms-resource:AppDisplayName"
 			  Description="ms-resource:AppDescription"
 			  BackgroundColor="transparent"
 			  Square150x150Logo="Assets\Square150x150Logo.png"
 			  Square44x44Logo="Assets\Square44x44Logo.png">
-				<uap:DefaultTile ShortName="ms-resource:AppShortDisplayName" Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
-					<uap:ShowNameOnTiles>
-						<uap:ShowOn Tile="wide310x150Logo" />
-						<uap:ShowOn Tile="square310x310Logo" />
-						<uap:ShowOn Tile="square150x150Logo" />
-					</uap:ShowNameOnTiles>
-				</uap:DefaultTile>
-				<uap:SplashScreen Image="Assets\SplashScreen.png" />
-			</uap:VisualElements>
-			<Extensions>
-				<uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="GetStoreApp.App">
-					<uap:Protocol Name="taskbarpinner">
-						<uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
-					</uap:Protocol>
-				</uap:Extension>
-				<uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="Windows.FullTrustApplication">
-					<uap:Protocol Name="webbrowser">
-						<uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
-					</uap:Protocol>
-				</uap:Extension>
+        <uap:DefaultTile ShortName="ms-resource:AppShortDisplayName" Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+            <uap:ShowOn Tile="square150x150Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="GetStoreApp.App">
+          <uap:Protocol Name="taskbarpinner">
+            <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap:Protocol Name="webbrowser">
+            <uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
 
-				<uap:Extension Category="windows.shareTarget" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
-					<uap:ShareTarget>
-						<uap:DataFormat>Uri</uap:DataFormat>
-					</uap:ShareTarget>
-				</uap:Extension>
+        <uap:Extension Category="windows.shareTarget" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap:ShareTarget>
+            <uap:DataFormat>Uri</uap:DataFormat>
+          </uap:ShareTarget>
+        </uap:Extension>
 
-				<uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
-					<uap5:AppExecutionAlias>
-						<uap5:ExecutionAlias Alias="GetStoreApp.exe" />
-					</uap5:AppExecutionAlias>
-				</uap5:Extension>
-			</Extensions>
-		</Application>
-	</Applications>
+        <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap5:AppExecutionAlias>
+            <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
+          </uap5:AppExecutionAlias>
+        </uap5:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
 
-	<Capabilities>
-		<Capability Name="internetClient" />
-		<rescap:Capability Name="broadFileSystemAccess" />
-		<rescap:Capability Name="packageManagement" />
-		<rescap:Capability Name="packageQuery" />
-		<rescap:Capability Name="runFullTrust" />
-	</Capabilities>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="broadFileSystemAccess" />
+    <rescap:Capability Name="packageManagement" />
+    <rescap:Capability Name="packageQuery" />
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
 </Package>

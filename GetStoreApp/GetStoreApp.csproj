@@ -35,6 +35,7 @@
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
     <WebView2EnableCsWinRTProjection>False</WebView2EnableCsWinRTProjection>
+    <WebView2UseWinRT>true</WebView2UseWinRT>
     <Win32Resource>GetStoreApp.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
