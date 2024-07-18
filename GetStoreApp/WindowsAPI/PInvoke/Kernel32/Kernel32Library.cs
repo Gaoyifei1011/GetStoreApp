@@ -25,19 +25,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         internal static partial bool AllocConsole();
 
         /// <summary>
-        /// 检索一个值，该值指示进程是使用基于 CoreWindow 的窗口模型还是基于 HWND 的窗口模型。 可以使用 值来决定如何注册窗口状态更改通知 (大小更改、可见性更改等 ) 。
-        /// </summary>
-        /// <param name="processToken">标识进程的访问令牌的句柄。</param>
-        /// <param name="policy">指向 AppPolicyWindowingModel 枚举类型的变量的指针。 当函数成功返回时，变量包含一个枚举常量值，该值指示所标识进程的窗口化模型。</param>
-        /// <returns>
-        /// 如果函数成功，该函数将返回ERROR_SUCCESS。
-        /// 如果找不到进程令牌的已知窗口模型策略，该函数将引发STATUS_ASSERTION_FAILURE异常并返回ERROR_NOT_FOUND。
-        /// 如果 processToken 或 policy 为 null，则该函数返回ERROR_INVALID_PARAMETER。
-        /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "AppPolicyGetWindowingModel", SetLastError = false)]
-        internal static partial int AppPolicyGetWindowingModel(IntPtr processToken, out AppPolicyWindowingModel policy);
-
-        /// <summary>
         /// 将调用进程附加到指定进程的控制台作为客户端应用程序
         /// </summary>
         /// <param name="dwProcessId">
@@ -174,23 +161,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         internal static partial IntPtr GetStdHandle(STD_HANDLE nStdHandle);
 
         /// <summary>
-        /// 打开现有的本地进程对象。
-        /// </summary>
-        /// <param name="dwDesiredAccess">
-        /// 对进程对象的访问。根据进程的安全描述符检查此访问权限。此参数可以是一个或多个进程访问权限。
-        /// 如果调用方已启用SeDebugPrivilege 特权，则无论安全描述符的内容如何，都会授予请求的访问权限。</param>
-        /// <param name="bInheritHandle">如果此值为 TRUE，则此进程创建的进程将继承句柄。否则，进程不会继承此句柄。</param>
-        /// <param name="dwProcessId">
-        /// 要打开的本地进程的标识符。
-        /// 如果指定的进程是系统空闲进程 （0x00000000），则该函数将失败，最后一个错误代码为。
-        /// 如果指定的进程是系统进程或客户端服务器运行时子系统 （CSRSS） 进程之一，则此函数将失败，
-        /// 最后一个错误代码是因为它们的访问限制阻止用户级代码打开它们。ERROR_INVALID_PARAMETERERROR_ACCESS_DENIED
-        /// </param>
-        /// <returns>如果函数成功，则返回值是指定进程的打开句柄。如果函数失败，则返回值为 NULL。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "OpenProcess", SetLastError = false)]
-        internal static partial IntPtr OpenProcess(EDESIREDACCESS dwDesiredAccess, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandle, uint dwProcessId);
-
-        /// <summary>
         /// 检索有关系统快照中遇到的第一个进程的信息。
         /// </summary>
         /// <param name="snapshot">从对 CreateToolhelp32Snapshot 函数的上一次调用返回的快照的句柄。</param>
@@ -254,17 +224,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         [LibraryImport(Kernel32, EntryPoint = "SetConsoleCtrlHandler", SetLastError = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static partial bool SetConsoleCtrlHandler(IntPtr handlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
-
-        /// <summary>
-        /// 终止指定的进程及其所有线程。
-        /// </summary>
-        /// <param name="hProcess">句柄必须具有 PROCESS_TERMINATE 访问权限。 有关详细信息，请参阅 进程安全性和访问权限。</param>
-        /// <param name="uExitCode">
-        /// 进程和线程因此调用而终止的退出代码。 使用 GetExitCodeProcess 函数检索进程的退出值。 使用 GetExitCodeThread 函数检索线程的退出值。</param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "TerminateProcess", SetLastError = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool TerminateProcess(IntPtr hProcess, uint uExitCode);
 
         /// <summary>
         /// 从当前光标位置开始，将字符串写入控制台屏幕缓冲区。

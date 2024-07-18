@@ -141,13 +141,21 @@ namespace GetStoreApp
             if (!isDisposed && disposing)
             {
                 GlobalNotificationService.SendNotification();
-                if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
+
+                try
                 {
-                    CHANGEFILTERSTRUCT changeFilterStatus = new()
+                    if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
                     {
-                        cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>()
-                    };
-                    User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
+                        CHANGEFILTERSTRUCT changeFilterStatus = new()
+                        {
+                            cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>()
+                        };
+                        User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Reset window message filter state failed", e);
                 }
 
                 MainWindow.Current?.SaveWindowInformation();

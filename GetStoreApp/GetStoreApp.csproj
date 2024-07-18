@@ -73,11 +73,11 @@
     <MyEmbeddedItems Include="EmbedAssets\wu.xml" />
 
     <None Remove="Assets\LICENSE" />
-    <None Remove="Styles\AppbarButton.xaml" />
-    <None Remove="Styles\Flyout.xaml" />
-    <None Remove="Styles\HyperlinkButton.xaml" />
-    <None Remove="Styles\InfoBar.xaml" />
-    <None Remove="Styles\MenuFlyout.xaml" />
+    <None Remove="Styles\WinUI\AppbarButton.xaml" />
+    <None Remove="Styles\WinUI\Flyout.xaml" />
+    <None Remove="Styles\WinUI\HyperlinkButton.xaml" />
+    <None Remove="Styles\WinUI\InfoBar.xaml" />
+    <None Remove="Styles\WinUI\MenuFlyout.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
     <None Remove="UI\Controls\Store\SearchStoreControl.xaml" />
@@ -115,11 +115,11 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.0-prerelease.240602.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
 
-    <Page Update="Styles\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\Flyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\InfoBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\WinUI\Flyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\WinUI\InfoBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\WinUI\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

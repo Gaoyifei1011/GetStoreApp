@@ -174,7 +174,7 @@
         WM_SETCURSOR = 0x0020,
 
         /// <summary>
-        /// 当光标处于非活动窗口中且用户按下鼠标按钮时发送。 仅当子窗口将其传递给 DefWindowProc 函数时，父窗口才会接收此消息。
+        /// 当光标处于非活动窗口中且用户按下鼠标按钮时发送。 仅当子窗口将其传递给 DefWindowProcW 函数时，父窗口才会接收此消息。
         /// </summary>
         WM_MOUSEACTIVATE = 0x0021,
 
@@ -353,12 +353,12 @@
         WM_ACCESS_WINDOW = 0x004F,
 
         /// <summary>
-        /// 当用户选择新的输入语言（在键盘控制面板应用程序) 或系统任务栏上的指示器中指定的热键时，发布到具有焦点的窗口。 应用程序可以通过将消息传递给 DefWindowProc 函数来接受更改，或者拒绝更改，并阻止它立即返回) 。
+        /// 当用户选择新的输入语言（在键盘控制面板应用程序) 或系统任务栏上的指示器中指定的热键时，发布到具有焦点的窗口。 应用程序可以通过将消息传递给 DefWindowProcW 函数来接受更改，或者拒绝更改，并阻止它立即返回) 。
         /// </summary>
         WM_INPUTLANGCHANGEREQUEST = 0x0050,
 
         /// <summary>
-        /// 更改应用程序输入语言后，发送到最受影响的窗口。 应进行任何特定于应用程序的设置并将消息传递给 DefWindowProc 函数，该函数会将消息传递给所有第一级子窗口。 这些子窗口可以将消息传递给 DefWindowProc ，使其将消息传递给其子窗口等。
+        /// 更改应用程序输入语言后，发送到最受影响的窗口。 应进行任何特定于应用程序的设置并将消息传递给 DefWindowProcW 函数，该函数会将消息传递给所有第一级子窗口。 这些子窗口可以将消息传递给 DefWindowProcW ，使其将消息传递给其子窗口等。
         /// </summary>
         WM_INPUTLANGCHANGE = 0x0051,
 
@@ -1615,7 +1615,7 @@
         WM_MBUTTONDBLCLK = 0x0209,
 
         /// <summary>
-        /// 当鼠标滚轮旋转时，发送到焦点窗口。 DefWindowProc 函数将消息传播到窗口的父级。 不应有消息的内部转发，因为 DefWindowProc 会将其传播到父链上，直到找到处理它的窗口。
+        /// 当鼠标滚轮旋转时，发送到焦点窗口。 DefWindowProcW 函数将消息传播到窗口的父级。 不应有消息的内部转发，因为 DefWindowProcW 会将其传播到父链上，直到找到处理它的窗口。
         /// </summary>
         WM_MOUSEWHEEL = 0x020A,
 
@@ -1635,7 +1635,7 @@
         WM_XBUTTONDBLCLK = 0x020D,
 
         /// <summary>
-        /// 当鼠标的水平滚轮倾斜或旋转时，发送到活动窗口。 DefWindowProc 函数将消息传播到窗口的父级。 不应有消息的内部转发，因为 DefWindowProc 会将其传播到父链上，直到找到处理它的窗口。
+        /// 当鼠标的水平滚轮倾斜或旋转时，发送到活动窗口。 DefWindowProcW 函数将消息传播到窗口的父级。 不应有消息的内部转发，因为 DefWindowProcW 会将其传播到父链上，直到找到处理它的窗口。
         /// </summary>
         WM_MOUSEHWHEEL = 0x020E,
 
@@ -1763,13 +1763,13 @@
         WM_MDISETMENU = 0x0230,
 
         /// <summary>
-        /// 在窗口进入移动模式循环或调整大小循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 WM_SYSCOMMAND 消息传递到 DefWindowProc 函数和消息 的 wParam 参数指定 SC_MOVE 或 SC_SIZE 值时，窗口将输入移动或调整模式循环。
-        /// 当 DefWindowProc 返回时，该操作已完成。
+        /// 在窗口进入移动模式循环或调整大小循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 WM_SYSCOMMAND 消息传递到 DefWindowProcW 函数和消息 的 wParam 参数指定 SC_MOVE 或 SC_SIZE 值时，窗口将输入移动或调整模式循环。
+        /// 当 DefWindowProcW 返回时，该操作已完成。
         /// </summary>
         WM_ENTERSIZEMOVE = 0x0231,
 
         /// <summary>
-        /// 在窗口退出移动或调整模式循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 WM_SYSCOMMAND 消息传递到 DefWindowProc 函数时，窗口将输入移动或调整模式循环，而消息的 wParam 参数指定 SC_MOV E 或 SC_SIZE 值。 当 DefWindowProc 返回时，此操作将完成。
+        /// 在窗口退出移动或调整模式循环后，将一次发送到窗口。 当用户单击窗口的标题栏或大小调整边框或窗口将 WM_SYSCOMMAND 消息传递到 DefWindowProcW 函数时，窗口将输入移动或调整模式循环，而消息的 wParam 参数指定 SC_MOV E 或 SC_SIZE 值。 当 DefWindowProcW 返回时，此操作将完成。
         /// </summary>
         WM_EXITSIZEMOVE = 0x0232,
 
@@ -2263,7 +2263,7 @@
 
         /// <summary>
         /// 将 WM_PRINTCLIENT 消息发送到窗口，以请求它在指定的设备上下文中绘制其工作区，通常位于打印机设备上下文中。
-        /// 与 WM_PRINT 不同，DefWindowProc 不会处理 WM_PRINTCLIENT。 窗口应通过应用程序定义的 WndProc 函数处理 WM_PRINTCLIENT 消息，以便其正确使用。
+        /// 与 WM_PRINT 不同，DefWindowProcW 不会处理 WM_PRINTCLIENT。 窗口应通过应用程序定义的 WndProc 函数处理 WM_PRINTCLIENT 消息，以便其正确使用。
         /// </summary>
         WM_PRINTCLIENT = 0x0318,
 

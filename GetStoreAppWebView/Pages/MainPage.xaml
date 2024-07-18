@@ -1,0 +1,202 @@
+﻿<Page
+    x:Class="GetStoreAppWebView.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
+    xmlns:root="using:GetStoreAppWebView.Services.Root"
+    xmlns:local="using:GetStoreAppWebView.UI.Custom"
+    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+    mc:Ignorable="d">
+
+    <Grid ActualThemeChanged="{x:Bind OnActualThemeChanged}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  应用标题栏内容  -->
+        <Grid
+            x:Name="AppTitlebar"
+            Height="45"
+            Margin="16,0,0,0"
+            VerticalAlignment="Top"
+            x:FieldModifier="public"
+            Background="Transparent">
+
+            <!--  标题栏应用名称  -->
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,2,0,0"
+                VerticalAlignment="Center"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
+                TextWrapping="NoWrap" />
+        </Grid>
+
+        <Grid
+            Grid.Row="1"
+            Height="45"
+            Padding="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel
+                Grid.Column="0"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                Orientation="Horizontal"
+                Spacing="2">
+
+                <AppBarButton
+                    Click="{x:Bind OnBrowserBackClicked}"
+                    IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Back')}"
+                    Style="{StaticResource AppBarButtonStyle}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72B;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton
+                    Click="{x:Bind OnBrowserForwardClicked}"
+                    IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Forward')}"
+                    Style="{StaticResource AppBarButtonStyle}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72A;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton
+                    Click="{x:Bind OnRefreshClicked}"
+                    IsEnabled="{x:Bind IsLoading.Equals(x:False), Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Refresh')}"
+                    Style="{StaticResource AppBarButtonStyle}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72C;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </StackPanel>
+
+            <Grid
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <ProgressRing
+                    Grid.Column="0"
+                    Width="20"
+                    Height="20"
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Right"
+                    IsActive="{x:Bind IsLoading, Mode=OneWay}"
+                    Visibility="{x:Bind IsLoading, Mode=OneWay}" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WebView/WebTitle')}" />
+                <TextBlock
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WebView/Loading')}"
+                    Visibility="{x:Bind IsLoading, Mode=OneWay}" />
+            </Grid>
+
+            <StackPanel
+                Grid.Column="2"
+                Margin="0,0,10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                Orientation="Horizontal"
+                Spacing="2">
+
+                <AppBarButton
+                    Click="{x:Bind OnDownloadClicked}"
+                    IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Download')}"
+                    Style="{StaticResource AppBarButtonStyle}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE896;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WebView/More')}" Style="{StaticResource AppBarButtonStyle}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE712;" />
+                    </AppBarButton.Icon>
+
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE774;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutSeparator />
+
+                            <MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8b7;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnClearWebCacheClicked}"
+                                IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE74D;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+            </StackPanel>
+        </Grid>
+
+        <WebView
+            x:Name="WebViewBrowser"
+            Grid.Row="2"
+            x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[0])}"
+            NavigationCompleted="{x:Bind OnNavigationCompleted}"
+            NavigationStarting="{x:Bind OnNavigationStarting}"
+            NewWindowRequested="{x:Bind OnNewWindowRequested}"
+            Source="{x:Bind Source, Mode=OneWay}"
+            UnviewableContentIdentified="{x:Bind OnUnviewableContentIdentified}" />
+
+        <local:WebView2
+            x:Name="WebView2Browser"
+            Grid.Row="2"
+            x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[1])}"
+            CoreProcessFailed="{x:Bind OnCoreProcessFailed}"
+            CoreWebView2Initialized="{x:Bind OnCoreWebView2Initialized}"
+            NavigationCompleted="{x:Bind OnWebView2NavigationCompleted}"
+            NavigationStarting="{x:Bind OnWebView2NavigationStarting}"
+            Source="{x:Bind Source, Mode=OneWay}" />
+    </Grid>
+</Page>

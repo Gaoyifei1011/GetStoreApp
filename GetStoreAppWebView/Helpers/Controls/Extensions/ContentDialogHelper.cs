@@ -1,7 +1,7 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace GetStoreAppWebView.Helpers.Controls.Extensions
 {
@@ -21,7 +21,6 @@ namespace GetStoreAppWebView.Helpers.Controls.Extensions
             if (!isDialogOpening && dialog is not null && element is not null)
             {
                 isDialogOpening = true;
-                dialog.XamlRoot = element.XamlRoot;
                 dialog.RequestedTheme = element.ActualTheme;
                 element.ActualThemeChanged += (sender, args) =>
                 {

@@ -55,53 +55,39 @@ namespace GetStoreApp
                 return;
             }
 
-            // Win32 基于 HWND 的传统桌面应用 / 控制台应用
-            if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_ClassicDesktop)
+            bool isDesktopProgram = args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
+            InitializeResourcesAsync(isDesktopProgram).Wait();
+
+            // 以桌面应用程序方式正常启动
+            if (isDesktopProgram)
             {
-                bool isDesktopProgram = args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
-                InitializeResourcesAsync(isDesktopProgram).Wait();
+                DownloadSchedulerService.InitializeDownloadScheduler(true);
+                DesktopLaunchService.InitializeLaunchAsync(args).Wait();
 
-                // 以桌面应用程序方式正常启动
-                if (isDesktopProgram)
+                // 启动桌面程序
+                if (IsNeedAppLaunch)
                 {
-                    DownloadSchedulerService.InitializeDownloadScheduler(true);
-                    DesktopLaunchService.InitializeLaunchAsync(args).Wait();
+                    ComWrappersSupport.InitializeComWrappers();
 
-                    // 启动桌面程序
-                    if (IsNeedAppLaunch)
+                    Application.Start((param) =>
                     {
-                        ComWrappersSupport.InitializeComWrappers();
-
-                        Application.Start((param) =>
-                        {
-                            SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
-                            _ = new WinUIApp();
-                        });
-                    }
-                }
-                // 以控制台程序方式启动
-                else
-                {
-                    AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-                    bool AttachResult = Kernel32Library.AttachConsole();
-
-                    if (!AttachResult)
-                    {
-                        Kernel32Library.AllocConsole();
-                    }
-                    ConsoleLaunchService.InitializeLaunchAsync(args).Wait();
-                    Kernel32Library.FreeConsole();
+                        SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+                        _ = new WinUIApp();
+                    });
                 }
             }
-            // UWP CoreApplication 应用
-            else if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_Universal)
+            // 以控制台程序方式启动
+            else
             {
-                // WinUI 3 UWP 模式下，必须需要使用多线程公寓模型启动，所以必须卸载 STAThreadAttribute 属性默认初始化的单线程公寓模型，然后将其初始化为多线程公寓模型
-                Ole32Library.CoUninitialize();
-                _ = Ole32Library.CoInitializeEx(IntPtr.Zero, COINIT.COINIT_MULTITHREADED);
-                InitializeResourcesAsync(false).Wait();
-                CoreApplication.Run(new Views.Windows.FrameworkViewSource());
-                Ole32Library.CoUninitialize();
+                AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+                bool AttachResult = Kernel32Library.AttachConsole();
+
+                if (!AttachResult)
+                {
+                    Kernel32Library.AllocConsole();
+                }
+                ConsoleLaunchService.InitializeLaunchAsync(args).Wait();
+                Kernel32Library.FreeConsole();
             }
         }
 
@@ -123,16 +109,11 @@ namespace GetStoreApp
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             ResultService.Initialize();
-
-            // 初始化通用设置选项（桌面应用程序和控制台应用程序）
-            if (RuntimeHelper.AppWindowingModel is AppPolicyWindowingModel.AppPolicyWindowingModel_ClassicDesktop)
-            {
-                ResourceService.LocalizeReosurce();
-                LinkFilterService.InitializeLinkFilterValue();
-                QueryLinksModeService.InitializeQueryLinksMode();
-                await DownloadOptionsService.InitializeDownloadAsync();
-                DownloadStorageService.Initialize();
-            }
+            ResourceService.LocalizeReosurce();
+            LinkFilterService.InitializeLinkFilterValue();
+            QueryLinksModeService.InitializeQueryLinksMode();
+            await DownloadOptionsService.InitializeDownloadAsync();
+            DownloadStorageService.Initialize();
 
             // 初始化其他设置信息（桌面应用程序）
             if (isDesktopProgram)

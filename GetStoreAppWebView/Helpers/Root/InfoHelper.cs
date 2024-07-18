@@ -1,4 +1,4 @@
-﻿using Windows.ApplicationModel;
+﻿using Windows.Storage;
 
 namespace GetStoreAppWebView.Helpers.Root
 {
@@ -7,6 +7,7 @@ namespace GetStoreAppWebView.Helpers.Root
     /// </summary>
     public static class InfoHelper
     {
-        public static string AppInstalledLocation { get; } = Package.Current.InstalledLocation.Path;
+        // 常见用户数据文件夹的完整路径
+        public static UserDataPaths UserDataPath { get; } = UserDataPaths.GetDefault();
     }
 }

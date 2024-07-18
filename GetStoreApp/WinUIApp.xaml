@@ -8,12 +8,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/AppBarButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/Flyout.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/HyperlinkButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/InfoBar.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/MenuFlyout.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/TeachingTip.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/WinUI/AppBarButton.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/WinUI/Flyout.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/WinUI/HyperlinkButton.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/WinUI/InfoBar.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/WinUI/MenuFlyout.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/WinUI/TeachingTip.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

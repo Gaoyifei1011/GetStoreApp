@@ -1,4 +1,3 @@
-using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
@@ -17,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
+using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.StartScreen;
@@ -535,8 +535,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
                 {
                     try
                     {
-                        ResultService.SaveResult(ConfigKey.TaskbarPinInfoKey, string.Format("{0} {1}", appListEntryItem.PackageFullName, appListEntryItem.AppUserModelId));
-                        await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"));
+                        await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        {
+                            { "AppUserModelId", appListEntryItem.AppUserModelId },
+                            { "PackageFullName", appListEntryItem.PackageFullName },
+                        });
                     }
                     catch (Exception e)
                     {

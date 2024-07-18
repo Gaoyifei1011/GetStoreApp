@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Advapi32;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Runtime.InteropServices;
 using Windows.ApplicationModel;
@@ -15,13 +14,10 @@ namespace GetStoreApp.Helpers.Root
 
         public static bool IsElevated { get; private set; }
 
-        public static AppPolicyWindowingModel AppWindowingModel { get; private set; }
-
         static RuntimeHelper()
         {
             IsInMsixContainer();
             IsRunningElevated();
-            GetAppWindowingModel();
         }
 
         /// <summary>
@@ -66,23 +62,6 @@ namespace GetStoreApp.Helpers.Root
             }
 
             IsElevated = token_elevation_type == TOKEN_ELEVATION_TYPE.TokenElevationTypeFull;
-        }
-
-        /// <summary>
-        /// 获取当前程序的窗口模型
-        /// </summary>
-        private static void GetAppWindowingModel()
-        {
-            bool success = Advapi32Library.OpenProcessToken(-1, 0x0008, out IntPtr tokenHandle);
-            if (success)
-            {
-                Kernel32Library.AppPolicyGetWindowingModel(tokenHandle, out AppPolicyWindowingModel model);
-                AppWindowingModel = model;
-            }
-            else
-            {
-                AppWindowingModel = AppPolicyWindowingModel.AppPolicyWindowingModel_None;
-            }
         }
     }
 }

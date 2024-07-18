@@ -1,47 +1,110 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Windows.Graphics;
 
 namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
 {
     /// <summary>
-    /// user32.dll 函数库
+    /// User32.dll 函数库
     /// </summary>
-    public static partial class User32Library
+    public static class User32Library
     {
         private const string User32 = "user32.dll";
 
         /// <summary>
-        /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
+        /// 将指定点的工作区坐标转换为屏幕坐标。
         /// </summary>
-        /// <param name="hWndParent">要搜索其子窗口的父窗口的句柄。如果 hwndParent 为 NULL，则该函数使用桌面窗口作为父窗口。 函数在桌面的子窗口之间搜索。 如果 hwndParent 为HWND_MESSAGE，则函数将搜索所有 仅消息窗口。</param>
-        /// <param name="hWndChildAfter">子窗口的句柄。 搜索从 Z 顺序中的下一个子窗口开始。 子窗口必须是 hwndParent 的直接子窗口，而不仅仅是子窗口。 如果 hwndChildAfter 为 NULL，则搜索从 hwndParent 的第一个子窗口开始。请注意，如果 hwndParent 和 hwndChildAfter 均为 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。</param>
-        /// <param name="lpszClass">类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 </param>
-        /// <param name="lpszWindow">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
-        /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
-        internal static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
+        /// <param name="hWnd">其工作区用于转换的窗口的句柄。</param>
+        /// <param name="lpPoint">指向 POINT 结构的指针，该结构包含要转换的客户端坐标。 如果函数成功，则新的屏幕坐标将复制到此结构中。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "ClientToScreen", SetLastError = false)]
+        public static extern bool ClientToScreen(IntPtr hWnd, ref PointInt32 lpPoint);
 
         /// <summary>
-        /// 创建从指定文件中提取的图标的句柄数组。
+        /// 创建具有扩展窗口样式的重叠窗口、弹出窗口窗口或子窗口;否则，此函数与 CreateWindow 函数相同。 有关创建窗口的详细信息以及 CreateWindowEx 的其他参数的完整说明，请参阅 CreateWindow。
         /// </summary>
-        /// <param name="lpszFile">要从中提取图标的文件的路径和名称。</param>
-        /// <param name="nIconIndex">要提取的第一个图标的从零开始的索引。 例如，如果此值为零，函数将提取指定文件中的第一个图标。</param>
-        /// <param name="cxIcon">所需的水平图标大小。 </param>
-        /// <param name="cyIcon">所需的垂直图标大小。</param>
-        /// <param name="phicon">指向返回的图标句柄数组的指针。</param>
-        /// <param name="piconid">
-        /// 指向最适合当前显示设备的图标返回的资源标识符的指针。 如果标识符不可用于此格式，则返回的标识符0xFFFFFFFF。 如果无法获取标识符，则返回的标识符为 0。
+        /// <param name="dwExStyle">正在创建的窗口的扩展窗口样式。</param>
+        /// <param name="lpClassName">
+        /// 由上一次调用 RegisterClass 或 RegisterClassEx 函数创建的以 null 结尾的字符串或类原子。原子必须位于 lpClassName 的低序字中；高序字必须为零。
+        /// 如果 lpClassName 是字符串，则指定窗口类名称。类名可以是使用 RegisterClass 或 RegisterClassEx 注册的任何名称，前提是注册该类的模块也是创建窗口的模块。类名也可以是任何预定义的系统类名称。</param>
+        /// <param name="lpWindowName">
+        /// 窗口名称。如果窗口样式指定标题栏，则 lpWindowName 指向的窗口标题将显示在标题栏中。
+        /// 使用 CreateWindow 创建控件（如按钮、检查框和静态控件）时，请使用 lpWindowName 指定控件的文本。
+        /// 使用 SS_ICON 样式创建静态控件时，请使用 lpWindowName 指定图标名称或标识符。 若要指定标识符，请使用语法“#num”。
         /// </param>
-        /// <param name="nIcons">要从文件中提取的图标数。 此参数仅在从.exe和.dll文件时有效。</param>
-        /// <param name="flags">指定控制此函数的标志。 这些标志是 LoadImage 函数使用的 LR_* 标志。</param>
-        /// <returns>
-        /// 如果 <param name="phicon"> 参数为 NULL 且此函数成功，则返回值为文件中的图标数。 如果函数失败，则返回值为 0。 如果 <param name="phicon"> 参数不是 NULL 且函数成功，则返回值是提取的图标数。 否则，如果未找到文件，则返回值0xFFFFFFFF。
-        /// </returns>
-        [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
-        internal static partial int PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out] IntPtr[] phicon, [Out] int[] piconid, int nIcons, int flags);
+        /// <param name="dwStyle">
+        /// 正在创建的窗口的样式。 此参数可以是窗口样式值以及“备注”部分中指示的控件样式的组合。
+        /// </param>
+        /// <param name="x">
+        /// 窗口的初始水平位置。 对于重叠或弹出窗口， x 参数是窗口左上角的初始 x 坐标（以屏幕坐标表示）。对于子窗口，x 是窗口左上角相对于父窗口工作区左上角的 x 坐标。如果 x 设置为 CW_USEDEFAULT，则系统会选择窗口左上角的默认位置，并忽略 y 参数。CW_USEDEFAULT 仅对重叠窗口有效;如果为弹出窗口或子窗口指定，则 x 和 y 参数设置为零。
+        /// </param>
+        /// <param name="y">
+        /// 窗口的初始垂直位置。对于重叠或弹出窗口，y 参数是窗口左上角的初始 y 坐标（以屏幕坐标表示）。对于子窗口，y 是子窗口左上角相对于父窗口工作区左上角的初始 y 坐标。对于列表框 ，y 是列表框工作区左上角相对于父窗口工作区左上角的初始 y 坐标。
+        /// 如果使用 WS_VISIBLE 样式位创建重叠窗口，并且 x 参数设置为 CW_USEDEFAULT，则 y 参数确定窗口的显示方式。 如果 y 参数CW_USEDEFAULT，则窗口管理器在创建窗口后使用SW_SHOW标志调用 ShowWindow。 如果 y 参数是其他某个值，则窗口管理器调用 ShowWindow ，该值作为 nCmdShow 参数。
+        /// </param>
+        /// <param name="nWidth">
+        /// 窗口的宽度（以设备单位为单位）。对于重叠窗口， nWidth 是窗口的宽度、屏幕坐标或 CW_USEDEFAULT。如果 nWidth 是 CW_USEDEFAULT，系统将为窗口选择默认宽度和高度；默认宽度从初始 x 坐标扩展到屏幕的右边缘；默认高度从初始 y 坐标扩展到图标区域的顶部。 CW_USEDEFAULT 仅对重叠窗口有效；如果为弹出窗口或子窗口指定 了CW_USEDEFAULT ，则 nWidth 和 nHeight 参数设置为零。
+        /// </param>
+        /// <param name="nHeight">
+        /// 窗口的高度（以设备单位为单位）。对于重叠窗口， nHeight 是窗口的高度（以屏幕坐标为单位）。如果 nWidth 参数设置为 CW_USEDEFAULT，则系统将忽略 nHeight。
+        /// </param>
+        /// <param name="hWndParent">
+        /// 正在创建的窗口的父窗口或所有者窗口的句柄。若要创建子窗口或拥有的窗口，请提供有效的窗口句柄。 此参数对于弹出窗口是可选的。
+        /// 若要创建仅消息窗口，请向现有仅消息窗口提供 HWND_MESSAGE 或句柄。</param>
+        /// <param name="hMenu">
+        /// 菜单句柄，或指定子窗口标识符，具体取决于窗口样式。对于重叠或弹出窗口， hMenu 标识要与窗口一起使用的菜单;如果要使用类菜单，则它可以为 NULL 。
+        /// 对于子窗口， hMenu 指定子窗口标识符，即对话框控件用于通知其父级事件的整数值。 应用程序确定子窗口标识符;对于具有相同父窗口的所有子窗口，它必须是唯一的。
+        /// </param>
+        /// <param name="hInstance">要与窗口关联的模块实例的句柄。</param>
+        /// <param name="lpParam">
+        /// 指向要通过 CREATESTRUCT 结构传递到窗口的值的指针，（WM_CREATE消息的 lParam 参数指向的 lpCreateParams 成员)）。 此消息在返回之前由此函数发送到创建的窗口。
+        /// 如果应用程序调用 CreateWindow 来创建 MDI 客户端窗口，lpParam 应指向 CLIENTCREATESTRUCT 结构。如果 MDI 客户端窗口调用 CreateWindow 来创建 MDI 子窗口， lpParam 应指向 MDICREATESTRUCT 结构。如果不需要其他数据，lpParam 可能为 NULL。</param>
+        /// <returns>如果函数成功，则返回值是新窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CreateWindowExW", SetLastError = false)]
+        public static extern IntPtr CreateWindowEx(uint dwExStyle, [MarshalAs(UnmanagedType.LPWStr)] string lpClassName, [MarshalAs(UnmanagedType.LPWStr)] string lpWindowName, uint dwStyle, uint x, uint y, uint nWidth, uint nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
 
         /// <summary>
-        /// 将指定的消息发送到窗口或窗口。SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
+        /// 调用默认窗口过程，为应用程序不处理的任何窗口消息提供默认处理。 此函数确保处理每条消息。 使用窗口过程接收的相同参数调用 DefWindowProc。
+        /// </summary>
+        /// <param name="hWnd">接收消息的窗口过程的句柄。</param>
+        /// <param name="msg">消息。</param>
+        /// <param name="wParam">其他消息信息。 此参数的内容取决于 Msg 参数的值。</param>
+        /// <param name="lParam">其他消息信息。 此参数的内容取决于 Msg 参数的值。</param>
+        /// <returns>返回值是消息处理的结果，取决于消息。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "DefWindowProcW", SetLastError = false)]
+        public static extern IntPtr DefWindowProc(IntPtr hWnd, WindowMessage msg, UIntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 销毁指定的窗口。 函数将 WM_DESTROY 和 WM_NCDESTROY 消息发送到窗口，以停用窗口并从窗口中删除键盘焦点。 如果窗口位于查看器链) 的顶部，函数还会销毁窗口的菜单、销毁计时器、删除剪贴板所有权，并中断剪贴板查看器链 (。
+        /// 如果指定的窗口是父窗口或所有者窗口， 则 DestroyWindow 会在销毁父窗口或所有者窗口时自动销毁关联的子窗口或拥有窗口。 函数首先销毁子窗口或拥有的窗口，然后销毁父窗口或所有者窗口。
+        /// DestroyWindow 还会销毁 CreateDialog 函数创建的无模式对话框。
+        /// </summary>
+        /// <param name="hWnd">要销毁的窗口的句柄。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "DestroyWindow", SetLastError = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DestroyWindow(IntPtr hWnd);
+
+        /// <summary>
+        /// 如果窗口附加到调用线程的消息队列，则检索具有键盘焦点的窗口的句柄。
+        /// </summary>
+        /// <returns>返回值是具有键盘焦点的窗口的句柄。 如果调用线程的消息队列没有与键盘焦点关联的窗口，则返回值为 NULL。</returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "GetFocus", SetLastError = false)]
+        public static extern IntPtr GetFocus();
+
+        /// <summary>
+        /// 注册一个窗口类，以便在调用 CreateWindow 或 CreateWindowEx 函数时使用。
+        /// </summary>
+        /// <param name="lpWndClass">指向 WNDCLASS 结构的指针。 在将结构传递给函数之前，必须使用相应的类属性填充结构。</param>
+        /// <returns>
+        /// 如果函数成功，则返回值是唯一标识所注册类的类原子。 此原子只能由 CreateWindow、 CreateWindowEx、 GetClassInfo、 GetClassInfoEx、 FindWindow、 FindWindowEx 和 UnregisterClass 函数和 IActiveIMMap：：FilterClientWindows 方法使用。
+        /// 如果函数失败，则返回值为零。
+        /// </returns>
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "RegisterClassW", SetLastError = false)]
+        public static extern ushort RegisterClass(ref WNDCLASS lpWndClass);
+
+        /// <summary>
+        /// 将指定的消息发送到窗口或窗口。 SendMessageW 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。
         /// </summary>
         /// <param name="hWnd">
         /// 窗口过程的句柄将接收消息。 如果此参数 HWND_BROADCAST ( (HWND) 0xffff) ，则会将消息发送到系统中的所有顶级窗口，
@@ -52,7 +115,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。</param>
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false)]
-        internal static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "SendMessageW", SetLastError = false)]
+        public static extern int SendMessage(IntPtr hWnd, WindowMessage wMsg, UIntPtr wParam, IntPtr lParam);
     }
 }

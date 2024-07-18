@@ -111,6 +111,8 @@
 
 ### 项目引用（按英文首字母排序）
 
+> * [Microsoft.NETCore.UniversalWindowsPlatform](https://github.com/Microsoft/dotnet/blob/master/releases/UWP/README.md)&emsp;
+> * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;

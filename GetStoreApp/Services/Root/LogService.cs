@@ -17,6 +17,7 @@ namespace GetStoreApp.Services.Root
         private static readonly string unknown = "unknown";
         private static readonly string httpRequestFolderPath = Path.Combine(new string[] { ApplicationData.Current.LocalCacheFolder.Path, "Logs", "HttpRequest" });
         private static readonly string exceptionFolderPath = Path.Combine(new string[] { ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception" });
+        private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace GetStoreApp.Services.Root
                     }
 
                     LoggingSession httpRequestSession = new("Http request log session");
-                    LoggingChannel httpRequestChannel = new("Http request log channel");
+                    LoggingChannel httpRequestChannel = new("Http request log channel", channelOptions);
                     LoggingFields httpRequestFields = new();
                     Guid httpRequestGuid = Guid.NewGuid();
                     LoggingOptions httpRequestOptions = new()
@@ -85,7 +86,7 @@ namespace GetStoreApp.Services.Root
                     }
 
                     LoggingSession exceptionSession = new("Exception log session");
-                    LoggingChannel exceptionChannel = new("Exception log channel");
+                    LoggingChannel exceptionChannel = new("Exception log channel", channelOptions);
                     LoggingFields exceptionFields = new();
                     Guid exceptionGuid = Guid.NewGuid();
                     LoggingOptions exceptionOptions = new()

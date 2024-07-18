@@ -46,9 +46,9 @@
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
     <DefaultLanguage>en-US</DefaultLanguage>
     <EntryPointProjectUniqueName>..\GetStoreApp\GetStoreApp.csproj</EntryPointProjectUniqueName>
-    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateKeyFile>GetStoreAppPackage_SignKey.pfx</PackageCertificateKeyFile>
     <ProjectGuid>ca6c2dc4-c96d-4c23-ae18-fc7150bef554</ProjectGuid>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>

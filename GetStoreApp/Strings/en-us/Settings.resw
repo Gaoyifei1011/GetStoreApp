@@ -381,15 +381,6 @@
   <data name="SystemThemeSettings" xml:space="preserve">
     <value>System theme settings</value>
   </data>
-  <data name="Terminate" xml:space="preserve">
-    <value>Terminate</value>
-  </data>
-  <data name="TerminateWebViewProcess" xml:space="preserve">
-    <value>Terminate webview process</value>
-  </data>
-  <data name="TerminateWebViewProcessDescription" xml:space="preserve">
-    <value>Terminates the background process of the WebView kernel engine</value>
-  </data>
   <data name="Theme" xml:space="preserve">
     <value>Application theme</value>
   </data>

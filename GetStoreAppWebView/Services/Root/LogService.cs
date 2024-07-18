@@ -15,6 +15,7 @@ namespace GetStoreAppWebView.Services.Root
     {
         private static readonly string unknown = "unknown";
         private static readonly string exceptionFolderPath = Path.Combine(new string[] { ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception" });
+        private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace GetStoreAppWebView.Services.Root
                     }
 
                     LoggingSession exceptionSession = new("Exception log session");
-                    LoggingChannel exceptionChannel = new("Exception log channel");
+                    LoggingChannel exceptionChannel = new("Exception log channel", channelOptions);
                     LoggingFields exceptionFields = new();
                     Guid exceptionGuid = Guid.NewGuid();
                     LoggingOptions exceptionOptions = new()
@@ -83,7 +84,7 @@ namespace GetStoreAppWebView.Services.Root
                     }
 
                     LoggingSession exceptionSession = new("Exception log session");
-                    LoggingChannel exceptionChannel = new("Exception log channel");
+                    LoggingChannel exceptionChannel = new("Exception log channel", channelOptions);
                     LoggingFields exceptionFields = new();
                     Guid exceptionGuid = Guid.NewGuid();
                     LoggingOptions exceptionOptions = new()

@@ -11,7 +11,7 @@
   <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="4.2.712.0" />
+	  Version="4.2.718.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -49,12 +49,12 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="GetStoreApp.App">
+        <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
           <uap:Protocol Name="taskbarpinner">
             <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
-        <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="Windows.FullTrustApplication">
+        <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
           <uap:Protocol Name="webbrowser">
             <uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
           </uap:Protocol>

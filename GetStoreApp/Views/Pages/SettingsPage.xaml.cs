@@ -694,44 +694,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 终止浏览器未正常退出的进程
-        /// </summary>
-        private void OnTerminateWebViewProcessClicked(object sender, RoutedEventArgs args)
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-                    List<uint> processIdList = ProcessHelper.GetProcessPidByName("Win32WebViewHost.exe");
-
-                    foreach (uint processId in processIdList)
-                    {
-                        IntPtr hProcess = Kernel32Library.OpenProcess(EDESIREDACCESS.PROCESS_TERMINATE, false, processId);
-
-                        if (hProcess != IntPtr.Zero)
-                        {
-                            Kernel32Library.TerminateProcess(hProcess, 0);
-                        }
-                    }
-
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.TerminateProcess, true));
-                    });
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "WebViewHost Process create failed.", e);
-
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.TerminateProcess, false));
-                    });
-                }
-            });
-        }
-
-        /// <summary>
         /// 开关按钮切换时修改相应设置
         /// </summary>
         private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)

@@ -1555,58 +1555,6 @@
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/TraceClear')}" />
                 </Grid>
 
-                <!--  清理未释放的 WebView 进程  -->
-                <Grid
-                    Height="61"
-                    Padding="16,12"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{StaticResource ControlCornerRadius}">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <FontIcon
-                        Grid.Column="0"
-                        Margin="0,0,12,0"
-                        FontSize="16"
-                        Glyph="&#xE711;" />
-
-                    <StackPanel
-                        Grid.Column="1"
-                        VerticalAlignment="Center"
-                        Orientation="Vertical">
-
-                        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcess')}" />
-
-                        <TextBlock
-                            x:Name="TerminateWebViewProcessDescription"
-                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcessDescription')}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap">
-
-                            <ToolTipService.ToolTip>
-                                <ToolTip
-                                    MaxWidth="9999"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/TerminateWebViewProcessDescription')}"
-                                    Visibility="{x:Bind TerminateWebViewProcessDescription.IsTextTrimmed, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                        </TextBlock>
-                    </StackPanel>
-
-                    <Button
-                        Grid.Column="2"
-                        MinWidth="100"
-                        Click="{x:Bind OnTerminateWebViewProcessClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Terminate')}" />
-                </Grid>
-
                 <!--  日志记录设置  -->
                 <Expander
                     Padding="0"

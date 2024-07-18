@@ -126,6 +126,9 @@
   <data name="Download" xml:space="preserve">
     <value>下载</value>
   </data>
+  <data name="DownloadWebView2Runtime" xml:space="preserve">
+    <value>下载并安装 WebView2 运行时</value>
+  </data>
   <data name="Forward" xml:space="preserve">
     <value>继续</value>
   </data>
@@ -141,13 +144,31 @@
   <data name="OpenWithBrowser" xml:space="preserve">
     <value>使用浏览器打开</value>
   </data>
+  <data name="PinAppToTaskbar" xml:space="preserve">
+    <value>固定应用到任务栏提示</value>
+  </data>
   <data name="Refresh" xml:space="preserve">
     <value>刷新</value>
+  </data>
+  <data name="TaskbarPinTip" xml:space="preserve">
+    <value>请根据系统的提示进行操作</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>网页浏览器</value>
   </data>
+  <data name="WarningSuitableWebView2NotFound" xml:space="preserve">
+    <value>未检测到合适版本的 Microsoft Edge WebView2 运行时。</value>
+  </data>
   <data name="WebTitle" xml:space="preserve">
     <value>网页接口</value>
+  </data>
+  <data name="WebView2Closed" xml:space="preserve">
+    <value>不能为关闭的 WebView2 元素创建 CoreWebView2。</value>
+  </data>
+  <data name="WebView2NotPresent" xml:space="preserve">
+    <value>失败，因为不存在有效的 CoreWebView2。确保已创建一个，例如通过调用 EnsureCoreWebView2Async() API。</value>
+  </data>
+  <data name="WebView2NotPresentClosed" xml:space="preserve">
+    <value>失败，因为不存在有效的 CoreWebView2。一个存在，但已经关闭。</value>
   </data>
 </root>

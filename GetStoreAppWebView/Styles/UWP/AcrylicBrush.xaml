@@ -1,0 +1,163 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <AcrylicBrush
+                x:Key="AcrylicBackgroundFillColorDefaultBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#2C2C2C"
+                TintColor="#2C2C2C"
+                TintLuminosityOpacity="0.96"
+                TintOpacity="0.15" />
+            <AcrylicBrush
+                x:Key="AcrylicInAppFillColorDefaultBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="#2C2C2C"
+                TintColor="#2C2C2C"
+                TintLuminosityOpacity="0.96"
+                TintOpacity="0.15" />
+            <AcrylicBrush
+                x:Key="AcrylicBackgroundFillColorDefaultInverseBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#F9F9F9"
+                TintColor="#FCFCFC"
+                TintLuminosityOpacity="0.85"
+                TintOpacity="0.0" />
+            <AcrylicBrush
+                x:Key="AcrylicInAppFillColorDefaultInverseBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="#F9F9F9"
+                TintColor="#FCFCFC"
+                TintLuminosityOpacity="0.85"
+                TintOpacity="0.0" />
+            <AcrylicBrush
+                x:Key="AcrylicBackgroundFillColorBaseBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#1C1C1C"
+                TintColor="#202020"
+                TintLuminosityOpacity="0.96"
+                TintOpacity="0.5" />
+            <AcrylicBrush
+                x:Key="AcrylicInAppFillColorBaseBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="#1C1C1C"
+                TintColor="#202020"
+                TintLuminosityOpacity="0.96"
+                TintOpacity="0.5" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicBackgroundFillColorDefaultBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="{ThemeResource SystemAccentColorDark1}"
+                TintColor="{ThemeResource SystemAccentColorDark1}"
+                TintLuminosityOpacity="0.8"
+                TintOpacity="0.8" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicInAppFillColorDefaultBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="{ThemeResource SystemAccentColorDark1}"
+                TintColor="{ThemeResource SystemAccentColorDark1}"
+                TintLuminosityOpacity="0.8"
+                TintOpacity="0.8" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicBackgroundFillColorBaseBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="{ThemeResource SystemAccentColorDark2}"
+                TintColor="{ThemeResource SystemAccentColorDark2}"
+                TintLuminosityOpacity="0.8"
+                TintOpacity="0.8" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicInAppFillColorBaseBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="{ThemeResource SystemAccentColorDark2}"
+                TintColor="{ThemeResource SystemAccentColorDark2}"
+                TintLuminosityOpacity="0.8"
+                TintOpacity="0.8" />
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="Light">
+            <AcrylicBrush
+                x:Key="AcrylicBackgroundFillColorDefaultBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#F9F9F9"
+                TintColor="#FCFCFC"
+                TintLuminosityOpacity="0.85"
+                TintOpacity="0.0" />
+            <AcrylicBrush
+                x:Key="AcrylicInAppFillColorDefaultBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="#F9F9F9"
+                TintColor="#FCFCFC"
+                TintLuminosityOpacity="0.85"
+                TintOpacity="0.0" />
+            <AcrylicBrush
+                x:Key="AcrylicBackgroundFillColorDefaultInverseBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#2C2C2C"
+                TintColor="#2C2C2C"
+                TintLuminosityOpacity="0.96"
+                TintOpacity="0.15" />
+            <AcrylicBrush
+                x:Key="AcrylicInAppFillColorDefaultInverseBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="#2C2C2C"
+                TintColor="#2C2C2C"
+                TintLuminosityOpacity="0.96"
+                TintOpacity="0.15" />
+            <AcrylicBrush
+                x:Key="AcrylicBackgroundFillColorBaseBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="#EEEEEE"
+                TintColor="#F3F3F3"
+                TintLuminosityOpacity="0.9"
+                TintOpacity="0.0" />
+            <AcrylicBrush
+                x:Key="AcrylicInAppFillColorBaseBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="#EEEEEE"
+                TintColor="#F3F3F3"
+                TintLuminosityOpacity="0.9"
+                TintOpacity="0.0" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicBackgroundFillColorDefaultBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="{ThemeResource SystemAccentColorLight3}"
+                TintColor="{ThemeResource SystemAccentColorLight3}"
+                TintLuminosityOpacity="0.9"
+                TintOpacity="0.8" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicInAppFillColorDefaultBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="{ThemeResource SystemAccentColorLight3}"
+                TintColor="{ThemeResource SystemAccentColorLight3}"
+                TintLuminosityOpacity="0.9"
+                TintOpacity="0.8" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicBackgroundFillColorBaseBrush"
+                BackgroundSource="HostBackdrop"
+                FallbackColor="{ThemeResource SystemAccentColorLight3}"
+                TintColor="{ThemeResource SystemAccentColorLight3}"
+                TintLuminosityOpacity="0.9"
+                TintOpacity="0.8" />
+            <AcrylicBrush
+                x:Key="AccentAcrylicInAppFillColorBaseBrush"
+                BackgroundSource="Backdrop"
+                FallbackColor="{ThemeResource SystemAccentColorLight3}"
+                TintColor="{ThemeResource SystemAccentColorLight3}"
+                TintLuminosityOpacity="0.9"
+                TintOpacity="0.8" />
+        </ResourceDictionary>
+
+        <ResourceDictionary x:Key="HighContrast">
+            <SolidColorBrush x:Key="AcrylicBackgroundFillColorDefaultBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="AcrylicInAppFillColorDefaultBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="AcrylicBackgroundFillColorDefaultInverseBrush" Color="{ThemeResource SystemColorWindowTextColor}" />
+            <SolidColorBrush x:Key="AcrylicInAppFillColorDefaultInverseBrush" Color="{ThemeResource SystemColorWindowTextColor}" />
+            <SolidColorBrush x:Key="AcrylicBackgroundFillColorBaseBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="AcrylicInAppFillColorBaseBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="AccentAcrylicBackgroundFillColorDefaultBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="AccentAcrylicInAppFillColorDefaultBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="AccentAcrylicBackgroundFillColorBaseBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="AccentAcrylicInAppFillColorBaseBrush" Color="{ThemeResource SystemColorWindowColor}" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+</ResourceDictionary>

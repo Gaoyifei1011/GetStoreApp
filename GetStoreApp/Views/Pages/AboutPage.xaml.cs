@@ -57,6 +57,8 @@ namespace GetStoreApp.Views.Pages
         //项目引用信息
         private List<DictionaryEntry> ReferenceList { get; } =
         [
+            new DictionaryEntry("Microsoft.NETCore.UniversalWindowsPlatform","https://github.com/Microsoft/dotnet/blob/master/releases/UWP/README.md"),
+            new DictionaryEntry("Microsoft.Web.WebView2","https://aka.ms/webview"),
             new DictionaryEntry("Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"),
             new DictionaryEntry( "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
             new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),

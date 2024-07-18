@@ -1,5 +1,5 @@
-﻿using Microsoft.Windows.ApplicationModel.Resources;
-using System;
+﻿using System;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
 
 namespace GetStoreAppWebView.Services.Root
@@ -14,17 +14,9 @@ namespace GetStoreAppWebView.Services.Root
         private static string _defaultAppLanguage;
         private static string _currentAppLanguage;
 
-        private static readonly ResourceManager resourceManager = new ResourceManager();
-        private static readonly ResourceContext defaultResourceContext;
-        private static readonly ResourceContext currentResourceContext;
-        private static readonly ResourceMap resourceMap;
-
-        static ResourceService()
-        {
-            defaultResourceContext = resourceManager.CreateResourceContext();
-            currentResourceContext = resourceManager.CreateResourceContext();
-            resourceMap = resourceManager.MainResourceMap;
-        }
+        private static readonly ResourceContext defaultResourceContext = new();
+        private static readonly ResourceContext currentResourceContext = new();
+        private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -53,14 +45,16 @@ namespace GetStoreAppWebView.Services.Root
                 {
                     return resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
                 }
-                catch (NullReferenceException)
+                catch (Exception currentResourceException)
                 {
+                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _currentAppLanguage), currentResourceException);
                     try
                     {
                         return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
                     }
-                    catch (NullReferenceException)
+                    catch (Exception defaultResourceException)
                     {
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context string with langauge {0} failed.", _defaultAppLanguage), defaultResourceException);
                         return resource;
                     }
                 }

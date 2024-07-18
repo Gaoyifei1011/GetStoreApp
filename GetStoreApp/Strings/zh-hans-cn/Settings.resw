@@ -381,15 +381,6 @@
   <data name="SystemThemeSettings" xml:space="preserve">
     <value>系统主题设置</value>
   </data>
-  <data name="Terminate" xml:space="preserve">
-    <value>关闭</value>
-  </data>
-  <data name="TerminateWebViewProcess" xml:space="preserve">
-    <value>关闭浏览器进程</value>
-  </data>
-  <data name="TerminateWebViewProcessDescription" xml:space="preserve">
-    <value>关闭 WebView 内核引擎的后台进程</value>
-  </data>
   <data name="Theme" xml:space="preserve">
     <value>应用主题</value>
   </data>

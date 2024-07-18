@@ -2,6 +2,9 @@
 
 namespace GetStoreApp.Services.Root
 {
+    /// <summary>
+    /// 存储运行结果服务
+    /// </summary>
     public static class ResultService
     {
         private const string result = "Result";
@@ -28,14 +31,6 @@ namespace GetStoreApp.Services.Root
             }
 
             return (T)resultContainer.Values[key];
-        }
-
-        /// <summary>
-        /// 保存结果存储信息
-        /// </summary>
-        public static void SaveResult<T>(string key, T value)
-        {
-            resultContainer.Values[key] = value;
         }
     }
 }
