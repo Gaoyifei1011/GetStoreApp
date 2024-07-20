@@ -2,7 +2,7 @@
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
-using GetStoreAppWebView.UI.Custom;
+using GetStoreAppWebView.UI.Controls;
 using GetStoreAppWebView.UI.Dialogs;
 using Microsoft.Web.WebView2.Core;
 using System;

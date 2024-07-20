@@ -29,7 +29,7 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
-namespace GetStoreAppWebView.UI.Custom
+namespace GetStoreAppWebView.UI.Controls
 {
     /// <summary>
     /// 表示一个对象，该对象允许承载 Web 内容。

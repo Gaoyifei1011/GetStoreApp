@@ -208,7 +208,7 @@ namespace GetStoreApp.Views.Windows
 
                     if (materialBackdrop is not null && materialBackdrop.BackdropConfiguration is not null)
                     {
-                        materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue ? true : args.WindowActivationState is not WindowActivationState.Deactivated;
+                        materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
                     }
                 }
             }

@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
     xmlns:root="using:GetStoreAppWebView.Services.Root"
-    xmlns:local="using:GetStoreAppWebView.UI.Custom"
+    xmlns:controls="using:GetStoreAppWebView.UI.Controls"
     Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
     mc:Ignorable="d">
 
@@ -189,7 +189,7 @@
             Source="{x:Bind Source, Mode=OneWay}"
             UnviewableContentIdentified="{x:Bind OnUnviewableContentIdentified}" />
 
-        <local:WebView2
+        <controls:WebView2
             x:Name="WebView2Browser"
             Grid.Row="2"
             x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[1])}"

@@ -97,8 +97,8 @@
     <Compile Include="Services\Root\LogService.cs" />
     <Compile Include="Services\Root\ResourceService.cs" />
     <Compile Include="Services\Root\ResultService.cs" />
-    <Compile Include="UI\Custom\CoreWebView2InitializedEventArgs.cs" />
-    <Compile Include="UI\Custom\WebView2.cs" />
+    <Compile Include="UI\Controls\CoreWebView2InitializedEventArgs.cs" />
+    <Compile Include="UI\Controls\WebView2.cs" />
     <Compile Include="UI\Dialogs\ProcessFailedDialog.xaml.cs" DependentUpon="ProcessFailedDialog.xaml" />
     <Compile Include="WindowsAPI\ComTypes\ICoreWindowInterop.cs" />
     <Compile Include="WindowsAPI\PInvoke\Kernel32\Kernel32Library.cs" />
