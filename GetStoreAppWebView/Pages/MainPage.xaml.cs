@@ -13,9 +13,11 @@ using System.Text;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Composition;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -131,6 +133,15 @@ namespace GetStoreAppWebView.Pages
 
             // 设置网页
             Source = new Uri("https://store.rg-adguard.net");
+
+            if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
+            {
+                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
+            }
+            else
+            {
+                VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
+            }
         }
 
         #region 第一部分：窗口内容挂载的事件
@@ -470,17 +481,6 @@ namespace GetStoreAppWebView.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, "WebView2 unloaded event failed", e);
                 }
-            }
-        }
-
-        /// <summary>
-        /// 窗口移动或调整大小时关闭下载框
-        /// </summary>
-        public void CloseDownloadDialog()
-        {
-            if (WebView2Browser is not null && WebView2Browser.CoreWebView2 is not null && WebView2Browser.CoreWebView2.IsDefaultDownloadDialogOpen)
-            {
-                WebView2Browser.CoreWebView2.CloseDefaultDownloadDialog();
             }
         }
     }

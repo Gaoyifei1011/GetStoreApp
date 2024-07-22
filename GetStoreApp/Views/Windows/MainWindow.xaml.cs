@@ -793,7 +793,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 应用主窗口消息处理
         /// </summary>
-        private IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
+        private IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             switch (Msg)
             {
@@ -916,7 +916,7 @@ namespace GetStoreApp.Views.Windows
                 // 选择窗口右键菜单的条目时接收到的消息
                 case WindowMessage.WM_SYSCOMMAND:
                     {
-                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToInt32() & 0xFFF0);
+                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToUInt32() & 0xFFF0);
 
                         if (sysCommand is SYSTEMCOMMAND.SC_MOUSEMENU)
                         {
@@ -947,7 +947,7 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 应用拖拽区域窗口消息处理
         /// </summary>
-        private IntPtr InputNonClientPointerSourceSubClassProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
+        private IntPtr InputNonClientPointerSourceSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
             switch (Msg)
             {

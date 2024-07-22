@@ -1,15 +1,15 @@
 ﻿<Page
     x:Class="GetStoreAppWebView.Pages.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
-    xmlns:root="using:GetStoreAppWebView.Services.Root"
+    xmlns:backdrop="using:GetStoreAppWebView.UI.Backdrop"
     xmlns:controls="using:GetStoreAppWebView.UI.Controls"
-    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreAppWebView.Services.Root"
+    xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
+    x:Name="MainPageRoot"
     mc:Ignorable="d">
-
     <Grid ActualThemeChanged="{x:Bind OnActualThemeChanged}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -198,5 +198,24 @@
             NavigationCompleted="{x:Bind OnWebView2NavigationCompleted}"
             NavigationStarting="{x:Bind OnWebView2NavigationStarting}"
             Source="{x:Bind Source, Mode=OneWay}" />
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="MicaBackdrop">
+                    <VisualState.Setters>
+                        <Setter Target="MainPageRoot.Background">
+                            <Setter.Value>
+                                <backdrop:MicaBrush />
+                            </Setter.Value>
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopAcrylicBackdrop">
+                    <VisualState.Setters>
+                        <Setter Target="MainPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

@@ -12,7 +12,7 @@
     <ErrorReport>prompt</ErrorReport>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>12.0</LangVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <NoWarn>;2008</NoWarn>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -85,6 +85,7 @@
     <Compile Include="Extensions\DataType\Constant\ConfigKey.cs" />
     <Compile Include="Helpers\Controls\Extensions\ContentDialogHelper.cs" />
     <Compile Include="Helpers\Controls\Extensions\WebView2Helper.cs" />
+    <Compile Include="Helpers\Controls\Backdrop\BackdropHelper.cs" />
     <Compile Include="Helpers\Root\InfoHelper.cs" />
     <Compile Include="Helpers\Root\RuntimeHelper.cs" />
     <Compile Include="Pages\MainPage.xaml.cs" DependentUpon="MainPage.xaml" />
@@ -97,10 +98,21 @@
     <Compile Include="Services\Root\LogService.cs" />
     <Compile Include="Services\Root\ResourceService.cs" />
     <Compile Include="Services\Root\ResultService.cs" />
+    <Compile Include="UI\Backdrop\BlendEffect.cs" />
+    <Compile Include="UI\Backdrop\BlendEffectMode.cs" />
+    <Compile Include="UI\Backdrop\ColorSourceEffect.cs" />
+    <Compile Include="UI\Backdrop\CrossFadeEffect.cs" />
+    <Compile Include="UI\Backdrop\MicaBrush.cs" />
+    <Compile Include="UI\Backdrop\OpacityEffect.cs" />
+    <Compile Include="WindowsAPI\ComTypes\D2D1_BUFFER_PRECISION.cs" />
     <Compile Include="UI\Controls\CoreWebView2InitializedEventArgs.cs" />
     <Compile Include="UI\Controls\WebView2.cs" />
     <Compile Include="UI\Dialogs\ProcessFailedDialog.xaml.cs" DependentUpon="ProcessFailedDialog.xaml" />
+    <Compile Include="WindowsAPI\ComTypes\GRAPHICS_EFFECT_PROPERTY_MAPPING.cs" />
     <Compile Include="WindowsAPI\ComTypes\ICoreWindowInterop.cs" />
+    <Compile Include="WindowsAPI\ComTypes\IGraphicsEffectD2D1Interop.cs" />
+    <Compile Include="WindowsAPI\ComTypes\IPropertyValueStatics.cs" />
+    <Compile Include="WindowsAPI\PInvoke\Combase\CombaseLibrary.cs" />
     <Compile Include="WindowsAPI\PInvoke\Kernel32\Kernel32Library.cs" />
     <Compile Include="WindowsAPI\PInvoke\User32\COPYDATASTRUCT.cs" />
     <Compile Include="WindowsAPI\PInvoke\User32\MODIFIERKEYS_FLAGS.cs" />
@@ -136,6 +148,7 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2646-prerelease" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
