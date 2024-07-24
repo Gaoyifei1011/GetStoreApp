@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.System.Power;
@@ -20,10 +19,10 @@ namespace GetStoreAppWebView.UI.Backdrop
         private bool isConnected;
         private bool useSolidColorFallback;
 
-        private double tintOpacity;
-        private double luminosityOpacity;
+        private float tintOpacity;
+        private float luminosityOpacity;
         private Color tintColor;
-        private Color luminosityColor;
+        private Color fallbackColor;
 
         private readonly UISettings uiSettings = new();
         private readonly AccessibilitySettings accessibilitySettings = new();
@@ -64,6 +63,7 @@ namespace GetStoreAppWebView.UI.Backdrop
 
             if (isConnected)
             {
+                isConnected = false;
                 uiSettings.ColorValuesChanged -= OnColorValuesChanged;
                 Window.Current.CoreWindow.Activated -= OnActivated;
                 accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
@@ -153,15 +153,15 @@ namespace GetStoreAppWebView.UI.Backdrop
 
                 if (actualTheme is ElementTheme.Light)
                 {
-                    tintColor = luminosityColor = Color.FromArgb(255, 243, 243, 243);
-                    tintOpacity = 50;
-                    luminosityOpacity = 100;
+                    tintColor = fallbackColor = Color.FromArgb(255, 243, 243, 243);
+                    tintOpacity = 0.5f;
+                    luminosityOpacity = 1;
                 }
                 else
                 {
-                    tintColor = luminosityColor = Color.FromArgb(255, 32, 32, 32);
-                    tintOpacity = 80;
-                    luminosityOpacity = 100;
+                    tintColor = fallbackColor = Color.FromArgb(255, 32, 32, 32);
+                    tintOpacity = 0.8f;
+                    luminosityOpacity = 1;
                 }
 
                 useSolidColorFallback = ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)) && uiSettings.AdvancedEffectsEnabled &&
@@ -175,7 +175,7 @@ namespace GetStoreAppWebView.UI.Backdrop
                     useSolidColorFallback = true;
                 }
 
-                CompositionBrush newBrush = useSolidColorFallback ? compositor.CreateColorBrush(tintColor) : BuildMicaEffectBrush(compositor, tintColor, (float)(tintOpacity / 100), luminosityColor, (float)(luminosityOpacity / 100));
+                CompositionBrush newBrush = useSolidColorFallback ? compositor.CreateColorBrush(fallbackColor) : BuildMicaEffectBrush(compositor, tintColor, tintOpacity, luminosityOpacity);
 
                 CompositionBrush oldBrush = CompositionBrush;
 
@@ -206,7 +206,7 @@ namespace GetStoreAppWebView.UI.Backdrop
             }
         }
 
-        private static CompositionBrush BuildMicaEffectBrush(Compositor compositor, Color tintColor, float tintOpacity, Color luminosityColor, float luminosityOpacity)
+        private static CompositionBrush BuildMicaEffectBrush(Compositor compositor, Color tintColor, float tintOpacity, float luminosityOpacity)
         {
             // Tint Color.
             ColorSourceEffect tintColorEffect = new()
@@ -228,7 +228,7 @@ namespace GetStoreAppWebView.UI.Backdrop
             // Luminosity Color.
             ColorSourceEffect luminosityColorEffect = new()
             {
-                Color = luminosityColor
+                Color = tintColor
             };
 
             // OpacityEffect applied to Luminosity.

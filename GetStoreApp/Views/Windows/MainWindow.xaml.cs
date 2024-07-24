@@ -14,7 +14,6 @@ using GetStoreApp.Views.Pages;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
-using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
 using Microsoft.UI.Dispatching;
