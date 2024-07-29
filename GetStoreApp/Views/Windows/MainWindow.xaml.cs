@@ -962,7 +962,7 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (Content is not null && Content.XamlRoot is not null)
+                        if (wParam.ToUInt32() is 2 && Content is not null && Content.XamlRoot is not null)
                         {
                             PointInt32 screenPoint = new(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
