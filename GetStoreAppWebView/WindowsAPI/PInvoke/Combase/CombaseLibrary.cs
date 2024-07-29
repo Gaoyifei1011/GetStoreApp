@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace GetStoreAppWebView.WindowsAPI.PInvoke.Combase
 {
+    /// <summary>
+    /// Combase.dll 函数库
+    /// </summary>
     public static class CombaseLibrary
     {
         private const string Combase = "combase.dll";

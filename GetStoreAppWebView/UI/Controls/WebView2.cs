@@ -917,13 +917,13 @@ namespace GetStoreAppWebView.UI.Controls
                             }
                             else
                             {
-                                throw new Exception(ResourceService.GetLocalized("WebView/WebView2Closed"));
+                                throw new COMException(ResourceService.GetLocalized("WebView/WebView2Closed"), unchecked((int)0x80000013)); // RO_E_CLOSED
                             }
                         }
                     }
                     else
                     {
-                        throw new Exception(ResourceService.GetLocalized("WebView/WebView2Closed"));
+                        throw new COMException(ResourceService.GetLocalized("WebView/WebView2Closed"), unchecked((int)0x80000013)); // RO_E_CLOSED
                     }
                 }
             }
@@ -1400,7 +1400,7 @@ namespace GetStoreAppWebView.UI.Controls
             }
             else
             {
-                throw new Exception(ResourceService.GetLocalized("WebView/WebView2Closed"));
+                throw new COMException(ResourceService.GetLocalized("WebView/WebView2Closed"), unchecked((int)0x80000013)); // RO_E_CLOSED
             }
         }
 
