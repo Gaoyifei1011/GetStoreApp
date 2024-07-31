@@ -54,7 +54,7 @@ namespace GetStoreApp.Services.Root
 
             InitializeIntroduction();
             InitializeRequestContent();
-            CharExtension.Initialize();
+            await CharExtension.InitializeAsync();
             await RequestService.GetLinksAsync();
 
             DownloadSchedulerService.CloseDownloadScheduler(false);

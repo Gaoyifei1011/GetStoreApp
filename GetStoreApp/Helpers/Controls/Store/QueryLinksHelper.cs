@@ -55,7 +55,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] contentBytes = ResourceService.GetEmbeddedData("Files/EmbedAssets/cookie.xml");
+                byte[] contentBytes = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/cookie.xml");
 
                 HttpStringContent httpStringContent = new(Encoding.UTF8.GetString(contentBytes));
                 httpStringContent.Headers.Expires = DateTime.Now;
@@ -234,7 +234,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] wubytesArray = ResourceService.GetEmbeddedData("Files/EmbedAssets/wu.xml");
+                byte[] wubytesArray = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/wu.xml");
                 string fileListXml = Encoding.UTF8.GetString(wubytesArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
                 byte[] contentBytes = Encoding.UTF8.GetBytes(fileListXml);
 
@@ -406,7 +406,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] urlbytesArray = ResourceService.GetEmbeddedData("Files/EmbedAssets/url.xml");
+                byte[] urlbytesArray = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/url.xml");
                 string url = Encoding.UTF8.GetString(urlbytesArray).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
                 byte[] contentBytes = Encoding.UTF8.GetBytes(url);
 

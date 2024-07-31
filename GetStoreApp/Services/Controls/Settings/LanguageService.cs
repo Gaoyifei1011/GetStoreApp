@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
-using Microsoft.Windows.Globalization;
+using Windows.Globalization;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -40,9 +40,9 @@ namespace GetStoreApp.UI.Dialogs.About
         /// <summary>
         /// 初始化许可证对话框时加载的内容
         /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
+        private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            LicenseText = Encoding.UTF8.GetString(ResourceService.GetEmbeddedData("Files/EmbedAssets/LICENSE"));
+            LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/LICENSE"));
         }
     }
 }
