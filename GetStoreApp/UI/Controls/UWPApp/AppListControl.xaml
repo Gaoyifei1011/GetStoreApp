@@ -339,9 +339,10 @@
                     TextAlignment="Center" />
             </Grid>
 
-            <ItemsView
+            <ListView
                 Grid.Row="1"
                 Padding="30,0,30,30"
+                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                 ItemsSource="{x:Bind UwpAppDataCollection, Mode=OneWay}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.HorizontalScrollMode="Disabled"
@@ -350,9 +351,9 @@
                 SelectionMode="None"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UwpAppDataCollection.Count), Mode=OneWay}">
 
-                <ItemsView.ItemTemplate>
+                <ListView.ItemTemplate>
                     <DataTemplate x:DataType="uwpApp:PackageModel">
-                        <ItemContainer Margin="0,0,0,2">
+                        <ItemContainer Margin="0,0,0,1">
                             <Grid>
                                 <Grid>
                                     <Grid
@@ -568,8 +569,8 @@
                             </Grid>
                         </ItemContainer>
                     </DataTemplate>
-                </ItemsView.ItemTemplate>
-            </ItemsView>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Grid>

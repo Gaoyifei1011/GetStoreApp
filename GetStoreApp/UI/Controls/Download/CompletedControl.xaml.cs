@@ -651,9 +651,9 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
+        private void OnItemInvoked(object sender, ItemClickEventArgs args)
         {
-            CompletedModel completedItem = (CompletedModel)args.InvokedItem;
+            CompletedModel completedItem = (CompletedModel)args.ClickedItem;
             int clickedIndex = CompletedCollection.IndexOf(completedItem);
 
             if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)

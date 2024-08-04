@@ -155,9 +155,10 @@
                 TextAlignment="Center" />
         </Grid>
 
-        <ItemsView
+        <ListView
             Grid.Row="1"
             Padding="30,0,30,30"
+            ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
             ItemsSource="{x:Bind UpgradableAppsCollection, Mode=OneWay}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.HorizontalScrollMode="Disabled"
@@ -166,9 +167,9 @@
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}">
 
-            <ItemsView.ItemTemplate>
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="winget:UpgradableAppsModel">
-                    <ItemContainer Margin="0,0,0,2">
+                    <ItemContainer Margin="0,0,0,1">
                         <Grid
                             Height="60"
                             Padding="16,12"
@@ -348,7 +349,7 @@
                         </Grid>
                     </ItemContainer>
                 </DataTemplate>
-            </ItemsView.ItemTemplate>
-        </ItemsView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Grid>

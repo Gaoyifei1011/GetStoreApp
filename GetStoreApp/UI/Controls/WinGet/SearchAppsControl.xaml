@@ -209,9 +209,10 @@
                     TextAlignment="Center" />
             </Grid>
 
-            <ItemsView
+            <ListView
                 Grid.Row="1"
                 Padding="30,0,30,30"
+                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                 ItemsSource="{x:Bind SearchAppsCollection, Mode=OneWay}"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 ScrollViewer.HorizontalScrollMode="Disabled"
@@ -220,9 +221,9 @@
                 SelectionMode="None"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchAppsCollection.Count), Mode=OneWay}">
 
-                <ItemsView.ItemTemplate>
+                <ListView.ItemTemplate>
                     <DataTemplate x:DataType="winget:SearchAppsModel">
-                        <ItemContainer Margin="0,0,0,2">
+                        <ItemContainer Margin="0,0,0,1">
                             <Grid
                                 Padding="16,12"
                                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -375,8 +376,8 @@
                             </Grid>
                         </ItemContainer>
                     </DataTemplate>
-                </ItemsView.ItemTemplate>
-            </ItemsView>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Grid>

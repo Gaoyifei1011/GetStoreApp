@@ -154,10 +154,11 @@
                                     TextWrapping="WrapWholeWords" />
                             </Grid>
 
-                            <ItemsView
+                            <ListView
                                 Grid.Row="1"
                                 Width="450"
                                 Height="200"
+                                ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                                 ItemsSource="{x:Bind InstallingAppsCollection, Mode=OneWay}"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 ScrollViewer.HorizontalScrollMode="Disabled"
@@ -166,9 +167,9 @@
                                 SelectionMode="None"
                                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsCollection.Count), Mode=OneWay}">
 
-                                <ItemsView.ItemTemplate>
+                                <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="model:InstallingAppsModel">
-                                        <ItemContainer Margin="0,0,0,2">
+                                        <ItemContainer Margin="0,0,0,1">
                                             <Grid
                                                 Height="60"
                                                 Margin="2,0"
@@ -344,8 +345,8 @@
                                             </Grid>
                                         </ItemContainer>
                                     </DataTemplate>
-                                </ItemsView.ItemTemplate>
-                            </ItemsView>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </Grid>
                     </Flyout>
                 </Button.Flyout>

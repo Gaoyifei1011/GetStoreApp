@@ -17,9 +17,10 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// </summary>
         public event Action<DODownloadStatusCallback, IDODownload, DO_DOWNLOAD_STATUS> StatusChanged;
 
-        public void OnStatusChange([MarshalAs(UnmanagedType.Interface)] IDODownload download, ref DO_DOWNLOAD_STATUS status)
+        public int OnStatusChange([MarshalAs(UnmanagedType.Interface)] IDODownload download, ref DO_DOWNLOAD_STATUS status)
         {
             StatusChanged?.Invoke(this, download, status);
+            return 0;
         }
     }
 }

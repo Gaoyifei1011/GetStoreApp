@@ -25,7 +25,7 @@
     <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSelfContained>true</PublishSelfContained>
     <PublishSingleFile>True</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
+    <PublishAot>true</PublishAot>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
@@ -77,6 +77,7 @@
     <None Remove="Styles\WinUI\Flyout.xaml" />
     <None Remove="Styles\WinUI\HyperlinkButton.xaml" />
     <None Remove="Styles\WinUI\InfoBar.xaml" />
+    <None Remove="Styles\WinUI\ListView.xaml" />
     <None Remove="Styles\WinUI\MenuFlyout.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
@@ -119,6 +120,7 @@
     <Page Update="Styles\WinUI\Flyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\InfoBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\WinUI\ListView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

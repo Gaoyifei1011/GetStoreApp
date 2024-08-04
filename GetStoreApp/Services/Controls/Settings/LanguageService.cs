@@ -1,9 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
-using Windows.Globalization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Windows.Globalization;
 
 namespace GetStoreApp.Services.Controls.Settings
 {
