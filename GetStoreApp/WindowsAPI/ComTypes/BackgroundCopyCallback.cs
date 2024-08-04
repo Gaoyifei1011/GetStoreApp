@@ -17,22 +17,25 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// </summary>
         public event Action<BackgroundCopyCallback, IBackgroundCopyJob, BG_JOB_STATE> StatusChanged;
 
-        public void JobTransferred([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob)
+        public int JobTransferred([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob)
         {
             pJob.GetState(out BG_JOB_STATE state);
             StatusChanged?.Invoke(this, pJob, state);
+            return 0;
         }
 
-        public void JobError([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, [MarshalAs(UnmanagedType.Interface)] IBackgroundCopyError pError)
+        public int JobError([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, [MarshalAs(UnmanagedType.Interface)] IBackgroundCopyError pError)
         {
             pJob.GetState(out BG_JOB_STATE state);
             StatusChanged?.Invoke(this, pJob, state);
+            return 0;
         }
 
-        public void JobModification([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, uint dwReserved)
+        public int JobModification([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, uint dwReserved)
         {
             pJob.GetState(out BG_JOB_STATE state);
             StatusChanged?.Invoke(this, pJob, state);
+            return 0;
         }
     }
 }

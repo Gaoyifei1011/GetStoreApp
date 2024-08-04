@@ -97,37 +97,7 @@ namespace GetStoreApp.UI.Dialogs.About
         public AppInformationDialog()
         {
             InitializeComponent();
-        }
 
-        /// <summary>
-        /// 复制应用信息
-        /// </summary>
-        private void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            args.Cancel = true;
-
-            Task.Run(() =>
-            {
-                StringBuilder stringBuilder = new();
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2SDKVersion") + WebView2SDKVersion);
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    sender.Hide();
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
-                });
-            });
-        }
-
-        /// <summary>
-        /// 初始化应用信息
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
             Task.Run(async () =>
             {
                 IReadOnlyList<Package> dependencyList = Package.Current.Dependencies;
@@ -184,6 +154,30 @@ namespace GetStoreApp.UI.Dialogs.About
             });
 
             DoNetVersion = Environment.Version.ToString();
+        }
+
+        /// <summary>
+        /// 复制应用信息
+        /// </summary>
+        private void OnCopyAppInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            args.Cancel = true;
+
+            Task.Run(() =>
+            {
+                StringBuilder stringBuilder = new();
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion") + WindowsAppSDKVersion);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WinUI3Version") + WinUI3Version);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
+                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2SDKVersion") + WebView2SDKVersion);
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    sender.Hide();
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
+                });
+            });
         }
     }
 }

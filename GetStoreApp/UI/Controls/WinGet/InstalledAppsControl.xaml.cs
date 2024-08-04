@@ -28,10 +28,8 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
-        private bool isInitialized = false;
-
+        private readonly PackageManager installedAppsManager;
         private AutoResetEvent autoResetEvent;
-        private PackageManager installedAppsManager;
 
         private string InstalledAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo");
 
@@ -124,6 +122,19 @@ namespace GetStoreApp.UI.Controls.WinGet
         public InstalledAppsControl()
         {
             InitializeComponent();
+
+            try
+            {
+                installedAppsManager = WinGetService.CreatePackageManager();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Installed apps information initialized failed.", e);
+                return;
+            }
+
+            GetInstalledApps();
+            InitializeData();
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -229,28 +240,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         #region 第二部分：已安装应用控件——挂载的事件
 
         /// <summary>
-        /// 初始化已安装应用信息
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (!isInitialized)
-            {
-                try
-                {
-                    installedAppsManager = WinGetService.CreatePackageManager();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Installed apps information initialized failed.", e);
-                    return;
-                }
-                isInitialized = true;
-                GetInstalledApps();
-                InitializeData();
-            }
-        }
-
-        /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
@@ -327,7 +316,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                 autoResetEvent ??= new AutoResetEvent(false);
                 Task.Run(async () =>
                 {
-                    await Task.Delay(300);
                     PackageCatalogReference searchCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
                     ConnectResult connectResult = await searchCatalogReference.ConnectAsync();

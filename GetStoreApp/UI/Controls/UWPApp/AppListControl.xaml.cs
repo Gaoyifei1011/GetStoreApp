@@ -33,7 +33,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
     /// </summary>
     public sealed partial class AppListControl : Grid, INotifyPropertyChanged
     {
-        private bool isInitialized = false;
         private bool needToRefreshData = false;
 
         private AutoResetEvent autoResetEvent;
@@ -154,6 +153,9 @@ namespace GetStoreApp.UI.Controls.UWPApp
         public AppListControl()
         {
             InitializeComponent();
+
+            GetInstalledApps();
+            InitializeData();
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -566,20 +568,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
         #region 第二部分：应用列表控件——挂载的事件
 
         /// <summary>
-        /// 初始化已安装应用信息
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (!isInitialized)
-            {
-                Task.Delay(500);
-                GetInstalledApps();
-                InitializeData();
-                isInitialized = true;
-            }
-        }
-
-        /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
@@ -643,7 +631,6 @@ namespace GetStoreApp.UI.Controls.UWPApp
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
-            Task.Delay(500);
             GetInstalledApps();
             InitializeData();
         }

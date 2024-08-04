@@ -10,7 +10,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     xmlns:uwpApp="using:GetStoreApp.Models.Controls.UWPApp"
-    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
     <Grid.Resources>

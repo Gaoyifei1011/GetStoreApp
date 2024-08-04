@@ -31,10 +31,8 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class UpgradableAppsControl : Grid, INotifyPropertyChanged
     {
-        private bool isInitialized = false;
-
+        private readonly PackageManager UpgradableAppsManager;
         private AutoResetEvent autoResetEvent;
-        private PackageManager UpgradableAppsManager;
         private WinGetPage WinGetInstance;
 
         private string UpgradableAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo");
@@ -80,6 +78,18 @@ namespace GetStoreApp.UI.Controls.WinGet
         public UpgradableAppsControl()
         {
             InitializeComponent();
+
+            try
+            {
+                UpgradableAppsManager = WinGetService.CreatePackageManager();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Upgradable apps information initialized failed.", e);
+                return;
+            }
+            GetUpgradableApps();
+            InitializeData();
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -460,28 +470,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
 
         #region 第二部分：可升级应用控件——挂载的事件
-
-        /// <summary>
-        /// 初始化可升级应用信息
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (!isInitialized)
-            {
-                try
-                {
-                    UpgradableAppsManager = WinGetService.CreatePackageManager();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Upgradable apps information initialized failed.", e);
-                    return;
-                }
-                GetUpgradableApps();
-                InitializeData();
-                isInitialized = true;
-            }
-        }
 
         /// <summary>
         /// 打开临时下载目录

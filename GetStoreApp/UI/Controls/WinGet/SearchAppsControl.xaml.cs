@@ -31,11 +31,9 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class SearchAppsControl : Grid, INotifyPropertyChanged
     {
-        private bool isInitialized = false;
+        private readonly PackageManager SearchAppsManager;
         private string cachedSearchText;
-
         private AutoResetEvent autoResetEvent;
-        private PackageManager SearchAppsManager;
         private WinGetPage WinGetInstance;
 
         private string SearchedAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo");
@@ -97,6 +95,15 @@ namespace GetStoreApp.UI.Controls.WinGet
         public SearchAppsControl()
         {
             InitializeComponent();
+
+            try
+            {
+                SearchAppsManager = WinGetService.CreatePackageManager();
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Search apps information initialized failed.", e);
+            }
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -425,29 +432,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         #region 第二部分：搜索应用控件——挂载的事件
 
         /// <summary>
-        /// 初始化搜索应用内容
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (!isInitialized)
-            {
-                try
-                {
-                    SearchAppsManager = WinGetService.CreatePackageManager();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Search apps information initialized failed.", e);
-                    return;
-                }
-                finally
-                {
-                    isInitialized = true;
-                }
-            }
-        }
-
-        /// <summary>
         /// 打开临时下载目录
         /// </summary>
         private async void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
@@ -466,11 +450,11 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 更新已安装应用数据
         /// </summary>
-        private async void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList.Clear();
             IsSearchCompleted = false;
-            await Task.Delay(500);
+
             if (string.IsNullOrEmpty(cachedSearchText))
             {
                 IsSearchCompleted = true;
@@ -483,14 +467,13 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
                 cachedSearchText = SearchText;
                 NotSearched = false;
                 IsSearchCompleted = false;
-                await Task.Delay(500);
                 GetSearchApps();
                 InitializeData();
             }

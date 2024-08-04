@@ -1,13 +1,16 @@
 using GetStoreApp.Helpers.Converters;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.ComTypes;
+using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -23,8 +26,12 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page
     {
+        private readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
+        private Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
+        private Guid IID_OpenControlPanel = new("D11AD862-66DE-4DF4-BF6C-1F5621996AF1");
+        private IOpenControlPanel openControlPanel;
+
         public readonly Lock installStateLock = new();
-        private bool isInitialized;
 
         internal Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = [];
 
@@ -33,6 +40,16 @@ namespace GetStoreApp.Views.Pages
         public WinGetPage()
         {
             InitializeComponent();
+
+            Task.Run(() =>
+            {
+                int createResult = Ole32Library.CoCreateInstance(ref CLSID_OpenControlPanel, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER | CLSCTX.CLSCTX_INPROC_HANDLER | CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_REMOTE_SERVER, ref IID_OpenControlPanel, out IntPtr ppv);
+
+                if (createResult is 0)
+                {
+                    openControlPanel = (IOpenControlPanel)strategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
+                }
+            });
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -126,12 +143,8 @@ namespace GetStoreApp.Views.Pages
         {
             if (ValueCheckConverterHelper.IsWinGetExisted(WinGetService.IsOfficialVersionExisted, WinGetService.IsDevVersionExisted, false))
             {
-                if (!isInitialized)
-                {
-                    SearchApps.InitializeWingetInstance(this);
-                    UpgradableApps.InitializeWingetInstance(this);
-                    isInitialized = true;
-                }
+                SearchApps.InitializeWingetInstance(this);
+                UpgradableApps.InitializeWingetInstance(this);
             }
 
             if (WinGetSelectorBar is not null)
@@ -153,7 +166,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnControlPanelClicked(object sender, RoutedEventArgs args)
         {
-            ProcessHelper.StartProcess("control.exe", "appwiz.cpl", out _);
+            Task.Run(() =>
+            {
+                openControlPanel?.Open("Microsoft.ProgramsAndFeatures", null, IntPtr.Zero);
+            });
         }
 
         /// <summary>

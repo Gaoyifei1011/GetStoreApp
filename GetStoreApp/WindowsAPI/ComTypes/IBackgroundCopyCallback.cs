@@ -18,7 +18,8 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// 此方法应返回 S_OK;否则，BITS 将继续调用此方法，直到返回 S_OK 。 出于性能原因，应将返回除 S_OK 以外的值的次数限制为多次。 作为返回错误代码的替代方法，请考虑始终返回 S_OK 并在内部处理错误。 调用此方法的间隔是任意的。
         /// 请注意，如果此方法失败，并且你调用 了 IBackgroundCopyJob2：：SetNotifyCmdLine 方法，则执行命令行，并且不会再次调用此方法。
         /// </returns>
-        void JobTransferred([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob);
+        [PreserveSig]
+        int JobTransferred([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob);
 
         /// <summary>
         /// 当作业的状态更改为BG_JOB_STATE_ERROR时，BITS 调用 JobError 方法的实现。
@@ -29,7 +30,8 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// 此方法应返回 S_OK;否则，BITS 会继续调用此方法，直到返回 S_OK 。 出于性能原因，应将返回 非S_OK 值的次数限制为几次。 作为返回错误代码的替代方法，请考虑始终返回 S_OK 并在内部处理错误。 调用此方法的间隔是任意的。
         /// 请注意，如果此方法失败，并且你调用 了 IBackgroundCopyJob2：：SetNotifyCmdLine 方法，则会执行命令行，并且不会再次调用此方法。
         /// </returns>
-        void JobError([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, [MarshalAs(UnmanagedType.Interface)] IBackgroundCopyError pError);
+        [PreserveSig]
+        int JobError([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, [MarshalAs(UnmanagedType.Interface)] IBackgroundCopyError pError);
 
         /// <summary>
         /// 修改作业后，BITS 会调用 JobModification 方法的实现。 当传输字节、文件已添加到作业、修改属性或作业状态更改时，服务将生成此事件。
@@ -37,6 +39,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pJob">包含用于访问作业的属性、进度和状态信息的方法。 不释放 pJob; 当 JobModification 方法返回时，BITS 释放接口。</param>
         /// <param name="dwReserved">保留供将来使用。</param>
         /// <returns>此方法应返回 S_OK。</returns>
-        void JobModification([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, uint dwReserved);
+        [PreserveSig]
+        int JobModification([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob pJob, uint dwReserved);
     }
 }

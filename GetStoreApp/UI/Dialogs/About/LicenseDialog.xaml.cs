@@ -35,14 +35,11 @@ namespace GetStoreApp.UI.Dialogs.About
         public LicenseDialog()
         {
             InitializeComponent();
-        }
 
-        /// <summary>
-        /// 初始化许可证对话框时加载的内容
-        /// </summary>
-        private async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/LICENSE"));
+            DispatcherQueue.TryEnqueue(async () =>
+            {
+                LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/LICENSE"));
+            });
         }
     }
 }
