@@ -73,7 +73,7 @@ namespace GetStoreAppWebView.UI.Controls
         private IntPtr tempHostHwnd = IntPtr.Zero;
         private IntPtr inputWindowHwnd = IntPtr.Zero;
 
-        private readonly Dictionary<uint, bool> hasTouchCapture = new();
+        private readonly Dictionary<uint, bool> hasTouchCapture = [];
         private Point webViewScaledPosition = new();
         private Point webViewScaledSize = new();
 

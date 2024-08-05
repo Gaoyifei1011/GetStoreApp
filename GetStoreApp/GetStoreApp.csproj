@@ -17,7 +17,9 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
     <IncludeSymbols>False</IncludeSymbols>
+    <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
+    <OptimizationPreference>Size</OptimizationPreference>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>

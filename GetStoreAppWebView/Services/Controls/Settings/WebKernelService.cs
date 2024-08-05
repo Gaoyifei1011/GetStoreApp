@@ -16,7 +16,7 @@ namespace GetStoreAppWebView.Services.Controls.Settings
 
         public static object WebKernel { get; set; }
 
-        public static List<object> WebKernelList { get; } = new() { "WebView", "WebView2" };
+        public static List<object> WebKernelList { get; } = ["WebView", "WebView2"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的网页浏览器内核选择值

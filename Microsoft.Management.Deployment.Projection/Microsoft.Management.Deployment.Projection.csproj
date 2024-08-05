@@ -4,9 +4,10 @@
     <CSWinRTWindowsMetadata>10.0.26100.0</CSWinRTWindowsMetadata>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <IsTrimmable>true</IsTrimmable>
+    <IsAotCompatible>true</IsAotCompatible>
     <Platforms>x64;x86;ARM64</Platforms>
-    <PublishTrimmed>true</PublishTrimmed>
+    <PublishAot>true</PublishAot>
+    <OptimizationPreference>Size</OptimizationPreference>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <WindowsSdkPackageVersion>10.0.26100.37-preview</WindowsSdkPackageVersion>

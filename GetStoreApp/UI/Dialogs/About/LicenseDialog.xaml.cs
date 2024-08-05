@@ -1,11 +1,7 @@
 ﻿using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using System.Text;
-
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
 
 namespace GetStoreApp.UI.Dialogs.About
 {

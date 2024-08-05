@@ -14,7 +14,7 @@ namespace GetStoreAppWebView.Services.Root
     public static class LogService
     {
         private static readonly string unknown = "unknown";
-        private static readonly string exceptionFolderPath = Path.Combine(new string[] { ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception" });
+        private static readonly string exceptionFolderPath = Path.Combine([ApplicationData.Current.LocalCacheFolder.Path, "Logs", "Exception"]);
         private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
