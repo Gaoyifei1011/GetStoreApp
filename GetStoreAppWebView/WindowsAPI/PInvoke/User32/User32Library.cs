@@ -17,7 +17,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// <param name="hWnd">其工作区用于转换的窗口的句柄。</param>
         /// <param name="lpPoint">指向 POINT 结构的指针，该结构包含要转换的客户端坐标。 如果函数成功，则新的屏幕坐标将复制到此结构中。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "ClientToScreen", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "ClientToScreen", SetLastError = false), PreserveSig]
         public static extern bool ClientToScreen(IntPtr hWnd, ref PointInt32 lpPoint);
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// 指向要通过 CREATESTRUCT 结构传递到窗口的值的指针，（WM_CREATE消息的 lParam 参数指向的 lpCreateParams 成员)）。 此消息在返回之前由此函数发送到创建的窗口。
         /// 如果应用程序调用 CreateWindow 来创建 MDI 客户端窗口，lpParam 应指向 CLIENTCREATESTRUCT 结构。如果 MDI 客户端窗口调用 CreateWindow 来创建 MDI 子窗口， lpParam 应指向 MDICREATESTRUCT 结构。如果不需要其他数据，lpParam 可能为 NULL。</param>
         /// <returns>如果函数成功，则返回值是新窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CreateWindowExW", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "CreateWindowExW", SetLastError = false), PreserveSig]
         public static extern IntPtr CreateWindowEx(uint dwExStyle, [MarshalAs(UnmanagedType.LPWStr)] string lpClassName, [MarshalAs(UnmanagedType.LPWStr)] string lpWindowName, uint dwStyle, uint x, uint y, uint nWidth, uint nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他消息信息。 此参数的内容取决于 Msg 参数的值。</param>
         /// <param name="lParam">其他消息信息。 此参数的内容取决于 Msg 参数的值。</param>
         /// <returns>返回值是消息处理的结果，取决于消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "DefWindowProcW", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "DefWindowProcW", SetLastError = false), PreserveSig]
         public static extern IntPtr DefWindowProc(IntPtr hWnd, WindowMessage msg, UIntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hWnd">要销毁的窗口的句柄。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "DestroyWindow", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "DestroyWindow", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyWindow(IntPtr hWnd);
 
@@ -89,7 +89,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// 如果窗口附加到调用线程的消息队列，则检索具有键盘焦点的窗口的句柄。
         /// </summary>
         /// <returns>返回值是具有键盘焦点的窗口的句柄。 如果调用线程的消息队列没有与键盘焦点关联的窗口，则返回值为 NULL。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "GetFocus", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "GetFocus", SetLastError = false), PreserveSig]
         public static extern IntPtr GetFocus();
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// 如果函数成功，则返回值是唯一标识所注册类的类原子。 此原子只能由 CreateWindow、 CreateWindowEx、 GetClassInfo、 GetClassInfoEx、 FindWindow、 FindWindowEx 和 UnregisterClass 函数和 IActiveIMMap：：FilterClientWindows 方法使用。
         /// 如果函数失败，则返回值为零。
         /// </returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "RegisterClassW", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "RegisterClassW", SetLastError = false), PreserveSig]
         public static extern ushort RegisterClass(ref WNDCLASS lpWndClass);
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。</param>
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "SendMessageW", SetLastError = false)]
+        [DllImport(User32, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
         public static extern int SendMessage(IntPtr hWnd, WindowMessage wMsg, UIntPtr wParam, IntPtr lParam);
     }
 }

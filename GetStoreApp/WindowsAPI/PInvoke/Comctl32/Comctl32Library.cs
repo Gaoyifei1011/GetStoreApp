@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
         /// <param name="uIdSubclass">子类 ID。 此 ID 与子类过程一起唯一标识子类。 若要删除子类，请将子类过程和此值传递给 RemoveWindowSubclass 函数。 此值将传递给 uIdSubclass 参数中的子类过程。</param>
         /// <param name="dwRefData">用于 引用数据的DWORD_PTR。 此值的含义由调用应用程序确定。 此值将传递给 dwRefData 参数中的子类过程。 不同的 dwRefData 与窗口句柄、子类过程和 uIdSubclass 的每个组合相关联。</param>
         /// <returns>如果成功安装子类回调，则为 TRUE;否则为 FALSE。</returns>
-        [LibraryImport(Comctl32, EntryPoint = "SetWindowSubclass", SetLastError = false)]
+        [LibraryImport(Comctl32, EntryPoint = "SetWindowSubclass", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool SetWindowSubclass(IntPtr hWnd, IntPtr pfnSubclass, uint uIdSubclass, IntPtr dwRefData);
 
@@ -31,7 +31,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
         /// <param name="wParam">指定附加消息信息。 此参数的内容取决于窗口消息的值。</param>
         /// <param name="lParam">指定附加消息信息。 此参数的内容取决于窗口消息的值。 注意：在 64 位版本的 Windows LPARAM 上是一个 64 位值。</param>
         /// <returns>返回的值特定于发送的消息。 应忽略此值。</returns>
-        [LibraryImport(Comctl32, EntryPoint = "DefSubclassProc", SetLastError = false)]
+        [LibraryImport(Comctl32, EntryPoint = "DefSubclassProc", SetLastError = false), PreserveSig]
         public static partial IntPtr DefSubclassProc(IntPtr hWnd, WindowMessage uMsg, UIntPtr wParam, IntPtr lParam);
     }
 }

@@ -19,7 +19,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.Kernel32
         /// GetModuleHandle 函数不会检索使用 LOAD_LIBRARY_AS_DATAFILE 标志加载的模块的句柄。 有关详细信息，请参阅 LoadLibraryEx。
         /// </param>
         /// <returns>如果函数成功，则返回值是指定模块的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "GetModuleHandleW", SetLastError = false)]
+        [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "GetModuleHandleW", SetLastError = false), PreserveSig]
         public static extern IntPtr GetModuleHandle(string modName);
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.Kernel32
         /// <param name="lpFrequency">
         /// 指向接收当前性能计数器频率（以每秒计数为单位）的变量的指针。 如果安装的硬件不支持高分辨率性能计数器，则此参数可以为零， (在运行 Windows XP 或更高版本) 的系统上不会发生这种情况。</param>
         /// <returns>如果安装的硬件支持高分辨率性能计数器，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [DllImport("kernel32", CharSet = CharSet.Unicode, EntryPoint = "QueryPerformanceFrequency", SetLastError = false)]
+        [DllImport("kernel32", CharSet = CharSet.Unicode, EntryPoint = "QueryPerformanceFrequency", SetLastError = false), PreserveSig]
         public static extern bool QueryPerformanceFrequency(ref long lpFrequency);
     }
 }

@@ -13,13 +13,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Uxtheme
         /// 设置 win32 右键菜单的样式
         /// </summary>
         /// <param name="preferredAppMode">菜单样式</param>
-        [LibraryImport(Uxtheme, EntryPoint = "#135", SetLastError = false)]
+        [LibraryImport(Uxtheme, EntryPoint = "#135", SetLastError = false), PreserveSig]
         public static partial void SetPreferredAppMode(PreferredAppMode preferredAppMode);
 
         /// <summary>
         /// 刷新右键菜单样式
         /// </summary>
-        [LibraryImport(Uxtheme, EntryPoint = "#136", SetLastError = false)]
+        [LibraryImport(Uxtheme, EntryPoint = "#136", SetLastError = false), PreserveSig]
         public static partial void FlushMenuThemes();
     }
 }

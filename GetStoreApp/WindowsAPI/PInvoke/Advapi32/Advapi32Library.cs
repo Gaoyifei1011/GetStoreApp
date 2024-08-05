@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="TokenInformationLength">指定 TokenInformation 参数指向的缓冲区的大小（以字节为单位）。 如果 TokenInformation 为 NULL，则此参数必须为零。</param>
         /// <param name="ReturnLength">指向一个变量的指针，该变量接收 TokenInformation 参数指向的缓冲区所需的字节数。 如果此值大于 TokenInformationLength 参数中指定的值，函数将失败，并且不会在缓冲区中存储任何数据。如果 TokenInformationClass 参数的值为 TokenDefaultDacl，并且令牌没有默认的 DACL，则该函数会将 ReturnLength 指向的变量设置为 sizeof(TOKEN_DEFAULT_DACL)，并将 TOKEN_DEFAULT_DACL 结构的 DefaultDacl 成员设置为 NULL。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(Advapi32, EntryPoint = "GetTokenInformation", SetLastError = false)]
+        [LibraryImport(Advapi32, EntryPoint = "GetTokenInformation", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool GetTokenInformation(IntPtr tokenHandle, TOKEN_INFORMATION_CLASS tokenInformationClass, IntPtr tokenInformation, uint tokenInformationLength, out uint returnLength);
 
@@ -30,7 +30,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         /// <param name="desiredAccess">指定一个访问掩码，该掩码 指定对访问令牌的请求访问类型。 这些请求的访问类型与令牌 (DACL) 的自由访问控制列表 进行比较，以确定授予或拒绝哪些访问权限。</param>
         /// <param name="tokenHandle">指向在函数返回时标识新打开的访问令牌的句柄的指针。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(Advapi32, EntryPoint = "OpenProcessToken", SetLastError = false)]
+        [LibraryImport(Advapi32, EntryPoint = "OpenProcessToken", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool OpenProcessToken(IntPtr processHandle, uint desiredAccess, out IntPtr tokenHandle);
     }

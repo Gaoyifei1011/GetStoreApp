@@ -18,7 +18,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="action">要执行的操作，可以执行以下值</param>
         /// <param name="pChangeFilterStruct">指向 CHANGEFILTERSTRUCT 结构的可选指针。</param>
         /// <returns>如果函数成功，则返回 TRUE;否则，它将返回 FALSE。</returns>
-        [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = false)]
+        [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool ChangeWindowMessageFilterEx(IntPtr hWnd, WindowMessage message, ChangeFilterAction action, in CHANGEFILTERSTRUCT pChangeFilterStruct);
 
@@ -30,7 +30,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="lpszClass">类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 </param>
         /// <param name="lpszWindow">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
         /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, string lpszClass, string lpszWindow);
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="hwnd">窗口的句柄。</param>
         /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 GetWindowThreadProcessId 将进程的标识符复制到变量;否则，它不会。</param>
         /// <returns>返回值是创建窗口的线程的标识符。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = false)]
+        [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = false), PreserveSig]
         public static partial int GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <returns>
         /// 如果 <param name="phicon"> 参数为 NULL 且此函数成功，则返回值为文件中的图标数。 如果函数失败，则返回值为 0。 如果 <param name="phicon"> 参数不是 NULL 且函数成功，则返回值是提取的图标数。 否则，如果未找到文件，则返回值0xFFFFFFFF。
         /// </returns>
-        [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial int PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out] IntPtr[] phicon, [Out] int[] piconid, int nIcons, int flags);
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
         /// <returns>如果将窗口带到前台，则返回值为非零值。如果未将窗口带到前台，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "SetForegroundWindow", SetLastError = false)]
+        [LibraryImport(User32, EntryPoint = "SetForegroundWindow", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool SetForegroundWindow(IntPtr hWnd);
 
@@ -82,7 +82,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="wParam">其他的消息特定信息。</param>
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
-        [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false)]
+        [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
         public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
     }
 }

@@ -21,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// <param name="dwClsContext">管理新创建对象的代码将在其中运行的上下文。 这些值取自枚举 CLSCTX。</param>
         /// <param name="riid">对要用于与对象通信的接口标识符的引用。</param>
         /// <param name="ppv">接收 riid 中请求的接口指针的指针变量的地址。 成功返回后，*ppv 包含请求的接口指针。 失败后，*ppv 包含 NULL。</param>
-        [LibraryImport(Ole32, EntryPoint = "CoCreateInstance", SetLastError = false)]
+        [LibraryImport(Ole32, EntryPoint = "CoCreateInstance", SetLastError = false), PreserveSig]
         public static partial int CoCreateInstance(ref Guid rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, ref Guid riid, out IntPtr ppv);
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// <param name="dwCapabilities">客户端或服务器的其他功能，通过设置一个或多个 EOLE_AUTHENTICATION_CAPABILITIES 值来指定。 其中一些值不能同时使用，在使用特定身份验证服务时无法设置其中一些值。 有关这些标志的详细信息，请参阅备注部分。</param>
         /// <param name="pReserved3">此参数是保留的，必须为 NULL。</param>
         /// <returns>此函数可以返回E_INVALIDARG的标准返回值和其他值。</returns>
-        [LibraryImport(Ole32, EntryPoint = "CoInitializeSecurity", SetLastError = false)]
+        [LibraryImport(Ole32, EntryPoint = "CoInitializeSecurity", SetLastError = false), PreserveSig]
         public static partial int CoInitializeSecurity(IntPtr pSecDesc, IntPtr cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1, int dwAuthnLevel, int dwImpLevel, IntPtr pAuthList, int dwCapabilities, IntPtr pReserved3);
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Ole32
         /// 如果设置了 pAuthInfo 并在 dwCapabilities 参数中设置了其中一个隐藏标志，CoSetProxyBlanket 将失败。
         /// </param>
         /// <param name="dwCapabilities">此代理的功能。 有关可能值的列表，请参阅 EOLE_AUTHENTICATION_CAPABILITIES 枚举。 唯一可以通过此函数设置的标志是EOAC_MUTUAL_AUTH、EOAC_STATIC_CLOAKING、EOAC_DYNAMIC_CLOAKING，EOAC_ANY_AUTHORITY (此标志已弃用) 、EOAC_MAKE_FULLSIC和EOAC_DEFAULT。 如果未设置 pAuthInfo 且 Schannel 不是身份验证服务，则可以设置 EOAC_STATIC_CLOAKING 或 EOAC_DYNAMIC_CLOAKING。 (有关详细信息，请参阅 隐藏 。) 如果设置了此处提及的功能以外的任何功能标志， CoSetProxyBlanket 将失败。</param>
-        [LibraryImport(Ole32, EntryPoint = "CoSetProxyBlanket", SetLastError = false)]
+        [LibraryImport(Ole32, EntryPoint = "CoSetProxyBlanket", SetLastError = false), PreserveSig]
         public static partial int CoSetProxyBlanket(IntPtr punk, uint dwAuthnSvc, uint dwAuthzSvc, IntPtr pServerPrincName, uint dwAuthLevel, uint dwImpLevel, IntPtr pAuthInfo, uint dwCapabilities);
     }
 }
