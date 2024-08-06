@@ -125,7 +125,7 @@ namespace GetStoreApp.Views.Windows
             new KeyValuePair<string, Type>("Store",typeof(StorePage)),
             new KeyValuePair<string, Type>("AppUpdate", typeof(AppUpdatePage)),
             new KeyValuePair<string, Type>("WinGet", typeof(WinGetPage)),
-            new KeyValuePair<string, Type>("UWPApp", typeof(UWPAppPage)),
+            new KeyValuePair<string, Type>("AppManager", typeof(AppManagerPage)),
             new KeyValuePair<string, Type>("Download", typeof(DownloadPage)),
             new KeyValuePair<string, Type>("Web",null ),
             new KeyValuePair<string, Type>("About", typeof(AboutPage)),
@@ -395,10 +395,10 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.Key is VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
             {
-                UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
-                if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)
+                AppManagerPage appManagerPage = WindowFrame.Content as AppManagerPage;
+                if (appManagerPage is not null && appManagerPage.BreadCollection.Count is 2)
                 {
-                    uwpAppPage.BackToAppList();
+                    appManagerPage.BackToAppList();
                 }
                 else
                 {
@@ -515,10 +515,10 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
         {
-            UWPAppPage uwpAppPage = WindowFrame.Content as UWPAppPage;
-            if (uwpAppPage is not null && uwpAppPage.BreadCollection.Count is 2)
+            AppManagerPage appManagerPage = WindowFrame.Content as AppManagerPage;
+            if (appManagerPage is not null && appManagerPage.BreadCollection.Count is 2)
             {
-                uwpAppPage.BackToAppList();
+                appManagerPage.BackToAppList();
             }
             else
             {
@@ -862,11 +862,11 @@ namespace GetStoreApp.Views.Windows
                                         NavigateTo(typeof(WinGetPage));
                                     });
                                 }
-                                else if (startupArgs[1] is "UWPApp" && GetCurrentPageType() != typeof(UWPAppPage))
+                                else if (startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
                                 {
                                     DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        NavigateTo(typeof(UWPAppPage));
+                                        NavigateTo(typeof(AppManagerPage));
                                     });
                                 }
                                 else if (startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))

@@ -1,0 +1,1551 @@
+<Page
+    x:Class="GetStoreApp.Views.Pages.AppManagerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:appManager="using:GetStoreApp.Models.Controls.AppManager"
+    xmlns:collection="using:System.Collections"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <x:Double x:Key="BreadcrumbBarChevronFontSize">16</x:Double>
+        <Thickness x:Key="BreadcrumbBarChevronPadding">8,0</Thickness>
+
+        <XamlUICommand x:Name="CopyAUMIDCommand" ExecuteRequested="{x:Bind OnCopyAUMIDExecuteRequested}" />
+        <XamlUICommand x:Name="CopyDependencyInformationCommand" ExecuteRequested="{x:Bind OnCopyDependencyInformationExecuteRequested}" />
+        <XamlUICommand x:Name="CopyDependencyNameCommand" ExecuteRequested="{x:Bind OnCopyDependencyNameExecuteRequested}" />
+        <XamlUICommand x:Name="LaunchCommand" ExecuteRequested="{x:Bind OnLaunchExecuteRequested}" />
+        <XamlUICommand x:Name="OpenAppCommand" ExecuteRequested="{x:Bind OnOpenAppExecuteRequested}" />
+        <XamlUICommand x:Name="OpenCacheFolderCommand" ExecuteRequested="{x:Bind OnOpenCacheFolderExecuteRequested}" />
+        <XamlUICommand x:Name="OpenFolderCommand" ExecuteRequested="{x:Bind OnOpenFolderExecuteRequested}" />
+        <XamlUICommand x:Name="OpenInstalledFolderCommand" ExecuteRequested="{x:Bind OnOpenInstalledFolderExecuteRequested}" />
+        <XamlUICommand x:Name="OpenManifestCommand" ExecuteRequested="{x:Bind OnOpenManifestExecuteRequested}" />
+        <XamlUICommand x:Name="OpenStoreCommand" ExecuteRequested="{x:Bind OnOpenStoreExecuteRequested}" />
+        <XamlUICommand x:Name="PinToDesktopCommand" ExecuteRequested="{x:Bind OnPinToDesktopExecuteRequested}" />
+        <XamlUICommand x:Name="PinToStartScreenCommand" ExecuteRequested="{x:Bind OnPinToStartScreenExecuteRequested}" />
+        <XamlUICommand x:Name="PinToTaskbarCommand" ExecuteRequested="{x:Bind OnPinToTaskbarExecuteRequested}" />
+        <XamlUICommand x:Name="ShowMoreCommand" ExecuteRequested="{x:Bind OnShowMoreExecuteRequested}" />
+        <XamlUICommand x:Name="UnInstallCommand" ExecuteRequested="{x:Bind OnUnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="ViewInformationCommand" ExecuteRequested="{x:Bind OnViewInformationExecuteRequested}" />
+
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+    </Page.Resources>
+
+    <Grid Padding="0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid
+            Grid.Row="0"
+            Margin="30,15,30,0"
+            ColumnSpacing="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <BreadcrumbBar
+                VerticalAlignment="Center"
+                ItemClicked="{x:Bind OnItemClicked}"
+                ItemsSource="{x:Bind BreadCollection, Mode=OneWay}">
+
+                <BreadcrumbBar.ItemTemplate>
+                    <DataTemplate x:DataType="collection:DictionaryEntry">
+                        <BreadcrumbBarItem Content="{Binding}">
+                            <BreadcrumbBarItem.ContentTemplate>
+                                <DataTemplate x:DataType="collection:DictionaryEntry">
+                                    <TextBlock FontSize="18" Text="{x:Bind Key}" />
+                                </DataTemplate>
+                            </BreadcrumbBarItem.ContentTemplate>
+                        </BreadcrumbBarItem>
+                    </DataTemplate>
+                </BreadcrumbBar.ItemTemplate>
+            </BreadcrumbBar>
+
+            <AutoSuggestBox
+                Grid.Column="1"
+                Width="200"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                PlaceholderText="{x:Bind root:ResourceService.GetLocalized('AppManager/PlaceHolderText')}"
+                QuerySubmitted="{x:Bind OnQuerySubmitted}"
+                Text="{x:Bind SearchText, Mode=OneWay}"
+                TextChanged="{x:Bind OnTextChanged}"
+                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}">
+
+                <AutoSuggestBox.QueryIcon>
+                    <FontIcon FontSize="14" Glyph="&#xE71E;" />
+                </AutoSuggestBox.QueryIcon>
+            </AutoSuggestBox>
+
+            <Button
+                Grid.Column="2"
+                Click="{x:Bind OnInstalledAppsClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('AppManager/InstalledApps')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/InstalledAppsToolTip')}"
+                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}" />
+        </Grid>
+
+        <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 1), Mode=OneWay}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0"
+                Height="66"
+                Margin="30,5,30,0"
+                Padding="16,8,2,8"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE74C;" />
+
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Operation')}" />
+                <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
+
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PackageEmpty')}"
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppManagerDataCollection.Count), Mode=OneWay}" />
+
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind sys:String.Format(PackageCountInfo, AppManagerDataCollection.Count), Mode=OneWay}"
+                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppManagerDataCollection.Count), Mode=OneWay}" />
+
+                <StackPanel
+                    Grid.Column="4"
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Orientation="Horizontal"
+                    Spacing="2">
+
+                    <AppBarButton
+                        IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('AppManager/Sort')}"
+                        Style="{StaticResource AppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/SortToolTip')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8CB;" />
+                        </AppBarButton.Icon>
+
+                        <AppBarButton.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutSubItem
+                                    Height="32"
+                                    Padding="11,0,11,0"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortWay')}">
+
+                                    <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnSortWayClicked}"
+                                        IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
+                                        Tag="True"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortIncrease')}" />
+
+                                    <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnSortWayClicked}"
+                                        IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
+                                        Tag="False"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortDecrease')}" />
+                                </MenuFlyoutSubItem>
+
+                                <MenuFlyoutSubItem
+                                    Height="32"
+                                    Padding="11,0,11,0"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortRule')}">
+
+                                    <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnSortRuleClicked}"
+                                        IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                        Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByDisplayName')}" />
+
+                                    <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnSortRuleClicked}"
+                                        IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                        Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByPublisher')}" />
+
+                                    <ToggleMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnSortRuleClicked}"
+                                        IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
+                                        Tag="{x:Bind enum:AppSortRuleKind.InstallDate}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByInstalledDate')}" />
+                                </MenuFlyoutSubItem>
+                            </MenuFlyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+
+                    <AppBarButton
+                        IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('AppManager/Filter')}"
+                        Style="{StaticResource AppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/FilterToolTip')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE71C;" />
+                        </AppBarButton.Icon>
+
+                        <AppBarButton.Flyout>
+                            <Flyout
+                                Closed="{x:Bind OnClosed}"
+                                FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
+                                Placement="Bottom"
+                                ShouldConstrainToRootBounds="False"
+                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                                <StackPanel Padding="12" Spacing="5">
+                                    <TextBlock
+                                        Margin="2,0,0,0"
+                                        FontSize="14"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/AppType')}" />
+
+                                    <ToggleButton
+                                        Click="{x:Bind OnFilterWayClicked}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/FrameworkPackage')}"
+                                        IsChecked="{x:Bind IsAppFramework, Mode=OneWay}" />
+
+                                    <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+                                    <TextBlock
+                                        Margin="2,0,0,0"
+                                        FontSize="14"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureType')}" />
+
+                                    <Grid ColumnSpacing="5" RowSpacing="5">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ToggleButton
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnSignatureRuleClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureStore')}"
+                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Store), Mode=OneWay}"
+                                            Tag="{x:Bind enum:PackageSignKind.Store}" />
+
+                                        <ToggleButton
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnSignatureRuleClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureSystem')}"
+                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.System), Mode=OneWay}"
+                                            Tag="{x:Bind enum:PackageSignKind.System}" />
+
+                                        <ToggleButton
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnSignatureRuleClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureEnterprise')}"
+                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Enterprise), Mode=OneWay}"
+                                            Tag="{x:Bind enum:PackageSignKind.Enterprise}" />
+
+                                        <ToggleButton
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnSignatureRuleClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureDeveloper')}"
+                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Developer), Mode=OneWay}"
+                                            Tag="{x:Bind enum:PackageSignKind.Developer}" />
+
+                                        <ToggleButton
+                                            Grid.Row="0"
+                                            Grid.Column="4"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnSignatureRuleClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureNone')}"
+                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.None), Mode=OneWay}"
+                                            Tag="{x:Bind enum:PackageSignKind.None}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+
+                    <AppBarButton
+                        Click="{x:Bind OnRefreshClicked}"
+                        IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('AppManager/Refresh')}"
+                        Style="{StaticResource AppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/RefreshToolTip')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE72C;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </StackPanel>
+            </Grid>
+
+            <Grid
+                x:Name="LoadingGrid"
+                Grid.Row="1"
+                Margin="30,3,30,0"
+                Padding="16,12"
+                x:Load="{x:Bind IsLoadedCompleted.Equals(x:False), Mode=OneWay}"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="10">
+
+                    <ProgressRing IsActive="True" IsEnabled="True" />
+
+                    <TextBlock
+                        Margin="0,10"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/LoadingPackage')}"
+                        TextAlignment="Center" />
+                </StackPanel>
+            </Grid>
+
+            <Grid
+                Grid.Row="2"
+                Margin="0,3,0,0"
+                Visibility="{x:Bind IsLoadedCompleted, Mode=OneWay}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid
+                    Grid.Row="0"
+                    Margin="30,0"
+                    Padding="16,12"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource ControlCornerRadius}"
+                    Visibility="{x:Bind IsPackageEmpty, Mode=OneWay}">
+
+                    <TextBlock
+                        Margin="0,10,0,10"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PackageEmptyDescription')}"
+                        TextAlignment="Center" />
+                </Grid>
+
+                <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackageEmpty), Mode=OneWay}">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid
+                        Grid.Row="0"
+                        Margin="30,0"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AppManagerDataCollection.Count), Mode=OneWay}">
+                        <TextBlock
+                            Margin="0,10,0,10"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PackageEmptyWithConditionDescription')}"
+                            TextAlignment="Center" />
+                    </Grid>
+
+                    <ListView
+                        Grid.Row="1"
+                        Padding="30,0,30,30"
+                        ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
+                        ItemsSource="{x:Bind AppManagerDataCollection, Mode=OneWay}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.HorizontalScrollMode="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Enabled"
+                        SelectionMode="None"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppManagerDataCollection.Count), Mode=OneWay}">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="appManager:PackageModel">
+                                <ItemContainer Margin="0,0,0,1">
+                                    <Grid>
+                                        <Grid>
+                                            <Grid
+                                                Height="60"
+                                                Padding="16,12"
+                                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                BorderThickness="1"
+                                                ColumnSpacing="10"
+                                                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="120" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    MinWidth="50"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind DisplayName}"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis"
+                                                    TextWrapping="NoWrap">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
+                                                                <Run Text="{x:Bind DisplayName}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    MinWidth="50"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind PublisherName}"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis"
+                                                    TextWrapping="NoWrap">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherNameToolTip')}" />
+                                                                <Run Text="{x:Bind PublisherName}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    MinWidth="50"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    HorizontalTextAlignment="Left"
+                                                    Text="{x:Bind Version}"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis"
+                                                    TextWrapping="NoWrap">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/VersionToolTip')}" />
+                                                                <Run Text="{x:Bind Version}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="3"
+                                                    MinWidth="50"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    HorizontalTextAlignment="Left"
+                                                    Text="{x:Bind InstallDate}"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis"
+                                                    TextWrapping="NoWrap">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/InstallDateToolTip')}" />
+                                                                <Run Text="{x:Bind InstallDate}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <StackPanel
+                                                    Grid.Column="4"
+                                                    Height="30"
+                                                    BorderBrush="{ThemeResource ButtonBorderBrush}"
+                                                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                                                    CornerRadius="{ThemeResource ControlCornerRadius}"
+                                                    Orientation="Horizontal">
+
+                                                    <Button
+                                                        VerticalAlignment="Stretch"
+                                                        VerticalContentAlignment="Center"
+                                                        BorderThickness="0,0,1,0"
+                                                        Command="{StaticResource ViewInformationCommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/View')}"
+                                                        CornerRadius="0"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/ViewToolTip')}" />
+
+                                                    <Button
+                                                        Width="35"
+                                                        VerticalAlignment="Stretch"
+                                                        BorderThickness="0"
+                                                        CornerRadius="0"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/FastOperationToolTip')}">
+
+                                                        <Button.Content>
+                                                            <AnimatedIcon
+                                                                Width="12"
+                                                                Height="12"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Center"
+                                                                AutomationProperties.AccessibilityView="Raw">
+                                                                <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                                                <AnimatedIcon.FallbackIconSource>
+                                                                    <FontIconSource
+                                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                        FontSize="8"
+                                                                        Glyph="&#xE96E;"
+                                                                        IsTextScaleFactorEnabled="False" />
+                                                                </AnimatedIcon.FallbackIconSource>
+                                                            </AnimatedIcon>
+                                                        </Button.Content>
+
+                                                        <Button.Flyout>
+                                                            <MenuFlyout Placement="Bottom">
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource OpenAppCommand}"
+                                                                    CommandParameter="{x:Bind Package}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenApp')}"
+                                                                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCount)}" />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource OpenStoreCommand}"
+                                                                    CommandParameter="{x:Bind Package}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenStore')}"
+                                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStorePackage(SignatureKind)}" />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource OpenManifestCommand}"
+                                                                    CommandParameter="{x:Bind Package}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenManifest')}" />
+
+                                                                <MenuFlyoutSubItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenFolder')}">
+
+                                                                    <MenuFlyoutItem
+                                                                        Height="32"
+                                                                        Padding="11,0"
+                                                                        Command="{StaticResource OpenInstalledFolderCommand}"
+                                                                        CommandParameter="{x:Bind Package}"
+                                                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenInstalledFolder')}" />
+
+                                                                    <MenuFlyoutItem
+                                                                        Height="32"
+                                                                        Padding="11,0"
+                                                                        Command="{StaticResource OpenCacheFolderCommand}"
+                                                                        CommandParameter="{x:Bind Package}"
+                                                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenCacheFolder')}" />
+                                                                </MenuFlyoutSubItem>
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource UnInstallCommand}"
+                                                                    CommandParameter="{x:Bind Package}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/UnInstall')}"
+                                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}" />
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <ProgressBar
+                                                Margin="16,0"
+                                                VerticalAlignment="Bottom"
+                                                IsIndeterminate="True"
+                                                Visibility="{x:Bind IsUnInstalling, Mode=OneWay}" />
+                                        </Grid>
+                                    </Grid>
+                                </ItemContainer>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 2), Mode=OneWay}">
+
+            <ScrollViewer Margin="0,5,0,0">
+                <StackPanel Margin="30,0,30,30" Spacing="3">
+                    <Expander
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        IsExpanded="True">
+
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <FontIcon
+                                    Grid.Column="0"
+                                    Margin="0,0,12,0"
+                                    FontSize="16"
+                                    Glyph="&#xE946;" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/AppInformation')}" />
+
+                                <AppBarButton
+                                    Grid.Column="2"
+                                    Click="{x:Bind OnCopyClicked}"
+                                    Label="{x:Bind root:ResourceService.GetLocalized('AppManager/Copy')}"
+                                    Style="{StaticResource AppBarButtonStyle}">
+
+                                    <AppBarButton.Icon>
+                                        <FontIcon Glyph="&#xE8C8;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                            </Grid>
+                        </Expander.Header>
+
+                        <Expander.Content>
+                            <Grid Margin="0,0,10,0" RowSpacing="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Margin="0,0,25,0"
+                                    FontSize="17"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/BasicInformation')}" />
+
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayName')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Text="{x:Bind DisplayName, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/FamilyName')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Text="{x:Bind FamilyName, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/FullName')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Text="{x:Bind FullName, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Description')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="2"
+                                    Text="{x:Bind Description, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <MenuFlyoutSeparator
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3" />
+
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Margin="0,0,25,0"
+                                    FontSize="17"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherInformation')}" />
+
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherName')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="2"
+                                    Text="{x:Bind PublisherName, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherId')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Grid.Column="2"
+                                    Text="{x:Bind PublisherId, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <MenuFlyoutSeparator
+                                    Grid.Row="7"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3" />
+
+                                <TextBlock
+                                    Grid.Row="8"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Margin="0,0,25,0"
+                                    FontSize="17"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PackageInformation')}" />
+
+                                <TextBlock
+                                    Grid.Row="8"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Version')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="8"
+                                    Grid.Column="2"
+                                    Text="{x:Bind Version, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="9"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/InstalledDate')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="9"
+                                    Grid.Column="2"
+                                    Text="{x:Bind InstalledDate, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="10"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Architecture')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="10"
+                                    Grid.Column="2"
+                                    Text="{x:Bind Architecture, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="11"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureKind')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="11"
+                                    Grid.Column="2"
+                                    Text="{x:Bind SignatureKind, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="12"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/ResourceId')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="12"
+                                    Grid.Column="2"
+                                    Text="{x:Bind ResourceId, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="13"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/IsBundle')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="13"
+                                    Grid.Column="2"
+                                    Text="{x:Bind IsBundle, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="14"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/IsDevelopmentMode')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="14"
+                                    Grid.Column="2"
+                                    Text="{x:Bind IsDevelopmentMode, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="15"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/IsFramework')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="15"
+                                    Grid.Column="2"
+                                    Text="{x:Bind IsFramework, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="16"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/IsOptional')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="16"
+                                    Grid.Column="2"
+                                    Text="{x:Bind IsOptional, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="17"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/IsResourcePackage')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="17"
+                                    Grid.Column="2"
+                                    Text="{x:Bind IsResourcePackage, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="18"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/IsStub')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="18"
+                                    Grid.Column="2"
+                                    Text="{x:Bind IsStub, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="19"
+                                    Grid.Column="1"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/VertifyIsOK')}"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Grid.Row="19"
+                                    Grid.Column="2"
+                                    Text="{x:Bind VertifyIsOK, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander
+                        Padding="0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        IsExpanded="True"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCollection.Count), Mode=OneWay}">
+
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <FontIcon
+                                    Grid.Column="0"
+                                    Margin="0,0,12,0"
+                                    FontSize="16"
+                                    Glyph="&#xE8A7;" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/AppListEntry')}" />
+                            </Grid>
+                        </Expander.Header>
+
+                        <Expander.Content>
+                            <StackPanel>
+                                <Grid Height="35" Padding="6,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="130" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        x:Name="EntryNameHeaderText"
+                                        Grid.Column="0"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/EntryName')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('AppManager/EntryName')}"
+                                                Visibility="{x:Bind EntryNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="EntryDescriptionHeaderText"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/EntryDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('AppManager/EntryDescription')}"
+                                                Visibility="{x:Bind EntryDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="AUMIDHeaderText"
+                                        Grid.Column="2"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/AUMID')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('AppManager/AUMID')}"
+                                                Visibility="{x:Bind AUMIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        Grid.ColumnSpan="2"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Options')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/OptionsToolTip')}" />
+                                </Grid>
+
+                                <ItemsView
+                                    CornerRadius="0"
+                                    ItemsSource="{x:Bind AppListEntryCollection, Mode=OneWay}"
+                                    SelectionMode="None">
+
+                                    <ItemsView.Layout>
+                                        <StackLayout />
+                                    </ItemsView.Layout>
+
+                                    <ItemsView.ItemTemplate>
+                                        <DataTemplate x:DataType="appManager:AppListEntryModel">
+                                            <ItemContainer CornerRadius="0">
+                                                <Grid
+                                                    Height="35"
+                                                    Padding="6,0,0,0"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="0,1,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="55" />
+                                                        <ColumnDefinition Width="75" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock
+                                                        x:Name="EntryNameText"
+                                                        Grid.Column="0"
+                                                        MinWidth="50"
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind DisplayName}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind DisplayName}"
+                                                                Visibility="{Binding ElementName=EntryNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+
+                                                    <TextBlock
+                                                        x:Name="EntryDescriptionText"
+                                                        Grid.Column="1"
+                                                        MinWidth="50"
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind Description}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind Description}"
+                                                                Visibility="{Binding ElementName=EntryDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+
+                                                    <TextBlock
+                                                        x:Name="AUMIDText"
+                                                        Grid.Column="2"
+                                                        MinWidth="50"
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind AppUserModelId}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind AppUserModelId}"
+                                                                Visibility="{Binding ElementName=AUMIDText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+
+                                                    <HyperlinkButton
+                                                        Grid.Column="3"
+                                                        Margin="10,0,0,0"
+                                                        Command="{StaticResource LaunchCommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        Style="{StaticResource HyperlinkButtonStyle}">
+
+                                                        <HyperlinkButton.Content>
+                                                            <TextBlock
+                                                                x:Name="LaunchText"
+                                                                Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Launch')}"
+                                                                TextTrimming="CharacterEllipsis"
+                                                                TextWrapping="NoWrap">
+
+                                                                <ToolTipService.ToolTip>
+                                                                    <ToolTip
+                                                                        MaxWidth="9999"
+                                                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/Launch')}"
+                                                                        Visibility="{Binding ElementName=LaunchText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                </ToolTipService.ToolTip>
+                                                            </TextBlock>
+                                                        </HyperlinkButton.Content>
+                                                    </HyperlinkButton>
+
+                                                    <HyperlinkButton
+                                                        Grid.Column="4"
+                                                        Margin="10,0,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center"
+                                                        Command="{StaticResource ShowMoreCommand}"
+                                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                        Style="{StaticResource HyperlinkButtonStyle}"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}">
+
+                                                        <HyperlinkButton.Content>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock
+                                                                    x:Name="MoreText"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}"
+                                                                    TextTrimming="CharacterEllipsis"
+                                                                    TextWrapping="NoWrap">
+
+                                                                    <ToolTipService.ToolTip>
+                                                                        <ToolTip
+                                                                            MaxWidth="9999"
+                                                                            Content="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}"
+                                                                            Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    </ToolTipService.ToolTip>
+                                                                </TextBlock>
+
+                                                                <AnimatedIcon
+                                                                    Width="12"
+                                                                    Height="12"
+                                                                    Margin="8,0,0,0"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    AutomationProperties.AccessibilityView="Raw">
+                                                                    <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                                                    <AnimatedIcon.FallbackIconSource>
+                                                                        <FontIconSource
+                                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                            FontSize="8"
+                                                                            Glyph="&#xE96E;"
+                                                                            IsTextScaleFactorEnabled="False" />
+                                                                    </AnimatedIcon.FallbackIconSource>
+                                                                </AnimatedIcon>
+                                                            </StackPanel>
+                                                        </HyperlinkButton.Content>
+
+                                                        <FlyoutBase.AttachedFlyout>
+                                                            <MenuFlyout Placement="Bottom">
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource CopyAUMIDCommand}"
+                                                                    CommandParameter="{x:Bind AppUserModelId}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyAUMID')}" />
+
+                                                                <MenuFlyoutSeparator />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource PinToDesktopCommand}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToDesktop')}"
+                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToDesktopToolTip')}" />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource PinToStartScreenCommand}"
+                                                                    CommandParameter="{x:Bind}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToStartScreen')}"
+                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToStartScreenToolTip')}" />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource PinToTaskbarCommand}"
+                                                                    CommandParameter="{x:Bind}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToTaskbar')}"
+                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToTaskbarToolTip')}" />
+                                                            </MenuFlyout>
+                                                        </FlyoutBase.AttachedFlyout>
+                                                    </HyperlinkButton>
+                                                </Grid>
+                                            </ItemContainer>
+                                        </DataTemplate>
+                                    </ItemsView.ItemTemplate>
+                                </ItemsView>
+                            </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+
+                    <Expander
+                        Padding="0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        IsExpanded="True"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DependenciesCollection.Count), Mode=OneWay}">
+
+                        <Expander.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <FontIcon
+                                    Grid.Column="0"
+                                    Margin="0,0,12,0"
+                                    FontSize="16"
+                                    Glyph="&#xE8AB;" />
+
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DependencyInformation')}" />
+                            </Grid>
+                        </Expander.Header>
+
+                        <Expander.Content>
+                            <StackPanel>
+                                <Grid Height="35" Padding="6,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="75" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock
+                                        x:Name="DependencyNameHeaderText"
+                                        Grid.Column="0"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DependencyName')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('AppManager/DependencyName')}"
+                                                Visibility="{x:Bind DependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="DependencyDescriptionHeaderText"
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DependencyPublisher')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('AppManager/DependencyPublisher')}"
+                                                Visibility="{x:Bind DependencyDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="DependencyVersionHeaderText"
+                                        Grid.Column="2"
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DependencyVersion')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('AppManager/DependencyVersion')}"
+                                                Visibility="{x:Bind DependencyVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        Grid.ColumnSpan="2"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Options')}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/OptionsToolTip')}" />
+                                </Grid>
+
+                                <ItemsView
+                                    CornerRadius="0"
+                                    ItemsSource="{x:Bind DependenciesCollection, Mode=OneWay}"
+                                    SelectionMode="None">
+
+                                    <ItemsView.Layout>
+                                        <StackLayout />
+                                    </ItemsView.Layout>
+
+                                    <ItemsView.ItemTemplate>
+                                        <DataTemplate x:DataType="appManager:PackageModel">
+                                            <ItemContainer CornerRadius="0">
+                                                <Grid
+                                                    Height="35"
+                                                    Padding="6,0,0,0"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="0,1,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="75" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock
+                                                        x:Name="DependencyNameText"
+                                                        Grid.Column="0"
+                                                        MinWidth="50"
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind DisplayName}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind DisplayName}"
+                                                                Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+
+                                                    <TextBlock
+                                                        x:Name="DependencyPublisherText"
+                                                        Grid.Column="1"
+                                                        MinWidth="50"
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind PublisherName}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind PublisherName}"
+                                                                Visibility="{Binding ElementName=DependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+
+                                                    <TextBlock
+                                                        x:Name="DependencyVersionText"
+                                                        Grid.Column="2"
+                                                        MinWidth="50"
+                                                        Margin="10,0,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind Version}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        TextWrapping="NoWrap">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip
+                                                                MaxWidth="9999"
+                                                                Content="{x:Bind Version}"
+                                                                Visibility="{Binding ElementName=DependencyVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+
+                                                    <HyperlinkButton
+                                                        Grid.Column="4"
+                                                        Margin="10,0,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center"
+                                                        Command="{StaticResource ShowMoreCommand}"
+                                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                                                        Style="{StaticResource HyperlinkButtonStyle}"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}">
+
+                                                        <HyperlinkButton.Content>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock
+                                                                    x:Name="MoreText"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}"
+                                                                    TextTrimming="CharacterEllipsis"
+                                                                    TextWrapping="NoWrap">
+
+                                                                    <ToolTipService.ToolTip>
+                                                                        <ToolTip
+                                                                            MaxWidth="9999"
+                                                                            Content="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}"
+                                                                            Visibility="{Binding ElementName=MoreText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                    </ToolTipService.ToolTip>
+                                                                </TextBlock>
+
+                                                                <AnimatedIcon
+                                                                    Width="12"
+                                                                    Height="12"
+                                                                    Margin="8,0,0,0"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    AutomationProperties.AccessibilityView="Raw">
+                                                                    <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                                                    <AnimatedIcon.FallbackIconSource>
+                                                                        <FontIconSource
+                                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                            FontSize="8"
+                                                                            Glyph="&#xE96E;"
+                                                                            IsTextScaleFactorEnabled="False" />
+                                                                    </AnimatedIcon.FallbackIconSource>
+                                                                </AnimatedIcon>
+                                                            </StackPanel>
+                                                        </HyperlinkButton.Content>
+
+                                                        <FlyoutBase.AttachedFlyout>
+                                                            <MenuFlyout Placement="Bottom">
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource OpenStoreCommand}"
+                                                                    CommandParameter="{x:Bind Package}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenStore')}" />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource OpenFolderCommand}"
+                                                                    CommandParameter="{x:Bind Package}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenFolder')}" />
+
+                                                                <MenuFlyoutSeparator />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource CopyDependencyNameCommand}"
+                                                                    CommandParameter="{x:Bind DisplayName}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyDependencyName')}" />
+
+                                                                <MenuFlyoutItem
+                                                                    Height="32"
+                                                                    Padding="11,0"
+                                                                    Command="{StaticResource CopyDependencyInformationCommand}"
+                                                                    CommandParameter="{x:Bind Package}"
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyDependencyInformation')}" />
+                                                            </MenuFlyout>
+                                                        </FlyoutBase.AttachedFlyout>
+                                                    </HyperlinkButton>
+                                                </Grid>
+                                            </ItemContainer>
+                                        </DataTemplate>
+                                    </ItemsView.ItemTemplate>
+                                </ItemsView>
+                            </StackPanel>
+                        </Expander.Content>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Page>

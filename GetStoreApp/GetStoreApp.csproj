@@ -83,8 +83,6 @@
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
     <None Remove="UI\Controls\Store\SearchStoreControl.xaml" />
-    <None Remove="UI\Controls\UWPApp\AppInfoControl.xaml" />
-    <None Remove="UI\Controls\UWPApp\AppListControl.xaml" />
     <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
@@ -105,11 +103,11 @@
     <None Remove="UI\TeachingTips\DataCopyTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="Views\Pages\AboutPage.xaml" />
+    <None Remove="Views\Pages\AppManagerPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
-    <None Remove="Views\Pages\UWPAppPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="WinUIApp.xaml" />
@@ -129,8 +127,6 @@
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\Store\QueryLinksControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\Store\SearchStoreControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Controls\UWPApp\AppInfoControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Controls\UWPApp\AppListControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -149,9 +145,9 @@
     <Page Update="UI\TeachingTips\OperationResultTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AboutPage.xaml" />
+    <Page Update="Views\Pages\AppManagerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\UWPAppPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\StorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

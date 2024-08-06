@@ -66,9 +66,9 @@ namespace GetStoreApp
                     wingetItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/WinGet.png");
                     taskbarJumpList.Items.Add(wingetItem);
 
-                    JumpListItem uwpAppItem = JumpListItem.CreateWithArguments("JumpList UWPApp", ResourceService.GetLocalized("Window/UWPApp"));
-                    uwpAppItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/UWPApp.png");
-                    taskbarJumpList.Items.Add(uwpAppItem);
+                    JumpListItem appManagerItem = JumpListItem.CreateWithArguments("JumpList AppManager", ResourceService.GetLocalized("Window/AppManager"));
+                    appManagerItem.Logo = new Uri("ms-appx:///Assets/ControlIcon/AppManager.png");
+                    taskbarJumpList.Items.Add(appManagerItem);
 
                     taskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
 

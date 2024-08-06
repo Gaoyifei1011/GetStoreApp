@@ -110,9 +110,9 @@ namespace GetStoreApp.Services.Root
                                     InitializePage = typeof(WinGetPage);
                                     break;
                                 }
-                            case "UWPApp":
+                            case "AppManager":
                                 {
-                                    InitializePage = typeof(UWPAppPage);
+                                    InitializePage = typeof(AppManagerPage);
                                     break;
                                 }
                             case "Download":

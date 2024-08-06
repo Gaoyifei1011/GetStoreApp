@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="AppManager" xml:space="preserve">
+    <value>App Manager</value>
+  </data>
   <data name="AppTitle" xml:space="preserve">
     <value>GetStoreApp</value>
   </data>
@@ -158,9 +161,6 @@
   </data>
   <data name="Store" xml:space="preserve">
     <value>Microsoft Store</value>
-  </data>
-  <data name="UWPApp" xml:space="preserve">
-    <value>Package Manager</value>
   </data>
   <data name="Web" xml:space="preserve">
     <value>Open Browser</value>

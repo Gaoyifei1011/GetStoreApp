@@ -1,52 +1,87 @@
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Models.Controls.UWPApp;
+using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.AppManager;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Windows;
+using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Store.Preview;
 using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Core;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.StartScreen;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
 
-namespace GetStoreApp.UI.Controls.UWPApp
+namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// 应用信息列表控件
+    /// 应用管理页面
     /// </summary>
-    public sealed partial class AppListControl : Grid, INotifyPropertyChanged
+    public sealed partial class AppManagerPage : Page, INotifyPropertyChanged
     {
         private bool needToRefreshData = false;
-
         private AutoResetEvent autoResetEvent;
         private readonly PackageManager packageManager = new();
 
-        private string Unknown { get; } = ResourceService.GetLocalized("UWPApp/Unknown");
+        private string Unknown { get; } = ResourceService.GetLocalized("AppManager/Unknown");
 
-        private string Yes { get; } = ResourceService.GetLocalized("UWPApp/Yes");
+        private string Yes { get; } = ResourceService.GetLocalized("AppManager/Yes");
 
-        private string No { get; } = ResourceService.GetLocalized("UWPApp/No");
+        private string No { get; } = ResourceService.GetLocalized("AppManager/No");
 
-        private string PackageCountInfo { get; } = ResourceService.GetLocalized("UWPApp/PackageCountInfo");
+        private string PackageCountInfo { get; } = ResourceService.GetLocalized("AppManager/PackageCountInfo");
 
-        public string SearchText { get; set; } = string.Empty;
+        private int _selectedIndex;
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
+
+            set
+            {
+                if (!Equals(_selectedIndex, value))
+                {
+                    _selectedIndex = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIndex)));
+                }
+            }
+        }
+
+        private string _searchText = string.Empty;
+
+        public string SearchText
+        {
+            get { return _searchText; }
+
+            set
+            {
+                if (!Equals(_searchText, value))
+                {
+                    _searchText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                }
+            }
+        }
 
         private bool _isLoadedCompleted = false;
 
@@ -96,18 +131,18 @@ namespace GetStoreApp.UI.Controls.UWPApp
             }
         }
 
-        private bool _isFramework = false;
+        private bool _isAppFramework = false;
 
-        public bool IsFramework
+        public bool IsAppFramework
         {
-            get { return _isFramework; }
+            get { return _isAppFramework; }
 
             set
             {
-                if (!Equals(_isFramework, value))
+                if (!Equals(_isAppFramework, value))
                 {
-                    _isFramework = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
+                    _isAppFramework = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppFramework)));
                 }
             }
         }
@@ -144,13 +179,310 @@ namespace GetStoreApp.UI.Controls.UWPApp
             }
         }
 
+        private string _displayName = string.Empty;
+
+        public string DisplayName
+        {
+            get { return _displayName; }
+
+            set
+            {
+                if (!Equals(_displayName, value))
+                {
+                    _displayName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayName)));
+                }
+            }
+        }
+
+        private string _familyName = string.Empty;
+
+        public string FamilyName
+        {
+            get { return _familyName; }
+
+            set
+            {
+                if (!Equals(_familyName, value))
+                {
+                    _familyName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FamilyName)));
+                }
+            }
+        }
+
+        private string _fullName = string.Empty;
+
+        public string FullName
+        {
+            get { return _fullName; }
+
+            set
+            {
+                if (!Equals(_fullName, value))
+                {
+                    _fullName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FullName)));
+                }
+            }
+        }
+
+        private string _description = string.Empty;
+
+        public string Description
+        {
+            get { return _description; }
+
+            set
+            {
+                if (!Equals(_description, value))
+                {
+                    _description = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Description)));
+                }
+            }
+        }
+
+        private string _publisherName = string.Empty;
+
+        public string PublisherName
+        {
+            get { return _publisherName; }
+
+            set
+            {
+                if (!Equals(_publisherName, value))
+                {
+                    _publisherName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherName)));
+                }
+            }
+        }
+
+        private string _publisherId = string.Empty;
+
+        public string PublisherId
+        {
+            get { return _publisherId; }
+
+            set
+            {
+                if (!Equals(_publisherId, value))
+                {
+                    _publisherId = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherId)));
+                }
+            }
+        }
+
+        private string _version;
+
+        public string Version
+        {
+            get { return _version; }
+
+            set
+            {
+                if (!Equals(_version, value))
+                {
+                    _version = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
+                }
+            }
+        }
+
+        private string _installedDate;
+
+        public string InstalledDate
+        {
+            get { return _installedDate; }
+
+            set
+            {
+                if (!Equals(_installedDate, value))
+                {
+                    _installedDate = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstalledDate)));
+                }
+            }
+        }
+
+        private string _architecture;
+
+        public string Architecture
+        {
+            get { return _architecture; }
+
+            set
+            {
+                if (!Equals(_architecture, value))
+                {
+                    _architecture = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Architecture)));
+                }
+            }
+        }
+
+        private string _signatureKind;
+
+        private string SignatureKind
+        {
+            get { return _signatureKind; }
+
+            set
+            {
+                if (!Equals(_signatureKind, value))
+                {
+                    _signatureKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SignatureKind)));
+                }
+            }
+        }
+
+        private string _resourceId;
+
+        public string ResourceId
+        {
+            get { return _resourceId; }
+
+            set
+            {
+                if (!Equals(_resourceId, value))
+                {
+                    _resourceId = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ResourceId)));
+                }
+            }
+        }
+
+        private string _isBundle;
+
+        public string IsBundle
+        {
+            get { return _isBundle; }
+
+            set
+            {
+                if (!Equals(_isBundle, value))
+                {
+                    _isBundle = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBundle)));
+                }
+            }
+        }
+
+        private string _isDevelopmentMode;
+
+        public string IsDevelopmentMode
+        {
+            get { return _isDevelopmentMode; }
+
+            set
+            {
+                if (!Equals(_isDevelopmentMode, value))
+                {
+                    _isDevelopmentMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDevelopmentMode)));
+                }
+            }
+        }
+
+        private string _isFramework;
+
+        public string IsFramework
+        {
+            get { return _isFramework; }
+
+            set
+            {
+                if (!Equals(_isFramework, value))
+                {
+                    _isFramework = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
+                }
+            }
+        }
+
+        private string _isOptional;
+
+        public string IsOptional
+        {
+            get { return _isOptional; }
+
+            set
+            {
+                if (!Equals(_isOptional, value))
+                {
+                    _isOptional = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOptional)));
+                }
+            }
+        }
+
+        private string _isResourcePackage;
+
+        public string IsResourcePackage
+        {
+            get { return _isResourcePackage; }
+
+            set
+            {
+                if (!Equals(_isResourcePackage, value))
+                {
+                    _isResourcePackage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsResourcePackage)));
+                }
+            }
+        }
+
+        private string _isStub;
+
+        public string IsStub
+        {
+            get { return _isStub; }
+
+            set
+            {
+                if (!Equals(_isStub, value))
+                {
+                    _isStub = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStub)));
+                }
+            }
+        }
+
+        private string _vertifyIsOK;
+
+        public string VertifyIsOK
+        {
+            get { return _vertifyIsOK; }
+
+            set
+            {
+                if (!Equals(_vertifyIsOK, value))
+                {
+                    _vertifyIsOK = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(VertifyIsOK)));
+                }
+            }
+        }
+
         private readonly List<Package> MatchResultList = [];
 
-        private ObservableCollection<PackageModel> UwpAppDataCollection { get; } = [];
+        private ObservableCollection<PackageModel> AppManagerDataCollection { get; } = [];
+
+        private ObservableCollection<AppListEntryModel> AppListEntryCollection { get; } = [];
+
+        private ObservableCollection<PackageModel> DependenciesCollection { get; } = [];
+
+        public ObservableCollection<DictionaryEntry> BreadCollection { get; } =
+        [
+            new DictionaryEntry(ResourceService.GetLocalized("AppManager/AppList"), "AppList")
+        ];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public AppListControl()
+        public AppManagerPage()
         {
             InitializeComponent();
 
@@ -158,7 +490,86 @@ namespace GetStoreApp.UI.Controls.UWPApp
             InitializeData();
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #region 第一部分：应用管理页面——XamlUICommand 命令调用时挂载的事件
+
+        /// <summary>
+        /// 复制应用入口的应用程序用户模型 ID
+        /// </summary>
+        private void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            string aumid = args.Parameter as string;
+
+            if (!string.IsNullOrEmpty(aumid))
+            {
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(aumid);
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppUserModelId, copyResult));
+            }
+        }
+
+        /// <summary>
+        /// 复制依赖包信息
+        /// </summary>
+        private void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        StringBuilder copyBuilder = new();
+                        copyBuilder.AppendLine(package.DisplayName);
+                        copyBuilder.AppendLine(package.Id.FamilyName);
+                        copyBuilder.AppendLine(package.Id.FullName);
+
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
+                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "App information copy failed", e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 复制依赖包名称
+        /// </summary>
+        private void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            string displayName = args.Parameter as string;
+            if (displayName is not null)
+            {
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(displayName);
+                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyName, copyResult));
+            }
+        }
+
+        /// <summary>
+        /// 启动对应入口的应用
+        /// </summary>
+        private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await appListEntryItem.AppListEntry.LaunchAsync();
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
+                }
+            });
+        }
 
         /// <summary>
         /// 打开应用
@@ -202,6 +613,29 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开安装目录
+        /// </summary>
+        private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Package package = args.Parameter as Package;
+
+            if (package is not null)
+            {
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
                     }
                 });
             }
@@ -280,6 +714,110 @@ namespace GetStoreApp.UI.Controls.UWPApp
         }
 
         /// <summary>
+        /// 固定应用到桌面
+        /// </summary>
+        private void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            Task.Run(() =>
+            {
+                bool isPinnedSuccessfully = false;
+
+                try
+                {
+                    if (StoreConfiguration.IsPinToDesktopSupported())
+                    {
+                        StoreConfiguration.PinToDesktop(FamilyName);
+                        isPinnedSuccessfully = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
+                }
+                finally
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, isPinnedSuccessfully));
+                    });
+                }
+            });
+        }
+
+        /// <summary>
+        /// 固定应用入口到开始“屏幕”
+        /// </summary>
+        private void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+
+            if (appListEntryItem is not null)
+            {
+                Task.Run(async () =>
+                {
+                    bool isPinnedSuccessfully = false;
+
+                    try
+                    {
+                        StartScreenManager startScreenManager = StartScreenManager.GetDefault();
+
+                        isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(appListEntryItem.AppListEntry);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
+                    }
+                    finally
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+                        });
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 固定应用入口到任务栏
+        /// </summary>
+        private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
+
+            Task.Run(async () =>
+            {
+                if (appListEntryItem is not null)
+                {
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        {
+                            { "AppUserModelId", appListEntryItem.AppUserModelId },
+                            { "PackageFullName", appListEntryItem.PackageFullName },
+                        });
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 更多按钮点击时显示菜单
+        /// </summary>
+        private void OnShowMoreExecuteRequested(object sender, ExecuteRequestedEventArgs args)
+        {
+            HyperlinkButton hyperlinkButton = args.Parameter as HyperlinkButton;
+            if (hyperlinkButton is not null)
+            {
+                FlyoutBase.ShowAttachedFlyout(hyperlinkButton);
+            }
+        }
+
+        /// <summary>
         /// 卸载应用
         /// </summary>
         private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
@@ -288,7 +826,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
             if (package is not null)
             {
-                foreach (PackageModel packageItem in UwpAppDataCollection)
+                foreach (PackageModel packageItem in AppManagerDataCollection)
                 {
                     if (packageItem.Package.Id.FullName == package.Id.FullName)
                     {
@@ -312,13 +850,13 @@ namespace GetStoreApp.UI.Controls.UWPApp
                             {
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
                                 {
-                                    foreach (PackageModel pacakgeItem in UwpAppDataCollection)
+                                    foreach (PackageModel pacakgeItem in AppManagerDataCollection)
                                     {
                                         if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                         {
                                             ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
 
-                                            UwpAppDataCollection.Remove(pacakgeItem);
+                                            AppManagerDataCollection.Remove(pacakgeItem);
                                             break;
                                         }
                                     }
@@ -332,7 +870,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
                                 {
-                                    foreach (PackageModel pacakgeItem in UwpAppDataCollection)
+                                    foreach (PackageModel pacakgeItem in AppManagerDataCollection)
                                     {
                                         if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                         {
@@ -371,9 +909,8 @@ namespace GetStoreApp.UI.Controls.UWPApp
         private void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             PackageModel packageItem = args.Parameter as PackageModel;
-            UWPAppPage uwpAppPage = MainWindow.Current.GetFrameContent() as UWPAppPage;
 
-            if (packageItem is not null && uwpAppPage is not null)
+            if (packageItem is not null)
             {
                 Task.Run(() =>
                 {
@@ -432,7 +969,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                         packageDict["Architecture"] = Unknown;
                     }
 
-                    packageDict["SignatureKind"] = ResourceService.GetLocalized(string.Format("UWPApp/Signature{0}", packageItem.SignatureKind.ToString()));
+                    packageDict["SignatureKind"] = ResourceService.GetLocalized(string.Format("AppManager/Signature{0}", packageItem.SignatureKind.ToString()));
 
                     try
                     {
@@ -557,15 +1094,70 @@ namespace GetStoreApp.UI.Controls.UWPApp
 
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        uwpAppPage.ShowAppInformation(packageDict);
+                        if (packageDict is not null)
+                        {
+                            InitializeAppInfo(packageDict);
+                            BreadCollection.Add(new DictionaryEntry(ResourceService.GetLocalized("AppManager/AppInformation"), "AppInformation"));
+                        }
                     });
                 });
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第一部分：应用管理页面——XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：应用列表控件——挂载的事件
+        #region 第二部分：应用管理页面——挂载的事件
+
+        /// <summary>
+        /// 打开设置中的安装的应用
+        /// </summary>
+        private async void OnInstalledAppsClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+        }
+
+        /// <summary>
+        /// 单击痕迹栏条目时发生的事件
+        /// </summary>
+        private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
+        {
+            DictionaryEntry breadItem = (DictionaryEntry)args.Item;
+            if (BreadCollection.Count is 2)
+            {
+                if (breadItem.Value.Equals(BreadCollection[0].Value))
+                {
+                    BackToAppList();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 根据输入的内容检索应用
+        /// </summary>
+        private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+                InitializeData(true);
+            }
+        }
+
+        /// <summary>
+        /// 文本输入框内容为空时，复原原来的内容
+        /// </summary>
+        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
+            if (autoSuggestBox is not null)
+            {
+                SearchText = autoSuggestBox.Text;
+                if (SearchText.Equals(string.Empty))
+                {
+                    SearchText = string.Empty;
+                    InitializeData();
+                }
+            }
+        }
 
         /// <summary>
         /// 根据排序方式对列表进行排序
@@ -598,7 +1190,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// </summary>
         private void OnFilterWayClicked(object sender, RoutedEventArgs args)
         {
-            IsFramework = !IsFramework;
+            IsAppFramework = !IsAppFramework;
             needToRefreshData = true;
         }
 
@@ -648,7 +1240,53 @@ namespace GetStoreApp.UI.Controls.UWPApp
             needToRefreshData = false;
         }
 
-        #endregion 第二部分：应用列表控件——挂载的事件
+        /// <summary>
+        /// 复制应用信息
+        /// </summary>
+        private void OnCopyClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(() =>
+            {
+                StringBuilder copyBuilder = new();
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/DisplayName"), DisplayName));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FamilyName"), FamilyName));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FullName"), FullName));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Description"), Description));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherName"), PublisherName));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherId"), PublisherId));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Version"), Version));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/InstalledDate"), InstalledDate));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Architecture"), Architecture));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/SignatureKind"), SignatureKind));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/ResourceId"), ResourceId));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsBundle"), IsBundle));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsDevelopmentMode"), IsDevelopmentMode));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsFramework"), IsFramework));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsOptional"), IsOptional));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsResourcePackage"), IsResourcePackage));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsStub"), IsStub));
+                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/VertifyIsOK"), VertifyIsOK));
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
+                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
+                });
+            });
+        }
+
+        #endregion 第二部分：应用管理页面——挂载的事件
+
+        /// <summary>
+        /// 返回到应用信息页面
+        /// </summary>
+        public void BackToAppList()
+        {
+            if (BreadCollection.Count is 2)
+            {
+                BreadCollection.RemoveAt(1);
+            }
+        }
 
         /// <summary>
         /// 加载系统已安装的应用信息
@@ -676,10 +1314,10 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        public void InitializeData(bool hasSearchText = false)
+        private void InitializeData(bool hasSearchText = false)
         {
             IsLoadedCompleted = false;
-            UwpAppDataCollection.Clear();
+            AppManagerDataCollection.Clear();
 
             Task.Run(() =>
             {
@@ -694,11 +1332,11 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     List<Package> appTypesList = [];
 
                     // 根据选项是否筛选包含框架包的数据
-                    if (IsFramework)
+                    if (IsAppFramework)
                     {
                         foreach (Package packageItem in backupList)
                         {
-                            if (packageItem.IsFramework == IsFramework)
+                            if (packageItem.IsFramework == IsAppFramework)
                             {
                                 appTypesList.Add(packageItem);
                             }
@@ -810,7 +1448,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
                     {
                         foreach (PackageModel packageItem in packageList)
                         {
-                            UwpAppDataCollection.Add(packageItem);
+                            AppManagerDataCollection.Add(packageItem);
                         }
 
                         IsLoadedCompleted = true;
@@ -827,9 +1465,46 @@ namespace GetStoreApp.UI.Controls.UWPApp
         }
 
         /// <summary>
+        /// 初始化应用信息
+        /// </summary>
+        private void InitializeAppInfo(Dictionary<string, object> appInfoDict)
+        {
+            DisplayName = appInfoDict[nameof(DisplayName)].ToString();
+            FamilyName = appInfoDict[nameof(FamilyName)].ToString();
+            FullName = appInfoDict[nameof(FullName)].ToString();
+            Description = appInfoDict[nameof(Description)].ToString();
+            PublisherName = appInfoDict[nameof(PublisherName)].ToString();
+            PublisherId = appInfoDict[nameof(PublisherId)].ToString();
+            Version = appInfoDict[nameof(Version)].ToString();
+            InstalledDate = appInfoDict[nameof(InstalledDate)].ToString();
+            Architecture = appInfoDict[nameof(Architecture)].ToString();
+            SignatureKind = appInfoDict[nameof(SignatureKind)].ToString();
+            ResourceId = appInfoDict[nameof(ResourceId)].ToString();
+            IsBundle = appInfoDict[nameof(IsBundle)].ToString();
+            IsDevelopmentMode = appInfoDict[nameof(IsDevelopmentMode)].ToString();
+            IsFramework = appInfoDict[nameof(IsFramework)].ToString();
+            IsOptional = appInfoDict[nameof(IsOptional)].ToString();
+            IsResourcePackage = appInfoDict[nameof(IsResourcePackage)].ToString();
+            IsStub = appInfoDict[nameof(IsStub)].ToString();
+            VertifyIsOK = appInfoDict[nameof(VertifyIsOK)].ToString();
+
+            AppListEntryCollection.Clear();
+            foreach (AppListEntryModel appListEntry in appInfoDict[nameof(AppListEntryCollection)] as List<AppListEntryModel>)
+            {
+                AppListEntryCollection.Add(appListEntry);
+            }
+
+            DependenciesCollection.Clear();
+            foreach (PackageModel packageItem in appInfoDict[nameof(DependenciesCollection)] as List<PackageModel>)
+            {
+                DependenciesCollection.Add(packageItem);
+            }
+        }
+
+        /// <summary>
         /// 获取应用包是否为框架包
         /// </summary>
-        public static bool GetIsFramework(Package package)
+        private static bool GetIsFramework(Package package)
         {
             try
             {
@@ -844,7 +1519,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用包的入口数
         /// </summary>
-        public static int GetAppListEntriesCount(Package package)
+        private static int GetAppListEntriesCount(Package package)
         {
             try
             {
@@ -859,7 +1534,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用的显示名称
         /// </summary>
-        public string GetDisplayName(Package package)
+        private string GetDisplayName(Package package)
         {
             try
             {
@@ -874,7 +1549,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用的发布者显示名称
         /// </summary>
-        public string GetPublisherName(Package package)
+        private string GetPublisherName(Package package)
         {
             try
             {
@@ -889,7 +1564,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用的版本信息
         /// </summary>
-        public static string GetVersion(Package package)
+        private static string GetVersion(Package package)
         {
             try
             {
@@ -904,7 +1579,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用的安装日期
         /// </summary>
-        public static string GetInstallDate(Package package)
+        private static string GetInstallDate(Package package)
         {
             try
             {
@@ -919,7 +1594,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用包签名方式
         /// </summary>
-        public static PackageSignatureKind GetSignatureKind(Package package)
+        private static PackageSignatureKind GetSignatureKind(Package package)
         {
             try
             {
@@ -934,7 +1609,7 @@ namespace GetStoreApp.UI.Controls.UWPApp
         /// <summary>
         /// 获取应用包安装日期
         /// </summary>
-        public static DateTimeOffset GetInstalledDate(Package package)
+        private static DateTimeOffset GetInstalledDate(Package package)
         {
             try
             {

@@ -234,21 +234,21 @@
 
                         <NavigationViewItem.Content>
                             <TextBlock
-                                x:Name="WindowUWPAppText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
+                                x:Name="WindowAppManagerText"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Window/AppManager')}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap" />
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/UWPApp.png" />
+                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/AppManager.png" />
                         </NavigationViewItem.Icon>
 
                         <NavigationViewItem.ContextFlyout>
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
-                                    Tag="UWPApp"
+                                    Tag="AppManager"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
@@ -256,8 +256,8 @@
                         <ToolTipService.ToolTip>
                             <ToolTip
                                 MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/UWPApp')}"
-                                Visibility="{x:Bind WindowUWPAppText.IsTextTrimmed, Mode=OneWay}" />
+                                Content="{x:Bind root:ResourceService.GetLocalized('Window/AppManager')}"
+                                Visibility="{x:Bind WindowAppManagerText.IsTextTrimmed, Mode=OneWay}" />
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
