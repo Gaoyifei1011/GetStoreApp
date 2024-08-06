@@ -112,10 +112,10 @@ namespace GetStoreApp.UI.Dialogs.About
                         try
                         {
                             StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
-                            IDictionary<string, object> WinUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                WinUI3Version = WinUI3FileProperties[fileVersionProperty] is not null ? Convert.ToString(WinUI3FileProperties[fileVersionProperty]) : string.Empty;
+                                WinUI3Version = winUI3FileProperties[fileVersionProperty] is not null ? Convert.ToString(winUI3FileProperties[fileVersionProperty]) : string.Empty;
                             });
                         }
                         catch (Exception e)
@@ -130,11 +130,11 @@ namespace GetStoreApp.UI.Dialogs.About
                         // WebView2 SDK 版本信息
                         try
                         {
-                            StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.Web.WebView2.Core.dll"));
-                            IDictionary<string, object> WebView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
+                            IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                WebView2SDKVersion = WebView2CoreFileProperties[fileVersionProperty] is not null ? Convert.ToString(WebView2CoreFileProperties[fileVersionProperty]) : string.Empty;
+                                WebView2SDKVersion = webView2CoreFileProperties[fileVersionProperty] is not null ? Convert.ToString(webView2CoreFileProperties[fileVersionProperty]) : string.Empty;
                             });
                         }
                         catch (Exception e)

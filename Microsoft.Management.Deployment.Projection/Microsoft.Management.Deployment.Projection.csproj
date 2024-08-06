@@ -2,7 +2,6 @@
   <PropertyGroup>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>	  
     <CSWinRTWindowsMetadata>10.0.26100.0</CSWinRTWindowsMetadata>
-    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <IsAotCompatible>true</IsAotCompatible>
     <Platforms>x64;x86;ARM64</Platforms>

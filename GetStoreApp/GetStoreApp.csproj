@@ -10,7 +10,6 @@
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>False</DisableXbfLineInfo>
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -161,25 +160,6 @@
 
     <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
 
-    <TrimmableAssembly Include="Microsoft.InteractiveExperiences.Projection" />
-    <TrimmableAssembly Include="Microsoft.Management.Deployment.Projection" />
-    <TrimmableAssembly Include="Microsoft.Web.WebView2.Core.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.Resources.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.AppLifecycle.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Builder.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.AppNotifications.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.Management.Deployment.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.PushNotifications.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.Security.AccessControl.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.System.Power.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.System.Projection" />
-    <TrimmableAssembly Include="Microsoft.Windows.Widgets.Projection" />
-    <TrimmableAssembly Include="Microsoft.WindowsAppRuntime.Bootstrap.Net" />
-    <TrimmableAssembly Include="WinRT.Host.Shim" />
-    <TrimmableAssembly Include="WinRT.Runtime" />
-
     <WindowsSdkSupportedTargetPlatformVersion Include="10.0.26100.0" WindowsSdkPackageVersion="10.0.26100.1" MinimumNETVersion="6.0" />
     <SdkSupportedTargetPlatformVersion Include="10.0.26100.0" />
   </ItemGroup>
@@ -187,7 +167,7 @@
   <!-- 捆绑前对二进制文件进行后处理 -->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
     <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->
-    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(RuntimeIdentifier)\msixpublish\$(AssemblyName).exe" />
+    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\native\$(AssemblyName).exe" />
   </Target>
 
   <!-- 不要复制本机引导文件 -->
