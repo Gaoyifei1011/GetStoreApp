@@ -17,8 +17,8 @@ namespace GetStoreApp.Services.Controls.Download
     /// </summary>
     public static class DownloadSchedulerService
     {
+        private static bool isInitialized;
         private static int badgeCount = 0;
-
         private static DictionaryEntry doEngineMode;
 
         public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
@@ -476,37 +476,42 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void InitializeDownloadScheduler(bool isDesktopProgram)
         {
-            // 获取当前下载引擎
-            doEngineMode = DownloadOptionsService.DoEngineMode;
-
-            // 更新当前下载任务数量通知
-            BadgeNotificationService.Show(badgeCount);
-
-            // 挂载集合数量发生更改事件
-            if (isDesktopProgram)
+            if (!isInitialized)
             {
-                CollectionCountChanged += OnCollectionCountChanged;
-            }
+                isInitialized = true;
 
-            // 初始化下载服务
-            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
-            {
-                DeliveryOptimizationService.DownloadCreated += OnDeliveryOptimizationCreated;
-                DeliveryOptimizationService.DownloadContinued += OnDeliveryOptimizationContinued;
-                DeliveryOptimizationService.DownloadPaused += OnDeliveryOptimizationPaused;
-                DeliveryOptimizationService.DownloadDeleted += OnDeliveryOptimizationDeleted;
-                DeliveryOptimizationService.DownloadProgressing += OnDeliveryOptimizationProgressing;
-                DeliveryOptimizationService.DownloadCompleted += OnDeliveryOptimizationCompleted;
-            }
-            else
-            {
-                BitsService.Initialize();
-                BitsService.DownloadCreated += OnBitsCreated;
-                BitsService.DownloadContinued += OnBitsContinued;
-                BitsService.DownloadPaused += OnBitsPaused;
-                BitsService.DownloadDeleted += OnBitsDeleted;
-                BitsService.DownloadProgressing += OnBitsProgressing;
-                BitsService.DownloadCompleted += OnBitsCompleted;
+                // 获取当前下载引擎
+                doEngineMode = DownloadOptionsService.DoEngineMode;
+
+                // 更新当前下载任务数量通知
+                BadgeNotificationService.Show(badgeCount);
+
+                // 挂载集合数量发生更改事件
+                if (isDesktopProgram)
+                {
+                    CollectionCountChanged += OnCollectionCountChanged;
+                }
+
+                // 初始化下载服务
+                if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+                {
+                    DeliveryOptimizationService.DownloadCreated += OnDeliveryOptimizationCreated;
+                    DeliveryOptimizationService.DownloadContinued += OnDeliveryOptimizationContinued;
+                    DeliveryOptimizationService.DownloadPaused += OnDeliveryOptimizationPaused;
+                    DeliveryOptimizationService.DownloadDeleted += OnDeliveryOptimizationDeleted;
+                    DeliveryOptimizationService.DownloadProgressing += OnDeliveryOptimizationProgressing;
+                    DeliveryOptimizationService.DownloadCompleted += OnDeliveryOptimizationCompleted;
+                }
+                else
+                {
+                    BitsService.Initialize();
+                    BitsService.DownloadCreated += OnBitsCreated;
+                    BitsService.DownloadContinued += OnBitsContinued;
+                    BitsService.DownloadPaused += OnBitsPaused;
+                    BitsService.DownloadDeleted += OnBitsDeleted;
+                    BitsService.DownloadProgressing += OnBitsProgressing;
+                    BitsService.DownloadCompleted += OnBitsCompleted;
+                }
             }
         }
 
@@ -515,33 +520,38 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void CloseDownloadScheduler(bool isDesktopProgram)
         {
-            DownloadSchedulerSemaphoreSlim.Dispose();
-            DownloadSchedulerSemaphoreSlim = null;
+            if (isInitialized)
+            {
+                isInitialized = false;
 
-            // 卸载集合数量发生更改事件
-            if (isDesktopProgram)
-            {
-                CollectionCountChanged -= OnCollectionCountChanged;
-            }
+                DownloadSchedulerSemaphoreSlim?.Dispose();
+                DownloadSchedulerSemaphoreSlim = null;
 
-            // 注销下载服务
-            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
-            {
-                DeliveryOptimizationService.DownloadCreated -= OnDeliveryOptimizationCreated;
-                DeliveryOptimizationService.DownloadContinued -= OnDeliveryOptimizationContinued;
-                DeliveryOptimizationService.DownloadPaused -= OnDeliveryOptimizationPaused;
-                DeliveryOptimizationService.DownloadDeleted -= OnDeliveryOptimizationDeleted;
-                DeliveryOptimizationService.DownloadProgressing -= OnDeliveryOptimizationProgressing;
-                DeliveryOptimizationService.DownloadCompleted -= OnDeliveryOptimizationCompleted;
-            }
-            else
-            {
-                BitsService.DownloadCreated -= OnBitsCreated;
-                BitsService.DownloadContinued -= OnBitsContinued;
-                BitsService.DownloadPaused -= OnBitsPaused;
-                BitsService.DownloadDeleted -= OnBitsDeleted;
-                BitsService.DownloadProgressing -= OnBitsProgressing;
-                BitsService.DownloadCompleted -= OnBitsCompleted;
+                // 卸载集合数量发生更改事件
+                if (isDesktopProgram)
+                {
+                    CollectionCountChanged -= OnCollectionCountChanged;
+                }
+
+                // 注销下载服务
+                if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+                {
+                    DeliveryOptimizationService.DownloadCreated -= OnDeliveryOptimizationCreated;
+                    DeliveryOptimizationService.DownloadContinued -= OnDeliveryOptimizationContinued;
+                    DeliveryOptimizationService.DownloadPaused -= OnDeliveryOptimizationPaused;
+                    DeliveryOptimizationService.DownloadDeleted -= OnDeliveryOptimizationDeleted;
+                    DeliveryOptimizationService.DownloadProgressing -= OnDeliveryOptimizationProgressing;
+                    DeliveryOptimizationService.DownloadCompleted -= OnDeliveryOptimizationCompleted;
+                }
+                else
+                {
+                    BitsService.DownloadCreated -= OnBitsCreated;
+                    BitsService.DownloadContinued -= OnBitsContinued;
+                    BitsService.DownloadPaused -= OnBitsPaused;
+                    BitsService.DownloadDeleted -= OnBitsDeleted;
+                    BitsService.DownloadProgressing -= OnBitsProgressing;
+                    BitsService.DownloadCompleted -= OnBitsCompleted;
+                }
             }
         }
 

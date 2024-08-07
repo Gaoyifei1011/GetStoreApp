@@ -19,7 +19,7 @@
 
   <!--从兼容性考虑，继续向上搜索 Directory.Build.props-->
   <PropertyGroup>
-    <NoWarn>CA2252;NU1701;NU1702</NoWarn>
+    <NoWarn>NU1701;NU1702</NoWarn>
     <DirectoryBuildPropsPath>$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))</DirectoryBuildPropsPath>
   </PropertyGroup>
   <Import Project="$(DirectoryBuildPropsPath)" Condition="'$(DirectoryBuildPropsPath)' != ''" />

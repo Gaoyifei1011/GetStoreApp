@@ -127,7 +127,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 使用下载链接创建下载
         /// </summary>
-        public static unsafe void CreateDownload(string url, string saveFilePath)
+        public static void CreateDownload(string url, string saveFilePath)
         {
             Task.Factory.StartNew((param) =>
             {

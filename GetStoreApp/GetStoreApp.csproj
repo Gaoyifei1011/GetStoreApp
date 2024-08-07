@@ -160,10 +160,17 @@
     <SdkSupportedTargetPlatformVersion Include="10.0.26100.0" />
   </ItemGroup>
 
+  <!-- 在 Debug 调试模式下测试 AOT 发布后的文件 -->
+  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Debug'">
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
+    <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
+  </Target>
+  
   <!-- 捆绑前对二进制文件进行后处理 -->
-  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle">
+  <!-- 该任务会在 Debug 以 AOT 发布时触发，故限制在 Release 模式下进行操作 -->
+  <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="$(Configuration) == 'Release'">
     <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->
-    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(ProjectDir)$(BaseOutputPath)$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\native\$(AssemblyName).exe" />
+    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
   </Target>
 
   <!-- 不要复制本机引导文件 -->
