@@ -1,12 +1,12 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using System.ComponentModel;
 
-namespace GetStoreApp.Models.Dialogs.Settings
+namespace GetStoreApp.Models.Dialogs
 {
     /// <summary>
     /// 清理选项数据模型
     /// </summary>
-    public partial class TraceCleanupModel : INotifyPropertyChanged
+    public sealed partial class TraceCleanupModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 清理选项是否被选择的标志

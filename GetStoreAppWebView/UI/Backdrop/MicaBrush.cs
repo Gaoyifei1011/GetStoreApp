@@ -14,7 +14,7 @@ namespace GetStoreAppWebView.UI.Backdrop
     /// <summary>
     /// Mica 背景色
     /// </summary>
-    public class MicaBrush : XamlCompositionBrushBase
+    public sealed class MicaBrush : XamlCompositionBrushBase
     {
         private bool isConnected;
         private bool useSolidColorFallback;

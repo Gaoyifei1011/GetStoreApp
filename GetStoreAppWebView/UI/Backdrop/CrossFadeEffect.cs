@@ -7,7 +7,7 @@ using Windows.Graphics.Effects;
 namespace GetStoreAppWebView.UI.Backdrop
 {
     [Guid("12F575E8-4DB1-485F-9A84-03A07DD3829F")]
-    public class CrossFadeEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
+    public sealed class CrossFadeEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         private Guid clsid = new("12F575E8-4DB1-485F-9A84-03A07DD3829F");
 

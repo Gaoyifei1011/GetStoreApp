@@ -3,7 +3,7 @@
     /// <summary>
     /// 应用类型数据模型
     /// </summary>
-    public class TypeModel
+    public sealed class TypeModel
     {
         /// <summary>
         /// 获取应用类型显示名称

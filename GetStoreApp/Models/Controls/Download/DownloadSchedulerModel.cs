@@ -6,7 +6,7 @@ namespace GetStoreApp.Models.Controls.Download
     /// <summary>
     /// 下载调度服务数据模型
     /// </summary>
-    public class DownloadSchedulerModel
+    public sealed class DownloadSchedulerModel
     {
         /// <summary>
         /// 任务下载时创建的下载唯一标识符

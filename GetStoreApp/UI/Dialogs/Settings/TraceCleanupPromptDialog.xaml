@@ -4,9 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialog="using:GetStoreApp.Models.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:settings="using:GetStoreApp.Models.Dialogs.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     IsPrimaryButtonEnabled="{x:Bind converter:ValueCheckConverterHelper.IsTraceCleanupButtonEnabled(IsSelected, IsCleaning), Mode=OneWay}"
@@ -37,7 +37,7 @@
             </ItemsView.Layout>
 
             <ItemsView.ItemTemplate>
-                <DataTemplate x:DataType="settings:TraceCleanupModel">
+                <DataTemplate x:DataType="dialog:TraceCleanupModel">
                     <ItemContainer>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox

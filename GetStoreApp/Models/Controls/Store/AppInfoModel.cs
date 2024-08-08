@@ -5,7 +5,7 @@ namespace GetStoreApp.Models.Controls.Store
     /// <summary>
     /// 应用信息数据模型
     /// </summary>
-    public partial class AppInfoModel : INotifyPropertyChanged
+    public sealed partial class AppInfoModel : INotifyPropertyChanged
     {
         private string _name;
 

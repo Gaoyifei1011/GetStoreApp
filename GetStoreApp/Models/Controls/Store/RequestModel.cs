@@ -3,7 +3,7 @@
     /// <summary>
     /// 网页请求数据模型
     /// </summary>
-    public class RequestModel
+    public sealed class RequestModel
     {
         /// <summary>
         /// 网页请求返回的ID值

@@ -1,9 +1,9 @@
-﻿namespace GetStoreApp.Models.Dialogs.About
+﻿namespace GetStoreApp.Models.Dialogs
 {
     /// <summary>
     /// 应用启动参数数据模型
     /// </summary>
-    public class StartupArgsModel
+    public sealed class StartupArgsModel
     {
         /// <summary>
         /// 应用启动参数名称

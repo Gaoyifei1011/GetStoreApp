@@ -3,7 +3,7 @@
     /// <summary>
     /// 已安装应用数据模型
     /// </summary>
-    public class InstalledAppsModel
+    public sealed class InstalledAppsModel
     {
         /// <summary>
         /// 应用ID

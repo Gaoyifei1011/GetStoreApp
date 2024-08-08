@@ -3,7 +3,7 @@
     /// <summary>
     /// 查询链接返回结果的数据模型
     /// </summary>
-    public class SearchStoreModel
+    public sealed class SearchStoreModel
     {
         /// <summary>
         /// 应用包名称

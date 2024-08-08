@@ -6,7 +6,7 @@ namespace GetStoreApp.Models.Window
     /// <summary>
     /// 页面导航数据模型
     /// </summary>
-    public class NavigationModel
+    public sealed class NavigationModel
     {
         /// <summary>
         /// 页面导航标签

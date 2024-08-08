@@ -3,7 +3,7 @@
     /// <summary>
     /// 通道类型数据模型
     /// </summary>
-    public class ChannelModel
+    public sealed class ChannelModel
     {
         /// <summary>
         /// 获取应用通道显示名称

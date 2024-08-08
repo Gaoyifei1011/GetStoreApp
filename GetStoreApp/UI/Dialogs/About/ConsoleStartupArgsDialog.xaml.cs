@@ -1,4 +1,4 @@
-using GetStoreApp.Models.Dialogs.About;
+using GetStoreApp.Models.Dialogs;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;

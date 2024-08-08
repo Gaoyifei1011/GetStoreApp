@@ -5,7 +5,7 @@ namespace GetStoreApp.Models.Controls.Store
     /// <summary>
     /// 应用信息状态栏数据模型
     /// </summary>
-    public class InfoBarModel
+    public sealed class InfoBarModel
     {
         /// <summary>
         /// 信息状态栏严重程度值

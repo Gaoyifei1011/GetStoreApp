@@ -9,7 +9,7 @@ using Windows.UI;
 namespace GetStoreAppWebView.UI.Backdrop
 {
     [Guid("61C23C20-AE69-4D8E-94CF-50078DF638F2")]
-    public class ColorSourceEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
+    public sealed class ColorSourceEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         private Guid clsid = new("61C23C20-AE69-4D8E-94CF-50078DF638F2");
 

@@ -1,6 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Store;
-using GetStoreApp.Models.Dialogs.Settings;
+using GetStoreApp.Models.Dialogs;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
