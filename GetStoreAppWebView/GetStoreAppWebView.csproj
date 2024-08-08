@@ -146,7 +146,7 @@
     <Page Include="Styles\UWP\TextBlock.xaml" Generator="MSBuild:Compile" SubType="Designer" />
     <Page Include="UI\Dialogs\ProcessFailedDialog.xaml" Generator="MSBuild:Compile" SubType="Designer" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.14" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2646-prerelease" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
