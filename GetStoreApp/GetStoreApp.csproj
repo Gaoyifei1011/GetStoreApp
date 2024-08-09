@@ -42,7 +42,7 @@
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.26100.37-preview</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.39</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -112,7 +112,7 @@
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="WinUIApp.xaml" />
 	  
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.0-prerelease.240801.1" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
 
     <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -169,7 +169,7 @@
   <!-- 捆绑前对二进制文件进行后处理 -->
   <!-- 该任务会在 Debug 以 AOT 发布时触发，故限制在 Release 模式下进行操作 -->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="$(Configuration) == 'Release'">
-    <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->
+     <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 --> 
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
   </Target>
 

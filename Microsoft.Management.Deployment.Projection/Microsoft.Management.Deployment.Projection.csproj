@@ -9,7 +9,7 @@
     <OptimizationPreference>Size</OptimizationPreference>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-    <WindowsSdkPackageVersion>10.0.26100.37-preview</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.39</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -35,7 +35,7 @@
     <Content Include="$(TargetDir)\winrtact.dll" ExcludeFromSingleFile="true" Link="winrtact.dll" CopyToOutputDirectory="Always" />
 
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.8.1911" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.0-prerelease.240801.1" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
     
     <WindowsSdkSupportedTargetPlatformVersion Include="10.0.26100.0" WindowsSdkPackageVersion="10.0.26100.1" MinimumNETVersion="6.0" />
     <SdkSupportedTargetPlatformVersion Include="10.0.26100.0" />
