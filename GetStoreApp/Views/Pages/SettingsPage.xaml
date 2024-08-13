@@ -701,7 +701,7 @@
                         Grid.Column="0"
                         Margin="0,0,12,0"
                         FontSize="16"
-                        Glyph="&#xE773;" />
+                        Glyph="&#xE721;" />
 
                     <StackPanel Grid.Column="1" Orientation="Vertical">
                         <TextBlock

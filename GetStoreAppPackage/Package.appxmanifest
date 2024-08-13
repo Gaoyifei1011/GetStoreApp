@@ -27,7 +27,7 @@
   <Resources>
     <Resource Language="AR" />
     <Resource Language="EN-US" />
-    <Resource Language="ZH-HANS-CN" />
+    <Resource Language="ZH-HANS" />
   </Resources>
 
   <Applications>

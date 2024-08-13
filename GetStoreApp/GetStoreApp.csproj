@@ -19,6 +19,7 @@
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
     <OptimizationPreference>Size</OptimizationPreference>
+    <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
@@ -156,10 +157,10 @@
   </ItemGroup>
 
   <!-- 在 Debug 调试模式下测试 AOT 发布后的文件 -->
-  <!--<Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Debug'">
+  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Debug'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
     <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
-  </Target>-->
+  </Target>
   
   <!-- 捆绑前对二进制文件进行后处理 -->
   <!-- 该任务会在 Debug 以 AOT 发布时触发，故限制在 Release 模式下进行操作 -->

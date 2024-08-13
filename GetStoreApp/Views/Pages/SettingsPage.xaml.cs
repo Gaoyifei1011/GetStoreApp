@@ -27,8 +27,8 @@ using Windows.Storage.Pickers;
 using Windows.System;
 using WinRT.Interop;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -731,6 +731,14 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpened(object sender, object args)
         {
+            foreach (LanguageModel languageItem in LanguageCollection)
+            {
+                if (languageItem.IsChecked)
+                {
+                    LanguageListView.ScrollIntoView(languageItem);
+                    break;
+                }
+            }
         }
 
         /// <summary>

@@ -90,7 +90,6 @@ namespace GetStoreApp.Services.Controls.Settings
                 {
                     SetLanguage(currentLanguage);
                     FlowDirection = currentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-                    System.IO.File.AppendAllText("D:\\01.txt", currentCulture.TextInfo.IsRightToLeft.ToString() + Environment.NewLine);
                     return currentLanguage;
                 }
                 else
@@ -102,7 +101,6 @@ namespace GetStoreApp.Services.Controls.Settings
                     {
                         SetLanguage(currentParentLanguage);
                         FlowDirection = currentParentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-                        System.IO.File.AppendAllText("D:\\01.txt", currentCulture.TextInfo.IsRightToLeft.ToString() + Environment.NewLine);
                         return currentParentLanguage;
                     }
 
@@ -111,7 +109,6 @@ namespace GetStoreApp.Services.Controls.Settings
                     {
                         SetLanguage(DefaultAppLanguage);
                         FlowDirection = CultureInfo.GetCultureInfo(DefaultAppLanguage.Value.ToString()).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-                        System.IO.File.AppendAllText("D:\\01.txt", currentCulture.TextInfo.IsRightToLeft.ToString() + Environment.NewLine);
                         return DefaultAppLanguage;
                     }
                 }
@@ -120,7 +117,7 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 CultureInfo savedCultureInfo = CultureInfo.GetCultureInfo(language.ToString());
                 FlowDirection = savedCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-                return LanguageList.Find(item => item.Value.ToString().Contains(language.ToString(), StringComparison.OrdinalIgnoreCase));
+                return LanguageList.Find(item => language.ToString().Contains(item.Value.ToString(), StringComparison.OrdinalIgnoreCase));
             }
         }
 
