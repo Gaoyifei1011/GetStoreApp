@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
@@ -10,10 +11,12 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -88,7 +91,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private DictionaryEntry _appLanguage = LanguageService.AppLanguage;
+        private DictionaryEntry _appLanguage;
 
         public DictionaryEntry AppLanguage
         {
@@ -284,8 +287,6 @@ namespace GetStoreApp.Views.Pages
 
         private List<DictionaryEntry> BackdropList { get; } = BackdropService.BackdropList;
 
-        private List<DictionaryEntry> LanguageList { get; } = LanguageService.LanguageList;
-
         private List<DictionaryEntry> WebKernelList { get; } = WebKernelService.WebKernelList;
 
         private List<DictionaryEntry> QueryLinksModeList { get; } = QueryLinksModeService.QueryLinksModeList;
@@ -296,50 +297,33 @@ namespace GetStoreApp.Views.Pages
 
         private List<DictionaryEntry> InstallModeList { get; } = InstallModeService.InstallModeList;
 
+        private ObservableCollection<LanguageModel> LanguageCollection { get; } = [];
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsPage()
         {
             InitializeComponent();
 
-            for (int index = 0; index < LanguageList.Count; index++)
+            foreach (DictionaryEntry languageItem in LanguageService.LanguageList)
             {
-                DictionaryEntry languageItem = LanguageList[index];
-                ToggleMenuFlyoutItem toggleMenuFlyoutItem = new()
+                if (LanguageService.AppLanguage.Value.Equals(languageItem.Value))
                 {
-                    Text = languageItem.Key.ToString(),
-                    Height = 32,
-                    Padding = new Thickness(11, 0, 11, 0),
-                    Tag = index
-                };
-
-                if (AppLanguage.Value.Equals(LanguageList[index].Value))
-                {
-                    toggleMenuFlyoutItem.IsChecked = true;
+                    AppLanguage = languageItem;
+                    LanguageCollection.Add(new LanguageModel()
+                    {
+                        LangaugeInfo = languageItem,
+                        IsChecked = true
+                    });
                 }
-
-                toggleMenuFlyoutItem.Click += (sender, args) =>
+                else
                 {
-                    foreach (MenuFlyoutItemBase menuFlyoutItemBase in LanguageFlyout.Items)
+                    LanguageCollection.Add(new LanguageModel()
                     {
-                        ToggleMenuFlyoutItem toggleMenuFlyoutItem = menuFlyoutItemBase as ToggleMenuFlyoutItem;
-                        if (toggleMenuFlyoutItem is not null && toggleMenuFlyoutItem.IsChecked)
-                        {
-                            toggleMenuFlyoutItem.IsChecked = false;
-                        }
-                    }
-
-                    int selectedIndex = Convert.ToInt32((sender as ToggleMenuFlyoutItem).Tag);
-                    (LanguageFlyout.Items[selectedIndex] as ToggleMenuFlyoutItem).IsChecked = true;
-
-                    if (AppLanguage.Value.ToString() != LanguageList[selectedIndex].Value.ToString())
-                    {
-                        AppLanguage = LanguageList[selectedIndex];
-                        LanguageService.SetLanguage(AppLanguage);
-                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.LanguageChange));
-                    }
-                };
-                LanguageFlyout.Items.Add(toggleMenuFlyoutItem);
+                        LangaugeInfo = languageItem,
+                        IsChecked = false
+                    });
+                }
             }
         }
 
@@ -356,7 +340,43 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第一部分：重写父类事件
 
-        #region 第二部分：设置页面——挂载的事件
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
+
+        /// <summary>
+        /// 修改应用语言
+        /// </summary>
+        private void OnLanguageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (LanguageFlyout.IsOpen)
+            {
+                LanguageFlyout.Hide();
+            }
+
+            LanguageModel languageItem = args.Parameter as LanguageModel;
+
+            if (languageItem is not null)
+            {
+                foreach (LanguageModel item in LanguageCollection)
+                {
+                    if (languageItem.LangaugeInfo.Value.Equals(item.LangaugeInfo.Value))
+                    {
+                        AppLanguage = item.LangaugeInfo;
+                        item.IsChecked = true;
+                    }
+                    else
+                    {
+                        item.IsChecked = false;
+                    }
+                }
+
+                LanguageService.SetLanguage(AppLanguage);
+                TeachingTipHelper.Show(new OperationResultTip(OperationKind.LanguageChange));
+            }
+        }
+
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
+
+        #region 第三部分：设置页面——挂载的事件
 
         /// <summary>
         /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
@@ -369,11 +389,11 @@ namespace GetStoreApp.Views.Pages
             if (settingNavigationArgs is AppNaviagtionArgs.DownloadOptions)
             {
                 Point targetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(currentPoint);
-                SettingsScroll.ChangeView(null, targetPosition.Y, null);
+                SettingsScroll.ChangeView(null, targetPosition.Y, null, true);
             }
             else
             {
-                SettingsScroll.ChangeView(null, 0, null);
+                SettingsScroll.ChangeView(null, 0, null, true);
             }
         }
 
@@ -707,6 +727,13 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 语言设置菜单打开时自动定位到选中项
+        /// </summary>
+        private void OnOpened(object sender, object args)
+        {
+        }
+
+        /// <summary>
         /// 是否开启应用窗口置顶
         /// </summary>
         private void OnTopMostToggled(object sender, RoutedEventArgs args)
@@ -784,7 +811,15 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第二部分：设置页面——挂载的事件
+        #endregion 第三部分：设置页面——挂载的事件
+
+        /// <summary>
+        /// 获取 ToggleSwitch 的文字转向
+        /// </summary>
+        private FlowDirection GetToggleSwitchDirection(FlowDirection flowDirection)
+        {
+            return flowDirection is FlowDirection.LeftToRight ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+        }
 
         private string LocalizeDisplayNumber(DictionaryEntry selectedBackdrop)
         {

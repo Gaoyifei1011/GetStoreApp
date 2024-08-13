@@ -2,16 +2,23 @@
     x:Class="GetStoreApp.Views.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:collection="using:System.Collections"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models.Controls.Settings"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     xmlns:sys="using:System"
     xmlns:systembackdrop="using:Microsoft.UI.Composition.SystemBackdrops"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <XamlUICommand x:Name="LanguageCommand" ExecuteRequested="{x:Bind OnLanguageExecuteRequested}" />
+    </Page.Resources>
 
     <Grid Padding="0">
 
@@ -343,7 +350,7 @@
                         Grid.Column="2"
                         MinWidth="0"
                         Margin="0,-2,0,0"
-                        FlowDirection="RightToLeft"
+                        FlowDirection="{x:Bind GetToggleSwitchDirection(service:LanguageService.FlowDirection)}"
                         IsEnabled="{x:Bind converter:ValueCheckConverterHelper.ObjectCompareReverseConvert(Backdrop.Value, BackdropList[0].Value), Mode=OneWay}"
                         IsEnabledChanged="{x:Bind OnIsEnabledChanged}"
                         IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
@@ -412,13 +419,54 @@
                         Content="{x:Bind AppLanguage.Key, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
-                            <MenuFlyout x:Name="LanguageFlyout" Placement="Bottom">
-                                <MenuFlyout.MenuFlyoutPresenterStyle>
-                                    <Style BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}" TargetType="MenuFlyoutPresenter">
-                                        <Setter Property="MaxHeight" Value="200" />
+                            <Flyout
+                                x:Name="LanguageFlyout"
+                                Opened="{x:Bind OnOpened}"
+                                Placement="Bottom"
+                                ShouldConstrainToRootBounds="False"
+                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="MinHeight" Value="0" />
                                     </Style>
-                                </MenuFlyout.MenuFlyoutPresenterStyle>
-                            </MenuFlyout>
+                                </Flyout.FlyoutPresenterStyle>
+
+                                <ListView
+                                    x:Name="LanguageListView"
+                                    MaxHeight="300"
+                                    Background="Transparent"
+                                    ItemsSource="{x:Bind LanguageCollection, Mode=OneWay}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.HorizontalScrollMode="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                    ScrollViewer.VerticalScrollMode="Enabled"
+                                    SelectionMode="None">
+
+                                    <ListView.ItemContainerStyle>
+                                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Margin" Value="0,1" />
+                                            <Setter Property="MinHeight" Value="0 " />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:LanguageModel">
+                                            <ToggleMenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Command="{StaticResource LanguageCommand}"
+                                                CommandParameter="{x:Bind}"
+                                                IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                                Text="{x:Bind sys:Convert.ToString(LangaugeInfo.Key)}" />
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Flyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </Grid>
@@ -472,7 +520,7 @@
                         Grid.Column="2"
                         MinWidth="0"
                         Margin="0,-2,0,0"
-                        FlowDirection="RightToLeft"
+                        FlowDirection="{x:Bind GetToggleSwitchDirection(service:LanguageService.FlowDirection)}"
                         IsOn="{x:Bind TopMostValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOnContent')}"
@@ -556,7 +604,7 @@
                         Grid.Column="3"
                         MinWidth="0"
                         Margin="0,-2,0,0"
-                        FlowDirection="RightToLeft"
+                        FlowDirection="{x:Bind GetToggleSwitchDirection(service:LanguageService.FlowDirection)}"
                         IsOn="{x:Bind Notification, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOnContent')}"
@@ -795,7 +843,7 @@
                                 <ToggleSwitch
                                     Grid.Column="1"
                                     MinWidth="0"
-                                    FlowDirection="RightToLeft"
+                                    FlowDirection="{x:Bind GetToggleSwitchDirection(service:LanguageService.FlowDirection)}"
                                     IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
                                     OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
                                     OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
@@ -843,7 +891,7 @@
                                 <ToggleSwitch
                                     Grid.Column="1"
                                     MinWidth="0"
-                                    FlowDirection="RightToLeft"
+                                    FlowDirection="{x:Bind GetToggleSwitchDirection(service:LanguageService.FlowDirection)}"
                                     IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
                                     OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
                                     OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
@@ -946,10 +994,16 @@
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ShowVersionToolTip')}">
                                     <Button.Flyout>
                                         <Flyout
-                                            FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
                                             Placement="Bottom"
                                             ShouldConstrainToRootBounds="False"
                                             SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                                    <Setter Property="Padding" Value="0" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
 
                                             <StackPanel Width="250" Padding="16,15,16,10">
                                                 <Grid Margin="0,0,0,8">
@@ -1026,7 +1080,7 @@
                                                     <ToggleSwitch
                                                         Grid.Column="1"
                                                         MinWidth="0"
-                                                        FlowDirection="RightToLeft"
+                                                        FlowDirection="{x:Bind GetToggleSwitchDirection(service:LanguageService.FlowDirection)}"
                                                         IsOn="{x:Bind UseDevVersion, Mode=OneWay}"
                                                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOffContent')}"
                                                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseDevFirstOnContent')}"

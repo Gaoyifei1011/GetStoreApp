@@ -237,10 +237,16 @@
                         <AppBarButton.Flyout>
                             <Flyout
                                 Closed="{x:Bind OnClosed}"
-                                FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
                                 Placement="Bottom"
                                 ShouldConstrainToRootBounds="False"
                                 SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Background" Value="Transparent" />
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
 
                                 <StackPanel Padding="12" Spacing="5">
                                     <TextBlock
@@ -418,7 +424,6 @@
                     <ListView
                         Grid.Row="1"
                         Padding="30,0,30,30"
-                        ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
                         ItemsSource="{x:Bind AppManagerDataCollection, Mode=OneWay}"
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                         ScrollViewer.HorizontalScrollMode="Disabled"
@@ -426,6 +431,15 @@
                         ScrollViewer.VerticalScrollMode="Enabled"
                         SelectionMode="None"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppManagerDataCollection.Count), Mode=OneWay}">
+
+                        <ListView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0,1" />
+                                <Setter Property="MinHeight" Value="0 " />
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="appManager:PackageModel">

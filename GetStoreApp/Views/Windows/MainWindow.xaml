@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
     Activated="{x:Bind OnActivated}"
     SizeChanged="{x:Bind OnSizeChanged}"
@@ -13,6 +14,7 @@
     <Page
         x:Name="MainPage"
         ActualThemeChanged="{x:Bind OnActualThemeChanged}"
+        FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
         KeyDown="{x:Bind OnKeyDown}"
         RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}">
 
@@ -108,17 +110,40 @@
         </Page.Resources>
 
         <Grid>
-            <TitleBar
-                Title="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
-                Height="48"
-                Margin="30,0,0,0"
+            <!--  应用标题栏内容  -->
+            <Grid
+                x:Name="AppTitlebar"
+                Height="45"
+                Margin="45,0,0,0"
                 VerticalAlignment="Top"
-                VerticalContentAlignment="Center">
+                x:FieldModifier="public">
 
-                <TitleBar.IconSource>
-                    <ImageIconSource ImageSource="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
-                </TitleBar.IconSource>
-            </TitleBar>
+                <!--  标题栏图标和应用名称  -->
+                <Grid
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Canvas.ZIndex="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ImageIcon
+                        Grid.Column="0"
+                        Width="18"
+                        Height="18"
+                        Margin="2,3,0,0"
+                        HorizontalAlignment="Left"
+                        Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="12,2,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
+                        TextWrapping="NoWrap" />
+                </Grid>
+            </Grid>
 
             <NavigationView
                 AlwaysShowHeader="True"

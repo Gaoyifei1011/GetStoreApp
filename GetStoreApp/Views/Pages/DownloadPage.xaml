@@ -52,10 +52,16 @@
                 <Button.Flyout>
                     <Flyout
                         x:Name="DownloadFlyout"
-                        FlyoutPresenterStyle="{StaticResource FlyoutPresenterStyle}"
                         Placement="Bottom"
                         ShouldConstrainToRootBounds="False"
                         SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Background" Value="Transparent" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
 
                         <StackPanel
                             Width="300"

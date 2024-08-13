@@ -206,7 +206,6 @@
             Padding="30,3,30,30"
             IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
             ItemClick="{x:Bind OnItemInvoked}"
-            ItemContainerStyle="{StaticResource CardListViewItemContainerStyle}"
             ItemsSource="{x:Bind DownloadingCollection, Mode=OneWay}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.HorizontalScrollMode="Disabled"
@@ -214,6 +213,15 @@
             ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}">
+
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0,1" />
+                    <Setter Property="MinHeight" Value="0 " />
+                </Style>
+            </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="download:DownloadingModel">

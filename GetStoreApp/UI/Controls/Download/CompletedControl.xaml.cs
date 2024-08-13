@@ -653,7 +653,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemClickEventArgs args)
         {
-            CompletedModel completedItem = (CompletedModel)args.ClickedItem;
+            CompletedModel completedItem = args.ClickedItem as CompletedModel;
             int clickedIndex = CompletedCollection.IndexOf(completedItem);
 
             if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)

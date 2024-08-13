@@ -112,18 +112,18 @@ namespace GetStoreApp.Views.Pages
                 case AppNaviagtionArgs.Instructions:
                     {
                         Point targetPosition = Instructions.TransformToVisual(AboutScroll).TransformPoint(currentPoint);
-                        AboutScroll.ChangeView(null, targetPosition.Y, null);
+                        AboutScroll.ChangeView(null, targetPosition.Y, null, true);
                         break;
                     }
                 case AppNaviagtionArgs.SettingsHelp:
                     {
                         Point targetPosition = SettingsHelp.TransformToVisual(AboutScroll).TransformPoint(currentPoint);
-                        AboutScroll.ChangeView(null, targetPosition.Y, null);
+                        AboutScroll.ChangeView(null, targetPosition.Y, null, true);
                         break;
                     }
                 default:
                     {
-                        AboutScroll.ChangeView(null, 0, null);
+                        AboutScroll.ChangeView(null, 0, null, true);
                         break;
                     }
             }

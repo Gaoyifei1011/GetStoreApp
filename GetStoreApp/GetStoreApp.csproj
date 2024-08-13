@@ -19,7 +19,6 @@
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
     <OptimizationPreference>Size</OptimizationPreference>
-    <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishProtocol>FileSystem</PublishProtocol>
@@ -42,7 +41,7 @@
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.26100.39</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.42</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -75,10 +74,8 @@
 
     <None Remove="Assets\LICENSE" />
     <None Remove="Styles\WinUI\AppbarButton.xaml" />
-    <None Remove="Styles\WinUI\Flyout.xaml" />
     <None Remove="Styles\WinUI\HyperlinkButton.xaml" />
     <None Remove="Styles\WinUI\InfoBar.xaml" />
-    <None Remove="Styles\WinUI\ListView.xaml" />
     <None Remove="Styles\WinUI\MenuFlyout.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
@@ -116,10 +113,8 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
 
     <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\WinUI\Flyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\InfoBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\WinUI\ListView.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -161,10 +156,10 @@
   </ItemGroup>
 
   <!-- 在 Debug 调试模式下测试 AOT 发布后的文件 -->
-  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Debug'">
+  <!--<Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="$(Configuration) == 'Debug'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
     <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
-  </Target>
+  </Target>-->
   
   <!-- 捆绑前对二进制文件进行后处理 -->
   <!-- 该任务会在 Debug 以 AOT 发布时触发，故限制在 Release 模式下进行操作 -->

@@ -9,10 +9,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/AppBarButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/WinUI/Flyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/HyperlinkButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/InfoBar.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/WinUI/ListView.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/MenuFlyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/TeachingTip.xaml" />
             </ResourceDictionary.MergedDictionaries>

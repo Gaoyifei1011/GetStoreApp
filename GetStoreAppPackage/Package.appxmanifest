@@ -11,7 +11,7 @@
   <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="4.4.809.0" />
+	  Version="4.5.813.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -25,6 +25,7 @@
   </Dependencies>
 
   <Resources>
+    <Resource Language="AR" />
     <Resource Language="EN-US" />
     <Resource Language="ZH-HANS-CN" />
   </Resources>

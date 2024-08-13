@@ -152,6 +152,7 @@ namespace GetStoreApp.Views.Windows
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
+            SetTitleBar(AppTitlebar);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -184,6 +185,12 @@ namespace GetStoreApp.Views.Windows
                 };
                 User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
                 ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
+            }
+
+            if (LanguageService.FlowDirection is FlowDirection.RightToLeft)
+            {
+                int style = GetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE);
+                SetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE, style |= (int)WindowStyleEx.WS_EX_LAYOUTRTL);
             }
 
             SetWindowTheme();
@@ -1035,6 +1042,36 @@ namespace GetStoreApp.Views.Windows
         }
 
         #endregion 第九部分：窗口导航方法
+
+        /// <summary>
+        /// 获取窗口属性
+        /// </summary>
+        private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
+        {
+            if (IntPtr.Size is 8)
+            {
+                return User32Library.GetWindowLongPtr(hWnd, nIndex);
+            }
+            else
+            {
+                return User32Library.GetWindowLong(hWnd, nIndex);
+            }
+        }
+
+        /// <summary>
+        /// 更改窗口属性
+        /// </summary>
+        private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size is 8)
+            {
+                return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+            }
+            else
+            {
+                return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
+            }
+        }
 
         /// <summary>
         /// 检查网络状态

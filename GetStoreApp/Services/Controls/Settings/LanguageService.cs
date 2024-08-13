@@ -1,8 +1,10 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Windows.Globalization;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -18,6 +20,8 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static DictionaryEntry AppLanguage { get; private set; }
 
+        public static FlowDirection FlowDirection { get; private set; }
+
         private static IReadOnlyList<string> AppLanguagesList { get; } = ApplicationLanguages.ManifestLanguages;
 
         public static List<DictionaryEntry> LanguageList { get; } = [];
@@ -29,22 +33,26 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             foreach (string applanguage in AppLanguagesList)
             {
-                LanguageList.Add(new DictionaryEntry(new Windows.Globalization.Language(applanguage).NativeName, applanguage));
+                CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
+                LanguageList.Add(new DictionaryEntry(culture.NativeName, culture.Name));
             }
         }
 
         /// <summary>
         /// 当设置中的键值为空时，判断当前系统语言是否存在于语言列表中
         /// </summary>
-        private static bool IsExistsInLanguageList(string currentSystemLanguage)
+        private static bool IsExistsInLanguageList(CultureInfo currentCulture, out DictionaryEntry language)
         {
             foreach (DictionaryEntry languageItem in LanguageList)
             {
-                if (languageItem.Value.ToString().Contains(currentSystemLanguage, StringComparison.OrdinalIgnoreCase))
+                if (languageItem.Value.ToString().Contains(currentCulture.Name, StringComparison.OrdinalIgnoreCase))
                 {
+                    language = languageItem;
                     return true;
                 }
             }
+
+            language = new();
             return false;
         }
 
@@ -67,31 +75,53 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             object language = LocalSettingsService.ReadSetting<object>(settingsKey);
 
-            // 当前系统的语言值
-            string currentSystemLanguage = ApplicationLanguages.Languages[0];
+            // 当前系统语言和当前系统语言的父区域性的语言
+            CultureInfo currentCulture = CultureInfo.CurrentCulture;
+            CultureInfo currentParentCulture = CultureInfo.CurrentCulture.Parent;
+            bool existResult = false;
 
             if (language is null)
             {
                 // 判断当前系统语言是否存在应用默认添加的语言列表中
-                bool result = IsExistsInLanguageList(currentSystemLanguage);
+                existResult = IsExistsInLanguageList(currentCulture, out DictionaryEntry currentLanguage);
 
                 // 如果存在，设置存储值和应用初次设置的语言为当前系统的语言
-                if (result)
+                if (existResult)
                 {
-                    DictionaryEntry currentLanguage = LanguageList.Find(item => item.Value.ToString().Contains(currentSystemLanguage, StringComparison.OrdinalIgnoreCase));
                     SetLanguage(currentLanguage);
+                    FlowDirection = currentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                    System.IO.File.AppendAllText("D:\\01.txt", currentCulture.TextInfo.IsRightToLeft.ToString() + Environment.NewLine);
                     return currentLanguage;
                 }
-
-                // 不存在，设置存储值和应用初次设置的语言为默认语言：English(United States)
                 else
                 {
-                    SetLanguage(DefaultAppLanguage);
-                    return DefaultAppLanguage;
+                    existResult = IsExistsInLanguageList(currentParentCulture, out DictionaryEntry currentParentLanguage);
+
+                    // 如果存在，设置存储值和应用初次设置的语言为当前系统语言的父区域性的语言
+                    if (existResult)
+                    {
+                        SetLanguage(currentParentLanguage);
+                        FlowDirection = currentParentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                        System.IO.File.AppendAllText("D:\\01.txt", currentCulture.TextInfo.IsRightToLeft.ToString() + Environment.NewLine);
+                        return currentParentLanguage;
+                    }
+
+                    // 不存在，设置存储值和应用初次设置的语言为默认语言：English(United States)
+                    else
+                    {
+                        SetLanguage(DefaultAppLanguage);
+                        FlowDirection = CultureInfo.GetCultureInfo(DefaultAppLanguage.Value.ToString()).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                        System.IO.File.AppendAllText("D:\\01.txt", currentCulture.TextInfo.IsRightToLeft.ToString() + Environment.NewLine);
+                        return DefaultAppLanguage;
+                    }
                 }
             }
-
-            return LanguageList.Find(item => item.Value.ToString().Contains(language.ToString(), StringComparison.OrdinalIgnoreCase));
+            else
+            {
+                CultureInfo savedCultureInfo = CultureInfo.GetCultureInfo(language.ToString());
+                FlowDirection = savedCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                return LanguageList.Find(item => item.Value.ToString().Contains(language.ToString(), StringComparison.OrdinalIgnoreCase));
+            }
         }
 
         /// <summary>

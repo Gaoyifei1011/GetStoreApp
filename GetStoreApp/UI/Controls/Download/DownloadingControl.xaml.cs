@@ -331,7 +331,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemClickEventArgs args)
         {
-            DownloadingModel downloadingItem = (DownloadingModel)args.ClickedItem;
+            DownloadingModel downloadingItem = args.ClickedItem as DownloadingModel;
             int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
 
             if (clickedIndex >= 0 && clickedIndex < DownloadingCollection.Count)
