@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="AppDescription" xml:space="preserve">
+    <value>وصف التطبيق:</value>
+</data>
+<data name="AppInformation" xml:space="preserve">
+    <value>معلومات التطبيق:</value>
+</data>
+<data name="ApplicationExit" xml:space="preserve">
+    <value>جارٍ الخروج من البرنامج...</value>
+</data>
+<data name="AppName" xml:space="preserve">
+    <value>اسم التطبيق:</value>
+</data>
+<data name="AppPublisher" xml:space="preserve">
+    <value>الناشر:</value>
+</data>
+<data name="AskContinue" xml:space="preserve">
+    <value>هل ترغب في المحاولة مرة أخرى للحصول عليه؟ (تأكد من إدخال "Y"، والخروج بإدخال أحرف أخرى)</value>
+</data>
+<data name="CategoryID" xml:space="preserve">
+    <value>معرف الفئة:</value>
+</data>
+<data name="ChannelInformation" xml:space="preserve">
+    <value>يوجد أربعة قنوات لروابط التحميل: 1. سريع، 2. بطيء، 3. معاينة الإصدار، و4. النسخة الرسمية</value>
+</data>
+<data name="DownloadCompleted" xml:space="preserve">
+    <value>تم تحميل الملف {0} بنجاح</value>
+</data>
+<data name="DownloadCompletedAll" xml:space="preserve">
+    <value>تم تحميل جميع الملفات، هل ترغب في تحميل ملفات أخرى؟ (تأكد من إدخال "Y"، والخروج بإدخال أحرف أخرى)</value>
+</data>
+<data name="DownloadCreated" xml:space="preserve">
+    <value>تم إنشاء مهمة تحميل الملف {0} بنجاح</value>
+</data>
+<data name="DownloadFile" xml:space="preserve">
+    <value>يرجى إدخال الرقم التسلسلي للملف الذي ترغب في تحميله، وإذا كان هناك عدة ملفات، افصل بينها بفواصل إنجليزية (",")</value>
+</data>
+<data name="DownloadingInformation" xml:space="preserve">
+    <value>جارٍ تحميل {0} ملف، {1} ملفات إجمالاً</value>
+</data>
+<data name="DownloadProgressing" xml:space="preserve">
+    <value>جارٍ التحميل، تم الانتهاء من التحميل {0}، حجم الملف {1}، السرعة الحالية {2}، نسبة الإنجاز {3}%</value>
+</data>
+<data name="ExitPrompt" xml:space="preserve">
+    <value>هل أنت متأكد أنك ترغب في الخروج؟</value>
+</data>
+<data name="FileInfoList" xml:space="preserve">
+    <value>قائمة معلومات الملفات</value>
+</data>
+<data name="FileName" xml:space="preserve">
+    <value>اسم الملف</value>
+</data>
+<data name="FileSize" xml:space="preserve">
+    <value>حجم الملف</value>
+</data>
+<data name="GetCompleted" xml:space="preserve">
+    <value>تم الحصول على البيانات بنجاح</value>
+</data>
+<data name="GettingNow" xml:space="preserve">
+    <value>يتم إجراء الاستعلامات من الخوادم في متجر مايكروسوفت، يرجى الانتظار...</value>
+</data>
+<data name="HeaderDescription1" xml:space="preserve">
+    <value>الحصول على إصدار تطبيق المتجر (وحدة التحكم): {0}.{1}.{2}.{3}</value>
+</data>
+<data name="HeaderDescription2" xml:space="preserve">
+    <value>احصل على تطبيق المتجر (برنامج وحدة التحكم) للاستعلام بسرعة وتنزيل حزمة التثبيت لتطبيقات متجر مايكروسوفت.</value>
+</data>
+<data name="HeaderDescription3" xml:space="preserve">
+    <value>لمزيد من المعلومات، انتقل إلى صفحة "حول" في التطبيق وتعرف عليها في وحدة "تعليمات الاستخدام".</value>
+</data>
+<data name="InputLink" xml:space="preserve">
+    <value>يرجى إدخال الرابط المقابل:</value>
+</data>
+<data name="None" xml:space="preserve">
+    <value>لا شيء</value>
+</data>
+<data name="OpenFolder" xml:space="preserve">
+    <value>جارٍ فتح المجلد الذي تم تحميله، يرجى الانتظار...</value>
+</data>
+<data name="ParameterError" xml:space="preserve">
+    <value>المعلمات التي أدخلتها غير صحيحة، يرجى التحقق من المعلمات التي أدخلتها</value>
+</data>
+<data name="ProductIDSample" xml:space="preserve">
+    <value>عينة معرف المنتج: 9WZDNCRFJBMP</value>
+</data>
+<data name="QueryLinksCount" xml:space="preserve">
+    <value>تم استرداد إجمالي {0} نتائج</value>
+</data>
+<data name="RequestError" xml:space="preserve">
+    <value>حدث خطأ في استرداد البيانات من خوادم متجر مايكروسوفت، يرجى التحقق من الشبكة قبل المحاولة مرة أخرى</value>
+</data>
+<data name="RequestFailed" xml:space="preserve">
+    <value>عاد الخادم ببيانات فارغة. قد لا تكون قد أدخلت الرابط الصحيح، أو أن الخدمة لا تدعم إصدار هذا المنتج</value>
+</data>
+<data name="RequestSuccessfully" xml:space="preserve">
+    <value>تم استلام هذه الروابط بنجاح من خوادم متجر مايكروسوفت</value>
+</data>
+<data name="SelectChannel" xml:space="preserve">
+    <value>يرجى إدخال القناة التي ترغب في تحديدها (الإنتاج هو الافتراضي):</value>
+</data>
+<data name="SelectType" xml:space="preserve">
+    <value>يرجى إدخال النوع الذي ترغب في تحديده (الرابط الافتراضي هو URL):</value>
+</data>
+<data name="SerialNumber" xml:space="preserve">
+    <value>الرقم التسلسلي</value>
+</data>
+<data name="SerialNumberError" xml:space="preserve">
+    <value>أدخلت الرقم التسلسلي بشكل خاطئ، هل ترغب في إعادة إدخاله؟ (تأكد من إدخال "Y"، والخروج بإدخال أحرف أخرى)</value>
+</data>
+<data name="SerialNumberOutRange" xml:space="preserve">
+    <value>أدخلت الرقم التسلسلي الذي يتجاوز النطاق، أو أدخلته بشكل خاطئ، هل ترغب في إعادة إدخاله؟ (تأكد من إدخال "Y"، والخروج بإدخال أحرف أخرى)</value>
+</data>
+<data name="Title" xml:space="preserve">
+    <value>GetStoreApp</value>
+</data>
+<data name="TypeInformation" xml:space="preserve">
+    <value>يوجد نوعان من تطبيقات الاستحواذ: 1. URL (رابط)، 2. ProductID</value>
+</data>
+<data name="URLSample" xml:space="preserve">
+    <value>عينة URL (رابط): https://www.microsoft.com/store/productId/9WZDNCRFJBMP</value>
+</data>
+</root>
