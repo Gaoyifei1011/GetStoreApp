@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="AppCurrentVersionToolTip" xml:space="preserve">
+    <value>الإصدار الحالي: </value>
+</data>
+<data name="AppNameToolTip" xml:space="preserve">
+    <value>اسم التطبيق:</value>
+</data>
+<data name="AppNewestVersionToolTip" xml:space="preserve">
+    <value>أحدث إصدار: </value>
+</data>
+<data name="AppPublisherToolTip" xml:space="preserve">
+    <value>الناشر: </value>
+</data>
+<data name="AppVersionToolTIp" xml:space="preserve">
+    <value>إصدار التطبيق: </value>
+</data>
+<data name="Canceling" xml:space="preserve">
+    <value>إلغاء</value>
+</data>
+<data name="CancelInstall" xml:space="preserve">
+    <value>إلغاء التثبيت</value>
+</data>
+<data name="Close" xml:space="preserve">
+    <value>إغلاق</value>
+</data>
+<data name="ControlPanel" xml:space="preserve">
+    <value>لوحة التحكم</value>
+</data>
+<data name="ControlPanelToolTip" xml:space="preserve">
+    <value>فتح البرامج والميزات في لوحة التحكم</value>
+</data>
+<data name="CopyInstallText" xml:space="preserve">
+    <value>نسخ أمر التثبيت</value>
+</data>
+<data name="CopyUnInstallText" xml:space="preserve">
+    <value>نسخ أمر إلغاء التثبيت</value>
+</data>
+<data name="CopyUpgradeText" xml:space="preserve">
+    <value>نسخ أمر الترقية</value>
+</data>
+<data name="DownloadedFileSizeToolTip" xml:space="preserve">
+    <value>اكتمل التنزيل: </value>
+</data>
+<data name="DownloadFromGithub" xml:space="preserve">
+    <value>تنزيل من GitHub</value>
+</data>
+<data name="DownloadFromGithubToolTip" xml:space="preserve">
+    <value>تنزيل من GitHub (رسمية، معاينة، مطور، إلخ)</value>
+</data>
+<data name="DownloadFromMicrosoftStore" xml:space="preserve">
+    <value>تنزيل من متجر Microsoft</value>
+</data>
+<data name="DownloadFromMicrosoftStoreToolTip" xml:space="preserve">
+    <value>تنزيل من متجر Microsoft (الإصدار الرسمي)</value>
+</data>
+<data name="Downloading" xml:space="preserve">
+    <value>جارٍ التنزيل</value>
+</data>
+<data name="DownloadProgressToolTip" xml:space="preserve">
+    <value>تقدم التنزيل:</value>
+</data>
+<data name="Finished" xml:space="preserve">
+    <value>تم الانتهاء</value>
+</data>
+<data name="InitializeFailedDescription" xml:space="preserve">
+    <value>للأسف، حدث استثناء في تهيئة مدير حزم WinGet، واكتشفت التطبيق أن مدير حزم WinGet لم يتم تثبيته على نظامك.</value>
+</data>
+<data name="InitializeFailedTitle" xml:space="preserve">
+    <value>مرحبًا بك في تطبيق Get Store مدير حزم WinGet</value>
+</data>
+<data name="Install" xml:space="preserve">
+    <value>تثبيت</value>
+</data>
+<data name="InstalledApps" xml:space="preserve">
+    <value>التطبيقات المثبتة</value>
+</data>
+<data name="InstalledAppsCountEmpty" xml:space="preserve">
+    <value>لا توجد تطبيقات مثبتة</value>
+</data>
+<data name="InstalledAppsCountInfo" xml:space="preserve">
+    <value>يوجد {0} تطبيقات مثبتة</value>
+</data>
+<data name="InstalledAppsEmptyDescription" xml:space="preserve">
+    <value>سجل التطبيق فارغ. تابع لتثبيت التطبيق الذي تريد استخدامه</value>
+</data>
+<data name="InstalledAppsPlaceHolderText" xml:space="preserve">
+    <value>ابحث عن التطبيقات المثبتة</value>
+</data>
+<data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
+    <value>لم يتم العثور على التطبيق الذي بحثت عنه، يرجى تغيير معايير البحث والمحاولة مرة أخرى</value>
+</data>
+<data name="Installing" xml:space="preserve">
+    <value>جارٍ التثبيت</value>
+</data>
+<data name="InstallingAppsListEmpty" xml:space="preserve">
+    <value>لا توجد مهام تنزيل وتثبيت حاليًا</value>
+</data>
+<data name="InstallWithCmd" xml:space="preserve">
+    <value>تثبيت باستخدام الأمر</value>
+</data>
+<data name="Introduce" xml:space="preserve">
+    <value>مقدمة إلى مدير حزم WinGet:</value>
+</data>
+<data name="IntroduceContent1" xml:space="preserve">
+    <value>مدير حزم Windows هو حل شامل لإدارة الحزم يتكون من أداة سطر الأوامر ومجموعة من الخدمات لتثبيت التطبيقات على Windows 10 وWindows 11.</value>
+</data>
+<data name="IntroduceContent2" xml:space="preserve">
+    <value>تتيح أداة winget للمستخدمين اكتشاف وتثبيت وترقية وإزالة وتكوين التطبيقات على أجهزة Windows 10 وWindows 11.</value>
+</data>
+<data name="LearnMore" xml:space="preserve">
+    <value>تعرف على المزيد</value>
+</data>
+<data name="LearnMoreToolTip" xml:space="preserve">
+    <value>تعرف على المزيد حول وصف مدير حزم WinGet</value>
+</data>
+<data name="LoadingInstalledApps" xml:space="preserve">
+    <value>يرجى الانتظار أثناء تحميل قائمة التطبيقات المثبتة...</value>
+</data>
+<data name="LoadingUpgradableApps" xml:space="preserve">
+    <value>يرجى الانتظار أثناء تحميل قائمة التطبيقات القابلة للترقية...</value>
+</data>
+<data name="NotSearchedTip" xml:space="preserve">
+    <value>تابع للحصول على التطبيقات التي تريد تثبيتها. ستظهر التطبيقات التي تبحث عنها هنا</value>
+</data>
+<data name="OpenTempFolder" xml:space="preserve">
+    <value>فتح مجلد التنزيل</value>
+</data>
+<data name="OpenTempFolderToolTip" xml:space="preserve">
+    <value>فتح الدليل المحلي حيث تم تنزيل حزمة تثبيت التطبيق مؤقتًا</value>
+</data>
+<data name="Operation" xml:space="preserve">
+    <value>عملية</value>
+</data>
+<data name="PostInstall" xml:space="preserve">
+    <value>اكتمل التثبيت</value>
+</data>
+<data name="Queued" xml:space="preserve">
+    <value>في الانتظار</value>
+</data>
+<data name="Refresh" xml:space="preserve">
+    <value>تحديث</value>
+</data>
+<data name="RefreshToolTip" xml:space="preserve">
+    <value>تحديث بيانات التطبيق المثبتة</value>
+</data>
+<data name="SearchApps" xml:space="preserve">
+    <value>ابحث عن التطبيقات</value>
+</data>
+<data name="SearchAppsEmptyDescription" xml:space="preserve">
+    <value>غير قادر على العثور على حزمة تتطابق مع المعايير المدخلة، يرجى تغيير معايير البحث والمحاولة مرة أخرى</value>
+</data>
+<data name="SearchAppsPlaceHolderText" xml:space="preserve">
+    <value>ابحث عن التطبيقات</value>
+</data>
+<data name="SearchedAppsCountEmpty" xml:space="preserve">
+    <value>لم يتم البحث عن أي تطبيقات</value>
+</data>
+<data name="SearchedAppsCountInfo" xml:space="preserve">
+    <value>يوجد {0} تطبيقات تم البحث عنها</value>
+</data>
+<data name="SearchingApps" xml:space="preserve">
+    <value>التطبيق يبحث، يرجى الانتظار...</value>
+</data>
+<data name="Sort" xml:space="preserve">
+    <value>فرز</value>
+</data>
+<data name="SortByDisplayName" xml:space="preserve">
+    <value>اسم التطبيق</value>
+</data>
+<data name="SortByPublisher" xml:space="preserve">
+    <value>اسم الناشر</value>
+</data>
+<data name="SortDecrease" xml:space="preserve">
+    <value>تناقص</value>
+</data>
+<data name="SortIncrease" xml:space="preserve">
+    <value>زيادة</value>
+</data>
+<data name="SortMode" xml:space="preserve">
+    <value>وضع الفرز</value>
+</data>
+<data name="SortRule" xml:space="preserve">
+    <value>قواعد الفرز</value>
+</data>
+<data name="SortToolTip" xml:space="preserve">
+    <value>فرز وفقًا للقواعد</value>
+</data>
+<data name="SortWay" xml:space="preserve">
+    <value>طريقة الفرز</value>
+</data>
+<data name="StopDownload" xml:space="preserve">
+    <value>إيقاف التنزيل</value>
+</data>
+<data name="TaskManager" xml:space="preserve">
+    <value>مدير المهام</value>
+</data>
+<data name="TotalFileSizeToolTip" xml:space="preserve">
+    <value>الحجم الكلي: </value>
+</data>
+<data name="UnInstall" xml:space="preserve">
+    <value>إلغاء التثبيت</value>
+</data>
+<data name="Unknown" xml:space="preserve">
+    <value>غير معروف</value>
+</data>
+<data name="Update" xml:space="preserve">
+    <value>تحديث</value>
+</data>
+<data name="UpgradableApps" xml:space="preserve">
+    <value>التطبيقات القابلة للترقية</value>
+</data>
+<data name="UpgradableAppsCountEmpty" xml:space="preserve">
+    <value>لا توجد تطبيقات قابلة للترقية</value>
+</data>
+<data name="UpgradableAppsCountInfo" xml:space="preserve">
+    <value>يوجد {0} تطبيقات قابلة للترقية</value>
+</data>
+<data name="UpgradableAppsEmptyDescription" xml:space="preserve">
+    <value>جميع تطبيقاتك محدثة</value>
+</data>
+<data name="ViewMoreOptions" xml:space="preserve">
+    <value>عرض المزيد من الخيارات</value>
+</data>
+</root>

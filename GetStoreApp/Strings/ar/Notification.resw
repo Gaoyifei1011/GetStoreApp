@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="AppInformationCopy" xml:space="preserve">
+    <value>تم نسخ معلومات التطبيق بنجاح إلى الحافظة</value>
+</data>
+<data name="AppUpdateSuccessfully" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;تم تحديث التطبيق {0} بنجاح&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="AppUserModelIdCopy" xml:space="preserve">
+    <value>تم نسخ AUMID بنجاح إلى الحافظة</value>
+</data>
+<data name="CheckNetWorkConnection" xml:space="preserve">
+    <value>تحقق من اتصال الشبكة</value>
+</data>
+<data name="CopyToClipboardFailed" xml:space="preserve">
+    <value>فشل في نسخ المحتوى إلى الحافظة. يرجى التحقق من أذونات الوصول إلى الحافظة</value>
+</data>
+<data name="DependencyInformationCopy" xml:space="preserve">
+    <value>تم نسخ اسم الاعتماد بنجاح إلى الحافظة</value>
+</data>
+<data name="DependencyNameCopy" xml:space="preserve">
+    <value>تم نسخ معلومات الاعتماد بنجاح إلى الحافظة</value>
+</data>
+<data name="DesktopShortcutSuccessfully" xml:space="preserve">
+    <value>تم إنشاء اختصار سطح المكتب للتطبيق بنجاح</value>
+</data>
+<data name="DesktopShortFailed" xml:space="preserve">
+    <value>فشل إنشاء اختصار سطح المكتب للتطبيق، يرجى إنشائه يدويًا</value>
+</data>
+<data name="DownloadCompleted" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;اكتمل التحميل&lt;/text&gt;
+      &lt;text&gt;تم تحميل جميع المهام بنجاح&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="عرض صفحة التحميل" arguments="action=ViewDownloadPage"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="DownloadCreateFailed" xml:space="preserve">
+    <value>فشل إنشاء مهمة التحميل</value>
+</data>
+<data name="DownloadCreateSuccessfully" xml:space="preserve">
+    <value>تم إنشاء مهمة التحميل بنجاح</value>
+</data>
+<data name="ElevatedRunning" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;نصائح التشغيل&lt;/text&gt;
+      &lt;text&gt;تم الكشف عن أن التطبيق قد يعمل كمسؤول وقد تكون بعض الوظائف محدودة. يُوصى بتشغيل التطبيق كمستخدم عادي&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="ExceptionCopy" xml:space="preserve">
+    <value>تم نسخ معلومات استثناء المتصفح بنجاح إلى الحافظة</value>
+</data>
+<data name="FileInformationCopy" xml:space="preserve">
+    <value>تم نسخ معلومات الملف بنجاح</value>
+</data>
+<data name="FileLost" xml:space="preserve">
+    <value>تم نقل الملف المحلي أو حذفه</value>
+</data>
+<data name="FolderPickerFailed" xml:space="preserve">
+    <value>فشل فتح منتقي المجلد</value>
+</data>
+<data name="HistoryCopy" xml:space="preserve">
+    <value>تم نسخ سجل التاريخ بنجاح إلى الحافظة</value>
+</data>
+<data name="HistorySelectedCopy" xml:space="preserve">
+    <value>تم نسخ {0} سجل تاريخ بنجاح إلى الحافظة</value>
+</data>
+<data name="InstallError" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;فشل تثبيت الملف {0}&lt;/text&gt;
+      &lt;text&gt;رسالة الخطأ: {1}&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="InstallSuccessfully" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;تم تثبيت الملف {0} بنجاح&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="LanguageChange" xml:space="preserve">
+    <value>تم تعديل إعداد اللغة بنجاح وسيتم تفعيله بعد إعادة تشغيل التطبيق</value>
+</data>
+<data name="LogCleanFailed" xml:space="preserve">
+    <value>فشل تنظيف السجل. يمكنك تشغيل تسجيل تنظيف المجلد يدويًا</value>
+</data>
+<data name="LogCleanSuccessfully" xml:space="preserve">
+    <value>تم تنظيف جميع سجلات السجل بنجاح</value>
+</data>
+<data name="NetworkError" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;الاتصال بالشبكة غير طبيعي&lt;/text&gt;
+      &lt;text&gt;الاتصال بالشبكة غير طبيعي، يرجى التحقق من اتصال الشبكة لديك.&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="تحقق من اتصال الشبكة" arguments="action=CheckNetWorkConnection"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="NewestVersion" xml:space="preserve">
+    <value>التطبيق هو أحدث إصدار</value>
+</data>
+<data name="NotNewestVersion" xml:space="preserve">
+    <value>التطبيق ليس أحدث إصدار، انقر على الصفحة الرئيسية للمشروع للحصول على تحديث</value>
+</data>
+<data name="PackageInformationCopy" xml:space="preserve">
+    <value>تم نسخ معلومات الحزمة بنجاح إلى الحافظة</value>
+</data>
+<data name="ResultContentCopy" xml:space="preserve">
+    <value>تم نسخ سجل التحميل بنجاح إلى الحافظة</value>
+</data>
+<data name="ResultContentSelectedCopy" xml:space="preserve">
+    <value>تم نسخ {0} سجل تحميل بنجاح إلى الحافظة</value>
+</data>
+<data name="ResultIDCopy" xml:space="preserve">
+    <value>تم نسخ CategoryID بنجاح إلى الحافظة</value>
+</data>
+<data name="ResultLinkCopy" xml:space="preserve">
+    <value>تم نسخ رابط التحميل بنجاح إلى الحافظة</value>
+</data>
+<data name="ResultLinkSelectedCopy" xml:space="preserve">
+    <value>تم نسخ {0} رابط تحميل بنجاح إلى الحافظة</value>
+</data>
+<data name="SearchInstallCopy" xml:space="preserve">
+    <value>تم نسخ أمر التثبيت بنجاح إلى الحافظة</value>
+</data>
+<data name="ShareFailed" xml:space="preserve">
+    <value>فشل مشاركة الملف. يرجى التحقق من أذونات الوصول إلى الملف المشترك</value>
+</data>
+<data name="ShareSelectedFailed" xml:space="preserve">
+    <value>فشل مشاركة {0} ملف. يرجى التحقق من أذونات الوصول إلى الملفات المشتركة</value>
+</data>
+<data name="StartScreenFailed" xml:space="preserve">
+    <value>فشل تثبيت التطبيق على الشاشة الرئيسية، يرجى تثبيته يدويًا</value>
+</data>
+<data name="StartScreenSuccessfully" xml:space="preserve">
+    <value>تم تثبيت التطبيق بنجاح على الشاشة الرئيسية</value>
+</data>
+<data name="TaskbarFailed" xml:space="preserve">
+    <value>فشل تثبيت التطبيق على شريط المهام. يرجى تثبيته يدويًا</value>
+</data>
+<data name="TaskbarSuccessfully" xml:space="preserve">
+    <value>تم تثبيت التطبيق بنجاح على شريط المهام</value>
+</data>
+<data name="TerminateFailed" xml:space="preserve">
+    <value>فشل إنهاء عملية المتصفح، يرجى إنهائها يدويًا</value>
+</data>
+<data name="TerminateSuccess" xml:space="preserve">
+    <value>تم إنهاء عملية المتصفح بنجاح</value>
+</data>
+<data name="UnInstallCopy" xml:space="preserve">
+    <value>تم نسخ أمر إلغاء التثبيت بنجاح إلى الحافظة</value>
+</data>
+<data name="UpgradeInstallCopy" xml:space="preserve">
+    <value>تم نسخ أمر الترقية بنجاح إلى الحافظة</value>
+</data>
+<data name="UWPUnInstallFailed" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;فشل إلغاء تثبيت التطبيق {0}&lt;/text&gt;
+      &lt;text&gt;فشل إلغاء تثبيت التطبيق، يرجى التحقق مما إذا كان لديك إذن لإلغاء تثبيت التطبيق&lt;/text&gt;
+      &lt;text&gt;بدلاً من ذلك، يمكنك محاولة إلغاء تثبيت التطبيق في الإعدادات&amp;#xA;رمز الخطأ:{1}&amp;#xA;رسالة الخطأ:{2}&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="فتح الإعدادات" arguments="action=OpenSettings"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="UWPUnInstallSuccessfully" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;تم إلغاء تثبيت التطبيق {0} بنجاح&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="WinGetInstallFailed" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;فشل تثبيت التطبيق {0}&lt;/text&gt;
+      &lt;text&gt;فشل تثبيت التطبيق، يرجى التحقق مما إذا كان لديك إذن لتثبيت التطبيق&lt;/text&gt;
+      &lt;text&gt;بدلاً من ذلك، يمكنك محاولة تثبيت التطبيق يدويًا&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="تثبيت باستخدام الأمر" arguments="action=InstallWithCommand"/&gt;
+    &lt;action content="فتح مجلد التنزيل" arguments="action=OpenDownloadFolder"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="WinGetInstallSuccessfully" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;تم تثبيت التطبيق {0} بنجاح&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="WinGetUnInstallFailed" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;فشل إلغاء تثبيت التطبيق {0}&lt;/text&gt;
+      &lt;text&gt;فشل إلغاء تثبيت التطبيق، يرجى التحقق مما إذا كان لديك إذن لإلغاء تثبيت التطبيق&lt;/text&gt;
+      &lt;text&gt;بدلاً من ذلك، يمكنك محاولة إلغاء تثبيت التطبيق في الإعدادات&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="فتح الإعدادات" arguments="action=OpenSettings"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="WinGetUnInstallSuccessfully" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;تم إلغاء تثبيت التطبيق {0} بنجاح&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="WinGetUpgradeFailed" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;فشل ترقية التطبيق {0}&lt;/text&gt;
+      &lt;text&gt;فشل ترقية التطبيق، يرجى التحقق مما إذا كان لديك إذن لترقية التطبيق&lt;/text&gt;
+      &lt;text&gt;بدلاً من ذلك، يمكنك محاولة ترقية التطبيق يدويًا&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+  &lt;actions&gt;
+    &lt;action content="تثبيت باستخدام الأمر" arguments="action=InstallWithCommand:{0}"/&gt;
+    &lt;action content="فتح مجلد التنزيل" arguments="action=OpenDownloadFolder"/&gt;
+  &lt;/actions&gt;
+&lt;/toast&gt;</value>
+</data>
+<data name="WinGetUpgradeSuccessfully" xml:space="preserve">
+    <value>&lt;toast launch="action=OpenApp"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;تمت ترقية التطبيق {0} بنجاح&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+</data>
+</root>

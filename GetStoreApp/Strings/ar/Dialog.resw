@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="Argument" xml:space="preserve">
+    <value>الحجة</value>
+</data>
+<data name="ArgumentName" xml:space="preserve">
+    <value>اسم الحجة</value>
+</data>
+<data name="Cancel" xml:space="preserve">
+    <value>إلغاء</value>
+</data>
+<data name="CancelDownload" xml:space="preserve">
+    <value>إلغاء التحميل</value>
+</data>
+<data name="Channel" xml:space="preserve">
+    <value>القناة</value>
+</data>
+<data name="CheckingFile" xml:space="preserve">
+    <value>يرجى الانتظار أثناء التحقق من الملف</value>
+</data>
+<data name="CleanFailed" xml:space="preserve">
+    <value>فشل التنظيف</value>
+</data>
+<data name="CleaningNow" xml:space="preserve">
+    <value>جارٍ التنظيف، يرجى الانتظار...</value>
+</data>
+<data name="CleanupNow" xml:space="preserve">
+    <value>تنظيف الآن</value>
+</data>
+<data name="CloseDialog" xml:space="preserve">
+    <value>إغلاق الحوار</value>
+</data>
+<data name="ClosingWindowContent" xml:space="preserve">
+    <value>لا يزال لديك مهمة لم تكمل تحميلها، هل ترغب في حفظ حالة التحميل وإجبار التطبيق على الإغلاق؟</value>
+</data>
+<data name="ClosingWindowTitle" xml:space="preserve">
+    <value>تنبيه تحميل المهمة</value>
+</data>
+<data name="Continue" xml:space="preserve">
+    <value>متابعة</value>
+</data>
+<data name="CopyException" xml:space="preserve">
+    <value>نسخ معلومات الاستثناء</value>
+</data>
+<data name="CopyFileInformation" xml:space="preserve">
+    <value>نسخ معلومات الملف</value>
+</data>
+<data name="DeleteDownload" xml:space="preserve">
+    <value>ستتم إزالة سجلات التحميل المحددة بشكل دائم، العملية لا يمكن التراجع عنها، يرجى توخي الحذر.</value>
+</data>
+<data name="DeleteDownloadWithFile" xml:space="preserve">
+    <value>ستتم إزالة سجلات التحميل المحددة (بما في ذلك الملفات) بشكل دائم. لا يمكن التراجع عن هذه العملية. يرجى توخي الحذر.</value>
+</data>
+<data name="DeleteTitle" xml:space="preserve">
+    <value>حذف السجل</value>
+</data>
+<data name="DesktopStartupArgsDescription1" xml:space="preserve">
+    <value>يمكن للتطبيق المكتبي اختيار النوع واسم القناة التي ترغب في الحصول عليها من خلال معلمات الإدخال، وملء الروابط المقابلة لتسهيل وسرعة الحصول عليها</value>
+</data>
+<data name="DesktopStartupArgsDescription2" xml:space="preserve">
+    <value>بعض المعلمات اختيارية ويتم استبدالها بالمعلمات الافتراضية عند عدم الإدخال أو وجود خطأ في الإدخال</value>
+</data>
+<data name="DesktopStartupArgsTitle" xml:space="preserve">
+    <value>وصف معلمات برنامج سطح المكتب</value>
+</data>
+<data name="DownloadCleanError" xml:space="preserve">
+    <value>حدث خطأ أثناء تنظيف سجلات التحميل. يرجى التحقق من حقوق الوصول إلى سجلات التحميل.</value>
+</data>
+<data name="DownloadCompletedContent" xml:space="preserve">
+    <value>مهمة التحميل الحالية قد اكتملت. هل ترغب في التحميل مرة أخرى؟</value>
+</data>
+<data name="DownloadMultiRecordContent" xml:space="preserve">
+    <value>لديك سجلات تحميل مكررة متعددة. هل ترغب في التحميل مرة أخرى؟</value>
+</data>
+<data name="DownloadNotifyTitle" xml:space="preserve">
+    <value>تنبيه إعادة التحميل</value>
+</data>
+<data name="DownloadRecord" xml:space="preserve">
+    <value>سجلات التحميل</value>
+</data>
+<data name="DownloadUnfinishedContent" xml:space="preserve">
+    <value>مهمة التحميل الحالية لم تكتمل. هل ترغب في التحميل مرة أخرى؟</value>
+</data>
+<data name="ExitCode" xml:space="preserve">
+    <value>رمز الخروج:</value>
+</data>
+<data name="FileInformationTitle" xml:space="preserve">
+    <value>معلومات الملف</value>
+</data>
+<data name="FileName" xml:space="preserve">
+    <value>اسم الملف:</value>
+</data>
+<data name="FilePath" xml:space="preserve">
+    <value>مسار الملف:</value>
+</data>
+<data name="FileSHA1" xml:space="preserve">
+    <value>قيمة SHA1 للملف:</value>
+</data>
+<data name="FileSize" xml:space="preserve">
+    <value>حجم الملف:</value>
+</data>
+<data name="HistoryCleanError" xml:space="preserve">
+    <value>حدث خطأ أثناء عملية تنظيف السجل. يرجى التحقق من أذونات الوصول إلى السجل.</value>
+</data>
+<data name="HistoryRecord" xml:space="preserve">
+    <value>سجلات التاريخ</value>
+</data>
+<data name="InputContent" xml:space="preserve">
+    <value>محتوى الإدخال</value>
+</data>
+<data name="InstallingNotifyContent" xml:space="preserve">
+    <value>يتم تثبيت تطبيقك ويمكنك القيام بأي شيء آخر بعد اكتمال التثبيت</value>
+</data>
+<data name="InstallingNotifyTitle" xml:space="preserve">
+    <value>تنبيهات تثبيت التطبيق</value>
+</data>
+<data name="IsRequired" xml:space="preserve">
+    <value>مطلوب</value>
+</data>
+<data name="License" xml:space="preserve">
+    <value>ترخيص GetStoreApp</value>
+</data>
+<data name="Link" xml:space="preserve">
+    <value>الرابط</value>
+</data>
+<data name="LinkContent" xml:space="preserve">
+    <value>[يجب إدخال المحتوى المتعلق]</value>
+</data>
+<data name="LocalFile" xml:space="preserve">
+    <value>الملفات التي تم إنشاؤها محليًا</value>
+</data>
+<data name="LocalFileCleanError" xml:space="preserve">
+    <value>حدث خطأ أثناء تنظيف الملف الذي تم إنشاؤه محليًا. تحقق من أذونات الوصول إلى الملف الذي تم إنشاؤه محليًا.</value>
+</data>
+<data name="No" xml:space="preserve">
+    <value>لا</value>
+</data>
+<data name="OK" xml:space="preserve">
+    <value>موافق</value>
+</data>
+<data name="OpenDownloadPage" xml:space="preserve">
+    <value>فتح صفحة التحميل</value>
+</data>
+<data name="ProcessDescription" xml:space="preserve">
+    <value>معلومات تفصيلية:</value>
+</data>
+<data name="ProcessFailedKind" xml:space="preserve">
+    <value>نوع الاستثناء:</value>
+</data>
+<data name="Reason" xml:space="preserve">
+    <value>سبب الاستثناء:</value>
+</data>
+<data name="Redownload" xml:space="preserve">
+    <value>إعادة التحميل</value>
+</data>
+<data name="Restart" xml:space="preserve">
+    <value>إعادة تشغيل التطبيق</value>
+</data>
+<data name="RestartContent" xml:space="preserve">
+    <value>التطبيق على وشك إعادة التشغيل، بعد إعادة التشغيل ستفقد بيانات التطبيق، تأكد من حفظ عملك بالكامل</value>
+</data>
+<data name="SelectEmptyContent" xml:space="preserve">
+    <value>لم تقم بتحديد أي شيء، يرجى تحديده قبل المتابعة</value>
+</data>
+<data name="SelectEmptyTitle" xml:space="preserve">
+    <value>تنبيهات اختيار العناصر</value>
+</data>
+<data name="StartupArgsSample" xml:space="preserve">
+    <value>مثال مرجعي</value>
+</data>
+<data name="TraceCleanupContent" xml:space="preserve">
+    <value>يتضمن تنظيف السجل سجلات التاريخ، سجلات التحميل، والملفات التي تم إنشاؤها محليًا عند تحميل تطبيق. اختر العناصر التي ترغب في تنظيفها.</value>
+</data>
+<data name="TraceCleanupTitle" xml:space="preserve">
+    <value>تنبيهات تنظيف الملفات</value>
+</data>
+<data name="Type" xml:space="preserve">
+    <value>النوع</value>
+</data>
+<data name="ViewDownloadRecord" xml:space="preserve">
+    <value>عرض تاريخ التحميل الخاص بك</value>
+</data>
+<data name="Yes" xml:space="preserve">
+    <value>نعم</value>
+</data>
+<data name="ConsoleStartupArgsDescription1" xml:space="preserve">
+    <value>هناك طريقتان لبدء برنامج وحدة التحكم، وضع المعلمات ووضع بدون معلمات</value>
+</data>
+<data name="ConsoleStartupArgsDescription2" xml:space="preserve">
+    <value>هناك أوضاع معلمات يمكن تحديدها عن طريق إدخال المعلمات للحصول على النوع واسم القناة، وملء الروابط المقابلة للحصول عليها بسرعة</value>
+</data>
+<data name="ConsoleStartupArgsDescription3" xml:space="preserve">
+    <value>بعض المعلمات اختيارية ويتم استبدالها بالمعلمات الافتراضية إذا تم كتابتها بشكل خاطئ</value>
+</data>
+<data name="ConsoleStartupArgsDescription4" xml:space="preserve">
+    <value>يتم الحصول على وضع بدون معلمات بسرعة من خلال الاستفسار</value>
+</data>
+<data name="ConsoleStartupArgsTitle" xml:space="preserve">
+    <value>وصف معلمات برنامج وحدة التحكم</value>
+</data>
+<data name="ParameterlessMode" xml:space="preserve">
+    <value>وضع بدون معلمات</value>
+</data>
+<data name="ParameterMode" xml:space="preserve">
+    <value>وضع المعلمات</value>
+</data>
+<data name="AppInformationTitle" xml:space="preserve">
+    <value>معلومات التطبيق</value>
+</data>
+<data name="CopyAppInformation" xml:space="preserve">
+    <value>نسخ معلومات التطبيق</value>
+</data>
+<data name="DoNetVersion" xml:space="preserve">
+    <value>إصدار .NET:</value>
+</data>
+<data name="WindowsAppSDKVersion" xml:space="preserve">
+    <value>إصدار Windows App SDK:</value>
+</data>
+<data name="WinUI3Version" xml:space="preserve">
+    <value>إصدار WinUI 3:</value>
+</data>
+<data name="ActionCenter" xml:space="preserve">
+    <value>إشعار التطبيق في مركز الإشعارات</value>
+</data>
+<data name="ActionCenterError" xml:space="preserve">
+    <value>فشل إشعار التطبيق في مركز الإشعارات في الإزالة. يرجى فتح سجل إشعارات التطبيق يدويًا في مركز الإشعارات</value>
+</data>
+<data name="Reboot" xml:space="preserve">
+    <value>إعادة تشغيل</value>
+</data>
+<data name="RebootTitle" xml:space="preserve">
+    <value>تنبيه إعادة تشغيل الجهاز</value>
+</data>
+<data name="UnInstallNeedReboot" xml:space="preserve">
+    <value>{0} تم إلغاء تثبيت التطبيق. تحتاج بعض التغييرات إلى إعادة تشغيل لتصبح فعالة. هل تحتاج إلى إعادة تشغيل الجهاز؟</value>
+</data>
+<data name="OpenSettings" xml:space="preserve">
+    <value>فتح الإعدادات</value>
+</data>
+<data name="UpgradeNeedReboot" xml:space="preserve">
+    <value>{0} تم ترقية التطبيق. تحتاج بعض التغييرات إلى إعادة تشغيل لتصبح فعالة. هل تحتاج إلى إعادة تشغيل الجهاز؟</value>
+</data>
+<data name="SearchNeedReboot" xml:space="preserve">
+    <value>{0} تم تثبيت التطبيق. تحتاج بعض التغييرات إلى إعادة تشغيل لتصبح فعالة. هل تحتاج إلى إعادة تشغيل الجهاز؟</value>
+</data>
+<data name="AppRunning" xml:space="preserve">
+    <value>التطبيق قيد التشغيل</value>
+</data>
+<data name="AppName" xml:space="preserve">
+    <value>GetStoreApp</value>
+</data>
+<data name="WebView2SDKVersion" xml:space="preserve">
+    <value>إصدار WebView2 SDK:</value>
+</data>
+<data name="WebViewProcessFailedContent" xml:space="preserve">
+    <value>عملية المتصفح غير طبيعية والتطبيق على وشك الخروج</value>
+</data>
+<data name="WebViewProcessFailedTitle" xml:space="preserve">
+    <value>فشل عملية الويب</value>
+</data>
+</root>

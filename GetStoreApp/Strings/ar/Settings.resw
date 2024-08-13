@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="Advanced" xml:space="preserve">
+    <value>خيارات متقدمة</value>
+</data>
+<data name="AlwaysShowBackdrop" xml:space="preserve">
+    <value>عرض الخلفية دائمًا</value>
+</data>
+<data name="AlwaysShowBackdropDescription" xml:space="preserve">
+    <value>لا يتراجع النافذة إلى لون صلب عندما تفقد التركيز</value>
+</data>
+<data name="AlwaysShowBackdropOffContent" xml:space="preserve">
+    <value>مغلق</value>
+</data>
+<data name="AlwaysShowBackdropOnContent" xml:space="preserve">
+    <value>مفتوح</value>
+</data>
+<data name="AppCacheFolder" xml:space="preserve">
+    <value>ذاكرة التخزين المؤقت للتطبيق</value>
+</data>
+<data name="Appearance" xml:space="preserve">
+    <value>المظهر</value>
+</data>
+<data name="AppInstall" xml:space="preserve">
+    <value>التثبيت باستخدام مثبت التطبيق</value>
+</data>
+<data name="Backdrop" xml:space="preserve">
+    <value>مادة خلفية النافذة</value>
+</data>
+<data name="BackdropAcrylic" xml:space="preserve">
+    <value>افتراضي</value>
+</data>
+<data name="BackdropAcrylicBase" xml:space="preserve">
+    <value>أساسي</value>
+</data>
+<data name="BackdropAcrylicThin" xml:space="preserve">
+    <value>رقيق</value>
+</data>
+<data name="BackdropDefault" xml:space="preserve">
+    <value>لا شيء</value>
+</data>
+<data name="BackdropDescription" xml:space="preserve">
+    <value>يحدد لون الخلفية لعرض التطبيق</value>
+</data>
+<data name="BackdropMica" xml:space="preserve">
+    <value>افتراضي</value>
+</data>
+<data name="BackdropMicaAlt" xml:space="preserve">
+    <value>بديل</value>
+</data>
+<data name="BlockMap" xml:space="preserve">
+    <value>الملفات ذات امتدادات أسماء الملفات المسماة BlockMap لا تظهر</value>
+</data>
+<data name="BlockMapDescription" xml:space="preserve">
+    <value>تُنشأ ملفات BlockMap تلقائيًا بواسطة makeappx.exe عند تعبئتها</value>
+</data>
+<data name="BlockMapOffContent" xml:space="preserve">
+    <value>لا تقم بالتصفية</value>
+</data>
+<data name="BlockMapOnContent" xml:space="preserve">
+    <value>تصفية</value>
+</data>
+<data name="ChangeFolder" xml:space="preserve">
+    <value>تغيير الدليل</value>
+</data>
+<data name="Clear" xml:space="preserve">
+    <value>مسح</value>
+</data>
+<data name="ClearLog" xml:space="preserve">
+    <value>مسح سجل السجل</value>
+</data>
+<data name="ClearLogDescription" xml:space="preserve">
+    <value>مسح جميع محتويات السجل للتطبيق</value>
+</data>
+<data name="CodeInstall" xml:space="preserve">
+    <value>التثبيت المباشر</value>
+</data>
+<data name="Custom" xml:space="preserve">
+    <value>مخصص</value>
+</data>
+<data name="DeliveryOptimization" xml:space="preserve">
+    <value>إعدادات تحسين التوصيل</value>
+</data>
+<data name="DeliveryOptimizationDescription" xml:space="preserve">
+    <value>فتح إعدادات تحسين التوصيل في النظام</value>
+</data>
+<data name="DesktopAcrylic" xml:space="preserve">
+    <value>أكريليك</value>
+</data>
+<data name="DesktopFolder" xml:space="preserve">
+    <value>سطح المكتب</value>
+</data>
+<data name="DevVersion" xml:space="preserve">
+    <value>إصدار المطور</value>
+</data>
+<data name="DevVersionInstall" xml:space="preserve">
+    <value>تثبيت</value>
+</data>
+<data name="DevVersionInstalled" xml:space="preserve">
+    <value>تم التثبيت</value>
+</data>
+<data name="DevVersionInstallToolTip" xml:space="preserve">
+    <value>انقر للتثبيت إصدار المطور</value>
+</data>
+<data name="DoEngineBits" xml:space="preserve">
+    <value>BITS</value>
+</data>
+<data name="DoEngineDo" xml:space="preserve">
+    <value>تحسين التوصيل</value>
+</data>
+<data name="DoEngineMode" xml:space="preserve">
+    <value>وضع محرك التنزيل</value>
+</data>
+<data name="DoEngineModeDescription" xml:space="preserve">
+    <value>تعيين محرك التنزيل الذي سيتم استخدامه عند تنزيل الملفات، هذا المعامل يأخذ تأثيره بعد إعادة التشغيل</value>
+</data>
+<data name="DownloadFolder" xml:space="preserve">
+    <value>التنزيلات</value>
+</data>
+<data name="DownloadOptions" xml:space="preserve">
+    <value>إدارة التنزيلات</value>
+</data>
+<data name="DownloadOptionsDescription" xml:space="preserve">
+    <value>إعدادات ملف تنزيل التطبيق</value>
+</data>
+<data name="EncryptedPackage" xml:space="preserve">
+    <value>ملف الحزمة المشفرة غير معروض</value>
+</data>
+<data name="EncryptedPackageDescription" xml:space="preserve">
+    <value>هذا النوع من الملفات هو حزمة تطبيق مشفرة</value>
+</data>
+<data name="EncryptedPackageOffContent" xml:space="preserve">
+    <value>لا تقم بالتصفية</value>
+</data>
+<data name="EncryptedPackageOnContent" xml:space="preserve">
+    <value>تصفية</value>
+</data>
+<data name="FileStoragePath" xml:space="preserve">
+    <value>مسار تخزين الملفات</value>
+</data>
+<data name="General" xml:space="preserve">
+    <value>خيارات عامة</value>
+</data>
+<data name="InstallMode" xml:space="preserve">
+    <value>وضع تثبيت التطبيق</value>
+</data>
+<data name="InstallModeDescription" xml:space="preserve">
+    <value>اختر كيفية تثبيت حزمة تطبيقات Windows</value>
+</data>
+<data name="InteractiveInstall" xml:space="preserve">
+    <value>تثبيت تفاعلي</value>
+</data>
+<data name="Language" xml:space="preserve">
+    <value>اللغة</value>
+</data>
+<data name="LanguageDescription" xml:space="preserve">
+    <value>تعديل اللغة المعروضة في واجهة التطبيق</value>
+</data>
+<data name="LearnDoEngine" xml:space="preserve">
+    <value>تعليمات محرك التنزيل</value>
+</data>
+<data name="LinkFilter" xml:space="preserve">
+    <value>تصفية الروابط</value>
+</data>
+<data name="LinkFilterDescription" xml:space="preserve">
+    <value>تصفية الروابط التي لن تستخدمها لجعل العثور على التطبيقات أكثر كفاءة</value>
+</data>
+<data name="LogFolder" xml:space="preserve">
+    <value>مسار تخزين السجل</value>
+</data>
+<data name="LogFolderDescription" xml:space="preserve">
+    <value>إدارة محتويات سجل التطبيق</value>
+</data>
+<data name="LogRecord" xml:space="preserve">
+    <value>سجل السجل</value>
+</data>
+<data name="LogRecordDescription" xml:space="preserve">
+    <value>إدارة سجل تطبيق السجل</value>
+</data>
+<data name="Mica" xml:space="preserve">
+    <value>ميكا</value>
+</data>
+<data name="Notification" xml:space="preserve">
+    <value>إشعارات التطبيق</value>
+</data>
+<data name="NotificationDescription" xml:space="preserve">
+    <value>يعرض إشعارات الرسائل من التطبيق</value>
+</data>
+<data name="NotificationOffContent" xml:space="preserve">
+    <value>مغلق</value>
+</data>
+<data name="NotificationOnContent" xml:space="preserve">
+    <value>فتح</value>
+</data>
+<data name="OfficialVersion" xml:space="preserve">
+    <value>الإصدار الرسمي</value>
+</data>
+<data name="OfficialVersionInstall" xml:space="preserve">
+    <value>تثبيت</value>
+</data>
+<data name="OfficialVersionInstalled" xml:space="preserve">
+    <value>تم التثبيت</value>
+</data>
+<data name="OfficialVersionInstallToolTip" xml:space="preserve">
+    <value>انقر لتثبيت الإصدار الرسمي</value>
+</data>
+<data name="OpenDeliveryOptimzationSettings" xml:space="preserve">
+    <value>فتح</value>
+</data>
+<data name="OpenFolderToolTip" xml:space="preserve">
+    <value>انقر للوصول إلى المجلد</value>
+</data>
+<data name="OpenLogFolder" xml:space="preserve">
+    <value>فتح المجلد</value>
+</data>
+<data name="OpenWinGetSettings" xml:space="preserve">
+    <value>فتح</value>
+</data>
+<data name="OpenWinGetSettingsToolTip" xml:space="preserve">
+    <value>فتح ملف التكوين</value>
+</data>
+<data name="QueryLinksMode" xml:space="preserve">
+    <value>وضع استعلام الروابط</value>
+</data>
+<data name="QueryLinksModeDescription" xml:space="preserve">
+    <value>اختر قناة واجهة التطبيق لاستعلام الرابط</value>
+</data>
+<data name="QueryLinksModeOfficial" xml:space="preserve">
+    <value>واجهة رسمية</value>
+</data>
+<data name="QueryLinksModeThirdParty" xml:space="preserve">
+    <value>واجهة طرف ثالث</value>
+</data>
+<data name="RestartApp" xml:space="preserve">
+    <value>إعادة تشغيل التطبيق</value>
+</data>
+<data name="RestartAppToolTip" xml:space="preserve">
+    <value>بعد تعديل إعدادات التطبيق، تحتاج بعض الخيارات إلى إعادة التشغيل لتأخذ تأثيرها</value>
+</data>
+<data name="SelectFolder" xml:space="preserve">
+    <value>اختر المجلد</value>
+</data>
+<data name="SettingsInstruction" xml:space="preserve">
+    <value>تعليمات الإعدادات</value>
+</data>
+<data name="ShowVersion" xml:space="preserve">
+    <value>عرض</value>
+</data>
+<data name="ShowVersionToolTip" xml:space="preserve">
+    <value>عرض معلومات إصدار WinGet للجهاز</value>
+</data>
+<data name="SlientInstall" xml:space="preserve">
+    <value>تثبيت بصمت</value>
+</data>
+<data name="SystemBackdropSettings" xml:space="preserve">
+    <value>إعدادات خلفية النظام</value>
+</data>
+<data name="SystemLanguageSettings" xml:space="preserve">
+    <value>إعدادات لغة النظام</value>
+</data>
+<data name="SystemNotificationSettings" xml:space="preserve">
+    <value>إعدادات إشعارات النظام</value>
+</data>
+<data name="SystemThemeSettings" xml:space="preserve">
+    <value>إعدادات ثيم النظام</value>
+</data>
+<data name="Theme" xml:space="preserve">
+    <value>ثيم التطبيق</value>
+</data>
+<data name="ThemeDark" xml:space="preserve">
+    <value>داكن</value>
+</data>
+<data name="ThemeDefault" xml:space="preserve">
+    <value>افتراضي ويندوز</value>
+</data>
+<data name="ThemeDescription" xml:space="preserve">
+    <value>اختر ثيم التطبيق للعرض</value>
+</data>
+<data name="ThemeLight" xml:space="preserve">
+    <value>فاتح</value>
+</data>
+<data name="Title" xml:space="preserve">
+    <value>الإعدادات</value>
+</data>
+<data name="TopMost" xml:space="preserve">
+    <value>النافذة مثبتة في الأعلى</value>
+</data>
+<data name="TopMostDescription" xml:space="preserve">
+    <value>يضع النافذة الحالية في أعلى القائمة</value>
+</data>
+<data name="TopMostOffContent" xml:space="preserve">
+    <value>غير مثبتة</value>
+</data>
+<data name="TopMostOnContent" xml:space="preserve">
+    <value>مثبتة</value>
+</data>
+<data name="TraceCleanup" xml:space="preserve">
+    <value>تنظيف السجل</value>
+</data>
+<data name="TraceCleanupDescription" xml:space="preserve">
+    <value>تنظيف جميع آثار الاستخدام داخل التطبيق</value>
+</data>
+<data name="TraceClear" xml:space="preserve">
+    <value>اختر ما تريد تنظيفه</value>
+</data>
+<data name="UseDevFirst" xml:space="preserve">
+    <value>تفضيل استخدام إصدار المطور أولاً</value>
+</data>
+<data name="UseDevFirstOffContent" xml:space="preserve">
+    <value>لا</value>
+</data>
+<data name="UseDevFirstOnContent" xml:space="preserve">
+    <value>نعم</value>
+</data>
+<data name="UseDevFirstToolTip" xml:space="preserve">
+    <value>عندما يوجد إصدارين، يُفضل إصدار التطوير (يأخذ تأثيره بعد إعادة التشغيل)</value>
+</data>
+<data name="WebKernel" xml:space="preserve">
+    <value>اختيار نواة المتصفح</value>
+</data>
+<data name="WebKernelDescription" xml:space="preserve">
+    <value>اختر النواة المستخدمة بواسطة متصفح الويب لعرض الصفحة</value>
+</data>
+<data name="WebKernelWebView" xml:space="preserve">
+    <value>WebView</value>
+</data>
+<data name="WebKernelWebView2" xml:space="preserve">
+    <value>WebView2</value>
+</data>
+<data name="WinGetConfig" xml:space="preserve">
+    <value>خيارات تكوين WinGet</value>
+</data>
+<data name="WinGetConfigDescription" xml:space="preserve">
+    <value>تخصيص وظيفة حزمة WinGet</value>
+</data>
+<data name="WinGetInstallMode" xml:space="preserve">
+    <value>وضع تثبيت WinGet</value>
+</data>
+<data name="WinGetInstallModeDescription" xml:space="preserve">
+    <value>تعيين كيفية تفاعل حزمة WinGet عند تثبيت التطبيقات</value>
+</data>
+<data name="WinGetSettings" xml:space="preserve">
+    <value>إعدادات WinGet</value>
+</data>
+<data name="WinGetSettingsDescription" xml:space="preserve">
+    <value>تخصيص وظيفة حزمة WinGet</value>
+</data>
+<data name="WinGetVersion" xml:space="preserve">
+    <value>إصدار WinGet</value>
+</data>
+<data name="WinGetVersionDescription" xml:space="preserve">
+    <value>عرض الإصدار الحالي من تطبيق WinGet</value>
+</data>
+</root>

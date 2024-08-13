@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="Cancel" xml:space="preserve">
+    <value>إلغاء</value>
+</data>
+<data name="CancelToolTip" xml:space="preserve">
+    <value>الخروج من وضع التحديد المتعدد</value>
+</data>
+<data name="Completed" xml:space="preserve">
+    <value>مكتمل</value>
+</data>
+<data name="CompletedCountInfo" xml:space="preserve">
+    <value>هناك {0} سجل تم تحميله</value>
+</data>
+<data name="CompletedEmpty" xml:space="preserve">
+    <value>لا توجد سجلات تم تحميلها</value>
+</data>
+<data name="CompletedEmptyDescription" xml:space="preserve">
+    <value>اذهب إلى التطبيق الذي تريد تحميله، وسيظهر الملف الذي قمت بتحميله هنا</value>
+</data>
+<data name="CompleteDownload" xml:space="preserve">
+    <value>اكتمل التحميل</value>
+</data>
+<data name="Continue" xml:space="preserve">
+    <value>استمرار التحميل</value>
+</data>
+<data name="ContinueAll" xml:space="preserve">
+    <value>تحميل الكل</value>
+</data>
+<data name="ContinueAllToolTip" xml:space="preserve">
+    <value>استئناف تحميل المهمة المتوقفة</value>
+</data>
+<data name="ContinueToolTip" xml:space="preserve">
+    <value>استئناف تحميل المهمة الحالية</value>
+</data>
+<data name="CurrentSpeedToolTip" xml:space="preserve">
+    <value>السرعة الحالية:</value>
+</data>
+<data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+</data>
+<data name="DeleteDownloadingToolTip" xml:space="preserve">
+    <value>يحذف السجل الذي يتم تحميله حاليًا</value>
+</data>
+<data name="DeleteOptions" xml:space="preserve">
+    <value>خيارات الحذف</value>
+</data>
+<data name="DeleteOptionsToolTip" xml:space="preserve">
+    <value>انقر لعرض خيارات الحذف</value>
+</data>
+<data name="DeleteSelected" xml:space="preserve">
+    <value>حذف</value>
+</data>
+<data name="DeleteSelectedToolTip" xml:space="preserve">
+    <value>احذف فقط سجلات العناصر المحددة، دون تضمين الملفات</value>
+</data>
+<data name="DeleteSelectedWithFile" xml:space="preserve">
+    <value>حذف (بما في ذلك الملفات)</value>
+</data>
+<data name="DeleteSelectedWithFileToolTip" xml:space="preserve">
+    <value>احذف سجلات العناصر المحددة واحذف الملفات المحلية</value>
+</data>
+<data name="DeleteToolTip" xml:space="preserve">
+    <value>يحذف فقط السجل الحالي، دون تضمين الملف</value>
+</data>
+<data name="DeleteUnfinishedToolTip" xml:space="preserve">
+    <value>احذف سجلات التحميل غير المكتملة</value>
+</data>
+<data name="DeleteWithFile" xml:space="preserve">
+    <value>حذف السجلات (بما في ذلك الملفات)</value>
+</data>
+<data name="DeleteWithFileToolTip" xml:space="preserve">
+    <value>يتم حذف الملفات المحلية عند حذف السجلات</value>
+</data>
+<data name="DownloadDescription" xml:space="preserve">
+    <value>تعليمات التحميل</value>
+</data>
+<data name="DownloadFailed" xml:space="preserve">
+    <value>فشل التحميل</value>
+</data>
+<data name="Downloading" xml:space="preserve">
+    <value>جارٍ التحميل</value>
+</data>
+<data name="DownloadingCountInfo" xml:space="preserve">
+    <value>هناك {0} سجل قيد التحميل</value>
+</data>
+<data name="DownloadingEmpty" xml:space="preserve">
+    <value>لا توجد سجلات قيد التحميل</value>
+</data>
+<data name="DownloadingEmptyDescription" xml:space="preserve">
+    <value>اذهب إلى التطبيق الذي تريد تحميله، وسيظهر الملف الذي تقوم بتحميله هنا</value>
+</data>
+<data name="DownloadProgress" xml:space="preserve">
+    <value>تم تحميل {0}%</value>
+</data>
+<data name="ExplainTitle" xml:space="preserve">
+    <value>تعليمات التحميل</value>
+</data>
+<data name="ExplanContent1" xml:space="preserve">
+    <value>رابط التحميل حساس للوقت، ولا يدعم التطبيق حاليًا استئناف التحميل للتطبيقات التي فشلت في التحميل.</value>
+</data>
+<data name="ExplanContent2" xml:space="preserve">
+    <value>إذا واجهت خدمة تحميل تتوقف بسبب استثناء، نوصي بإعادة تشغيل التطبيق قبل محاولة التحميل.</value>
+</data>
+<data name="FileInformation" xml:space="preserve">
+    <value>عرض معلومات الملف</value>
+</data>
+<data name="FileNotExists" xml:space="preserve">
+    <value>الملف غير موجود</value>
+</data>
+<data name="FileSizeToolTip" xml:space="preserve">
+    <value>حجم الملف:</value>
+</data>
+<data name="FinishedSizeToolTip" xml:space="preserve">
+    <value>تم التحميل:</value>
+</data>
+<data name="InstallError" xml:space="preserve">
+    <value>فشل التثبيت</value>
+</data>
+<data name="Installing" xml:space="preserve">
+    <value>جارٍ التثبيت، يرجى الانتظار......</value>
+</data>
+<data name="InstallToolTip" xml:space="preserve">
+    <value>تثبيت التطبيق</value>
+</data>
+<data name="InstallValue" xml:space="preserve">
+    <value>{0}% تم تثبيته</value>
+</data>
+<data name="LearnMore" xml:space="preserve">
+    <value>تعرف على المزيد</value>
+</data>
+<data name="OpenFolder" xml:space="preserve">
+    <value>فتح المجلد</value>
+</data>
+<data name="OpenFolderToolTip" xml:space="preserve">
+    <value>فتح المجلد الافتراضي للتنزيلات</value>
+</data>
+<data name="OpenItemFolderToolTip" xml:space="preserve">
+    <value>فتح المجلد حيث تم حفظ المهمة الحالية بعد اكتمال التحميل</value>
+</data>
+<data name="OpenSettings" xml:space="preserve">
+    <value>فتح إعدادات التحميل</value>
+</data>
+<data name="Operation" xml:space="preserve">
+    <value>عملية</value>
+</data>
+<data name="PauseAll" xml:space="preserve">
+    <value>إيقاف الكل</value>
+</data>
+<data name="PauseAllToolTip" xml:space="preserve">
+    <value>يوقف جميع المهام التي قيد التحميل أو في انتظار التحميل</value>
+</data>
+<data name="PauseDownload" xml:space="preserve">
+    <value>تم إيقاف التحميل</value>
+</data>
+<data name="PauseToolTip" xml:space="preserve">
+    <value>إيقاف تحميل المهمة الحالية</value>
+</data>
+<data name="Progress" xml:space="preserve">
+    <value>اكتمل التحميل {0}%</value>
+</data>
+<data name="Select" xml:space="preserve">
+    <value>تحديد</value>
+</data>
+<data name="SelectAll" xml:space="preserve">
+    <value>تحديد الكل</value>
+</data>
+<data name="SelectedToolTip" xml:space="preserve">
+    <value>محدد</value>
+</data>
+<data name="SelectNone" xml:space="preserve">
+    <value>عدم تحديد أي شيء</value>
+</data>
+<data name="SelectToolTip" xml:space="preserve">
+    <value>الدخول في وضع التحديد المتعدد</value>
+</data>
+<data name="ShareFile" xml:space="preserve">
+    <value>مشاركة الملف</value>
+</data>
+<data name="ShareFileTitle" xml:space="preserve">
+    <value>مشاركة الملف</value>
+</data>
+<data name="ShareSelectedFile" xml:space="preserve">
+    <value>مشاركة الملفات المحددة</value>
+</data>
+<data name="Title" xml:space="preserve">
+    <value>إدارة التحميل</value>
+</data>
+<data name="TotalSizeToolTip" xml:space="preserve">
+    <value>حجم الملف:</value>
+</data>
+<data name="UnSelectedToolTip" xml:space="preserve">
+    <value>غير محدد</value>
+</data>
+<data name="ViewMore" xml:space="preserve">
+    <value>عرض المزيد</value>
+</data>
+</root>
