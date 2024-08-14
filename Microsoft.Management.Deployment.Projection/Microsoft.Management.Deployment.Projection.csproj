@@ -36,9 +36,6 @@
 
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.8.1911" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
-    
-    <WindowsSdkSupportedTargetPlatformVersion Include="10.0.26100.0" WindowsSdkPackageVersion="10.0.26100.1" MinimumNETVersion="6.0" />
-    <SdkSupportedTargetPlatformVersion Include="10.0.26100.0" />
   </ItemGroup>
 
   <!-- 复制 Microsoft.WindowsPackageManager.ComInterop 所需要的文件到输出根目录 -->

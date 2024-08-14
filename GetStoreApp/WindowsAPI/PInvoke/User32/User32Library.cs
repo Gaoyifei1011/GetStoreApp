@@ -93,7 +93,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </summary>
         /// <param name="dwDefaultLayout">默认进程布局。</param>
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "SetProcessDefaultLayout", SetLastError = false)]
+        [LibraryImport(User32, EntryPoint = "SetProcessDefaultLayout", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool SetProcessDefaultLayout(uint dwDefaultLayout);
     }
