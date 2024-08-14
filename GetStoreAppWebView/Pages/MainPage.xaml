@@ -9,6 +9,7 @@
     xmlns:root="using:GetStoreAppWebView.Services.Root"
     xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
     x:Name="MainPageRoot"
+    FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
     <Grid ActualThemeChanged="{x:Bind OnActualThemeChanged}">
         <Grid.RowDefinitions>
@@ -195,6 +196,7 @@
             x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[1])}"
             CoreProcessFailed="{x:Bind OnCoreProcessFailed}"
             CoreWebView2Initialized="{x:Bind OnCoreWebView2Initialized}"
+            FlowDirection="LeftToRight"
             NavigationCompleted="{x:Bind OnWebView2NavigationCompleted}"
             NavigationStarting="{x:Bind OnWebView2NavigationStarting}"
             Source="{x:Bind Source, Mode=OneWay}" />

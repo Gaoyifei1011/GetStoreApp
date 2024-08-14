@@ -5,7 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreAppWebView.Services.Root"
+    xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
     Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+    FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">

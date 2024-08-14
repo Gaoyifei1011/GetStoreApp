@@ -17,6 +17,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -51,6 +52,7 @@ namespace GetStoreApp.Views.Windows
     {
         private readonly SUBCLASSPROC mainWindowSubClassProc;
         private readonly SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
+        private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
 
@@ -152,7 +154,7 @@ namespace GetStoreApp.Views.Windows
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
-            SetTitleBar(AppTitlebar);
+            inputNonClientPointerSource = InputNonClientPointerSource.GetForWindowId(AppWindow.Id);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -185,12 +187,6 @@ namespace GetStoreApp.Views.Windows
                 };
                 User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
                 ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
-            }
-
-            if (LanguageService.FlowDirection is FlowDirection.RightToLeft)
-            {
-                int style = GetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE);
-                SetWindowLongAuto((IntPtr)AppWindow.Id.Value, WindowLongIndexFlags.GWL_EXSTYLE, style |= (int)WindowStyleEx.WS_EX_LAYOUTRTL);
             }
 
             SetWindowTheme();
@@ -234,6 +230,11 @@ namespace GetStoreApp.Views.Windows
             if (overlappedPresenter is not null)
             {
                 IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            }
+
+            if (Content is not null && Content.XamlRoot is not null)
+            {
+                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32((int)(AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale), (int)AppTitlebar.Margin.Top, (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale), (int)(AppTitlebar.ActualHeight * Content.XamlRoot.RasterizationScale))]);
             }
         }
 
@@ -515,6 +516,8 @@ namespace GetStoreApp.Views.Windows
                 }
                 IsBackEnabled = CanGoBack();
             }
+
+            inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32((int)(45 * Content.XamlRoot.RasterizationScale), 0, (int)((AppWindow.Size.Width - 45) * Content.XamlRoot.RasterizationScale), (int)(45 * Content.XamlRoot.RasterizationScale))]);
         }
 
         /// <summary>
@@ -1042,36 +1045,6 @@ namespace GetStoreApp.Views.Windows
         }
 
         #endregion 第九部分：窗口导航方法
-
-        /// <summary>
-        /// 获取窗口属性
-        /// </summary>
-        private int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
-        {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.GetWindowLongPtr(hWnd, nIndex);
-            }
-            else
-            {
-                return User32Library.GetWindowLong(hWnd, nIndex);
-            }
-        }
-
-        /// <summary>
-        /// 更改窗口属性
-        /// </summary>
-        private IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
-        {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
-            }
-            else
-            {
-                return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
-            }
-        }
 
         /// <summary>
         /// 检查网络状态

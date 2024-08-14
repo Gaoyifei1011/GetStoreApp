@@ -358,14 +358,11 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (LanguageModel item in LanguageCollection)
                 {
+                    item.IsChecked = false;
                     if (languageItem.LangaugeInfo.Value.Equals(item.LangaugeInfo.Value))
                     {
                         AppLanguage = item.LangaugeInfo;
                         item.IsChecked = true;
-                    }
-                    else
-                    {
-                        item.IsChecked = false;
                     }
                 }
 

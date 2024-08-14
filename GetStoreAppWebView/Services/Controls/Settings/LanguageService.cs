@@ -2,7 +2,9 @@
 using GetStoreAppWebView.Services.Root;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Windows.Globalization;
+using Windows.UI.Xaml;
 
 namespace GetStoreAppWebView.Services.Controls.Settings
 {
@@ -14,6 +16,8 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         private static readonly string settingsKey = ConfigKey.LanguageKey;
 
         public static string DefaultAppLanguage { get; private set; }
+
+        public static FlowDirection FlowDirection { get; private set; }
 
         public static string AppLanguage { get; private set; }
 
@@ -38,6 +42,9 @@ namespace GetStoreAppWebView.Services.Controls.Settings
             {
                 AppLanguage = DefaultAppLanguage;
             }
+
+            ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
+            FlowDirection = CultureInfo.GetCultureInfo(AppLanguage).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
         }
     }
 }

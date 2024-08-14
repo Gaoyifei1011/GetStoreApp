@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections;
@@ -76,31 +77,33 @@ namespace GetStoreApp.Services.Controls.Settings
             object language = LocalSettingsService.ReadSetting<object>(settingsKey);
 
             // 当前系统语言和当前系统语言的父区域性的语言
-            CultureInfo currentCulture = CultureInfo.CurrentCulture;
-            CultureInfo currentParentCulture = CultureInfo.CurrentCulture.Parent;
+            CultureInfo currentCultureInfo = CultureInfo.CurrentCulture;
+            CultureInfo currentParentCultureInfo = CultureInfo.CurrentCulture.Parent;
             bool existResult = false;
 
             if (language is null)
             {
                 // 判断当前系统语言是否存在应用默认添加的语言列表中
-                existResult = IsExistsInLanguageList(currentCulture, out DictionaryEntry currentLanguage);
+                existResult = IsExistsInLanguageList(currentCultureInfo, out DictionaryEntry currentLanguage);
 
                 // 如果存在，设置存储值和应用初次设置的语言为当前系统的语言
                 if (existResult)
                 {
                     SetLanguage(currentLanguage);
-                    FlowDirection = currentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                    FlowDirection = currentCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                    User32Library.SetProcessDefaultLayout(Convert.ToUInt32(currentCultureInfo.TextInfo.IsRightToLeft));
                     return currentLanguage;
                 }
                 else
                 {
-                    existResult = IsExistsInLanguageList(currentParentCulture, out DictionaryEntry currentParentLanguage);
+                    existResult = IsExistsInLanguageList(currentParentCultureInfo, out DictionaryEntry currentParentLanguage);
 
                     // 如果存在，设置存储值和应用初次设置的语言为当前系统语言的父区域性的语言
                     if (existResult)
                     {
                         SetLanguage(currentParentLanguage);
-                        FlowDirection = currentParentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                        FlowDirection = currentParentCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                        User32Library.SetProcessDefaultLayout(Convert.ToUInt32(currentParentCultureInfo.TextInfo.IsRightToLeft));
                         return currentParentLanguage;
                     }
 
@@ -108,7 +111,9 @@ namespace GetStoreApp.Services.Controls.Settings
                     else
                     {
                         SetLanguage(DefaultAppLanguage);
-                        FlowDirection = CultureInfo.GetCultureInfo(DefaultAppLanguage.Value.ToString()).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                        CultureInfo defaultCultureInfo = CultureInfo.GetCultureInfo(DefaultAppLanguage.Value.ToString());
+                        FlowDirection = defaultCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                        User32Library.SetProcessDefaultLayout(Convert.ToUInt32(defaultCultureInfo.TextInfo.IsRightToLeft));
                         return DefaultAppLanguage;
                     }
                 }
@@ -117,6 +122,7 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 CultureInfo savedCultureInfo = CultureInfo.GetCultureInfo(language.ToString());
                 FlowDirection = savedCultureInfo.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+                User32Library.SetProcessDefaultLayout(Convert.ToUInt32(savedCultureInfo.TextInfo.IsRightToLeft));
                 return LanguageList.Find(item => language.ToString().Contains(item.Value.ToString(), StringComparison.OrdinalIgnoreCase));
             }
         }

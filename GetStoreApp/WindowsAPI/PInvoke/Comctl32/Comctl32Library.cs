@@ -2,6 +2,9 @@
 using System;
 using System.Runtime.InteropServices;
 
+// 抑制 CA1401 警告
+#pragma warning disable CA1401
+
 namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
 {
     /// <summary>
