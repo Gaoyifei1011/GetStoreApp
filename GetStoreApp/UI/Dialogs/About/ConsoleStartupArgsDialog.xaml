@@ -6,9 +6,11 @@
     xmlns:dialog="using:GetStoreApp.Models.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/ConsoleStartupArgsTitle')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
+    FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 

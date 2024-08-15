@@ -31,7 +31,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         private static string RequestExceptionContent;
 
         [GeneratedRegex("[\r\n]")]
-        private static partial Regex WhiteSpaceRegex();
+        private static partial Regex WhiteSpaceRegex { get; }
 
         /// <summary>
         /// 生成要请求的内容
@@ -74,8 +74,8 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                     Dictionary<string, string> responseDict = new()
                     {
-                        { "Headers", response.Headers is null ? string.Empty : WhiteSpaceRegex().Replace(response.Headers.ToString(), string.Empty) },
-                        { "Response message:", response.RequestMessage is null ? string.Empty : WhiteSpaceRegex().Replace(response.RequestMessage.ToString(), string.Empty) }
+                        { "Headers", response.Headers is null ? string.Empty : WhiteSpaceRegex.Replace(response.Headers.ToString(), string.Empty) },
+                        { "Response message:", response.RequestMessage is null ? string.Empty : WhiteSpaceRegex.Replace(response.RequestMessage.ToString(), string.Empty) }
                     };
 
                     LogService.WriteLog(LoggingLevel.Information, "Requested successfully.", responseDict);

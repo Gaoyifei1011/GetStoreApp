@@ -17,7 +17,7 @@
     <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
     <IncludeSymbols>False</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
     <OptimizationPreference>Size</OptimizationPreference>
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>

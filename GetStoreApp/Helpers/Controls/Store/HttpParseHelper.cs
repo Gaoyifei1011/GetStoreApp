@@ -12,13 +12,13 @@ namespace GetStoreApp.Helpers.Controls.Store
         private static string parseContent = string.Empty;
 
         [GeneratedRegex(@"<i>(.*?)<\/i>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
-        private static partial Regex CIDRegex();
+        private static partial Regex CIDRegex { get; }
 
         [GeneratedRegex(@"<tr\sstyle=\\?""background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"">\s{0,}<td>\s{0,}<a\shref=\\?""(.*?)\\?""\srel=\\?""noreferrer\\?"">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?GMT)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
-        private static partial Regex ResultDataListRegex();
+        private static partial Regex ResultDataListRegex { get; }
 
         /// <summary>
-        /// 初始化HtmlParseService类时添加HtmlReqeustHelper生成的字符串数据
+        /// 初始化 HtmlParseService 类时添加 HtmlReqeustHelper 生成的字符串数据
         /// </summary>
         public static void InitializeParseData(RequestModel httpRequestData)
         {
@@ -26,13 +26,13 @@ namespace GetStoreApp.Helpers.Controls.Store
         }
 
         /// <summary>
-        /// 解析网页数据中包含的CategoryID信息
+        /// 解析网页数据中包含的 CategoryID 信息
         /// </summary>
         public static string HtmlParseCID()
         {
             if (!string.IsNullOrEmpty(parseContent))
             {
-                MatchCollection cidCollection = CIDRegex().Matches(parseContent);
+                MatchCollection cidCollection = CIDRegex.Matches(parseContent);
                 if (cidCollection.Count > 0)
                 {
                     GroupCollection cidGroups = cidCollection[0].Groups;
@@ -55,7 +55,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             if (!string.IsNullOrEmpty(parseContent))
             {
-                MatchCollection resultDataListCollection = ResultDataListRegex().Matches(parseContent);
+                MatchCollection resultDataListCollection = ResultDataListRegex.Matches(parseContent);
 
                 for (int index = 0; index < resultDataListCollection.Count; index++)
                 {
