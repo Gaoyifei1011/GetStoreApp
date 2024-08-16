@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GetStoreApp.Helpers.Controls.Extensions
 {
     /// <summary>
-    /// 扩展后的教学提示辅助类，使用教学提示来显示应用内通知
+    /// 扩展后的教学提示控件辅助类
     /// </summary>
     public static class TeachingTipHelper
     {

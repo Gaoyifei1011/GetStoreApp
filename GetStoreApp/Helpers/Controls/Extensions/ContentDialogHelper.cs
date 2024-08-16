@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace GetStoreApp.Helpers.Controls.Extensions
 {
     /// <summary>
-    /// 扩展后的内容对话框辅助类，只允许在同一时间段内打开一个内容对话框
+    /// 扩展后的内容对话框控件辅助类
     /// </summary>
     public static class ContentDialogHelper
     {

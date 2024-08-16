@@ -818,14 +818,6 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第三部分：设置页面——挂载的事件
 
-        /// <summary>
-        /// 获取 ToggleSwitch 的文字转向
-        /// </summary>
-        private FlowDirection GetToggleSwitchDirection(FlowDirection flowDirection)
-        {
-            return flowDirection is FlowDirection.LeftToRight ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-        }
-
         private string LocalizeDisplayNumber(DictionaryEntry selectedBackdrop)
         {
             int index = BackdropList.FindIndex(item => item.Value.Equals(selectedBackdrop.Value));

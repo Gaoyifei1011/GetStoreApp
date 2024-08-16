@@ -270,7 +270,9 @@ namespace GetStoreAppWebView.Pages
             {
                 if (WebView2Browser is not null && WebView2Browser.CoreWebView2 is not null)
                 {
+                    WebView2Browser.CoreWebView2.CookieManager.DeleteAllCookies();
                     await WebView2Browser.CoreWebView2.Profile.ClearBrowsingDataAsync();
+                    await WebView2Browser.CoreWebView2.ClearServerCertificateErrorActionsAsync();
                 }
             }
         }
@@ -373,6 +375,8 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private void OnCoreWebView2Initialized(object sender, CoreWebView2InitializedEventArgs args)
         {
+            WebView2Browser.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
+            WebView2Browser.CoreWebView2.Settings.AreDevToolsEnabled = false;
             WebView2Browser.CoreWebView2.NewWindowRequested += OnCoreWebViewNewWindowRequested;
             WebView2Browser.CoreWebView2.SourceChanged += OnSourceChanged;
             IsEnabled = true;
@@ -461,27 +465,5 @@ namespace GetStoreAppWebView.Pages
         }
 
         #endregion 第五部分：窗口属性设置
-
-        /// <summary>
-        /// 关闭窗口时注销的事件
-        /// </summary>
-        public void CloseWindow()
-        {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1] && WebView2Browser is not null)
-            {
-                try
-                {
-                    if (WebView2Browser.CoreWebView2 is not null)
-                    {
-                        WebView2Browser.CoreWebView2.NewWindowRequested -= OnCoreWebViewNewWindowRequested;
-                        WebView2Browser.CoreWebView2.SourceChanged -= OnSourceChanged;
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "WebView2 unloaded event failed", e);
-                }
-            }
-        }
     }
 }

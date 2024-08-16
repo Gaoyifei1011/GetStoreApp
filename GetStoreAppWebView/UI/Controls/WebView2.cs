@@ -750,10 +750,7 @@ namespace GetStoreAppWebView.UI.Controls
         private async void OnTextScaleFactorChanged(UISettings sender, object args)
         {
             // OnTextScaleFactorChanged 发生在非 UI 线程中，使用 Dispatcher 在 UI 线程中调用 UpdateCoreWebViewScale。
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                UpdateCoreWebViewScale();
-            });
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, UpdateCoreWebViewScale);
         }
 
         #endregion 第六部分：自定义事件

@@ -22,15 +22,14 @@
     <Optimize>False</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
+    <PublishAot>true</PublishAot>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>False</PublishReadyToRun>
     <PublishSelfContained>true</PublishSelfContained>
     <PublishSingleFile>True</PublishSingleFile>
-    <PublishAot>true</PublishAot>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <SelfContained>true</SelfContained>
     <StartupObject>GetStoreApp.Program</StartupObject>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
@@ -110,7 +109,8 @@
     <None Remove="Views\Pages\WinGetPage.xaml" />
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="WinUIApp.xaml" />
-	  
+    
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2651.64" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240807006-preview1" />
 
