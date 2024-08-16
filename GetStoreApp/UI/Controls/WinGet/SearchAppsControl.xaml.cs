@@ -111,15 +111,15 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 复制安装命令
         /// </summary>
-        private void OnCopyInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
-            if (appId is not null)
+            if (!string.IsNullOrEmpty(appId))
             {
                 string copyContent = string.Format("winget install {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
             }
         }
 

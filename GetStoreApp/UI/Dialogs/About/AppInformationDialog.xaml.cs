@@ -167,11 +167,11 @@ namespace GetStoreApp.UI.Dialogs.About
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/DoNetVersion") + DoNetVersion);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/WebView2SDKVersion") + WebView2SDKVersion);
 
-                DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(async () =>
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
+                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
                 });
             });
         }

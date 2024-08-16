@@ -88,11 +88,11 @@ namespace GetStoreApp.UI.Dialogs.Download
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
                 stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
 
-                DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(async () =>
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
                     sender.Hide();
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
+                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
                 });
             });
         }

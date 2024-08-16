@@ -302,7 +302,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 复制到剪贴板
         /// </summary>
-        private void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             HistoryModel historyItem = args.Parameter as HistoryModel;
 
@@ -311,7 +311,7 @@ namespace GetStoreApp.UI.Controls.Store
                 string copyContent = string.Join('\t', new object[] { historyItem.HistoryAppName, historyItem.HistoryType.Value, historyItem.HistoryChannel.Value, historyItem.HistoryLink });
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.History, copyResult, false));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.History, copyResult, false));
             }
         }
 
@@ -421,10 +421,10 @@ namespace GetStoreApp.UI.Controls.Store
                         isDownloadSuccessfully = true;
                     }
 
-                    DispatcherQueue.TryEnqueue(() =>
+                    DispatcherQueue.TryEnqueue(async () =>
                     {
                         // 显示下载任务创建成功消息
-                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                        await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
                     });
                 });
             }
@@ -446,21 +446,21 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 复制指定项目的链接
         /// </summary>
-        private void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string fileLink = args.Parameter as string;
 
             if (!string.IsNullOrEmpty(fileLink))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileLink);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, copyResult, false));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, false));
             }
         }
 
         /// <summary>
         /// 复制指定项目的信息
         /// </summary>
-        private void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
 
@@ -473,7 +473,7 @@ namespace GetStoreApp.UI.Controls.Store
                     );
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, false));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, false));
             }
         }
 
@@ -539,7 +539,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 复制应用信息
         /// </summary>
-        private void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
+        private async void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
         {
             StringBuilder appInformationBuilder = new();
             appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppName"));
@@ -550,7 +550,7 @@ namespace GetStoreApp.UI.Controls.Store
             appInformationBuilder.AppendLine(AppInfo.Description);
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
-            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
+            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
         }
 
         /// <summary>
@@ -675,10 +675,10 @@ namespace GetStoreApp.UI.Controls.Store
                         );
                 }
 
-                DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(async () =>
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
+                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
                 });
             });
         }
@@ -727,10 +727,10 @@ namespace GetStoreApp.UI.Controls.Store
                     stringBuilder.AppendLine(string.Format("{0}", queryLinksItem.FileLink));
                 }
 
-                DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(async () =>
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
+                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
                 });
             });
         }
@@ -853,10 +853,10 @@ namespace GetStoreApp.UI.Controls.Store
                     }
                 }
 
-                DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(async () =>
                 {
                     // 显示下载任务创建成功消息
-                    TeachingTipHelper.Show(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
                     IsSelectMode = false;
                     queryLinksLock.Enter();
 

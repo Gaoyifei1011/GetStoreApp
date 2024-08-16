@@ -37,6 +37,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 CultureInfo culture = CultureInfo.GetCultureInfo(applanguage);
                 LanguageList.Add(new DictionaryEntry(culture.NativeName, culture.Name));
             }
+            LanguageList.Sort((item1, item2) => item1.Value.ToString().CompareTo(item2.Value.ToString()));
         }
 
         /// <summary>

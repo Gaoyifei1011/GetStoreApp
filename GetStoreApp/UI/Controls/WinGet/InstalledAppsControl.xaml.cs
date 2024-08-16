@@ -142,15 +142,15 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 复制卸载命令
         /// </summary>
-        private void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
-            if (appId is not null)
+            if (!string.IsNullOrEmpty(appId))
             {
                 string copyContent = string.Format("winget uninstall {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetUnInstall, copyResult));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.WinGetUnInstall, copyResult));
             }
         }
 

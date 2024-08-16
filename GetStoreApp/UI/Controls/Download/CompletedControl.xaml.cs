@@ -189,19 +189,19 @@ namespace GetStoreApp.UI.Controls.Download
             }
             else
             {
-                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FileLost));
+                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
         /// <summary>
         /// 安装应用
         /// </summary>
-        private void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
             if (completedItem is not null && File.Exists(completedItem.FilePath))
             {
-                Task.Run(async () =>
+                await Task.Run(async () =>
                 {
                     // 普通应用：直接安装
                     if (completedItem.FilePath.EndsWith(".exe") || completedItem.FileName.EndsWith(".msi"))
@@ -319,7 +319,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             else
             {
-                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FileLost));
+                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -365,7 +365,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// <summary>
         /// 共享文件
         /// </summary>
-        private void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             CompletedModel completedItem = args.Parameter as CompletedModel;
 
@@ -388,13 +388,13 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    TeachingTipHelper.Show(new OperationResultTip(OperationKind.ShareFailed, false, 1));
+                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.ShareFailed, false, 1));
                     LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
                 }
             }
             else
             {
-                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FileLost));
+                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -592,7 +592,7 @@ namespace GetStoreApp.UI.Controls.Download
                     return;
                 }
 
-                DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(async () =>
                 {
                     try
                     {
@@ -628,7 +628,7 @@ namespace GetStoreApp.UI.Controls.Download
                     }
                     catch (Exception e)
                     {
-                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
+                        await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
                         LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
                     }
                 });

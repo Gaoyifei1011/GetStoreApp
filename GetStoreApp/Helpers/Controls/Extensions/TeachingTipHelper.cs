@@ -14,33 +14,30 @@ namespace GetStoreApp.Helpers.Controls.Extensions
         /// <summary>
         /// 使用教学提示显示应用内通知
         /// </summary>
-        public static void Show(TeachingTip teachingTip, int duration = 2000)
+        public static async Task ShowAsync(TeachingTip teachingTip, int duration = 2000)
         {
-            MainWindow.Current.DispatcherQueue.TryEnqueue(async () =>
+            teachingTip.Name = "TeachingTip" + Guid.NewGuid().ToString();
+
+            ((MainWindow.Current.Content as Page).Content as Grid).Children.Add(teachingTip);
+
+            teachingTip.IsOpen = true;
+            teachingTip.Closed += (sender, args) =>
             {
-                teachingTip.Name = "TeachingTip" + Guid.NewGuid().ToString();
-
-                ((MainWindow.Current.Content as Page).Content as Grid).Children.Add(teachingTip);
-
-                teachingTip.IsOpen = true;
-                teachingTip.Closed += (sender, args) =>
+                try
                 {
-                    try
+                    foreach (UIElement uiElement in ((MainWindow.Current.Content as Page).Content as Grid).Children)
                     {
-                        foreach (UIElement uiElement in ((MainWindow.Current.Content as Page).Content as Grid).Children)
+                        if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
                         {
-                            if ((uiElement as FrameworkElement).Name.Equals(teachingTip.Name, StringComparison.OrdinalIgnoreCase))
-                            {
-                                ((MainWindow.Current.Content as Page).Content as Grid).Children.Remove(uiElement);
-                                break;
-                            }
+                            ((MainWindow.Current.Content as Page).Content as Grid).Children.Remove(uiElement);
+                            break;
                         }
                     }
-                    catch (Exception) { }
-                };
-                await Task.Delay(duration);
-                teachingTip.IsOpen = false;
-            });
+                }
+                catch (Exception) { }
+            };
+            await Task.Delay(duration);
+            teachingTip.IsOpen = false;
         }
     }
 }

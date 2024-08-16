@@ -152,9 +152,9 @@ namespace GetStoreApp.Views.Pages
                 }
                 finally
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    DispatcherQueue.TryEnqueue(async () =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
+                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
                     });
                 }
             });
@@ -188,9 +188,9 @@ namespace GetStoreApp.Views.Pages
                 }
                 finally
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    DispatcherQueue.TryEnqueue(async () =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
                     });
                 }
             });
@@ -227,9 +227,9 @@ namespace GetStoreApp.Views.Pages
                 }
                 finally
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    DispatcherQueue.TryEnqueue(async () =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Taskbar, isPinnedSuccessfully));
+                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, isPinnedSuccessfully));
                     });
                 }
             });
@@ -312,9 +312,9 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     bool isNewest = InfoHelper.AppVersion >= tagVersion;
 
-                                    DispatcherQueue.TryEnqueue(() =>
+                                    DispatcherQueue.TryEnqueue(async () =>
                                     {
-                                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
+                                        await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
                                     });
                                 }
                             }

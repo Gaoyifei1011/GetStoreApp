@@ -453,10 +453,7 @@ namespace GetStoreApp.Views.Windows
             }
             finally
             {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
-                });
+                await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
             }
         }
 
@@ -598,9 +595,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnDataChanged(ApplicationData sender, object args)
         {
-            DispatcherQueue.TryEnqueue(() =>
+            DispatcherQueue.TryEnqueue(async () =>
             {
-                TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Taskbar, ResultService.ReadResult<bool>(ConfigKey.TaskbarPinnedResultKey)));
+                await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, ResultService.ReadResult<bool>(ConfigKey.TaskbarPinnedResultKey)));
             });
         }
 

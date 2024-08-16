@@ -495,14 +495,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制应用入口的应用程序用户模型 ID
         /// </summary>
-        private void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string aumid = args.Parameter as string;
 
             if (!string.IsNullOrEmpty(aumid))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(aumid);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.AppUserModelId, copyResult));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppUserModelId, copyResult));
             }
         }
 
@@ -524,10 +524,10 @@ namespace GetStoreApp.Views.Pages
                         copyBuilder.AppendLine(package.Id.FamilyName);
                         copyBuilder.AppendLine(package.Id.FullName);
 
-                        DispatcherQueue.TryEnqueue(() =>
+                        DispatcherQueue.TryEnqueue(async () =>
                         {
                             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
-                            TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
+                            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
                         });
                     }
                     catch (Exception e)
@@ -541,13 +541,13 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制依赖包名称
         /// </summary>
-        private void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string displayName = args.Parameter as string;
             if (displayName is not null)
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(displayName);
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.DependencyName, copyResult));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyName, copyResult));
             }
         }
 
@@ -736,9 +736,9 @@ namespace GetStoreApp.Views.Pages
                 }
                 finally
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    DispatcherQueue.TryEnqueue(async () =>
                     {
-                        TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.Desktop, isPinnedSuccessfully));
+                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Desktop, isPinnedSuccessfully));
                     });
                 }
             });
@@ -769,9 +769,9 @@ namespace GetStoreApp.Views.Pages
                     }
                     finally
                     {
-                        DispatcherQueue.TryEnqueue(() =>
+                        DispatcherQueue.TryEnqueue(async () =>
                         {
-                            TeachingTipHelper.Show(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+                            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
                         });
                     }
                 });
@@ -1267,10 +1267,10 @@ namespace GetStoreApp.Views.Pages
                 copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsStub"), IsStub));
                 copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/VertifyIsOK"), VertifyIsOK));
 
-                DispatcherQueue.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(async () =>
                 {
                     bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
-                    TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
+                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
                 });
             });
         }

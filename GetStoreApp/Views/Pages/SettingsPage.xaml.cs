@@ -345,7 +345,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 修改应用语言
         /// </summary>
-        private void OnLanguageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnLanguageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (LanguageFlyout.IsOpen)
             {
@@ -367,7 +367,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 LanguageService.SetLanguage(AppLanguage);
-                TeachingTipHelper.Show(new OperationResultTip(OperationKind.LanguageChange));
+                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.LanguageChange));
             }
         }
 
@@ -584,6 +584,7 @@ namespace GetStoreApp.Views.Pages
                             if (!result)
                             {
                                 string selectedPath = string.Empty;
+
                                 unsafe
                                 {
                                     char* pszPath = stackalloc char[Kernel32Library.MAX_PATH + 1];
@@ -611,7 +612,6 @@ namespace GetStoreApp.Views.Pages
                                     catch (Exception e)
                                     {
                                         LogService.WriteLog(LoggingLevel.Error, "Open SHBrowseForFolder failed", e);
-                                        TeachingTipHelper.Show(new OperationResultTip(OperationKind.FolderPicker));
                                     }
                                 };
 
@@ -633,7 +633,7 @@ namespace GetStoreApp.Views.Pages
                             // 选取文件夹失败，显示提示
                             if (!result)
                             {
-                                TeachingTipHelper.Show(new OperationResultTip(OperationKind.FolderPicker));
+                                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FolderPicker));
                             }
 
                             break;
@@ -704,10 +704,10 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 清除所有日志记录
         /// </summary>
-        private void OnClearClicked(object sender, RoutedEventArgs args)
+        private async void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = LogService.ClearLog();
-            TeachingTipHelper.Show(new OperationResultTip(OperationKind.LogClean, result));
+            await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.LogClean, result));
         }
 
         /// <summary>

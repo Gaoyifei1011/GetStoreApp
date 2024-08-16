@@ -97,15 +97,15 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 复制升级命令
         /// </summary>
-        private void OnCopyUpgradeTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyUpgradeTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
-            if (appId is not null)
+            if (!string.IsNullOrEmpty(appId))
             {
                 string copyContent = string.Format("winget install {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                TeachingTipHelper.Show(new DataCopyTip(DataCopyKind.WinGetUpgradeInstall, copyResult));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.WinGetUpgradeInstall, copyResult));
             }
         }
 
@@ -115,7 +115,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         private void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             string appId = args.Parameter as string;
-            if (appId is not null)
+            if (!string.IsNullOrEmpty(appId))
             {
                 Task.Run(() =>
                 {
