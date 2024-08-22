@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
+using Windows.System;
 using Windows.UI.Notifications;
 
 namespace GetStoreApp.Services.Root
@@ -30,7 +31,7 @@ namespace GetStoreApp.Services.Root
 
             if (notificationArgs is "CheckNetWorkConnection")
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+                await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
             else if (notificationArgs is "OpenDownloadFolder")
@@ -38,17 +39,17 @@ namespace GetStoreApp.Services.Root
                 string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
                 if (Directory.Exists(wingetTempPath))
                 {
-                    await Windows.System.Launcher.LaunchFolderPathAsync(wingetTempPath);
+                    await Launcher.LaunchFolderPathAsync(wingetTempPath);
                 }
                 else
                 {
-                    await Windows.System.Launcher.LaunchFolderPathAsync(Path.GetTempPath());
+                    await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
                 }
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
             else if (notificationArgs is "OpenSettings")
             {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
+                await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
             else if (notificationArgs.Contains("InstallWithCommand"))

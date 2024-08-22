@@ -159,22 +159,29 @@ namespace GetStoreApp.Services.Root
                 string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
 
                 // 向主实例发送数据
+                byte[] sendDataBytes = Encoding.UTF8.GetBytes(sendData);
                 COPYDATASTRUCT copyDataStruct = new()
                 {
                     dwData = (IntPtr)activationKind,
-                    cbData = Encoding.Default.GetBytes(sendData).Length + 1,
-                    lpData = sendData
+                    cbData = sendDataBytes.Length,
+                    lpData = Marshal.AllocHGlobal(sendDataBytes.Length)
                 };
+                Marshal.Copy(sendDataBytes, 0, copyDataStruct.lpData, sendDataBytes.Length);
 
                 List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
 
                 foreach (IntPtr hwnd in hwndList)
                 {
                     isExisted = true;
-                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf<COPYDATASTRUCT>());
-                    Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
-                    User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                    Marshal.FreeHGlobal(ptrCopyDataStruct);
+
+                    unsafe
+                    {
+                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(sizeof(COPYDATASTRUCT));
+                        *(COPYDATASTRUCT*)ptrCopyDataStruct = copyDataStruct;
+                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
+                        Marshal.FreeHGlobal(copyDataStruct.lpData);
+                        Marshal.FreeHGlobal(ptrCopyDataStruct);
+                    }
                 }
 
                 // 然后退出实例并停止
@@ -210,22 +217,29 @@ namespace GetStoreApp.Services.Root
                     }
 
                     // 向主实例发送数据
+                    byte[] sendDataBytes = Encoding.UTF8.GetBytes(sendData);
                     COPYDATASTRUCT copyDataStruct = new()
                     {
                         dwData = (IntPtr)activationKind,
-                        cbData = Encoding.Default.GetBytes(sendData).Length + 1,
-                        lpData = sendData
+                        cbData = sendDataBytes.Length,
+                        lpData = Marshal.AllocHGlobal(sendDataBytes.Length)
                     };
+                    Marshal.Copy(sendDataBytes, 0, copyDataStruct.lpData, sendDataBytes.Length);
 
                     List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
 
                     foreach (IntPtr hwnd in hwndList)
                     {
                         isExisted = true;
-                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf<COPYDATASTRUCT>());
-                        Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
-                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                        Marshal.FreeHGlobal(ptrCopyDataStruct);
+
+                        unsafe
+                        {
+                            IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(sizeof(COPYDATASTRUCT));
+                            *(COPYDATASTRUCT*)ptrCopyDataStruct = copyDataStruct;
+                            User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
+                            Marshal.FreeHGlobal(copyDataStruct.lpData);
+                            Marshal.FreeHGlobal(ptrCopyDataStruct);
+                        }
                     }
 
                     // 然后退出实例并停止
@@ -239,22 +253,29 @@ namespace GetStoreApp.Services.Root
                 string sendData = desktopLaunchArgs[0];
 
                 // 向主实例发送数据
+                byte[] sendDataBytes = Encoding.UTF8.GetBytes(sendData);
                 COPYDATASTRUCT copyDataStruct = new()
                 {
                     dwData = (IntPtr)activationKind,
-                    cbData = Encoding.Default.GetBytes(sendData).Length + 1,
-                    lpData = sendData
+                    cbData = sendDataBytes.Length,
+                    lpData = Marshal.AllocHGlobal(sendDataBytes.Length)
                 };
+                Marshal.Copy(sendDataBytes, 0, copyDataStruct.lpData, sendDataBytes.Length);
 
                 List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
 
                 foreach (IntPtr hwnd in hwndList)
                 {
                     isExisted = true;
-                    IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(Marshal.SizeOf<COPYDATASTRUCT>());
-                    Marshal.StructureToPtr(copyDataStruct, ptrCopyDataStruct, false);
-                    User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                    Marshal.FreeHGlobal(ptrCopyDataStruct);
+
+                    unsafe
+                    {
+                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(sizeof(COPYDATASTRUCT));
+                        *(COPYDATASTRUCT*)ptrCopyDataStruct = copyDataStruct;
+                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
+                        Marshal.FreeHGlobal(copyDataStruct.lpData);
+                        Marshal.FreeHGlobal(ptrCopyDataStruct);
+                    }
                 }
 
                 // 然后退出实例并停止

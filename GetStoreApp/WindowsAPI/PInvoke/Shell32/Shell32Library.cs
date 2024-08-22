@@ -11,24 +11,22 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
         public const string Shell32 = "shell32.dll";
 
         /// <summary>
-        /// 显示一个对话框，使用户能够选择 Shell 文件夹。
+        /// 从分析名称创建和初始化命令行管理程序项对象。
         /// </summary>
-        /// <param name="lpbi">指向 BROWSEINFO 结构的指针，该结构包含用于显示对话框的信息。</param>
-        /// <returns>
-        /// 返回一个 PIDL，该值指定所选文件夹相对于命名空间根目录的位置。 如果用户在对话框中选择“ 取消 ”按钮，则返回值为 NULL。
-        /// 返回的 PIDL 可能是文件夹快捷方式而不是文件夹的。 有关此情况的完整讨论，请参阅备注部分。
-        /// </returns>
-        [LibraryImport(Shell32, EntryPoint = "SHBrowseForFolderW", SetLastError = false), PreserveSig]
-        public static partial IntPtr SHBrowseForFolder(ref BROWSEINFO lpbi);
-
-        /// <summary>
-        /// 将项标识符列表转换为文件系统路径。
-        /// </summary>
-        /// <param name="pidl">(项标识符列表的地址，该列表指定相对于桌面) 命名空间根目录文件或目录位置。</param>
-        /// <param name="pszPath">要接收文件系统路径的缓冲区的地址。 此缓冲区的大小必须至少为 MAX_PATH 个字符。</param>
-        /// <returns>如果成功，则返回 TRUE ;否则为 FALSE。</returns>
-        [LibraryImport(Shell32, EntryPoint = "SHGetPathFromIDListW", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static unsafe partial bool SHGetPathFromIDList(IntPtr pidl, char* pszPath);
+        /// <param name="pszPath">指向显示名称的指针。</param>
+        /// <param name="pbc">
+        /// 自选。指向绑定上下文的指针，用于将参数作为输入和输出传递给分析函数。
+        /// 这些传递的参数通常特定于数据源，并由数据源所有者记录。
+        /// 例如，文件系统数据源接受正在使用STR_FILE_SYS_BIND_DATA绑定上下文参数分析的名称（作为 WIN32_FIND_DATA 结构）。
+        /// 可以传递STR_PARSE_PREFER_FOLDER_BROWSING以指示在可能的情况下使用文件系统数据源分析 URL。
+        /// 使用 CreateBindCtx 构造绑定上下文对象，并使用IBindCtx::RegisterObjectParam 填充值。
+        /// 有关这些键的完整列表，请参阅绑定上下文字符串键。有关使用此参数的示例，请参阅使用参数进行分析示例。
+        /// 如果没有数据传递到分析函数或从分析函数接收任何数据，则此值可以为NULL。
+        /// </param>
+        /// <param name="riid">对接口的 IID 的引用，以通过ppv（通常为IID_IShellItem或IID_IShellItem2）进行检索。</param>
+        /// <param name="ppv">此方法成功返回时，包含 riid 中请求的接口指针。这通常是IShellItem或IShellItem2。</param>
+        /// <returns>此方法成功返回时，包含riid 中请求的接口指针。这通常是 IShellItem 或IShellItem2。</returns>
+        [LibraryImport(Shell32, EntryPoint = "SHCreateItemFromParsingName", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
+        public static partial int SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, IntPtr pbc, ref Guid riid, out IntPtr ppv);
     }
 }

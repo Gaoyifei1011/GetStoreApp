@@ -178,7 +178,7 @@
     <value>正在从微软商店的服务器中进行查询，请耐心等待......</value>
   </data>
   <data name="HeaderDescription1" xml:space="preserve">
-    <value>获取商店应用（控制台程序）版本：{0}.{1}.{2}.{3}</value>
+    <value>获取商店应用（控制台程序）版本：{0}</value>
   </data>
   <data name="HeaderDescription2" xml:space="preserve">
     <value>获取商店应用（控制台程序）可以快速查询并下载微软商店应用的安装包。</value>

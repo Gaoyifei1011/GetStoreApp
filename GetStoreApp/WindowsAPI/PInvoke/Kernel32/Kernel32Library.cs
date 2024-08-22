@@ -135,7 +135,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// </returns>
         [LibraryImport(Kernel32, EntryPoint = "CreateProcessW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool CreateProcess(string lpApplicationName, [MarshalAs(UnmanagedType.LPStr)] string lpCommandLine, IntPtr lpProcessAttributes, IntPtr lpThreadAttributes, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandles, CREATE_PROCESS_FLAGS dwCreationFlags, IntPtr lpEnvironment, string lpCurrentDirectory, ref STARTUPINFO lpStartupInfo, out PROCESS_INFORMATION lpProcessInformation);
+        public static partial bool CreateProcess([MarshalAs(UnmanagedType.LPWStr)] string lpApplicationName, [MarshalAs(UnmanagedType.LPWStr)] string lpCommandLine, IntPtr lpProcessAttributes, IntPtr lpThreadAttributes, [MarshalAs(UnmanagedType.Bool)] bool bInheritHandles, CREATE_PROCESS_FLAGS dwCreationFlags, IntPtr lpEnvironment, [MarshalAs(UnmanagedType.LPWStr)] string lpCurrentDirectory, ref STARTUPINFO lpStartupInfo, out PROCESS_INFORMATION lpProcessInformation);
 
         /// <summary>
         /// 从其控制台中分离调用进程。
@@ -216,7 +216,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "SetConsoleTitleW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetConsoleTitle(string lpConsoleTitle);
+        public static partial bool SetConsoleTitle([MarshalAs(UnmanagedType.LPWStr)] string lpConsoleTitle);
 
         /// <summary>
         /// 从调用进程的处理程序函数列表中添加或删除应用程序定义的 HandlerRoutine 函数。如果未指定处理程序函数，则该函数将设置可继承的属性，该属性确定调用进程是否忽略 Ctrl+C 信号。

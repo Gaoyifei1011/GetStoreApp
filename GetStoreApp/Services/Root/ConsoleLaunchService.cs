@@ -95,14 +95,7 @@ namespace GetStoreApp.Services.Root
         {
             ConsoleHelper.SetTitle(ResourceService.GetLocalized("Console/Title"));
 
-            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"),
-                new int[]
-                {
-                    InfoHelper.AppVersion.Major,
-                    InfoHelper.AppVersion.Minor,
-                    InfoHelper.AppVersion.Build,
-                    InfoHelper.AppVersion.Revision,
-                }));
+            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"), InfoHelper.AppVersion.ToString()));
             ConsoleHelper.Write(Environment.NewLine);
             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
             ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + Environment.NewLine);
@@ -128,8 +121,7 @@ namespace GetStoreApp.Services.Root
                 int typeIndex;
                 try
                 {
-                    typeIndex = int.Parse(ConsoleHelper.ReadLine());
-                    if (typeIndex is < 1 or > 4)
+                    if (int.TryParse(ConsoleHelper.ReadLine(), out typeIndex) && (typeIndex is < 1 or > 4))
                     {
                         typeIndex = 1;
                     }
@@ -146,8 +138,7 @@ namespace GetStoreApp.Services.Root
                 int channelIndex;
                 try
                 {
-                    channelIndex = int.Parse(ConsoleHelper.ReadLine());
-                    if (channelIndex is < 1 or > 4)
+                    if (int.TryParse(ConsoleHelper.ReadLine(), out channelIndex) && (channelIndex is < 1 or > 4))
                     {
                         channelIndex = 4;
                     }

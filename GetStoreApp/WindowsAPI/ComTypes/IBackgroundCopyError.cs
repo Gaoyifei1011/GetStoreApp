@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pCode">发生的错误的错误代码。</param>
         /// <returns>此方法在成功时返回 S_OK 或错误时返回标准 COM HRESULT 值之一。</returns>
         [PreserveSig]
-        int GetError(out BG_ERROR_CONTEXT pContext, [MarshalAs(UnmanagedType.Error)] out int pCode);
+        int GetError(out BG_ERROR_CONTEXT pContext, [MarshalAs(UnmanagedType.I4)] out int pCode);
 
         /// <summary>
         /// 检索指向与错误关联的文件对象的接口指针。
@@ -27,7 +27,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pVal">IBackgroundCopyFile 接口指针，用于确定与错误关联的本地和远程文件名的方法。 如果错误未与本地或远程文件关联， 则 ppFile 参数设置为 NULL 。 完成后，释放 ppFile。</param>
         /// <returns>此方法返回以下 HRESULT 值。</returns>
         [PreserveSig]
-        int GetFile([MarshalAs(UnmanagedType.Interface)] out IntPtr pVal);
+        int GetFile(out IntPtr pVal);
 
         /// <summary>
         /// 检索与错误关联的错误文本。

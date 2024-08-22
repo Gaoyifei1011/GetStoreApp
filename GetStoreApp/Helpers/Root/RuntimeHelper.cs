@@ -43,7 +43,7 @@ namespace GetStoreApp.Helpers.Root
             bool success = Advapi32Library.OpenProcessToken(-1, 0x0008, out IntPtr tokenHandle);
 
             TOKEN_ELEVATION_TYPE token_elevation_type = TOKEN_ELEVATION_TYPE.TokenElevationTypeDefault;
-            uint tetSize = (uint)Marshal.SizeOf((int)token_elevation_type);
+            uint tetSize = sizeof(int);
 
             if (success)
             {

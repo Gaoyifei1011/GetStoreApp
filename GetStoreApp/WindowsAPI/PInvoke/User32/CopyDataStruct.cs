@@ -22,7 +22,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 要传递给接收应用程序的数据。 此成员可以为 NULL。
         /// </summary>
-        [MarshalAs(UnmanagedType.LPStr, SizeConst = 512)]
-        public string lpData;
+        public IntPtr lpData;
     }
 }

@@ -114,7 +114,6 @@
     <Compile Include="WindowsAPI\ComTypes\IPropertyValueStatics.cs" />
     <Compile Include="WindowsAPI\PInvoke\Combase\CombaseLibrary.cs" />
     <Compile Include="WindowsAPI\PInvoke\Kernel32\Kernel32Library.cs" />
-    <Compile Include="WindowsAPI\PInvoke\User32\COPYDATASTRUCT.cs" />
     <Compile Include="WindowsAPI\PInvoke\User32\MODIFIERKEYS_FLAGS.cs" />
     <Compile Include="WindowsAPI\PInvoke\User32\MOUSEHOOKSTRUCTEX_MOUSE_DATA.cs" />
     <Compile Include="WindowsAPI\PInvoke\User32\PEN_FLAGS.cs" />

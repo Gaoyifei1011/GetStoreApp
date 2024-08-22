@@ -28,7 +28,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         int CreateUInt8(byte value, out IntPtr propertyValue);
 
         /// <summary>
-        ///
+        /// 创建一个新的 IPropertyValue 对象，该对象包含指定的有符号 16 位整数值。
         /// </summary>
         /// <param name="value">要存储的值。</param>
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
@@ -37,7 +37,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         int CreateInt16(short value, out IntPtr propertyValue);
 
         /// <summary>
-        ///
+        /// 创建一个新的 IPropertyValue 对象，该对象包含指定的无符号 16 位整数值。
         /// </summary>
         /// <param name="value">要存储的值。</param>
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>

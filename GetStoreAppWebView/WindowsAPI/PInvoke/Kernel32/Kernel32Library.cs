@@ -20,7 +20,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.Kernel32
         /// </param>
         /// <returns>如果函数成功，则返回值是指定模块的句柄。如果函数失败，则返回值为 NULL。</returns>
         [DllImport(Kernel32, CharSet = CharSet.Unicode, EntryPoint = "GetModuleHandleW", SetLastError = false), PreserveSig]
-        public static extern IntPtr GetModuleHandle(string modName);
+        public static extern IntPtr GetModuleHandle([MarshalAs(UnmanagedType.LPWStr)] string modName);
 
         /// <summary>
         /// 检索性能计数器的频率。 性能计数器的频率在系统启动时固定，并且在所有处理器中保持一致。 因此，只需在应用程序初始化时查询频率，并且可以缓存结果。

@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -181,11 +182,15 @@ namespace GetStoreApp.Views.Windows
             // 处理提权模式下运行应用
             if (RuntimeHelper.IsElevated)
             {
-                CHANGEFILTERSTRUCT changeFilterStatus = new()
+                unsafe
                 {
-                    cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>()
-                };
-                User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
+                    CHANGEFILTERSTRUCT changeFilterStatus = new()
+                    {
+                        cbSize = sizeof(CHANGEFILTERSTRUCT)
+                    };
+                    User32Library.ChangeWindowMessageFilterEx((IntPtr)AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_ALLOW, in changeFilterStatus);
+                }
+
                 ToastNotificationService.Show(NotificationKind.RunAsAdministrator);
             }
 
@@ -634,7 +639,7 @@ namespace GetStoreApp.Views.Windows
         {
             WindowTheme = ThemeService.AppTheme.Value.Equals(ThemeService.ThemeList[0].Value)
                 ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark
-                : Enum.Parse<ElementTheme>(ThemeService.AppTheme.Value.ToString());
+                : Enum.TryParse(ThemeService.AppTheme.Value.ToString(), out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
 
         /// <summary>
@@ -808,10 +813,19 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (Content is not null && Content.XamlRoot is not null)
                         {
-                            MINMAXINFO minMaxInfo = Marshal.PtrToStructure<MINMAXINFO>(lParam);
+                            MINMAXINFO minMaxInfo;
+
+                            unsafe
+                            {
+                                minMaxInfo = *(MINMAXINFO*)lParam;
+                            }
                             minMaxInfo.ptMinTrackSize.X = (int)(960 * Content.XamlRoot.RasterizationScale);
                             minMaxInfo.ptMinTrackSize.Y = (int)(600 * Content.XamlRoot.RasterizationScale);
-                            Marshal.StructureToPtr(minMaxInfo, lParam, true);
+
+                            unsafe
+                            {
+                                *(MINMAXINFO*)lParam = minMaxInfo;
+                            }
                         }
 
                         break;
@@ -828,7 +842,12 @@ namespace GetStoreApp.Views.Windows
                 // 窗口接收其他数据消息
                 case WindowMessage.WM_COPYDATA:
                     {
-                        COPYDATASTRUCT copyDataStruct = Marshal.PtrToStructure<COPYDATASTRUCT>(lParam);
+                        COPYDATASTRUCT copyDataStruct;
+
+                        unsafe
+                        {
+                            copyDataStruct = *(COPYDATASTRUCT*)lParam;
+                        }
 
                         // 正常启动
                         if ((ActivationKind)copyDataStruct.dwData is ActivationKind.Launch)
@@ -844,7 +863,10 @@ namespace GetStoreApp.Views.Windows
                         else if ((ActivationKind)copyDataStruct.dwData is ActivationKind.CommandLineLaunch ||
                             (ActivationKind)copyDataStruct.dwData is ActivationKind.ShareTarget)
                         {
-                            string[] startupArgs = copyDataStruct.lpData.Split(' ');
+                            byte[] buffer = new byte[copyDataStruct.cbData];
+                            Marshal.Copy(copyDataStruct.lpData, buffer, 0, buffer.Length);
+                            string data = Encoding.UTF8.GetString(buffer);
+                            string[] startupArgs = data.Split(' ');
 
                             if (startupArgs.Length is 2 && (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile"))
                             {
@@ -911,7 +933,10 @@ namespace GetStoreApp.Views.Windows
                         {
                             Task.Run(async () =>
                             {
-                                await ToastNotificationService.HandleToastNotificationAsync(copyDataStruct.lpData);
+                                byte[] buffer = new byte[copyDataStruct.cbData];
+                                Marshal.Copy(copyDataStruct.lpData, buffer, 0, buffer.Length);
+                                string data = Encoding.UTF8.GetString(buffer);
+                                await ToastNotificationService.HandleToastNotificationAsync(data);
                             });
 
                             Show();

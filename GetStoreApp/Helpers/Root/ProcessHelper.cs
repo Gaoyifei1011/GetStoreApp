@@ -3,7 +3,6 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.Helpers.Root
@@ -36,7 +35,7 @@ namespace GetStoreApp.Helpers.Root
 
                 PROCESSENTRY32 processEntry32 = new()
                 {
-                    dwSize = Marshal.SizeOf<PROCESSENTRY32>()
+                    dwSize = sizeof(PROCESSENTRY32)
                 };
 
                 for (bool result = Kernel32Library.Process32First(hSnapshot, ref processEntry32); result; result = Kernel32Library.Process32Next(hSnapshot, ref processEntry32))
@@ -59,7 +58,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 创建进程
         /// </summary>
-        public static void StartProcess(string processName, string arguments, out int processid)
+        public static unsafe void StartProcess(string processName, string arguments, out int processid)
         {
             Kernel32Library.GetStartupInfo(out STARTUPINFO startupInfo);
             startupInfo.lpReserved = IntPtr.Zero;
@@ -75,9 +74,9 @@ namespace GetStoreApp.Helpers.Root
             startupInfo.wShowWindow = WindowShowStyle.SW_SHOWNORMAL;
             startupInfo.cbReserved2 = 0;
             startupInfo.lpReserved2 = IntPtr.Zero;
-            startupInfo.cb = Marshal.SizeOf<STARTUPINFO>();
+            startupInfo.cb = sizeof(STARTUPINFO);
 
-            bool createResult = Kernel32Library.CreateProcess(null, string.Format("{0} {1}", processName, arguments), IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.None, IntPtr.Zero, null, ref startupInfo, out PROCESS_INFORMATION processInformation);
+            bool createResult = Kernel32Library.CreateProcess(null, string.Join(' ', new string[] { processName, arguments }), IntPtr.Zero, IntPtr.Zero, false, CREATE_PROCESS_FLAGS.None, IntPtr.Zero, null, ref startupInfo, out PROCESS_INFORMATION processInformation);
 
             if (createResult)
             {

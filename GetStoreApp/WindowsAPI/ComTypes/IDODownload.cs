@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// IDODownload 接口用于启动和管理下载。
     /// </summary>
     [GeneratedComInterface, Guid("FBBD7FC0-C147-4727-A38D-827EF071EE77")]
-    public unsafe partial interface IDODownload
+    public partial interface IDODownload
     {
         /// <summary>
         /// 启动或恢复下载，将可选范围作为指向 DO_DOWNLOAD_RANGES_INFO 结构的指针传递。
@@ -56,7 +56,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="propVal">生成的属性值，存储在 VARIANT 中。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int GetProperty(DODownloadProperty propId, ComVariant* propVal);
+        int GetProperty(DODownloadProperty propId, ref ComVariant propVal);
 
         /// <summary>
         /// 检索指向包含特定下载属性的 VARIANT 的指针。
@@ -65,6 +65,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="propVal">要设置的属性值，存储在 VARIANT 中。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int SetProperty(DODownloadProperty propId, ComVariant* propVal);
+        int SetProperty(DODownloadProperty propId, ref ComVariant propVal);
     }
 }

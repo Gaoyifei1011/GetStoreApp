@@ -7,8 +7,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.ComTypes;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -18,7 +17,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
@@ -335,7 +333,7 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            settingNavigationArgs = args.Parameter is not null ? Enum.Parse<AppNaviagtionArgs>(Convert.ToString(args.Parameter)) : AppNaviagtionArgs.None;
+            settingNavigationArgs = args.Parameter is not null && Enum.TryParse(Convert.ToString(args.Parameter), out AppNaviagtionArgs appNaviagtionArgs) ? appNaviagtionArgs : AppNaviagtionArgs.None;
         }
 
         #endregion 第一部分：重写父类事件
@@ -556,7 +554,7 @@ namespace GetStoreApp.Views.Pages
                         }
                     case "Custom":
                         {
-                            // 先使用 FolderPicker，FolderPicker 打开失败，再尝试使用 SHBrowseForFolder 函数选择文件夹，否则提示自定义文件夹失败
+                            // 先使用 FolderPicker，FolderPicker 打开失败，再尝试使用 IFileDialog COM 接口选择文件夹，否则提示自定义文件夹失败
                             bool result = false;
 
                             // 使用 FolderPicker
@@ -580,53 +578,29 @@ namespace GetStoreApp.Views.Pages
                                 LogService.WriteLog(LoggingLevel.Error, "Open folderPicker failed", e);
                             }
 
-                            // 使用 SHBrowseForFolder
+                            // 使用 IFileDialog
                             if (!result)
                             {
-                                string selectedPath = string.Empty;
-
-                                unsafe
-                                {
-                                    char* pszPath = stackalloc char[Kernel32Library.MAX_PATH + 1];
-
-                                    try
-                                    {
-                                        BROWSEINFO browseInfo = new()
-                                        {
-                                            hwndOwner = (IntPtr)MainWindow.Current.AppWindow.Id.Value,
-                                            lpszTitle = Marshal.StringToHGlobalUni(ResourceService.GetLocalized("Settings/SelectFolder")),
-                                            ulFlags = BROWSEINFOFLAGS.BIF_RETURNONLYFSDIRS | BROWSEINFOFLAGS.BIF_NEWDIALOGSTYLE
-                                        };
-                                        IntPtr resultPtr = Shell32Library.SHBrowseForFolder(ref browseInfo);
-
-                                        if (resultPtr != IntPtr.Zero)
-                                        {
-                                            if (Shell32Library.SHGetPathFromIDList(resultPtr, pszPath))
-                                            {
-                                                selectedPath = new string(pszPath);
-                                            }
-                                            Marshal.FreeCoTaskMem(resultPtr);
-                                        }
-                                        result = true;
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        LogService.WriteLog(LoggingLevel.Error, "Open SHBrowseForFolder failed", e);
-                                    }
-                                };
-
                                 try
                                 {
-                                    if (result is true && !string.IsNullOrEmpty(selectedPath))
+                                    OpenFolderDialog openFolderDialog = new(MainWindow.Current.AppWindow.Id)
                                     {
-                                        DownloadFolder = await StorageFolder.GetFolderFromPathAsync(selectedPath);
+                                        Description = ResourceService.GetLocalized("Settings/SelectFolder"),
+                                        RootFolder = DownloadOptionsService.DownloadFolder.Path,
+                                    };
+
+                                    if (openFolderDialog.ShowDialog())
+                                    {
+                                        DownloadFolder = await StorageFolder.GetFolderFromPathAsync(openFolderDialog.SelectedPath);
                                         DownloadOptionsService.SetFolder(DownloadFolder);
                                     }
+
+                                    result = true;
+                                    openFolderDialog.Dispose();
                                 }
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, "Failed to read the directory obtained by the SHBrowseForFolder function", e);
-                                    result = false;
+                                    LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
                                 }
                             }
 

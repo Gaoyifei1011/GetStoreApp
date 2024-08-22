@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 使用下载链接创建下载
         /// </summary>
-        public static unsafe void CreateDownload(string url, string saveFilePath)
+        public static void CreateDownload(string url, string saveFilePath)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -114,24 +114,24 @@ namespace GetStoreApp.Services.Controls.Download
 
                         // 添加下载信息
                         ComVariant displayNameVariant = ComVariant.Create(displayName);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_DisplayName, &displayNameVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_DisplayName, ref displayNameVariant);
                         ComVariant urlVariant = ComVariant.Create(url);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_Uri, &urlVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_Uri, ref urlVariant);
                         ComVariant filePathVariant = ComVariant.Create(saveFilePath);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, &filePathVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, ref filePathVariant);
 
                         DODownloadStatusCallback doDownloadStatusCallback = new();
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
 
                         ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, strategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(doDownloadStatusCallback).WrappedObject, CreateComInterfaceFlags.None));
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_CallbackInterface, &callbackInterfaceVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_CallbackInterface, ref callbackInterfaceVariant);
                         ComVariant foregroundVariant = ComVariant.Create(true);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, &foregroundVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, ref foregroundVariant);
 
                         ComVariant idVariant = ComVariant.Null;
-                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, &idVariant);
+                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, ref idVariant);
                         ComVariant totalSizeVariant = ComVariant.Null;
-                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_TotalSizeBytes, &totalSizeVariant);
+                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_TotalSizeBytes, ref totalSizeVariant);
                         doDownloadStatusCallback.DownloadID = new(idVariant.As<string>());
                         double size = Convert.ToDouble(totalSizeVariant.As<ulong>());
                         DownloadCreated?.Invoke(doDownloadStatusCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, Convert.ToDouble(totalSizeVariant.As<ulong>()));

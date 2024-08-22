@@ -6,7 +6,6 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.UI.StartScreen;
@@ -146,11 +145,14 @@ namespace GetStoreApp
                 {
                     if (RuntimeHelper.IsElevated && MainWindow.Current.AppWindow.Id.Value is not 0)
                     {
-                        CHANGEFILTERSTRUCT changeFilterStatus = new()
+                        unsafe
                         {
-                            cbSize = Marshal.SizeOf<CHANGEFILTERSTRUCT>()
-                        };
-                        User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
+                            CHANGEFILTERSTRUCT changeFilterStatus = new()
+                            {
+                                cbSize = sizeof(CHANGEFILTERSTRUCT)
+                            };
+                            User32Library.ChangeWindowMessageFilterEx((IntPtr)MainWindow.Current.AppWindow.Id.Value, WindowMessage.WM_COPYDATA, ChangeFilterAction.MSGFLT_RESET, in changeFilterStatus);
+                        }
                     }
                 }
                 catch (Exception e)
