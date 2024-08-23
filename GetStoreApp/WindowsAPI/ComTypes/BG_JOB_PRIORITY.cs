@@ -23,6 +23,6 @@
         /// <summary>
         /// 以低优先级在后台传输作业。 后台传输使用客户端的空闲网络带宽来传输文件。 这是最低的后台优先级别。
         /// </summary>
-        BG_JOB_PRIORITY_LOW = 3,
+        BG_JOB_PRIORITY_LOW = 3
     }
 }

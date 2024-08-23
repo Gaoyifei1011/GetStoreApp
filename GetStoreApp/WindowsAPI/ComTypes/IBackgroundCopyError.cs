@@ -19,7 +19,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="pCode">发生的错误的错误代码。</param>
         /// <returns>此方法在成功时返回 S_OK 或错误时返回标准 COM HRESULT 值之一。</returns>
         [PreserveSig]
-        int GetError(out BG_ERROR_CONTEXT pContext, [MarshalAs(UnmanagedType.I4)] out int pCode);
+        int GetError(out BG_ERROR_CONTEXT pContext, out int pCode);
 
         /// <summary>
         /// 检索指向与错误关联的文件对象的接口指针。

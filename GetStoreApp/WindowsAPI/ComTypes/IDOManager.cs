@@ -4,6 +4,9 @@ using System.Runtime.InteropServices.Marshalling;
 
 namespace GetStoreApp.WindowsAPI.ComTypes
 {
+    /// <summary>
+    /// IDOManager 接口用于创建新的下载，并枚举现有下载。
+    /// </summary>
     [GeneratedComInterface, Guid("400E2D4A-1431-4C1A-A748-39CA472CFDB1")]
     public partial interface IDOManager
     {

@@ -50,6 +50,6 @@
         /// <summary>
         /// 指定调用 IBackgroundCopyJob：：Cancel 方法 取消作业 (即从传输队列中删除作业) 。
         /// </summary>
-        BG_JOB_STATE_CANCELLED = 8,
+        BG_JOB_STATE_CANCELLED = 8
     }
 }

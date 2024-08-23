@@ -1326,7 +1326,7 @@ namespace GetStoreAppWebView.UI.Controls
                         if (coreWindow is not null)
                         {
                             ICoreWindowInterop coreWindowInterop = coreWindow as object as ICoreWindowInterop;
-                            tempHostHwnd = coreWindowInterop.WindowHandle;
+                            coreWindowInterop.GetWindowHandle(out tempHostHwnd);
                         }
                         else
                         {
@@ -1423,7 +1423,7 @@ namespace GetStoreAppWebView.UI.Controls
                 if (coreWindow is not null)
                 {
                     ICoreWindowInterop coreWindowInterop = coreWindow as object as ICoreWindowInterop;
-                    xamlHostHwnd = coreWindowInterop.WindowHandle;
+                    coreWindowInterop.GetWindowHandle(out xamlHostHwnd);
                 }
             }
 

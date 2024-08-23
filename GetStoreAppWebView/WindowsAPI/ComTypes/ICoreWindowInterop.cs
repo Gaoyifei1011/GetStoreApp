@@ -12,11 +12,17 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <summary>
         /// 获取应用的 CoreWindow (HWND) 句柄。
         /// </summary>
-        IntPtr WindowHandle { get; }
+        /// <param name="hwnd">CoreWindow 的窗口句柄</param>
+        /// <returns>此方法返回 HRESULT 成功或错误代码。</returns>
+        [PreserveSig]
+        int GetWindowHandle(out IntPtr hwnd);
 
         /// <summary>
         /// 设置是否已处理到 CoreWindow 的消息。此属性是只写的。
         /// </summary>
-        bool MessageHandled { set; }
+        /// <param name="value">标志该消息是否已被处理</param>
+        /// <returns>此方法返回 HRESULT 成功或错误代码。</returns>
+        [PreserveSig]
+        int SetMessageHandled([MarshalAs(UnmanagedType.Bool)] bool value);
     }
 }

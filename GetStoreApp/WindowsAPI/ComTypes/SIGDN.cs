@@ -53,6 +53,6 @@
         /// <summary>
         /// 在 Windows 8 中引入。
         /// </summary>
-        SIGDN_PARENTRELATIVEFORUI = 0x80094001,
+        SIGDN_PARENTRELATIVEFORUI = 0x80094001
     }
 }
