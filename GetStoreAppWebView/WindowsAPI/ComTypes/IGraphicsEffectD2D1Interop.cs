@@ -28,10 +28,10 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         int GetNamedPropertyMapping([MarshalAs(UnmanagedType.LPWStr)] string name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping);
 
         /// <summary>
-        /// 检索效果属性的映射。
+        /// 检索效果的属性计数。
         /// </summary>
-        /// <param name="count">检索效果的属性计数。</param>
-        /// <returns>当方法返回时，此参数将包含属性计数。</returns>
+        /// <param name="count">当方法返回时，此参数将包含属性计数。</param>
+        /// <returns>此方法返回 HRESULT 成功或错误代码。</returns>
         [PreserveSig]
         int GetPropertyCount(out uint count);
 

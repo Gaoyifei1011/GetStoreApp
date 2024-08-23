@@ -112,7 +112,7 @@
     
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2651.64" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240807006-preview1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240821007-preview2" />
 
     <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

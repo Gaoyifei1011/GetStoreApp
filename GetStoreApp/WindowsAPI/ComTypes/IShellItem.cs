@@ -21,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="bhid">对 GUID 的引用，指定将创建哪个处理程序。</param>
         /// <param name="riid">要检索的对象类型的 IID。</param>
         /// <param name="ppv">此方法返回时，包含由 riid 指定的处理程序返回的类型 riid 的指针。</param>
-        /// <returns>如果项相同，则返回S_OK项，如果项不同，则返回S_FALSE，否则返回错误值。</returns>
+        /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
         int BindToHandler(IntPtr pbc, Guid bhid, Guid riid, out IntPtr ppv);
 
@@ -38,6 +38,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// </summary>
         /// <param name="sigdnName">指示名称外观的 SIGDN 值之一。</param>
         /// <param name="ppszName">一个值，当此函数成功返回时，接收指向检索的显示名称的指针的地址。</param>
+        /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
         int GetDisplayName(SIGDN sigdnName, out IntPtr ppszName);
 
