@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
-using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 
@@ -12,14 +11,6 @@ namespace GetStoreApp.Helpers.Converters
     /// </summary>
     public static class ValueCheckConverterHelper
     {
-        /// <summary>
-        /// 检查枚举值中是否设置了一个或多个位域
-        /// </summary>
-        public static bool IsEnumHasFlag(Enum value, Enum comparedValue)
-        {
-            return value.HasFlag(comparedValue);
-        }
-
         /// <summary>
         /// 判断值是否相同（取反）
         /// </summary>

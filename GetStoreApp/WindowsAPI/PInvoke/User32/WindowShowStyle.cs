@@ -68,6 +68,6 @@
         /// <summary>
         /// 即使拥有窗口的线程未响应，也会最小化窗口。 仅当将窗口从不同的线程最小化时，才应使用此标志。
         /// </summary>
-        SW_FORCEMINIMIZE = 11,
+        SW_FORCEMINIMIZE = 11
     }
 }

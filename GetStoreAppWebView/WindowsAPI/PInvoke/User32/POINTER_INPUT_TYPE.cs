@@ -1,5 +1,8 @@
 ﻿namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
 {
+    /// <summary>
+    /// 标识指针输入类型。
+    /// </summary>
     public enum POINTER_INPUT_TYPE
     {
         /// <summary>
@@ -25,6 +28,6 @@
         /// <summary>
         /// 触摸板指针类型 (Windows 8.1 及更高版本) 。
         /// </summary>
-        PT_TOUCHPAD = 5,
+        PT_TOUCHPAD = 5
     }
 }

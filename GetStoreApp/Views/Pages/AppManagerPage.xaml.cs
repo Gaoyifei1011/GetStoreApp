@@ -163,18 +163,82 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private PackageSignKind _signType = PackageSignKind.Store;
+        private bool _isStoreSignatureSelected = true;
 
-        public PackageSignKind SignType
+        public bool IsStoreSignatureSelected
         {
-            get { return _signType; }
+            get { return _isStoreSignatureSelected; }
 
             set
             {
-                if (!Equals(_signType, value))
+                if (!Equals(_isStoreSignatureSelected, value))
                 {
-                    _signType = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SignType)));
+                    _isStoreSignatureSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsStoreSignatureSelected)));
+                }
+            }
+        }
+
+        private bool _isSystemSignatureSelected = false;
+
+        public bool IsSystemSignatureSelected
+        {
+            get { return _isSystemSignatureSelected; }
+
+            set
+            {
+                if (!Equals(_isSystemSignatureSelected, value))
+                {
+                    _isSystemSignatureSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSystemSignatureSelected)));
+                }
+            }
+        }
+
+        private bool _isEnterpriseSignatureSelected = false;
+
+        public bool IsEnterpriseSignatureSelected
+        {
+            get { return _isEnterpriseSignatureSelected; }
+
+            set
+            {
+                if (!Equals(_isEnterpriseSignatureSelected, value))
+                {
+                    _isEnterpriseSignatureSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsEnterpriseSignatureSelected)));
+                }
+            }
+        }
+
+        private bool _isDeveloperSignatureSelected = false;
+
+        public bool IsDeveloperSignatureSelected
+        {
+            get { return _isDeveloperSignatureSelected; }
+
+            set
+            {
+                if (!Equals(_isDeveloperSignatureSelected, value))
+                {
+                    _isDeveloperSignatureSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDeveloperSignatureSelected)));
+                }
+            }
+        }
+
+        private bool _isNoneSignatureSelected = false;
+
+        public bool IsNoneSignatureSelected
+        {
+            get { return _isNoneSignatureSelected; }
+
+            set
+            {
+                if (!Equals(_isNoneSignatureSelected, value))
+                {
+                    _isNoneSignatureSelected = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNoneSignatureSelected)));
                 }
             }
         }
@@ -1200,15 +1264,29 @@ namespace GetStoreApp.Views.Pages
         private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
             ToggleButton toggleButton = sender as ToggleButton;
-            if (toggleButton is not null)
+            if (toggleButton is not null && toggleButton.Tag is not null)
             {
-                if (SignType.HasFlag((PackageSignKind)toggleButton.Tag))
+                PackageSignatureKind signatureKind = (PackageSignatureKind)toggleButton.Tag;
+
+                if (signatureKind is PackageSignatureKind.Store)
                 {
-                    SignType &= ~(PackageSignKind)toggleButton.Tag;
+                    IsStoreSignatureSelected = !IsStoreSignatureSelected;
                 }
-                else
+                else if (signatureKind is PackageSignatureKind.System)
                 {
-                    SignType |= (PackageSignKind)toggleButton.Tag;
+                    IsSystemSignatureSelected = !IsSystemSignatureSelected;
+                }
+                else if (signatureKind is PackageSignatureKind.Enterprise)
+                {
+                    IsEnterpriseSignatureSelected = !IsEnterpriseSignatureSelected;
+                }
+                else if (signatureKind is PackageSignatureKind.Developer)
+                {
+                    IsDeveloperSignatureSelected = !IsDeveloperSignatureSelected;
+                }
+                else if (signatureKind is PackageSignatureKind.None)
+                {
+                    IsNoneSignatureSelected = !IsNoneSignatureSelected;
                 }
 
                 needToRefreshData = true;
@@ -1350,23 +1428,23 @@ namespace GetStoreApp.Views.Pages
                     List<Package> filteredList = [];
                     foreach (Package packageItem in appTypesList)
                     {
-                        if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && SignType.HasFlag(PackageSignKind.Store))
+                        if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
                         {
                             filteredList.Add(packageItem);
                         }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && SignType.HasFlag(PackageSignKind.System))
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
                         {
                             filteredList.Add(packageItem);
                         }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && SignType.HasFlag(PackageSignKind.Enterprise))
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                         {
                             filteredList.Add(packageItem);
                         }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && SignType.HasFlag(PackageSignKind.Developer))
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                         {
                             filteredList.Add(packageItem);
                         }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && SignType.HasFlag(PackageSignKind.None))
+                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
                         {
                             filteredList.Add(packageItem);
                         }

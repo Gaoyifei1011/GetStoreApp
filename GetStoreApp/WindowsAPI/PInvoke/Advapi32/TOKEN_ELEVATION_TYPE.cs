@@ -15,6 +15,6 @@
         /// <summary>
         /// 令牌是有限的令牌。
         /// </summary>
-        TokenElevationTypeLimited = 3,
+        TokenElevationTypeLimited = 3
     }
 }

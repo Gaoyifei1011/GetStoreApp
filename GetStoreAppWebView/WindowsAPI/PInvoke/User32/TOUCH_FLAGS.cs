@@ -11,6 +11,6 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 默认值。
         /// </summary>
-        TOUCH_FLAG_NONE = 0x00000000,
+        TOUCH_FLAG_NONE = 0x00000000
     }
 }

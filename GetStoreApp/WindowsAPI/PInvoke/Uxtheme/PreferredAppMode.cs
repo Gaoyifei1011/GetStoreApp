@@ -1,7 +1,7 @@
 ﻿namespace GetStoreApp.WindowsAPI.PInvoke.Uxtheme
 {
     /// <summary>
-    /// 菜单样式
+    /// 菜单主题样式
     /// </summary>
     public enum PreferredAppMode
     {

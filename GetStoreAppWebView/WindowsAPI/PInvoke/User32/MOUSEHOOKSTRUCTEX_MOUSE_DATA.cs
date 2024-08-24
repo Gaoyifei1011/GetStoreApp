@@ -13,6 +13,6 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 按下或释放第二个 X 按钮。
         /// </summary>
-        XBUTTON2 = 0x00000002,
+        XBUTTON2 = 0x00000002
     }
 }

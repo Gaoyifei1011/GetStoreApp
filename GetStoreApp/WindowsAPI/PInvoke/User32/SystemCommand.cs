@@ -99,6 +99,6 @@
         /// <summary>
         /// 使用指针将光标更改为问号。 如果用户随后单击对话框中的控件，该控件将收到 WM_HELP 消息。
         /// </summary>
-        SC_CONTEXTHELP = 0xF180,
+        SC_CONTEXTHELP = 0xF180
     }
 }

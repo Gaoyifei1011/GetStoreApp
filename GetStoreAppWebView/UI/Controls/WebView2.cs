@@ -721,7 +721,7 @@ namespace GetStoreAppWebView.UI.Controls
             if (args.VirtualKey is VirtualKey.Tab && args.EventType is CoreAcceleratorKeyEventType.KeyDown && webHasFocus && args.Handled)
             {
                 UIntPtr wparam = new((int)VirtualKey.Tab);
-                IntPtr lparam = new(WebView2Utility.MakeLParam(0x0001, 0x000f));
+                IntPtr lparam = new(WebView2Helper.MakeLParam(0x0001, 0x000f));
 
                 if (inputWindowHwnd != IntPtr.Zero)
                 {
@@ -950,24 +950,24 @@ namespace GetStoreAppWebView.UI.Controls
                     }
                     else
                     {
-                        IntPtr lparam = WebView2Utility.PackIntoWin32StylePointerArgs_lparam(physicalPoint);
-                        UIntPtr wparam = WebView2Utility.PackIntoWin32StyleMouseArgs_wparam(message, args, logicalPointerPoint);
+                        IntPtr lparam = WebView2Helper.PackIntoWin32StylePointerArgs_lparam(physicalPoint);
+                        UIntPtr wparam = WebView2Helper.PackIntoWin32StyleMouseArgs_wparam(message, args, logicalPointerPoint);
 
-                        Point coords_win32 = new((short)WebView2Utility.LoWord(lparam), (short)WebView2Utility.HiWord(lparam));
+                        Point coords_win32 = new((short)WebView2Helper.LoWord(lparam), (short)WebView2Helper.HiWord(lparam));
                         Point coords = new(coords_win32.X, coords_win32.Y);
 
                         //对于鼠标滚轮滚动和 XBUTTON 事件，鼠标数据是非零的
                         uint mouse_data = 0;
                         if (message is WindowMessage.WM_MOUSEWHEEL || message is WindowMessage.WM_MOUSEHWHEEL)
                         {
-                            mouse_data = (uint)WebView2Utility.GetWheelDataWParam(wparam);
+                            mouse_data = (uint)WebView2Helper.GetWheelDataWParam(wparam);
                         }
                         else if (message is WindowMessage.WM_XBUTTONDOWN || message is WindowMessage.WM_XBUTTONUP || message is WindowMessage.WM_XBUTTONDBLCLK)
                         {
-                            mouse_data = (uint)WebView2Utility.GetXButtonWParam(wparam);
+                            mouse_data = (uint)WebView2Helper.GetXButtonWParam(wparam);
                         }
 
-                        coreWebViewCompositionController.SendMouseInput((CoreWebView2MouseEventKind)message, (CoreWebView2MouseEventVirtualKeys)WebView2Utility.GetKeystateWParam(wparam), mouse_data, coords);
+                        coreWebViewCompositionController.SendMouseInput((CoreWebView2MouseEventKind)message, (CoreWebView2MouseEventVirtualKeys)WebView2Helper.GetKeystateWParam(wparam), mouse_data, coords);
                     }
                 }
                 else if (deviceType is PointerDeviceType.Touch || deviceType is PointerDeviceType.Pen)

@@ -7,6 +7,6 @@
     {
         Desktop = 0,
         StartScreen = 1,
-        Taskbar = 2,
+        Taskbar = 2
     }
 }

@@ -230,6 +230,6 @@
 
         TokenIsAppSilo = 48,
 
-        MaxTokenInfoClass,
+        MaxTokenInfoClass = 49
     }
 }

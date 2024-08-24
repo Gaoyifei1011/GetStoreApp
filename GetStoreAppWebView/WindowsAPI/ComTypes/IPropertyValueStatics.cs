@@ -285,7 +285,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="valueLength">数组长度</param>
         /// <param name="value">要存储的 Unicode 字符数组。</param>
         /// <param name="propertyValue"></param>
-        /// <returns></returns>
+        /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
         int CreateChar16Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] char[] value, out IntPtr propertyValue);
 

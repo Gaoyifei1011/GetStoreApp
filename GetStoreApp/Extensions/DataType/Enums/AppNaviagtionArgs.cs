@@ -10,6 +10,6 @@
         History = 2,
         Instructions = 3,
         SettingsHelp = 4,
-        DownloadOptions = 5,
+        DownloadOptions = 5
     }
 }

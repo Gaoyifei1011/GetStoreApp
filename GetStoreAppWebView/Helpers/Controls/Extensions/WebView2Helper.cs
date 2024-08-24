@@ -13,7 +13,7 @@ namespace GetStoreAppWebView.Helpers.Controls.Extensions
     /// 这些实用程序将 WinRT 事件参数转换为 Win32 事件参数，并发送给 WebView
     /// 参考 winuser.h 输入的代码：https://docs.microsoft.com/en-us/windows/desktop/api/winuser/
     /// </summary>
-    public static class WebView2Utility
+    public static class WebView2Helper
     {
         public static short GetWheelDataWParam(UIntPtr wParam)
         {
@@ -131,14 +131,6 @@ namespace GetStoreAppWebView.Helpers.Controls.Extensions
 
             UIntPtr wParam = new(MakeWParam(lowWord, highWord));
             return wParam;
-        }
-
-        public static void ScheduleActionAfterWait(CoreDispatcher Dispatcher, Action action, uint millisecondWait)
-        {
-            // 给 CreateTimer 的回调在 UI 线程中被调用。
-            // 为了使这个有用，我们可以与 XAML 对象进行交互，
-            // 在执行 UI 线程之前，我们将使用调度程序先将我们的工作发布到UI线程。
-            ThreadPoolTimer timer = ThreadPoolTimer.CreateTimer(async _ => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action()), TimeSpan.FromMilliseconds(millisecondWait));
         }
     }
 }

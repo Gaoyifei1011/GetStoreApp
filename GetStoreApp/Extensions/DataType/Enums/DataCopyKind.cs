@@ -18,6 +18,6 @@
         ResultLink = 10,
         WinGetSearchInstall = 11,
         WinGetUnInstall = 12,
-        WinGetUpgradeInstall = 13,
+        WinGetUpgradeInstall = 13
     }
 }

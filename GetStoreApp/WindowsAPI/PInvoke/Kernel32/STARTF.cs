@@ -93,6 +93,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// 不再需要句柄时，必须使用 CloseHandle 关闭句柄。
         /// 此标志不能与 STARTF_USEHOTKEY 一起使用。
         /// </summary>
-        STARTF_USESTDHANDLES = 0x00000100,
+        STARTF_USESTDHANDLES = 0x00000100
     }
 }

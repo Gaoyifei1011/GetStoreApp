@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:appManager="using:GetStoreApp.Models.Controls.AppManager"
+    xmlns:applicationModel="using:Windows.ApplicationModel"
     xmlns:collection="using:System.Collections"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -286,8 +287,8 @@
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnSignatureRuleClicked}"
                                             Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureStore')}"
-                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Store), Mode=OneWay}"
-                                            Tag="{x:Bind enum:PackageSignKind.Store}" />
+                                            IsChecked="{x:Bind IsStoreSignatureSelected, Mode=OneWay}"
+                                            Tag="{x:Bind applicationModel:PackageSignatureKind.Store}" />
 
                                         <ToggleButton
                                             Grid.Row="0"
@@ -295,8 +296,8 @@
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnSignatureRuleClicked}"
                                             Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureSystem')}"
-                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.System), Mode=OneWay}"
-                                            Tag="{x:Bind enum:PackageSignKind.System}" />
+                                            IsChecked="{x:Bind IsSystemSignatureSelected, Mode=OneWay}"
+                                            Tag="{x:Bind applicationModel:PackageSignatureKind.System}" />
 
                                         <ToggleButton
                                             Grid.Row="0"
@@ -304,8 +305,8 @@
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnSignatureRuleClicked}"
                                             Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureEnterprise')}"
-                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Enterprise), Mode=OneWay}"
-                                            Tag="{x:Bind enum:PackageSignKind.Enterprise}" />
+                                            IsChecked="{x:Bind IsEnterpriseSignatureSelected, Mode=OneWay}"
+                                            Tag="{x:Bind applicationModel:PackageSignatureKind.Enterprise}" />
 
                                         <ToggleButton
                                             Grid.Row="0"
@@ -313,8 +314,8 @@
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnSignatureRuleClicked}"
                                             Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureDeveloper')}"
-                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.Developer), Mode=OneWay}"
-                                            Tag="{x:Bind enum:PackageSignKind.Developer}" />
+                                            IsChecked="{x:Bind IsDeveloperSignatureSelected, Mode=OneWay}"
+                                            Tag="{x:Bind applicationModel:PackageSignatureKind.Developer}" />
 
                                         <ToggleButton
                                             Grid.Row="0"
@@ -322,8 +323,8 @@
                                             HorizontalAlignment="Stretch"
                                             Click="{x:Bind OnSignatureRuleClicked}"
                                             Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureNone')}"
-                                            IsChecked="{x:Bind converter:ValueCheckConverterHelper.IsEnumHasFlag(SignType, enum:PackageSignKind.None), Mode=OneWay}"
-                                            Tag="{x:Bind enum:PackageSignKind.None}" />
+                                            IsChecked="{x:Bind IsNoneSignatureSelected, Mode=OneWay}"
+                                            Tag="{x:Bind applicationModel:PackageSignatureKind.None}" />
                                     </Grid>
                                 </StackPanel>
                             </Flyout>

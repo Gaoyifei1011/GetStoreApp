@@ -21,6 +21,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <summary>
         /// 标准错误设备。 最初，这是活动控制台屏幕缓冲区 CONOUT$。
         /// </summary>
-        STD_ERROR_HANDLE = -12,
+        STD_ERROR_HANDLE = -12
     }
 }

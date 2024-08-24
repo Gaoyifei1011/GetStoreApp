@@ -23,6 +23,6 @@
         /// <summary>
         /// POINTER_TOUCH_INFO 结构的 pressure 字段有效。
         /// </summary>
-        TOUCH_MASK_PRESSURE = 0x00000004,
+        TOUCH_MASK_PRESSURE = 0x00000004
     }
 }
