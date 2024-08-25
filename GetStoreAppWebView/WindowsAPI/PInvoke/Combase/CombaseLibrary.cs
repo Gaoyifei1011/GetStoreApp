@@ -18,7 +18,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.Combase
         /// <param name="factory">激活工厂。</param>
         /// <returns>如果此函数成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [DllImport(Combase, CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "RoGetActivationFactory", SetLastError = false), PreserveSig]
-        public static extern int RoGetActivationFactory(IntPtr activatableClassId, [MarshalAs(UnmanagedType.LPStruct)] Guid iid, out IntPtr factory);
+        public static extern int RoGetActivationFactory(IntPtr activatableClassId, Guid iid, out IntPtr factory);
 
         /// <summary>
         /// 基于指定的源字符串创建新的 HSTRING 。

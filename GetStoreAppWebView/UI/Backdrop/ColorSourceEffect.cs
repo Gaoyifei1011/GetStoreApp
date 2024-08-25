@@ -11,8 +11,6 @@ namespace GetStoreAppWebView.UI.Backdrop
     [Guid("61C23C20-AE69-4D8E-94CF-50078DF638F2")]
     public sealed class ColorSourceEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
-        private Guid clsid = new("61C23C20-AE69-4D8E-94CF-50078DF638F2");
-
         public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
 
         public bool CacheOutput { get; set; }
@@ -37,7 +35,7 @@ namespace GetStoreAppWebView.UI.Backdrop
 
         public int GetEffectId(out Guid id)
         {
-            id = clsid;
+            id = typeof(ColorSourceEffect).GUID;
             return 0;
         }
 

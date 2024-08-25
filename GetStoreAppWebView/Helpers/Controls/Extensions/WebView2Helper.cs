@@ -2,8 +2,6 @@
 using System;
 using Windows.Foundation;
 using Windows.System;
-using Windows.System.Threading;
-using Windows.UI.Core;
 using Windows.UI.Input;
 using Windows.UI.Xaml.Input;
 

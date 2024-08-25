@@ -9,8 +9,6 @@ namespace GetStoreAppWebView.UI.Backdrop
     [Guid("12F575E8-4DB1-485F-9A84-03A07DD3829F")]
     public sealed class CrossFadeEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
-        private Guid clsid = new("12F575E8-4DB1-485F-9A84-03A07DD3829F");
-
         public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
 
         public bool CacheOutput { get; set; }
@@ -32,7 +30,7 @@ namespace GetStoreAppWebView.UI.Backdrop
 
         public int GetEffectId(out Guid id)
         {
-            id = clsid;
+            id = typeof(CrossFadeEffect).GUID;
             return 0;
         }
 

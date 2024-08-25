@@ -9,8 +9,6 @@ namespace GetStoreAppWebView.UI.Backdrop
     [Guid("811D79A4-DE28-4454-8094-C64685F8BD4C")]
     public sealed class OpacityEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
-        private Guid clsid = new("811D79A4-DE28-4454-8094-C64685F8BD4C");
-
         public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
 
         public bool CacheOutput { get; set; }
@@ -30,7 +28,7 @@ namespace GetStoreAppWebView.UI.Backdrop
 
         public int GetEffectId(out Guid id)
         {
-            id = clsid;
+            id = typeof(OpacityEffect).GUID;
             return 0;
         }
 

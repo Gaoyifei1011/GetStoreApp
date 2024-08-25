@@ -8,7 +8,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// 公开检索有关 Shell 项的信息的方法。 IShellItem 和 IShellItem2 是任何新代码中项的首选表示形式。
     /// IShellItem 接口继承自 IUnknown 接口。
     /// </summary>
-    [GeneratedComInterface, Guid("43826D1E-E718-42EE-BC55-A1E261C37BFE"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GeneratedComInterface, Guid("43826D1E-E718-42EE-BC55-A1E261C37BFE")]
     public partial interface IShellItem
     {
         /// <summary>

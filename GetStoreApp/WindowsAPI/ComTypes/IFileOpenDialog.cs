@@ -7,7 +7,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     /// <summary>
     /// 通过添加特定于打开对话框的方法扩展 IFileOpenDialog 接口。
     /// </summary>
-    [GeneratedComInterface, Guid("42F85136-DB7E-439C-85F1-E4075D135FC8"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GeneratedComInterface, Guid("42F85136-DB7E-439C-85F1-E4075D135FC8")]
     public partial interface IFileOpenDialog
     {
         /// <summary>

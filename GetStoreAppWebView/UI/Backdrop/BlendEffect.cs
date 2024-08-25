@@ -9,8 +9,6 @@ namespace GetStoreAppWebView.UI.Backdrop
     [Guid("81C5B77B-13F8-4CDD-AD20-C890547AC65D")]
     public sealed class BlendEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
-        private Guid clsid = new("81C5B77B-13F8-4CDD-AD20-C890547AC65D");
-
         public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
 
         public bool CacheOutput { get; set; }
@@ -32,7 +30,7 @@ namespace GetStoreAppWebView.UI.Backdrop
 
         public int GetEffectId(out Guid id)
         {
-            id = clsid;
+            id = typeof(BlendEffect).GUID;
             return 0;
         }
 
