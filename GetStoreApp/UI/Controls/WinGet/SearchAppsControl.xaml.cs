@@ -113,8 +113,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnCopyInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appId = args.Parameter as string;
-            if (!string.IsNullOrEmpty(appId))
+            if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
                 string copyContent = string.Format("winget install {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
@@ -128,8 +127,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            SearchAppsModel searchApps = args.Parameter as SearchAppsModel;
-            if (searchApps is not null)
+            if (args.Parameter is SearchAppsModel searchApps)
             {
                 Task.Run(async () =>
                 {
@@ -417,8 +415,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appId = args.Parameter as string;
-            if (appId is not null)
+            if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
                 Task.Run(() =>
                 {
@@ -484,8 +481,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
-            if (autoSuggestBox is not null)
+            if (sender is AutoSuggestBox autoSuggestBox)
             {
                 SearchText = autoSuggestBox.Text;
             }
@@ -517,10 +513,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
                     PackageCatalogReference catalogRef = SearchAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
-                    ConnectResult connectResult = await catalogRef.ConnectAsync();
-                    PackageCatalog searchCatalog = connectResult.PackageCatalog;
 
-                    if (searchCatalog is not null)
+                    if ((await catalogRef.ConnectAsync()).PackageCatalog is PackageCatalog searchCatalog)
                     {
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         PackageMatchFilter nameMatchFilter = WinGetService.CreatePacakgeMatchFilter();
@@ -529,7 +523,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         nameMatchFilter.Option = PackageFieldMatchOption.ContainsCaseInsensitive;
                         nameMatchFilter.Value = cachedSearchText;
                         findPackagesOptions.Filters.Add(nameMatchFilter);
-                        FindPackagesResult findResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
+                        FindPackagesResult findResult = await searchCatalog.FindPackagesAsync(findPackagesOptions);
 
                         for (int index = 0; index < findResult.Matches.Count; index++)
                         {

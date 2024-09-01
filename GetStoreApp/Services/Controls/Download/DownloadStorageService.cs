@@ -127,9 +127,7 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     foreach (KeyValuePair<string, object> downloadItemKey in downloadStorageContainer.Values)
                     {
-                        ApplicationDataCompositeValue compositeValue = downloadItemKey.Value as ApplicationDataCompositeValue;
-
-                        if (compositeValue is not null)
+                        if (downloadItemKey.Value is ApplicationDataCompositeValue compositeValue)
                         {
                             downloadSchedulerList.Add(new DownloadSchedulerModel()
                             {

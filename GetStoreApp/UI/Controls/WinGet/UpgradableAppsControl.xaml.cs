@@ -99,8 +99,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnCopyUpgradeTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appId = args.Parameter as string;
-            if (!string.IsNullOrEmpty(appId))
+            if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
                 string copyContent = string.Format("winget install {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
@@ -114,8 +113,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appId = args.Parameter as string;
-            if (!string.IsNullOrEmpty(appId))
+            if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
                 Task.Run(() =>
                 {
@@ -129,8 +127,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            UpgradableAppsModel upgradableApps = args.Parameter as UpgradableAppsModel;
-            if (upgradableApps is not null)
+            if (args.Parameter is UpgradableAppsModel upgradableApps)
             {
                 Task.Run(async () =>
                 {
@@ -526,10 +523,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
                     createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
                     PackageCatalogReference packageCatalogReference = UpgradableAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
-                    ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
-                    PackageCatalog upgradableCatalog = connectResult.PackageCatalog;
 
-                    if (upgradableCatalog is not null)
+                    if ((await packageCatalogReference.ConnectAsync()).PackageCatalog is PackageCatalog upgradableCatalog)
                     {
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         FindPackagesResult findResult = await upgradableCatalog.FindPackagesAsync(findPackagesOptions);

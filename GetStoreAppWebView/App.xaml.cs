@@ -35,60 +35,55 @@ namespace GetStoreAppWebView
         {
             base.OnActivated(args);
 
-            if (args.Kind is ActivationKind.Protocol)
+            if (args.Kind is ActivationKind.Protocol && args is ProtocolActivatedEventArgs protocolActivatedEventArgs && protocolActivatedEventArgs.PreviousExecutionState is not ApplicationExecutionState.Running)
             {
-                ProtocolActivatedEventArgs protocolActivatedEventArgs = args as ProtocolActivatedEventArgs;
-
-                if (protocolActivatedEventArgs.PreviousExecutionState is not ApplicationExecutionState.Running)
+                if (protocolActivatedEventArgs.Uri.AbsoluteUri is "webbrowser:")
                 {
-                    if (protocolActivatedEventArgs.Uri.AbsoluteUri is "webbrowser:")
-                    {
-                        Window.Current.Content = new MainPage();
-                        Window.Current.Activate();
-                    }
-                    else if (protocolActivatedEventArgs.Uri.AbsoluteUri is "taskbarpinner:")
-                    {
-                        ApplicationView applicationView = ApplicationView.GetForCurrentView();
-                        CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
-                        Window.Current.Content = new TaskbarPinPage();
-                        applicationView.Title = ResourceService.GetLocalized("WebView/PinAppToTaskbar");
-                        Window.Current.Activate();
-                        ViewModePreferences preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                        preferences.CustomSize = new Size(400, 200);
-                        await applicationView.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
-                        bool pinResult = false;
+                    Window.Current.Content = new MainPage();
+                    Window.Current.Activate();
+                }
+                else if (protocolActivatedEventArgs.Uri.AbsoluteUri is "taskbarpinner:")
+                {
+                    ApplicationView applicationView = ApplicationView.GetForCurrentView();
+                    CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
+                    Window.Current.Content = new TaskbarPinPage();
+                    applicationView.Title = ResourceService.GetLocalized("WebView/PinAppToTaskbar");
+                    Window.Current.Activate();
+                    ViewModePreferences preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+                    preferences.CustomSize = new Size(400, 200);
+                    await applicationView.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                    bool pinResult = false;
 
-                        try
+                    try
+                    {
+                        if (protocolActivatedEventArgs.Data.Count is 2)
                         {
-                            if (protocolActivatedEventArgs.Data.Count is 2)
-                            {
-                                PackageManager packageManager = new();
-                                Package package = packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string);
+                            PackageManager packageManager = new();
+                            Package package = packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string);
 
-                                if (package is not null)
+                            if (package is not null)
+                            {
+                                foreach (AppListEntry applistItem in package.GetAppListEntries())
                                 {
-                                    foreach (AppListEntry applistItem in package.GetAppListEntries())
+                                    if (applistItem.AppUserModelId.Equals(protocolActivatedEventArgs.Data["AppUserModelId"]))
                                     {
-                                        if (applistItem.AppUserModelId.Equals(protocolActivatedEventArgs.Data["AppUserModelId"]))
-                                        {
-                                            pinResult = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
-                                            break;
-                                        }
+                                        pinResult = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
+                                        break;
                                     }
                                 }
                             }
                         }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed", e);
-                        }
-                        finally
-                        {
-                            ResultService.SaveResult(ConfigKey.TaskbarPinnedResultKey, pinResult);
-                            ApplicationData.Current.SignalDataChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed", e);
+                    }
+                    finally
+                    {
+                        ResultService.SaveResult(ConfigKey.TaskbarPinnedResultKey, pinResult);
+                        ApplicationData.Current.SignalDataChanged();
 
-                            Dispose();
-                        }
+                        Dispose();
                     }
                 }
             }

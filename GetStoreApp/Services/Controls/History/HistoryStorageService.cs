@@ -59,9 +59,7 @@ namespace GetStoreApp.Services.Controls.History
                     {
                         if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value))
                         {
-                            ApplicationDataCompositeValue compositeValue = value as ApplicationDataCompositeValue;
-
-                            if (compositeValue is not null)
+                            if (value is ApplicationDataCompositeValue compositeValue)
                             {
                                 TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
                                 ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
@@ -106,9 +104,7 @@ namespace GetStoreApp.Services.Controls.History
                 {
                     if (searchStoreContainer.Values.TryGetValue(SearchStore + index.ToString(), out object value))
                     {
-                        ApplicationDataCompositeValue compositeValue = value as ApplicationDataCompositeValue;
-
-                        if (compositeValue is not null)
+                        if (value is ApplicationDataCompositeValue compositeValue)
                         {
                             TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
                             ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));

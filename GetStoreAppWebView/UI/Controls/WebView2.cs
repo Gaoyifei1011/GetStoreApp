@@ -169,8 +169,7 @@ namespace GetStoreAppWebView.UI.Controls
         /// </summary>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            FrameworkElement child = Content as FrameworkElement;
-            if (child is not null)
+            if (Content is FrameworkElement child)
             {
                 child.Arrange(new Rect(new Point(0, 0), finalSize));
                 return finalSize;
@@ -224,18 +223,13 @@ namespace GetStoreAppWebView.UI.Controls
             {
                 TryCompleteInitialization();
 
-                if (VisualTreeHelper.GetChildrenCount(this) > 0)
+                if (VisualTreeHelper.GetChildrenCount(this) > 0 && VisualTreeHelper.GetChild(this, 0) is ContentPresenter contentPresenter)
                 {
-                    ContentPresenter contentPresenter = VisualTreeHelper.GetChild(this, 0) as ContentPresenter;
-
-                    if (contentPresenter is not null)
-                    {
-                        contentPresenter.Background = Background;
-                        contentPresenter.HorizontalAlignment = HorizontalAlignment.Stretch;
-                        contentPresenter.VerticalAlignment = VerticalAlignment.Stretch;
-                        contentPresenter.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-                        contentPresenter.VerticalContentAlignment = VerticalAlignment.Stretch;
-                    }
+                    contentPresenter.Background = Background;
+                    contentPresenter.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    contentPresenter.VerticalAlignment = VerticalAlignment.Stretch;
+                    contentPresenter.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+                    contentPresenter.VerticalContentAlignment = VerticalAlignment.Stretch;
                 }
             }
         }
@@ -632,12 +626,9 @@ namespace GetStoreAppWebView.UI.Controls
                 if (contentRoot is not null)
                 {
                     findNextElementOptions.SearchRoot = contentRoot;
-                    DependencyObject nextElement = FocusManager.FindNextElement(xamlDirection, findNextElementOptions);
-
-                    if (nextElement is not null)
+                    if (FocusManager.FindNextElement(xamlDirection, findNextElementOptions) is DependencyObject nextElement)
                     {
-                        WebView2 webView2 = nextElement as WebView2;
-                        if (webView2 is not null)
+                        if (nextElement is WebView2 webView2)
                         {
                             // 如果下一个元素是这个 WebView，那么我们是唯一可聚焦的元素。将焦点移回 WebView，否则我们会被卡在页面的顶部或底部，而不是循环。
                             webView2.MoveFocusIntoCoreWebView(moveFocusRequestedReason);
@@ -1111,9 +1102,7 @@ namespace GetStoreAppWebView.UI.Controls
 
             while (parentAsDO is not null)
             {
-                UIElement parentAsUIE = parentAsDO as UIElement;
-
-                if (parentAsUIE is not null)
+                if (parentAsDO is UIElement parentAsUIE)
                 {
                     Visibility parentVisibility = parentAsUIE.Visibility;
 
@@ -1321,9 +1310,7 @@ namespace GetStoreAppWebView.UI.Controls
                     {
                         // 如果我们还不知道父节点，要么使用 CoreWindow 作为父节点，或者如果我们没有，创建一个虚拟 hwnd 作为临时父节点。
                         // 一直使用虚拟父类是行不通的，因为我们不能将浏览器从一个非 ShellManaged的 Hwnd (虚拟)重命名为一个 ShellManaged 的 (CoreWindow)。
-                        CoreWindow coreWindow = CoreWindow.GetForCurrentThread();
-
-                        if (coreWindow is not null)
+                        if (CoreWindow.GetForCurrentThread() is CoreWindow coreWindow)
                         {
                             ICoreWindowInterop coreWindowInterop = coreWindow as object as ICoreWindowInterop;
                             coreWindowInterop.GetWindowHandle(out tempHostHwnd);
@@ -1417,14 +1404,10 @@ namespace GetStoreAppWebView.UI.Controls
         /// </summary>
         private IntPtr GetHostHwnd()
         {
-            if (xamlHostHwnd == IntPtr.Zero)
+            if (xamlHostHwnd == IntPtr.Zero && CoreWindow.GetForCurrentThread() is CoreWindow coreWindow)
             {
-                CoreWindow coreWindow = CoreWindow.GetForCurrentThread();
-                if (coreWindow is not null)
-                {
-                    ICoreWindowInterop coreWindowInterop = coreWindow as object as ICoreWindowInterop;
-                    coreWindowInterop.GetWindowHandle(out xamlHostHwnd);
-                }
+                ICoreWindowInterop coreWindowInterop = coreWindow as object as ICoreWindowInterop;
+                coreWindowInterop.GetWindowHandle(out xamlHostHwnd);
             }
 
             return xamlHostHwnd;
@@ -1492,8 +1475,7 @@ namespace GetStoreAppWebView.UI.Controls
             KeyDown += OnKeyDown;
 
             // 注意：我们没有在 Islands / win32 中直接模拟AcceleratorKeyActivated 与 DispatcherQueue。
-            CoreWindow coreWindow = CoreWindow.GetForCurrentThread();
-            if (coreWindow is not null)
+            if (CoreWindow.GetForCurrentThread() is CoreWindow coreWindow)
             {
                 coreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
             }
@@ -1610,9 +1592,7 @@ namespace GetStoreAppWebView.UI.Controls
             {
                 // 在一个非 CoreWindow 的场景中，我们可能已经创建了 CoreWebView2，它的父节点是一个虚拟 hwnd (参考 ensuretemporaryhostthwnd())，在这种情况下，我们需要更新以在这里使用真正的父节点。
                 // 如果我们使用了一个 CoreWindow 父类，这个 hwnd 不会改变。CoreWebView2 不允许我们进行切换使用 CoreWindow 作为 XamlRoot 的父类。
-                CoreWindow coreWindow = CoreWindow.GetForCurrentThread();
-
-                if (coreWindow is not null)
+                if (CoreWindow.GetForCurrentThread() is CoreWindow coreWindow)
                 {
                     IntPtr prevParentWindow = xamlHostHwnd;
                     xamlHostHwnd = IntPtr.Zero;
@@ -1740,8 +1720,7 @@ namespace GetStoreAppWebView.UI.Controls
             PointerCaptureLost -= OnPointerCaptureLost;
             KeyDown -= OnKeyDown;
 
-            CoreWindow coreWindow = CoreWindow.GetForCurrentThread();
-            if (coreWindow is not null)
+            if (CoreWindow.GetForCurrentThread() is CoreWindow coreWindow)
             {
                 coreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
             }

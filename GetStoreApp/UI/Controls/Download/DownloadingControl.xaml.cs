@@ -331,12 +331,14 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemClickEventArgs args)
         {
-            DownloadingModel downloadingItem = args.ClickedItem as DownloadingModel;
-            int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
-
-            if (clickedIndex >= 0 && clickedIndex < DownloadingCollection.Count)
+            if (args.ClickedItem is DownloadingModel downloadingItem)
             {
-                DownloadingCollection[clickedIndex].IsSelected = !DownloadingCollection[clickedIndex].IsSelected;
+                int clickedIndex = DownloadingCollection.IndexOf(downloadingItem);
+
+                if (clickedIndex >= 0 && clickedIndex < DownloadingCollection.Count)
+                {
+                    DownloadingCollection[clickedIndex].IsSelected = !DownloadingCollection[clickedIndex].IsSelected;
+                }
             }
         }
 

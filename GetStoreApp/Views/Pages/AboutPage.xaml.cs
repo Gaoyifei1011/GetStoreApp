@@ -173,9 +173,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     IReadOnlyList<AppListEntry> appEntries = await Package.Current.GetAppListEntriesAsync();
 
-                    AppListEntry defaultEntry = appEntries[0];
-
-                    if (defaultEntry is not null)
+                    if (appEntries[0] is AppListEntry defaultEntry)
                     {
                         StartScreenManager startScreenManager = StartScreenManager.GetDefault();
 
@@ -303,20 +301,14 @@ namespace GetStoreApp.Views.Pages
                             httpClient.Dispose();
                             responseMessage.Dispose();
 
-                            if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                            if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name").Remove(0, 1)) is Version tagVersion)
                             {
-                                string tag = responseStringObject.GetNamedString("tag_name").Remove(0, 1);
-                                Version tagVersion = new(tag);
+                                bool isNewest = InfoHelper.AppVersion >= tagVersion;
 
-                                if (tagVersion is not null)
+                                DispatcherQueue.TryEnqueue(async () =>
                                 {
-                                    bool isNewest = InfoHelper.AppVersion >= tagVersion;
-
-                                    DispatcherQueue.TryEnqueue(async () =>
-                                    {
-                                        await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
-                                    });
-                                }
+                                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
+                                });
                             }
                         }
                         else

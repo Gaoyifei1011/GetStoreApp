@@ -108,8 +108,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            CompletedModel completedItem = args.Parameter as CompletedModel;
-            if (completedItem is not null)
+            if (args.Parameter is CompletedModel completedItem)
             {
                 if (completedItem.IsInstalling is true)
                 {
@@ -138,8 +137,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnDeleteWithFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            CompletedModel completedItem = args.Parameter as CompletedModel;
-            if (completedItem is not null)
+            if (args.Parameter is CompletedModel completedItem)
             {
                 if (completedItem.IsInstalling is true)
                 {
@@ -181,9 +179,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnFileInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            CompletedModel completedItem = args.Parameter as CompletedModel;
-
-            if (completedItem is not null && File.Exists(completedItem.FilePath))
+            if (args.Parameter is CompletedModel completedItem && File.Exists(completedItem.FilePath))
             {
                 await ContentDialogHelper.ShowAsync(new FileInformationDialog(completedItem), this);
             }
@@ -198,8 +194,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            CompletedModel completedItem = args.Parameter as CompletedModel;
-            if (completedItem is not null && File.Exists(completedItem.FilePath))
+            if (args.Parameter is CompletedModel completedItem && File.Exists(completedItem.FilePath))
             {
                 await Task.Run(async () =>
                 {
@@ -328,38 +323,40 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnOpenItemFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string filePath = args.Parameter as string;
-            Task.Run(async () =>
+            if (args.Parameter is string filePath)
             {
-                if (File.Exists(filePath))
+                Task.Run(async () =>
                 {
-                    // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
-                    if (!string.IsNullOrEmpty(filePath))
+                    if (File.Exists(filePath))
                     {
-                        try
+                        // 定位文件，若定位失败，则仅启动资源管理器并打开桌面目录
+                        if (!string.IsNullOrEmpty(filePath))
                         {
-                            StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
-                            StorageFolder folder = await file.GetParentAsync();
-                            FolderLauncherOptions options = new();
-                            options.ItemsToSelect.Add(file);
-                            await Launcher.LaunchFolderAsync(folder, options);
+                            try
+                            {
+                                StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+                                StorageFolder folder = await file.GetParentAsync();
+                                FolderLauncherOptions options = new();
+                                options.ItemsToSelect.Add(file);
+                                await Launcher.LaunchFolderAsync(folder, options);
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Completed download completedItem folder located failed.", e);
+                                await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                            }
                         }
-                        catch (Exception e)
+                        else
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "Completed download completedItem folder located failed.", e);
                             await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
                         }
                     }
                     else
                     {
-                        await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Desktop);
+                        await Launcher.LaunchFolderAsync(DownloadOptionsService.DownloadFolder);
                     }
-                }
-                else
-                {
-                    await Launcher.LaunchFolderAsync(DownloadOptionsService.DownloadFolder);
-                }
-            });
+                });
+            }
         }
 
         /// <summary>
@@ -367,9 +364,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private async void OnShareFileExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            CompletedModel completedItem = args.Parameter as CompletedModel;
-
-            if (completedItem is not null && File.Exists(completedItem.FilePath))
+            if (args.Parameter is CompletedModel completedItem && File.Exists(completedItem.FilePath))
             {
                 try
                 {
@@ -653,12 +648,14 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnItemInvoked(object sender, ItemClickEventArgs args)
         {
-            CompletedModel completedItem = args.ClickedItem as CompletedModel;
-            int clickedIndex = CompletedCollection.IndexOf(completedItem);
-
-            if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)
+            if (args.ClickedItem is CompletedModel completedItem)
             {
-                CompletedCollection[clickedIndex].IsSelected = !CompletedCollection[clickedIndex].IsSelected;
+                int clickedIndex = CompletedCollection.IndexOf(completedItem);
+
+                if (clickedIndex >= 0 && clickedIndex < CompletedCollection.Count)
+                {
+                    CompletedCollection[clickedIndex].IsSelected = !CompletedCollection[clickedIndex].IsSelected;
+                }
             }
         }
 

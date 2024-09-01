@@ -305,12 +305,12 @@ namespace GetStoreAppWebView.Pages
         {
             IsLoading = false;
             applicationView.Title = string.Format("{0} - {1}", sender.DocumentTitle, ResourceService.GetLocalized("WebView/Title"));
-            if (sender is not null && sender.CanGoBack)
+            if (sender.CanGoBack)
             {
                 sender.GoBack();
             }
 
-            if (sender is not null && sender.CanGoForward)
+            if (sender.CanGoForward)
             {
                 sender.GoForward();
             }
@@ -404,9 +404,7 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private void OnSourceChanged(object sender, CoreWebView2SourceChangedEventArgs args)
         {
-            CoreWebView2 coreWebView2 = sender as CoreWebView2;
-
-            if (coreWebView2 is not null)
+            if (sender is CoreWebView2 coreWebView2)
             {
                 CanGoBack = coreWebView2.CanGoBack;
                 CanGoForward = coreWebView2.CanGoForward;
@@ -419,9 +417,7 @@ namespace GetStoreAppWebView.Pages
         private void OnCoreWebViewNewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs args)
         {
             args.Handled = true;
-
-            CoreWebView2 coreWebView2 = sender as CoreWebView2;
-            coreWebView2?.Navigate(args.Uri);
+            (sender as CoreWebView2)?.Navigate(args.Uri);
         }
 
         #endregion 第四部分：WebView2 浏览器事件

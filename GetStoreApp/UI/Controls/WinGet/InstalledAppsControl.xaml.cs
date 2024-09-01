@@ -144,8 +144,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appId = args.Parameter as string;
-            if (!string.IsNullOrEmpty(appId))
+            if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
                 string copyContent = string.Format("winget uninstall {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
@@ -159,9 +158,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            InstalledAppsModel installedApps = args.Parameter as InstalledAppsModel;
-
-            if (installedApps is not null)
+            if (args.Parameter is InstalledAppsModel installedApps)
             {
                 Task.Run(async () =>
                 {
@@ -244,8 +241,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem)
             {
                 IsIncrease = Convert.ToBoolean(toggleMenuFlyoutItem.Tag);
                 InitializeData();
@@ -257,8 +253,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem)
             {
                 SelectedRule = (AppSortRuleKind)toggleMenuFlyoutItem.Tag;
                 InitializeData();
@@ -293,8 +288,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
-            if (autoSuggestBox is not null)
+            if (sender is AutoSuggestBox autoSuggestBox)
             {
                 SearchText = autoSuggestBox.Text;
                 if (SearchText == string.Empty && MatchResultList.Count > 0)
@@ -318,10 +312,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     PackageCatalogReference searchCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
-                    ConnectResult connectResult = await searchCatalogReference.ConnectAsync();
-                    PackageCatalog installedCatalog = connectResult.PackageCatalog;
-
-                    if (installedCatalog is not null)
+                    if ((await searchCatalogReference.ConnectAsync()).PackageCatalog is PackageCatalog installedCatalog)
                     {
                         FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
                         FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);

@@ -468,4 +468,7 @@
   <data name="WinGetVersionDescription" xml:space="preserve">
     <value>查看 WinGet 应用的当前版本</value>
   </data>
+  <data name="LearnConfig" xml:space="preserve">
+    <value>了解配置</value>
+  </data>
 </root>

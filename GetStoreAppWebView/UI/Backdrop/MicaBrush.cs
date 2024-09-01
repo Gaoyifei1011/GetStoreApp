@@ -46,8 +46,7 @@ namespace GetStoreAppWebView.UI.Backdrop
                 compositionCapabilities.Changed += OnCompositionCapabilitiesChanged;
                 PowerManager.EnergySaverStatusChanged += OnEnergySaverStatusChanged;
 
-                FrameworkElement rootElement = Window.Current.Content as FrameworkElement;
-                if (rootElement is not null)
+                if (Window.Current.Content is FrameworkElement rootElement)
                 {
                     rootElement.ActualThemeChanged += OnActualThemeChanged;
                 }
@@ -70,8 +69,7 @@ namespace GetStoreAppWebView.UI.Backdrop
                 compositionCapabilities.Changed -= OnCompositionCapabilitiesChanged;
                 PowerManager.EnergySaverStatusChanged -= OnEnergySaverStatusChanged;
 
-                FrameworkElement rootElement = Window.Current.Content as FrameworkElement;
-                if (rootElement is not null)
+                if (Window.Current.Content is FrameworkElement rootElement)
                 {
                     rootElement.ActualThemeChanged -= OnActualThemeChanged;
                 }
@@ -141,15 +139,7 @@ namespace GetStoreAppWebView.UI.Backdrop
             {
                 ElementTheme actualTheme = ElementTheme.Default;
 
-                FrameworkElement rootElement = Window.Current.Content as FrameworkElement;
-                if (rootElement is not null)
-                {
-                    actualTheme = rootElement.ActualTheme;
-                }
-                else
-                {
-                    actualTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                }
+                actualTheme = Window.Current.Content is FrameworkElement rootElement ? rootElement.ActualTheme : Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
 
                 if (actualTheme is ElementTheme.Light)
                 {

@@ -561,9 +561,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string aumid = args.Parameter as string;
-
-            if (!string.IsNullOrEmpty(aumid))
+            if (args.Parameter is string aumid && !string.IsNullOrEmpty(aumid))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(aumid);
                 await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppUserModelId, copyResult));
@@ -575,9 +573,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 Task.Run(() =>
                 {
@@ -607,8 +603,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string displayName = args.Parameter as string;
-            if (displayName is not null)
+            if (args.Parameter is string displayName && !string.IsNullOrEmpty(displayName))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(displayName);
                 await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyName, copyResult));
@@ -620,19 +615,20 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
-
-            Task.Run(async () =>
+            if (args.Parameter is AppListEntryModel appListEntryItem)
             {
-                try
+                Task.Run(async () =>
                 {
-                    await appListEntryItem.AppListEntry.LaunchAsync();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
-                }
-            });
+                    try
+                    {
+                        await appListEntryItem.AppListEntry.LaunchAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, string.Format("Open app {0} failed", appListEntryItem.DisplayName), e);
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -640,9 +636,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -663,9 +657,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -687,9 +679,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -710,9 +700,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -733,15 +721,13 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
                     try
                     {
-                        StorageFile file = await StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml"));
-                        if (file is not null)
+                        if (await StorageFile.GetFileFromPathAsync(Path.Combine(package.InstalledPath, "AppxManifest.xml")) is StorageFile file)
                         {
                             await Launcher.LaunchFileAsync(file);
                         }
@@ -759,9 +745,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 Task.Run(async () =>
                 {
@@ -813,9 +797,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
-
-            if (appListEntryItem is not null)
+            if (args.Parameter is AppListEntryModel appListEntryItem)
             {
                 Task.Run(async () =>
                 {
@@ -847,11 +829,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            AppListEntryModel appListEntryItem = args.Parameter as AppListEntryModel;
-
-            Task.Run(async () =>
+            if (args.Parameter is AppListEntryModel appListEntryItem)
             {
-                if (appListEntryItem is not null)
+                Task.Run(async () =>
                 {
                     try
                     {
@@ -865,8 +845,8 @@ namespace GetStoreApp.Views.Pages
                     {
                         LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
                     }
-                }
-            });
+                });
+            }
         }
 
         /// <summary>
@@ -874,8 +854,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnShowMoreExecuteRequested(object sender, ExecuteRequestedEventArgs args)
         {
-            HyperlinkButton hyperlinkButton = args.Parameter as HyperlinkButton;
-            if (hyperlinkButton is not null)
+            if (args.Parameter is HyperlinkButton hyperlinkButton)
             {
                 FlyoutBase.ShowAttachedFlyout(hyperlinkButton);
             }
@@ -886,9 +865,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Package package = args.Parameter as Package;
-
-            if (package is not null)
+            if (args.Parameter is Package package)
             {
                 foreach (PackageModel packageItem in AppManagerDataCollection)
                 {
@@ -972,9 +949,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            PackageModel packageItem = args.Parameter as PackageModel;
-
-            if (packageItem is not null)
+            if (args.Parameter is PackageModel packageItem)
             {
                 Task.Run(() =>
                 {
@@ -1211,8 +1186,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            AutoSuggestBox autoSuggestBox = sender as AutoSuggestBox;
-            if (autoSuggestBox is not null)
+            if (sender is AutoSuggestBox autoSuggestBox)
             {
                 SearchText = autoSuggestBox.Text;
                 if (SearchText.Equals(string.Empty))
@@ -1228,8 +1202,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 IsIncrease = Convert.ToBoolean(toggleMenuFlyoutItem.Tag);
                 InitializeData();
@@ -1241,8 +1214,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 SelectedRule = (AppSortRuleKind)toggleMenuFlyoutItem.Tag;
                 InitializeData();
@@ -1263,8 +1235,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
-            ToggleButton toggleButton = sender as ToggleButton;
-            if (toggleButton is not null && toggleButton.Tag is not null)
+            if (sender is ToggleButton toggleButton && toggleButton.Tag is not null)
             {
                 PackageSignatureKind signatureKind = (PackageSignatureKind)toggleButton.Tag;
 

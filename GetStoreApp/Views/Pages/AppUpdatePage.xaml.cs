@@ -111,9 +111,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string packageFamilyName = args.Parameter as string;
-
-            if (packageFamilyName is not null)
+            if (args.Parameter is string packageFamilyName && !string.IsNullOrEmpty(packageFamilyName))
             {
                 Task.Run(async () =>
                 {
@@ -158,9 +156,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string packageFamilyName = args.Parameter as string;
-
-            if (packageFamilyName is not null)
+            if (args.Parameter is string packageFamilyName && !string.IsNullOrEmpty(packageFamilyName))
             {
                 Task.Run(() =>
                 {

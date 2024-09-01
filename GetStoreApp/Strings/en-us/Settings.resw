@@ -468,4 +468,7 @@
   <data name="WinGetVersionDescription" xml:space="preserve">
     <value>Show the current version of the WinGet application</value>
   </data>
+  <data name="LearnConfig" xml:space="preserve">
+    <value>Learn config</value>
+  </data>
 </root>

@@ -304,9 +304,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnCopyExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            HistoryModel historyItem = args.Parameter as HistoryModel;
-
-            if (historyItem is not null)
+            if (args.Parameter is HistoryModel historyItem)
             {
                 string copyContent = string.Join('\t', new object[] { historyItem.HistoryAppName, historyItem.HistoryType.Value, historyItem.HistoryChannel.Value, historyItem.HistoryLink });
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
@@ -320,17 +318,11 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            HistoryModel historyItem = args.Parameter as HistoryModel;
-
-            if (historyItem is not null)
+            if (args.Parameter is HistoryModel historyItem && MainWindow.Current.GetFrameContent() is StorePage storePage)
             {
-                StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
-                if (storePage is not null)
-                {
-                    SelectedType = TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
-                    SelectedChannel = ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
-                    LinkText = historyItem.HistoryLink;
-                }
+                SelectedType = TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
+                SelectedChannel = ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
+                LinkText = historyItem.HistoryLink;
             }
         }
 
@@ -339,9 +331,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
-
-            if (queryLinksItem is not null)
+            if (args.Parameter is QueryLinksModel queryLinksItem)
             {
                 Task.Run(() =>
                 {
@@ -435,9 +425,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string fileLink = args.Parameter as string;
-
-            if (!string.IsNullOrEmpty(fileLink))
+            if (args.Parameter is string fileLink && !string.IsNullOrEmpty(fileLink))
             {
                 await Launcher.LaunchUriAsync(new Uri(fileLink));
             }
@@ -448,9 +436,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnCopyLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string fileLink = args.Parameter as string;
-
-            if (!string.IsNullOrEmpty(fileLink))
+            if (args.Parameter is string fileLink && !string.IsNullOrEmpty(fileLink))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileLink);
                 await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, false));
@@ -462,9 +448,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnCopyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            QueryLinksModel queryLinksItem = args.Parameter as QueryLinksModel;
-
-            if (queryLinksItem is not null)
+            if (args.Parameter is QueryLinksModel queryLinksItem)
             {
                 string copyInformation = string.Format("[\n{0}\n{1}\n{2}\n]\n",
                     queryLinksItem.FileName,
@@ -505,8 +489,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 SelectedType = TypeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
@@ -521,8 +504,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 SelectedChannel = ChannelList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
             }
@@ -904,9 +886,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
         {
-            QueryLinksModel queryLinksItem = args.InvokedItem as QueryLinksModel;
-
-            if (queryLinksItem is not null)
+            if (args.InvokedItem is QueryLinksModel queryLinksItem)
             {
                 queryLinksLock.Enter();
 

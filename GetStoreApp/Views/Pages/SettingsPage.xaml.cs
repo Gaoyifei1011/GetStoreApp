@@ -17,9 +17,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
+using Windows.Management.Core;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
@@ -350,9 +352,7 @@ namespace GetStoreApp.Views.Pages
                 LanguageFlyout.Hide();
             }
 
-            LanguageModel languageItem = args.Parameter as LanguageModel;
-
-            if (languageItem is not null)
+            if (args.Parameter is LanguageModel languageItem)
             {
                 foreach (LanguageModel item in LanguageCollection)
                 {
@@ -421,8 +421,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 Theme = ThemeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 ThemeService.SetTheme(Theme);
@@ -434,8 +433,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 Backdrop = BackdropList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 BackdropService.SetBackdrop(Backdrop);
@@ -471,8 +469,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWebKernelSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 WebKernelItem = WebKernelList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 WebKernelService.SetWebKernel(WebKernelItem);
@@ -484,8 +481,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 QueryLinksModeService.SetQueryLinksMode(QueryLinksModeItem);
@@ -497,8 +493,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem)
             {
                 WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 WinGetConfigService.SetWinGetInstallMode(WinGetInstallMode);
@@ -510,9 +505,21 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
-                ProcessHelper.StartProcess("winget.exe", "settings", out _);
+                if (ApplicationDataManager.CreateForPackageFamily("Microsoft.DesktopAppInstaller_8wekyb3d8bbwe") is ApplicationData applicationData)
+                {
+                    string wingetConfigFilePath = Path.Combine(applicationData.LocalFolder.Path, "settings.json");
+
+                    if (File.Exists(wingetConfigFilePath))
+                    {
+                        await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(wingetConfigFilePath));
+                    }
+                    else
+                    {
+                        ProcessHelper.StartProcess("winget.exe", "settings", out _);
+                    }
+                }
             });
         }
 
@@ -529,8 +536,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
-            if (menuFlyoutItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 switch ((string)menuFlyoutItem.Tag)
                 {
@@ -564,9 +570,7 @@ namespace GetStoreApp.Views.Pages
                                 InitializeWithWindow.Initialize(folderPicker, (IntPtr)MainWindow.Current.AppWindow.Id.Value);
                                 folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
 
-                                StorageFolder downloadFolder = await folderPicker.PickSingleFolderAsync();
-
-                                if (downloadFolder is not null)
+                                if (await folderPicker.PickSingleFolderAsync() is StorageFolder downloadFolder)
                                 {
                                     DownloadFolder = downloadFolder;
                                     DownloadOptionsService.SetFolder(downloadFolder);
@@ -638,8 +642,7 @@ namespace GetStoreApp.Views.Pages
 
         private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 DoEngineMode = DoEngineModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 DownloadOptionsService.SetDoEngineMode(DoEngineMode);
@@ -651,8 +654,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            ToggleMenuFlyoutItem toggleMenuFlyoutItem = sender as ToggleMenuFlyoutItem;
-            if (toggleMenuFlyoutItem.Tag is not null)
+            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
             {
                 InstallMode = InstallModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 InstallModeService.SetInstallMode(InstallMode);
@@ -689,8 +691,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAlwaysShowBackdropToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
+            if (sender is ToggleSwitch toggleSwitch)
             {
                 AlwaysShowBackdropService.SetAlwaysShowBackdrop(toggleSwitch.IsOn);
                 AlwaysShowBackdropValue = toggleSwitch.IsOn;
@@ -717,8 +718,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTopMostToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
+            if (sender is ToggleSwitch toggleSwitch)
             {
                 TopMostService.SetTopMostValue(toggleSwitch.IsOn);
                 TopMostValue = toggleSwitch.IsOn;
@@ -730,8 +730,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNotificationToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
+            if (sender is ToggleSwitch toggleSwitch)
             {
                 NotificationService.SetNotification(toggleSwitch.IsOn);
                 Notification = toggleSwitch.IsOn;
@@ -743,8 +742,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnEncryptedPackageToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
+            if (sender is ToggleSwitch toggleSwitch)
             {
                 LinkFilterService.SetEncryptedPackageFilterValue(toggleSwitch.IsOn);
                 EncryptedPackageFilterValue = toggleSwitch.IsOn;
@@ -756,8 +754,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBlockMapToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
+            if (sender is ToggleSwitch toggleSwitch)
             {
                 LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
                 BlockMapFilterValue = toggleSwitch.IsOn;
@@ -769,8 +766,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetConfigToggled(object sender, RoutedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
+            if (sender is ToggleSwitch toggleSwitch)
             {
                 WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);
                 UseDevVersion = toggleSwitch.IsOn;
@@ -782,8 +778,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch is not null)
+            if (sender is ToggleSwitch toggleSwitch)
             {
                 AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
                 AlwaysShowBackdropValue = false;

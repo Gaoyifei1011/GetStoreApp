@@ -59,8 +59,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCancelInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appId = args.Parameter as string;
-            if (appId is not null)
+            if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
                 foreach (InstallingAppsModel installingAppsItem in InstallingAppsCollection)
                 {
@@ -106,9 +105,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
-            SelectorBar selectorBar = sender as SelectorBar;
-
-            if (selectorBar is not null && selectorBar.SelectedItem is not null)
+            if (sender is SelectorBar selectorBar && selectorBar.SelectedItem is not null)
             {
                 int selectedIndex = selectorBar.Items.IndexOf(selectorBar.SelectedItem);
 

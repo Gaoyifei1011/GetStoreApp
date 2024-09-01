@@ -32,9 +32,8 @@ namespace GetStoreApp.Views.Pages
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
-            if (args.Parameter is not null)
+            if (args.Parameter is object[] navigationArgs)
             {
-                object[] navigationArgs = args.Parameter as object[];
                 storeNavigationArgs = (AppNaviagtionArgs)navigationArgs[0];
                 if (navigationArgs.Length is 4)
                 {
@@ -58,9 +57,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
         {
-            SelectorBar selectorBar = sender as SelectorBar;
-
-            if (selectorBar is not null && selectorBar.SelectedItem is not null)
+            if (sender is SelectorBar selectorBar && selectorBar.SelectedItem is not null)
             {
                 int selectedIndex = selectorBar.Items.IndexOf(selectorBar.SelectedItem);
 

@@ -209,14 +209,9 @@ namespace GetStoreApp.Views.Windows
         {
             try
             {
-                if (Visible && SystemBackdrop is not null)
+                if (Visible && SystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
-                    MaterialBackdrop materialBackdrop = SystemBackdrop as MaterialBackdrop;
-
-                    if (materialBackdrop is not null && materialBackdrop.BackdropConfiguration is not null)
-                    {
-                        materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
-                    }
+                    materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
                 }
             }
             catch (Exception) { }
@@ -343,10 +338,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMoveClicked(object sender, RoutedEventArgs args)
         {
-            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
-            if (menuItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
-                ((MenuFlyout)menuItem.Tag).Hide();
+                ((MenuFlyout)menuFlyoutItem.Tag).Hide();
                 User32Library.SendMessage((IntPtr)AppWindow.Id.Value, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
             }
         }
@@ -356,10 +350,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnSizeClicked(object sender, RoutedEventArgs args)
         {
-            MenuFlyoutItem menuItem = sender as MenuFlyoutItem;
-            if (menuItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
-                ((MenuFlyout)menuItem.Tag).Hide();
+                ((MenuFlyout)menuFlyoutItem.Tag).Hide();
                 User32Library.SendMessage((IntPtr)AppWindow.Id.Value, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
         }
@@ -408,8 +401,7 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.Key is VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
             {
-                AppManagerPage appManagerPage = WindowFrame.Content as AppManagerPage;
-                if (appManagerPage is not null && appManagerPage.BreadCollection.Count is 2)
+                if (WindowFrame.Content is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
                 {
                     appManagerPage.BackToAppList();
                 }
@@ -429,11 +421,9 @@ namespace GetStoreApp.Views.Windows
 
             try
             {
-                MenuFlyoutItem menuFlyoutItem = sender as MenuFlyoutItem;
-
-                if (menuFlyoutItem is not null)
+                if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
                 {
-                    string tag = menuFlyoutItem.Tag as string;
+                    string tag = Convert.ToString(menuFlyoutItem.Tag);
 
                     SecondaryTile secondaryTile = new("GetStoreApp" + tag)
                     {
@@ -474,14 +464,11 @@ namespace GetStoreApp.Views.Windows
             SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
 
             // 导航控件加载完成后初始化内容
-
-            NavigationView navigationView = sender as NavigationView;
-            if (navigationView is not null)
+            if (sender is NavigationView navigationView)
             {
                 foreach (object menuItem in navigationView.MenuItems)
                 {
-                    NavigationViewItem navigationViewItem = menuItem as NavigationViewItem;
-                    if (navigationViewItem is not null)
+                    if (menuItem is NavigationViewItem navigationViewItem)
                     {
                         int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
 
@@ -496,8 +483,7 @@ namespace GetStoreApp.Views.Windows
 
                 foreach (object footerMenuItem in navigationView.FooterMenuItems)
                 {
-                    NavigationViewItem navigationViewItem = footerMenuItem as NavigationViewItem;
-                    if (navigationViewItem is not null)
+                    if (footerMenuItem is NavigationViewItem navigationViewItem)
                     {
                         int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
 
@@ -527,8 +513,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
         {
-            AppManagerPage appManagerPage = WindowFrame.Content as AppManagerPage;
-            if (appManagerPage is not null && appManagerPage.BreadCollection.Count is 2)
+            if (WindowFrame.Content is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
             {
                 appManagerPage.BackToAppList();
             }
@@ -543,8 +528,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            NavigationViewItemBase navigationViewItem = args.SelectedItemContainer;
-            if (navigationViewItem.Tag is not null)
+            if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is not null)
             {
                 NavigationModel navigationItem = NavigationItemList.Find(item => item.NavigationTag == PageList[Convert.ToInt32(navigationViewItem.Tag)].Key);
 
@@ -915,8 +899,7 @@ namespace GetStoreApp.Views.Windows
                                         NavigateTo(typeof(StorePage));
                                     }
 
-                                    StorePage storePage = WindowFrame.Content as StorePage;
-                                    if (storePage is not null)
+                                    if (WindowFrame.Content is StorePage storePage)
                                     {
                                         storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
                                         storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];

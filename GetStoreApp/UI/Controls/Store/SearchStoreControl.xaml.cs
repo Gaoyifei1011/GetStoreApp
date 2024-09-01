@@ -179,15 +179,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string historyContent = args.Parameter as string;
-
-            if (!string.IsNullOrEmpty(historyContent))
+            if (args.Parameter is string historyContent && !string.IsNullOrEmpty(historyContent) && MainWindow.Current.GetFrameContent() is StorePage)
             {
-                StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
-                if (storePage is not null)
-                {
-                    SearchText = historyContent;
-                }
+                SearchText = historyContent;
             }
         }
 
@@ -196,9 +190,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appLink = args.Parameter as string;
-
-            if (appLink is not null)
+            if (args.Parameter is string appLink && !string.IsNullOrEmpty(appLink))
             {
                 await Launcher.LaunchUriAsync(new Uri(appLink));
             }
@@ -209,17 +201,11 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnQueryLinksExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string appLink = args.Parameter as string;
-
-            if (appLink is not null)
+            if (args.Parameter is string appLink && !string.IsNullOrEmpty(appLink) && MainWindow.Current.GetFrameContent() is StorePage storePage)
             {
-                StorePage storePage = MainWindow.Current.GetFrameContent() as StorePage;
-                if (storePage is not null)
-                {
-                    storePage.QueryLinks.SelectedType = storePage.QueryLinks.TypeList[0];
-                    storePage.QueryLinks.LinkText = appLink;
-                    storePage.StoreSelectorBar.SelectedItem = storePage.StoreSelectorBar.Items[0];
-                }
+                storePage.QueryLinks.SelectedType = storePage.QueryLinks.TypeList[0];
+                storePage.QueryLinks.LinkText = appLink;
+                storePage.StoreSelectorBar.SelectedItem = storePage.StoreSelectorBar.Items[0];
             }
         }
 
