@@ -2,6 +2,7 @@
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
+using GetStoreAppWebView.UI.Backdrop;
 using GetStoreAppWebView.UI.Controls;
 using GetStoreAppWebView.UI.Dialogs;
 using Microsoft.Web.WebView2.Core;
@@ -22,8 +23,8 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreAppWebView.Pages
 {
@@ -136,12 +137,14 @@ namespace GetStoreAppWebView.Pages
 
             if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
-                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
+                //VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
             }
             else
             {
                 VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
             }
+
+            Background = new MicaBrush();
         }
 
         #region 第一部分：窗口内容挂载的事件
@@ -375,11 +378,14 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private void OnCoreWebView2Initialized(object sender, CoreWebView2InitializedEventArgs args)
         {
-            WebView2Browser.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
-            WebView2Browser.CoreWebView2.Settings.AreDevToolsEnabled = false;
-            WebView2Browser.CoreWebView2.NewWindowRequested += OnCoreWebViewNewWindowRequested;
-            WebView2Browser.CoreWebView2.SourceChanged += OnSourceChanged;
-            IsEnabled = true;
+            if (WebView2Browser.CoreWebView2 is not null)
+            {
+                WebView2Browser.CoreWebView2.Settings.AreDefaultScriptDialogsEnabled = false;
+                WebView2Browser.CoreWebView2.Settings.AreDevToolsEnabled = false;
+                WebView2Browser.CoreWebView2.NewWindowRequested += OnCoreWebViewNewWindowRequested;
+                WebView2Browser.CoreWebView2.SourceChanged += OnSourceChanged;
+                IsEnabled = true;
+            }
         }
 
         /// <summary>

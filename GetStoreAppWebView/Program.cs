@@ -31,7 +31,7 @@ namespace GetStoreAppWebView
                 }
             }
 
-            Application.Start((param) => new App());
+            Application.Start(static (param) => _ = new App());
         }
 
         /// <summary>

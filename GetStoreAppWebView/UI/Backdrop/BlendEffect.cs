@@ -1,4 +1,4 @@
-﻿using GetStoreAppWebView.Helpers.Backdrop;
+﻿using GetStoreAppWebView.Helpers.Controls.Backdrop;
 using GetStoreAppWebView.WindowsAPI.ComTypes;
 using System;
 using System.Runtime.InteropServices;
@@ -7,7 +7,7 @@ using Windows.Graphics.Effects;
 namespace GetStoreAppWebView.UI.Backdrop
 {
     [Guid("81C5B77B-13F8-4CDD-AD20-C890547AC65D")]
-    public sealed class BlendEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
+    public sealed partial class BlendEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
 
@@ -34,9 +34,9 @@ namespace GetStoreAppWebView.UI.Backdrop
             return 0;
         }
 
-        public int GetNamedPropertyMapping(string name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
+        public int GetNamedPropertyMapping(IntPtr name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
         {
-            switch (name)
+            switch (Marshal.PtrToStringUni(name))
             {
                 case nameof(Mode):
                     {
@@ -77,21 +77,21 @@ namespace GetStoreAppWebView.UI.Backdrop
             return 0;
         }
 
-        public int GetSource(uint index, out IntPtr source)
+        public int GetSource(uint index, out IGraphicsEffectSource source)
         {
             if (index is 0)
             {
-                source = Marshal.GetComInterfaceForObject(Background, typeof(IGraphicsEffectSource));
+                source = Background;
                 return 0;
             }
             else if (index is 1)
             {
-                source = Marshal.GetComInterfaceForObject(Foreground, typeof(IGraphicsEffectSource));
+                source = Foreground;
                 return 0;
             }
             else
             {
-                source = IntPtr.Zero;
+                source = null;
                 return 2147483637;
             }
         }

@@ -1,4 +1,4 @@
-﻿using GetStoreAppWebView.Helpers.Backdrop;
+﻿using GetStoreAppWebView.Helpers.Controls.Backdrop;
 using GetStoreAppWebView.WindowsAPI.ComTypes;
 using System;
 using System.Numerics;
@@ -9,7 +9,7 @@ using Windows.UI;
 namespace GetStoreAppWebView.UI.Backdrop
 {
     [Guid("61C23C20-AE69-4D8E-94CF-50078DF638F2")]
-    public sealed class ColorSourceEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
+    public sealed partial class ColorSourceEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
 
@@ -39,9 +39,9 @@ namespace GetStoreAppWebView.UI.Backdrop
             return 0;
         }
 
-        public int GetNamedPropertyMapping(string name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
+        public int GetNamedPropertyMapping(IntPtr name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
         {
-            switch (name)
+            switch (Marshal.PtrToStringUni(name))
             {
                 case nameof(Color):
                     {
@@ -82,9 +82,9 @@ namespace GetStoreAppWebView.UI.Backdrop
             return 0;
         }
 
-        public int GetSource(uint index, out IntPtr source)
+        public int GetSource(uint index, out IGraphicsEffectSource source)
         {
-            source = IntPtr.Zero;
+            source = null;
             return 0;
         }
 

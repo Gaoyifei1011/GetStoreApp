@@ -30,22 +30,22 @@ namespace GetStoreAppWebView.Helpers.Controls.Extensions
 
         public static long LoWord(IntPtr Number)
         {
-            return (int)Number & 0xffff;
+            return checked((int)Number & 0xffff);
         }
 
         public static long LoWord(UIntPtr Number)
         {
-            return (uint)Number & 0xffff;
+            return checked((uint)Number & 0xffff);
         }
 
         public static long HiWord(IntPtr Number)
         {
-            return ((int)Number >> 16) & 0xffff;
+            return checked(((int)Number >> 16) & 0xffff);
         }
 
         public static long HiWord(UIntPtr Number)
         {
-            return ((uint)Number >> 16) & 0xffff;
+            return checked(((uint)Number >> 16) & 0xffff);
         }
 
         public static uint MakeWParam(ushort low, ushort high)

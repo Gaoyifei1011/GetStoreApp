@@ -111,7 +111,7 @@
 
 ### 项目引用（按英文首字母排序）
 
-> * [Microsoft.NETCore.UniversalWindowsPlatform](https://github.com/Microsoft/dotnet/blob/master/releases/UWP/README.md)&emsp;
+> * [DisposableMemory.ModernNetUAP.XamlCompiler](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
 > * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
@@ -126,7 +126,7 @@
 
 > * 该程序使用的是 Windows 应用 SDK 构建的，建议您的系统版本为 Windows 11（代号 22H2 / 内部版本号 22621）或更高版本，最低版本为Windows 10（代号 2004 / 内部版本号 19041）或更高版本。
 > * 如果您的系统是 Windows 10，应用功能存在一些限制：
-    不支持设置云母/云母Alt 背景色
+    不支持设置云母/云母 Alt 背景色
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases)页面的二进制安装文件已经打包成压缩包。请解压压缩包并使用 Powershell 管理员模式（必要情况下）运行 install.ps1 文件方可实现快速安装。
 > * 自行下载项目源代码并编译。（请仔细阅读下面的项目编译步骤）
 

@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "网页浏览器": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    }
+  }
+}

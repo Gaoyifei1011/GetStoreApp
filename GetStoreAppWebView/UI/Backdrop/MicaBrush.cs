@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.System.Power;
@@ -9,12 +10,15 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
+// 抑制 CA1822 警告
+#pragma warning disable CA1822
+
 namespace GetStoreAppWebView.UI.Backdrop
 {
     /// <summary>
     /// Mica 背景色
     /// </summary>
-    public sealed class MicaBrush : XamlCompositionBrushBase
+    public sealed partial class MicaBrush : XamlCompositionBrushBase
     {
         private bool isConnected;
         private bool useSolidColorFallback;
@@ -196,7 +200,10 @@ namespace GetStoreAppWebView.UI.Backdrop
             }
         }
 
-        private static CompositionBrush BuildMicaEffectBrush(Compositor compositor, Color tintColor, float tintOpacity, float luminosityOpacity)
+        /// <summary>
+        /// 创建云母背景色
+        /// </summary>
+        private static CompositionEffectBrush BuildMicaEffectBrush(Compositor compositor, Color tintColor, float tintOpacity, float luminosityOpacity)
         {
             // Tint Color.
             ColorSourceEffect tintColorEffect = new()
@@ -255,7 +262,10 @@ namespace GetStoreAppWebView.UI.Backdrop
             return micaEffectBrush;
         }
 
-        private CompositionBrush CreateCrossFadeEffectBrush(Compositor compositor, CompositionBrush from, CompositionBrush to)
+        /// <summary>
+        /// 创建回退动画
+        /// </summary>
+        private CompositionEffectBrush CreateCrossFadeEffectBrush(Compositor compositor, CompositionBrush from, CompositionBrush to)
         {
             CrossFadeEffect crossFadeEffect = new()
             {
@@ -265,7 +275,8 @@ namespace GetStoreAppWebView.UI.Backdrop
                 CrossFade = 0
             };
 
-            CompositionEffectBrush crossFadeEffectBrush = compositor.CreateEffectFactory(crossFadeEffect, ["Crossfade.CrossFade"]).CreateBrush();
+            List<string> corssfadeList = ["Crossfade.CrossFade"];
+            CompositionEffectBrush crossFadeEffectBrush = compositor.CreateEffectFactory(crossFadeEffect, corssfadeList).CreateBrush();
             crossFadeEffectBrush.Comment = "Crossfade";
 
             crossFadeEffectBrush.SetSourceParameter("source1", from);

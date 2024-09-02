@@ -2,14 +2,18 @@
 using GetStoreAppWebView.WindowsAPI.PInvoke.Combase;
 using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using WinRT;
 
-namespace GetStoreAppWebView.Helpers.Backdrop
+namespace GetStoreAppWebView.Helpers.Controls.Backdrop
 {
     /// <summary>
     /// 背景色辅助类
     /// </summary>
     public static class BackdropHelper
     {
+        private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
+
         public static Lazy<IPropertyValueStatics> PropertyValueStatics { get; } = new(() => GetActivationFactory<IPropertyValueStatics>("Windows.Foundation.PropertyValue", typeof(IPropertyValueStatics).GUID));
 
         /// <summary>
@@ -20,8 +24,8 @@ namespace GetStoreAppWebView.Helpers.Backdrop
             if (!string.IsNullOrEmpty(activatableClassId))
             {
                 Marshal.ThrowExceptionForHR(CombaseLibrary.WindowsCreateString(activatableClassId, activatableClassId.Length, out IntPtr stringPtr));
-                CombaseLibrary.RoGetActivationFactory(stringPtr, iid, out IntPtr comp);
-                return (T)Marshal.GetObjectForIUnknown(comp);
+                _ = CombaseLibrary.RoGetActivationFactory(stringPtr, iid, out IntPtr comp);
+                return (T)strategyBasedComWrappers.GetOrCreateObjectForComInstance(comp, CreateObjectFlags.None);
             }
             else
             {

@@ -1,23 +1,24 @@
-﻿<Application
+﻿<wux:Application
     x:Class="GetStoreAppWebView.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:wux="using:Windows.UI.Xaml">
 
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/AcrylicBrush.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/AppBarButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/Button.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/Common.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/ContentDialog.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/CornerRadius.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/Hyperlink.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/MenuFlyout.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/ScrollBar.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/ScrollViewer.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/UWP/TextBlock.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
-</Application>
+    <wux:Application.Resources>
+        <wux:ResourceDictionary>
+            <wux:ResourceDictionary.MergedDictionaries>
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/AcrylicBrush.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/AppBarButton.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/Button.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/Common.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/ContentDialog.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/CornerRadius.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/Hyperlink.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/MenuFlyout.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/ScrollBar.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/ScrollViewer.xaml" />
+                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/TextBlock.xaml" />
+            </wux:ResourceDictionary.MergedDictionaries>
+        </wux:ResourceDictionary>
+    </wux:Application.Resources>
+</wux:Application>

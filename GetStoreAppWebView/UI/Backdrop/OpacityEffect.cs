@@ -1,4 +1,4 @@
-﻿using GetStoreAppWebView.Helpers.Backdrop;
+﻿using GetStoreAppWebView.Helpers.Controls.Backdrop;
 using GetStoreAppWebView.WindowsAPI.ComTypes;
 using System;
 using System.Runtime.InteropServices;
@@ -7,7 +7,7 @@ using Windows.Graphics.Effects;
 namespace GetStoreAppWebView.UI.Backdrop
 {
     [Guid("811D79A4-DE28-4454-8094-C64685F8BD4C")]
-    public sealed class OpacityEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
+    public sealed partial class OpacityEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
 
@@ -37,9 +37,9 @@ namespace GetStoreAppWebView.UI.Backdrop
             get { return true; }
         }
 
-        public int GetNamedPropertyMapping(string name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
+        public int GetNamedPropertyMapping(IntPtr name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
         {
-            switch (name)
+            switch (Marshal.PtrToStringUni(name))
             {
                 case nameof(Opacity):
                     {
@@ -80,9 +80,9 @@ namespace GetStoreAppWebView.UI.Backdrop
             return 0;
         }
 
-        public int GetSource(uint index, out IntPtr source)
+        public int GetSource(uint index, out IGraphicsEffectSource source)
         {
-            source = Marshal.GetComInterfaceForObject(Source, typeof(IGraphicsEffectSource));
+            source = Source;
             return 0;
         }
 

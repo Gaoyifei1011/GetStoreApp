@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.Foundation;
@@ -34,7 +35,7 @@ namespace GetStoreAppWebView.UI.Controls
     /// <summary>
     /// 表示一个对象，该对象允许承载 Web 内容。
     /// </summary>
-    public class WebView2 : ContentControl
+    public partial class WebView2 : ContentControl
     {
         private CoreWebView2EnvironmentOptions options = null;
         private CoreWebView2Environment coreWebViewEnvironment = null;
@@ -723,7 +724,7 @@ namespace GetStoreAppWebView.UI.Controls
                     }
                 }
 
-                User32Library.SendMessage(inputWindowHwnd, WindowMessage.WM_KEYDOWN, wparam, lparam);
+                _ = User32Library.SendMessage(inputWindowHwnd, WindowMessage.WM_KEYDOWN, wparam, lparam);
             }
         }
 
@@ -1321,13 +1322,22 @@ namespace GetStoreAppWebView.UI.Controls
                             IntPtr hInstance = Kernel32Library.GetModuleHandle(null);
                             ;
                             delegWndProc = OnWndProc;
+
+                            byte[] classnameBytes = Encoding.Default.GetBytes(classname);
+                            IntPtr classnamePtr = Marshal.AllocHGlobal(classnameBytes.Length + 1);
+                            Marshal.Copy(classnameBytes, 0, classnamePtr, classnameBytes.Length);
+
+                            // Add null terminator
+                            Marshal.WriteByte(classnamePtr + classnameBytes.Length, 0);
+
                             WNDCLASS wc = new()
                             {
                                 lpfnWndProc = Marshal.GetFunctionPointerForDelegate(delegWndProc),
                                 hInstance = hInstance,
-                                lpszClassName = classname,
+                                lpszClassName = classnamePtr,
                             };
                             User32Library.RegisterClass(ref wc);
+                            Marshal.FreeHGlobal(classnamePtr);
 
                             tempHostHwnd = User32Library.CreateWindowEx(0, classname, "WebView2 Temporary Parent", 0x00000000, 0, 0, 0, 0, IntPtr.Zero, IntPtr.Zero, hInstance, IntPtr.Zero);
                         }
@@ -1426,7 +1436,7 @@ namespace GetStoreAppWebView.UI.Controls
                 //将焦点设置为 WebView2 / CoreWebView2 正确。
                 if ((uint)e.HResult is not 0x80070057)
                 {
-                    throw e;
+                    throw;
                 }
             }
         }
@@ -1500,10 +1510,7 @@ namespace GetStoreAppWebView.UI.Controls
                 // 获取处理多点触控捕获的指针 id
                 PointerPoint logicalPointerPoint = args.GetCurrentPoint(this);
                 uint id = logicalPointerPoint.PointerId;
-                if (hasTouchCapture.ContainsKey(id))
-                {
-                    hasTouchCapture.Remove(id);
-                }
+                hasTouchCapture.Remove(id);
             }
             else if (deviceType is PointerDeviceType.Pen)
             {

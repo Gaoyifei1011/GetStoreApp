@@ -1,15 +1,42 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation;
+using WinRT;
 
 namespace GetStoreAppWebView.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 创建可在属性存储中存储的 IPropertyValue 对象。
     /// </summary>
-    [ComImport, Guid("629BDBC8-D932-4FF4-96B9-8D96C5C1E858"), InterfaceType(ComInterfaceType.InterfaceIsIInspectable)]
-    public interface IPropertyValueStatics
+    [GeneratedComInterface, Guid("629BDBC8-D932-4FF4-96B9-8D96C5C1E858")]
+    public partial interface IPropertyValueStatics
     {
+        /// <summary>
+        /// 获取由当前Windows 运行时类实现的接口。
+        /// </summary>
+        /// <param name="iidCount">当前 Windows 运行时 对象实现的接口数，不包括 IUnknown 和 IInspectable 实现。</param>
+        /// <param name="iids">指向数组的指针，该数组包含当前 Windows 运行时 对象实现的每个接口的 IID。 排除 IUnknown 和 IInspectable 接口。</param>
+        /// <returns>此函数可以返回以下值。S_OK 和 E_OUTOFMEMORY</returns>
+        [PreserveSig]
+        int GetIids(out ulong iidCount, out IntPtr iids);
+
+        /// <summary>
+        /// 获取当前Windows 运行时 对象的完全限定名称。
+        /// </summary>
+        /// <param name="className">当前Windows 运行时对象的完全限定名称。</param>
+        /// <returns>此函数可以返回以下值。S_OK、E_OUTOFMEMORY 和 E_ILLEGAL_METHOD_CALL</returns>
+        [PreserveSig]
+        int GetRuntimeClassName(out IntPtr className);
+
+        /// <summary>
+        /// 获取当前Windows 运行时对象的信任级别。
+        /// </summary>
+        /// <param name="trustLevel">当前Windows 运行时对象的信任级别。 默认值为 BaseLevel。</param>
+        /// <returns>此方法始终返回 S_OK。</returns>
+        [PreserveSig]
+        int GetTrustLevel(out TrustLevel trustLevel);
+
         /// <summary>
         /// 创建表示空值的新 IPropertyValue 对象。
         /// </summary>
@@ -115,7 +142,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateBoolean(bool value, out IntPtr propertyValue);
+        int CreateBoolean([MarshalAs(UnmanagedType.Bool)] bool value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建包含指定字符串值的新 IPropertyValue 对象。
@@ -133,7 +160,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateInspectable([MarshalAs(UnmanagedType.IUnknown)] object value, out IntPtr propertyValue);
+        int CreateInspectable(IntPtr value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建包含指定 GUID 值的新 IPropertyValue 对象。
@@ -197,7 +224,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateUInt8Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] byte[] value, out IntPtr propertyValue);
+        int CreateUInt8Array(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] byte[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的有符号 16 位整数值数组。
@@ -207,7 +234,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateInt16Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] short[] value, out IntPtr propertyValue);
+        int CreateInt16Array(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] short[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的无符号 16 位整数值数组。
@@ -217,7 +244,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateUInt16Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] ushort[] value, out IntPtr propertyValue);
+        int CreateUInt16Array(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] ushort[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的有符号 32 位整数值数组。
@@ -237,7 +264,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateUInt32Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] uint[] value, out IntPtr propertyValue);
+        int CreateUInt32Array(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] uint[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的有符号 64 位整数值数组。
@@ -247,7 +274,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateInt64Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] long[] value, out IntPtr propertyValue);
+        int CreateInt64Array(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] long[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的无符号 64 位整数值数组。
@@ -257,7 +284,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateUInt64Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] ulong[] value, out IntPtr propertyValue);
+        int CreateUInt64Array(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] ulong[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的 32 位浮点值数组。
@@ -267,7 +294,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateSingleArray(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] float[] value, out IntPtr propertyValue);
+        int CreateSingleArray(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] float[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的 64 位浮点值数组。
@@ -277,7 +304,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateDoubleArray(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] double[] value, out IntPtr propertyValue);
+        int CreateDoubleArray(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] double[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的 Unicode 字符数组。
@@ -287,7 +314,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue"></param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateChar16Array(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] char[] value, out IntPtr propertyValue);
+        int CreateChar16Array(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] char[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的 8 位布尔值数组。
@@ -297,7 +324,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateBooleanArray(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] bool[] value, out IntPtr propertyValue);
+        int CreateBooleanArray(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0, ArraySubType = UnmanagedType.Bool)] bool[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的字符串值数组。
@@ -317,7 +344,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateInspectableArray(int valueLength, [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.IUnknown, SizeParamIndex = 0)] object[] value, out IntPtr propertyValue);
+        int CreateInspectableArray(int valueLength, IntPtr value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的 Guid 值数组。
@@ -327,7 +354,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="propertyValue">指向新对象的指针，该对象将其 Type 属性设置为 PropertyType_Empty。 新 对象中不存储任何值。 使用 IUnknown::QueryInterface 方法获取对象的 IPropertyValue 接口。</param>
         /// <returns>此方法可以返回其中一个值。S_OK 为已成功创建属性值，E_POINTER 为 NULL，E_OUTOFMEMORY 为无法创建 IPropertyValue 对象。</returns>
         [PreserveSig]
-        int CreateGuidArray(int valueLength, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] Guid[] value, out IntPtr propertyValue);
+        int CreateGuidArray(int valueLength, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] Guid[] value, out IntPtr propertyValue);
 
         /// <summary>
         /// 创建一个新的 IPropertyValue 对象，该对象包含指定的 DateTime 值数组。

@@ -55,15 +55,13 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 类菜单的资源名称，该名称显示在资源文件中。 如果使用整数来标识菜单，请使用 MAKEINTRESOURCE 宏。 如果此成员为 NULL，则属于此类的窗口没有默认菜单。
         /// </summary>
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpszMenuName;
+        public IntPtr lpszMenuName;
 
         /// <summary>
         /// 指向以 null 结尾的字符串的指针或 是原子。 如果此参数是 atom，则它必须是先前调用 RegisterClass 或 RegisterClassEx 函数创建的类原子。 原子必须位于 lpszClassName 的低序字中;高序字必须为零。
         /// 如果 lpszClassName 是字符串，则指定窗口类名。 类名可以是使用 RegisterClass 或 RegisterClassEx 注册的任何名称，也可以是任何预定义的控件类名称。
         /// lpszClassName 的最大长度为 256。 如果 lpszClassName 大于最大长度， 则 RegisterClass 函数将失败。
         /// </summary>
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpszClassName;
+        public IntPtr lpszClassName;
     }
 }

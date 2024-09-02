@@ -3,28 +3,29 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreApp</AssemblyName>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
+    <CsWinRTUseWindowsUIXamlProjections>false</CsWinRTUseWindowsUIXamlProjections>
     <DebugType>portable</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
-    <DisableXbfLineInfo>False</DisableXbfLineInfo>
+    <DisableXbfLineInfo>false</DisableXbfLineInfo>
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
-    <IncludeSymbols>False</IncludeSymbols>
+    <IncludeSymbols>false</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>preview</LangVersion>
     <OptimizationPreference>Size</OptimizationPreference>
-    <Optimize>False</Optimize>
+    <Optimize>false</Optimize>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishAot>true</PublishAot>
     <PublishProtocol>FileSystem</PublishProtocol>
-    <PublishReadyToRun>False</PublishReadyToRun>
+    <PublishReadyToRun>false</PublishReadyToRun>
     <PublishSelfContained>true</PublishSelfContained>
     <PublishSingleFile>True</PublishSingleFile>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
@@ -35,7 +36,8 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
-    <WebView2EnableCsWinRTProjection>False</WebView2EnableCsWinRTProjection>
+    <UseUwp>false</UseUwp>
+    <WebView2EnableCsWinRTProjection>false</WebView2EnableCsWinRTProjection>
     <WebView2UseWinRT>true</WebView2UseWinRT>
     <Win32Resource>GetStoreApp.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
@@ -163,7 +165,7 @@
   <!-- 捆绑前对二进制文件进行后处理 -->
   <!-- 该任务会在 Debug 以 AOT 发布时触发，故限制在 Release 模式下进行操作 -->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="$(Configuration) == 'Release'">
-     <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 --> 
+    <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->  
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
   </Target>
 
