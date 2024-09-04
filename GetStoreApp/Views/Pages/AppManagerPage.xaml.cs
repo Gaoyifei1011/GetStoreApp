@@ -1189,9 +1189,8 @@ namespace GetStoreApp.Views.Pages
             if (sender is AutoSuggestBox autoSuggestBox)
             {
                 SearchText = autoSuggestBox.Text;
-                if (SearchText.Equals(string.Empty))
+                if (string.IsNullOrEmpty(SearchText))
                 {
-                    SearchText = string.Empty;
                     InitializeData();
                 }
             }

@@ -61,7 +61,7 @@ namespace GetStoreApp.Helpers.Root
                 }
             }
 
-            IsElevated = token_elevation_type == TOKEN_ELEVATION_TYPE.TokenElevationTypeFull;
+            IsElevated = token_elevation_type is TOKEN_ELEVATION_TYPE.TokenElevationTypeFull;
         }
     }
 }

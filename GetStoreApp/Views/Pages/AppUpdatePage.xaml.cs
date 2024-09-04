@@ -312,7 +312,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     AppInstallItem appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
 
-                    if (appInstallItem != null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
+                    if (appInstallItem is not null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
                     {
                         appInstallItem.Completed += OnAppInstallItemCompleted;
                         appInstallItem.StatusChanged += OnAppInstallItemStatausChanged;

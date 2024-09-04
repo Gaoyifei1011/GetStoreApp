@@ -5,6 +5,8 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -193,7 +195,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
+                                    Shell32Library.ShellExecute(IntPtr.Zero, "open", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", null, WindowShowStyle.SW_SHOWNORMAL);
                                 }
                             }
 
@@ -291,7 +293,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             if (sender is AutoSuggestBox autoSuggestBox)
             {
                 SearchText = autoSuggestBox.Text;
-                if (SearchText == string.Empty && MatchResultList.Count > 0)
+                if (string.IsNullOrEmpty(SearchText) && MatchResultList.Count > 0)
                 {
                     InitializeData();
                 }
@@ -322,7 +324,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         for (int index = 0; index < list.Count; index++)
                         {
                             MatchResult matchResultItem = list[index];
-                            if (matchResultItem.CatalogPackage.InstalledVersion.Publisher != string.Empty)
+                            if (!string.IsNullOrEmpty(matchResultItem.CatalogPackage.InstalledVersion.Publisher))
                             {
                                 MatchResultList.Add(matchResultItem);
                             }

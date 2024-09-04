@@ -93,7 +93,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             {
                 try
                 {
-                    if (value != null)
+                    if (value is not null)
                     {
                         *value = Guid.Empty;
                     }
@@ -101,7 +101,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
                     int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetEffectId(out Guid v);
                     if (hr >= 0)
                     {
-                        if (value != null)
+                        if (value is not null)
                         {
                             *value = v;
                         }
@@ -120,12 +120,12 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             {
                 try
                 {
-                    if (index != null)
+                    if (index is not null)
                     {
                         *index = 0;
                     }
 
-                    if (mapping != null)
+                    if (mapping is not null)
                     {
                         *mapping = 0;
                     }
@@ -133,12 +133,12 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
                     int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetNamedPropertyMapping(name, out uint i, out GRAPHICS_EFFECT_PROPERTY_MAPPING m);
                     if (hr >= 0)
                     {
-                        if (index != null)
+                        if (index is not null)
                         {
                             *index = i;
                         }
 
-                        if (mapping != null)
+                        if (mapping is not null)
                         {
                             *mapping = m;
                         }
@@ -157,7 +157,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             {
                 try
                 {
-                    if (value != null)
+                    if (value is not null)
                     {
                         *value = 0;
                     }
@@ -181,7 +181,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             {
                 try
                 {
-                    if (value != null)
+                    if (value is not null)
                     {
                         *value = 0;
                     }
@@ -205,7 +205,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             {
                 try
                 {
-                    if (value != null)
+                    if (value is not null)
                     {
                         *value = 0;
                     }
@@ -230,7 +230,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             {
                 try
                 {
-                    if (value != null)
+                    if (value is not null)
                     {
                         *value = 0;
                     }

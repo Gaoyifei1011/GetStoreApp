@@ -7,11 +7,11 @@ using System.Runtime.Versioning;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("©Copyright ©2022-2024 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("获取商店应用 WebView2 WinRT 扩展")]
-[assembly: AssemblyFileVersion("4.6.902.0")]
-[assembly: AssemblyInformationalVersion("4.6.902.0")]
+[assembly: AssemblyFileVersion("4.6.904.0")]
+[assembly: AssemblyInformationalVersion("4.6.904.0")]
 [assembly: AssemblyProduct("获取商店应用 WebView2 WinRT 扩展")]
 [assembly: AssemblyTitle("获取商店应用 WebView2 WinRT 扩展")]
-[assembly: AssemblyVersion("4.6.902.0")]
+[assembly: AssemblyVersion("4.6.904.0")]
 
 // 应用程序默认区域性的资源控制器设置
 [assembly: NeutralResourcesLanguage("en-us")]

@@ -8,6 +8,8 @@ using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -517,7 +519,7 @@ namespace GetStoreApp.Views.Pages
                     }
                     else
                     {
-                        ProcessHelper.StartProcess("winget.exe", "settings", out _);
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", "settings", null, WindowShowStyle.SW_HIDE);
                     }
                 }
             });

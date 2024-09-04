@@ -7,6 +7,8 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -117,7 +119,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(() =>
                 {
-                    ProcessHelper.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("install {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
                 });
             }
         }
@@ -299,7 +301,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                                 if (result is ContentDialogResult.Primary)
                                 {
-                                    ProcessHelper.StartProcess(Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", out _);
+                                    Shell32Library.ShellExecute(IntPtr.Zero, "open", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", null, WindowShowStyle.SW_SHOWNORMAL);
                                 }
                             }
 

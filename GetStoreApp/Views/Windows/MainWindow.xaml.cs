@@ -1059,7 +1059,7 @@ namespace GetStoreApp.Views.Windows
             try
             {
                 ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-                bool isConnected = connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() is NetworkConnectivityLevel.InternetAccess;
+                bool isConnected = connectionProfile is not null && connectionProfile.GetNetworkConnectivityLevel() is NetworkConnectivityLevel.InternetAccess;
 
                 if (!isConnected)
                 {

@@ -79,7 +79,7 @@ namespace GetStoreAppWebView.Helpers.Controls.Extensions
             {
                 lowWord |= (ushort)MODIFIERKEYS_FLAGS.MK_CONTROL;
             }
-            if (((int)modifiers & (int)VirtualKeyModifiers.Shift) != 0)
+            if (((int)modifiers & (int)VirtualKeyModifiers.Shift) is not 0)
             {
                 lowWord |= (ushort)MODIFIERKEYS_FLAGS.MK_SHIFT;
             }
@@ -115,13 +115,13 @@ namespace GetStoreAppWebView.Helpers.Controls.Extensions
             else if (message is WindowMessage.WM_XBUTTONDOWN or WindowMessage.WM_XBUTTONUP)
             {
                 PointerUpdateKind pointerUpdateKind = properties.PointerUpdateKind;
-                if (pointerUpdateKind == PointerUpdateKind.XButton1Pressed ||
-                    pointerUpdateKind == PointerUpdateKind.XButton1Released)
+                if (pointerUpdateKind is PointerUpdateKind.XButton1Pressed ||
+                    pointerUpdateKind is PointerUpdateKind.XButton1Released)
                 {
                     highWord |= (ushort)MOUSEHOOKSTRUCTEX_MOUSE_DATA.XBUTTON1;
                 }
-                else if (pointerUpdateKind == PointerUpdateKind.XButton2Pressed ||
-                         pointerUpdateKind == PointerUpdateKind.XButton2Released)
+                else if (pointerUpdateKind is PointerUpdateKind.XButton2Pressed ||
+                         pointerUpdateKind is PointerUpdateKind.XButton2Released)
                 {
                     highWord |= (ushort)MOUSEHOOKSTRUCTEX_MOUSE_DATA.XBUTTON2;
                 }

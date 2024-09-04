@@ -9,6 +9,8 @@ using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.Dialogs.Download;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -201,7 +203,7 @@ namespace GetStoreApp.UI.Controls.Download
                     // 普通应用：直接安装
                     if (completedItem.FilePath.EndsWith(".exe") || completedItem.FileName.EndsWith(".msi"))
                     {
-                        ProcessHelper.StartProcess("explorer.exe ", completedItem.FilePath, out _);
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", completedItem.FilePath, string.Empty, null, WindowShowStyle.SW_SHOWNORMAL);
                     }
                     // 商店打包应用：使用应用安装程序安装或直接安装
                     else

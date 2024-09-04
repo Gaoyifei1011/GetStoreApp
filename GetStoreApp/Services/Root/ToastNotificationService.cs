@@ -1,8 +1,9 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using System;
 using System.IO;
@@ -58,7 +59,7 @@ namespace GetStoreApp.Services.Root
                 if (splitList.Length > 1)
                 {
                     string appId = splitList[1];
-                    ProcessHelper.StartProcess("winget.exe", string.Format("install {0}", appId), out _);
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("install {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
                 }
                 Program.IsNeedAppLaunch = Application.Current is not null;
             }
