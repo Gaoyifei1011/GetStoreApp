@@ -43,8 +43,6 @@ Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "signtool", "signtool.exe", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWebView", "GetStoreAppWebView\GetStoreAppWebView.csproj", "{AA3374D5-346B-41F9-A362-329F01589BE2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Web.WebView2.Core.Projection", "Microsoft.Web.WebView2.Core.Projection\Microsoft.Web.WebView2.Core.Projection.csproj", "{1393D03D-7521-4AAD-A8D0-136E3A4482F8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -115,18 +113,6 @@ Global
 		{AA3374D5-346B-41F9-A362-329F01589BE2}.Release|x64.Build.0 = Release|x64
 		{AA3374D5-346B-41F9-A362-329F01589BE2}.Release|x86.ActiveCfg = Release|x86
 		{AA3374D5-346B-41F9-A362-329F01589BE2}.Release|x86.Build.0 = Release|x86
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Debug|ARM64.Build.0 = Debug|ARM64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Debug|x64.ActiveCfg = Debug|x64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Debug|x64.Build.0 = Debug|x64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Debug|x86.ActiveCfg = Debug|x86
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Debug|x86.Build.0 = Debug|x86
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Release|ARM64.ActiveCfg = Release|ARM64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Release|ARM64.Build.0 = Release|ARM64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Release|x64.ActiveCfg = Release|x64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Release|x64.Build.0 = Release|x64
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Release|x86.ActiveCfg = Release|x86
-		{1393D03D-7521-4AAD-A8D0-136E3A4482F8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -27,7 +27,7 @@
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>false</PublishReadyToRun>
     <PublishSelfContained>true</PublishSelfContained>
-    <PublishSingleFile>True</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreAppWebView</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
@@ -36,7 +36,8 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
-    <UseUwp>true</UseUwp>
+    <UseUwpTools>true</UseUwpTools>
+    <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
     <WindowsSdkPackageVersion>10.0.26100.42</WindowsSdkPackageVersion>
   </PropertyGroup>
@@ -76,8 +77,9 @@
     <None Remove="Styles\UWP\TextBlock.xaml" />
 
     <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.2" />
+
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2817-prerelease" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
-    <ProjectReference Include="..\Microsoft.Web.WebView2.Core.Projection\Microsoft.Web.WebView2.Core.Projection.csproj" />
 
     <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
