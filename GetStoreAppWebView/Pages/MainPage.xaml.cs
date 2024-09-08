@@ -137,7 +137,7 @@ namespace GetStoreAppWebView.Pages
 
             if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
-                //VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
+                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
             }
             else
             {

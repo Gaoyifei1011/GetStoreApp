@@ -1,5 +1,4 @@
 ﻿using GetStoreAppWebView.WindowsAPI.ComTypes;
-using GetStoreAppWebView.WindowsAPI.PInvoke.Combase;
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
@@ -23,9 +22,8 @@ namespace GetStoreAppWebView.Helpers.Controls.Backdrop
         {
             if (!string.IsNullOrEmpty(activatableClassId))
             {
-                Marshal.ThrowExceptionForHR(CombaseLibrary.WindowsCreateString(activatableClassId, activatableClassId.Length, out IntPtr stringPtr));
-                _ = CombaseLibrary.RoGetActivationFactory(stringPtr, iid, out IntPtr comp);
-                return (T)strategyBasedComWrappers.GetOrCreateObjectForComInstance(comp, CreateObjectFlags.None);
+                IObjectReference objectReference = ActivationFactory.Get(activatableClassId, iid);
+                return (T)strategyBasedComWrappers.GetOrCreateObjectForComInstance(objectReference.ThisPtr, CreateObjectFlags.None);
             }
             else
             {
