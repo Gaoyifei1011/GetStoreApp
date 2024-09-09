@@ -62,16 +62,6 @@ namespace GetStoreApp.Extensions.Backdrop
         }
 
         /// <summary>
-        /// 重写此方法，以便在GetDefaultSystemBackdropConfiguration返回的对象发生变化时调用。
-        /// </summary>
-        protected override void OnDefaultSystemBackdropConfigurationChanged(ICompositionSupportsSystemBackdrop target, XamlRoot xamlRoot)
-        {
-            // 添加判断代码，防止 SystemBackdrop 在修改的时候触发异常
-            if (target is not null)
-            { }
-        }
-
-        /// <summary>
         /// 从其容器中清除此对象时调用
         /// </summary>
         protected override void OnTargetDisconnected(ICompositionSupportsSystemBackdrop disconnectedTarget)

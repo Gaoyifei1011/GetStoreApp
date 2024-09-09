@@ -37,9 +37,9 @@
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
     <UseUwpTools>false</UseUwpTools>
-    <WebView2EnableCsWinRTProjection>false</WebView2EnableCsWinRTProjection>
+    <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
-    <WebView2UseWinRT>true</WebView2UseWinRT>
+    <WebView2UseWinRT>false</WebView2UseWinRT>
     <Win32Resource>GetStoreApp.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>

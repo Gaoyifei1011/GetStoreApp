@@ -9,7 +9,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 本机互操作接口，提供 与 IGraphicsEffect 对应的接口，并允许元数据查询。
-    /// 不支持 COM 源生成
+    /// 暂不支持 COM 源生成
     /// </summary>
     [WindowsRuntimeType, Guid("2FC57384-A068-44D7-A331-30982FCF7177")]
     public interface IGraphicsEffectD2D1Interop

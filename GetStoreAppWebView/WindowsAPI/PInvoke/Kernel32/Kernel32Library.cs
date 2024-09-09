@@ -28,7 +28,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.Kernel32
         /// <param name="lpFrequency">
         /// 指向接收当前性能计数器频率（以每秒计数为单位）的变量的指针。 如果安装的硬件不支持高分辨率性能计数器，则此参数可以为零， (在运行 Windows XP 或更高版本) 的系统上不会发生这种情况。</param>
         /// <returns>如果安装的硬件支持高分辨率性能计数器，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport("kernel32", EntryPoint = "QueryPerformanceFrequency", SetLastError = false), PreserveSig]
+        [LibraryImport(Kernel32, EntryPoint = "QueryPerformanceFrequency", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool QueryPerformanceFrequency(ref long lpFrequency);
     }

@@ -1,7 +1,7 @@
-﻿using GetStoreAppWebView.Helpers.Controls.Backdrop;
-using GetStoreAppWebView.WindowsAPI.ComTypes;
+﻿using GetStoreAppWebView.WindowsAPI.ComTypes;
 using System;
 using System.Runtime.InteropServices;
+using Windows.Foundation;
 using Windows.Graphics.Effects;
 
 namespace GetStoreAppWebView.UI.Backdrop
@@ -9,24 +9,15 @@ namespace GetStoreAppWebView.UI.Backdrop
     [Guid("81C5B77B-13F8-4CDD-AD20-C890547AC65D")]
     public sealed partial class BlendEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
-        public D2D1_BUFFER_PRECISION BufferPrecision { get; set; }
-
-        public bool CacheOutput { get; set; }
+        private readonly IPropertyValueStatics propertyValue = PropertyValue.As<IPropertyValueStatics>();
 
         public BlendEffectMode Mode { get; set; } = BlendEffectMode.Multiply;
+
+        public string Name { get; set; } = string.Empty;
 
         public IGraphicsEffectSource Background { get; set; }
 
         public IGraphicsEffectSource Foreground { get; set; }
-
-        private string _name = string.Empty;
-
-        public string Name
-        {
-            get { return _name; }
-
-            set { _name = value; }
-        }
 
         public int GetEffectId(out Guid id)
         {
@@ -59,7 +50,7 @@ namespace GetStoreAppWebView.UI.Backdrop
         {
             if (index is 0)
             {
-                BackdropHelper.PropertyValueStatics.Value.CreateUInt32((uint)Mode, out IntPtr ptr);
+                propertyValue.CreateUInt32((uint)Mode, out IntPtr ptr);
                 if (ptr != IntPtr.Zero)
                 {
                     source = ptr;

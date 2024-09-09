@@ -17,7 +17,7 @@ using System.Runtime.Versioning;
 [assembly: NeutralResourcesLanguage("en-us")]
 
 // 设置程序集仅允许在Windows平台上可用
-[assembly: SupportedOSPlatform("windows10.0.26100")]
+[assembly: SupportedOSPlatform("windows10.0.26100.0")]
 
 // 禁用运行时封送
 [assembly: DisableRuntimeMarshalling]
