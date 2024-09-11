@@ -2,7 +2,9 @@ using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using System;
 using System.IO;
+using System.Threading;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 
 namespace GetStoreAppWebView
@@ -31,7 +33,11 @@ namespace GetStoreAppWebView
                 }
             }
 
-            Application.Start(static (param) => _ = new App());
+            Application.Start((param) =>
+            {
+                SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+                _ = new App();
+            });
         }
 
         /// <summary>

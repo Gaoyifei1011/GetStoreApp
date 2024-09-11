@@ -5,7 +5,6 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <CsWinRTUseWindowsUIXamlProjections>false</CsWinRTUseWindowsUIXamlProjections>
     <DebugType>portable</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
@@ -36,16 +35,13 @@
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
-    <UseUwpTools>false</UseUwpTools>
-    <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
-    <WebView2UseWinRT>false</WebView2UseWinRT>
     <Win32Resource>GetStoreApp.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsPackageType>MSIX</WindowsPackageType>
-    <WindowsSdkPackageVersion>10.0.26100.42</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
@@ -114,7 +110,7 @@
     <None Remove="WinUIApp.xaml" />
     
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2817-prerelease" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
 
     <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
