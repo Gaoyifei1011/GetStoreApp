@@ -401,6 +401,7 @@
                                     Margin="5,0,0,0"
                                     Padding="0"
                                     Command="{StaticResource OpenItemFolderCommand}"
+                                    CommandParameter="{x:Bind FilePath}"
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenItemFolderToolTip')}">
 

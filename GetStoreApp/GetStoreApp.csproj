@@ -5,7 +5,8 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DebugType>portable</DebugType>
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -13,11 +14,14 @@
     <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
     <IncludeSymbols>false</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>preview</LangVersion>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <MetricsSupport>false</MetricsSupport>
     <OptimizationPreference>Size</OptimizationPreference>
     <Optimize>false</Optimize>
     <OutputType>WinExe</OutputType>
@@ -164,13 +168,6 @@
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="$(Configuration) == 'Release'">
     <!-- 对生成的 GetStoreApp.exe 文件进行数字签名 -->  
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
-  </Target>
-
-  <!-- 不要复制本机引导文件 -->
-  <Target Name="_RemoveWasdkBootstrapDll" BeforeTargets="ResolveReferences">
-    <ItemGroup>
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)%(Extension)' == 'Microsoft.WindowsAppRuntime.Bootstrap.dll'" />
-    </ItemGroup>
   </Target>
 
   <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->

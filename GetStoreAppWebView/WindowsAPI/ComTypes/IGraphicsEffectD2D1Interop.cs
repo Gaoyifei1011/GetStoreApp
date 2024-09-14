@@ -80,7 +80,6 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
 
             // interface delegates
             private delegate* unmanaged[MemberFunction]<IntPtr, Guid*, int> GetEffectId;
-
             private delegate* unmanaged[MemberFunction]<IntPtr, IntPtr, uint*, GRAPHICS_EFFECT_PROPERTY_MAPPING*, int> GetNamedPropertyMapping;
             private delegate* unmanaged[MemberFunction]<IntPtr, uint*, int> GetPropertyCount;
             private delegate* unmanaged[MemberFunction]<IntPtr, uint, IntPtr*, int> GetProperty;

@@ -5,7 +5,8 @@
     <AssemblyName>GetStoreAppWebView</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DebugType>portable</DebugType>
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
     <DefaultXamlRuntime>UAP</DefaultXamlRuntime>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
@@ -13,11 +14,14 @@
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
     <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
     <IncludeSymbols>false</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <MetricsSupport>false</MetricsSupport>
     <OptimizationPreference>Size</OptimizationPreference>
     <Optimize>false</Optimize>
     <OutputType>WinExe</OutputType>
@@ -39,6 +43,7 @@
     <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
     <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
+    <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">
