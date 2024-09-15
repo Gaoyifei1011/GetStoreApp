@@ -78,7 +78,8 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
 
             private IUnknownVftbl IUnknownVftbl;
 
-            // interface delegates
+            // 接口委托
+
             private delegate* unmanaged[MemberFunction]<IntPtr, Guid*, int> GetEffectId;
             private delegate* unmanaged[MemberFunction]<IntPtr, IntPtr, uint*, GRAPHICS_EFFECT_PROPERTY_MAPPING*, int> GetNamedPropertyMapping;
             private delegate* unmanaged[MemberFunction]<IntPtr, uint*, int> GetPropertyCount;
@@ -86,24 +87,22 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             private delegate* unmanaged[MemberFunction]<IntPtr, uint, IntPtr*, int> GetSource;
             private delegate* unmanaged[MemberFunction]<IntPtr, uint*, int> GetSourceCount;
 
-            // interface implementation
+            // 接口实现
+
             [UnmanagedCallersOnly(CallConvs = [typeof(CallConvMemberFunction)])]
-            private static int GetEffectIdFromAbi(IntPtr thisPtr, Guid* value)
+            private static int GetEffectIdFromAbi(IntPtr thisPtr, Guid* id)
             {
                 try
                 {
-                    if (value is not null)
+                    if (id is not null)
                     {
-                        *value = Guid.Empty;
+                        *id = Guid.Empty;
                     }
 
-                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetEffectId(out Guid v);
+                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetEffectId(out Guid idObject);
                     if (hr >= 0)
                     {
-                        if (value is not null)
-                        {
-                            *value = v;
-                        }
+                        *id = idObject;
                     }
                     return hr;
                 }
@@ -129,18 +128,11 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
                         *mapping = 0;
                     }
 
-                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetNamedPropertyMapping(name, out uint i, out GRAPHICS_EFFECT_PROPERTY_MAPPING m);
+                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetNamedPropertyMapping(name, out uint indexObject, out GRAPHICS_EFFECT_PROPERTY_MAPPING mappingObject);
                     if (hr >= 0)
                     {
-                        if (index is not null)
-                        {
-                            *index = i;
-                        }
-
-                        if (mapping is not null)
-                        {
-                            *mapping = m;
-                        }
+                        *index = indexObject;
+                        *mapping = mappingObject;
                     }
                     return hr;
                 }
@@ -152,19 +144,19 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             }
 
             [UnmanagedCallersOnly(CallConvs = [typeof(CallConvMemberFunction)])]
-            private static int GetPropertyCountFromAbi(IntPtr thisPtr, uint* value)
+            private static int GetPropertyCountFromAbi(IntPtr thisPtr, uint* count)
             {
                 try
                 {
-                    if (value is not null)
+                    if (count is not null)
                     {
-                        *value = 0;
+                        *count = 0;
                     }
 
-                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetPropertyCount(out uint v);
+                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetPropertyCount(out uint countObject);
                     if (hr >= 0)
                     {
-                        *value = v;
+                        *count = countObject;
                     }
                     return hr;
                 }
@@ -185,10 +177,10 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
                         *value = 0;
                     }
 
-                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetProperty(index, out IntPtr v);
+                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetProperty(index, out IntPtr valueObject);
                     if (hr >= 0)
                     {
-                        *value = v;
+                        *value = valueObject;
                     }
                     return hr;
                 }
@@ -200,20 +192,19 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             }
 
             [UnmanagedCallersOnly(CallConvs = [typeof(CallConvMemberFunction)])]
-            private static int GetSourceFromAbi(IntPtr thisPtr, uint index, IntPtr* value)
+            private static int GetSourceFromAbi(IntPtr thisPtr, uint index, IntPtr* source)
             {
                 try
                 {
-                    if (value is not null)
+                    if (source is not null)
                     {
-                        *value = 0;
+                        *source = 0;
                     }
 
-                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetSource(index, out IGraphicsEffectSource v);
+                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetSource(index, out IGraphicsEffectSource sourceObject);
                     if (hr >= 0)
                     {
-                        IntPtr unk = MarshalInspectable<IGraphicsEffectSource>.FromManaged(v!);
-                        *value = unk;
+                        *source = MarshalInspectable<IGraphicsEffectSource>.FromManaged(sourceObject!);
                     }
                     return hr;
                 }
@@ -225,19 +216,19 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
             }
 
             [UnmanagedCallersOnly(CallConvs = [typeof(CallConvMemberFunction)])]
-            private static int GetSourceCountFromAbi(IntPtr thisPtr, uint* value)
+            private static int GetSourceCountFromAbi(IntPtr thisPtr, uint* count)
             {
                 try
                 {
-                    if (value is not null)
+                    if (count is not null)
                     {
-                        *value = 0;
+                        *count = 0;
                     }
 
-                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetSourceCount(out uint v);
+                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetSourceCount(out uint countObject);
                     if (hr >= 0)
                     {
-                        *value = v;
+                        *count = countObject;
                     }
                     return hr;
                 }

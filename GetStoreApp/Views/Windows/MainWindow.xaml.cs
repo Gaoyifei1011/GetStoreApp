@@ -52,7 +52,6 @@ namespace GetStoreApp.Views.Windows
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly SUBCLASSPROC mainWindowSubClassProc;
-        private readonly SUBCLASSPROC inputNonClientPointerSourceSubClassProc;
         private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly OverlappedPresenter overlappedPresenter;
@@ -169,15 +168,6 @@ namespace GetStoreApp.Views.Windows
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
             Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0, IntPtr.Zero);
-
-            // 为非工作区的窗口设置相应的窗口样式，添加窗口过程
-            IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx((IntPtr)AppWindow.Id.Value, IntPtr.Zero, "InputNonClientPointerSource", null);
-
-            if (inputNonClientPointerSourceHandle != IntPtr.Zero)
-            {
-                inputNonClientPointerSourceSubClassProc = new SUBCLASSPROC(InputNonClientPointerSourceSubClassProc);
-                Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(inputNonClientPointerSourceSubClassProc), 0, IntPtr.Zero);
-            }
 
             // 处理提权模式下运行应用
             if (RuntimeHelper.IsElevated)
@@ -300,6 +290,7 @@ namespace GetStoreApp.Views.Windows
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
                     DownloadSchedulerService.TerminateDownload();
+                    Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0);
                     (Application.Current as WinUIApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
@@ -317,6 +308,7 @@ namespace GetStoreApp.Views.Windows
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
+                Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0);
                 (Application.Current as WinUIApp).Dispose();
             }
         }
@@ -927,44 +919,6 @@ namespace GetStoreApp.Views.Windows
 
                         break;
                     }
-                // 选择窗口右键菜单的条目时接收到的消息
-                case WindowMessage.WM_SYSCOMMAND:
-                    {
-                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToUInt32() & 0xFFF0);
-
-                        if (sysCommand is SYSTEMCOMMAND.SC_MOUSEMENU)
-                        {
-                            FlyoutShowOptions options = new()
-                            {
-                                Position = new Point(0, 15),
-                                ShowMode = FlyoutShowMode.Standard
-                            };
-                            TitlebarMenuFlyout.ShowAt(null, options);
-                            return 0;
-                        }
-                        else if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU)
-                        {
-                            FlyoutShowOptions options = new()
-                            {
-                                Position = new Point(0, 45),
-                                ShowMode = FlyoutShowMode.Standard
-                            };
-                            TitlebarMenuFlyout.ShowAt(null, options);
-                            return 0;
-                        }
-                        break;
-                    }
-            }
-            return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);
-        }
-
-        /// <summary>
-        /// 应用拖拽区域窗口消息处理
-        /// </summary>
-        private IntPtr InputNonClientPointerSourceSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
-        {
-            switch (Msg)
-            {
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
@@ -991,6 +945,33 @@ namespace GetStoreApp.Views.Windows
                             TitlebarMenuFlyout.ShowAt(Content, options);
                         }
                         return 0;
+                    }
+                // 选择窗口右键菜单的条目时接收到的消息
+                case WindowMessage.WM_SYSCOMMAND:
+                    {
+                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToUInt32() & 0xFFF0);
+
+                        if (sysCommand is SYSTEMCOMMAND.SC_MOUSEMENU)
+                        {
+                            FlyoutShowOptions options = new()
+                            {
+                                Position = new Point(0, 15),
+                                ShowMode = FlyoutShowMode.Standard
+                            };
+                            TitlebarMenuFlyout.ShowAt(null, options);
+                            return 0;
+                        }
+                        else if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU)
+                        {
+                            FlyoutShowOptions options = new()
+                            {
+                                Position = new Point(0, 45),
+                                ShowMode = FlyoutShowMode.Standard
+                            };
+                            TitlebarMenuFlyout.ShowAt(null, options);
+                            return 0;
+                        }
+                        break;
                     }
             }
             return Comctl32Library.DefSubclassProc(hWnd, Msg, wParam, lParam);

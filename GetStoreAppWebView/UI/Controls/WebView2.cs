@@ -29,6 +29,7 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using WinRT;
 
 namespace GetStoreAppWebView.UI.Controls
 {
@@ -1313,7 +1314,7 @@ namespace GetStoreAppWebView.UI.Controls
                         // 一直使用虚拟父类是行不通的，因为我们不能将浏览器从一个非 ShellManaged的 Hwnd (虚拟)重命名为一个 ShellManaged 的 (CoreWindow)。
                         if (CoreWindow.GetForCurrentThread() is CoreWindow coreWindow)
                         {
-                            ICoreWindowInterop coreWindowInterop = coreWindow as object as ICoreWindowInterop;
+                            ICoreWindowInterop coreWindowInterop = coreWindow.As<ICoreWindowInterop>();
                             coreWindowInterop.GetWindowHandle(out tempHostHwnd);
                         }
                         else
@@ -1416,7 +1417,7 @@ namespace GetStoreAppWebView.UI.Controls
         {
             if (xamlHostHwnd == IntPtr.Zero && CoreWindow.GetForCurrentThread() is CoreWindow coreWindow)
             {
-                ICoreWindowInterop coreWindowInterop = coreWindow as object as ICoreWindowInterop;
+                ICoreWindowInterop coreWindowInterop = coreWindow.As<ICoreWindowInterop>();
                 coreWindowInterop.GetWindowHandle(out xamlHostHwnd);
             }
 

@@ -36,5 +36,16 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
         /// <returns>返回的值特定于发送的消息。 应忽略此值。</returns>
         [LibraryImport(Comctl32, EntryPoint = "DefSubclassProc", SetLastError = false), PreserveSig]
         public static partial IntPtr DefSubclassProc(IntPtr hWnd, WindowMessage uMsg, UIntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 从窗口中删除子类回调。
+        /// </summary>
+        /// <param name="hWnd">正在子类化的窗口的句柄。</param>
+        /// <param name="pfnSubclass">指向窗口过程的指针。 此指针和子类 ID 唯一标识此子类回调。 有关回调函数原型，请参阅 SUBCLASSPROC。</param>
+        /// <param name="uIdSubclass">UINT_PTR子类 ID。 此 ID 和回调指针唯一标识此子类回调。 注意：在 64 位版本的 Windows 上，这是一个 64 位值。</param>
+        /// <returns>如果成功删除子类回调，则为 TRUE;否则为 FALSE。</returns>
+        [LibraryImport(Comctl32, EntryPoint = "RemoveWindowSubclass", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool RemoveWindowSubclass(IntPtr hWnd, IntPtr pfnSubclass, uint uIdSubclass);
     }
 }

@@ -11,7 +11,7 @@
   <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="5.0.914.0" />
+	  Version="5.0.915.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -78,8 +78,6 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
-    <rescap:Capability Name="broadFileSystemAccess" />
-    <rescap:Capability Name="packageManagement" />
     <rescap:Capability Name="packageQuery" />
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>

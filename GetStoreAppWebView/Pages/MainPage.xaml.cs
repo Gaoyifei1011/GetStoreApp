@@ -5,6 +5,7 @@ using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.UI.Backdrop;
 using GetStoreAppWebView.UI.Controls;
 using GetStoreAppWebView.UI.Dialogs;
+using GetStoreAppWebView.WindowsAPI.ComTypes;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ using Windows.UI.Composition;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -35,6 +37,8 @@ namespace GetStoreAppWebView.Pages
     {
         private readonly ApplicationView applicationView = ApplicationView.GetForCurrentView();
         private readonly CoreApplicationView coreApplicationView = CoreApplication.GetCurrentView();
+        private readonly IInternalCoreWindow2 internalCoreWindow2 = Window.Current.CoreWindow.As<IInternalCoreWindow2>();
+        private readonly EventHandler windowPositionChangedEventHandler;
 
         private bool _canGoBack = false;
 
@@ -145,6 +149,8 @@ namespace GetStoreAppWebView.Pages
             }
 
             Background = new MicaBrush();
+            windowPositionChangedEventHandler = new EventHandler(OnWindowPositionChanged);
+            internalCoreWindow2.AddWindowPositionChanged(MarshalInterface<EventHandler>.CreateMarshaler(windowPositionChangedEventHandler).ThisPtr, out EventRegistrationToken token);
         }
 
         #region 第一部分：窗口内容挂载的事件
@@ -155,6 +161,17 @@ namespace GetStoreAppWebView.Pages
         private void OnActualThemeChanged(FrameworkElement sender, object args)
         {
             SetTitleBarTheme(sender.ActualTheme);
+        }
+
+        /// <summary>
+        /// 窗口位置和大小发生变化关闭 WebView 2 的下载对话框
+        /// </summary>
+        private void OnWindowPositionChanged(object sender, EventArgs args)
+        {
+            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1] && WebView2Browser is not null && WebView2Browser.CoreWebView2 is not null && WebView2Browser.CoreWebView2.IsDefaultDownloadDialogOpen)
+            {
+                WebView2Browser.CoreWebView2.CloseDefaultDownloadDialog();
+            }
         }
 
         #endregion 第一部分：窗口内容挂载的事件
