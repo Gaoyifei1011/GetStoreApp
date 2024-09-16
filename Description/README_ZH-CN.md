@@ -104,6 +104,8 @@
 | 控制台应用程序                  | 已完成                                                             |
 | 程序性能优化                    | 已完成                                                             |
 | 界面现代化改造                  | 已完成                                                             |
+| WinGet Widget 小组件            | 未完成                                                             |
+| 应用安装支持 (https://github.com/Gaoyifei1011/GetStoreApp/issues/18)       | 未完成                  |
 
 程序所有功能都已开发完成
 

@@ -105,6 +105,8 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 | Program performance optimization                         | Completed                                                                                                          |
 | Interface modernization                                  | Completed                                                                                                          |
 | Package management                                       | Completed                                                                                                          |
+| WinGet Widgets                                           | Unfinished                                                                                                         |
+| App install support (https://github.com/Gaoyifei1011/GetStoreApp/issues/18)      | Unfinished                                                                                 |
 
 All the content of the program has been developed
 
