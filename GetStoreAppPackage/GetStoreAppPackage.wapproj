@@ -81,6 +81,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="GetStoreAppPackage_SignKey.pfx" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
   </ItemGroup>

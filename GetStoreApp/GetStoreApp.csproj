@@ -11,7 +11,6 @@
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
-    <EnableMsixTooling>false</EnableMsixTooling>
     <FileAlignment>512</FileAlignment>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -34,6 +33,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <SelfContained>true</SelfContained>
     <StartupObject>GetStoreApp.Program</StartupObject>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>

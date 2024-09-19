@@ -60,7 +60,8 @@ namespace GetStoreApp.Views.Pages
             new DictionaryEntry("DisposableMemory.ModernNetUAP.XamlCompiler","https://github.com/driver1998/ModernNetUAP.XamlCompiler"),
             new DictionaryEntry("Microsoft.Web.WebView2","https://aka.ms/webview"),
             new DictionaryEntry("Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"),
-            new DictionaryEntry( "Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
+            new DictionaryEntry("Microsoft.Windows.SDK.BuildTools","https://aka.ms/WinSDKProjectURL"),
+            new DictionaryEntry("Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
             new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),
         ];
 

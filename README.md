@@ -123,6 +123,7 @@
 > * [DisposableMemory.ModernNetUAP.XamlCompiler](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
 > * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
+> * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
 
