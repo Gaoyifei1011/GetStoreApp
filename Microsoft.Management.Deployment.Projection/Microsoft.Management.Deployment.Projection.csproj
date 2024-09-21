@@ -1,15 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>	  
+    <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
+    <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <CSWinRTWindowsMetadata>10.0.26100.0</CSWinRTWindowsMetadata>
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+    <ImplicitUsings>disable</ImplicitUsings>
     <IsAotCompatible>true</IsAotCompatible>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <MetricsSupport>false</MetricsSupport>
     <Platforms>x64;x86;ARM64</Platforms>
     <PublishAot>true</PublishAot>
     <OptimizationPreference>Size</OptimizationPreference>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
+    <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Platform)'=='x86'">

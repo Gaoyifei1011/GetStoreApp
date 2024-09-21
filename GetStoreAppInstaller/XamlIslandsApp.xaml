@@ -1,14 +1,13 @@
 ﻿<wux:Application
-    x:Class="GetStoreAppWebView.App"
+    x:Class="GetStoreAppInstaller.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GetStoreAppInstaller"
     xmlns:wux="using:Windows.UI.Xaml">
-
     <wux:Application.Resources>
         <wux:ResourceDictionary>
             <wux:ResourceDictionary.MergedDictionaries>
                 <wux:ResourceDictionary Source="ms-appx:///Styles/Mile.Xaml.Styles.SunValley.xbf" />
-                <wux:ResourceDictionary Source="ms-appx:///Styles/UWP/AppBarButton.xaml" />
             </wux:ResourceDictionary.MergedDictionaries>
         </wux:ResourceDictionary>
     </wux:Application.Resources>

@@ -1,0 +1,28 @@
+﻿<wuxc:Page
+    x:Class="GetStoreAppInstaller.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:GetStoreAppInstaller"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wuxc="using:Windows.UI.Xaml.Controls"
+    mc:Ignorable="d">
+
+    <wuxc:StackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="36">
+        <wuxc:StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <wuxc:TextBlock
+                VerticalAlignment="Center"
+                FontSize="60"
+                Text="GetStoreApp Installer and Package Manager"
+                TextAlignment="Center" />
+            <wuxc:TextBlock
+                VerticalAlignment="Center"
+                FontSize="60"
+                Text="Coming soon......."
+                TextAlignment="Center" />
+        </wuxc:StackPanel>
+    </wuxc:StackPanel>
+</wuxc:Page>

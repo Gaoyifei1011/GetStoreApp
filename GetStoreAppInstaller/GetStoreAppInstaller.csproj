@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest</AnalysisLevel>
-    <AssemblyName>GetStoreAppWebView</AssemblyName>
+    <AssemblyName>GetStoreAppInstaller</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <DebuggerSupport>false</DebuggerSupport>
@@ -21,6 +21,7 @@
     <IncludeSymbols>false</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
+    <MileXamlNoSunValleyXamlStyle>true</MileXamlNoSunValleyXamlStyle>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
     <MetricsSupport>false</MetricsSupport>
     <OptimizationPreference>Size</OptimizationPreference>
@@ -33,17 +34,17 @@
     <PublishSelfContained>true</PublishSelfContained>
     <PublishSingleFile>true</PublishSingleFile>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <RootNamespace>GetStoreAppWebView</RootNamespace>
+    <RootNamespace>GetStoreAppInstaller</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <SelfContained>true</SelfContained>
-    <StartupObject>GetStoreAppWebView.Program</StartupObject>
+    <StartupObject>GetStoreAppInstaller.Program</StartupObject>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseRidGraph>true</UseRidGraph>
     <UseUwpTools>true</UseUwpTools>
-    <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
-    <Win32Resource>GetStoreAppWebView.res</Win32Resource>
+    <UseWindowsForms>false</UseWindowsForms>
+    <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
     <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
@@ -57,9 +58,8 @@
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
     <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
   </PropertyGroup>
-
-  <ItemGroup>    
-    <Content Remove="Assets\GetStoreAppWebView.ico" />
+  <ItemGroup>
+    <ApplicationDefinition Include="XamlIslandsApp.xaml" />
     <Content Remove="Styles\Mile.Xaml.Styles.SunValley.xbf" />
     <MyEmbeddedItems Include="Styles\Mile.Xaml.Styles.SunValley.xbf" />
     
@@ -69,20 +69,15 @@
 
     <Manifest Include="$(ApplicationManifest)" />
 
-    <None Remove="Dialogs\ProcessFailedDialog.xaml" />
-    <None Remove="Pages\MainPage.xaml" />
-    <None Remove="Pages\TaskbarPinPage.xaml" />
-    <None Remove="Styles\UWP\AppbarButton.xaml" />
+    <None Remove="TestPage.xaml" />
+    <None Remove="XamlIslandsApp.xaml" />
+
+    <Page Update="TestPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Remove="XamlIslandsApp.xaml" />
 
     <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.2" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2817-prerelease" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
-    <PackageReference Include="Mile.Xaml" Version="2.3.1064" GeneratePathProperty="True" IncludeAssets="none" PrivateAssets="all" />
-
-    <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Pages\TaskbarPinPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\UWP\AppbarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <PackageReference Include="Mile.Xaml" Version="2.3.1064" GeneratePathProperty="True" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
@@ -93,11 +88,10 @@
 
   <!-- 捆绑前对二进制文件进行后处理 -->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
-    <!-- 对生成的 GetStoreAppWebView.exe 文件进行数字签名 -->
+    <!-- 对生成的 GetStoreAppInstaller.exe 文件进行数字签名 -->
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
   </Target>
 
-  <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->
   <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
     <Copy SourceFiles="@(MyEmbeddedItems)" DestinationFiles="@(MyEmbeddedItems->'$(IntermediateOutputPath)embed\Styles\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     <ReadLinesFromFile File="$(_EmbedFileResfilePath)">

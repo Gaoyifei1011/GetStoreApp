@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "获取商店应用": {
+    "应用安装器": {
       "commandName": "MsixPackage",
       "nativeDebugging": true
     }

@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>GetStoreAppWidget</AssemblyName>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
+    <Deterministic>true</Deterministic>
+    <DisableXbfLineInfo>False</DisableXbfLineInfo>
+    <FileAlignment>512</FileAlignment>
+    <ForceAotCompile>true</ForceAotCompile>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+    <LangVersion>latest</LangVersion>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <MetricsSupport>false</MetricsSupport>
+    <Optimize>False</Optimize>
+    <OptimizationPreference>Size</OptimizationPreference>
+    <OutputType>Library</OutputType>
+    <Platforms>x86;x64;ARM64</Platforms>
+    <PublishAot>True</PublishAot>
+    <PublishTrimmed>True</PublishTrimmed>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <SelfContained>true</SelfContained>
+    <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
+    <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
+    <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
+    <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Platform)'=='x86'">
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='ARM64'">
+    <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
+  </ItemGroup>
+
+  <!-- 测试 AOT 发布后的文件 -->
+  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
+    <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).dll" DestinationFiles="$(ProjectDir)bin\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\$(AssemblyName).dll" />
+  </Target>
+
+  <!-- 捆绑前对二进制文件进行后处理 -->
+  <Target Name="DigitialSignGeneratedFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
+    <!-- 对生成的 GetStoreAppShellMenuExtension.dll 文件进行数字签名 -->
+    <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).dll" />
+  </Target>
+</Project>

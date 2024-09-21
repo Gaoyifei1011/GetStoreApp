@@ -34,7 +34,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
             DispatcherQueue.TryEnqueue(async () =>
             {
-                LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/LICENSE"));
+                LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/LICENSE"));
             });
         }
     }

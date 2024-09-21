@@ -12,7 +12,7 @@ namespace GetStoreApp.Extensions.Console
 
         public static async Task InitializeAsync()
         {
-            lengths = await ResourceService.GetEmbeddedDataAsync("Files/EmbedAssets/Lengths.bin");
+            lengths = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/Lengths.bin");
         }
 
         /// <summary>
