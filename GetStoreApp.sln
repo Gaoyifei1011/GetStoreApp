@@ -43,11 +43,11 @@ Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "signtool", "signtool.exe", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWebView", "GetStoreAppWebView\GetStoreAppWebView.csproj", "{AA3374D5-346B-41F9-A362-329F01589BE2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppShellMenuExtension", "GetStoreAppShellMenuExtension\GetStoreAppShellMenuExtension.csproj", "{F0353E1D-52C6-409A-8CF6-A77DDEFC0C1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppShellExtension", "GetStoreAppShellExtension\GetStoreAppShellExtension.csproj", "{F0353E1D-52C6-409A-8CF6-A77DDEFC0C1B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWidget", "GetStoreAppWidget\GetStoreAppWidget.csproj", "{BC2EC858-BA74-4BBD-81A8-991878DF7FA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetStoreAppInstaller", "GetStoreAppInstaller\GetStoreAppInstaller.csproj", "{620DEDCD-20BD-4A18-9A01-FFD2B12C18A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppInstaller", "GetStoreAppInstaller\GetStoreAppInstaller.csproj", "{620DEDCD-20BD-4A18-9A01-FFD2B12C18A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

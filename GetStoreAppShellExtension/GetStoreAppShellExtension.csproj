@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AssemblyName>GetStoreAppShellMenuExtension</AssemblyName>
+    <AssemblyName>GetStoreAppShellExtension</AssemblyName>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <DebuggerSupport>false</DebuggerSupport>
     <DebugType>none</DebugType>
@@ -51,7 +51,7 @@
 
   <!-- 捆绑前对二进制文件进行后处理 -->
   <Target Name="DigitialSignGeneratedFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
-    <!-- 对生成的 GetStoreAppShellMenuExtension.dll 文件进行数字签名 -->
+    <!-- 对生成的 GetStoreAppShellExtension.dll 文件进行数字签名 -->
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).dll" />
   </Target>
 </Project>

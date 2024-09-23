@@ -43,8 +43,8 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateKeyFile>GetStoreAppPackage_SignKey.pfx</PackageCertificateKeyFile>
     <ProjectGuid>CA6C2DC4-C96D-4C23-AE18-FC7150BEF554</ProjectGuid>
-    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TargetFrameworkMoniker>.NETCoreApp,Version=v9.0</TargetFrameworkMoniker>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
     <UserSecretsId>FF1007A3-37E5-4856-A3D5-765555830F81</UserSecretsId>
     <VisualStudioVersion>17.0</VisualStudioVersion>
@@ -78,7 +78,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <!--<ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />-->
-    <!--<ProjectReference Include="..\GetStoreAppShellMenuExtension\GetStoreAppShellMenuExtension.csproj" />-->
+    <ProjectReference Include="..\GetStoreAppShellExtension\GetStoreAppShellExtension.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
     <!--<ProjectReference Include="..\GetStoreAppWidget\GetStoreAppWidget.csproj" />-->
   </ItemGroup>

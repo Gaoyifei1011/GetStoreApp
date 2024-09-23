@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace GetStoreAppShellMenuExtension.WindowsAPI.ComTypes
+namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 允许创建对象的类。

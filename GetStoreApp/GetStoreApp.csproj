@@ -63,6 +63,7 @@
   <ItemGroup>
     <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
 
+    <Content Include="Assets\PowerShell.ico" CopyToOutputDirectory="Always" />
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Embed\cookie.xml" />
     <Content Remove="Assets\Embed\Lengths.bin" />

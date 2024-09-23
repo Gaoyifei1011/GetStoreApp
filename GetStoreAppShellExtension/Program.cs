@@ -1,29 +1,35 @@
-﻿using System;
+﻿using GetStoreAppShellExtension.Commands;
+using GetStoreAppShellExtension.Services.Controls.Settings;
+using GetStoreAppShellExtension.Services.Root;
+using System;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 
-namespace GetStoreAppShellMenuExtension
+namespace GetStoreAppShellExtension
 {
     /// <summary>
     /// 获取商店应用 右键菜单扩展
     /// </summary>
-    public class Program
+    public static class Program
     {
-        private static long g_cRefModule = 0;
+        private static long g_cRefModule;
 
         static Program()
         {
-            //ShellMenuService.InitializeShellMenu();
+            LanguageService.InitializeLanguage();
+            ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
         }
 
         /// <summary>
         /// 确定是否正在使用实现此函数的 DLL。 否则，调用方可以从内存中卸载 DLL。
         /// </summary>
-        /// <returns>OLE 不提供此函数。 支持 OLE 组件对象模型 (COM) 的 DLL 应实现并导出 DllCanUnloadNow。</returns>
+        /// <returns>OLE 不提供此函数。 支持 OLE 组件对象模型 (COM) 的 DLL 应实现并导出 DllCanUnloadturns>Now。</re
         [UnmanagedCallersOnly(EntryPoint = "DllCanUnloadNow")]
         public static int DllCanUnloadNow()
         {
-            return g_cRefModule >= 1 ? 1 : 0;
+            Environment.Exit(0);
+            return 0;
         }
 
         public static void DllAddRef()
@@ -46,16 +52,16 @@ namespace GetStoreAppShellMenuExtension
         [UnmanagedCallersOnly(EntryPoint = "DllGetClassObject")]
         public static unsafe int DllGetClassObject(Guid clsid, Guid riid, IntPtr* ppv)
         {
-            //if (clsid.Equals(typeof(ExplorerCommand).GUID))
-            //{
-            //    ClassFactory classFactory = new();
-            //    IntPtr pIUnknown = (IntPtr)ComInterfaceMarshaller<ClassFactory>.ConvertToUnmanaged(classFactory);
+            if (clsid.Equals(typeof(RootExplorerCommand).GUID))
+            {
+                ClassFactory classFactory = new();
+                IntPtr pIUnknown = (IntPtr)ComInterfaceMarshaller<ClassFactory>.ConvertToUnmanaged(classFactory);
 
-            //    int hresult = Marshal.QueryInterface(pIUnknown, in riid, out *ppv);
-            //    Marshal.Release(pIUnknown);
+                int hresult = Marshal.QueryInterface(pIUnknown, in riid, out *ppv);
+                Marshal.Release(pIUnknown);
 
-            //    return hresult;
-            //}
+                return hresult;
+            }
 
             return unchecked((int)0x80040111);
         }

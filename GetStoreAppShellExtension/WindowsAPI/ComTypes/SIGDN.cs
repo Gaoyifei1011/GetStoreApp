@@ -1,4 +1,4 @@
-﻿namespace GetStoreAppShellMenuExtension.WindowsAPI.ComTypes
+﻿namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 请求通过 IShellItem：：GetDisplayName 和 SHGetNameFromIDList 检索项的显示名称的形式。

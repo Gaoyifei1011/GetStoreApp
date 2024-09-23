@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace GetStoreAppShellMenuExtension.WindowsAPI.ComTypes
+namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 公开检索有关 Shell 项的信息的方法。 IShellItem 和 IShellItem2 是任何新代码中项的首选表示形式。

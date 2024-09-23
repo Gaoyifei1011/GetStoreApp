@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GetStoreAppShellMenuExtension.WindowsAPI.ComTypes
+namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 指向当前命令标志

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GetStoreAppShellMenuExtension.WindowsAPI.ComTypes
+namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
 {
     /// <summary>
     /// EXPCMDSTATE 值表示 Shell 项的命令状态。

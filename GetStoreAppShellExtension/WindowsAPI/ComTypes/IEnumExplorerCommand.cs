@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace GetStoreAppShellMenuExtension.WindowsAPI.ComTypes
+namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 由 IExplorerCommandProvider 提供。 此接口包含要放入命令栏的命令枚举。
