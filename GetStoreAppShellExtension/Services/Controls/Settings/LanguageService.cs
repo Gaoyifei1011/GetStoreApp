@@ -2,9 +2,7 @@
 using GetStoreAppShellExtension.Services.Root;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using Windows.Globalization;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppShellExtension.Services.Controls.Settings
 {
@@ -16,8 +14,6 @@ namespace GetStoreAppShellExtension.Services.Controls.Settings
         private static readonly string settingsKey = ConfigKey.LanguageKey;
 
         public static string DefaultAppLanguage { get; private set; }
-
-        public static FlowDirection FlowDirection { get; private set; }
 
         public static string AppLanguage { get; private set; }
 
@@ -44,7 +40,6 @@ namespace GetStoreAppShellExtension.Services.Controls.Settings
             }
 
             ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
-            FlowDirection = CultureInfo.GetCultureInfo(AppLanguage).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
         }
     }
 }

@@ -75,7 +75,7 @@
     <None Remove="Styles\UWP\AppbarButton.xaml" />
 
     <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.2" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2817-prerelease" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
     <PackageReference Include="Mile.Xaml" Version="2.3.1064" GeneratePathProperty="True" IncludeAssets="none" PrivateAssets="all" />
 
