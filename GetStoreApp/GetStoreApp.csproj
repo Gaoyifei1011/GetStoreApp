@@ -62,8 +62,67 @@
 
   <ItemGroup>
     <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
+    <Content Include="Assets\Icon\Control\About.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\AppUpdate.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\Download.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\Settings.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\Store.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\Web.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Control\WinGet.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\ShellMenu\AppInformation.ico" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\ShellMenu\PowerShell.ico" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\LargeTile.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\LargeTile.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\LargeTile.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\LargeTile.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\LargeTile.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SmallTile.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SmallTile.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SmallTile.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SmallTile.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SmallTile.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SplashScreen.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SplashScreen.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SplashScreen.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SplashScreen.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\SplashScreen.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square150x150Logo.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square150x150Logo.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square150x150Logo.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square150x150Logo.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square150x150Logo.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-lightunplated_targetsize-16.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-lightunplated_targetsize-24.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-lightunplated_targetsize-32.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-lightunplated_targetsize-48.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-lightunplated_targetsize-256.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-unplated_targetsize-16.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-unplated_targetsize-24.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-unplated_targetsize-32.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-unplated_targetsize-48.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.altform-unplated_targetsize-256.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.targetsize-16.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.targetsize-24.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.targetsize-32.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.targetsize-48.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Square44x44Logo.targetsize-256.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Wide310x150Logo.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Wide310x150Logo.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Wide310x150Logo.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Wide310x150Logo.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\MainApp\Wide310x150Logo.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\StoreLogo.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\StoreLogo.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\StoreLogo.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\StoreLogo.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\StoreLogo.scale-400.png" CopyToOutputDirectory="Always" />
 
-    <Content Include="Assets\PowerShell.ico" CopyToOutputDirectory="Always" />
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Embed\cookie.xml" />
     <Content Remove="Assets\Embed\Lengths.bin" />
@@ -159,6 +218,11 @@
     <Page Remove="WinUIApp.xaml" />
 
     <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Assets\Icon\ShellMenu\AppInformation.ico" CopyToOutputDirectory="Always" />
+    <Content Update="Assets\Icon\ShellMenu\PowerShell.ico" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->

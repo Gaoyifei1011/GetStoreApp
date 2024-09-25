@@ -129,4 +129,10 @@
   <data name="PSRegister" xml:space="preserve">
     <value>Use PowerShell to register app</value>
   </data>
+  <data name="AppInstallAdmin" xml:space="preserve">
+    <value>Use app installer to install (Admin)</value>
+  </data>
+  <data name="AppInstall" xml:space="preserve">
+    <value>Use app installer to install</value>
+  </data>
 </root>

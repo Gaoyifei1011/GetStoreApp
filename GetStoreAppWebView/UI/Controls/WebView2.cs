@@ -2,11 +2,11 @@
 using GetStoreAppWebView.Models;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.WindowsAPI.ComTypes;
-using GetStoreAppWebView.WindowsAPI.PInvoke.Kernel32;
 using GetStoreAppWebView.WindowsAPI.PInvoke.User32;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -1079,15 +1079,8 @@ namespace GetStoreAppWebView.UI.Controls
 
                     outputPoint.Time = (uint)(logicalPointerPoint.Timestamp / 1000);
                     outputPoint.HistoryCount = (uint)args.GetIntermediatePoints(this).Count;
-
-                    long lpFrequency = 0;
-                    bool result = Kernel32Library.QueryPerformanceFrequency(ref lpFrequency);
-                    if (result)
-                    {
-                        int scale = 1000000;
-                        ulong frequency = (ulong)lpFrequency;
-                        outputPoint.PerformanceCount = (logicalPointerPoint.Timestamp * frequency) / (ulong)scale;
-                    }
+                    outputPoint.HistoryCount = (uint)args.GetIntermediatePoints(this).Count;
+                    outputPoint.PerformanceCount = (ulong)Stopwatch.Frequency * logicalPointerPoint.Timestamp / 1000000;
 
                     coreWebViewCompositionController.SendPointerInput((CoreWebView2PointerEventKind)message, outputPoint);
                 }
@@ -1320,7 +1313,7 @@ namespace GetStoreAppWebView.UI.Controls
                         else
                         {
                             string classname = "WEBVIEW2_TEMP_PARENT";
-                            IntPtr hInstance = Kernel32Library.GetModuleHandle(null);
+                            IntPtr hInstance = NativeLibrary.GetMainProgramHandle();
                             ;
                             delegWndProc = OnWndProc;
 

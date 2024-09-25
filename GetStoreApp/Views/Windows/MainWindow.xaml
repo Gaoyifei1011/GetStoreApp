@@ -134,7 +134,7 @@
                         Height="18"
                         Margin="2,3,0,0"
                         HorizontalAlignment="Left"
-                        Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
+                        Source="ms-appx:///Assets/MainApp/Square44x44Logo.altform-unplated_targetsize-256.png" />
                     <TextBlock
                         Grid.Column="1"
                         Margin="12,2,0,0"
@@ -171,7 +171,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Store.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/Store.png" />
                         </NavigationViewItem.Icon>
 
                         <NavigationViewItem.ContextFlyout>
@@ -202,7 +202,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/AppUpdate.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/AppUpdate.png" />
                         </NavigationViewItem.Icon>
 
                         <NavigationViewItem.ContextFlyout>
@@ -235,7 +235,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/WinGet.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/WinGet.png" />
                         </NavigationViewItem.Icon>
 
                         <NavigationViewItem.ContextFlyout>
@@ -266,7 +266,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/AppManager.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/AppManager.png" />
                         </NavigationViewItem.Icon>
 
                         <NavigationViewItem.ContextFlyout>
@@ -299,7 +299,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Download.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/Download.png" />
                         </NavigationViewItem.Icon>
 
                         <NavigationViewItem.ContextFlyout>
@@ -330,7 +330,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Web.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/Web.png" />
                         </NavigationViewItem.Icon>
 
                         <NavigationViewItem.ContextFlyout>
@@ -363,7 +363,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/About.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/About.png" />
                         </NavigationViewItem.Icon>
 
                         <ToolTipService.ToolTip>
@@ -385,7 +385,7 @@
                         </NavigationViewItem.Content>
 
                         <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/ControlIcon/Settings.png" />
+                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/Settings.png" />
                         </NavigationViewItem.Icon>
 
                         <ToolTipService.ToolTip>

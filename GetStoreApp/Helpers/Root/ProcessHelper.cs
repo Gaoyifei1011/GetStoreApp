@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using Windows.Foundation.Diagnostics;
@@ -44,7 +45,8 @@ namespace GetStoreApp.Helpers.Root
                         processEntry32PIDList.Add(processEntry32.th32ProcessID);
                     }
                 }
-                Kernel32Library.CloseHandle(hSnapshot);
+
+                new SafeWaitHandle(hSnapshot, true).Dispose();
                 return processEntry32PIDList;
             }
             catch (Exception e)

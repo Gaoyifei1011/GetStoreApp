@@ -39,19 +39,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial bool AttachConsole(int dwProcessId = -1);
 
         /// <summary>
-        /// 关闭打开的对象句柄。
-        /// </summary>
-        /// <param name="hObject">打开对象的有效句柄。</param>
-        /// <returns>
-        /// 如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。
-        /// 如果应用程序在调试器下运行，则如果函数收到无效的句柄值或伪句柄值，该函数将引发异常。
-        /// 如果两次关闭句柄，或者对 FindFirstFile 函数返回的句柄调用 CloseHandle，而不是调用 FindClose 函数，则可能会出现这种情况。
-        /// </returns>
-        [LibraryImport(Kernel32, EntryPoint = "CloseHandle", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool CloseHandle(IntPtr hObject);
-
-        /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。
         /// </summary>
         /// <param name="dwFlags">要包含在快照中的系统部分。 此参数可使用以下一个或多个值。</param>

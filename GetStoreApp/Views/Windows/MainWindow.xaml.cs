@@ -424,9 +424,9 @@ namespace GetStoreApp.Views.Windows
                     };
 
                     secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                    secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/ControlIcon/{0}.png", tag));
-                    secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/ControlIcon/{0}.png", tag));
-                    secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/ControlIcon/{0}.png", tag));
+                    secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                    secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                    secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
 
                     secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
 

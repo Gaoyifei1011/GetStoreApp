@@ -12,7 +12,7 @@
   <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="5.0.918.0" />
+	  Version="5.0.925.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -35,27 +35,31 @@
     <Application Id="GetStoreApp"
 		  Executable="GetStoreApp.exe"
 		  EntryPoint="Windows.FullTrustApplication">
+
       <uap:VisualElements
 			  DisplayName="ms-resource:AppDisplayName"
 			  Description="ms-resource:AppDescription"
 			  BackgroundColor="transparent"
-			  Square150x150Logo="Assets\Square150x150Logo.png"
-			  Square44x44Logo="Assets\Square44x44Logo.png">
-        <uap:DefaultTile ShortName="ms-resource:AppShortDisplayName" Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png">
+			  Square150x150Logo="Assets\MainApp\Square150x150Logo.png"
+			  Square44x44Logo="Assets\MainApp\Square44x44Logo.png">
+
+        <uap:DefaultTile ShortName="ms-resource:AppShortDisplayName" Wide310x150Logo="Assets\MainApp\Wide310x150Logo.png" Square71x71Logo="Assets\MainApp\SmallTile.png" Square310x310Logo="Assets\MainApp\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
             <uap:ShowOn Tile="square150x150Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\MainApp\SplashScreen.png" />
       </uap:VisualElements>
+
       <Extensions>
         <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
           <uap:Protocol Name="taskbarpinner">
             <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
+
         <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
           <uap:Protocol Name="webbrowser">
             <uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
@@ -81,6 +85,7 @@
             </com:SurrogateServer>
           </com:ComServer>
         </com:Extension>
+
         <desktop4:Extension Category="windows.fileExplorerContextMenus">
           <desktop4:FileExplorerContextMenus>
             <desktop4:ItemType Type="*">

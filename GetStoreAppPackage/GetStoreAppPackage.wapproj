@@ -52,22 +52,22 @@
     <WinUISDKReferences>false</WinUISDKReferences>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
   <ItemGroup>
@@ -75,7 +75,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="GetStoreAppPackage_SignKey.pfx" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <!--<ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />-->
     <ProjectReference Include="..\GetStoreAppShellExtension\GetStoreAppShellExtension.csproj" />

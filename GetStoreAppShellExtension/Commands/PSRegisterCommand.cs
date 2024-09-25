@@ -29,7 +29,7 @@ namespace GetStoreAppShellExtension.Commands
         /// </summary>
         public int GetIcon(IShellItemArray psiItemArray, out string ppszIcon)
         {
-            ppszIcon = Path.Combine(InfoHelper.AppInstalledLocation, @"Assets\PowerShell.ico");
+            ppszIcon = Path.Combine(InfoHelper.AppInstalledLocation, @"Assets\Icon\ShellMenu\PowerShell.ico");
             return 0;
         }
 

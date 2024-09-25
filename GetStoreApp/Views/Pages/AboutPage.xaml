@@ -168,7 +168,7 @@
                         Width="120"
                         Height="120"
                         Margin="28,14"
-                        Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-256.png" />
+                        Source="ms-appx:///Assets/MainApp/Square44x44Logo.altform-unplated_targetsize-256.png" />
 
                     <StackPanel
                         Grid.Column="1"

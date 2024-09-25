@@ -28,8 +28,7 @@ namespace GetStoreAppShellExtension
         [UnmanagedCallersOnly(EntryPoint = "DllCanUnloadNow")]
         public static int DllCanUnloadNow()
         {
-            Environment.Exit(0);
-            return 0;
+            return g_cRefModule >= 1 ? 1 : 0;
         }
 
         public static void DllAddRef()
