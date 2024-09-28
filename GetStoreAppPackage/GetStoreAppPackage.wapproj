@@ -27,6 +27,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup>
+    <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
+  </PropertyGroup>
+  <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
+  <PropertyGroup>
+    <AssetTargetFallback>$(AssetTargetFallback);net9.0-windows10.0.26100;native</AssetTargetFallback>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundleAutoResourcePackageQualifiers>DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
@@ -43,33 +48,32 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateKeyFile>GetStoreAppPackage_SignKey.pfx</PackageCertificateKeyFile>
     <ProjectGuid>CA6C2DC4-C96D-4C23-AE18-FC7150BEF554</ProjectGuid>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <TargetFrameworkMoniker>.NETCoreApp,Version=v9.0</TargetFrameworkMoniker>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
     <UserSecretsId>FF1007A3-37E5-4856-A3D5-765555830F81</UserSecretsId>
     <VisualStudioVersion>17.0</VisualStudioVersion>
-    <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
     <WinUISDKReferences>false</WinUISDKReferences>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <AppxBundle>Always</AppxBundle>
+    <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
-  <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
@@ -80,7 +84,7 @@
     <!--<ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />-->
     <ProjectReference Include="..\GetStoreAppShellExtension\GetStoreAppShellExtension.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
-    <!--<ProjectReference Include="..\GetStoreAppWidget\GetStoreAppWidget.csproj" />-->
+    <ProjectReference Include="..\GetStoreAppWidget\GetStoreAppWidget.csproj" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <!--将生成的文件放到应用包的根目录-->

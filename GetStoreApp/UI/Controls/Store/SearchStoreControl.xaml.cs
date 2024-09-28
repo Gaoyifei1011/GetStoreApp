@@ -27,7 +27,7 @@ namespace GetStoreApp.UI.Controls.Store
     {
         private string SearchStoreCountInfo { get; } = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
 
-        private bool _isSearchingStore = false;
+        private bool _isSearchingStore;
 
         public bool IsSeachingStore
         {
@@ -91,7 +91,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isRingActive = false;
+        private bool _isRingActive;
 
         public bool IsRingActive
         {
@@ -107,7 +107,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _resultCotnrolVisable = false;
+        private bool _resultCotnrolVisable;
 
         public bool ResultControlVisable
         {
@@ -123,7 +123,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isSelectMode = false;
+        private bool _isSelectMode;
 
         public bool IsSelectMode
         {

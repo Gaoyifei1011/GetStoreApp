@@ -107,7 +107,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isQueryingLinks = false;
+        private bool _isQueryingLinks;
 
         public bool IsQueryingLinks
         {
@@ -171,7 +171,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isRingActive = false;
+        private bool _isRingActive;
 
         public bool IsRingActive
         {
@@ -187,7 +187,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _resultCotnrolVisable = false;
+        private bool _resultCotnrolVisable;
 
         public bool ResultControlVisable
         {
@@ -203,7 +203,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isAppInfoVisible = false;
+        private bool _isAppInfoVisible;
 
         public bool IsAppInfoVisible
         {
@@ -219,7 +219,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isPackagedApp = false;
+        private bool _isPackagedApp;
 
         public bool IsPackagedApp
         {
@@ -235,7 +235,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isSelectMode = false;
+        private bool _isSelectMode;
 
         public bool IsSelectMode
         {

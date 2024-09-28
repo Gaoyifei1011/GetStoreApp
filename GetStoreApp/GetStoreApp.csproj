@@ -5,8 +5,8 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DebuggerSupport>false</DebuggerSupport>
-    <DebugType>none</DebugType>
+    <DebuggerSupport>true</DebuggerSupport>
+    <DebugType>pdbonly</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -27,25 +27,15 @@
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishAot>true</PublishAot>
-    <PublishProtocol>FileSystem</PublishProtocol>
-    <PublishReadyToRun>false</PublishReadyToRun>
-    <PublishSelfContained>true</PublishSelfContained>
-    <PublishSingleFile>true</PublishSingleFile>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <SelfContained>true</SelfContained>
-    <StartupObject>GetStoreApp.Program</StartupObject>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <UseRidGraph>true</UseRidGraph>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <Win32Resource>GetStoreApp.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
-    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
-    <WindowsPackageType>MSIX</WindowsPackageType>
     <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
@@ -178,7 +168,6 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
-    <!--<PackageReference Include="Mile.Aria2" Version="1.0.230" />-->
 
     <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

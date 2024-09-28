@@ -5,7 +5,7 @@
     /// </summary>
     public static class ConfigKey
     {
-        public const string FileShellMenuKey = "FileShellMenu";
+        public const string ShellMenuKey = "ShellMenu";
 
         public const string LanguageKey = "AppLanguage";
     }

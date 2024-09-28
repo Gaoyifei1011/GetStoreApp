@@ -471,4 +471,19 @@
   <data name="LearnConfig" xml:space="preserve">
     <value>了解配置</value>
   </data>
+  <data name="ShellMenu" xml:space="preserve">
+    <value>文件右键菜单</value>
+  </data>
+  <data name="ShellMenuDescription" xml:space="preserve">
+    <value>是否在系统中显示文件右键菜单</value>
+  </data>
+  <data name="ShellMenuOffContent" xml:space="preserve">
+    <value>隐藏</value>
+  </data>
+  <data name="ShellMenuOnContent" xml:space="preserve">
+    <value>显示</value>
+  </data>
+  <data name="RestartExplorer" xml:space="preserve">
+    <value>重启资源管理器</value>
+  </data>
 </root>

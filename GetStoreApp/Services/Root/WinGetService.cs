@@ -34,11 +34,11 @@ namespace GetStoreApp.Services.Root
         // COM接口：IUnknown 接口
         private static Guid IID_IUnknown = new("00000000-0000-0000-C000-000000000046");
 
-        private static bool actuallyUseDev = false;
+        private static bool actuallyUseDev;
 
-        public static bool IsOfficialVersionExisted { get; private set; } = false;
+        public static bool IsOfficialVersionExisted { get; private set; }
 
-        public static bool IsDevVersionExisted { get; private set; } = false;
+        public static bool IsDevVersionExisted { get; private set; }
 
         /// <summary>
         /// 判断 WinGet 服务是否存在

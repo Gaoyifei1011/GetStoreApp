@@ -56,7 +56,7 @@ namespace GetStoreAppShellExtension.Commands
         /// </summary>
         public int GetState(IShellItemArray psiItemArray, bool fOkToBeSlow, out EXPCMDSTATE pCmdState)
         {
-            if (FileShellMenuService.GetFileShellMenuValue() && psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
+            if (ShellMenuService.GetShellMenuValue() && psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
                 if (Path.GetFileName(filePath).Equals("AppxManifest.xml", StringComparison.OrdinalIgnoreCase))

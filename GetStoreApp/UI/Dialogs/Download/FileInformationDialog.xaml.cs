@@ -22,7 +22,7 @@ namespace GetStoreApp.UI.Dialogs.Download
 
         private string FileSize { get; set; }
 
-        private bool _fileCheckState = false;
+        private bool _fileCheckState;
 
         public bool FileCheckState
         {

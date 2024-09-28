@@ -39,7 +39,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppManagerPage : Page, INotifyPropertyChanged
     {
-        private bool needToRefreshData = false;
+        private bool needToRefreshData;
         private AutoResetEvent autoResetEvent;
         private readonly PackageManager packageManager = new();
 
@@ -83,7 +83,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isLoadedCompleted = false;
+        private bool _isLoadedCompleted;
 
         public bool IsLoadedCompleted
         {
@@ -131,7 +131,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isAppFramework = false;
+        private bool _isAppFramework;
 
         public bool IsAppFramework
         {
@@ -179,7 +179,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isSystemSignatureSelected = false;
+        private bool _isSystemSignatureSelected;
 
         public bool IsSystemSignatureSelected
         {
@@ -195,7 +195,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isEnterpriseSignatureSelected = false;
+        private bool _isEnterpriseSignatureSelected;
 
         public bool IsEnterpriseSignatureSelected
         {
@@ -211,7 +211,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isDeveloperSignatureSelected = false;
+        private bool _isDeveloperSignatureSelected;
 
         public bool IsDeveloperSignatureSelected
         {
@@ -227,7 +227,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _isNoneSignatureSelected = false;
+        private bool _isNoneSignatureSelected;
 
         public bool IsNoneSignatureSelected
         {

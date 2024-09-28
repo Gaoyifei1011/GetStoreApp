@@ -10,7 +10,7 @@ namespace GetStoreAppWebView.Helpers.Controls.Extensions
     /// </summary>
     public static class ContentDialogHelper
     {
-        private static bool isDialogOpening = false;
+        private static bool isDialogOpening;
 
         /// <summary>
         /// 显示对话框

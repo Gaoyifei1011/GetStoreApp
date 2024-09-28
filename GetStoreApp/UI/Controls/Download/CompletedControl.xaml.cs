@@ -41,7 +41,7 @@ namespace GetStoreApp.UI.Controls.Download
 
         private string CompletedCountInfo { get; } = ResourceService.GetLocalized("Download/CompletedCountInfo");
 
-        private bool _isSelectMode = false;
+        private bool _isSelectMode;
 
         public bool IsSelectMode
         {

@@ -12,7 +12,6 @@
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
-    <FileAlignment>512</FileAlignment>
     <ForceAotCompile>true</ForceAotCompile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -28,20 +27,13 @@
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishAot>true</PublishAot>
-    <PublishProtocol>FileSystem</PublishProtocol>
-    <PublishReadyToRun>false</PublishReadyToRun>
-    <PublishSelfContained>true</PublishSelfContained>
-    <PublishSingleFile>true</PublishSingleFile>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <RootNamespace>GetStoreAppWebView</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <SelfContained>true</SelfContained>
-    <StartupObject>GetStoreAppWebView.Program</StartupObject>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <UseRidGraph>true</UseRidGraph>
     <UseUwpTools>true</UseUwpTools>
+    <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
     <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>

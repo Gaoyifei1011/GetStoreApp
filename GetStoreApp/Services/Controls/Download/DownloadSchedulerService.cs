@@ -18,7 +18,7 @@ namespace GetStoreApp.Services.Controls.Download
     public static class DownloadSchedulerService
     {
         private static bool isInitialized;
-        private static int badgeCount = 0;
+        private static int badgeCount;
         private static DictionaryEntry doEngineMode;
 
         public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);

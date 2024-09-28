@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AssemblyName>Microsoft.Management.Deployment.Projection</AssemblyName>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <CsWinRTIncludes>Microsoft.Management.Deployment</CsWinRTIncludes>
     <CSWinRTWindowsMetadata>10.0.26100.0</CSWinRTWindowsMetadata>
@@ -8,14 +12,22 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
+    <IncludeAllContentForSelfExtract>false</IncludeAllContentForSelfExtract>
+    <IncludeSymbols>false</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
+    <LangVersion>latest</LangVersion>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
     <MetricsSupport>false</MetricsSupport>
-    <Platforms>x64;x86;ARM64</Platforms>
-    <PublishAot>true</PublishAot>
     <OptimizationPreference>Size</OptimizationPreference>
+    <Optimize>false</Optimize>    
+    <OutputType>Library</OutputType>
+    <Platforms>x86;x64;ARM64</Platforms>
+    <PublishAot>true</PublishAot>
+    <RootNamespace>Microsoft.Management.Deployment.Projection</RootNamespace>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>

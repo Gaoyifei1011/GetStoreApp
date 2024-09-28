@@ -56,7 +56,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private bool _isSearchCompleted = false;
+        private bool _isSearchCompleted;
 
         public bool IsSearchCompleted
         {

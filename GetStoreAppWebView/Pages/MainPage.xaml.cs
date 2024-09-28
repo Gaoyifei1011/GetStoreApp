@@ -40,7 +40,7 @@ namespace GetStoreAppWebView.Pages
         private readonly IInternalCoreWindow2 internalCoreWindow2 = Window.Current.CoreWindow.As<IInternalCoreWindow2>();
         private readonly EventHandler windowPositionChangedEventHandler;
 
-        private bool _canGoBack = false;
+        private bool _canGoBack;
 
         public bool CanGoBack
         {
@@ -56,7 +56,7 @@ namespace GetStoreAppWebView.Pages
             }
         }
 
-        private bool _canGoForward = false;
+        private bool _canGoForward;
 
         public bool CanGoForward
         {
@@ -88,7 +88,7 @@ namespace GetStoreAppWebView.Pages
             }
         }
 
-        private bool _isDownloadClickEnabled = false;
+        private bool _isDownloadClickEnabled;
 
         public bool IsDownloadClickEnabled
         {

@@ -9,7 +9,7 @@ namespace GetStoreAppWebView.Services.Root
     /// </summary>
     public static class ResourceService
     {
-        private static bool isInitialized = false;
+        private static bool isInitialized;
 
         private static string _defaultAppLanguage;
         private static string _currentAppLanguage;

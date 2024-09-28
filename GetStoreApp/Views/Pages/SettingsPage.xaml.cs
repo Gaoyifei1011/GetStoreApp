@@ -19,6 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -169,6 +170,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     _queryLinksModeItem = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksModeItem)));
+                }
+            }
+        }
+
+        private bool _shellMenuValue = ShellMenuService.ShellMenuValue;
+
+        public bool ShellMenuValue
+        {
+            get { return _shellMenuValue; }
+
+            set
+            {
+                if (!Equals(_shellMenuValue, value))
+                {
+                    _shellMenuValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShellMenuValue)));
                 }
             }
         }
@@ -487,6 +504,29 @@ namespace GetStoreApp.Views.Pages
             {
                 QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
                 QueryLinksModeService.SetQueryLinksMode(QueryLinksModeItem);
+            }
+        }
+
+        /// <summary>
+        /// 重新启动资源管理器
+        /// </summary>
+        private void OnRestartExplorerClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(() =>
+            {
+                Shell32Library.ShellExecute(IntPtr.Zero, "open", "cmd.exe", "/C taskkill /f /im explorer.exe & start \"\" explorer.exe", null, WindowShowStyle.SW_HIDE);
+            });
+        }
+
+        /// <summary>
+        /// 是否开启显示文件右键菜单
+        /// </summary>
+        private void OnShellMenuToggled(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                ShellMenuService.SetShellMenu(toggleSwitch.IsOn);
+                ShellMenuValue = toggleSwitch.IsOn;
             }
         }
 

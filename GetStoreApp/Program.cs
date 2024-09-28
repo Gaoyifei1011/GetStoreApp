@@ -130,6 +130,7 @@ namespace GetStoreApp
                 TopMostService.InitializeTopMostValue();
 
                 WebKernelService.InitializeWebKernel();
+                ShellMenuService.InitializeShellMenu();
                 NotificationService.InitializeNotification();
                 WinGetConfigService.InitializeWinGetConfig();
             }

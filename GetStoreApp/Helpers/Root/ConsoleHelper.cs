@@ -9,7 +9,7 @@ namespace GetStoreApp.Helpers.Root
     /// </summary>
     public static class ConsoleHelper
     {
-        public static bool IsExited { get; set; } = false;
+        public static bool IsExited { get; set; }
 
         /// <summary>
         /// 将控制台的前景色设置为默认值。

@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ResourceService
     {
-        private static bool isInitialized = false;
+        private static bool isInitialized;
 
         private static DictionaryEntry _defaultAppLanguage;
         private static DictionaryEntry _currentAppLanguage;

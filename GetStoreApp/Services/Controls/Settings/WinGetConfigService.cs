@@ -15,7 +15,7 @@ namespace GetStoreApp.Services.Controls.Settings
         private static readonly string winGetConfigSettingsKey = ConfigKey.WinGetConfigKey;
         private static readonly string winGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
 
-        private static readonly bool defaultUseDevVersion = false;
+        private static readonly bool defaultUseDevVersion;
 
         public static bool UseDevVersion { get; private set; }
 

@@ -44,30 +44,30 @@ namespace GetStoreAppWebView.UI.Controls
         private CoreWebView2CompositionController coreWebViewCompositionController = null;
         private CoreWebView2 coreWebView = null;
 
-        private bool everHadCoreWebView = false;
-        private bool isLeftMouseButtonPressed = false;
-        private bool isMiddleMouseButtonPressed = false;
-        private bool isRightMouseButtonPressed = false;
-        private bool isXButton1Pressed = false;
-        private bool isXButton2Pressed = false;
+        private bool everHadCoreWebView;
+        private bool isLeftMouseButtonPressed;
+        private bool isMiddleMouseButtonPressed;
+        private bool isRightMouseButtonPressed;
+        private bool isXButton1Pressed;
+        private bool isXButton2Pressed;
         private bool hasMouseCapture;
-        private bool hasPenCapture = false;
-        private bool isRenderedRegistered = false;
-        private bool isTextScaleChangedRegistered = false;
-        private bool isPointerOver = false;
-        private bool webHasFocus = false;
-        private bool isVisible = false;
-        private bool isHostVisible = false;
-        private bool shouldShowMissingAnaheimWarning = false;
-        private bool isCoreFailure_BrowserExited_State = false;
-        private bool isClosed = false;
-        private bool isImplicitCreationInProgress = false;
-        private bool isExplicitCreationInProgress = false;
+        private bool hasPenCapture;
+        private bool isRenderedRegistered;
+        private bool isTextScaleChangedRegistered;
+        private bool isPointerOver;
+        private bool webHasFocus;
+        private bool isVisible;
+        private bool isHostVisible;
+        private bool shouldShowMissingAnaheimWarning;
+        private bool isCoreFailure_BrowserExited_State;
+        private bool isClosed;
+        private bool isImplicitCreationInProgress;
+        private bool isExplicitCreationInProgress;
 
-        private long manipulationModeChangedToken = 0;
-        private long visibilityChangedToken = 0;
+        private long manipulationModeChangedToken;
+        private long visibilityChangedToken;
 
-        private double rasterizationScale = 0;
+        private double rasterizationScale;
 
         private string stopNavigateOnUriChanged = null;
 

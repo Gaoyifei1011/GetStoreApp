@@ -34,7 +34,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
         }
 
-        private bool _isCleaning = false;
+        private bool _isCleaning;
 
         public bool IsCleaning
         {

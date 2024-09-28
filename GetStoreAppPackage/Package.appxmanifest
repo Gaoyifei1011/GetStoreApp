@@ -4,15 +4,16 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
   xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="com uap uap5 desktop4 rescap">
+  IgnorableNamespaces="com uap uap3 desktop desktop4 rescap">
 
   <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="5.0.925.0" />
+	  Version="5.0.926.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -54,6 +55,30 @@
       </uap:VisualElements>
 
       <Extensions>
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:SurrogateServer AppId="C098FAB9-A297-5829-B47E-07EBB207E64A" DisplayName="GetStoreAppShellExtension">
+              <com:Class Id="C098FAB9-A297-5829-B47E-07EBB207E64A" Path="GetStoreAppShellExtension.dll" ThreadingModel="Both" />
+            </com:SurrogateServer>
+          </com:ComServer>
+        </com:Extension>
+
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer Executable="GetStoreAppWidget.exe" DisplayName="GetStoreAppWidget">
+              <com:Class Id="F96AFBA5-38A4-DB97-DAC7-DE29871B26B5" DisplayName="GetStoreAppWidget" />
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
+
+        <desktop4:Extension Category="windows.fileExplorerContextMenus">
+          <desktop4:FileExplorerContextMenus>
+            <desktop4:ItemType Type="*">
+              <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
+            </desktop4:ItemType>
+          </desktop4:FileExplorerContextMenus>
+        </desktop4:Extension>
+
         <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
           <uap:Protocol Name="taskbarpinner">
             <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
@@ -72,27 +97,11 @@
           </uap:ShareTarget>
         </uap:Extension>
 
-        <uap5:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
-          <uap5:AppExecutionAlias>
-            <uap5:ExecutionAlias Alias="GetStoreApp.exe" />
-          </uap5:AppExecutionAlias>
-        </uap5:Extension>
-
-        <com:Extension Category="windows.comServer">
-          <com:ComServer>
-            <com:SurrogateServer AppId="C098FAB9-A297-5829-B47E-07EBB207E64A" DisplayName="GetStoreAppShellExtension">
-              <com:Class Id="C098FAB9-A297-5829-B47E-07EBB207E64A" Path="GetStoreAppShellExtension.dll" ThreadingModel="Both" />
-            </com:SurrogateServer>
-          </com:ComServer>
-        </com:Extension>
-
-        <desktop4:Extension Category="windows.fileExplorerContextMenus">
-          <desktop4:FileExplorerContextMenus>
-            <desktop4:ItemType Type="*">
-              <desktop4:Verb Id="CGetStoreAppCommand" Clsid="C098FAB9-A297-5829-B47E-07EBB207E64A" />
-            </desktop4:ItemType>
-          </desktop4:FileExplorerContextMenus>
-        </desktop4:Extension>
+        <uap3:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap3:AppExecutionAlias>
+            <desktop:ExecutionAlias Alias="GetStoreApp.exe" />
+          </uap3:AppExecutionAlias>
+        </uap3:Extension>
       </Extensions>
     </Application>
   </Applications>

@@ -39,7 +39,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         private string UpgradableAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo");
 
-        private bool _isLoadedCompleted = false;
+        private bool _isLoadedCompleted;
 
         public bool IsLoadedCompleted
         {
