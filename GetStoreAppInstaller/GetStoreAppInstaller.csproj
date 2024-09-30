@@ -30,11 +30,13 @@
     <PublishAot>true</PublishAot>
     <RootNamespace>GetStoreAppInstaller</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+    <selfcontained>false</selfcontained>
     <UseUwpTools>true</UseUwpTools>
-    <UseWindowsForms>false</UseWindowsForms>
+    <UseWindowsForms>true</UseWindowsForms>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
     <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
@@ -74,7 +76,7 @@
   <!-- 测试 AOT 发布后的文件 -->
   <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
-    <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
+    <!--<Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />-->
   </Target>
 
   <!-- 捆绑前对二进制文件进行后处理 -->

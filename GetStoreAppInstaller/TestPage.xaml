@@ -15,12 +15,12 @@
         <wuxc:StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <wuxc:TextBlock
                 VerticalAlignment="Center"
-                FontSize="60"
+                FontSize="30"
                 Text="GetStoreApp Installer and Package Manager"
                 TextAlignment="Center" />
             <wuxc:TextBlock
                 VerticalAlignment="Center"
-                FontSize="60"
+                FontSize="25"
                 Text="Coming soon......."
                 TextAlignment="Center" />
         </wuxc:StackPanel>

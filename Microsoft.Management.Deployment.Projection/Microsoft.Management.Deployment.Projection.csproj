@@ -42,12 +42,6 @@
     <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
-  <!-- Configure the release build binary to be as required by internal API scanning tools. -->
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-
   <ItemGroup>
     <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
 

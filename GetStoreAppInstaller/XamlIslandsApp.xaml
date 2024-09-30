@@ -1,5 +1,5 @@
 ﻿<wux:Application
-    x:Class="GetStoreAppInstaller.App"
+    x:Class="GetStoreAppInstaller.XamlIslandsApp"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GetStoreAppInstaller"

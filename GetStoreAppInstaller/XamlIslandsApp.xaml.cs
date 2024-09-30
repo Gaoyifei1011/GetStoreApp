@@ -3,9 +3,9 @@ using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller
 {
-    public sealed partial class App : Application
+    public sealed partial class XamlIslandsApp : Application
     {
-        public App()
+        public XamlIslandsApp()
         {
             this.ThreadInitialize();
             this.InitializeComponent();
