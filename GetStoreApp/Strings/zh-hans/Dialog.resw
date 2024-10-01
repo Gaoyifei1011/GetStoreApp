@@ -375,4 +375,7 @@
   <data name="WebViewProcessFailedTitle" xml:space="preserve">
     <value>浏览器进程异常</value>
   </data>
+  <data name="WindowsUIVersion" xml:space="preserve">
+    <value>Windows UI 版本：</value>
+  </data>
 </root>

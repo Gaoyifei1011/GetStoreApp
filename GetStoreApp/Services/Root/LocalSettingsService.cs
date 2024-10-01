@@ -14,12 +14,7 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static T ReadSetting<T>(string key)
         {
-            if (localSettingsContainer.Values[key] is null)
-            {
-                return default;
-            }
-
-            return (T)localSettingsContainer.Values[key];
+            return localSettingsContainer.Values[key] is not null ? (T)localSettingsContainer.Values[key] : default;
         }
 
         /// <summary>

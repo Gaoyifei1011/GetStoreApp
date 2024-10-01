@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -52,6 +53,22 @@ namespace GetStoreApp.UI.Dialogs.About
                 {
                     _winUI3Version = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinUI3Version)));
+                }
+            }
+        }
+
+        private string _windowsUIVersion;
+
+        public string WindowsUIVersion
+        {
+            get { return _windowsUIVersion; }
+
+            set
+            {
+                if (!Equals(_windowsUIVersion, value))
+                {
+                    _windowsUIVersion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowsUIVersion)));
                 }
             }
         }
@@ -111,7 +128,7 @@ namespace GetStoreApp.UI.Dialogs.About
                         // WinUI 3 版本信息
                         try
                         {
-                            StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", dependency.InstalledLocation.Path, "Microsoft.ui.xaml.Controls.dll"));
+                            StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependency.InstalledLocation.Path, "Microsoft.UI.Xaml.Controls.dll"));
                             IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
                             DispatcherQueue.TryEnqueue(() =>
                             {
@@ -123,14 +140,33 @@ namespace GetStoreApp.UI.Dialogs.About
                             LogService.WriteLog(LoggingLevel.Warning, "Get WinUI3 version failed.", e);
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                WinUI3Version = string.Empty;
+                                WinUI3Version = new Version().ToString();
+                            });
+                        }
+
+                        // Windows UI 版本信息
+                        try
+                        {
+                            StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.SystemDataPath.System, "Windows.UI.Xaml.dll"));
+                            IDictionary<string, object> windowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                WindowsUIVersion = windowsUIFileProperties[fileVersionProperty] is not null ? Convert.ToString(windowsUIFileProperties[fileVersionProperty]) : string.Empty;
+                            });
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                WindowsUIVersion = new Version().ToString();
                             });
                         }
 
                         // WebView2 SDK 版本信息
                         try
                         {
-                            StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(string.Format(@"{0}\{1}", InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
+                            StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
                             IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
                             DispatcherQueue.TryEnqueue(() =>
                             {
@@ -142,7 +178,7 @@ namespace GetStoreApp.UI.Dialogs.About
                             LogService.WriteLog(LoggingLevel.Warning, "Get WebView2 SDK version failed.", e);
                             DispatcherQueue.TryEnqueue(() =>
                             {
-                                WebView2SDKVersion = string.Empty;
+                                WebView2SDKVersion = new Version().ToString();
                             });
                         }
                     }

@@ -7,8 +7,6 @@
     {
         public const string LanguageKey = "AppLanguage";
 
-        public const string TaskbarPinnedResultKey = "TaskbarPinnedResult";
-
         public const string WebKernelKey = "WebKernel";
     }
 }

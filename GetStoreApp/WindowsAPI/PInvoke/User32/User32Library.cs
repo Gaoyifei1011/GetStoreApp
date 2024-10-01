@@ -14,38 +14,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         private const string User32 = "user32.dll";
 
         /// <summary>
-        /// 修改指定窗口的用户界面特权隔离 (UIPI) 消息筛选器。
-        /// </summary>
-        /// <param name="hWnd">要修改其 UIPI 消息筛选器的窗口的句柄。</param>
-        /// <param name="message">消息筛选器允许通过或阻止的消息。</param>
-        /// <param name="action">要执行的操作，可以执行以下值</param>
-        /// <param name="pChangeFilterStruct">指向 CHANGEFILTERSTRUCT 结构的可选指针。</param>
-        /// <returns>如果函数成功，则返回 TRUE;否则，它将返回 FALSE。</returns>
-        [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool ChangeWindowMessageFilterEx(IntPtr hWnd, WindowMessage message, ChangeFilterAction action, in CHANGEFILTERSTRUCT pChangeFilterStruct);
-
-        /// <summary>
-        /// 检索一个窗口的句柄，该窗口的类名和窗口名称与指定的字符串匹配。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
-        /// </summary>
-        /// <param name="hWndParent">要搜索其子窗口的父窗口的句柄。如果 hwndParent 为 NULL，则该函数使用桌面窗口作为父窗口。 函数在桌面的子窗口之间搜索。 如果 hwndParent 为HWND_MESSAGE，则函数将搜索所有 仅消息窗口。</param>
-        /// <param name="hWndChildAfter">子窗口的句柄。 搜索从 Z 顺序中的下一个子窗口开始。 子窗口必须是 hwndParent 的直接子窗口，而不仅仅是子窗口。 如果 hwndChildAfter 为 NULL，则搜索从 hwndParent 的第一个子窗口开始。请注意，如果 hwndParent 和 hwndChildAfter 均为 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。</param>
-        /// <param name="lpszClass">类名或上一次对 RegisterClass 或 RegisterClassEx 函数的调用创建的类名或类原子。 原子必须置于 lpszClass 的低序单词中;高阶单词必须为零。如果 lpszClass 是字符串，则指定窗口类名。 类名可以是注册到 RegisterClass 或 RegisterClassEx 的任何名称，也可以是预定义的控件类名称，也可以是 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。 </param>
-        /// <param name="lpszWindow">窗口名称 (窗口的标题) 。 如果此参数为 NULL，则所有窗口名称都匹配。</param>
-        /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值为 NULL。 要获得更多的错误信息，请调用 GetLastError。</returns>
-        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, [MarshalAs(UnmanagedType.LPWStr)] string lpszClass, [MarshalAs(UnmanagedType.LPWStr)] string lpszWindow);
-
-        /// <summary>
-        /// 检索创建指定窗口的线程的标识符，以及（可选）创建窗口的进程的标识符。
-        /// </summary>
-        /// <param name="hwnd">窗口的句柄。</param>
-        /// <param name="ID">指向接收进程标识符的变量的指针。如果此参数不为 NULL，则 GetWindowThreadProcessId 将进程的标识符复制到变量;否则，它不会。</param>
-        /// <returns>返回值是创建窗口的线程的标识符。</returns>
-        [LibraryImport(User32, EntryPoint = "GetWindowThreadProcessId", SetLastError = false), PreserveSig]
-        public static partial int GetWindowThreadProcessId(IntPtr hwnd, out uint lpdwProcessId);
-
-        /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。
         /// </summary>
         /// <param name="lpszFile">要从中提取图标的文件的路径和名称。</param>
@@ -63,15 +31,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// </returns>
         [LibraryImport(User32, EntryPoint = "PrivateExtractIconsW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial int PrivateExtractIcons([MarshalAs(UnmanagedType.LPWStr)] string lpszFile, int nIconIndex, int cxIcon, int cyIcon, [Out] IntPtr[] phicon, [Out] int[] piconid, int nIcons, int flags);
-
-        /// <summary>
-        /// 将创建指定窗口的线程引入前台并激活窗口。 键盘输入将定向到窗口，并为用户更改各种视觉提示。 系统为创建前台窗口的线程分配的优先级略高于其他线程的优先级。
-        /// </summary>
-        /// <param name="hWnd">应激活并带到前台的窗口的句柄。</param>
-        /// <returns>如果将窗口带到前台，则返回值为非零值。如果未将窗口带到前台，则返回值为零。</returns>
-        [LibraryImport(User32, EntryPoint = "SetForegroundWindow", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetForegroundWindow(IntPtr hWnd);
 
         /// <summary>
         /// 将指定的消息发送到窗口或窗口。 SendMessage 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。

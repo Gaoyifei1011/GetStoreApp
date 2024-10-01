@@ -1,14 +1,13 @@
-﻿using GetStoreApp.Helpers.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
+using Windows.Foundation.Diagnostics;
+using Windows.Storage;
 using Windows.System;
 
 namespace GetStoreApp.Services.Root
@@ -18,6 +17,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class DesktopLaunchService
     {
+        private static AppActivationArguments appActivationArguments;
         private static IActivatedEventArgs activatedEventArgs;
         private static ActivationKind activationKind = ActivationKind.Launch;
 
@@ -42,7 +42,9 @@ namespace GetStoreApp.Services.Root
             {
                 desktopLaunchArgs.Add(arg);
             }
-            activatedEventArgs = AppInstance.GetActivatedEventArgs();
+
+            appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+            activatedEventArgs = appActivationArguments.Data as IActivatedEventArgs;
             await ParseStartupKindAsync(activatedEventArgs is null ? ActivationKind.Launch : activatedEventArgs.Kind);
             await DealLaunchArgsAsync();
         }
@@ -151,41 +153,31 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static async Task DealLaunchArgsAsync()
         {
+            AppInstance currentInstance = AppInstance.FindOrRegisterForKey("GetStoreApp");
+
             // 正常启动
             if (activationKind is ActivationKind.Launch)
             {
-                bool isExisted = false;
-
                 string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
+                ResultService.SaveResult(StorageDataKind.DesktopLaunch, sendData);
 
-                // 向主实例发送数据
-                byte[] sendDataBytes = Encoding.UTF8.GetBytes(sendData);
-                COPYDATASTRUCT copyDataStruct = new()
+                if (!currentInstance.IsCurrent)
                 {
-                    dwData = (IntPtr)activationKind,
-                    cbData = sendDataBytes.Length,
-                    lpData = Marshal.AllocHGlobal(sendDataBytes.Length)
-                };
-                Marshal.Copy(sendDataBytes, 0, copyDataStruct.lpData, sendDataBytes.Length);
+                    ApplicationData.Current.SignalDataChanged();
 
-                List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
-
-                foreach (IntPtr hwnd in hwndList)
-                {
-                    isExisted = true;
-
-                    unsafe
+                    try
                     {
-                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(sizeof(COPYDATASTRUCT));
-                        *(COPYDATASTRUCT*)ptrCopyDataStruct = copyDataStruct;
-                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                        Marshal.FreeHGlobal(copyDataStruct.lpData);
-                        Marshal.FreeHGlobal(ptrCopyDataStruct);
+                        await currentInstance.RedirectActivationToAsync(AppInstance.GetCurrent().GetActivatedEventArgs());
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Redirect to main instance failed", e);
+                    }
+                    finally
+                    {
+                        Environment.Exit(0);
                     }
                 }
-
-                // 然后退出实例并停止
-                Program.IsNeedAppLaunch = !isExisted;
             }
             // 命令参数启动或者共享目标启动
             else if (activationKind is ActivationKind.CommandLineLaunch || activationKind is ActivationKind.ShareTarget)
@@ -198,8 +190,6 @@ namespace GetStoreApp.Services.Root
                 // 带命令参数启动
                 else
                 {
-                    bool isExisted = false;
-
                     string sendData;
                     // 跳转列表启动
                     if (desktopLaunchArgs.Count is 2 && desktopLaunchArgs[0] is "JumpList")
@@ -216,116 +206,63 @@ namespace GetStoreApp.Services.Root
                         sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
                     }
 
-                    // 向主实例发送数据
-                    byte[] sendDataBytes = Encoding.UTF8.GetBytes(sendData);
-                    COPYDATASTRUCT copyDataStruct = new()
+                    if (activationKind is ActivationKind.CommandLineLaunch)
                     {
-                        dwData = (IntPtr)activationKind,
-                        cbData = sendDataBytes.Length,
-                        lpData = Marshal.AllocHGlobal(sendDataBytes.Length)
-                    };
-                    Marshal.Copy(sendDataBytes, 0, copyDataStruct.lpData, sendDataBytes.Length);
-
-                    List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
-
-                    foreach (IntPtr hwnd in hwndList)
+                        ResultService.SaveResult(StorageDataKind.CommandLineLaunch, sendData);
+                    }
+                    else
                     {
-                        isExisted = true;
-
-                        unsafe
-                        {
-                            IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(sizeof(COPYDATASTRUCT));
-                            *(COPYDATASTRUCT*)ptrCopyDataStruct = copyDataStruct;
-                            User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                            Marshal.FreeHGlobal(copyDataStruct.lpData);
-                            Marshal.FreeHGlobal(ptrCopyDataStruct);
-                        }
+                        ResultService.SaveResult(StorageDataKind.ShareTarget, sendData);
                     }
 
-                    // 然后退出实例并停止
-                    Program.IsNeedAppLaunch = !isExisted;
+                    if (!currentInstance.IsCurrent)
+                    {
+                        ApplicationData.Current.SignalDataChanged();
+
+                        try
+                        {
+                            await currentInstance.RedirectActivationToAsync(AppInstance.GetCurrent().GetActivatedEventArgs());
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Redirect to main instance failed", e);
+                        }
+                        finally
+                        {
+                            Environment.Exit(0);
+                        }
+                    }
                 }
             }
             // 应用通知启动
             else if (activationKind is ActivationKind.ToastNotification)
             {
-                bool isExisted = false;
                 string sendData = desktopLaunchArgs[0];
 
-                // 向主实例发送数据
-                byte[] sendDataBytes = Encoding.UTF8.GetBytes(sendData);
-                COPYDATASTRUCT copyDataStruct = new()
-                {
-                    dwData = (IntPtr)activationKind,
-                    cbData = sendDataBytes.Length,
-                    lpData = Marshal.AllocHGlobal(sendDataBytes.Length)
-                };
-                Marshal.Copy(sendDataBytes, 0, copyDataStruct.lpData, sendDataBytes.Length);
+                ResultService.SaveResult(StorageDataKind.ToastNotification, sendData);
 
-                List<IntPtr> hwndList = FindExistedWindowHandle("GetStoreApp.exe");
-
-                foreach (IntPtr hwnd in hwndList)
-                {
-                    isExisted = true;
-
-                    unsafe
-                    {
-                        IntPtr ptrCopyDataStruct = Marshal.AllocHGlobal(sizeof(COPYDATASTRUCT));
-                        *(COPYDATASTRUCT*)ptrCopyDataStruct = copyDataStruct;
-                        User32Library.SendMessage(hwnd, WindowMessage.WM_COPYDATA, 0, ptrCopyDataStruct);
-                        Marshal.FreeHGlobal(copyDataStruct.lpData);
-                        Marshal.FreeHGlobal(ptrCopyDataStruct);
-                    }
-                }
-
-                // 然后退出实例并停止
-                if (isExisted)
-                {
-                    Program.IsNeedAppLaunch = !isExisted;
-                    return;
-                }
-                else
+                if (currentInstance.IsCurrent)
                 {
                     await ToastNotificationService.HandleToastNotificationAsync(desktopLaunchArgs[0]);
                 }
-            }
-        }
-
-        /// <summary>
-        /// 寻找当前进程的所有窗口句柄
-        /// </summary>
-        private static List<IntPtr> FindExistedWindowHandle(string processName)
-        {
-            List<IntPtr> hwndList = [];
-            List<uint> processPidList = ProcessHelper.GetProcessPidByName(processName);
-
-            if (processPidList.Count > 0)
-            {
-                IntPtr hwnd = IntPtr.Zero;
-                do
+                else
                 {
-                    hwnd = User32Library.FindWindowEx(IntPtr.Zero, hwnd, "WinUIDesktopWin32WindowClass", null);
+                    ApplicationData.Current.SignalDataChanged();
 
-                    if (hwnd != IntPtr.Zero)
+                    try
                     {
-                        User32Library.GetWindowThreadProcessId(hwnd, out uint processId);
-
-                        if (processId is not 0)
-                        {
-                            foreach (uint processPid in processPidList)
-                            {
-                                if (processPid.Equals(processId))
-                                {
-                                    hwndList.Add(hwnd);
-                                }
-                            }
-                        }
+                        await currentInstance.RedirectActivationToAsync(AppInstance.GetCurrent().GetActivatedEventArgs());
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Redirect to main instance failed", e);
+                    }
+                    finally
+                    {
+                        Environment.Exit(0);
                     }
                 }
-                while (hwnd != IntPtr.Zero);
             }
-
-            return hwndList;
         }
     }
 }

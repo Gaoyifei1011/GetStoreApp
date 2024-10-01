@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Root
             if (notificationArgs is "CheckNetWorkConnection")
             {
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-                Program.IsNeedAppLaunch = Application.Current is not null;
+                Environment.Exit(0);
             }
             else if (notificationArgs is "OpenDownloadFolder")
             {
@@ -46,12 +46,12 @@ namespace GetStoreApp.Services.Root
                 {
                     await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
                 }
-                Program.IsNeedAppLaunch = Application.Current is not null;
+                Environment.Exit(0);
             }
             else if (notificationArgs is "OpenSettings")
             {
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-                Program.IsNeedAppLaunch = Application.Current is not null;
+                Environment.Exit(0);
             }
             else if (notificationArgs.Contains("InstallWithCommand"))
             {
@@ -61,7 +61,7 @@ namespace GetStoreApp.Services.Root
                     string appId = splitList[1];
                     Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("install {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
                 }
-                Program.IsNeedAppLaunch = Application.Current is not null;
+                Environment.Exit(0);
             }
             else if (notificationArgs.Contains("OpenApp"))
             {

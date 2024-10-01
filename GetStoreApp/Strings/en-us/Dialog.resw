@@ -375,4 +375,7 @@
   <data name="WebViewProcessFailedTitle" xml:space="preserve">
     <value>Web process failed</value>
   </data>
+  <data name="WindowsUIVersion" xml:space="preserve">
+    <value>Windows UI version:</value>
+  </data>
 </root>

@@ -1620,7 +1620,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch
             {
-                return "0.0.0.0";
+                return new Version().ToString();
             }
         }
 
@@ -1635,7 +1635,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch
             {
-                return "1970/01/01 00:00";
+                return DateTimeOffset.FromUnixTimeSeconds(0).ToString("yyyy/MM/dd HH:mm");
             }
         }
 
@@ -1665,7 +1665,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch
             {
-                return new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+                return DateTimeOffset.FromUnixTimeSeconds(0);
             }
         }
     }

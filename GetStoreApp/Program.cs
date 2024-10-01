@@ -24,8 +24,6 @@ namespace GetStoreApp
     /// </summary>
     public class Program
     {
-        public static bool IsNeedAppLaunch { get; set; } = true;
-
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
@@ -65,16 +63,13 @@ namespace GetStoreApp
                 DesktopLaunchService.InitializeLaunchAsync(args).Wait();
 
                 // 启动桌面程序
-                if (IsNeedAppLaunch)
-                {
-                    ComWrappersSupport.InitializeComWrappers();
+                ComWrappersSupport.InitializeComWrappers();
 
-                    Application.Start((param) =>
-                    {
-                        SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
-                        _ = new WinUIApp();
-                    });
-                }
+                Application.Start((param) =>
+                {
+                    SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
+                    _ = new WinUIApp();
+                });
             }
             // 以控制台程序方式启动
             else

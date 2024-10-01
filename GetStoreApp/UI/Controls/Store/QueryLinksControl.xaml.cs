@@ -706,7 +706,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                 foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
-                    stringBuilder.AppendLine(string.Format("{0}", queryLinksItem.FileLink));
+                    stringBuilder.AppendLine(queryLinksItem.FileLink);
                 }
 
                 DispatcherQueue.TryEnqueue(async () =>

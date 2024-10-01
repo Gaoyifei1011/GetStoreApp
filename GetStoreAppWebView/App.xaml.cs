@@ -1,4 +1,4 @@
-﻿using GetStoreAppWebView.Extensions.DataType.Constant;
+﻿using GetStoreAppWebView.Extensions.DataType.Enums;
 using GetStoreAppWebView.Pages;
 using GetStoreAppWebView.Services.Root;
 using System;
@@ -80,7 +80,7 @@ namespace GetStoreAppWebView
                     }
                     finally
                     {
-                        ResultService.SaveResult(ConfigKey.TaskbarPinnedResultKey, pinResult);
+                        ResultService.SaveResult(StorageDataKind.TaskbarPinnedResult, pinResult.ToString());
                         ApplicationData.Current.SignalDataChanged();
 
                         Dispose();

@@ -1,4 +1,5 @@
-﻿using Windows.Storage;
+﻿using GetStoreAppWebView.Extensions.DataType.Enums;
+using Windows.Storage;
 
 namespace GetStoreAppWebView.Services.Root
 {
@@ -23,9 +24,10 @@ namespace GetStoreAppWebView.Services.Root
         /// <summary>
         /// 保存结果存储信息
         /// </summary>
-        public static void SaveResult<T>(string key, T value)
+        public static void SaveResult(StorageDataKind dataKind, string value)
         {
-            resultContainer.Values[key] = value;
+            resultContainer.Values[nameof(StorageDataKind)] = dataKind.ToString();
+            resultContainer.Values[dataKind.ToString()] = value;
         }
     }
 }

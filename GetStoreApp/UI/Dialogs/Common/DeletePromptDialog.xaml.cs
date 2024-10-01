@@ -16,12 +16,12 @@ namespace GetStoreApp.UI.Dialogs.Common
             {
                 case DeleteKind.Download:
                     {
-                        Content = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString()));
+                        Content = ResourceService.GetLocalized(string.Format("Dialog/Delete{0}", deletePrompt.ToString()));
                         break;
                     }
                 case DeleteKind.DownloadWithFile:
                     {
-                        Content = ResourceService.GetLocalized(string.Format("/Dialog/Delete{0}", deletePrompt.ToString()));
+                        Content = ResourceService.GetLocalized(string.Format("Dialog/Delete{0}", deletePrompt.ToString()));
                         break;
                     }
             }

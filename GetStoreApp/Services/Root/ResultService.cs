@@ -1,4 +1,6 @@
-﻿using Windows.Storage;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using System;
+using Windows.Storage;
 
 namespace GetStoreApp.Services.Root
 {
@@ -21,16 +23,28 @@ namespace GetStoreApp.Services.Root
         }
 
         /// <summary>
+        /// 获取存储的数据类型
+        /// </summary>
+        public static StorageDataKind GetStorageDataKind()
+        {
+            return resultContainer.Values[nameof(StorageDataKind)] is not null ? Enum.TryParse(resultContainer.Values[nameof(StorageDataKind)] as string, out StorageDataKind dataKind) ? dataKind : StorageDataKind.None : StorageDataKind.None;
+        }
+
+        /// <summary>
         /// 读取结果存储信息
         /// </summary>
-        public static T ReadResult<T>(string key)
+        public static string ReadResult(StorageDataKind dataKind)
         {
-            if (resultContainer.Values[key] is null)
-            {
-                return default;
-            }
+            return resultContainer.Values[dataKind.ToString()] is not null ? resultContainer.Values[dataKind.ToString()].ToString() : string.Empty;
+        }
 
-            return (T)resultContainer.Values[key];
+        /// <summary>
+        /// 保存结果存储信息
+        /// </summary>
+        public static void SaveResult(StorageDataKind dataKind, string value)
+        {
+            resultContainer.Values[nameof(StorageDataKind)] = dataKind.ToString();
+            resultContainer.Values[dataKind.ToString()] = value;
         }
     }
 }

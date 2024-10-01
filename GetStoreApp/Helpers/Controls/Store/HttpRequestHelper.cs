@@ -69,7 +69,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 if (response.IsSuccessStatusCode)
                 {
                     RequestId = 0;
-                    RequestStatusCode = string.Format("{0}", response.StatusCode);
+                    RequestStatusCode = response.StatusCode.ToString();
                     RequestContent = await response.Content.ReadAsStringAsync();
 
                     Dictionary<string, string> responseDict = new()
