@@ -63,6 +63,7 @@ namespace GetStoreApp.Views.Pages
             new DictionaryEntry("Microsoft.Windows.SDK.BuildTools","https://aka.ms/WinSDKProjectURL"),
             new DictionaryEntry("Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
             new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),
+            new DictionaryEntry("Mile.Xaml", "https://github.com/ProjectMile/Mile.Xaml"),
         ];
 
         //项目感谢者信息

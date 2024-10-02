@@ -18,7 +18,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
         /// <param name="pceltFetched">此方法返回时，包含指向实际检索的元素数的指针。 如果不需要此信息，则此指针可以为 NULL 。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int Next(uint celt, [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 0), Out] IExplorerCommand[] pUICommand, out uint pceltFetched);
+        int Next(uint celt, [Out, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.Interface, SizeParamIndex = 0)] IExplorerCommand[] pUICommand, out uint pceltFetched);
 
         /// <summary>
         /// 目前尚未实现。
