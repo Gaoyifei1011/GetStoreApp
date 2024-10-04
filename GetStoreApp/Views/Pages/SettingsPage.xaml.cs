@@ -819,7 +819,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
         {
-            if (sender is ToggleSwitch toggleSwitch)
+            if (sender is ToggleSwitch)
             {
                 AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
                 AlwaysShowBackdropValue = false;

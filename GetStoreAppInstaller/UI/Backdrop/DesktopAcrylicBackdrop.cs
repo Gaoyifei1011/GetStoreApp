@@ -26,7 +26,6 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private bool isInitialized;
         private bool isWindowClosed;
         private bool isActivated = true;
-        private bool useMicaBrush;
         private bool useDesktopAcrylicBackdrop;
 
         private readonly IntPtr windowHandle;

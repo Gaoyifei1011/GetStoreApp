@@ -35,7 +35,7 @@
     <Win32Resource>GetStoreApp.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
-    <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.47</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -165,7 +165,7 @@
     <None Remove="WinUIApp.xaml" />
     
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.5" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
 
     <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

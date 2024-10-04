@@ -28,7 +28,7 @@
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <WindowsSdkPackageVersion>10.0.26100.45</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.48</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -49,7 +49,7 @@
     <Content Include="$(TargetDir)\winrtact.dll" ExcludeFromSingleFile="true" Link="winrtact.dll" CopyToOutputDirectory="Always" />
 
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.8.1911" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.5" />
   </ItemGroup>
 
   <!-- 复制 Microsoft.WindowsPackageManager.ComInterop 所需要的文件到输出根目录 -->

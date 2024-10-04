@@ -7,11 +7,11 @@ using System.Runtime.Versioning;
 [assembly: AssemblyCompany("高怡飞")]
 [assembly: AssemblyCopyright("©Copyright ©2022-2024 高怡飞, All Rights Reserved.")]
 [assembly: AssemblyDescription("获取商店应用 WinGet WinRT 扩展")]
-[assembly: AssemblyFileVersion("5.0.1001.0")]
-[assembly: AssemblyInformationalVersion("5.0.1001.0")]
+[assembly: AssemblyFileVersion("5.1.1004.0")]
+[assembly: AssemblyInformationalVersion("5.1.1004.0")]
 [assembly: AssemblyProduct("获取商店应用 WinGet WinRT 扩展")]
 [assembly: AssemblyTitle("获取商店应用 WinGet WinRT 扩展")]
-[assembly: AssemblyVersion("5.0.1001.0")]
+[assembly: AssemblyVersion("5.1.1004.0")]
 
 // 应用程序默认区域性的资源控制器设置
 [assembly: NeutralResourcesLanguage("en-us")]
