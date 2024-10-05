@@ -370,7 +370,7 @@ namespace GetStoreApp.Views.Windows
         }
 
         /// <summary>
-        /// 按下 Alt + Space 键时，导航控件返回到上一页
+        /// 按下 Alt + BackSpace 键时，导航控件返回到上一页
         /// </summary>
         private void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
@@ -946,12 +946,16 @@ namespace GetStoreApp.Views.Windows
                         }
                         else if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU)
                         {
-                            FlyoutShowOptions options = new()
+                            if (lParam is (IntPtr)VirtualKey.Space)
                             {
-                                Position = new Point(0, 45),
-                                ShowMode = FlyoutShowMode.Standard
-                            };
-                            TitlebarMenuFlyout.ShowAt(null, options);
+                                FlyoutShowOptions options = new()
+                                {
+                                    Position = new Point(0, 45),
+                                    ShowMode = FlyoutShowMode.Standard
+                                };
+                                TitlebarMenuFlyout.ShowAt(null, options);
+                            }
+
                             return 0;
                         }
                         break;

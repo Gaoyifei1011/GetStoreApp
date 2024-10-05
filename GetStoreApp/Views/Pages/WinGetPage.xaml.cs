@@ -26,7 +26,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page
     {
-        private readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
         private Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
         private Guid IID_OpenControlPanel = new("D11AD862-66DE-4DF4-BF6C-1F5621996AF1");
         private IOpenControlPanel openControlPanel;
@@ -37,7 +36,7 @@ namespace GetStoreApp.Views.Pages
 
         public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = [];
 
-        public WinGetPage()
+        public unsafe WinGetPage()
         {
             InitializeComponent();
 
@@ -47,7 +46,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (createResult is 0)
                 {
-                    openControlPanel = (IOpenControlPanel)strategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
+                    openControlPanel = ComInterfaceMarshaller<IOpenControlPanel>.ConvertToManaged((void*)ppv);
                 }
             });
         }

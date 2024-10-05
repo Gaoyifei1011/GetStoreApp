@@ -37,7 +37,7 @@
     <UseUwpTools>true</UseUwpTools>
     <UseWindowsForms>true</UseWindowsForms>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
-    <WindowsSdkPackageVersion>10.0.26100.47</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.48</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 

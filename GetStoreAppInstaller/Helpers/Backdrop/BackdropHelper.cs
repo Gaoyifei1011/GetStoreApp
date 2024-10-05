@@ -16,7 +16,7 @@ namespace GetStoreAppInstaller.Helpers.Backdrop
         /// </summary>
         public static DesktopWindowTarget InitializeDesktopWindowTarget(IntPtr handle, bool isTopMost)
         {
-            if (handle == nint.Zero)
+            if (handle == IntPtr.Zero)
             {
                 throw new NullReferenceException("窗口句柄无效");
             }

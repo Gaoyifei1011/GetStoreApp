@@ -1,7 +1,6 @@
 ﻿using GetStoreAppShellExtension.Commands;
 using GetStoreAppShellExtension.WindowsAPI.ComTypes;
 using System;
-using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 namespace GetStoreAppShellExtension
@@ -12,19 +11,17 @@ namespace GetStoreAppShellExtension
     [GeneratedComClass]
     public partial class ClassFactory : IClassFactory
     {
-        private readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
-        private readonly Func<object> rootExplorerCommandFunc = new(() => { return new RootExplorerCommand(); });
+        private readonly IExplorerCommand rootExplorerCommand = new RootExplorerCommand();
 
-        public int CreateInstance(nint pUnkOuter, in Guid riid, out nint ppvObject)
+        public unsafe int CreateInstance(IntPtr pUnkOuter, in Guid riid, out IntPtr ppvObject)
         {
-            if (pUnkOuter != nint.Zero)
+            if (pUnkOuter != IntPtr.Zero)
             {
-                ppvObject = nint.Zero;
-                return unchecked((int)0x80040110); // CLASS_E_NOAGGREGATION
+                ppvObject = IntPtr.Zero;
+                return unchecked((int)0x80040110);
             }
 
-            object obj = rootExplorerCommandFunc.Invoke();
-            ppvObject = strategyBasedComWrappers.GetOrCreateComInterfaceForObject(obj, CreateComInterfaceFlags.None);
+            ppvObject = (IntPtr)ComInterfaceMarshaller<IExplorerCommand>.ConvertToUnmanaged(rootExplorerCommand);
             return 0;
         }
 

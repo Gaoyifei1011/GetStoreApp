@@ -17,7 +17,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="iids">指向数组的指针，该数组包含当前 Windows 运行时 对象实现的每个接口的 IID。 排除 IUnknown 和 IInspectable 接口。</param>
         /// <returns>此函数可以返回以下值。S_OK 和 E_OUTOFMEMORY</returns>
         [PreserveSig]
-        int GetIids(out ulong iidCount, out nint iids);
+        int GetIids(out ulong iidCount, out IntPtr iids);
 
         /// <summary>
         /// 获取当前Windows 运行时 对象的完全限定名称。
@@ -25,7 +25,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// <param name="className">当前Windows 运行时对象的完全限定名称。</param>
         /// <returns>此函数可以返回以下值。S_OK、E_OUTOFMEMORY 和 E_ILLEGAL_METHOD_CALL</returns>
         [PreserveSig]
-        int GetRuntimeClassName(out nint className);
+        int GetRuntimeClassName(out IntPtr className);
 
         /// <summary>
         /// 获取当前Windows 运行时对象的信任级别。
@@ -52,49 +52,49 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         int OnVisibleBoundsChange();
 
         [PreserveSig]
-        int AddLayoutBoundsChanged(nint handler, out EventRegistrationToken token);
+        int AddLayoutBoundsChanged(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveLayoutBoundsChanged(EventRegistrationToken token);
 
         [PreserveSig]
-        int AddVisibleBoundsChanged(nint handler, out EventRegistrationToken token);
+        int AddVisibleBoundsChanged(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveVisibleBoundsChanged(EventRegistrationToken token);
 
         [PreserveSig]
-        int AddSysKeyDown(nint handler, out EventRegistrationToken token);
+        int AddSysKeyDown(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveSysKeyDown(EventRegistrationToken token);
 
         [PreserveSig]
-        int AddSysKeyUp(nint handler, out EventRegistrationToken token);
+        int AddSysKeyUp(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveSysKeyUp(EventRegistrationToken token);
 
         [PreserveSig]
-        int AddWindowPositionChanged(nint handler, out EventRegistrationToken token);
+        int AddWindowPositionChanged(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveWindowPositionChanged(EventRegistrationToken token);
 
         [PreserveSig]
-        int AddSettingsChanged(nint handler, out EventRegistrationToken token);
+        int AddSettingsChanged(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveSettingsChanged(EventRegistrationToken token);
 
         [PreserveSig]
-        int AddViewStateChanged(nint handler, out EventRegistrationToken token);
+        int AddViewStateChanged(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveViewStateChanged(EventRegistrationToken token);
 
         [PreserveSig]
-        int AddDestroying(nint handler, out EventRegistrationToken token);
+        int AddDestroying(IntPtr handler, out EventRegistrationToken token);
 
         [PreserveSig]
         int RemoveDestroying(EventRegistrationToken token);
