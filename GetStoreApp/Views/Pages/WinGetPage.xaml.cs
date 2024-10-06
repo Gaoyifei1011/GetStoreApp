@@ -26,8 +26,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page
     {
-        private Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
-        private Guid IID_OpenControlPanel = new("D11AD862-66DE-4DF4-BF6C-1F5621996AF1");
+        private readonly Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
         private IOpenControlPanel openControlPanel;
 
         public readonly Lock installStateLock = new();
@@ -42,7 +41,7 @@ namespace GetStoreApp.Views.Pages
 
             Task.Run(() =>
             {
-                int createResult = Ole32Library.CoCreateInstance(ref CLSID_OpenControlPanel, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER | CLSCTX.CLSCTX_INPROC_HANDLER | CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_REMOTE_SERVER, ref IID_OpenControlPanel, out IntPtr ppv);
+                int createResult = Ole32Library.CoCreateInstance(CLSID_OpenControlPanel, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER | CLSCTX.CLSCTX_INPROC_HANDLER | CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_REMOTE_SERVER, typeof(IOpenControlPanel).GUID, out IntPtr ppv);
 
                 if (createResult is 0)
                 {

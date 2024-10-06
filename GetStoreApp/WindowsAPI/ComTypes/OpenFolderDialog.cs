@@ -16,7 +16,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     public partial class OpenFolderDialog : IDisposable
     {
         private readonly Guid CLSID_FileOpenDialog = new("DC1C5A9C-E88A-4dde-A5A1-60F82A20AEF7");
-        private readonly Guid IID_IUnknown = new("00000000-0000-0000-C000-000000000046");
         private IFileOpenDialog FileOpenDialog;
         private WindowId parentWindowId;
 
@@ -34,7 +33,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
             }
 
             parentWindowId = windowId;
-            int result = Ole32Library.CoCreateInstance(ref CLSID_FileOpenDialog, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, ref IID_IUnknown, out IntPtr ppv);
+            int result = Ole32Library.CoCreateInstance(CLSID_FileOpenDialog, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IFileOpenDialog).GUID, out IntPtr ppv);
 
             if (result is 0)
             {

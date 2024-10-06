@@ -19,9 +19,7 @@ namespace GetStoreApp.Services.Controls.Download
     {
         private static readonly string displayName = "GetStoreApp";
         private static readonly Lock bitsLock = new();
-
-        private static Guid CLSID_BackgroundCopyManager = new("4991D34B-80A1-4291-83B6-3328366B9097");
-        private static Guid IID_IBackgroundCopyManager = new("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C");
+        private static readonly Guid CLSID_BackgroundCopyManager = new("4991D34B-80A1-4291-83B6-3328366B9097");
 
         private static IBackgroundCopyManager backgroundCopyManager;
 
@@ -50,7 +48,7 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        int createResult = Ole32Library.CoCreateInstance(ref CLSID_BackgroundCopyManager, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, ref IID_IBackgroundCopyManager, out IntPtr ppv);
+                        int createResult = Ole32Library.CoCreateInstance(CLSID_BackgroundCopyManager, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IBackgroundCopyManager).GUID, out IntPtr ppv);
 
                         if (createResult is 0)
                         {

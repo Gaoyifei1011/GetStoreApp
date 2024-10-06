@@ -1,5 +1,4 @@
 ﻿using Microsoft.Windows.Widgets.Providers;
-using System;
 
 namespace GetStoreAppWidget
 {

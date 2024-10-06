@@ -6,10 +6,10 @@ using System.Runtime.InteropServices.Marshalling;
 namespace GetStoreAppShellExtension
 {
     /// <summary>
-    /// 允许创建对象的类。
+    /// 允许创建对象的类
     /// </summary>
     [GeneratedComClass]
-    public partial class ClassFactory : IClassFactory
+    public partial class ShellMenuClassFactory : IClassFactory
     {
         private readonly IExplorerCommand rootExplorerCommand = new RootExplorerCommand();
 
@@ -27,15 +27,6 @@ namespace GetStoreAppShellExtension
 
         public int LockServer(bool fLock)
         {
-            if (fLock)
-            {
-                Program.DllAddRef();
-            }
-            else
-            {
-                Program.DllRelease();
-            }
-
             return 0;
         }
     }

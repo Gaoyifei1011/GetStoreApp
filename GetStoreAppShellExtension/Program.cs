@@ -4,7 +4,7 @@ using GetStoreAppShellExtension.Services.Root;
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using System.Threading;
+using WinRT;
 
 namespace GetStoreAppShellExtension
 {
@@ -13,32 +13,11 @@ namespace GetStoreAppShellExtension
     /// </summary>
     public static class Program
     {
-        private static long g_cRefModule;
-
         static Program()
         {
+            ComWrappersSupport.InitializeComWrappers();
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
-        }
-
-        /// <summary>
-        /// 确定是否正在使用实现此函数的 DLL。 否则，调用方可以从内存中卸载 DLL。
-        /// </summary>
-        /// <returns>OLE 不提供此函数。 支持 OLE 组件对象模型 (COM) 的 DLL 应实现并导出 DllCanUnloadturns>Now。</re
-        [UnmanagedCallersOnly(EntryPoint = "DllCanUnloadNow")]
-        public static int DllCanUnloadNow()
-        {
-            return g_cRefModule >= 1 ? 1 : 0;
-        }
-
-        public static void DllAddRef()
-        {
-            Interlocked.Increment(ref g_cRefModule);
-        }
-
-        public static void DllRelease()
-        {
-            Interlocked.Decrement(ref g_cRefModule);
         }
 
         /// <summary>
@@ -53,8 +32,8 @@ namespace GetStoreAppShellExtension
         {
             if (clsid.Equals(typeof(RootExplorerCommand).GUID))
             {
-                ClassFactory classFactory = new();
-                IntPtr pIUnknown = (IntPtr)ComInterfaceMarshaller<ClassFactory>.ConvertToUnmanaged(classFactory);
+                ShellMenuClassFactory classFactory = new();
+                IntPtr pIUnknown = (IntPtr)ComInterfaceMarshaller<ShellMenuClassFactory>.ConvertToUnmanaged(classFactory);
 
                 int hresult = Marshal.QueryInterface(pIUnknown, in riid, out *ppv);
                 Marshal.Release(pIUnknown);

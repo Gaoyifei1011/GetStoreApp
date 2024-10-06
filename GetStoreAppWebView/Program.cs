@@ -6,6 +6,7 @@ using System.Threading;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
+using WinRT;
 
 namespace GetStoreAppWebView
 {
@@ -19,6 +20,7 @@ namespace GetStoreAppWebView
         /// </summary>
         public static void Main()
         {
+            ComWrappersSupport.InitializeComWrappers();
             InitializeResources();
 
             if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])

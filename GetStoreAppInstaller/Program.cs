@@ -1,6 +1,7 @@
 ﻿using Mile.Xaml;
 using System;
 using System.Windows.Forms;
+using WinRT;
 
 namespace GetStoreAppInstaller
 {
@@ -14,6 +15,7 @@ namespace GetStoreAppInstaller
         [STAThread]
         public static void Main()
         {
+            ComWrappersSupport.InitializeComWrappers();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

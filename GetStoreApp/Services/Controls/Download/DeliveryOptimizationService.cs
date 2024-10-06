@@ -19,9 +19,7 @@ namespace GetStoreApp.Services.Controls.Download
     {
         private static readonly string displayName = "GetStoreApp";
         private static readonly Lock deliveryOptimizationLock = new();
-
-        private static Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
-        private static Guid IID_DOManager = new("400E2D4A-1431-4C1A-A748-39CA472CFDB1");
+        private static readonly Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
 
         private static Dictionary<Guid, Tuple<IDODownload, DODownloadStatusCallback>> DeliveryOptimizationDict { get; } = [];
 
@@ -101,7 +99,7 @@ namespace GetStoreApp.Services.Controls.Download
                     IDODownload doDownload = null;
 
                     // 创建 IDoManager
-                    int createResult = Ole32Library.CoCreateInstance(ref CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, ref IID_DOManager, out IntPtr doManagerPointer);
+                    int createResult = Ole32Library.CoCreateInstance(CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IDOManager).GUID, out IntPtr doManagerPointer);
 
                     if (createResult is 0)
                     {

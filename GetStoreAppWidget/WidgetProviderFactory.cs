@@ -1,31 +1,35 @@
 ﻿using GetStoreAppWidget.WindowsAPI.ComTypes;
 using Microsoft.Windows.Widgets.Providers;
 using System;
-using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using WinRT;
 
 namespace GetStoreAppWidget
 {
+    /// <summary>
+    /// 允许创建对象的类
+    /// </summary>
     [GeneratedComClass]
     public partial class WidgetProviderFactory<T> : IClassFactory where T : IWidgetProvider, new()
     {
+        private static readonly Guid IID_IUnknown = new("00000000-0000-0000-C000-000000000046");
+
         public int CreateInstance(IntPtr pUnkOuter, in Guid riid, out IntPtr ppvObject)
         {
-            ppvObject = IntPtr.Zero;
-
             if (pUnkOuter != IntPtr.Zero)
             {
-                Marshal.ThrowExceptionForHR(2147221232);
+                ppvObject = IntPtr.Zero;
+                return unchecked((int)0x80040110);
             }
 
-            if (riid == typeof(T).GUID || riid == Guid.Empty)
+            if (riid == typeof(T).GUID || riid == IID_IUnknown)
             {
                 ppvObject = MarshalInspectable<IWidgetProvider>.FromManaged(new T());
             }
             else
             {
-                Marshal.ThrowExceptionForHR(2147467262);
+                ppvObject = IntPtr.Zero;
+                Environment.Exit(0);
             }
 
             return 0;
