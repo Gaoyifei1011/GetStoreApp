@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppInformation" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="AppList" xml:space="preserve">
+    <value>App list</value>
+  </data>
+  <data name="AppListEntry" xml:space="preserve">
+    <value>Application entries</value>
+  </data>
+  <data name="AppType" xml:space="preserve">
+    <value>App type</value>
+  </data>
+  <data name="Architecture" xml:space="preserve">
+    <value>Architecture</value>
+  </data>
+  <data name="AUMID" xml:space="preserve">
+    <value>AUMID</value>
+  </data>
+  <data name="BasicInformation" xml:space="preserve">
+    <value>Basic information</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CopyAUMID" xml:space="preserve">
+    <value>Copy AUMID</value>
+  </data>
+  <data name="CopyDependencyInformation" xml:space="preserve">
+    <value>Copy app information</value>
+  </data>
+  <data name="CopyDependencyName" xml:space="preserve">
+    <value>Copy app name</value>
+  </data>
+  <data name="DependencyInformation" xml:space="preserve">
+    <value>Dependency information</value>
+  </data>
+  <data name="DependencyName" xml:space="preserve">
+    <value>App name</value>
+  </data>
+  <data name="DependencyPublisher" xml:space="preserve">
+    <value>Publisher</value>
+  </data>
+  <data name="DependencyVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>App description</value>
+  </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>Display name</value>
+  </data>
+  <data name="DisplayNameToolTip" xml:space="preserve">
+    <value>App name: </value>
+  </data>
+  <data name="EntryDescription" xml:space="preserve">
+    <value>Entry description</value>
+  </data>
+  <data name="EntryName" xml:space="preserve">
+    <value>Entry name</value>
+  </data>
+  <data name="FamilyName" xml:space="preserve">
+    <value>Family name</value>
+  </data>
+  <data name="FastOperationToolTip" xml:space="preserve">
+    <value>View fast operation options</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FilterToolTip" xml:space="preserve">
+    <value>Filter according to the rules</value>
+  </data>
+  <data name="FrameworkPackage" xml:space="preserve">
+    <value>Framework package</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="InstallDateToolTip" xml:space="preserve">
+    <value>Installed date: </value>
+  </data>
+  <data name="InstalledApps" xml:space="preserve">
+    <value>Installed apps</value>
+  </data>
+  <data name="InstalledAppsToolTip" xml:space="preserve">
+    <value>Open the installed app in Settings</value>
+  </data>
+  <data name="InstalledDate" xml:space="preserve">
+    <value>Installed date</value>
+  </data>
+  <data name="IsBundle" xml:space="preserve">
+    <value>Is bundle</value>
+  </data>
+  <data name="IsDevelopmentMode" xml:space="preserve">
+    <value>Is development mode installation</value>
+  </data>
+  <data name="IsFramework" xml:space="preserve">
+    <value>Is Framework</value>
+  </data>
+  <data name="IsOptional" xml:space="preserve">
+    <value>Is optional</value>
+  </data>
+  <data name="IsResourcePackage" xml:space="preserve">
+    <value>Is resource</value>
+  </data>
+  <data name="IsStub" xml:space="preserve">
+    <value>Is stub</value>
+  </data>
+  <data name="Launch" xml:space="preserve">
+    <value>Launch</value>
+  </data>
+  <data name="LoadingPackage" xml:space="preserve">
+    <value>Please wait while loading the list of installed applications...</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OpenApp" xml:space="preserve">
+    <value>Open app</value>
+  </data>
+  <data name="OpenCacheFolder" xml:space="preserve">
+    <value>Open cache folder</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
+  <data name="OpenInstalledFolder" xml:space="preserve">
+    <value>Open installed folder</value>
+  </data>
+  <data name="OpenManifest" xml:space="preserve">
+    <value>Open app manifest</value>
+  </data>
+  <data name="OpenStore" xml:space="preserve">
+    <value>Open Microsoft Store</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="OptionsToolTip" xml:space="preserve">
+    <value>Select the options you want to use</value>
+  </data>
+  <data name="PackageCountInfo" xml:space="preserve">
+    <value>There are {0} installed apps</value>
+  </data>
+  <data name="PackageEmpty" xml:space="preserve">
+    <value>There is no installed apps</value>
+  </data>
+  <data name="PackageEmptyDescription" xml:space="preserve">
+    <value>There is no app on your device</value>
+  </data>
+  <data name="PackageEmptyWithConditionDescription" xml:space="preserve">
+    <value>There are no apps on your device that match the conditions</value>
+  </data>
+  <data name="PackageInformation" xml:space="preserve">
+    <value>Package information</value>
+  </data>
+  <data name="PackageStatus" xml:space="preserve">
+    <value>Package status</value>
+  </data>
+  <data name="PinToDesktop" xml:space="preserve">
+    <value>Pin to desktop</value>
+  </data>
+  <data name="PinToDesktopToolTip" xml:space="preserve">
+    <value>Pin the app to desktop</value>
+  </data>
+  <data name="PinToStartScreen" xml:space="preserve">
+    <value>Pin to start screen</value>
+  </data>
+  <data name="PinToStartScreenToolTip" xml:space="preserve">
+    <value>Pin the app to Start screen</value>
+  </data>
+  <data name="PinToTaskbar" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
+  <data name="PinToTaskbarToolTip" xml:space="preserve">
+    <value>Pin the app to taskbar</value>
+  </data>
+  <data name="PlaceHolderText" xml:space="preserve">
+    <value>Search installed apps</value>
+  </data>
+  <data name="PublisherId" xml:space="preserve">
+    <value>Publisher id</value>
+  </data>
+  <data name="PublisherInformation" xml:space="preserve">
+    <value>Publisher information</value>
+  </data>
+  <data name="PublisherName" xml:space="preserve">
+    <value>Publisher name</value>
+  </data>
+  <data name="PublisherNameToolTip" xml:space="preserve">
+    <value>PublisherName: </value>
+  </data>
+  <data name="PublisherToolTip" xml:space="preserve">
+    <value>Publisher: </value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RefreshToolTip" xml:space="preserve">
+    <value>Refresh the installed apps data</value>
+  </data>
+  <data name="ResourceId" xml:space="preserve">
+    <value>Resource id</value>
+  </data>
+  <data name="SignatureDeveloper" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="SignatureEnterprise" xml:space="preserve">
+    <value>Enterprise</value>
+  </data>
+  <data name="SignatureKind" xml:space="preserve">
+    <value>Signature kind</value>
+  </data>
+  <data name="SignatureNone" xml:space="preserve">
+    <value>None signature</value>
+  </data>
+  <data name="SignatureStore" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="SignatureSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="SignatureType" xml:space="preserve">
+    <value>Signature type</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="SortByDisplayName" xml:space="preserve">
+    <value>Package name</value>
+  </data>
+  <data name="SortByInstalledDate" xml:space="preserve">
+    <value>Install date</value>
+  </data>
+  <data name="SortByPublisher" xml:space="preserve">
+    <value>Publisher name</value>
+  </data>
+  <data name="SortDecrease" xml:space="preserve">
+    <value>Decrease</value>
+  </data>
+  <data name="SortIncrease" xml:space="preserve">
+    <value>Increase</value>
+  </data>
+  <data name="SortRule" xml:space="preserve">
+    <value>Sort rule</value>
+  </data>
+  <data name="SortToolTip" xml:space="preserve">
+    <value>Sort according to the rules</value>
+  </data>
+  <data name="SortWay" xml:space="preserve">
+    <value>Sort way</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>מנהל החבילות</value>
+  </data>
+  <data name="UnInstall" xml:space="preserve">
+    <value>הסר התקנה</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>לא ידוע</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>גרסת חבילה</value>
+  </data>
+  <data name="VersionToolTip" xml:space="preserve">
+    <value>גרסה: </value>
+  </data>
+  <data name="VertifyIsOk" xml:space="preserve">
+    <value>Is intact</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ViewToolTip" xml:space="preserve">
+    <value>View app more information</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+</root>
