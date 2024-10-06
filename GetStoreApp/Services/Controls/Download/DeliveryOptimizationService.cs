@@ -19,10 +19,7 @@ namespace GetStoreApp.Services.Controls.Download
     {
         private static readonly string displayName = "GetStoreApp";
         private static readonly Lock deliveryOptimizationLock = new();
-        private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
-
-        private static Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
-        private static Guid IID_DOManager = new("400E2D4A-1431-4C1A-A748-39CA472CFDB1");
+        private static readonly Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
 
         private static Dictionary<Guid, Tuple<IDODownload, DODownloadStatusCallback>> DeliveryOptimizationDict { get; } = [];
 
@@ -92,7 +89,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 使用下载链接创建下载
         /// </summary>
-        public static void CreateDownload(string url, string saveFilePath)
+        public static unsafe void CreateDownload(string url, string saveFilePath)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -102,11 +99,11 @@ namespace GetStoreApp.Services.Controls.Download
                     IDODownload doDownload = null;
 
                     // 创建 IDoManager
-                    int createResult = Ole32Library.CoCreateInstance(ref CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, ref IID_DOManager, out IntPtr doManagerPointer);
+                    int createResult = Ole32Library.CoCreateInstance(CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IDOManager).GUID, out IntPtr doManagerPointer);
 
                     if (createResult is 0)
                     {
-                        doManager = (IDOManager)strategyBasedComWrappers.GetOrCreateObjectForComInstance(doManagerPointer, CreateObjectFlags.None);
+                        doManager = ComInterfaceMarshaller<IDOManager>.ConvertToManaged((void*)doManagerPointer);
                         doManager.CreateDownload(out doDownload);
                         ComWrappers.TryGetComInstance(doDownload, out IntPtr doDownloadPointer);
                         _ = Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
@@ -123,7 +120,7 @@ namespace GetStoreApp.Services.Controls.Download
                         DODownloadStatusCallback doDownloadStatusCallback = new();
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
 
-                        ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, strategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(doDownloadStatusCallback).WrappedObject, CreateComInterfaceFlags.None));
+                        ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, (IntPtr)ComInterfaceMarshaller<object>.ConvertToUnmanaged(new UnknownWrapper(doDownloadStatusCallback).WrappedObject));
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_CallbackInterface, ref callbackInterfaceVariant);
                         ComVariant foregroundVariant = ComVariant.Create(true);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, ref foregroundVariant);

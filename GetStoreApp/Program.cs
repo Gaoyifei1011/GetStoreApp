@@ -17,6 +17,9 @@ using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using WinRT;
 
+// 抑制 CA1806 警告
+#pragma warning disable CA1806
+
 namespace GetStoreApp
 {
     /// <summary>
@@ -30,7 +33,8 @@ namespace GetStoreApp
         [STAThread]
         public static void Main(string[] args)
         {
-            _ = Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 0x20, 0);
+            ComWrappersSupport.InitializeComWrappers();
+            Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 0x20, 0);
 
             if (!RuntimeHelper.IsMSIX)
             {
@@ -63,8 +67,6 @@ namespace GetStoreApp
                 DesktopLaunchService.InitializeLaunchAsync(args).Wait();
 
                 // 启动桌面程序
-                ComWrappersSupport.InitializeComWrappers();
-
                 Application.Start((param) =>
                 {
                     SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));

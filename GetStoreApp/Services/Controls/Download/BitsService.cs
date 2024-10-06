@@ -19,10 +19,7 @@ namespace GetStoreApp.Services.Controls.Download
     {
         private static readonly string displayName = "GetStoreApp";
         private static readonly Lock bitsLock = new();
-        private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
-
-        private static Guid CLSID_BackgroundCopyManager = new("4991D34B-80A1-4291-83B6-3328366B9097");
-        private static Guid IID_IBackgroundCopyManager = new("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C");
+        private static readonly Guid CLSID_BackgroundCopyManager = new("4991D34B-80A1-4291-83B6-3328366B9097");
 
         private static IBackgroundCopyManager backgroundCopyManager;
 
@@ -43,7 +40,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 初始化后台智能传输服务
         /// </summary>
-        public static void Initialize()
+        public static unsafe void Initialize()
         {
             if (backgroundCopyManager is null)
             {
@@ -51,11 +48,11 @@ namespace GetStoreApp.Services.Controls.Download
                 {
                     try
                     {
-                        int createResult = Ole32Library.CoCreateInstance(ref CLSID_BackgroundCopyManager, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, ref IID_IBackgroundCopyManager, out IntPtr ppv);
+                        int createResult = Ole32Library.CoCreateInstance(CLSID_BackgroundCopyManager, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IBackgroundCopyManager).GUID, out IntPtr ppv);
 
                         if (createResult is 0)
                         {
-                            backgroundCopyManager = (IBackgroundCopyManager)strategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
+                            backgroundCopyManager = ComInterfaceMarshaller<IBackgroundCopyManager>.ConvertToManaged((void*)ppv);
                         }
                     }
                     catch (Exception e)
@@ -127,7 +124,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 使用下载链接创建下载
         /// </summary>
-        public static void CreateDownload(string url, string saveFilePath)
+        public static unsafe void CreateDownload(string url, string saveFilePath)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -143,7 +140,7 @@ namespace GetStoreApp.Services.Controls.Download
                             DownloadID = downloadID
                         };
                         backgroundCopyCallback.StatusChanged += OnStatusChanged;
-                        downloadJob.SetNotifyInterface(strategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
+                        downloadJob.SetNotifyInterface((IntPtr)ComInterfaceMarshaller<object>.ConvertToUnmanaged(new UnknownWrapper(backgroundCopyCallback).WrappedObject));
 
                         downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
                         DownloadCreated?.Invoke(backgroundCopyCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, progress.BytesTotal is ulong.MaxValue ? 0 : progress.BytesTotal);

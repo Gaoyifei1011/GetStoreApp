@@ -16,8 +16,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     public partial class OpenFolderDialog : IDisposable
     {
         private readonly Guid CLSID_FileOpenDialog = new("DC1C5A9C-E88A-4dde-A5A1-60F82A20AEF7");
-        private readonly Guid IID_IUnknown = new("00000000-0000-0000-C000-000000000046");
-        private static readonly StrategyBasedComWrappers strategyBasedComWrappers = new();
         private IFileOpenDialog FileOpenDialog;
         private WindowId parentWindowId;
 
@@ -27,7 +25,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
 
         public string RootFolder { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        public OpenFolderDialog(WindowId windowId)
+        public unsafe OpenFolderDialog(WindowId windowId)
         {
             if (windowId.Value is 0)
             {
@@ -35,18 +33,18 @@ namespace GetStoreApp.WindowsAPI.ComTypes
             }
 
             parentWindowId = windowId;
-            int result = Ole32Library.CoCreateInstance(ref CLSID_FileOpenDialog, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, ref IID_IUnknown, out IntPtr ppv);
+            int result = Ole32Library.CoCreateInstance(CLSID_FileOpenDialog, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IFileOpenDialog).GUID, out IntPtr ppv);
 
             if (result is 0)
             {
-                FileOpenDialog = (IFileOpenDialog)strategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
+                FileOpenDialog = ComInterfaceMarshaller<IFileOpenDialog>.ConvertToManaged((void*)ppv);
             }
 
             FileOpenDialog.SetOptions(FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS);
             FileOpenDialog.SetTitle(Description);
             Guid iShellItemGuid = typeof(IShellItem).GUID;
             Shell32Library.SHCreateItemFromParsingName(RootFolder, IntPtr.Zero, ref iShellItemGuid, out IntPtr initialFolder);
-            FileOpenDialog.SetFolder((IShellItem)strategyBasedComWrappers.GetOrCreateObjectForComInstance(initialFolder, CreateObjectFlags.None));
+            FileOpenDialog.SetFolder(ComInterfaceMarshaller<IShellItem>.ConvertToManaged((void*)initialFolder));
         }
 
         ~OpenFolderDialog()

@@ -170,7 +170,6 @@ namespace GetStoreAppWebView.UI.Backdrop
                 }
 
                 CompositionBrush newBrush = useSolidColorFallback ? compositor.CreateColorBrush(fallbackColor) : BuildMicaEffectBrush(compositor, tintColor, tintOpacity, luminosityOpacity);
-
                 CompositionBrush oldBrush = CompositionBrush;
 
                 if (oldBrush is null || CompositionBrush.Comment is "Crossfade")
