@@ -117,262 +117,265 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="Argument" xml:space="preserve">
-    <value>الحجة</value>
-</data>
-<data name="ArgumentName" xml:space="preserve">
-    <value>اسم الحجة</value>
-</data>
-<data name="Cancel" xml:space="preserve">
-    <value>إلغاء</value>
-</data>
-<data name="CancelDownload" xml:space="preserve">
-    <value>إلغاء التحميل</value>
-</data>
-<data name="Channel" xml:space="preserve">
-    <value>القناة</value>
-</data>
-<data name="CheckingFile" xml:space="preserve">
-    <value>يرجى الانتظار أثناء التحقق من الملف</value>
-</data>
-<data name="CleanFailed" xml:space="preserve">
-    <value>فشل التنظيف</value>
-</data>
-<data name="CleaningNow" xml:space="preserve">
-    <value>جارٍ التنظيف، يرجى الانتظار...</value>
-</data>
-<data name="CleanupNow" xml:space="preserve">
-    <value>تنظيف الآن</value>
-</data>
-<data name="CloseDialog" xml:space="preserve">
-    <value>إغلاق الحوار</value>
-</data>
-<data name="ClosingWindowContent" xml:space="preserve">
-    <value>لا يزال لديك مهمة لم تكمل تحميلها، هل ترغب في حفظ حالة التحميل وإجبار التطبيق على الإغلاق؟</value>
-</data>
-<data name="ClosingWindowTitle" xml:space="preserve">
-    <value>تنبيه تحميل المهمة</value>
-</data>
-<data name="Continue" xml:space="preserve">
-    <value>متابعة</value>
-</data>
-<data name="CopyException" xml:space="preserve">
-    <value>نسخ معلومات الاستثناء</value>
-</data>
-<data name="CopyFileInformation" xml:space="preserve">
-    <value>نسخ معلومات الملف</value>
-</data>
-<data name="DeleteDownload" xml:space="preserve">
-    <value>ستتم إزالة سجلات التحميل المحددة بشكل دائم، العملية لا يمكن التراجع عنها، يرجى توخي الحذر.</value>
-</data>
-<data name="DeleteDownloadWithFile" xml:space="preserve">
-    <value>ستتم إزالة سجلات التحميل المحددة (بما في ذلك الملفات) بشكل دائم. لا يمكن التراجع عن هذه العملية. يرجى توخي الحذر.</value>
-</data>
-<data name="DeleteTitle" xml:space="preserve">
-    <value>حذف السجل</value>
-</data>
-<data name="DesktopStartupArgsDescription1" xml:space="preserve">
-    <value>يمكن للتطبيق المكتبي اختيار النوع واسم القناة التي ترغب في الحصول عليها من خلال معلمات الإدخال، وملء الروابط المقابلة لتسهيل وسرعة الحصول عليها</value>
-</data>
-<data name="DesktopStartupArgsDescription2" xml:space="preserve">
-    <value>بعض المعلمات اختيارية ويتم استبدالها بالمعلمات الافتراضية عند عدم الإدخال أو وجود خطأ في الإدخال</value>
-</data>
-<data name="DesktopStartupArgsTitle" xml:space="preserve">
-    <value>وصف معلمات برنامج سطح المكتب</value>
-</data>
-<data name="DownloadCleanError" xml:space="preserve">
-    <value>حدث خطأ أثناء تنظيف سجلات التحميل. يرجى التحقق من حقوق الوصول إلى سجلات التحميل.</value>
-</data>
-<data name="DownloadCompletedContent" xml:space="preserve">
-    <value>مهمة التحميل الحالية قد اكتملت. هل ترغب في التحميل مرة أخرى؟</value>
-</data>
-<data name="DownloadMultiRecordContent" xml:space="preserve">
-    <value>لديك سجلات تحميل مكررة متعددة. هل ترغب في التحميل مرة أخرى؟</value>
-</data>
-<data name="DownloadNotifyTitle" xml:space="preserve">
-    <value>تنبيه إعادة التحميل</value>
-</data>
-<data name="DownloadRecord" xml:space="preserve">
-    <value>سجلات التحميل</value>
-</data>
-<data name="DownloadUnfinishedContent" xml:space="preserve">
-    <value>مهمة التحميل الحالية لم تكتمل. هل ترغب في التحميل مرة أخرى؟</value>
-</data>
-<data name="ExitCode" xml:space="preserve">
-    <value>رمز الخروج:</value>
-</data>
-<data name="FileInformationTitle" xml:space="preserve">
-    <value>معلومات الملف</value>
-</data>
-<data name="FileName" xml:space="preserve">
-    <value>اسم الملف:</value>
-</data>
-<data name="FilePath" xml:space="preserve">
-    <value>مسار الملف:</value>
-</data>
-<data name="FileSHA1" xml:space="preserve">
-    <value>قيمة SHA1 للملف:</value>
-</data>
-<data name="FileSize" xml:space="preserve">
-    <value>حجم الملف:</value>
-</data>
-<data name="HistoryCleanError" xml:space="preserve">
-    <value>حدث خطأ أثناء عملية تنظيف السجل. يرجى التحقق من أذونات الوصول إلى السجل.</value>
-</data>
-<data name="HistoryRecord" xml:space="preserve">
-    <value>سجلات التاريخ</value>
-</data>
-<data name="InputContent" xml:space="preserve">
-    <value>محتوى الإدخال</value>
-</data>
-<data name="InstallingNotifyContent" xml:space="preserve">
-    <value>يتم تثبيت تطبيقك ويمكنك القيام بأي شيء آخر بعد اكتمال التثبيت</value>
-</data>
-<data name="InstallingNotifyTitle" xml:space="preserve">
-    <value>تنبيهات تثبيت التطبيق</value>
-</data>
-<data name="IsRequired" xml:space="preserve">
-    <value>مطلوب</value>
-</data>
-<data name="License" xml:space="preserve">
-    <value>ترخيص GetStoreApp</value>
-</data>
-<data name="Link" xml:space="preserve">
-    <value>الرابط</value>
-</data>
-<data name="LinkContent" xml:space="preserve">
-    <value>[يجب إدخال المحتوى المتعلق]</value>
-</data>
-<data name="LocalFile" xml:space="preserve">
-    <value>الملفات التي تم إنشاؤها محليًا</value>
-</data>
-<data name="LocalFileCleanError" xml:space="preserve">
-    <value>حدث خطأ أثناء تنظيف الملف الذي تم إنشاؤه محليًا. تحقق من أذونات الوصول إلى الملف الذي تم إنشاؤه محليًا.</value>
-</data>
-<data name="No" xml:space="preserve">
-    <value>لا</value>
-</data>
-<data name="OK" xml:space="preserve">
-    <value>موافق</value>
-</data>
-<data name="OpenDownloadPage" xml:space="preserve">
-    <value>فتح صفحة التحميل</value>
-</data>
-<data name="ProcessDescription" xml:space="preserve">
-    <value>معلومات تفصيلية:</value>
-</data>
-<data name="ProcessFailedKind" xml:space="preserve">
-    <value>نوع الاستثناء:</value>
-</data>
-<data name="Reason" xml:space="preserve">
-    <value>سبب الاستثناء:</value>
-</data>
-<data name="Redownload" xml:space="preserve">
-    <value>إعادة التحميل</value>
-</data>
-<data name="Restart" xml:space="preserve">
-    <value>إعادة تشغيل التطبيق</value>
-</data>
-<data name="RestartContent" xml:space="preserve">
-    <value>التطبيق على وشك إعادة التشغيل، بعد إعادة التشغيل ستفقد بيانات التطبيق، تأكد من حفظ عملك بالكامل</value>
-</data>
-<data name="SelectEmptyContent" xml:space="preserve">
-    <value>لم تقم بتحديد أي شيء، يرجى تحديده قبل المتابعة</value>
-</data>
-<data name="SelectEmptyTitle" xml:space="preserve">
-    <value>تنبيهات اختيار العناصر</value>
-</data>
-<data name="StartupArgsSample" xml:space="preserve">
-    <value>مثال مرجعي</value>
-</data>
-<data name="TraceCleanupContent" xml:space="preserve">
-    <value>يتضمن تنظيف السجل سجلات التاريخ، سجلات التحميل، والملفات التي تم إنشاؤها محليًا عند تحميل تطبيق. اختر العناصر التي ترغب في تنظيفها.</value>
-</data>
-<data name="TraceCleanupTitle" xml:space="preserve">
-    <value>تنبيهات تنظيف الملفات</value>
-</data>
-<data name="Type" xml:space="preserve">
-    <value>النوع</value>
-</data>
-<data name="ViewDownloadRecord" xml:space="preserve">
-    <value>عرض تاريخ التحميل الخاص بك</value>
-</data>
-<data name="Yes" xml:space="preserve">
-    <value>نعم</value>
-</data>
-<data name="ConsoleStartupArgsDescription1" xml:space="preserve">
-    <value>هناك طريقتان لبدء برنامج وحدة التحكم، وضع المعلمات ووضع بدون معلمات</value>
-</data>
-<data name="ConsoleStartupArgsDescription2" xml:space="preserve">
-    <value>هناك أوضاع معلمات يمكن تحديدها عن طريق إدخال المعلمات للحصول على النوع واسم القناة، وملء الروابط المقابلة للحصول عليها بسرعة</value>
-</data>
-<data name="ConsoleStartupArgsDescription3" xml:space="preserve">
-    <value>بعض المعلمات اختيارية ويتم استبدالها بالمعلمات الافتراضية إذا تم كتابتها بشكل خاطئ</value>
-</data>
-<data name="ConsoleStartupArgsDescription4" xml:space="preserve">
-    <value>يتم الحصول على وضع بدون معلمات بسرعة من خلال الاستفسار</value>
-</data>
-<data name="ConsoleStartupArgsTitle" xml:space="preserve">
-    <value>وصف معلمات برنامج وحدة التحكم</value>
-</data>
-<data name="ParameterlessMode" xml:space="preserve">
-    <value>وضع بدون معلمات</value>
-</data>
-<data name="ParameterMode" xml:space="preserve">
-    <value>وضع المعلمات</value>
-</data>
-<data name="AppInformationTitle" xml:space="preserve">
-    <value>معلومات التطبيق</value>
-</data>
-<data name="CopyAppInformation" xml:space="preserve">
-    <value>نسخ معلومات التطبيق</value>
-</data>
-<data name="DoNetVersion" xml:space="preserve">
-    <value>إصدار .NET:</value>
-</data>
-<data name="WindowsAppSDKVersion" xml:space="preserve">
-    <value>إصدار Windows App SDK:</value>
-</data>
-<data name="WinUI3Version" xml:space="preserve">
-    <value>إصدار WinUI 3:</value>
-</data>
-<data name="ActionCenter" xml:space="preserve">
-    <value>إشعار التطبيق في مركز الإشعارات</value>
-</data>
-<data name="ActionCenterError" xml:space="preserve">
-    <value>فشل إشعار التطبيق في مركز الإشعارات في الإزالة. يرجى فتح سجل إشعارات التطبيق يدويًا في مركز الإشعارات</value>
-</data>
-<data name="Reboot" xml:space="preserve">
-    <value>إعادة تشغيل</value>
-</data>
-<data name="RebootTitle" xml:space="preserve">
-    <value>تنبيه إعادة تشغيل الجهاز</value>
-</data>
-<data name="UnInstallNeedReboot" xml:space="preserve">
-    <value>{0} تم إلغاء تثبيت التطبيق. تحتاج بعض التغييرات إلى إعادة تشغيل لتصبح فعالة. هل تحتاج إلى إعادة تشغيل الجهاز؟</value>
-</data>
-<data name="OpenSettings" xml:space="preserve">
-    <value>فتح الإعدادات</value>
-</data>
-<data name="UpgradeNeedReboot" xml:space="preserve">
-    <value>{0} تم ترقية التطبيق. تحتاج بعض التغييرات إلى إعادة تشغيل لتصبح فعالة. هل تحتاج إلى إعادة تشغيل الجهاز؟</value>
-</data>
-<data name="SearchNeedReboot" xml:space="preserve">
-    <value>{0} تم تثبيت التطبيق. تحتاج بعض التغييرات إلى إعادة تشغيل لتصبح فعالة. هل تحتاج إلى إعادة تشغيل الجهاز؟</value>
-</data>
-<data name="AppRunning" xml:space="preserve">
-    <value>التطبيق قيد التشغيل</value>
-</data>
-<data name="AppName" xml:space="preserve">
+  <data name="Argument" xml:space="preserve">
+    <value>Argument</value>
+  </data>
+  <data name="ArgumentName" xml:space="preserve">
+    <value>Argument name</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelDownload" xml:space="preserve">
+    <value>Cancel the download</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="CheckingFile" xml:space="preserve">
+    <value>Please wait while the file is being validated</value>
+  </data>
+  <data name="CleanFailed" xml:space="preserve">
+    <value>Clean failed</value>
+  </data>
+  <data name="CleaningNow" xml:space="preserve">
+    <value>Cleaning up, please wait...</value>
+  </data>
+  <data name="CleanupNow" xml:space="preserve">
+    <value>Cleanup now</value>
+  </data>
+  <data name="CloseDialog" xml:space="preserve">
+    <value>Close dialog</value>
+  </data>
+  <data name="ClosingWindowContent" xml:space="preserve">
+    <value>You still have a task that you haven't completed downloading, do you want to save the download state and force quit the app?</value>
+  </data>
+  <data name="ClosingWindowTitle" xml:space="preserve">
+    <value>Task downloading prompt</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="CopyException" xml:space="preserve">
+    <value>Copy exception information</value>
+  </data>
+  <data name="CopyFileInformation" xml:space="preserve">
+    <value>Copy file information</value>
+  </data>
+  <data name="DeleteDownload" xml:space="preserve">
+    <value>The selected download records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
+  </data>
+  <data name="DeleteDownloadWithFile" xml:space="preserve">
+    <value>The selected download records (including files) will be permanently deleted. This operation cannot be undone. Please exercise caution.</value>
+  </data>
+  <data name="DeleteTitle" xml:space="preserve">
+    <value>Delete record</value>
+  </data>
+  <data name="DesktopStartupArgsDescription1" xml:space="preserve">
+    <value>The desktop application can select the type and channel name you want to get through input parameters, and fill in the corresponding links to facilitate and quickly obtain</value>
+  </data>
+  <data name="DesktopStartupArgsDescription2" xml:space="preserve">
+    <value>Some parameters are optional and are replaced by default parameters when there is no input or input error</value>
+  </data>
+  <data name="DesktopStartupArgsTitle" xml:space="preserve">
+    <value>Desktop program parameter description</value>
+  </data>
+  <data name="DownloadCleanError" xml:space="preserve">
+    <value>An error occurred during the download record cleanup. Please check the download record access rights.</value>
+  </data>
+  <data name="DownloadCompletedContent" xml:space="preserve">
+    <value>Your current download task is complete. Do you want to download again?</value>
+  </data>
+  <data name="DownloadMultiRecordContent" xml:space="preserve">
+    <value>You have multiple duplicate download records. Do you want to download again?</value>
+  </data>
+  <data name="DownloadNotifyTitle" xml:space="preserve">
+    <value>Repeat the download prompt</value>
+  </data>
+  <data name="DownloadRecord" xml:space="preserve">
+    <value>Download records</value>
+  </data>
+  <data name="DownloadUnfinishedContent" xml:space="preserve">
+    <value>Your current download task is not complete. Do you want to download again?</value>
+  </data>
+  <data name="ExitCode" xml:space="preserve">
+    <value>Exit code: </value>
+  </data>
+  <data name="FileInformationTitle" xml:space="preserve">
+    <value>File information</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File name: </value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>File path: </value>
+  </data>
+  <data name="FileSHA1" xml:space="preserve">
+    <value>File SHA1 value: </value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>File size: </value>
+  </data>
+  <data name="HistoryCleanError" xml:space="preserve">
+    <value>An error occurred during the history cleaning process. Please check the history access permissions.</value>
+  </data>
+  <data name="HistoryRecord" xml:space="preserve">
+    <value>History records</value>
+  </data>
+  <data name="InputContent" xml:space="preserve">
+    <value>Input content</value>
+  </data>
+  <data name="InstallingNotifyContent" xml:space="preserve">
+    <value>Your app is being installed and you can do anything else after the installation is complete</value>
+  </data>
+  <data name="InstallingNotifyTitle" xml:space="preserve">
+    <value>App installation prompts</value>
+  </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>Is required</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>GetStoreApp License</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="LinkContent" xml:space="preserve">
+    <value>[Need to input the correlative content]</value>
+  </data>
+  <data name="LocalFile" xml:space="preserve">
+    <value>Locally created files</value>
+  </data>
+  <data name="LocalFileCleanError" xml:space="preserve">
+    <value>An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenDownloadPage" xml:space="preserve">
+    <value>Open download page</value>
+  </data>
+  <data name="ProcessDescription" xml:space="preserve">
+    <value>Detail information: </value>
+  </data>
+  <data name="ProcessFailedKind" xml:space="preserve">
+    <value>Exception type: </value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Exception reason: </value>
+  </data>
+  <data name="Redownload" xml:space="preserve">
+    <value>Re-download</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Application restart</value>
+  </data>
+  <data name="RestartContent" xml:space="preserve">
+    <value>The app is about to restart, after the restart the app's data will be lost, make sure that your work has been saved in its entirety</value>
+  </data>
+  <data name="SelectEmptyContent" xml:space="preserve">
+    <value>You have not selected anything, please select it before proceeding</value>
+  </data>
+  <data name="SelectEmptyTitle" xml:space="preserve">
+    <value>Item selection prompts</value>
+  </data>
+  <data name="StartupArgsSample" xml:space="preserve">
+    <value>Reference example</value>
+  </data>
+  <data name="TraceCleanupContent" xml:space="preserve">
+    <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>
+  </data>
+  <data name="TraceCleanupTitle" xml:space="preserve">
+    <value>File cleaning prompts</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ViewDownloadRecord" xml:space="preserve">
+    <value>View your download history</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription1" xml:space="preserve">
+    <value>There are two ways to start the console program, parameter mode and parameterless mode</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription2" xml:space="preserve">
+    <value>There are parameter modes that can be selected by entering parameters to obtain the type and channel name, and fill in the corresponding links to quickly obtain them</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription3" xml:space="preserve">
+    <value>Some parameters are optional and are replaced by default parameters if they are mistyped</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription4" xml:space="preserve">
+    <value>The parameterless mode is quickly obtained by asking</value>
+  </data>
+  <data name="ConsoleStartupArgsTitle" xml:space="preserve">
+    <value>Console program parameter description</value>
+  </data>
+  <data name="ParameterlessMode" xml:space="preserve">
+    <value>Parameterless mode</value>
+  </data>
+  <data name="ParameterMode" xml:space="preserve">
+    <value>Parameter mode</value>
+  </data>
+  <data name="AppInformationTitle" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="CopyAppInformation" xml:space="preserve">
+    <value>Copy app information</value>
+  </data>
+  <data name="DoNetVersion" xml:space="preserve">
+    <value>.NET version：</value>
+  </data>
+  <data name="WindowsAppSDKVersion" xml:space="preserve">
+    <value>Windows App SDK version：</value>
+  </data>
+  <data name="WinUI3Version" xml:space="preserve">
+    <value>WinUI 3 version:</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>Application notification in action center</value>
+  </data>
+  <data name="ActionCenterError" xml:space="preserve">
+    <value>The application notification in the action center fails to be cleared. Please manually open the app notification record in the action center</value>
+  </data>
+  <data name="Reboot" xml:space="preserve">
+    <value>Reboot</value>
+  </data>
+  <data name="RebootTitle" xml:space="preserve">
+    <value>Restart device prompt</value>
+  </data>
+  <data name="UnInstallNeedReboot" xml:space="preserve">
+    <value>{0} The application has been uninstalled. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
+  <data name="UpgradeNeedReboot" xml:space="preserve">
+    <value>{0} The application has been upgraded. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="SearchNeedReboot" xml:space="preserve">
+    <value>{0} The application has been installed. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="AppRunning" xml:space="preserve">
+    <value>The application is running</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
     <value>GetStoreApp</value>
-</data>
-<data name="WebView2SDKVersion" xml:space="preserve">
-    <value>إصدار WebView2 SDK:</value>
-</data>
-<data name="WebViewProcessFailedContent" xml:space="preserve">
-    <value>عملية المتصفح غير طبيعية والتطبيق على وشك الخروج</value>
-</data>
-<data name="WebViewProcessFailedTitle" xml:space="preserve">
-    <value>فشل عملية الويب</value>
-</data>
+  </data>
+  <data name="WebView2SDKVersion" xml:space="preserve">
+    <value>WebView2 SDK Version:</value>
+  </data>
+  <data name="WebViewProcessFailedContent" xml:space="preserve">
+    <value>The browser process is abnormal and the program is about to exit</value>
+  </data>
+  <data name="WebViewProcessFailedTitle" xml:space="preserve">
+    <value>Web process failed</value>
+  </data>
+  <data name="WindowsUIVersion" xml:space="preserve">
+    <value>Windows UI version:</value>
+  </data>
 </root>
