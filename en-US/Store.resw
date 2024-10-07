@@ -118,222 +118,222 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel" xml:space="preserve">
-    <value>ביטול</value>
+    <value>取消</value>
   </data>
   <data name="CancelToolTip" xml:space="preserve">
-    <value>Exit multi-select mode</value>
+    <value>退出多选模式</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>העתק</value>
+    <value>复制</value>
   </data>
   <data name="CopyInformation" xml:space="preserve">
-    <value>העתק מידכ</value>
+    <value>复制信息</value>
   </data>
   <data name="CopyInformationToolTip" xml:space="preserve">
-    <value>Copy the information to the clipboard</value>
+    <value>复制信息到剪贴板</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
-    <value>העתק קישור</value>
+    <value>复制链接</value>
   </data>
   <data name="CopyLinkToolTip" xml:space="preserve">
-    <value>Copy the download link to the clipboard</value>
+    <value>复制下载链接到剪贴板</value>
   </data>
   <data name="CopyOptions" xml:space="preserve">
-    <value>העתק אפשרויות</value>
+    <value>复制选项</value>
   </data>
   <data name="CopyOptionsToolTip" xml:space="preserve">
-    <value>Click Show Replication Options</value>
+    <value>单击显示复制选项</value>
   </data>
   <data name="CopyQueryedAppInfo" xml:space="preserve">
-    <value>העתק מידע אפליקציה</value>
+    <value>复制应用信息</value>
   </data>
   <data name="CopySelectedContent" xml:space="preserve">
-    <value>Copy the selected row content</value>
+    <value>复制选中行内容</value>
   </data>
   <data name="CopySelectedContentToolTip" xml:space="preserve">
-    <value>Copy the contents of the selected row to the clipboard</value>
+    <value>复制选中行的内容到剪贴板</value>
   </data>
   <data name="CopySelectedLink" xml:space="preserve">
-    <value>Copy the selected row download link</value>
+    <value>复制选中行下载链接</value>
   </data>
   <data name="CopySelectedLinkToolTip" xml:space="preserve">
-    <value>Copy the download link for the selected row to the clipboard</value>
+    <value>复制选中行的下载链接到剪贴板</value>
   </data>
   <data name="CopyToolTip" xml:space="preserve">
-    <value>Copy the selected content to the clipboard</value>
+    <value>复制选中的内容到剪贴板</value>
   </data>
   <data name="DownloadSelected" xml:space="preserve">
-    <value>הורד את הפריט הנבחר</value>
+    <value>下载选中的项目</value>
   </data>
   <data name="FileName" xml:space="preserve">
-    <value>שם קובץ</value>
+    <value>文件名称</value>
   </data>
   <data name="FileSize" xml:space="preserve">
-    <value>גודל קובץ</value>
+    <value>文件大小</value>
   </data>
   <data name="FillIn" xml:space="preserve">
-    <value>Fill in</value>
+    <value>填入</value>
   </data>
   <data name="HistoryAppName" xml:space="preserve">
-    <value>App name / category id</value>
+    <value>应用名称 / 类别ID</value>
   </data>
   <data name="HistoryChannel" xml:space="preserve">
-    <value>ערוץ</value>
+    <value>通道</value>
   </data>
   <data name="HistoryContent" xml:space="preserve">
-    <value>Input content</value>
+    <value>输入的内容</value>
   </data>
   <data name="HistoryEmpty" xml:space="preserve">
-    <value>The history is empty</value>
+    <value>历史记录空空如也</value>
   </data>
   <data name="HistoryLink" xml:space="preserve">
-    <value>קישור</value>
+    <value>链接</value>
   </data>
   <data name="HistoryType" xml:space="preserve">
-    <value>סוג</value>
+    <value>类型</value>
   </data>
   <data name="LanguageAndRegion" xml:space="preserve">
-    <value>שפה ואזור</value>
+    <value>语言和区域</value>
   </data>
   <data name="LanguageAndRegionToolTip" xml:space="preserve">
-    <value>Open Language and Region in settings</value>
+    <value>打开设置中的语言和区域</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
-    <value>למד עוד</value>
+    <value>了解更多</value>
   </data>
   <data name="NonPackagedApp" xml:space="preserve">
-    <value>Classic app</value>
+    <value>传统应用</value>
   </data>
   <data name="OpenLink" xml:space="preserve">
-    <value>פתח קישור</value>
+    <value>打开链接</value>
   </data>
   <data name="OpenLinkToolTip" xml:space="preserve">
-    <value>Use browser to open the link</value>
+    <value>使用浏览器打开链接</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>אפשרויות</value>
+    <value>选项</value>
   </data>
   <data name="OptionsToolTip" xml:space="preserve">
-    <value>Select the options you want to use</value>
+    <value>选择您要使用的选项</value>
   </data>
   <data name="PackagedApp" xml:space="preserve">
-    <value>חבילת אפליקציה</value>
+    <value>打包应用</value>
   </data>
   <data name="QueryedAppDescription" xml:space="preserve">
-    <value>App description:</value>
+    <value>应用描述：</value>
   </data>
   <data name="QueryedAppInfo" xml:space="preserve">
-    <value>App information</value>
+    <value>应用信息</value>
   </data>
   <data name="QueryedAppName" xml:space="preserve">
-    <value>שם אפליקציה:</value>
+    <value>应用名称：</value>
   </data>
   <data name="QueryedAppPublisher" xml:space="preserve">
-    <value>מפרסם:</value>
+    <value>发布者：</value>
   </data>
   <data name="QueryedAppType" xml:space="preserve">
-    <value>AppType: </value>
+    <value>应用类型：</value>
   </data>
   <data name="QueryLinks" xml:space="preserve">
-    <value>Query links</value>
+    <value>查询链接</value>
   </data>
   <data name="QueryLinksCountInfo" xml:space="preserve">
-    <value>{0} results were queryed from the Microsoft Store</value>
+    <value>从微软商店中查询到{0}条结果</value>
   </data>
   <data name="QueryLinksEmpty" xml:space="preserve">
-    <value>No results have been searched, please check the link you entered and try again</value>
+    <value>没有搜索到任何结果，请检查您输入的链接后重试</value>
   </data>
   <data name="QueryLinksInfoError" xml:space="preserve">
-    <value>An error occurred while querying the link from the Microsoft Store's servers</value>
+    <value>从微软商店的服务器中查询链接时发生了错误</value>
   </data>
   <data name="QueryLinksInfoGetting" xml:space="preserve">
-    <value>Querying from Microsoft Store's servers, please wait...</value>
+    <value>正在从微软商店的服务器中进行查询，请稍候......</value>
   </data>
   <data name="QueryLinksInfoSuccess" xml:space="preserve">
-    <value>These links have been successfully queried from the Microsoft Store's servers</value>
+    <value>已成功从微软商店的服务器中查询到这些链接</value>
   </data>
   <data name="QueryLinksInfoWarning" xml:space="preserve">
-    <value>The data returned by the server is empty, please check the link you entered</value>
+    <value>服务器返回的数据为空，请检查您输入的链接</value>
   </data>
   <data name="QueryLinksToolTip" xml:space="preserve">
-    <value>Query the download links for the current app and its dependencies</value>
+    <value>查询当前应用及其依赖的下载链接</value>
   </data>
   <data name="QueryResult" xml:space="preserve">
-    <value>Query result</value>
+    <value>查询结果</value>
   </data>
   <data name="Recent" xml:space="preserve">
-    <value>Recently used items</value>
+    <value>最近使用的项目</value>
   </data>
   <data name="SampleTitle" xml:space="preserve">
-    <value>For example:</value>
+    <value>例如：</value>
   </data>
   <data name="SearchApps" xml:space="preserve">
-    <value>חפש אפליקציות</value>
+    <value>搜索应用</value>
   </data>
   <data name="SearchPlaceHolderText" xml:space="preserve">
-    <value>For example: Microsoft Corporation</value>
+    <value>例如：Microsoft Corporation</value>
   </data>
   <data name="SearchResult" xml:space="preserve">
-    <value>Search Result</value>
+    <value>搜索结果</value>
   </data>
   <data name="SearchStore" xml:space="preserve">
-    <value>חפש אפליקציות</value>
+    <value>搜索应用</value>
   </data>
   <data name="SearchStoreCountInfo" xml:space="preserve">
-    <value>{0} results were searched from the Microsoft Store</value>
+    <value>从微软商店中搜索到{0}条结果</value>
   </data>
   <data name="SearchStoreEmpty" xml:space="preserve">
-    <value>No results have been searched, please check the content you entered and try again</value>
+    <value>没有搜索到任何结果，请检查您输入的内容后重试</value>
   </data>
   <data name="SearchStoreInfoError" xml:space="preserve">
-    <value>An error occurred while searching apps from the Microsoft Store's servers</value>
+    <value>从微软商店的服务器中搜索应用时发生了错误</value>
   </data>
   <data name="SearchStoreInfoGetting" xml:space="preserve">
-    <value>Searching from the Microsoft Store's servers, please wait...</value>
+    <value>正在从微软商店的服务器中进行搜索，请稍候......</value>
   </data>
   <data name="SearchStoreInfoSuccess" xml:space="preserve">
-    <value>These apps have been successfully searched from the Microsoft Store servers</value>
+    <value>已成功从微软商店的服务器中搜索到这些应用</value>
   </data>
   <data name="SearchStoreInfoWarning" xml:space="preserve">
-    <value>The data returned by the server is empty, please check what you entered</value>
+    <value>服务器返回的数据为空，请检查您输入的内容</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>בחר</value>
+    <value>选择</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
-    <value>בחר הכל</value>
+    <value>全选</value>
   </data>
   <data name="SelectedToolTip" xml:space="preserve">
-    <value>נבחר</value>
+    <value>已选择</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
-    <value>אל תבחר מאום</value>
+    <value>全部不选</value>
   </data>
   <data name="SelectToolTip" xml:space="preserve">
-    <value>Enter multi-select mode</value>
+    <value>进入多选模式</value>
   </data>
   <data name="StoreAppLink" xml:space="preserve">
-    <value>App link</value>
+    <value>应用链接</value>
   </data>
   <data name="StoreAppName" xml:space="preserve">
-    <value>שם אפליקציה</value>
+    <value>应用名称</value>
   </data>
   <data name="StoreAppPublisher" xml:space="preserve">
-    <value>מפרסם האפליקציה</value>
+    <value>发布者</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Microsoft Store</value>
+    <value>微软商店</value>
   </data>
   <data name="UnSelectedToolTip" xml:space="preserve">
-    <value>לא נבחר מאום</value>
+    <value>未选择</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
-    <value>Direction for use</value>
+    <value>使用说明</value>
   </data>
   <data name="UseInstructionToolTip" xml:space="preserve">
-    <value>Click to learn how to use the app</value>
+    <value>点击了解应用的具体使用方法</value>
   </data>
   <data name="Welcome" xml:space="preserve">
-    <value>Welcome to use GetStoreApp</value>
+    <value>欢迎使用获取商店应用</value>
   </data>
 </root>
