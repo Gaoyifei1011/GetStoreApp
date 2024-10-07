@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>אודות</value>
   </data>
   <data name="AppManager" xml:space="preserve">
-    <value>App Manager</value>
+    <value>מנהל האפליקציות</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
     <value>GetStoreApp</value>
   </data>
   <data name="AppUpdate" xml:space="preserve">
-    <value>App Update</value>
+    <value>עדכון אפליקציות</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>סגור</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download Management</value>
@@ -154,16 +154,16 @@
     <value>Restore</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>הגדרות</value>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>גודל</value>
   </data>
   <data name="Store" xml:space="preserve">
     <value>Microsoft Store</value>
   </data>
   <data name="Web" xml:space="preserve">
-    <value>Open Browser</value>
+    <value>פתח דפדפן</value>
   </data>
   <data name="WinGet" xml:space="preserve">
     <value>WinGet Package</value>
