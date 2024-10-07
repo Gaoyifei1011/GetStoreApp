@@ -118,264 +118,264 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Argument" xml:space="preserve">
-    <value>Argument</value>
+    <value>参数</value>
   </data>
   <data name="ArgumentName" xml:space="preserve">
-    <value>Argument name</value>
+    <value>参数名称</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
   </data>
   <data name="CancelDownload" xml:space="preserve">
-    <value>Cancel the download</value>
+    <value>取消下载</value>
   </data>
   <data name="Channel" xml:space="preserve">
-    <value>Channel</value>
+    <value>通道</value>
   </data>
   <data name="CheckingFile" xml:space="preserve">
-    <value>Please wait while the file is being validated</value>
+    <value>文件正在校验中，请稍候</value>
   </data>
   <data name="CleanFailed" xml:space="preserve">
-    <value>Clean failed</value>
+    <value>清理失败</value>
   </data>
   <data name="CleaningNow" xml:space="preserve">
-    <value>Cleaning up, please wait...</value>
+    <value>正在清理中，请稍侯...</value>
   </data>
   <data name="CleanupNow" xml:space="preserve">
-    <value>Cleanup now</value>
+    <value>立即清理</value>
   </data>
   <data name="CloseDialog" xml:space="preserve">
-    <value>Close dialog</value>
+    <value>关闭对话框</value>
   </data>
   <data name="ClosingWindowContent" xml:space="preserve">
-    <value>You still have a task that you haven't completed downloading, do you want to save the download state and force quit the app?</value>
+    <value>您目前还有尚未完成下载的任务，是否要保存下载状态并强制退出应用？</value>
   </data>
   <data name="ClosingWindowTitle" xml:space="preserve">
-    <value>Task downloading prompt</value>
+    <value>任务下载中提示</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Continue</value>
+    <value>继续</value>
   </data>
   <data name="CopyException" xml:space="preserve">
-    <value>Copy exception information</value>
+    <value>复制异常信息</value>
   </data>
   <data name="CopyFileInformation" xml:space="preserve">
-    <value>Copy file information</value>
+    <value>复制文件信息</value>
   </data>
   <data name="DeleteDownload" xml:space="preserve">
-    <value>The selected download records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
+    <value>选定的下载记录将被永久删除，该操作不可撤销，请谨慎操作。</value>
   </data>
   <data name="DeleteDownloadWithFile" xml:space="preserve">
-    <value>The selected download records (including files) will be permanently deleted. This operation cannot be undone. Please exercise caution.</value>
+    <value>选定的下载记录（包括文件）将被永久删除，该操作不可撤销，请谨慎操作。</value>
   </data>
   <data name="DeleteTitle" xml:space="preserve">
-    <value>Delete record</value>
+    <value>删除记录</value>
   </data>
   <data name="DesktopStartupArgsDescription1" xml:space="preserve">
-    <value>The desktop application can select the type and channel name you want to get through input parameters, and fill in the corresponding links to facilitate and quickly obtain</value>
+    <value>桌面应用可以通过输入参数选定好想要获取的类型、通道名称，填入相应的链接，方便快速获取</value>
   </data>
   <data name="DesktopStartupArgsDescription2" xml:space="preserve">
-    <value>Some parameters are optional and are replaced by default parameters when there is no input or input error</value>
+    <value>部分参数为可选参数，在缺省或输入错误时会使用默认参数代替</value>
   </data>
   <data name="DesktopStartupArgsTitle" xml:space="preserve">
-    <value>Desktop program parameter description</value>
+    <value>桌面程序参数说明</value>
   </data>
   <data name="DownloadCleanError" xml:space="preserve">
-    <value>An error occurred during the download record cleanup. Please check the download record access rights.</value>
+    <value>下载记录在清理的过程中发生了错误，请检查下载记录访问权限。</value>
   </data>
   <data name="DownloadCompletedContent" xml:space="preserve">
-    <value>Your current download task is complete. Do you want to download again?</value>
+    <value>您当前的下载任务已经完成，是否要重新下载？</value>
   </data>
   <data name="DownloadMultiRecordContent" xml:space="preserve">
-    <value>You have multiple duplicate download records. Do you want to download again?</value>
+    <value>您有多条重复的下载记录，是否要重新下载？</value>
   </data>
   <data name="DownloadNotifyTitle" xml:space="preserve">
-    <value>Repeat the download prompt</value>
+    <value>重复下载提示</value>
   </data>
   <data name="DownloadRecord" xml:space="preserve">
-    <value>Download records</value>
+    <value>下载记录</value>
   </data>
   <data name="DownloadUnfinishedContent" xml:space="preserve">
-    <value>Your current download task is not complete. Do you want to download again?</value>
+    <value>您当前的下载任务尚未完成，是否要重新下载？</value>
   </data>
   <data name="ExitCode" xml:space="preserve">
-    <value>Exit code: </value>
+    <value>退出代码：</value>
   </data>
   <data name="FileInformationTitle" xml:space="preserve">
-    <value>File information</value>
+    <value>文件信息</value>
   </data>
   <data name="FileName" xml:space="preserve">
-    <value>File name: </value>
+    <value>文件名：</value>
   </data>
   <data name="FilePath" xml:space="preserve">
-    <value>File path: </value>
+    <value>文件路径：</value>
   </data>
   <data name="FileSHA1" xml:space="preserve">
-    <value>File SHA1 value: </value>
+    <value>文件SHA1值：</value>
   </data>
   <data name="FileSize" xml:space="preserve">
-    <value>File size: </value>
+    <value>文件大小：</value>
   </data>
   <data name="HistoryCleanError" xml:space="preserve">
-    <value>An error occurred during the history cleaning process. Please check the history access permissions.</value>
+    <value>历史记录在清理的过程中发生了错误，请检查历史记录访问权限。</value>
   </data>
   <data name="HistoryRecord" xml:space="preserve">
-    <value>History records</value>
+    <value>历史记录</value>
   </data>
   <data name="InputContent" xml:space="preserve">
-    <value>Input content</value>
+    <value>输入内容</value>
   </data>
   <data name="InstallingNotifyContent" xml:space="preserve">
-    <value>Your app is being installed and you can do anything else after the installation is complete</value>
+    <value>您的应用正在安装中，安装完成后再进行其他操作</value>
   </data>
   <data name="InstallingNotifyTitle" xml:space="preserve">
-    <value>App installation prompts</value>
+    <value>应用安装提示</value>
   </data>
   <data name="IsRequired" xml:space="preserve">
-    <value>Is required</value>
+    <value>是否必需</value>
   </data>
   <data name="License" xml:space="preserve">
-    <value>GetStoreApp License</value>
+    <value>获取商店应用 许可证</value>
   </data>
   <data name="Link" xml:space="preserve">
-    <value>Link</value>
+    <value>链接</value>
   </data>
   <data name="LinkContent" xml:space="preserve">
-    <value>[Need to input the correlative content]</value>
+    <value>[需输入相应内容]</value>
   </data>
   <data name="LocalFile" xml:space="preserve">
-    <value>Locally created files</value>
+    <value>本地创建的文件</value>
   </data>
   <data name="LocalFileCleanError" xml:space="preserve">
-    <value>An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.</value>
+    <value>本地创建的文件在清理的过程中发生了错误，请检查本地创建的文件的访问权限。</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>否</value>
   </data>
   <data name="OK" xml:space="preserve">
-    <value>OK</value>
+    <value>确定</value>
   </data>
   <data name="OpenDownloadPage" xml:space="preserve">
-    <value>Open download page</value>
+    <value>打开下载页面</value>
   </data>
   <data name="ProcessDescription" xml:space="preserve">
-    <value>Detail information: </value>
+    <value>详细信息：</value>
   </data>
   <data name="ProcessFailedKind" xml:space="preserve">
-    <value>Exception type: </value>
+    <value>异常类型：</value>
   </data>
   <data name="Reason" xml:space="preserve">
-    <value>Exception reason: </value>
+    <value>异常原因：</value>
   </data>
   <data name="Redownload" xml:space="preserve">
-    <value>Re-download</value>
+    <value>重新下载</value>
   </data>
   <data name="Restart" xml:space="preserve">
-    <value>Application restart</value>
+    <value>重启应用</value>
   </data>
   <data name="RestartContent" xml:space="preserve">
-    <value>The app is about to restart, after the restart the app's data will be lost, make sure that your work has been saved in its entirety</value>
+    <value>应用即将重启，重启后应用的数据将会丢失，请确保您的工作内容已经全部保存。</value>
   </data>
   <data name="SelectEmptyContent" xml:space="preserve">
-    <value>You have not selected anything, please select it before proceeding</value>
+    <value>您没有选择任何内容，请选中后再进行操作</value>
   </data>
   <data name="SelectEmptyTitle" xml:space="preserve">
-    <value>Item selection prompts</value>
+    <value>项目选择提示</value>
   </data>
   <data name="StartupArgsSample" xml:space="preserve">
-    <value>Reference example</value>
+    <value>参考样例</value>
   </data>
   <data name="TraceCleanupContent" xml:space="preserve">
-    <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>
+    <value>痕迹清理包括历史记录、下载记录和应用下载时在本地创建的文件。请选择您要清理的项目。</value>
   </data>
   <data name="TraceCleanupTitle" xml:space="preserve">
-    <value>File cleaning prompts</value>
+    <value>痕迹清理</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>类型</value>
   </data>
   <data name="ViewDownloadRecord" xml:space="preserve">
-    <value>View your download history</value>
+    <value>查看下载记录</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>是</value>
   </data>
   <data name="ConsoleStartupArgsDescription1" xml:space="preserve">
-    <value>There are two ways to start the console program, parameter mode and parameterless mode</value>
+    <value>控制台程序有两种启动方式，有参数模式和无参数模式</value>
   </data>
   <data name="ConsoleStartupArgsDescription2" xml:space="preserve">
-    <value>There are parameter modes that can be selected by entering parameters to obtain the type and channel name, and fill in the corresponding links to quickly obtain them</value>
+    <value>有参数模式可以通过输入参数选定好想要获取到类型、通道名称，填入相应的链接即可快速获取</value>
   </data>
   <data name="ConsoleStartupArgsDescription3" xml:space="preserve">
-    <value>Some parameters are optional and are replaced by default parameters if they are mistyped</value>
+    <value>部分参数为可选参数，在缺省或输入错误时会使用默认参数代替</value>
   </data>
   <data name="ConsoleStartupArgsDescription4" xml:space="preserve">
-    <value>The parameterless mode is quickly obtained by asking</value>
+    <value>无参数模式会通过询问的方式来快速获取</value>
   </data>
   <data name="ConsoleStartupArgsTitle" xml:space="preserve">
-    <value>Console program parameter description</value>
+    <value>控制台程序参数说明</value>
   </data>
   <data name="ParameterlessMode" xml:space="preserve">
-    <value>Parameterless mode</value>
+    <value>无参数模式</value>
   </data>
   <data name="ParameterMode" xml:space="preserve">
-    <value>Parameter mode</value>
+    <value>有参数模式</value>
   </data>
   <data name="AppInformationTitle" xml:space="preserve">
-    <value>App information</value>
+    <value>应用信息</value>
   </data>
   <data name="CopyAppInformation" xml:space="preserve">
-    <value>Copy app information</value>
+    <value>复制应用信息</value>
   </data>
   <data name="DoNetVersion" xml:space="preserve">
-    <value>.NET version：</value>
+    <value>.NET 版本：</value>
   </data>
   <data name="WindowsAppSDKVersion" xml:space="preserve">
-    <value>Windows App SDK version：</value>
+    <value>Windows 应用 SDK 版本：</value>
   </data>
   <data name="WinUI3Version" xml:space="preserve">
-    <value>WinUI 3 version:</value>
+    <value>WinUI 3 版本：</value>
   </data>
   <data name="ActionCenter" xml:space="preserve">
-    <value>Application notification in action center</value>
+    <value>操作中心的应用通知</value>
   </data>
   <data name="ActionCenterError" xml:space="preserve">
-    <value>The application notification in the action center fails to be cleared. Please manually open the app notification record in the action center</value>
+    <value>操作中心的应用通知清理失败，请手动打开操作中心清理通知记录</value>
   </data>
   <data name="Reboot" xml:space="preserve">
-    <value>Reboot</value>
+    <value>重启</value>
   </data>
   <data name="RebootTitle" xml:space="preserve">
-    <value>Restart device prompt</value>
+    <value>重启设备提示</value>
   </data>
   <data name="UnInstallNeedReboot" xml:space="preserve">
-    <value>{0} The application has been uninstalled. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+    <value>{0}应用已卸载完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
   </data>
   <data name="OpenSettings" xml:space="preserve">
-    <value>Open settings</value>
+    <value>打开"设置"</value>
   </data>
   <data name="UpgradeNeedReboot" xml:space="preserve">
-    <value>{0} The application has been upgraded. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+    <value>{0}应用已升级完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
   </data>
   <data name="SearchNeedReboot" xml:space="preserve">
-    <value>{0} The application has been installed. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+    <value>{0}应用已安装完成，部分更改需要重启后生效，请问您是否需要重启设备？</value>
   </data>
   <data name="AppRunning" xml:space="preserve">
-    <value>The application is running</value>
+    <value>应用程序正在运行中</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>获取商店应用</value>
   </data>
   <data name="WebView2SDKVersion" xml:space="preserve">
-    <value>WebView2 SDK Version:</value>
+    <value>WebView2 SDK 版本：</value>
   </data>
   <data name="WebViewProcessFailedContent" xml:space="preserve">
-    <value>The browser process is abnormal and the program is about to exit</value>
+    <value>浏览器进程发生了异常，程序即将退出</value>
   </data>
   <data name="WebViewProcessFailedTitle" xml:space="preserve">
-    <value>Web process failed</value>
+    <value>浏览器进程异常</value>
   </data>
   <data name="WindowsUIVersion" xml:space="preserve">
-    <value>Windows UI version:</value>
+    <value>Windows UI 版本：</value>
   </data>
 </root>
