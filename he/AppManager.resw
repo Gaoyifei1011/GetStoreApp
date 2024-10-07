@@ -118,288 +118,285 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppInformation" xml:space="preserve">
-    <value>App information</value>
+    <value>应用信息</value>
   </data>
   <data name="AppList" xml:space="preserve">
-    <value>App list</value>
+    <value>应用列表</value>
   </data>
   <data name="AppListEntry" xml:space="preserve">
-    <value>Application entries</value>
+    <value>应用程序入口</value>
   </data>
   <data name="AppType" xml:space="preserve">
-    <value>App type</value>
+    <value>应用类型</value>
   </data>
   <data name="Architecture" xml:space="preserve">
-    <value>Architecture</value>
+    <value>架构</value>
   </data>
   <data name="AUMID" xml:space="preserve">
-    <value>AUMID</value>
+    <value>应用程序用户模型 ID</value>
   </data>
   <data name="BasicInformation" xml:space="preserve">
-    <value>Basic information</value>
+    <value>基本信息</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>复制</value>
   </data>
   <data name="CopyAUMID" xml:space="preserve">
-    <value>Copy AUMID</value>
+    <value>复制应用程序用户模型 ID</value>
   </data>
   <data name="CopyDependencyInformation" xml:space="preserve">
-    <value>Copy app information</value>
+    <value>复制应用信息</value>
   </data>
   <data name="CopyDependencyName" xml:space="preserve">
-    <value>Copy app name</value>
+    <value>复制应用名称</value>
   </data>
   <data name="DependencyInformation" xml:space="preserve">
-    <value>Dependency information</value>
+    <value>依赖信息</value>
   </data>
   <data name="DependencyName" xml:space="preserve">
-    <value>App name</value>
+    <value>应用名称</value>
   </data>
   <data name="DependencyPublisher" xml:space="preserve">
-    <value>Publisher</value>
+    <value>发布者</value>
   </data>
   <data name="DependencyVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>版本</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>App description</value>
+    <value>应用描述</value>
   </data>
   <data name="DisplayName" xml:space="preserve">
-    <value>Display name</value>
+    <value>应用名称</value>
   </data>
   <data name="DisplayNameToolTip" xml:space="preserve">
-    <value>App name: </value>
+    <value>应用名称：</value>
   </data>
   <data name="EntryDescription" xml:space="preserve">
-    <value>Entry description</value>
+    <value>入口描述</value>
   </data>
   <data name="EntryName" xml:space="preserve">
-    <value>Entry name</value>
+    <value>入口名称</value>
   </data>
   <data name="FamilyName" xml:space="preserve">
-    <value>Family name</value>
+    <value>系列名称</value>
   </data>
   <data name="FastOperationToolTip" xml:space="preserve">
-    <value>View fast operation options</value>
+    <value>查看快捷操作选项</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>筛选</value>
   </data>
   <data name="FilterToolTip" xml:space="preserve">
-    <value>Filter according to the rules</value>
+    <value>按照规则进行筛选</value>
   </data>
   <data name="FrameworkPackage" xml:space="preserve">
-    <value>Framework package</value>
+    <value>框架包</value>
   </data>
   <data name="FullName" xml:space="preserve">
-    <value>Full name</value>
+    <value>完整名称</value>
   </data>
   <data name="InstallDateToolTip" xml:space="preserve">
-    <value>Installed date: </value>
+    <value>安装日期：</value>
   </data>
   <data name="InstalledApps" xml:space="preserve">
-    <value>Installed apps</value>
+    <value>安装的应用</value>
   </data>
   <data name="InstalledAppsToolTip" xml:space="preserve">
-    <value>Open the installed app in Settings</value>
+    <value>打开设置中的安装的应用</value>
   </data>
   <data name="InstalledDate" xml:space="preserve">
-    <value>Installed date</value>
+    <value>安装日期</value>
   </data>
   <data name="IsBundle" xml:space="preserve">
-    <value>Is bundle</value>
+    <value>是否为捆绑包</value>
   </data>
   <data name="IsDevelopmentMode" xml:space="preserve">
-    <value>Is development mode installation</value>
+    <value>是否为开发模式安装</value>
   </data>
   <data name="IsFramework" xml:space="preserve">
-    <value>Is Framework</value>
+    <value>是否为框架包</value>
   </data>
   <data name="IsOptional" xml:space="preserve">
-    <value>Is optional</value>
+    <value>是否为可选包</value>
   </data>
   <data name="IsResourcePackage" xml:space="preserve">
-    <value>Is resource</value>
+    <value>是否为资源包</value>
   </data>
   <data name="IsStub" xml:space="preserve">
-    <value>Is stub</value>
+    <value>是否为存根应用</value>
   </data>
   <data name="Launch" xml:space="preserve">
-    <value>Launch</value>
+    <value>启动</value>
   </data>
   <data name="LoadingPackage" xml:space="preserve">
-    <value>Please wait while loading the list of installed applications...</value>
+    <value>正在加载已安装的应用列表，请稍候......</value>
   </data>
   <data name="More" xml:space="preserve">
-    <value>More</value>
+    <value>更多</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>否</value>
   </data>
   <data name="OpenApp" xml:space="preserve">
-    <value>Open app</value>
+    <value>打开应用</value>
   </data>
   <data name="OpenCacheFolder" xml:space="preserve">
-    <value>Open cache folder</value>
+    <value>打开缓存目录</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
-    <value>Open folder</value>
+    <value>打开目录</value>
   </data>
   <data name="OpenInstalledFolder" xml:space="preserve">
-    <value>Open installed folder</value>
+    <value>打开安装目录</value>
   </data>
   <data name="OpenManifest" xml:space="preserve">
-    <value>Open app manifest</value>
+    <value>打开清单文件</value>
   </data>
   <data name="OpenStore" xml:space="preserve">
-    <value>Open Microsoft Store</value>
+    <value>打开商店</value>
   </data>
   <data name="Operation" xml:space="preserve">
-    <value>Operation</value>
+    <value>操作</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>选项</value>
   </data>
   <data name="OptionsToolTip" xml:space="preserve">
-    <value>Select the options you want to use</value>
+    <value>选择您要使用的选项</value>
   </data>
   <data name="PackageCountInfo" xml:space="preserve">
-    <value>There are {0} installed apps</value>
+    <value>共有{0}个已安装的应用</value>
   </data>
   <data name="PackageEmpty" xml:space="preserve">
-    <value>There is no installed apps</value>
+    <value>没有已安装的应用</value>
   </data>
   <data name="PackageEmptyDescription" xml:space="preserve">
-    <value>There is no app on your device</value>
+    <value>您的设备上没有应用</value>
   </data>
   <data name="PackageEmptyWithConditionDescription" xml:space="preserve">
-    <value>There are no apps on your device that match the conditions</value>
+    <value>您的设备上没有符合对应条件的应用</value>
   </data>
   <data name="PackageInformation" xml:space="preserve">
-    <value>Package information</value>
+    <value>应用包信息</value>
   </data>
   <data name="PackageStatus" xml:space="preserve">
-    <value>Package status</value>
+    <value>应用包状态</value>
   </data>
   <data name="PinToDesktop" xml:space="preserve">
-    <value>Pin to desktop</value>
+    <value>固定到桌面</value>
   </data>
   <data name="PinToDesktopToolTip" xml:space="preserve">
-    <value>Pin the app to desktop</value>
+    <value>将应用固定到桌面</value>
   </data>
   <data name="PinToStartScreen" xml:space="preserve">
-    <value>Pin to start screen</value>
+    <value>固定到”开始“屏幕</value>
   </data>
   <data name="PinToStartScreenToolTip" xml:space="preserve">
-    <value>Pin the app to Start screen</value>
+    <value>将应用固定到“开始”屏幕</value>
   </data>
   <data name="PinToTaskbar" xml:space="preserve">
-    <value>Pin to taskbar</value>
+    <value>固定到任务栏</value>
   </data>
   <data name="PinToTaskbarToolTip" xml:space="preserve">
-    <value>Pin the app to taskbar</value>
+    <value>将应用固定到任务栏</value>
   </data>
   <data name="PlaceHolderText" xml:space="preserve">
-    <value>Search installed apps</value>
+    <value>搜索已安装的应用</value>
   </data>
   <data name="PublisherId" xml:space="preserve">
-    <value>Publisher id</value>
+    <value>发布者ID</value>
   </data>
   <data name="PublisherInformation" xml:space="preserve">
-    <value>Publisher information</value>
+    <value>发布者信息</value>
   </data>
   <data name="PublisherName" xml:space="preserve">
-    <value>Publisher name</value>
+    <value>发布者名称</value>
   </data>
   <data name="PublisherNameToolTip" xml:space="preserve">
-    <value>PublisherName: </value>
+    <value>发布者名称：</value>
   </data>
   <data name="PublisherToolTip" xml:space="preserve">
-    <value>Publisher: </value>
+    <value>发布者：</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>刷新</value>
   </data>
   <data name="RefreshToolTip" xml:space="preserve">
-    <value>Refresh the installed apps data</value>
+    <value>刷新已安装应用数据</value>
   </data>
   <data name="ResourceId" xml:space="preserve">
-    <value>Resource id</value>
+    <value>资源ID</value>
   </data>
   <data name="SignatureDeveloper" xml:space="preserve">
-    <value>Developer</value>
+    <value>开发者</value>
   </data>
   <data name="SignatureEnterprise" xml:space="preserve">
-    <value>Enterprise</value>
+    <value>企业</value>
   </data>
   <data name="SignatureKind" xml:space="preserve">
-    <value>Signature kind</value>
+    <value>签名方式</value>
   </data>
   <data name="SignatureNone" xml:space="preserve">
-    <value>None signature</value>
+    <value>无签名</value>
   </data>
   <data name="SignatureStore" xml:space="preserve">
-    <value>Store</value>
+    <value>商店</value>
   </data>
   <data name="SignatureSystem" xml:space="preserve">
-    <value>System</value>
+    <value>系统</value>
   </data>
   <data name="SignatureType" xml:space="preserve">
-    <value>Signature type</value>
+    <value>签名类型</value>
   </data>
   <data name="Sort" xml:space="preserve">
-    <value>Sort</value>
+    <value>排序</value>
   </data>
   <data name="SortByDisplayName" xml:space="preserve">
-    <value>Package name</value>
+    <value>应用包名称</value>
   </data>
   <data name="SortByInstalledDate" xml:space="preserve">
-    <value>Install date</value>
+    <value>安装日期</value>
   </data>
   <data name="SortByPublisher" xml:space="preserve">
-    <value>Publisher name</value>
+    <value>发布者名称</value>
   </data>
   <data name="SortDecrease" xml:space="preserve">
-    <value>Decrease</value>
+    <value>降序</value>
   </data>
   <data name="SortIncrease" xml:space="preserve">
-    <value>Increase</value>
+    <value>升序</value>
   </data>
   <data name="SortRule" xml:space="preserve">
-    <value>Sort rule</value>
+    <value>排序规则</value>
   </data>
   <data name="SortToolTip" xml:space="preserve">
-    <value>Sort according to the rules</value>
+    <value>按照规则进行排序</value>
   </data>
   <data name="SortWay" xml:space="preserve">
-    <value>Sort way</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>מנהל החבילות</value>
+    <value>排序方式</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
-    <value>הסר התקנה</value>
+    <value>卸载</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>לא ידוע</value>
+    <value>未知</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>גרסת חבילה</value>
+    <value>应用版本</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
-    <value>גרסה: </value>
+    <value>版本：</value>
   </data>
-  <data name="VertifyIsOk" xml:space="preserve">
-    <value>Is intact</value>
+  <data name="VertifyIsOK" xml:space="preserve">
+    <value>是否完整</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>View</value>
+    <value>查看</value>
   </data>
   <data name="ViewToolTip" xml:space="preserve">
-    <value>View app more information</value>
+    <value>查看应用更多信息</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>是</value>
   </data>
 </root>
