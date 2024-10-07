@@ -127,16 +127,16 @@
     <value>There is no upgradable apps</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>בטל</value>
   </data>
   <data name="Canceled" xml:space="preserve">
-    <value>Canceled</value>
+    <value>בוטל</value>
   </data>
   <data name="CheckUpdate" xml:space="preserve">
-    <value>Check update</value>
+    <value>בדוק עדכונים</value>
   </data>
   <data name="Completed" xml:space="preserve">
-    <value>Completed</value>
+    <value>הסתיים</value>
   </data>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading,{0}% completed</value>
@@ -163,7 +163,7 @@
     <value>Click Check for Updates to see the status of the current user application</value>
   </data>
   <data name="OpenStore" xml:space="preserve">
-    <value>Open store</value>
+    <value>פתח את החנות</value>
   </data>
   <data name="OpenStoreToolTip" xml:space="preserve">
     <value>Click to open Microsoft Store</value>
@@ -172,7 +172,7 @@
     <value>Operation</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
+    <value>עצור</value>
   </data>
   <data name="Pending" xml:space="preserve">
     <value>Waiting</value>
@@ -187,13 +187,13 @@
     <value>Starting</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>App update</value>
+    <value>עדכון אפליקציות</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Update</value>
+    <value>עדכן</value>
   </data>
   <data name="UpdateAll" xml:space="preserve">
-    <value>Update all</value>
+    <value>עדכן הכל</value>
   </data>
   <data name="UpdateEmptyDescription" xml:space="preserve">
     <value>All apps are up to date</value>
