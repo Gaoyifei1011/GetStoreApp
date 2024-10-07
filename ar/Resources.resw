@@ -129,34 +129,34 @@
   <data name="AppShortDisplayName" xml:space="preserve">
     <value>GetStoreApp</value>
   </data>
-<data name="Fast" xml:space="preserve">
-    <value>سريع</value>
-</data>
-<data name="ProductID" xml:space="preserve">
-    <value>معرف المنتج</value>
-</data>
-<data name="Retail" xml:space="preserve">
-    <value>تجزئة</value>
-</data>
-<data name="RP" xml:space="preserve">
-    <value>معاينة الإصدار</value>
-</data>
-<data name="Slow" xml:space="preserve">
-    <value>بطيء</value>
-</data>
-<data name="URL" xml:space="preserve">
-    <value>رابط (URL)</value>
-</data>
-<data name="TaskbarProtocolName" xml:space="preserve">
-    <value>مثبت شريط المهام</value>
-</data>
-<data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
-    <value>فشل في تهيئة وحدة التحكم في خلفية النظام للتطبيق</value>
-</data>
-<data name="TaskbarPinner" xml:space="preserve">
-    <value>مثبت شريط المهام</value>
-</data>
-<data name="WebBrowserProtocolName" xml:space="preserve">
-    <value>متصفح الويب</value>
-</data>
+  <data name="Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="ProductID" xml:space="preserve">
+    <value>ProductID</value>
+  </data>
+  <data name="Retail" xml:space="preserve">
+    <value>Retail</value>
+  </data>
+  <data name="RP" xml:space="preserve">
+    <value>Release Preview</value>
+  </data>
+  <data name="Slow" xml:space="preserve">
+    <value>Slow</value>
+  </data>
+  <data name="URL" xml:space="preserve">
+    <value>URL(Link)</value>
+  </data>
+  <data name="TaskbarProtocolName" xml:space="preserve">
+    <value>Taskbar Pinner</value>
+  </data>
+  <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
+    <value>The app's sytstem backdrop controller failed to initialize</value>
+  </data>
+  <data name="TaskbarPinner" xml:space="preserve">
+    <value>Taskbar Pinner</value>
+  </data>
+  <data name="WebBrowserProtocolName" xml:space="preserve">
+    <value>Web Browser</value>
+  </data>
 </root>
