@@ -118,54 +118,54 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>אודות</value>
+    <value>关于</value>
   </data>
   <data name="AppManager" xml:space="preserve">
-    <value>מנהל האפליקציות</value>
+    <value>应用管理</value>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>获取商店应用</value>
   </data>
   <data name="AppUpdate" xml:space="preserve">
-    <value>עדכון אפליקציות</value>
+    <value>应用更新</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>סגור</value>
+    <value>关闭</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>Download Management</value>
+    <value>下载管理</value>
   </data>
   <data name="Maximize" xml:space="preserve">
-    <value>Maximize</value>
+    <value>最大化</value>
   </data>
   <data name="Minimize" xml:space="preserve">
-    <value>Minimize</value>
+    <value>最小化</value>
   </data>
   <data name="Move" xml:space="preserve">
-    <value>Move</value>
+    <value>移动</value>
   </data>
   <data name="NavigationFailed" xml:space="preserve">
-    <value>Page {0} navigation failed</value>
+    <value>页面{0}导航失败</value>
   </data>
   <data name="PinToStartScreen" xml:space="preserve">
-    <value>Pin to start screen</value>
+    <value>固定到“开始”屏幕</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>还原</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>הגדרות</value>
+    <value>设置</value>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>גודל</value>
+    <value>大小</value>
   </data>
   <data name="Store" xml:space="preserve">
-    <value>Microsoft Store</value>
+    <value>微软商店</value>
   </data>
   <data name="Web" xml:space="preserve">
-    <value>פתח דפדפן</value>
+    <value>打开网页</value>
   </data>
   <data name="WinGet" xml:space="preserve">
-    <value>WinGet Package</value>
+    <value>WinGet 程序包</value>
   </data>
 </root>
