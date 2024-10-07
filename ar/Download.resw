@@ -117,199 +117,199 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="Cancel" xml:space="preserve">
-    <value>إلغاء</value>
-</data>
-<data name="CancelToolTip" xml:space="preserve">
-    <value>الخروج من وضع التحديد المتعدد</value>
-</data>
-<data name="Completed" xml:space="preserve">
-    <value>مكتمل</value>
-</data>
-<data name="CompletedCountInfo" xml:space="preserve">
-    <value>هناك {0} سجل تم تحميله</value>
-</data>
-<data name="CompletedEmpty" xml:space="preserve">
-    <value>لا توجد سجلات تم تحميلها</value>
-</data>
-<data name="CompletedEmptyDescription" xml:space="preserve">
-    <value>اذهب إلى التطبيق الذي تريد تحميله، وسيظهر الملف الذي قمت بتحميله هنا</value>
-</data>
-<data name="CompleteDownload" xml:space="preserve">
-    <value>اكتمل التحميل</value>
-</data>
-<data name="Continue" xml:space="preserve">
-    <value>استمرار التحميل</value>
-</data>
-<data name="ContinueAll" xml:space="preserve">
-    <value>تحميل الكل</value>
-</data>
-<data name="ContinueAllToolTip" xml:space="preserve">
-    <value>استئناف تحميل المهمة المتوقفة</value>
-</data>
-<data name="ContinueToolTip" xml:space="preserve">
-    <value>استئناف تحميل المهمة الحالية</value>
-</data>
-<data name="CurrentSpeedToolTip" xml:space="preserve">
-    <value>السرعة الحالية:</value>
-</data>
-<data name="Delete" xml:space="preserve">
-    <value>حذف</value>
-</data>
-<data name="DeleteDownloadingToolTip" xml:space="preserve">
-    <value>يحذف السجل الذي يتم تحميله حاليًا</value>
-</data>
-<data name="DeleteOptions" xml:space="preserve">
-    <value>خيارات الحذف</value>
-</data>
-<data name="DeleteOptionsToolTip" xml:space="preserve">
-    <value>انقر لعرض خيارات الحذف</value>
-</data>
-<data name="DeleteSelected" xml:space="preserve">
-    <value>حذف</value>
-</data>
-<data name="DeleteSelectedToolTip" xml:space="preserve">
-    <value>احذف فقط سجلات العناصر المحددة، دون تضمين الملفات</value>
-</data>
-<data name="DeleteSelectedWithFile" xml:space="preserve">
-    <value>حذف (بما في ذلك الملفات)</value>
-</data>
-<data name="DeleteSelectedWithFileToolTip" xml:space="preserve">
-    <value>احذف سجلات العناصر المحددة واحذف الملفات المحلية</value>
-</data>
-<data name="DeleteToolTip" xml:space="preserve">
-    <value>يحذف فقط السجل الحالي، دون تضمين الملف</value>
-</data>
-<data name="DeleteUnfinishedToolTip" xml:space="preserve">
-    <value>احذف سجلات التحميل غير المكتملة</value>
-</data>
-<data name="DeleteWithFile" xml:space="preserve">
-    <value>حذف السجلات (بما في ذلك الملفات)</value>
-</data>
-<data name="DeleteWithFileToolTip" xml:space="preserve">
-    <value>يتم حذف الملفات المحلية عند حذف السجلات</value>
-</data>
-<data name="DownloadDescription" xml:space="preserve">
-    <value>تعليمات التحميل</value>
-</data>
-<data name="DownloadFailed" xml:space="preserve">
-    <value>فشل التحميل</value>
-</data>
-<data name="Downloading" xml:space="preserve">
-    <value>جارٍ التحميل</value>
-</data>
-<data name="DownloadingCountInfo" xml:space="preserve">
-    <value>هناك {0} سجل قيد التحميل</value>
-</data>
-<data name="DownloadingEmpty" xml:space="preserve">
-    <value>لا توجد سجلات قيد التحميل</value>
-</data>
-<data name="DownloadingEmptyDescription" xml:space="preserve">
-    <value>اذهب إلى التطبيق الذي تريد تحميله، وسيظهر الملف الذي تقوم بتحميله هنا</value>
-</data>
-<data name="DownloadProgress" xml:space="preserve">
-    <value>تم تحميل {0}%</value>
-</data>
-<data name="ExplainTitle" xml:space="preserve">
-    <value>تعليمات التحميل</value>
-</data>
-<data name="ExplanContent1" xml:space="preserve">
-    <value>رابط التحميل حساس للوقت، ولا يدعم التطبيق حاليًا استئناف التحميل للتطبيقات التي فشلت في التحميل.</value>
-</data>
-<data name="ExplanContent2" xml:space="preserve">
-    <value>إذا واجهت خدمة تحميل تتوقف بسبب استثناء، نوصي بإعادة تشغيل التطبيق قبل محاولة التحميل.</value>
-</data>
-<data name="FileInformation" xml:space="preserve">
-    <value>عرض معلومات الملف</value>
-</data>
-<data name="FileNotExists" xml:space="preserve">
-    <value>الملف غير موجود</value>
-</data>
-<data name="FileSizeToolTip" xml:space="preserve">
-    <value>حجم الملف:</value>
-</data>
-<data name="FinishedSizeToolTip" xml:space="preserve">
-    <value>تم التحميل:</value>
-</data>
-<data name="InstallError" xml:space="preserve">
-    <value>فشل التثبيت</value>
-</data>
-<data name="Installing" xml:space="preserve">
-    <value>جارٍ التثبيت، يرجى الانتظار......</value>
-</data>
-<data name="InstallToolTip" xml:space="preserve">
-    <value>تثبيت التطبيق</value>
-</data>
-<data name="InstallValue" xml:space="preserve">
-    <value>{0}% تم تثبيته</value>
-</data>
-<data name="LearnMore" xml:space="preserve">
-    <value>تعرف على المزيد</value>
-</data>
-<data name="OpenFolder" xml:space="preserve">
-    <value>فتح المجلد</value>
-</data>
-<data name="OpenFolderToolTip" xml:space="preserve">
-    <value>فتح المجلد الافتراضي للتنزيلات</value>
-</data>
-<data name="OpenItemFolderToolTip" xml:space="preserve">
-    <value>فتح المجلد حيث تم حفظ المهمة الحالية بعد اكتمال التحميل</value>
-</data>
-<data name="OpenSettings" xml:space="preserve">
-    <value>فتح إعدادات التحميل</value>
-</data>
-<data name="Operation" xml:space="preserve">
-    <value>عملية</value>
-</data>
-<data name="PauseAll" xml:space="preserve">
-    <value>إيقاف الكل</value>
-</data>
-<data name="PauseAllToolTip" xml:space="preserve">
-    <value>يوقف جميع المهام التي قيد التحميل أو في انتظار التحميل</value>
-</data>
-<data name="PauseDownload" xml:space="preserve">
-    <value>تم إيقاف التحميل</value>
-</data>
-<data name="PauseToolTip" xml:space="preserve">
-    <value>إيقاف تحميل المهمة الحالية</value>
-</data>
-<data name="Progress" xml:space="preserve">
-    <value>اكتمل التحميل {0}%</value>
-</data>
-<data name="Select" xml:space="preserve">
-    <value>تحديد</value>
-</data>
-<data name="SelectAll" xml:space="preserve">
-    <value>تحديد الكل</value>
-</data>
-<data name="SelectedToolTip" xml:space="preserve">
-    <value>محدد</value>
-</data>
-<data name="SelectNone" xml:space="preserve">
-    <value>عدم تحديد أي شيء</value>
-</data>
-<data name="SelectToolTip" xml:space="preserve">
-    <value>الدخول في وضع التحديد المتعدد</value>
-</data>
-<data name="ShareFile" xml:space="preserve">
-    <value>مشاركة الملف</value>
-</data>
-<data name="ShareFileTitle" xml:space="preserve">
-    <value>مشاركة الملف</value>
-</data>
-<data name="ShareSelectedFile" xml:space="preserve">
-    <value>مشاركة الملفات المحددة</value>
-</data>
-<data name="Title" xml:space="preserve">
-    <value>إدارة التحميل</value>
-</data>
-<data name="TotalSizeToolTip" xml:space="preserve">
-    <value>حجم الملف:</value>
-</data>
-<data name="UnSelectedToolTip" xml:space="preserve">
-    <value>غير محدد</value>
-</data>
-<data name="ViewMore" xml:space="preserve">
-    <value>عرض المزيد</value>
-</data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelToolTip" xml:space="preserve">
+    <value>Exit multi-select mode</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="CompletedCountInfo" xml:space="preserve">
+    <value>There are {0} records that have been downloaded</value>
+  </data>
+  <data name="CompletedEmpty" xml:space="preserve">
+    <value>There are no records that have been downloaded</value>
+  </data>
+  <data name="CompletedEmptyDescription" xml:space="preserve">
+    <value>Go to the app you want to download, and the file you downloaded will appear here</value>
+  </data>
+  <data name="CompleteDownload" xml:space="preserve">
+    <value>Downloaded completed</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue download</value>
+  </data>
+  <data name="ContinueAll" xml:space="preserve">
+    <value>Download all</value>
+  </data>
+  <data name="ContinueAllToolTip" xml:space="preserve">
+    <value>Resume downloading the task that is paused</value>
+  </data>
+  <data name="ContinueToolTip" xml:space="preserve">
+    <value>Continue downloading the current task</value>
+  </data>
+  <data name="CurrentSpeedToolTip" xml:space="preserve">
+    <value>Current speed: </value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteDownloadingToolTip" xml:space="preserve">
+    <value>Deletes the currently downloaded record</value>
+  </data>
+  <data name="DeleteOptions" xml:space="preserve">
+    <value>Delete options</value>
+  </data>
+  <data name="DeleteOptionsToolTip" xml:space="preserve">
+    <value>Click Show Delete Options</value>
+  </data>
+  <data name="DeleteSelected" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteSelectedToolTip" xml:space="preserve">
+    <value>Delete only the records of the selected items, not including the files</value>
+  </data>
+  <data name="DeleteSelectedWithFile" xml:space="preserve">
+    <value>Delete (including files)</value>
+  </data>
+  <data name="DeleteSelectedWithFileToolTip" xml:space="preserve">
+    <value>Delete records of selected items and delete local files</value>
+  </data>
+  <data name="DeleteToolTip" xml:space="preserve">
+    <value>Deletes only the current record, not including the file</value>
+  </data>
+  <data name="DeleteUnfinishedToolTip" xml:space="preserve">
+    <value>Delete incomplete download records</value>
+  </data>
+  <data name="DeleteWithFile" xml:space="preserve">
+    <value>Delete records (including files)</value>
+  </data>
+  <data name="DeleteWithFileToolTip" xml:space="preserve">
+    <value>Local files are deleted when records are deleted</value>
+  </data>
+  <data name="DownloadDescription" xml:space="preserve">
+    <value>Download instructions</value>
+  </data>
+  <data name="DownloadFailed" xml:space="preserve">
+    <value>Download Failed</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="DownloadingCountInfo" xml:space="preserve">
+    <value>There are {0} records in the process of being downloaded</value>
+  </data>
+  <data name="DownloadingEmpty" xml:space="preserve">
+    <value>There are no records in the process of being downloaded</value>
+  </data>
+  <data name="DownloadingEmptyDescription" xml:space="preserve">
+    <value>Go to the app you want to download, the file you're downloading will appear here</value>
+  </data>
+  <data name="DownloadProgress" xml:space="preserve">
+    <value>Downloaded {0}% completed</value>
+  </data>
+  <data name="ExplainTitle" xml:space="preserve">
+    <value>Download instructions</value>
+  </data>
+  <data name="ExplanContent1" xml:space="preserve">
+    <value>The download link is time-sensitive, and the app does not currently support resuming downloads for apps that fail to download.</value>
+  </data>
+  <data name="ExplanContent2" xml:space="preserve">
+    <value>If you encounter a download service that quits because of an exception, we recommend restarting the app before trying to download.</value>
+  </data>
+  <data name="FileInformation" xml:space="preserve">
+    <value>View file information</value>
+  </data>
+  <data name="FileNotExists" xml:space="preserve">
+    <value>The file does not exist</value>
+  </data>
+  <data name="FileSizeToolTip" xml:space="preserve">
+    <value>File size: </value>
+  </data>
+  <data name="FinishedSizeToolTip" xml:space="preserve">
+    <value>Download completed: </value>
+  </data>
+  <data name="InstallError" xml:space="preserve">
+    <value>Install failed</value>
+  </data>
+  <data name="Installing" xml:space="preserve">
+    <value>Installing, please wait......</value>
+  </data>
+  <data name="InstallToolTip" xml:space="preserve">
+    <value>Install the app</value>
+  </data>
+  <data name="InstallValue" xml:space="preserve">
+    <value>{0}% Installed</value>
+  </data>
+  <data name="LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
+  <data name="OpenFolderToolTip" xml:space="preserve">
+    <value>Open the folder for default downloads</value>
+  </data>
+  <data name="OpenItemFolderToolTip" xml:space="preserve">
+    <value>Open the folder where the current task was saved after the download was completed</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Open Download Settings</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="PauseAll" xml:space="preserve">
+    <value>Pause all</value>
+  </data>
+  <data name="PauseAllToolTip" xml:space="preserve">
+    <value>Pauses all tasks that are in the process of being downloaded or waiting to be downloaded</value>
+  </data>
+  <data name="PauseDownload" xml:space="preserve">
+    <value>Download suspended</value>
+  </data>
+  <data name="PauseToolTip" xml:space="preserve">
+    <value>Pause downloading the current task</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Download completed {0}%</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="SelectedToolTip" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="SelectNone" xml:space="preserve">
+    <value>Select none</value>
+  </data>
+  <data name="SelectToolTip" xml:space="preserve">
+    <value>Enter multi-select mode</value>
+  </data>
+  <data name="ShareFile" xml:space="preserve">
+    <value>Share file</value>
+  </data>
+  <data name="ShareFileTitle" xml:space="preserve">
+    <value>File sharing</value>
+  </data>
+  <data name="ShareSelectedFile" xml:space="preserve">
+    <value>Share the selected files</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Download Management</value>
+  </data>
+  <data name="TotalSizeToolTip" xml:space="preserve">
+    <value>File size: </value>
+  </data>
+  <data name="UnSelectedToolTip" xml:space="preserve">
+    <value>Not selected</value>
+  </data>
+  <data name="ViewMore" xml:space="preserve">
+    <value>View more</value>
+  </data>
 </root>
