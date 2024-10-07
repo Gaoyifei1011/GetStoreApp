@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,58 +118,58 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppInformation" xml:space="preserve">
-    <value>عرض معلومات التطبيق</value>
+    <value>View app information</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>GetStoreApp</value>
   </data>
   <data name="AppSettings" xml:space="preserve">
-    <value>فتح إعدادات التطبيق</value>
+    <value>Open App settings</value>
   </data>
   <data name="AppVersion" xml:space="preserve">
-    <value>إصدار التطبيق: </value>
+    <value>Application Version: </value>
   </data>
   <data name="Backdrop" xml:space="preserve">
-    <value>تعليمات إعدادات الخلفية</value>
+    <value>Backdrop settings instructions</value>
   </data>
   <data name="BackdropDescription" xml:space="preserve">
-    <value>ويندوز 10 (قبل 22000) لا يدعم خلفية mica</value>
+    <value>Windows 10 (earlier than 22000) does not support mica backdrop</value>
   </data>
   <data name="BeginnerGuide" xml:space="preserve">
-    <value>دليل المبتدئين</value>
+    <value>Beginner's guide</value>
   </data>
   <data name="BlockMapButton" xml:space="preserve">
-    <value>تعرف على ملفات BlockMap</value>
+    <value>Learn about BlockMap files</value>
   </data>
   <data name="BlockMapInstruction" xml:space="preserve">
-    <value>ملف خريطة الكتلة للحزمة هو مستند XML يحتوي على قائمة بملفات التطبيق مع الفهارس والتجزئة التشفيرية لكل كتلة بيانات مخزنة في الحزمة.</value>
+    <value>The package block map file is an XML document that contains a list of the app’s files along with indexes and cryptographic hashes for each block of data that is stored in the package.</value>
   </data>
   <data name="BriefIntroduction" xml:space="preserve">
-    <value>مقدمة موجزة للتطبيق</value>
+    <value>App brief introduction</value>
   </data>
   <data name="Checking" xml:space="preserve">
-    <value>جارٍ الفحص</value>
+    <value>Checking</value>
   </data>
   <data name="CheckNetwork" xml:space="preserve">
-    <value>تحقق من الشبكة</value>
+    <value>Check the network</value>
   </data>
   <data name="CheckUpdate" xml:space="preserve">
-    <value>تحقق من التحديث</value>
+    <value>Check Update</value>
   </data>
   <data name="ConsoleLaunch" xml:space="preserve">
-    <value>معلمات برنامج وحدة التحكم</value>
+    <value>Console program parameters</value>
   </data>
   <data name="DataStorage" xml:space="preserve">
-    <value>تخزين البيانات</value>
+    <value>Data storage</value>
   </data>
   <data name="DataStorageDescription" xml:space="preserve">
-    <value>تُخزن بيانات التطبيق كمستند XML يمكنك الوصول إليه في الدليل المحلي الخاص بك. عند الوصول إلى ملف تخزين البيانات، لا تقم بتعديل أي من محتويات ملف تخزين البيانات بشكل عشوائي. إذا فشل التطبيق في الإطلاق بسبب تعديل محتويات الملف، قم بإعادة تعيين التطبيق.</value>
+    <value>The app's data is stored as an XML document that you can access in your local directory. When accessing a datastore file, do not arbitrarily modify any of the contents of the datastore file. If the app fails to launch due to modification of the file contents, reset the app.</value>
   </data>
   <data name="DesktopLaunch" xml:space="preserve">
-    <value>معلمات برنامج سطح المكتب</value>
+    <value>Desktop program parameters</value>
   </data>
   <data name="Developer" xml:space="preserve">
-    <value>المطور:</value>
+    <value>Developer:</value>
   </data>
   <data name="DeveloperHomePage" xml:space="preserve">
     <value>https://github.com/Gaoyifei1011</value>
@@ -178,219 +178,219 @@
     <value>@高怡飞</value>
   </data>
   <data name="DeveloperNameToolTip" xml:space="preserve">
-    <value>انقر لزيارة الصفحة الرئيسية للمطور</value>
+    <value>Click to visit the Developer home page</value>
   </data>
   <data name="DevelopPurpose" xml:space="preserve">
-    <value>هدف التطوير</value>
+    <value>Purpose of development</value>
   </data>
   <data name="DevelopPurposeDescription" xml:space="preserve">
-    <value>يوفر متجر مايكروسوفت توزيعًا وتنزيلًا وتحديثًا للتطبيقات الموجودة بالفعل على المتجر. ولكن في أحدث متجر مايكروسوفت، تتطلب مايكروسوفت من المستخدمين استخدام حساب عبر الإنترنت لتنزيل التطبيقات من المتجر. هذه مشكلة للمستخدمين الذين لا يستخدمون حساب مايكروسوفت أبدًا ويجب عليهم الاعتماد على المتجر لتنزيل تطبيقاتهم. يستخدم التطبيق واجهة برمجة التطبيقات الرسمية وواجهة الاستحواذ المقدمة من واجهة برمجة التطبيقات التابعة لجهة خارجية، متجاوزًا قناة تنزيل التطبيقات الرسمية المقدمة من متجر مايكروسوفت. يمكن للمستخدمين تنزيل حزمة تثبيت التطبيق المطلوبة بشكل غير متصل للنشر المستقل.</value>
+    <value>The Microsoft Store provides distribution, download, and update access to apps already on the store. But in the latest Microsoft Store, Microsoft requires users to use an online account to download apps from the store. This is a problem for users who never use a Microsoft account and must rely on the store to download their apps. The app uses the official API and the acquisition interface provided by the third-party API, bypassing the official app download channel provided by the Microsoft Store. Users can download the required application installation package offline for independent deployment.</value>
   </data>
   <data name="Download" xml:space="preserve">
-    <value>تعليمات إدارة التنزيل</value>
+    <value>Download management instructions</value>
   </data>
   <data name="DownloadDescription1" xml:space="preserve">
-    <value>وظيفة التنزيل في التطبيق ليست مقدمة من التطبيق نفسه، بل تستخدم تحسين التسليم المدمج أو خدمة النقل الذكي في الخلفية (BITS) لتنزيل الملفات. لذلك، أثناء عملية التنزيل، سيظهر ملف تنزيل مؤقت بتنسيق TMP على القرص المحلي، وستعتمد مدة التنزيل على سرعة اتصالك بالإنترنت.</value>
+    <value>The download function of the application is not provided by the application itself, it uses the built-in delivery optimization or background intelligent transfer service (BITS) to download files. Therefore, during the download process, a temporary download file in TMP format will appear on the local disk, and the download time will depend on your Internet connection speed.</value>
   </data>
   <data name="DownloadDescription2" xml:space="preserve">
-    <value>رابط التنزيل حساس للوقت، وستظهر رسالة خطأ 404 إذا قمت بزيارة رابط التنزيل بعد فترة معينة من الوقت. لذلك، لا يدعم التطبيق استئناف التنزيلات للتطبيقات التي فشلت في التنزيل. إذا كان لديك مهمة تنزيل غير مكتملة تم انتهاء وقتها، نوصي بأن تعيد الحصول على الرابط قبل التنزيل.</value>
+    <value>The download link is time-sensitive, and a 404 error will appear if you visit the download link after a certain period of time. Therefore, the application does not support resuming downloads for applications that fail to download. If you have an incomplete download task that has been timed out, we recommend that you re-obtain the link before downloading.</value>
   </data>
   <data name="DownloadDescription3" xml:space="preserve">
-    <value>تتوقف خدمة التنزيل بسبب استثناء في بعض الظروف غير المعروفة، وإذا واجهت خدمة تنزيل غير تعمل أثناء تنزيل ملف، نوصي بأن تحاول إعادة تشغيل التطبيق.</value>
+    <value>The download service shuts down due to an exception in some unknown circumstances, and if you encounter a download service that is not running while downloading a file, we recommend that you try restarting the app.</value>
   </data>
   <data name="DownloadFailed" xml:space="preserve">
-    <value>فشل التنزيل</value>
+    <value>Download failed</value>
   </data>
   <data name="DownloadFailedDescription" xml:space="preserve">
-    <value>إذا كانت مهمة التنزيل في القائمة غير المكتملة ونص الرسالة يظهر أن التنزيل قد فشل، فقد حدث خطأ في مهمة التنزيل. يمكنك محاولة الخطوات التالية لإصلاح تنزيلات التطبيق.</value>
+    <value>If the download task is in the incomplete list and the message text shows that the download failed, an error has occurred for the download task. You can try the following steps to fix app downloads.</value>
   </data>
   <data name="DownloadFailedStep1" xml:space="preserve">
-    <value>1. تحقق من اتصال الشبكة لجهازك، يرجى التحقق من عمود "طلب فشل" للحصول على العمليات المحددة.</value>
+    <value>1. Check your device's network connection, please check the "Request Failed" column for specific operations.</value>
   </data>
   <data name="DownloadFailedStep2" xml:space="preserve">
-    <value>2. تحقق مما إذا كان الدليل الذي تختاره للتنزيل بشكل افتراضي لديه أذونات كتابة، إذا كان الدليل الذي تختاره لا يسمح بالكتابة العادية، فستكون مهمة التنزيل غير طبيعية.</value>
+    <value>2. Check whether the download directory you select by default has write permissions, if the directory you select does not allow normal writing, the download task will be abnormal.</value>
   </data>
   <data name="DownloadSettings" xml:space="preserve">
-    <value>إعدادات التنزيل</value>
+    <value>Download settings</value>
   </data>
   <data name="EncryptedPackageButton" xml:space="preserve">
-    <value>تعرف على الحزم المشفرة</value>
+    <value>Learn about encrypted packages</value>
   </data>
   <data name="EncryptedPackageInstruction" xml:space="preserve">
-    <value>تتضمن ملفات الحزم المشفرة '.eappx'، '.eappxbundle'، '.emsix'، و '.emsixbundle'</value>
+    <value>The encrypted package files include '.eappx', '.eappxbundle', '.emsix', and '.emsixbundle'</value>
   </data>
   <data name="HeaderDescription" xml:space="preserve">
-    <value>مرحبًا بك في تنزيل GetStoreApp. نتمنى لك تجربة ممتعة</value>
+    <value>Welcome to download the GetStoreApp.Wish you a pleasant experience</value>
   </data>
   <data name="HelpTranslate" xml:space="preserve">
-    <value>ساعد في ترجمة التطبيق</value>
+    <value>Help translate app</value>
   </data>
   <data name="InstallMode" xml:space="preserve">
-    <value>تعليمات وضع التثبيت</value>
+    <value>Insall mode instructions</value>
   </data>
   <data name="InstallModeDescription1" xml:space="preserve">
-    <value>طرق تثبيت التطبيق مقسمة إلى طريقتين: استخدام تثبيت التطبيق والتثبيت المباشر. بشكل افتراضي، يتم تثبيته باستخدام مثبت التطبيق.</value>
+    <value>App installation methods are divided into two ways: using application installation and direct installation. By default, it is installed using App Installer.</value>
   </data>
   <data name="InstallModeDescription2" xml:space="preserve">
-    <value>قد تحتوي حزمة التطبيق التي تم تنزيلها على بعض تبعيات المكتبة، في عملية التثبيت إذا كنت لا تعرف هذه الأمور جيدًا، يُوصى باستخدام مثبت التطبيق للتثبيت، بهذه الطريقة سيتم تحليل تبعيات المكتبة تلقائيًا في حزمة التثبيت، ويقوم الجهاز بتنزيل الخلفية بتثبيت التبعيات غير المثبتة في الخلفية.</value>
+    <value>The downloaded application package may contain some library dependencies, in the installation process if you do not know these things very well, it is recommended that you use the application installer to install, this way will automatically analyze the library dependencies in the installation package, background download device does not have installed dependencies and install in the background.</value>
   </data>
   <data name="InstallModeDescription3" xml:space="preserve">
-    <value>إذا كانت نسخة نظام التشغيل التي تستخدمها لا تتضمن مثبت تطبيق، نوصي بتنزيل الحزم المعتمدة بالإضافة إلى تنزيل التطبيق. بعد اكتمال التنزيل، استخدم التثبيت المباشر، وتثبيت الحزمة المعتمدة أولاً، ثم تثبيت الحزمة الرئيسية للتطبيق. بمجرد التثبيت، سيكون التطبيق جاهزًا للعمل.</value>
+    <value>If the version of the operating system you're using doesn't include an app installer, we recommend that you download the dependent packages as well as the app download. After the download is complete, use Direct Install, installing the dependent package first, and then installing the main app package. Once installed, the app will be up and running.</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>تعليمات إعداد اللغة</value>
+    <value>Language setting insturctions</value>
   </data>
   <data name="LanguageDescription" xml:space="preserve">
-    <value>اسم تطبيق قائمة البدء لا يتغير مع إعداد لغة التطبيق. ابحث عن التطبيق في الإعدادات وانقر على زر الإصلاح وسيتغير اسم التطبيق دون مسح بيانات التطبيق الخاصة بك.</value>
+    <value>The name of the Start menu app doesn't change with the app language setting. Find the app in settings and click the Repair button and the app name changes without clearing your app's data.</value>
   </data>
   <data name="LaunchParameters" xml:space="preserve">
-    <value>معلمات الإطلاق</value>
+    <value>Launch parameters</value>
   </data>
   <data name="LaunchParametersDescription" xml:space="preserve">
-    <value>يدعم تطبيق سطح المكتب الآن تشغيل المعلمات، يرجى النقر على وصف المعلمات أدناه للاستخدام المحدد</value>
+    <value>The desktop application now supports parameter operation, please click the parameter description below for specific usage</value>
   </data>
-<data name="LearnBits" xml:space="preserve">
-    <value>تعلم عن BITS</value>
-</data>
-<data name="LearnDeliveryOptimization" xml:space="preserve">
-    <value>تعلم عن تحسين التسليم</value>
-</data>
-<data name="LearnWinGetConfig" xml:space="preserve">
-    <value>تعلم خيارات التكوين</value>
-</data>
-<data name="LinkFilter" xml:space="preserve">
-    <value>تعليمات تصفية الروابط</value>
-</data>
-<data name="MicrosoftStore" xml:space="preserve">
-    <value>1. متجر مايكروسوفت</value>
-</data>
-<data name="MicrosoftStoreDescription" xml:space="preserve">
-    <value>بمجرد فتح التطبيق، اختر نوع الرابط والقناة التي تريد الحصول عليها. عند الانتهاء من الاختيار، أدخل محتوى الرابط الذي ترغب في الحصول عليه، وعند الانتهاء من الإدخال، انقر على زر "احصل على الرابط" للحصول على حزمة تثبيت التطبيق المقابلة لرابط المتجر. بعد الحصول الناجح، سيتم حفظ سجل إدخالك، وفي المرة القادمة التي تفتح فيها التطبيق، يمكنك بسرعة الحصول على حزمة تثبيت التطبيق المقابلة لرابط المتجر.</value>
-</data>
-<data name="Others" xml:space="preserve">
-    <value>أخرى</value>
-</data>
-<data name="OthersToolTip" xml:space="preserve">
-    <value>خيارات أخرى</value>
-</data>
-<data name="PaidApps" xml:space="preserve">
-    <value>يرجى تنزيل التطبيق المدفوع من القناة الرسمية</value>
-</data>
-<data name="PaidAppsDescription" xml:space="preserve">
-    <value>قيدت مايكروسوفت تشغيل التطبيقات المدفوعة في أنظمة ويندوز، ولا يمكن أن تعمل التطبيقات المدفوعة التي لم يتم شراؤها بشكل صحيح بعد التثبيت من خلال حزم التثبيت غير المتصلة. إذا كان لديك تطبيق مدفوع قمت بشرائه بالفعل، قم بتنزيله من متجر مايكروسوفت.</value>
-</data>
-<data name="PinToDesktop" xml:space="preserve">
-    <value>تثبيت على سطح المكتب</value>
-</data>
-<data name="PinToDesktopToolTip" xml:space="preserve">
-    <value>تثبيت التطبيق على سطح المكتب</value>
-</data>
-<data name="PinToStartScreen" xml:space="preserve">
-    <value>تثبيت على شاشة البدء</value>
-</data>
-<data name="PinToStartScreenToolTip" xml:space="preserve">
-    <value>تثبيت التطبيق على شاشة البدء</value>
-</data>
-<data name="PinToTaskbar" xml:space="preserve">
-    <value>تثبيت على شريط المهام</value>
-</data>
-<data name="PinToTaskbarToolTip" xml:space="preserve">
-    <value>تثبيت التطبيق على شريط المهام</value>
-</data>
-<data name="Precaution" xml:space="preserve">
-    <value>احتياطات</value>
-</data>
-<data name="PrivacyandSecurity" xml:space="preserve">
-    <value>الخصوصية والأمان</value>
-</data>
-<data name="PrivacyandSecurityDescription" xml:space="preserve">
-    <value>كود التطبيق بالكامل مفتوح المصدر على Github، ويمكن قراءة جميع الأكواد بمفردها. التاريخ المتعلق بالتطبيق مخزن في مجلد ذاكرة التخزين المؤقت للتطبيق ولا يتم رفعه عبر الشبكة. يتم أيضًا حذف جميع المحتويات عند إلغاء تثبيت التطبيق أو إعادة تعيينه. عند تنزيل تطبيق، تأكد من أنك تحصل على التطبيق من مصدر موثوق، والعنوان الوحيد الذي تحدده حاليًا هو صفحة الإصدار لمستودع Github.</value>
-</data>
-<data name="ProjectHomePage" xml:space="preserve">
-    <value>الصفحة الرئيسية للمشروع</value>
-</data>
-<data name="Reference" xml:space="preserve">
-    <value>مراجع المشروع (ترتيب أبجدي)</value>
-</data>
-<data name="ReferenceToolTip" xml:space="preserve">
-    <value>انقر لتتعلم عن المشروع المفتوح المصدر المشار إليه</value>
-</data>
-<data name="RequestFailed" xml:space="preserve">
-    <value>فشل الطلب</value>
-</data>
-<data name="RequestFailedDescription" xml:space="preserve">
-    <value>إذا تحول خلفية شريط الرسالة إلى اللون الأحمر، فهذا يعني أن خطأ قد حدث في طلبك. يمكنك الحصول على المعلومات من خلال زر "عرض" في شريط حالة المعلومات. بعد أن تفهم السبب المحدد للخطأ، يمكنك القيام بما يلي.</value>
-</data>
-<data name="RequestFailedStep1" xml:space="preserve">
-    <value>1. قد تكون الشبكات في مناطق مختلفة لها ظروف مختلفة. إذا كان الخطأ ناتجًا عن انتهاء مهلة اتصال الشبكة، يمكنك محاولة استعادته مرة أخرى.</value>
-</data>
-<data name="RequestFailedStep2" xml:space="preserve">
-    <value>2. فقط الرابط الصحيح سيحصل على حزمة تثبيت التطبيق، يرجى التحقق مما إذا كان الرابط الذي أدخلته صحيحًا.</value>
-</data>
-<data name="RequestFailedStep3" xml:space="preserve">
-    <value>3. يحتاج التطبيق إلى الاتصال بالشبكة لإرسال طلب الحصول. تحقق من حالة شبكة جهازك وانتظر حتى يعمل اتصال الشبكة بشكل صحيح لتجربة استعادته مرة أخرى.</value>
-</data>
-<data name="RequestFailedStep4" xml:space="preserve">
-    <value>4. إذا واجهت مشكلات أخرى غير معروفة، يُوصى باستخدام متصفح الويب.</value>
-</data>
-<data name="SendFeedback" xml:space="preserve">
-    <value>إرسال ملاحظات</value>
-</data>
-<data name="SettingsHelp" xml:space="preserve">
-    <value>تعليمات خيارات الإعداد</value>
-</data>
-<data name="ShowLicense" xml:space="preserve">
-    <value>عرض الترخيص</value>
-</data>
-<data name="ShowLicenseToolTip" xml:space="preserve">
-    <value>عرض اتفاقية ترخيص التطبيق</value>
-</data>
-<data name="ShowReleaseNotes" xml:space="preserve">
-    <value>عرض ملاحظات الإصدار</value>
-</data>
-<data name="ShowReleaseNotesToolTip" xml:space="preserve">
-    <value>تعرف على التحديثات الخاصة بالتطبيق</value>
-</data>
-<data name="SystemInformation" xml:space="preserve">
-    <value>عرض معلومات النظام</value>
-</data>
-<data name="Thanks" xml:space="preserve">
-    <value>شكرًا (ترتيب أبجدي)</value>
-</data>
-<data name="ThanksDescription" xml:space="preserve">
-    <value>طريق التطوير طويل ومليء بالعقبات. شكرًا جزيلاً لدعم هؤلاء الأصدقاء.</value>
-</data>
-<data name="ThanksToolTip" xml:space="preserve">
-    <value>انقر لتتعلم عن المعلومات الشخصية للشكر</value>
-</data>
-<data name="Title" xml:space="preserve">
-    <value>حول</value>
-</data>
-<data name="TroubleShoot" xml:space="preserve">
-    <value>استكشاف الأخطاء وإصلاحها</value>
-</data>
-<data name="UpdatePath" xml:space="preserve">
-    <value>مسار التحديث</value>
-</data>
-<data name="UpdatePathDescription" xml:space="preserve">
-    <value>يمكن تنزيل التطبيقات المدرجة في متجر مايكروسوفت أو تحديثها فقط من خلال متجر مايكروسوفت، ولا يُسمح بتنزيلها وتثبيتها من خلال قنوات طرف ثالث أخرى. تضمن هذه الممارسة موثوقية مسار مصدر التطبيق. نتيجة لذلك، ينتهك التطبيق بطريقة ما سياسات متجر مايكروسوفت ولا يمكن إدراجه في متجر مايكروسوفت. يمكنك فتح صفحة الإصدار للمشروع من خلال "التحقق من التحديثات"، والعثور على أحدث إصدار من التطبيق بنفسك، وتنزيل حزمة التثبيت بتنسيق MSIX لتحديث المشروع.</value>
-</data>
-<data name="UseInstruction" xml:space="preserve">
-    <value>تعليمات الاستخدام</value>
-</data>
-<data name="WinGetConfig" xml:space="preserve">
-    <value>وصف خيارات تكوين WinGet</value>
-</data>
-<data name="WinGetConfigDescription" xml:space="preserve">
-    <value>يمكن تخصيص تجربة عميل Windows Package Manager من خلال تخصيص ملف تكوين WinGet. يمكنك تغيير القيم الافتراضية وتجربة الميزات التجريبية التي تم تنفيذها بالفعل في العميل.</value>
-</data>
-<data name="WinGetPackage" xml:space="preserve">
-    <value>2. حزمة WinGet</value>
-</data>
-<data name="WinGetPackageDescription1" xml:space="preserve">
-    <value>مدير حزم ويندوز هو حل شامل لإدارة الحزم يتكون من أداة سطر أوامر ومجموعة من الخدمات لتثبيت التطبيقات على ويندوز 10 وويندوز 11.</value>
-</data>
-<data name="WinGetPackageDescription2" xml:space="preserve">
-    <value>يوفر تطبيق WinGet واجهة رسومية صديقة للحزم تشمل البحث وتثبيت التطبيقات المطلوبة، وإدارة التطبيقات المثبتة وقابلة للتحديث على الجهاز. من السهل تشغيلها وإدارة التطبيقات التقليدية (أي التطبيقات غير المتجر) على الجهاز.</value>
-</data>
+  <data name="LearnBits" xml:space="preserve">
+    <value>Learn bits</value>
+  </data>
+  <data name="LearnDeliveryOptimization" xml:space="preserve">
+    <value>Learn delivery optimization</value>
+  </data>
+  <data name="LearnWinGetConfig" xml:space="preserve">
+    <value>learn config options</value>
+  </data>
+  <data name="LinkFilter" xml:space="preserve">
+    <value>Link filtering instructions</value>
+  </data>
+  <data name="MicrosoftStore" xml:space="preserve">
+    <value>1. Microsoft Store</value>
+  </data>
+  <data name="MicrosoftStoreDescription" xml:space="preserve">
+    <value>Once the app opens, select the type of link and channel you want to get. When the selection is complete, enter the link content you want to get, and when the input is complete, click the 'Get Link' button to get the app installation package corresponding to the store link. After successful acquisition, your input record will be stored, and the next time you open the app, you can quickly get the app installation package corresponding to the store link.</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="OthersToolTip" xml:space="preserve">
+    <value>Other options</value>
+  </data>
+  <data name="PaidApps" xml:space="preserve">
+    <value>Please download the paid app from the official channel</value>
+  </data>
+  <data name="PaidAppsDescription" xml:space="preserve">
+    <value>Microsoft has restricted the operation of paid apps in Windows systems, and paid apps that have not been purchased cannot function properly after installation through offline installation packages. If you have a paid app that you've already purchased, download it from the Microsoft Store.</value>
+  </data>
+  <data name="PinToDesktop" xml:space="preserve">
+    <value>Pin to desktop</value>
+  </data>
+  <data name="PinToDesktopToolTip" xml:space="preserve">
+    <value>Pin the app to desktop</value>
+  </data>
+  <data name="PinToStartScreen" xml:space="preserve">
+    <value>Pin to start screen</value>
+  </data>
+  <data name="PinToStartScreenToolTip" xml:space="preserve">
+    <value>Pin the app to Start screen</value>
+  </data>
+  <data name="PinToTaskbar" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
+  <data name="PinToTaskbarToolTip" xml:space="preserve">
+    <value>Pin the app to taskbar</value>
+  </data>
+  <data name="Precaution" xml:space="preserve">
+    <value>Precautions</value>
+  </data>
+  <data name="PrivacyandSecurity" xml:space="preserve">
+    <value>Privacy and Security</value>
+  </data>
+  <data name="PrivacyandSecurityDescription" xml:space="preserve">
+    <value>All of the app's code is open source on Github, and all code can be read on its own. The history involved in the app is stored in the app's cache folder and is not uploaded over the network. All content is also deleted when the app is uninstalled or reset. When downloading an app, make sure that you get the app from a reliable source, and the only address you currently specify is the Release page of the Github repository.</value>
+  </data>
+  <data name="ProjectHomePage" xml:space="preserve">
+    <value>Project home page</value>
+  </data>
+  <data name="Reference" xml:space="preserve">
+    <value>Project references (Sort by alphabetical order)</value>
+  </data>
+  <data name="ReferenceToolTip" xml:space="preserve">
+    <value>Click to learn about the referenced open source project</value>
+  </data>
+  <data name="RequestFailed" xml:space="preserve">
+    <value>Request failed</value>
+  </data>
+  <data name="RequestFailedDescription" xml:space="preserve">
+    <value>If the background of the message bar turns red, it means that an error has occurred in your request. You can get information through the "View" button in the information status bar. After you understand the specific cause of the error, you can do the following.</value>
+  </data>
+  <data name="RequestFailedStep1" xml:space="preserve">
+    <value>1. Networks in different regions may have different conditions. If the error is caused by network connection timeout, you can try to retrieve it again.</value>
+  </data>
+  <data name="RequestFailedStep2" xml:space="preserve">
+    <value>2. Only the correct link will get the app installation package, please check if the link you entered is correct.</value>
+  </data>
+  <data name="RequestFailedStep3" xml:space="preserve">
+    <value>3. The app needs networking to send a get request. Check your device's network condition and wait until your device's network connection is working properly to try to regain it.</value>
+  </data>
+  <data name="RequestFailedStep4" xml:space="preserve">
+    <value>4. If you encounter other unknown issues, it is recommended that you use the web browser.</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>Send feedback</value>
+  </data>
+  <data name="SettingsHelp" xml:space="preserve">
+    <value>Setting options instructions</value>
+  </data>
+  <data name="ShowLicense" xml:space="preserve">
+    <value>Show License</value>
+  </data>
+  <data name="ShowLicenseToolTip" xml:space="preserve">
+    <value>View the app's license agreement</value>
+  </data>
+  <data name="ShowReleaseNotes" xml:space="preserve">
+    <value>Show release notes</value>
+  </data>
+  <data name="ShowReleaseNotesToolTip" xml:space="preserve">
+    <value>Learn about app-specific updates</value>
+  </data>
+  <data name="SystemInformation" xml:space="preserve">
+    <value>View system information</value>
+  </data>
+  <data name="Thanks" xml:space="preserve">
+    <value>Thanks (Sort by alphabetical order)</value>
+  </data>
+  <data name="ThanksDescription" xml:space="preserve">
+    <value>The road to development is long and obstructive. Thank you very much for the support of these friends.</value>
+  </data>
+  <data name="ThanksToolTip" xml:space="preserve">
+    <value>Click Learn about the thank-your's personal information</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="TroubleShoot" xml:space="preserve">
+    <value>Trouble shoot</value>
+  </data>
+  <data name="UpdatePath" xml:space="preserve">
+    <value>Update path</value>
+  </data>
+  <data name="UpdatePathDescription" xml:space="preserve">
+    <value>Apps listed on the Microsoft Store can only be downloaded or updated through the Microsoft Store and are not allowed to be downloaded and installed through other third-party channels. This practice ensures the reliability of the application source path. As a result, the app somehow violates the policies of the Microsoft Store and cannot be listed in the Microsoft Store. You can open the release page of the project by "Check for Updates", find the latest version of the app yourself, and download the installation package in MSIX format for the project to update.</value>
+  </data>
+  <data name="UseInstruction" xml:space="preserve">
+    <value>Direction for use</value>
+  </data>
+  <data name="WinGetConfig" xml:space="preserve">
+    <value>WinGet config options description</value>
+  </data>
+  <data name="WinGetConfigDescription" xml:space="preserve">
+    <value>The Windows package Manager client experience can be customized by customizing WinGet's configuration file. You can change the default values and experiment with the experimental features already implemented in the client.</value>
+  </data>
+  <data name="WinGetPackage" xml:space="preserve">
+    <value>2. WinGet package</value>
+  </data>
+  <data name="WinGetPackageDescription1" xml:space="preserve">
+    <value>Windows Package Manager is a comprehensive package manager solution that consists of a command line tool and set of services for installing applications on Windows 10 and Windows 11.</value>
+  </data>
+  <data name="WinGetPackageDescription2" xml:space="preserve">
+    <value>The WinGet application provides a package-friendly graphical interface that includes searching and installing required applications, managing installed and upgradeable applications on the device. It is easy to operate and manage traditional applications (i.e. non-store applications) on the device.</value>
+  </data>
 </root>
