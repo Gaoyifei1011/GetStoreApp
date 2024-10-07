@@ -376,19 +376,19 @@
     <value>Sort way</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Package manager</value>
+    <value>מנהל החבילות</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>הסר התקנה</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>לא ידוע</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Package version</value>
+    <value>גרסת חבילה</value>
   </data>
   <data name="VersionToolTip" xml:space="preserve">
-    <value>Version: </value>
+    <value>גרסה: </value>
   </data>
   <data name="VertifyIsOk" xml:space="preserve">
     <value>Is intact</value>
