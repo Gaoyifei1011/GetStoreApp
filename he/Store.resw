@@ -118,34 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>ביטול</value>
   </data>
   <data name="CancelToolTip" xml:space="preserve">
     <value>Exit multi-select mode</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>העתק</value>
   </data>
   <data name="CopyInformation" xml:space="preserve">
-    <value>Copy info</value>
+    <value>העתק מידכ</value>
   </data>
   <data name="CopyInformationToolTip" xml:space="preserve">
     <value>Copy the information to the clipboard</value>
   </data>
   <data name="CopyLink" xml:space="preserve">
-    <value>Copy link</value>
+    <value>העתק קישור</value>
   </data>
   <data name="CopyLinkToolTip" xml:space="preserve">
     <value>Copy the download link to the clipboard</value>
   </data>
   <data name="CopyOptions" xml:space="preserve">
-    <value>Copy options</value>
+    <value>העתק אפשרויות</value>
   </data>
   <data name="CopyOptionsToolTip" xml:space="preserve">
     <value>Click Show Replication Options</value>
   </data>
   <data name="CopyQueryedAppInfo" xml:space="preserve">
-    <value>Copy app info</value>
+    <value>העתק מידע אפליקציה</value>
   </data>
   <data name="CopySelectedContent" xml:space="preserve">
     <value>Copy the selected row content</value>
@@ -163,13 +163,13 @@
     <value>Copy the selected content to the clipboard</value>
   </data>
   <data name="DownloadSelected" xml:space="preserve">
-    <value>Download the selected item</value>
+    <value>הורד את הפריט הנבחר</value>
   </data>
   <data name="FileName" xml:space="preserve">
-    <value>File Name</value>
+    <value>שם קובץ</value>
   </data>
   <data name="FileSize" xml:space="preserve">
-    <value>File Size</value>
+    <value>גודל קובץ</value>
   </data>
   <data name="FillIn" xml:space="preserve">
     <value>Fill in</value>
@@ -178,7 +178,7 @@
     <value>App name / category id</value>
   </data>
   <data name="HistoryChannel" xml:space="preserve">
-    <value>Channel</value>
+    <value>ערוץ</value>
   </data>
   <data name="HistoryContent" xml:space="preserve">
     <value>Input content</value>
@@ -187,37 +187,37 @@
     <value>The history is empty</value>
   </data>
   <data name="HistoryLink" xml:space="preserve">
-    <value>Link</value>
+    <value>קישור</value>
   </data>
   <data name="HistoryType" xml:space="preserve">
-    <value>Type</value>
+    <value>סוג</value>
   </data>
   <data name="LanguageAndRegion" xml:space="preserve">
-    <value>Language and region</value>
+    <value>שפה ואזור</value>
   </data>
   <data name="LanguageAndRegionToolTip" xml:space="preserve">
     <value>Open Language and Region in settings</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
-    <value>Learn more</value>
+    <value>למד עוד</value>
   </data>
   <data name="NonPackagedApp" xml:space="preserve">
     <value>Classic app</value>
   </data>
   <data name="OpenLink" xml:space="preserve">
-    <value>Open link</value>
+    <value>פתח קישור</value>
   </data>
   <data name="OpenLinkToolTip" xml:space="preserve">
     <value>Use browser to open the link</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>אפשרויות</value>
   </data>
   <data name="OptionsToolTip" xml:space="preserve">
     <value>Select the options you want to use</value>
   </data>
   <data name="PackagedApp" xml:space="preserve">
-    <value>Packaged app</value>
+    <value>חבילת אפליקציה</value>
   </data>
   <data name="QueryedAppDescription" xml:space="preserve">
     <value>App description:</value>
@@ -226,10 +226,10 @@
     <value>App information</value>
   </data>
   <data name="QueryedAppName" xml:space="preserve">
-    <value>App name:</value>
+    <value>שם אפליקציה:</value>
   </data>
   <data name="QueryedAppPublisher" xml:space="preserve">
-    <value>Publisehr:</value>
+    <value>מפרסם:</value>
   </data>
   <data name="QueryedAppType" xml:space="preserve">
     <value>AppType: </value>
@@ -268,7 +268,7 @@
     <value>For example:</value>
   </data>
   <data name="SearchApps" xml:space="preserve">
-    <value>Search apps</value>
+    <value>חפש אפליקציות</value>
   </data>
   <data name="SearchPlaceHolderText" xml:space="preserve">
     <value>For example: Microsoft Corporation</value>
@@ -277,7 +277,7 @@
     <value>Search Result</value>
   </data>
   <data name="SearchStore" xml:space="preserve">
-    <value>Search apps</value>
+    <value>חפש אפליקציות</value>
   </data>
   <data name="SearchStoreCountInfo" xml:space="preserve">
     <value>{0} results were searched from the Microsoft Store</value>
@@ -298,16 +298,16 @@
     <value>The data returned by the server is empty, please check what you entered</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Select</value>
+    <value>בחר</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
-    <value>Select all</value>
+    <value>בחר הכל</value>
   </data>
   <data name="SelectedToolTip" xml:space="preserve">
-    <value>Selected</value>
+    <value>נבחר</value>
   </data>
   <data name="SelectNone" xml:space="preserve">
-    <value>Select none</value>
+    <value>אל תבחר מאום</value>
   </data>
   <data name="SelectToolTip" xml:space="preserve">
     <value>Enter multi-select mode</value>
@@ -316,16 +316,16 @@
     <value>App link</value>
   </data>
   <data name="StoreAppName" xml:space="preserve">
-    <value>App name</value>
+    <value>שם אפליקציה</value>
   </data>
   <data name="StoreAppPublisher" xml:space="preserve">
-    <value>App publisher</value>
+    <value>מפרסם האפליקציה</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Microsoft Store</value>
   </data>
   <data name="UnSelectedToolTip" xml:space="preserve">
-    <value>Not selected</value>
+    <value>לא נבחר מאום</value>
   </data>
   <data name="UseInstruction" xml:space="preserve">
     <value>Direction for use</value>
