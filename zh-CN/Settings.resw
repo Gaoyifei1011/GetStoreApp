@@ -385,19 +385,19 @@
     <value>Application theme</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>Dark</value>
+    <value>כהה</value>
   </data>
   <data name="ThemeDefault" xml:space="preserve">
-    <value>Windows default</value>
+    <value>Windows ברירת המחדל של</value>
   </data>
   <data name="ThemeDescription" xml:space="preserve">
     <value>Select the application theme to display</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>Light</value>
+    <value>בהיר</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Settings</value>
+    <value>הגדרות</value>
   </data>
   <data name="TopMost" xml:space="preserve">
     <value>Window set on top</value>
@@ -424,10 +424,10 @@
     <value>Priority use dev version</value>
   </data>
   <data name="UseDevFirstOffContent" xml:space="preserve">
-    <value>No</value>
+    <value>לא</value>
   </data>
   <data name="UseDevFirstOnContent" xml:space="preserve">
-    <value>Yes</value>
+    <value>כן</value>
   </data>
   <data name="UseDevFirstToolTip" xml:space="preserve">
     <value>When both versions exist, the development version is preferred (takes effect after restart)</value>
@@ -457,13 +457,13 @@
     <value>Set how the WinGet package interacts when installing applications</value>
   </data>
   <data name="WinGetSettings" xml:space="preserve">
-    <value>WinGet settings</value>
+    <value>WinGet הגדרות</value>
   </data>
   <data name="WinGetSettingsDescription" xml:space="preserve">
     <value>Customizing the WinGet package's function</value>
   </data>
   <data name="WinGetVersion" xml:space="preserve">
-    <value>WinGet version</value>
+    <value>WinGet גרסת</value>
   </data>
   <data name="WinGetVersionDescription" xml:space="preserve">
     <value>Show the current version of the WinGet application</value>
@@ -481,9 +481,9 @@
     <value>Whether to display the file right-click menu in the system</value>
   </data>
   <data name="ShellMenuOnContent" xml:space="preserve">
-    <value>Show</value>
+    <value>הצג</value>
   </data>
   <data name="ShellMenuOffContent" xml:space="preserve">
-    <value>Hide</value>
+    <value>הסתר</value>
   </data>
 </root>
