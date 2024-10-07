@@ -118,225 +118,225 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppCurrentVersionToolTip" xml:space="preserve">
-    <value>Current version: </value>
+    <value>当前版本：</value>
   </data>
   <data name="AppNameToolTip" xml:space="preserve">
-    <value>App name:</value>
+    <value>应用名称：</value>
   </data>
   <data name="AppNewestVersionToolTip" xml:space="preserve">
-    <value>The newest version: </value>
+    <value>最新版本：</value>
   </data>
   <data name="AppPublisherToolTip" xml:space="preserve">
-    <value>Publisher: </value>
+    <value>发布者：</value>
   </data>
-  <data name="AppVersionToolTIp" xml:space="preserve">
-    <value>App version: </value>
+  <data name="AppVersionToolTip" xml:space="preserve">
+    <value>应用版本：</value>
   </data>
   <data name="Canceling" xml:space="preserve">
-    <value>Canceling</value>
+    <value>取消中</value>
   </data>
   <data name="CancelInstall" xml:space="preserve">
-    <value>Cancel the installation</value>
+    <value>取消安装</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>关闭</value>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control panel</value>
+    <value>控制面板</value>
   </data>
   <data name="ControlPanelToolTip" xml:space="preserve">
-    <value>Open Programs and Features in Control Panel</value>
+    <value>打开控制面板的程序和功能</value>
   </data>
   <data name="CopyInstallText" xml:space="preserve">
-    <value>Copy install command</value>
+    <value>复制安装命令</value>
   </data>
   <data name="CopyUnInstallText" xml:space="preserve">
-    <value>Copy uninstall command</value>
+    <value>复制卸载命令</value>
   </data>
   <data name="CopyUpgradeText" xml:space="preserve">
-    <value>Copy upgrade command</value>
+    <value>复制升级命令</value>
   </data>
   <data name="DownloadedFileSizeToolTip" xml:space="preserve">
-    <value>Download completed: </value>
+    <value>已下载完成：</value>
   </data>
   <data name="DownloadFromGithub" xml:space="preserve">
-    <value>Download from Github</value>
+    <value>从 Github 中下载</value>
   </data>
   <data name="DownloadFromGithubToolTip" xml:space="preserve">
-    <value>Download from Github (official, preview, developer, etc.)</value>
+    <value>从 Github 中下载（正式版、预览版、开发版等）</value>
   </data>
   <data name="DownloadFromMicrosoftStore" xml:space="preserve">
-    <value>Download from the Microsoft Store</value>
+    <value>从微软商店中下载</value>
   </data>
   <data name="DownloadFromMicrosoftStoreToolTip" xml:space="preserve">
-    <value>Download from Microsoft Store (official version)</value>
+    <value>从微软商店中下载（正式版）</value>
   </data>
   <data name="Downloading" xml:space="preserve">
-    <value>Downloading</value>
+    <value>下载中</value>
   </data>
   <data name="DownloadProgressToolTip" xml:space="preserve">
-    <value>Download progress:</value>
+    <value>下载进度：</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>Finished</value>
+    <value>已完成</value>
   </data>
   <data name="InitializeFailedDescription" xml:space="preserve">
-    <value>Unfortunately, the WinGet package manager initialization exception occurred and the application detected that the WinGet package manager was not installed on your system.</value>
+    <value>很不幸的事情发生了，WinGet 程序包管理器初始化异常，应用检测到您的系统没有安装 WinGet 程序包管理器。</value>
   </data>
   <data name="InitializeFailedTitle" xml:space="preserve">
-    <value>Welcome to Get Store application WinGet Package Manager</value>
+    <value>欢迎使用获取商店应用 WinGet 程序包管理器</value>
   </data>
   <data name="Install" xml:space="preserve">
-    <value>התקן</value>
+    <value>安装</value>
   </data>
   <data name="InstalledApps" xml:space="preserve">
-    <value>אפליקציות מותקנות</value>
+    <value>已安装应用</value>
   </data>
   <data name="InstalledAppsCountEmpty" xml:space="preserve">
-    <value>There is no installed apps</value>
+    <value>没有已安装的应用</value>
   </data>
   <data name="InstalledAppsCountInfo" xml:space="preserve">
-    <value>There are {0} installed apps</value>
+    <value>共有{0}个已安装的应用</value>
   </data>
   <data name="InstalledAppsEmptyDescription" xml:space="preserve">
-    <value>The application record is empty. Go ahead and install the application you want to use</value>
+    <value>应用记录为空，快去安装需要使用的应用吧</value>
   </data>
   <data name="InstalledAppsPlaceHolderText" xml:space="preserve">
-    <value>Search the installed apps</value>
+    <value>搜索已安装的应用</value>
   </data>
   <data name="InstalledAppsSearchEmptyDescription" xml:space="preserve">
-    <value>The application you searched for has not been found, please change the search criteria and try again</value>
+    <value>您搜索的应用暂未找到，请更改搜索条件后再进行尝试</value>
   </data>
   <data name="Installing" xml:space="preserve">
-    <value>מתקין</value>
+    <value>安装中...</value>
   </data>
   <data name="InstallingAppsListEmpty" xml:space="preserve">
-    <value>There are currently no download and installation tasks</value>
+    <value>当前暂无下载和安装任务</value>
   </data>
   <data name="InstallWithCmd" xml:space="preserve">
-    <value>Install with command</value>
+    <value>使用命令安装</value>
   </data>
   <data name="Introduce" xml:space="preserve">
-    <value>Introduction to WinGet Package Manager:</value>
+    <value>WinGet 程序包管理器介绍：</value>
   </data>
   <data name="IntroduceContent1" xml:space="preserve">
-    <value>Windows Package Manager is a comprehensive package manager solution that consists of a command line tool and set of services for installing applications on Windows 10 and Windows 11.</value>
+    <value>Windows 程序包管理器是一个综合的程序包管理器解决方案，由一个命令行工具和一组用于在 Windows 10 和 Windows 11 上安装应用程序的服务组成。</value>
   </data>
   <data name="IntroduceContent2" xml:space="preserve">
-    <value>The winget tool enables users to discover, install, upgrade, remove and configure applications on Windows 10 and Windows 11 computers.</value>
+    <value>用户可以在 Windows 10 和 Windows 11 计算机上使用 winget 工具来发现、安装、升级、删除和配置应用程序。</value>
   </data>
   <data name="LearnMore" xml:space="preserve">
-    <value>Learn more</value>
+    <value>了解更多</value>
   </data>
   <data name="LearnMoreToolTip" xml:space="preserve">
-    <value>Learn more about the WinGet package manager description</value>
+    <value>了解更多有关 WinGet 程序包管理器的描述信息</value>
   </data>
   <data name="LoadingInstalledApps" xml:space="preserve">
-    <value>Please wait while loading the list of installed applications...</value>
+    <value>正在加载已安装应用列表，请稍候...</value>
   </data>
   <data name="LoadingUpgradableApps" xml:space="preserve">
-    <value>Please wait while loading the list of upgradable applications...</value>
+    <value>正在加载可升级应用列表，请稍候...</value>
   </data>
   <data name="NotSearchedTip" xml:space="preserve">
-    <value>Go ahead and get the apps you want to install. The apps you search for will be displayed here</value>
+    <value>快去获取想要安装的应用吧，您搜索到的应用将会显示在此处</value>
   </data>
   <data name="OpenTempFolder" xml:space="preserve">
-    <value>Open download folder</value>
+    <value>打开下载目录</value>
   </data>
   <data name="OpenTempFolderToolTip" xml:space="preserve">
-    <value>Open the local directory where the app installation package was temporarily downloaded</value>
+    <value>打开临时下载应用安装包的本地目录</value>
   </data>
   <data name="Operation" xml:space="preserve">
-    <value>Operation</value>
+    <value>操作</value>
   </data>
   <data name="PostInstall" xml:space="preserve">
-    <value>Install completing</value>
+    <value>完成安装中</value>
   </data>
   <data name="Queued" xml:space="preserve">
-    <value>Waiting</value>
+    <value>等待中</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>רענן</value>
+    <value>刷新</value>
   </data>
   <data name="RefreshToolTip" xml:space="preserve">
-    <value>Refresh installed application data</value>
+    <value>刷新已安装应用数据</value>
   </data>
   <data name="SearchApps" xml:space="preserve">
-    <value>חפש אפליקציות</value>
+    <value>查找应用</value>
   </data>
   <data name="SearchAppsEmptyDescription" xml:space="preserve">
-    <value>Unable to find a package that matches the entered criteria, please change the search criteria and try again</value>
+    <value>找不到与输入条件匹配的程序包，请更改搜索条件后再进行尝试</value>
   </data>
   <data name="SearchAppsPlaceHolderText" xml:space="preserve">
-    <value>חפש אפליקציות</value>
+    <value>搜索应用</value>
   </data>
   <data name="SearchedAppsCountEmpty" xml:space="preserve">
-    <value>No apps were searched</value>
+    <value>没有搜索到任何应用</value>
   </data>
   <data name="SearchedAppsCountInfo" xml:space="preserve">
-    <value>There are {0} searched apps</value>
+    <value>已搜索到{0}个应用</value>
   </data>
   <data name="SearchingApps" xml:space="preserve">
-    <value>The application is searching, please wait...</value>
+    <value>应用正在搜索中，清稍候...</value>
   </data>
   <data name="Sort" xml:space="preserve">
-    <value>Sort</value>
+    <value>排序</value>
   </data>
   <data name="SortByDisplayName" xml:space="preserve">
-    <value>App name</value>
+    <value>应用名称</value>
   </data>
   <data name="SortByPublisher" xml:space="preserve">
-    <value>Publisher name</value>
+    <value>发布者名称</value>
   </data>
   <data name="SortDecrease" xml:space="preserve">
-    <value>Decrease</value>
+    <value>降序</value>
   </data>
   <data name="SortIncrease" xml:space="preserve">
-    <value>Increase</value>
+    <value>升序</value>
   </data>
   <data name="SortMode" xml:space="preserve">
-    <value>Sorting mode</value>
+    <value>排序方式</value>
   </data>
   <data name="SortRule" xml:space="preserve">
-    <value>Sorting rules</value>
+    <value>排序规则</value>
   </data>
   <data name="SortToolTip" xml:space="preserve">
-    <value>Sort according to the rules</value>
+    <value>按照规则进行排序</value>
   </data>
   <data name="SortWay" xml:space="preserve">
-    <value>Sort way</value>
+    <value>排序方式</value>
   </data>
   <data name="StopDownload" xml:space="preserve">
-    <value>Stop download</value>
+    <value>停止下载</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task manager</value>
+    <value>任务管理</value>
   </data>
   <data name="TotalFileSizeToolTip" xml:space="preserve">
-    <value>Total size: </value>
+    <value>总大小：</value>
   </data>
   <data name="UnInstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>卸载</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>未知</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Update</value>
+    <value>升级</value>
   </data>
   <data name="UpgradableApps" xml:space="preserve">
-    <value>Upgradable apps</value>
+    <value>可升级应用</value>
   </data>
   <data name="UpgradableAppsCountEmpty" xml:space="preserve">
-    <value>There is no upgradeable apps</value>
+    <value>没有可升级的应用</value>
   </data>
   <data name="UpgradableAppsCountInfo" xml:space="preserve">
-    <value>There are {0} upgradable apps</value>
+    <value>共有{0}个可升级的应用</value>
   </data>
   <data name="UpgradableAppsEmptyDescription" xml:space="preserve">
-    <value>All of your applications are up to date</value>
+    <value>您的所有应用已经是最新版本了</value>
   </data>
   <data name="ViewMoreOptions" xml:space="preserve">
-    <value>View more options</value>
+    <value>查看更多选项</value>
   </data>
 </root>
