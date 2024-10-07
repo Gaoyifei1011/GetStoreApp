@@ -187,10 +187,10 @@
     <value>Welcome to Get Store application WinGet Package Manager</value>
   </data>
   <data name="Install" xml:space="preserve">
-    <value>Install</value>
+    <value>התקן</value>
   </data>
   <data name="InstalledApps" xml:space="preserve">
-    <value>Installed apps</value>
+    <value>אפליקציות מותקנות</value>
   </data>
   <data name="InstalledAppsCountEmpty" xml:space="preserve">
     <value>There is no installed apps</value>
@@ -208,7 +208,7 @@
     <value>The application you searched for has not been found, please change the search criteria and try again</value>
   </data>
   <data name="Installing" xml:space="preserve">
-    <value>Installing</value>
+    <value>מתקין</value>
   </data>
   <data name="InstallingAppsListEmpty" xml:space="preserve">
     <value>There are currently no download and installation tasks</value>
@@ -256,19 +256,19 @@
     <value>Waiting</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>רענן</value>
   </data>
   <data name="RefreshToolTip" xml:space="preserve">
     <value>Refresh installed application data</value>
   </data>
   <data name="SearchApps" xml:space="preserve">
-    <value>Search apps</value>
+    <value>חפש אפליקציות</value>
   </data>
   <data name="SearchAppsEmptyDescription" xml:space="preserve">
     <value>Unable to find a package that matches the entered criteria, please change the search criteria and try again</value>
   </data>
   <data name="SearchAppsPlaceHolderText" xml:space="preserve">
-    <value>Search apps</value>
+    <value>חפש אפליקציות</value>
   </data>
   <data name="SearchedAppsCountEmpty" xml:space="preserve">
     <value>No apps were searched</value>
