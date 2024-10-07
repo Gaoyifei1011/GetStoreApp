@@ -118,325 +118,325 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Advanced" xml:space="preserve">
-    <value>خيارات متقدمة</value>
+    <value>Advanced Options</value>
   </data>
   <data name="AlwaysShowBackdrop" xml:space="preserve">
-    <value>عرض الخلفية دائمًا</value>
+    <value>Always show backdrop</value>
   </data>
   <data name="AlwaysShowBackdropDescription" xml:space="preserve">
-    <value>لا يتراجع النافذة إلى لون صلب عندما تفقد التركيز</value>
+    <value>The window does not fall back to a solid color when it loses focus</value>
   </data>
   <data name="AlwaysShowBackdropOffContent" xml:space="preserve">
-    <value>مغلق</value>
+    <value>Closed</value>
   </data>
   <data name="AlwaysShowBackdropOnContent" xml:space="preserve">
-    <value>مفتوح</value>
+    <value>Opened</value>
   </data>
   <data name="AppCacheFolder" xml:space="preserve">
-    <value>ذاكرة التخزين المؤقت للتطبيق</value>
+    <value>App cache</value>
   </data>
   <data name="Appearance" xml:space="preserve">
-    <value>المظهر</value>
+    <value>Appearance</value>
   </data>
   <data name="AppInstall" xml:space="preserve">
-    <value>التثبيت باستخدام مثبت التطبيق</value>
+    <value>Install using the app installer</value>
   </data>
   <data name="Backdrop" xml:space="preserve">
-    <value>مادة خلفية النافذة</value>
+    <value>Window background material</value>
   </data>
   <data name="BackdropAcrylic" xml:space="preserve">
-    <value>افتراضي</value>
+    <value>Default</value>
   </data>
   <data name="BackdropAcrylicBase" xml:space="preserve">
-    <value>أساسي</value>
+    <value>Base</value>
   </data>
   <data name="BackdropAcrylicThin" xml:space="preserve">
-    <value>رقيق</value>
+    <value>Thin</value>
   </data>
   <data name="BackdropDefault" xml:space="preserve">
-    <value>لا شيء</value>
+    <value>None</value>
   </data>
   <data name="BackdropDescription" xml:space="preserve">
-    <value>يحدد لون الخلفية لعرض التطبيق</value>
+    <value>Sets the background color of the app's rendering</value>
   </data>
   <data name="BackdropMica" xml:space="preserve">
-    <value>افتراضي</value>
+    <value>Default</value>
   </data>
   <data name="BackdropMicaAlt" xml:space="preserve">
-    <value>بديل</value>
+    <value>Alt</value>
   </data>
   <data name="BlockMap" xml:space="preserve">
-    <value>الملفات ذات امتدادات أسماء الملفات المسماة BlockMap لا تظهر</value>
+    <value>Files with file name extensions called BlockMap are not displayed</value>
   </data>
   <data name="BlockMapDescription" xml:space="preserve">
-    <value>تُنشأ ملفات BlockMap تلقائيًا بواسطة makeappx.exe عند تعبئتها</value>
+    <value>BlockMap files are created automatically by makeappx.exe when they are packaged</value>
   </data>
   <data name="BlockMapOffContent" xml:space="preserve">
-    <value>لا تقم بالتصفية</value>
+    <value>Do not filter</value>
   </data>
   <data name="BlockMapOnContent" xml:space="preserve">
-    <value>تصفية</value>
+    <value>filter</value>
   </data>
   <data name="ChangeFolder" xml:space="preserve">
-    <value>تغيير الدليل</value>
+    <value>Change directory</value>
   </data>
   <data name="Clear" xml:space="preserve">
-    <value>مسح</value>
+    <value>Clear</value>
   </data>
   <data name="ClearLog" xml:space="preserve">
-    <value>مسح سجل السجل</value>
+    <value>Clear log record</value>
   </data>
   <data name="ClearLogDescription" xml:space="preserve">
-    <value>مسح جميع محتويات السجل للتطبيق</value>
+    <value>Clear all log contents of the app</value>
   </data>
   <data name="CodeInstall" xml:space="preserve">
-    <value>التثبيت المباشر</value>
+    <value>Direct installation</value>
   </data>
   <data name="Custom" xml:space="preserve">
-    <value>مخصص</value>
+    <value>Custom</value>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
-    <value>إعدادات تحسين التوصيل</value>
+    <value>Delivery optimization settings</value>
   </data>
   <data name="DeliveryOptimizationDescription" xml:space="preserve">
-    <value>فتح إعدادات تحسين التوصيل في النظام</value>
+    <value>Open the system's delivery optimization Settings</value>
   </data>
   <data name="DesktopAcrylic" xml:space="preserve">
-    <value>أكريليك</value>
+    <value>Acrylic</value>
   </data>
   <data name="DesktopFolder" xml:space="preserve">
-    <value>سطح المكتب</value>
+    <value>Desktop</value>
   </data>
   <data name="DevVersion" xml:space="preserve">
-    <value>إصدار المطور</value>
+    <value>Dev version</value>
   </data>
   <data name="DevVersionInstall" xml:space="preserve">
-    <value>تثبيت</value>
+    <value>Install</value>
   </data>
   <data name="DevVersionInstalled" xml:space="preserve">
-    <value>تم التثبيت</value>
+    <value>Installed</value>
   </data>
   <data name="DevVersionInstallToolTip" xml:space="preserve">
-    <value>انقر للتثبيت إصدار المطور</value>
+    <value>Click to install the dev version</value>
   </data>
   <data name="DoEngineBits" xml:space="preserve">
     <value>BITS</value>
   </data>
   <data name="DoEngineDo" xml:space="preserve">
-    <value>تحسين التوصيل</value>
+    <value>Delivery optimization</value>
   </data>
   <data name="DoEngineMode" xml:space="preserve">
-    <value>وضع محرك التنزيل</value>
+    <value>Download engine mode</value>
   </data>
   <data name="DoEngineModeDescription" xml:space="preserve">
-    <value>تعيين محرك التنزيل الذي سيتم استخدامه عند تنزيل الملفات، هذا المعامل يأخذ تأثيره بعد إعادة التشغيل</value>
+    <value>Set the download engine to use when downloading files,this parameter takes effect after a restart</value>
   </data>
   <data name="DownloadFolder" xml:space="preserve">
-    <value>التنزيلات</value>
+    <value>Downloads</value>
   </data>
   <data name="DownloadOptions" xml:space="preserve">
-    <value>إدارة التنزيلات</value>
+    <value>Download management</value>
   </data>
   <data name="DownloadOptionsDescription" xml:space="preserve">
-    <value>إعدادات ملف تنزيل التطبيق</value>
+    <value>Application download file settings</value>
   </data>
   <data name="EncryptedPackage" xml:space="preserve">
-    <value>ملف الحزمة المشفرة غير معروض</value>
+    <value>The encrypted package file is not displayed</value>
   </data>
   <data name="EncryptedPackageDescription" xml:space="preserve">
-    <value>هذا النوع من الملفات هو حزمة تطبيق مشفرة</value>
+    <value>This type of file is an encrypted application package</value>
   </data>
   <data name="EncryptedPackageOffContent" xml:space="preserve">
-    <value>لا تقم بالتصفية</value>
+    <value>Do not filter</value>
   </data>
   <data name="EncryptedPackageOnContent" xml:space="preserve">
-    <value>تصفية</value>
+    <value>filter</value>
   </data>
   <data name="FileStoragePath" xml:space="preserve">
-    <value>مسار تخزين الملفات</value>
+    <value>File storage path</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>خيارات عامة</value>
+    <value>General Options</value>
   </data>
   <data name="InstallMode" xml:space="preserve">
-    <value>وضع تثبيت التطبيق</value>
+    <value>Application install mode</value>
   </data>
   <data name="InstallModeDescription" xml:space="preserve">
-    <value>اختر كيفية تثبيت حزمة تطبيقات Windows</value>
+    <value>Select how the Windows app package is installed</value>
   </data>
   <data name="InteractiveInstall" xml:space="preserve">
-    <value>تثبيت تفاعلي</value>
+    <value>Install interactively</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>اللغة</value>
+    <value>Language</value>
   </data>
   <data name="LanguageDescription" xml:space="preserve">
-    <value>تعديل اللغة المعروضة في واجهة التطبيق</value>
+    <value>Modify the language displayed in the app interface</value>
   </data>
   <data name="LearnDoEngine" xml:space="preserve">
-    <value>تعليمات محرك التنزيل</value>
+    <value>Download engine instruction</value>
   </data>
   <data name="LinkFilter" xml:space="preserve">
-    <value>تصفية الروابط</value>
+    <value>Link filtering</value>
   </data>
   <data name="LinkFilterDescription" xml:space="preserve">
-    <value>تصفية الروابط التي لن تستخدمها لجعل العثور على التطبيقات أكثر كفاءة</value>
+    <value>Filter out links that you won't use to make finding apps more efficient</value>
   </data>
   <data name="LogFolder" xml:space="preserve">
-    <value>مسار تخزين السجل</value>
+    <value>Log storage path</value>
   </data>
   <data name="LogFolderDescription" xml:space="preserve">
-    <value>إدارة محتويات سجل التطبيق</value>
+    <value>Manage the log content of the app</value>
   </data>
   <data name="LogRecord" xml:space="preserve">
-    <value>سجل السجل</value>
+    <value>Log record</value>
   </data>
   <data name="LogRecordDescription" xml:space="preserve">
-    <value>إدارة سجل تطبيق السجل</value>
+    <value>Manage app log record</value>
   </data>
   <data name="Mica" xml:space="preserve">
-    <value>ميكا</value>
+    <value>Mica</value>
   </data>
   <data name="Notification" xml:space="preserve">
-    <value>إشعارات التطبيق</value>
+    <value>App notifications</value>
   </data>
   <data name="NotificationDescription" xml:space="preserve">
-    <value>يعرض إشعارات الرسائل من التطبيق</value>
+    <value>Displays message notifications from the app</value>
   </data>
   <data name="NotificationOffContent" xml:space="preserve">
-    <value>مغلق</value>
+    <value>Closed</value>
   </data>
   <data name="NotificationOnContent" xml:space="preserve">
-    <value>فتح</value>
+    <value>Opening</value>
   </data>
   <data name="OfficialVersion" xml:space="preserve">
-    <value>الإصدار الرسمي</value>
+    <value>Official version</value>
   </data>
   <data name="OfficialVersionInstall" xml:space="preserve">
-    <value>تثبيت</value>
+    <value>Install</value>
   </data>
   <data name="OfficialVersionInstalled" xml:space="preserve">
-    <value>تم التثبيت</value>
+    <value>Installed</value>
   </data>
   <data name="OfficialVersionInstallToolTip" xml:space="preserve">
-    <value>انقر لتثبيت الإصدار الرسمي</value>
+    <value>Click to install the official version</value>
   </data>
   <data name="OpenDeliveryOptimzationSettings" xml:space="preserve">
-    <value>فتح</value>
+    <value>Open</value>
   </data>
   <data name="OpenFolderToolTip" xml:space="preserve">
-    <value>انقر للوصول إلى المجلد</value>
+    <value>Click to access the folder</value>
   </data>
   <data name="OpenLogFolder" xml:space="preserve">
-    <value>فتح المجلد</value>
+    <value>Open folder</value>
   </data>
   <data name="OpenWinGetSettings" xml:space="preserve">
-    <value>فتح</value>
+    <value>Open</value>
   </data>
   <data name="OpenWinGetSettingsToolTip" xml:space="preserve">
-    <value>فتح ملف التكوين</value>
+    <value>Open configuration file</value>
   </data>
   <data name="QueryLinksMode" xml:space="preserve">
-    <value>وضع استعلام الروابط</value>
+    <value>Query links mode</value>
   </data>
   <data name="QueryLinksModeDescription" xml:space="preserve">
-    <value>اختر قناة واجهة التطبيق لاستعلام الرابط</value>
+    <value>Select the application interface channel to query the link</value>
   </data>
   <data name="QueryLinksModeOfficial" xml:space="preserve">
-    <value>واجهة رسمية</value>
+    <value>Official interface</value>
   </data>
   <data name="QueryLinksModeThirdParty" xml:space="preserve">
-    <value>واجهة طرف ثالث</value>
+    <value>Third party interface</value>
   </data>
   <data name="RestartApp" xml:space="preserve">
-    <value>إعادة تشغيل التطبيق</value>
+    <value>Application restart</value>
   </data>
   <data name="RestartAppToolTip" xml:space="preserve">
-    <value>بعد تعديل إعدادات التطبيق، تحتاج بعض الخيارات إلى إعادة التشغيل لتأخذ تأثيرها</value>
+    <value>After the app settings are modified, some options need to be restarted to take effect</value>
   </data>
   <data name="SelectFolder" xml:space="preserve">
-    <value>اختر المجلد</value>
+    <value>Select folder</value>
   </data>
   <data name="SettingsInstruction" xml:space="preserve">
-    <value>تعليمات الإعدادات</value>
+    <value>Settings instruction</value>
   </data>
   <data name="ShowVersion" xml:space="preserve">
-    <value>عرض</value>
+    <value>Show</value>
   </data>
   <data name="ShowVersionToolTip" xml:space="preserve">
-    <value>عرض معلومات إصدار WinGet للجهاز</value>
+    <value>View WinGet version information for the device</value>
   </data>
   <data name="SlientInstall" xml:space="preserve">
-    <value>تثبيت بصمت</value>
+    <value>Install sliently</value>
   </data>
   <data name="SystemBackdropSettings" xml:space="preserve">
-    <value>إعدادات خلفية النظام</value>
+    <value>System backdrop settings</value>
   </data>
   <data name="SystemLanguageSettings" xml:space="preserve">
-    <value>إعدادات لغة النظام</value>
+    <value>System language settings</value>
   </data>
   <data name="SystemNotificationSettings" xml:space="preserve">
-    <value>إعدادات إشعارات النظام</value>
+    <value>System notification settings</value>
   </data>
   <data name="SystemThemeSettings" xml:space="preserve">
-    <value>إعدادات ثيم النظام</value>
+    <value>System theme settings</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>ثيم التطبيق</value>
+    <value>Application theme</value>
   </data>
   <data name="ThemeDark" xml:space="preserve">
-    <value>داكن</value>
+    <value>Dark</value>
   </data>
   <data name="ThemeDefault" xml:space="preserve">
-    <value>افتراضي ويندوز</value>
+    <value>Windows default</value>
   </data>
   <data name="ThemeDescription" xml:space="preserve">
-    <value>اختر ثيم التطبيق للعرض</value>
+    <value>Select the application theme to display</value>
   </data>
   <data name="ThemeLight" xml:space="preserve">
-    <value>فاتح</value>
+    <value>Light</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>الإعدادات</value>
+    <value>Settings</value>
   </data>
   <data name="TopMost" xml:space="preserve">
-    <value>النافذة مثبتة في الأعلى</value>
+    <value>Window set on top</value>
   </data>
   <data name="TopMostDescription" xml:space="preserve">
-    <value>يضع النافذة الحالية في أعلى القائمة</value>
+    <value>Places the currently applied window at the very top</value>
   </data>
   <data name="TopMostOffContent" xml:space="preserve">
-    <value>غير مثبتة</value>
+    <value>Not pinned</value>
   </data>
   <data name="TopMostOnContent" xml:space="preserve">
-    <value>مثبتة</value>
+    <value>Pinned</value>
   </data>
   <data name="TraceCleanup" xml:space="preserve">
-    <value>تنظيف السجل</value>
+    <value>Trace cleanup</value>
   </data>
   <data name="TraceCleanupDescription" xml:space="preserve">
-    <value>تنظيف جميع آثار الاستخدام داخل التطبيق</value>
+    <value>Clean up all traces of use within the app</value>
   </data>
   <data name="TraceClear" xml:space="preserve">
-    <value>اختر ما تريد تنظيفه</value>
+    <value>Select what you want to clean</value>
   </data>
   <data name="UseDevFirst" xml:space="preserve">
-    <value>تفضيل استخدام إصدار المطور أولاً</value>
+    <value>Priority use dev version</value>
   </data>
   <data name="UseDevFirstOffContent" xml:space="preserve">
-    <value>لا</value>
+    <value>No</value>
   </data>
   <data name="UseDevFirstOnContent" xml:space="preserve">
-    <value>نعم</value>
+    <value>Yes</value>
   </data>
   <data name="UseDevFirstToolTip" xml:space="preserve">
-    <value>عندما يوجد إصدارين، يُفضل إصدار التطوير (يأخذ تأثيره بعد إعادة التشغيل)</value>
+    <value>When both versions exist, the development version is preferred (takes effect after restart)</value>
   </data>
   <data name="WebKernel" xml:space="preserve">
-    <value>اختيار نواة المتصفح</value>
+    <value>Browser kernel selection</value>
   </data>
   <data name="WebKernelDescription" xml:space="preserve">
-    <value>اختر النواة المستخدمة بواسطة متصفح الويب لعرض الصفحة</value>
+    <value>Select the kernel used by the web browser to render the page</value>
   </data>
   <data name="WebKernelWebView" xml:space="preserve">
     <value>WebView</value>
@@ -445,30 +445,45 @@
     <value>WebView2</value>
   </data>
   <data name="WinGetConfig" xml:space="preserve">
-    <value>خيارات تكوين WinGet</value>
+    <value>WinGet config options</value>
   </data>
   <data name="WinGetConfigDescription" xml:space="preserve">
-    <value>تخصيص وظيفة حزمة WinGet</value>
+    <value>Customize the WinGet package's function</value>
   </data>
   <data name="WinGetInstallMode" xml:space="preserve">
-    <value>وضع تثبيت WinGet</value>
+    <value>WinGet install mode</value>
   </data>
   <data name="WinGetInstallModeDescription" xml:space="preserve">
-    <value>تعيين كيفية تفاعل حزمة WinGet عند تثبيت التطبيقات</value>
+    <value>Set how the WinGet package interacts when installing applications</value>
   </data>
   <data name="WinGetSettings" xml:space="preserve">
-    <value>إعدادات WinGet</value>
+    <value>WinGet settings</value>
   </data>
   <data name="WinGetSettingsDescription" xml:space="preserve">
-    <value>تخصيص وظيفة حزمة WinGet</value>
+    <value>Customizing the WinGet package's function</value>
   </data>
   <data name="WinGetVersion" xml:space="preserve">
-    <value>إصدار WinGet</value>
+    <value>WinGet version</value>
   </data>
   <data name="WinGetVersionDescription" xml:space="preserve">
-    <value>عرض الإصدار الحالي من تطبيق WinGet</value>
+    <value>Show the current version of the WinGet application</value>
   </data>
   <data name="LearnConfig" xml:space="preserve">
-    <value/>
+    <value>Learn config</value>
+  </data>
+  <data name="RestartExplorer" xml:space="preserve">
+    <value>Restart explorer</value>
+  </data>
+  <data name="ShellMenu" xml:space="preserve">
+    <value>File right-click menu</value>
+  </data>
+  <data name="ShellMenuDescription" xml:space="preserve">
+    <value>Whether to display the file right-click menu in the system</value>
+  </data>
+  <data name="ShellMenuOnContent" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ShellMenuOffContent" xml:space="preserve">
+    <value>Hide</value>
   </data>
 </root>
