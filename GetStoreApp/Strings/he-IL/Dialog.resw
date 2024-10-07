@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Argument" xml:space="preserve">
+    <value>Argument</value>
+  </data>
+  <data name="ArgumentName" xml:space="preserve">
+    <value>Argument name</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelDownload" xml:space="preserve">
+    <value>Cancel the download</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel</value>
+  </data>
+  <data name="CheckingFile" xml:space="preserve">
+    <value>Please wait while the file is being validated</value>
+  </data>
+  <data name="CleanFailed" xml:space="preserve">
+    <value>Clean failed</value>
+  </data>
+  <data name="CleaningNow" xml:space="preserve">
+    <value>Cleaning up, please wait...</value>
+  </data>
+  <data name="CleanupNow" xml:space="preserve">
+    <value>Cleanup now</value>
+  </data>
+  <data name="CloseDialog" xml:space="preserve">
+    <value>Close dialog</value>
+  </data>
+  <data name="ClosingWindowContent" xml:space="preserve">
+    <value>You still have a task that you haven't completed downloading, do you want to save the download state and force quit the app?</value>
+  </data>
+  <data name="ClosingWindowTitle" xml:space="preserve">
+    <value>Task downloading prompt</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="CopyException" xml:space="preserve">
+    <value>Copy exception information</value>
+  </data>
+  <data name="CopyFileInformation" xml:space="preserve">
+    <value>Copy file information</value>
+  </data>
+  <data name="DeleteDownload" xml:space="preserve">
+    <value>The selected download records will be permanently deleted, the operation is irrevocable, please proceed with caution.</value>
+  </data>
+  <data name="DeleteDownloadWithFile" xml:space="preserve">
+    <value>The selected download records (including files) will be permanently deleted. This operation cannot be undone. Please exercise caution.</value>
+  </data>
+  <data name="DeleteTitle" xml:space="preserve">
+    <value>Delete record</value>
+  </data>
+  <data name="DesktopStartupArgsDescription1" xml:space="preserve">
+    <value>The desktop application can select the type and channel name you want to get through input parameters, and fill in the corresponding links to facilitate and quickly obtain</value>
+  </data>
+  <data name="DesktopStartupArgsDescription2" xml:space="preserve">
+    <value>Some parameters are optional and are replaced by default parameters when there is no input or input error</value>
+  </data>
+  <data name="DesktopStartupArgsTitle" xml:space="preserve">
+    <value>Desktop program parameter description</value>
+  </data>
+  <data name="DownloadCleanError" xml:space="preserve">
+    <value>An error occurred during the download record cleanup. Please check the download record access rights.</value>
+  </data>
+  <data name="DownloadCompletedContent" xml:space="preserve">
+    <value>Your current download task is complete. Do you want to download again?</value>
+  </data>
+  <data name="DownloadMultiRecordContent" xml:space="preserve">
+    <value>You have multiple duplicate download records. Do you want to download again?</value>
+  </data>
+  <data name="DownloadNotifyTitle" xml:space="preserve">
+    <value>Repeat the download prompt</value>
+  </data>
+  <data name="DownloadRecord" xml:space="preserve">
+    <value>Download records</value>
+  </data>
+  <data name="DownloadUnfinishedContent" xml:space="preserve">
+    <value>Your current download task is not complete. Do you want to download again?</value>
+  </data>
+  <data name="ExitCode" xml:space="preserve">
+    <value>Exit code: </value>
+  </data>
+  <data name="FileInformationTitle" xml:space="preserve">
+    <value>File information</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File name: </value>
+  </data>
+  <data name="FilePath" xml:space="preserve">
+    <value>File path: </value>
+  </data>
+  <data name="FileSHA1" xml:space="preserve">
+    <value>File SHA1 value: </value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>File size: </value>
+  </data>
+  <data name="HistoryCleanError" xml:space="preserve">
+    <value>An error occurred during the history cleaning process. Please check the history access permissions.</value>
+  </data>
+  <data name="HistoryRecord" xml:space="preserve">
+    <value>History records</value>
+  </data>
+  <data name="InputContent" xml:space="preserve">
+    <value>Input content</value>
+  </data>
+  <data name="InstallingNotifyContent" xml:space="preserve">
+    <value>Your app is being installed and you can do anything else after the installation is complete</value>
+  </data>
+  <data name="InstallingNotifyTitle" xml:space="preserve">
+    <value>App installation prompts</value>
+  </data>
+  <data name="IsRequired" xml:space="preserve">
+    <value>Is required</value>
+  </data>
+  <data name="License" xml:space="preserve">
+    <value>GetStoreApp License</value>
+  </data>
+  <data name="Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="LinkContent" xml:space="preserve">
+    <value>[Need to input the correlative content]</value>
+  </data>
+  <data name="LocalFile" xml:space="preserve">
+    <value>Locally created files</value>
+  </data>
+  <data name="LocalFileCleanError" xml:space="preserve">
+    <value>An error occurred during the clearing of the locally created file. Check the access permission of the locally created file.</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenDownloadPage" xml:space="preserve">
+    <value>Open download page</value>
+  </data>
+  <data name="ProcessDescription" xml:space="preserve">
+    <value>Detail information: </value>
+  </data>
+  <data name="ProcessFailedKind" xml:space="preserve">
+    <value>Exception type: </value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Exception reason: </value>
+  </data>
+  <data name="Redownload" xml:space="preserve">
+    <value>Re-download</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Application restart</value>
+  </data>
+  <data name="RestartContent" xml:space="preserve">
+    <value>The app is about to restart, after the restart the app's data will be lost, make sure that your work has been saved in its entirety</value>
+  </data>
+  <data name="SelectEmptyContent" xml:space="preserve">
+    <value>You have not selected anything, please select it before proceeding</value>
+  </data>
+  <data name="SelectEmptyTitle" xml:space="preserve">
+    <value>Item selection prompts</value>
+  </data>
+  <data name="StartupArgsSample" xml:space="preserve">
+    <value>Reference example</value>
+  </data>
+  <data name="TraceCleanupContent" xml:space="preserve">
+    <value>Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.</value>
+  </data>
+  <data name="TraceCleanupTitle" xml:space="preserve">
+    <value>File cleaning prompts</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ViewDownloadRecord" xml:space="preserve">
+    <value>View your download history</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription1" xml:space="preserve">
+    <value>There are two ways to start the console program, parameter mode and parameterless mode</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription2" xml:space="preserve">
+    <value>There are parameter modes that can be selected by entering parameters to obtain the type and channel name, and fill in the corresponding links to quickly obtain them</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription3" xml:space="preserve">
+    <value>Some parameters are optional and are replaced by default parameters if they are mistyped</value>
+  </data>
+  <data name="ConsoleStartupArgsDescription4" xml:space="preserve">
+    <value>The parameterless mode is quickly obtained by asking</value>
+  </data>
+  <data name="ConsoleStartupArgsTitle" xml:space="preserve">
+    <value>Console program parameter description</value>
+  </data>
+  <data name="ParameterlessMode" xml:space="preserve">
+    <value>Parameterless mode</value>
+  </data>
+  <data name="ParameterMode" xml:space="preserve">
+    <value>Parameter mode</value>
+  </data>
+  <data name="AppInformationTitle" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="CopyAppInformation" xml:space="preserve">
+    <value>Copy app information</value>
+  </data>
+  <data name="DoNetVersion" xml:space="preserve">
+    <value>.NET version：</value>
+  </data>
+  <data name="WindowsAppSDKVersion" xml:space="preserve">
+    <value>Windows App SDK version：</value>
+  </data>
+  <data name="WinUI3Version" xml:space="preserve">
+    <value>WinUI 3 version:</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>Application notification in action center</value>
+  </data>
+  <data name="ActionCenterError" xml:space="preserve">
+    <value>The application notification in the action center fails to be cleared. Please manually open the app notification record in the action center</value>
+  </data>
+  <data name="Reboot" xml:space="preserve">
+    <value>Reboot</value>
+  </data>
+  <data name="RebootTitle" xml:space="preserve">
+    <value>Restart device prompt</value>
+  </data>
+  <data name="UnInstallNeedReboot" xml:space="preserve">
+    <value>{0} The application has been uninstalled. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
+  <data name="UpgradeNeedReboot" xml:space="preserve">
+    <value>{0} The application has been upgraded. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="SearchNeedReboot" xml:space="preserve">
+    <value>{0} The application has been installed. Some changes need to be restarted to take effect. Do you need to restart the device?</value>
+  </data>
+  <data name="AppRunning" xml:space="preserve">
+    <value>The application is running</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>GetStoreApp</value>
+  </data>
+  <data name="WebView2SDKVersion" xml:space="preserve">
+    <value>WebView2 SDK Version:</value>
+  </data>
+  <data name="WebViewProcessFailedContent" xml:space="preserve">
+    <value>The browser process is abnormal and the program is about to exit</value>
+  </data>
+  <data name="WebViewProcessFailedTitle" xml:space="preserve">
+    <value>Web process failed</value>
+  </data>
+  <data name="WindowsUIVersion" xml:space="preserve">
+    <value>Windows UI version:</value>
+  </data>
+</root>
