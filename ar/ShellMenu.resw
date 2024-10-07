@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="RootMenu" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>获取商店应用</value>
   </data>
   <data name="PSInstall" xml:space="preserve">
-    <value>Use PowerShell to install</value>
+    <value>使用 PowerShell 安装</value>
   </data>
   <data name="PSInstallAdmin" xml:space="preserve">
-    <value>Use PowerShell to install (Admin)</value>
+    <value>使用 PowerShell 安装 (管理员)</value>
   </data>
   <data name="PSRegister" xml:space="preserve">
-    <value>Use PowerShell to register app</value>
+    <value>使用 PowerShell 注册应用</value>
   </data>
   <data name="AppInstallAdmin" xml:space="preserve">
-    <value>Use app installer to install (Admin)</value>
+    <value>使用应用安装器安装 (管理员)</value>
   </data>
   <data name="AppInstall" xml:space="preserve">
-    <value>Use app installer to install</value>
+    <value>使用应用安装器安装</value>
   </data>
 </root>
