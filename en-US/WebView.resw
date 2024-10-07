@@ -117,58 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="Back" xml:space="preserve">
-    <value>رجوع</value>
-</data>
-<data name="ClearWebCache" xml:space="preserve">
-    <value>تنظيف ذاكرة التخزين المؤقت للويب</value>
-</data>
-<data name="Download" xml:space="preserve">
-    <value>تنزيل</value>
-</data>
-<data name="DownloadWebView2Runtime" xml:space="preserve">
-    <value>تنزيل وتثبيت WebView2 Runtime</value>
-</data>
-<data name="Forward" xml:space="preserve">
-    <value>تقدم</value>
-</data>
-<data name="Loading" xml:space="preserve">
-    <value>(جارٍ التحميل)</value>
-</data>
-<data name="More" xml:space="preserve">
-    <value>المزيد</value>
-</data>
-<data name="OpenCacheFolder" xml:space="preserve">
-    <value>فتح مجلد الذاكرة المؤقتة</value>
-</data>
-<data name="OpenWithBrowser" xml:space="preserve">
-    <value>فتح باستخدام المتصفح</value>
-</data>
-<data name="PinAppToTaskbar" xml:space="preserve">
-    <value>تثبيت التطبيق على شريط المهام</value>
-</data>
-<data name="Refresh" xml:space="preserve">
-    <value>تحديث</value>
-</data>
-<data name="TaskbarPinTip" xml:space="preserve">
-    <value>يرجى اتباع تعليمات النظام</value>
-</data>
-<data name="Title" xml:space="preserve">
-    <value>متصفح الويب</value>
-</data>
-<data name="WarningSuitableWebView2NotFound" xml:space="preserve">
-    <value>لم يتم الكشف عن إصدار مناسب من Microsoft Edge WebView2 Runtime.</value>
-</data>
-<data name="WebTitle" xml:space="preserve">
-    <value>واجهة الويب</value>
-</data>
-<data name="WebView2Closed" xml:space="preserve">
-    <value>لا يمكن إنشاء CoreWebView2 لعنصر WebView2 المغلق.</value>
-</data>
-<data name="WebView2NotPresent" xml:space="preserve">
-    <value>فشل لأن CoreWebView2 صالح غير موجود. تأكد من أنه تم إنشاؤه، على سبيل المثال عن طريق استدعاء واجهة برمجة التطبيقات EnsureCoreWebView2Async().</value>
-</data>
-<data name="WebView2NotPresentClosed" xml:space="preserve">
-    <value>فشل لأن CoreWebView2 صالح غير موجود. كان موجودًا، لكنه تم إغلاقه.</value>
-</data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="ClearWebCache" xml:space="preserve">
+    <value>Clean up the web cache</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DownloadWebView2Runtime" xml:space="preserve">
+    <value>Download and install WebView2 Runtime</value>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>(Loading)</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="OpenCacheFolder" xml:space="preserve">
+    <value>Open the cache folder</value>
+  </data>
+  <data name="OpenWithBrowser" xml:space="preserve">
+    <value>Open With Browser</value>
+  </data>
+  <data name="PinAppToTaskbar" xml:space="preserve">
+    <value>Pin app to taskbar tip</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="TaskbarPinTip" xml:space="preserve">
+    <value>Please follow the instructions of the system</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>WebBrowser</value>
+  </data>
+  <data name="WarningSuitableWebView2NotFound" xml:space="preserve">
+    <value>A suitable version of Microsoft Edge WebView2 Runtime was not detected.</value>
+  </data>
+  <data name="WebTitle" xml:space="preserve">
+    <value>Web interface</value>
+  </data>
+  <data name="WebView2Closed" xml:space="preserve">
+    <value>Cannot create CoreWebView2 for Closed WebView2 element.</value>
+  </data>
+  <data name="WebView2NotPresent" xml:space="preserve">
+    <value>Failed because a valid CoreWebView2 is not present. Make sure one was created, for example by calling EnsureCoreWebView2Async() API.</value>
+  </data>
+  <data name="WebView2NotPresentClosed" xml:space="preserve">
+    <value>Failed because a valid CoreWebView2 is not present. One existed, but has been closed.</value>
+  </data>
 </root>
