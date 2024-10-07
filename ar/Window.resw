@@ -117,55 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="About" xml:space="preserve">
-    <value>حول</value>
-</data>
-<data name="AppManager" xml:space="preserve">
-    <value>مدير التطبيقات</value>
-</data>
-<data name="AppTitle" xml:space="preserve">
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AppManager" xml:space="preserve">
+    <value>App Manager</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
     <value>GetStoreApp</value>
-</data>
-<data name="AppUpdate" xml:space="preserve">
-    <value>تحديث التطبيق</value>
-</data>
-<data name="Close" xml:space="preserve">
-    <value>إغلاق</value>
-</data>
-<data name="Download" xml:space="preserve">
-    <value>إدارة التنزيلات</value>
-</data>
-<data name="Maximize" xml:space="preserve">
-    <value>تكبير</value>
-</data>
-<data name="Minimize" xml:space="preserve">
-    <value>تصغير</value>
-</data>
-<data name="Move" xml:space="preserve">
-    <value>نقل</value>
-</data>
-<data name="NavigationFailed" xml:space="preserve">
-    <value>فشل التنقل في الصفحة {0}</value>
-</data>
-<data name="PinToStartScreen" xml:space="preserve">
-    <value>تثبيت على شاشة البدء</value>
-</data>
-<data name="Restore" xml:space="preserve">
-    <value>استعادة</value>
-</data>
-<data name="Settings" xml:space="preserve">
-    <value>الإعدادات</value>
-</data>
-<data name="Size" xml:space="preserve">
-    <value>الحجم</value>
-</data>
-<data name="Store" xml:space="preserve">
-    <value>متجر Microsoft</value>
-</data>
-<data name="Web" xml:space="preserve">
-    <value>فتح المتصفح</value>
-</data>
-<data name="WinGet" xml:space="preserve">
-    <value>حزمة WinGet</value>
-</data>
+  </data>
+  <data name="AppUpdate" xml:space="preserve">
+    <value>App Update</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download Management</value>
+  </data>
+  <data name="Maximize" xml:space="preserve">
+    <value>Maximize</value>
+  </data>
+  <data name="Minimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="NavigationFailed" xml:space="preserve">
+    <value>Page {0} navigation failed</value>
+  </data>
+  <data name="PinToStartScreen" xml:space="preserve">
+    <value>Pin to start screen</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Store" xml:space="preserve">
+    <value>Microsoft Store</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>Open Browser</value>
+  </data>
+  <data name="WinGet" xml:space="preserve">
+    <value>WinGet Package</value>
+  </data>
 </root>
