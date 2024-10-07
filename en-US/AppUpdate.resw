@@ -118,84 +118,84 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AcquiringLicense" xml:space="preserve">
-    <value>Acquiring license</value>
+    <value>正在获取许可证</value>
   </data>
   <data name="AppUpdateCountInfo" xml:space="preserve">
-    <value>There are {0} upgradable apps</value>
+    <value>共有{0}个可升级的应用</value>
   </data>
   <data name="AppUpdateEmpty" xml:space="preserve">
-    <value>There is no upgradable apps</value>
+    <value>没有可升级的应用</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>בטל</value>
+    <value>取消</value>
   </data>
   <data name="Canceled" xml:space="preserve">
-    <value>בוטל</value>
+    <value>安装已取消</value>
   </data>
   <data name="CheckUpdate" xml:space="preserve">
-    <value>בדוק עדכונים</value>
+    <value>检查更新</value>
   </data>
   <data name="Completed" xml:space="preserve">
-    <value>הסתיים</value>
+    <value>安装已完成</value>
   </data>
   <data name="Downloading" xml:space="preserve">
-    <value>Downloading,{0}% completed</value>
+    <value>正在下载，已完成{0}%</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Failed, Error code: {0}</value>
+    <value>安装失败，错误代码：{0}</value>
   </data>
   <data name="InsiderProgram" xml:space="preserve">
-    <value>Insider program</value>
+    <value>预览体验计划</value>
   </data>
   <data name="InsiderProgramToolTip" xml:space="preserve">
-    <value>Click to modify the insider program for the current user</value>
+    <value>单击修改当前用户的预览体验计划</value>
   </data>
   <data name="Installing" xml:space="preserve">
-    <value>Installing,{0}% completed</value>
+    <value>正在安装，已完成{0}%</value>
   </data>
   <data name="InstallingSubInformation" xml:space="preserve">
-    <value>App size {0}, {1} downloaded</value>
+    <value>应用大小{0}，已下载{1}</value>
   </data>
   <data name="LoadingUpdate" xml:space="preserve">
-    <value>Checking all apps for the current user, please wait...</value>
+    <value>正在检查当前用户的所有应用，请稍候...</value>
   </data>
   <data name="NotCheckUpdateTip" xml:space="preserve">
-    <value>Click Check for Updates to see the status of the current user application</value>
+    <value>单击检查更新来查看当前用户应用的情况</value>
   </data>
   <data name="OpenStore" xml:space="preserve">
-    <value>פתח את החנות</value>
+    <value>打开商店</value>
   </data>
   <data name="OpenStoreToolTip" xml:space="preserve">
-    <value>Click to open Microsoft Store</value>
+    <value>单击打开微软商店</value>
   </data>
   <data name="Operation" xml:space="preserve">
-    <value>Operation</value>
+    <value>操作</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>עצור</value>
+    <value>安装已暂停</value>
   </data>
   <data name="Pending" xml:space="preserve">
-    <value>Waiting</value>
+    <value>等待安装</value>
   </data>
   <data name="ReadyToDownload" xml:space="preserve">
-    <value>Ready to update</value>
+    <value>已准备好更新</value>
   </data>
   <data name="RestoringData" xml:space="preserve">
-    <value>Restoring data</value>
+    <value>正在还原应用数据</value>
   </data>
   <data name="Starting" xml:space="preserve">
-    <value>Starting</value>
+    <value>安装正在启动</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>עדכון אפליקציות</value>
+    <value>应用更新</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>עדכן</value>
+    <value>更新</value>
   </data>
   <data name="UpdateAll" xml:space="preserve">
-    <value>עדכן הכל</value>
+    <value>全部更新</value>
   </data>
   <data name="UpdateEmptyDescription" xml:space="preserve">
-    <value>All apps are up to date</value>
+    <value>所有应用都已经更新到最新版本</value>
   </data>
 </root>
