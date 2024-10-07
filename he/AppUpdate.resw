@@ -117,85 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-<data name="AcquiringLicense" xml:space="preserve">
-    <value>جارٍ الحصول على الترخيص</value>
-</data>
-<data name="AppUpdateCountInfo" xml:space="preserve">
-    <value>يوجد {0} تطبيقات قابلة للتحديث</value>
-</data>
-<data name="AppUpdateEmpty" xml:space="preserve">
-    <value>لا توجد تطبيقات قابلة للتحديث</value>
-</data>
-<data name="Cancel" xml:space="preserve">
-    <value>إلغاء</value>
-</data>
-<data name="Canceled" xml:space="preserve">
-    <value>تم الإلغاء</value>
-</data>
-<data name="CheckUpdate" xml:space="preserve">
-    <value>تحقق من التحديث</value>
-</data>
-<data name="Completed" xml:space="preserve">
-    <value>مكتمل</value>
-</data>
-<data name="Downloading" xml:space="preserve">
-    <value>جارٍ التحميل، {0}% مكتمل</value>
-</data>
-<data name="Error" xml:space="preserve">
-    <value>فشل، رمز الخطأ: {0}</value>
-</data>
-<data name="InsiderProgram" xml:space="preserve">
-    <value>برنامج Insider</value>
-</data>
-<data name="InsiderProgramToolTip" xml:space="preserve">
-    <value>انقر لتعديل برنامج Insider للمستخدم الحالي</value>
-</data>
-<data name="Installing" xml:space="preserve">
-    <value>جارٍ التثبيت، {0}% مكتمل</value>
-</data>
-<data name="InstallingSubInformation" xml:space="preserve">
-    <value>حجم التطبيق {0}، {1} تم تحميله</value>
-</data>
-<data name="LoadingUpdate" xml:space="preserve">
-    <value>جارٍ التحقق من جميع التطبيقات للمستخدم الحالي، يرجى الانتظار...</value>
-</data>
-<data name="NotCheckUpdateTip" xml:space="preserve">
-    <value>انقر على "تحقق من التحديثات" لرؤية حالة تطبيقات المستخدم الحالي</value>
-</data>
-<data name="OpenStore" xml:space="preserve">
-    <value>فتح المتجر</value>
-</data>
-<data name="OpenStoreToolTip" xml:space="preserve">
-    <value>انقر لفتح متجر مايكروسوفت</value>
-</data>
-<data name="Operation" xml:space="preserve">
-    <value>عملية</value>
-</data>
-<data name="Paused" xml:space="preserve">
-    <value>معلق</value>
-</data>
-<data name="Pending" xml:space="preserve">
-    <value>بانتظار</value>
-</data>
-<data name="ReadyToDownload" xml:space="preserve">
-    <value>جاهز للتحديث</value>
-</data>
-<data name="RestoringData" xml:space="preserve">
-    <value>جارٍ استعادة البيانات</value>
-</data>
-<data name="Starting" xml:space="preserve">
-    <value>جارٍ البدء</value>
-</data>
-<data name="Title" xml:space="preserve">
-    <value>تحديث التطبيق</value>
-</data>
-<data name="Update" xml:space="preserve">
-    <value>تحديث</value>
-</data>
-<data name="UpdateAll" xml:space="preserve">
-    <value>تحديث الكل</value>
-</data>
-<data name="UpdateEmptyDescription" xml:space="preserve">
-    <value>جميع التطبيقات محدثة</value>
-</data>
+  <data name="AcquiringLicense" xml:space="preserve">
+    <value>Acquiring license</value>
+  </data>
+  <data name="AppUpdateCountInfo" xml:space="preserve">
+    <value>There are {0} upgradable apps</value>
+  </data>
+  <data name="AppUpdateEmpty" xml:space="preserve">
+    <value>There is no upgradable apps</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>Check update</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading,{0}% completed</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Failed, Error code: {0}</value>
+  </data>
+  <data name="InsiderProgram" xml:space="preserve">
+    <value>Insider program</value>
+  </data>
+  <data name="InsiderProgramToolTip" xml:space="preserve">
+    <value>Click to modify the insider program for the current user</value>
+  </data>
+  <data name="Installing" xml:space="preserve">
+    <value>Installing,{0}% completed</value>
+  </data>
+  <data name="InstallingSubInformation" xml:space="preserve">
+    <value>App size {0}, {1} downloaded</value>
+  </data>
+  <data name="LoadingUpdate" xml:space="preserve">
+    <value>Checking all apps for the current user, please wait...</value>
+  </data>
+  <data name="NotCheckUpdateTip" xml:space="preserve">
+    <value>Click Check for Updates to see the status of the current user application</value>
+  </data>
+  <data name="OpenStore" xml:space="preserve">
+    <value>Open store</value>
+  </data>
+  <data name="OpenStoreToolTip" xml:space="preserve">
+    <value>Click to open Microsoft Store</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
+  <data name="ReadyToDownload" xml:space="preserve">
+    <value>Ready to update</value>
+  </data>
+  <data name="RestoringData" xml:space="preserve">
+    <value>Restoring data</value>
+  </data>
+  <data name="Starting" xml:space="preserve">
+    <value>Starting</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>App update</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateAll" xml:space="preserve">
+    <value>Update all</value>
+  </data>
+  <data name="UpdateEmptyDescription" xml:space="preserve">
+    <value>All apps are up to date</value>
+  </data>
 </root>
