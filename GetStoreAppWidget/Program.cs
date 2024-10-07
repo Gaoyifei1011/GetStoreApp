@@ -14,7 +14,7 @@ namespace GetStoreAppWidget
     /// </summary>
     public class Program
     {
-        private static readonly WidgetProviderFactory<WidgetProvider> widgetProviderFactory = new();
+        private static readonly WidgetProviderFactory widgetProviderFactory = new();
         private static AutoResetEvent autoResetEvent = new(false);
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace GetStoreAppWidget
         public static unsafe void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
-            Ole32Library.CoRegisterClassObject(typeof(WidgetProvider).GUID, (IntPtr)ComInterfaceMarshaller<WidgetProviderFactory<WidgetProvider>>.ConvertToUnmanaged(widgetProviderFactory), CLSCTX.CLSCTX_LOCAL_SERVER, REGCLS.REGCLS_MULTIPLEUSE, out uint registrationHandle);
+            Ole32Library.CoRegisterClassObject(typeof(WidgetProvider).GUID, (IntPtr)ComInterfaceMarshaller<WidgetProviderFactory>.ConvertToUnmanaged(widgetProviderFactory), CLSCTX.CLSCTX_LOCAL_SERVER, REGCLS.REGCLS_MULTIPLEUSE, out uint registrationHandle);
             autoResetEvent.WaitOne();
             autoResetEvent.Dispose();
             autoResetEvent = null;

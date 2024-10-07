@@ -23,7 +23,7 @@ namespace GetStoreAppWidget.WindowsAPI.PInvoke.Ole32
         /// <param name="lpdwRegister">指向标识已注册的类对象的值的指针;稍后由 CoRevokeClassObject 函数用来撤销注册。</param>
         /// <returns>此函数可以返回标准返回值E_INVALIDARG、E_OUTOFMEMORY和E_UNEXPECTED，以及S_OK。</returns>
         [LibraryImport(Ole32, EntryPoint = "CoRegisterClassObject", SetLastError = false), PreserveSig]
-        public static partial int CoRegisterClassObject(Guid rclsid, IntPtr pUnk, CLSCTX dwClsContext, REGCLS flags, out uint lpdwRegister);
+        public static partial int CoRegisterClassObject(in Guid rclsid, IntPtr pUnk, CLSCTX dwClsContext, REGCLS flags, out uint lpdwRegister);
 
         /// <summary>
         /// 通知 OLE 以前使用 CoRegisterClassObject 函数注册的类对象不再可供使用。

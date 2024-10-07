@@ -10,9 +10,9 @@ namespace GetStoreAppWidget
     /// 允许创建对象的类
     /// </summary>
     [GeneratedComClass]
-    public partial class WidgetProviderFactory<T> : IClassFactory where T : IWidgetProvider, new()
+    public partial class WidgetProviderFactory : IClassFactory
     {
-        private static readonly Guid IID_IUnknown = new("00000000-0000-0000-C000-000000000046");
+        private readonly IWidgetProvider widgetProvider = new WidgetProvider();
 
         public int CreateInstance(IntPtr pUnkOuter, in Guid riid, out IntPtr ppvObject)
         {
@@ -22,16 +22,7 @@ namespace GetStoreAppWidget
                 return unchecked((int)0x80040110);
             }
 
-            if (riid == typeof(T).GUID || riid == IID_IUnknown)
-            {
-                ppvObject = MarshalInspectable<IWidgetProvider>.FromManaged(new T());
-            }
-            else
-            {
-                ppvObject = IntPtr.Zero;
-                Environment.Exit(0);
-            }
-
+            ppvObject = MarshalInspectable<IWidgetProvider>.FromManaged(widgetProvider);
             return 0;
         }
 
