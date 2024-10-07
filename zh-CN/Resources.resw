@@ -118,45 +118,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDescription" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>获取商店应用</value>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>GetStoreApp</value>
-  </data>
-  <data name="PackageDisplayName" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>获取商店应用</value>
   </data>
   <data name="AppShortDisplayName" xml:space="preserve">
-    <value>GetStoreApp</value>
+    <value>获取商店应用</value>
   </data>
   <data name="Fast" xml:space="preserve">
-    <value>Fast</value>
+    <value>快速</value>
+  </data>
+  <data name="PackageDisplayName" xml:space="preserve">
+    <value>获取商店应用</value>
   </data>
   <data name="ProductID" xml:space="preserve">
-    <value>ProductID</value>
+    <value>产品 ID</value>
   </data>
   <data name="Retail" xml:space="preserve">
-    <value>Retail</value>
+    <value>正式版</value>
   </data>
   <data name="RP" xml:space="preserve">
-    <value>Release Preview</value>
+    <value>发布预览</value>
   </data>
   <data name="Slow" xml:space="preserve">
-    <value>Slow</value>
-  </data>
-  <data name="URL" xml:space="preserve">
-    <value>URL(Link)</value>
-  </data>
-  <data name="TaskbarProtocolName" xml:space="preserve">
-    <value>Taskbar Pinner</value>
+    <value>慢速</value>
   </data>
   <data name="SystemBackdropControllerInitializeFailed" xml:space="preserve">
-    <value>The app's sytstem backdrop controller failed to initialize</value>
+    <value>应用的背景色控制器初始化失败</value>
   </data>
   <data name="TaskbarPinner" xml:space="preserve">
-    <value>Taskbar Pinner</value>
+    <value>任务栏固定程序</value>
+  </data>
+  <data name="TaskbarProtocolName" xml:space="preserve">
+    <value>任务栏固定辅助程序</value>
+  </data>
+  <data name="URL" xml:space="preserve">
+    <value>URL（链接）</value>
   </data>
   <data name="WebBrowserProtocolName" xml:space="preserve">
-    <value>Web Browser</value>
+    <value>网页浏览器</value>
   </data>
 </root>
