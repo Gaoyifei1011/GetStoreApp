@@ -19,6 +19,7 @@
 
     <Page.Resources>
         <XamlUICommand x:Name="LanguageCommand" ExecuteRequested="{x:Bind OnLanguageExecuteRequested}" />
+        <XamlUICommand x:Name="StoreRegionCommand" ExecuteRequested="{x:Bind OnStoreRegionExecuteRequested}" />
     </Page.Resources>
 
     <Grid Padding="0">
@@ -142,7 +143,7 @@
                     <DropDownButton
                         Grid.Column="3"
                         VerticalAlignment="Center"
-                        Content="{x:Bind Theme.Key, Mode=OneWay}">
+                        Content="{x:Bind Theme.Value, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
@@ -150,25 +151,25 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnThemeSelectClicked}"
-                                    IsChecked="{x:Bind Theme.Value.Equals(ThemeList[0].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind Theme.Key.Equals(ThemeList[0].Key), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind sys:Convert.ToString(ThemeList[0].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(ThemeList[0].Value)}" />
 
                                 <ToggleMenuFlyoutItem
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnThemeSelectClicked}"
-                                    IsChecked="{x:Bind Theme.Value.Equals(ThemeList[1].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind Theme.Key.Equals(ThemeList[1].Key), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind sys:Convert.ToString(ThemeList[1].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(ThemeList[1].Value)}" />
 
                                 <ToggleMenuFlyoutItem
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnThemeSelectClicked}"
-                                    IsChecked="{x:Bind Theme.Value.Equals(ThemeList[2].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind Theme.Key.Equals(ThemeList[2].Key), Mode=OneWay}"
                                     Tag="2"
-                                    Text="{x:Bind sys:Convert.ToString(ThemeList[2].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(ThemeList[2].Value)}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -238,9 +239,9 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
-                                    IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[0].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[0].Key), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind sys:Convert.ToString(BackdropList[0].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(BackdropList[0].Value)}" />
 
                                 <MenuFlyoutSubItem
                                     x:Name="MicaFlyoutItem"
@@ -253,17 +254,17 @@
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
-                                        IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[1].Value), Mode=OneWay}"
+                                        IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[1].Key), Mode=OneWay}"
                                         Tag="1"
-                                        Text="{x:Bind sys:Convert.ToString(BackdropList[1].Key)}" />
+                                        Text="{x:Bind sys:Convert.ToString(BackdropList[1].Value)}" />
 
                                     <ToggleMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
-                                        IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[2].Value), Mode=OneWay}"
+                                        IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[2].Key), Mode=OneWay}"
                                         Tag="2"
-                                        Text="{x:Bind sys:Convert.ToString(BackdropList[2].Key)}" />
+                                        Text="{x:Bind sys:Convert.ToString(BackdropList[2].Value)}" />
                                 </MenuFlyoutSubItem>
 
                                 <MenuFlyoutSubItem
@@ -277,25 +278,25 @@
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
-                                        IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[3].Value), Mode=OneWay}"
+                                        IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[3].Key), Mode=OneWay}"
                                         Tag="3"
-                                        Text="{x:Bind sys:Convert.ToString(BackdropList[3].Key)}" />
+                                        Text="{x:Bind sys:Convert.ToString(BackdropList[3].Value)}" />
 
                                     <ToggleMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
-                                        IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[4].Value), Mode=OneWay}"
+                                        IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[4].Key), Mode=OneWay}"
                                         Tag="4"
-                                        Text="{x:Bind sys:Convert.ToString(BackdropList[4].Key)}" />
+                                        Text="{x:Bind sys:Convert.ToString(BackdropList[4].Value)}" />
 
                                     <ToggleMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnBackdropSelectClicked}"
-                                        IsChecked="{x:Bind Backdrop.Value.Equals(BackdropList[5].Value), Mode=OneWay}"
+                                        IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[5].Key), Mode=OneWay}"
                                         Tag="5"
-                                        Text="{x:Bind sys:Convert.ToString(BackdropList[5].Key)}" />
+                                        Text="{x:Bind sys:Convert.ToString(BackdropList[5].Value)}" />
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
                         </DropDownButton.Flyout>
@@ -352,7 +353,7 @@
                         MinWidth="0"
                         Margin="0,-2,0,0"
                         FlowDirection="{x:Bind controlHelper:ToggleSwitchHelper.GetFlowDirection(service:LanguageService.FlowDirection)}"
-                        IsEnabled="{x:Bind converter:ValueCheckConverterHelper.ObjectCompareReverseConvert(Backdrop.Value, BackdropList[0].Value), Mode=OneWay}"
+                        IsEnabled="{x:Bind converter:ValueCheckConverterHelper.ObjectCompareReverseConvert(Backdrop.Key, BackdropList[0].Key), Mode=OneWay}"
                         IsEnabledChanged="{x:Bind OnIsEnabledChanged}"
                         IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
@@ -417,12 +418,12 @@
                     <DropDownButton
                         Grid.Column="3"
                         VerticalAlignment="Center"
-                        Content="{x:Bind AppLanguage.Key, Mode=OneWay}">
+                        Content="{x:Bind AppLanguage.Value, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <Flyout
                                 x:Name="LanguageFlyout"
-                                Opened="{x:Bind OnOpened}"
+                                Opened="{x:Bind OnLanguageFlyoutOpened}"
                                 Placement="Bottom"
                                 ShouldConstrainToRootBounds="False"
                                 SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
@@ -463,7 +464,7 @@
                                                 Command="{StaticResource LanguageCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                Text="{x:Bind sys:Convert.ToString(LangaugeInfo.Key)}" />
+                                                Text="{x:Bind sys:Convert.ToString(LangaugeInfo.Value)}" />
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
@@ -625,6 +626,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <FontIcon
@@ -656,10 +658,17 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <DropDownButton
+                    <HyperlinkButton
                         Grid.Column="2"
+                        Margin="0,0,6,0"
                         VerticalAlignment="Center"
-                        Content="{x:Bind WebKernelItem.Key, Mode=OneWay}">
+                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadWebView2')}"
+                        NavigateUri="https://developer.microsoft.com/microsoft-edge/webview2" />
+
+                    <DropDownButton
+                        Grid.Column="3"
+                        VerticalAlignment="Center"
+                        Content="{x:Bind WebKernelItem.Value, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
@@ -667,17 +676,17 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnWebKernelSelectClicked}"
-                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(WebKernelList[0].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind WebKernelItem.Key.Equals(WebKernelList[0].Key), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind sys:Convert.ToString(WebKernelList[0].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(WebKernelList[0].Value)}" />
 
                                 <ToggleMenuFlyoutItem
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnWebKernelSelectClicked}"
-                                    IsChecked="{x:Bind WebKernelItem.Value.Equals(WebKernelList[1].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind WebKernelItem.Key.Equals(WebKernelList[1].Key), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind sys:Convert.ToString(WebKernelList[1].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(WebKernelList[1].Value)}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -730,7 +739,7 @@
                     <DropDownButton
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Content="{x:Bind QueryLinksModeItem.Key, Mode=OneWay}">
+                        Content="{x:Bind QueryLinksModeItem.Value, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
@@ -738,17 +747,17 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnQueryLinksModeSelectClicked}"
-                                    IsChecked="{x:Bind QueryLinksModeItem.Value.Equals(QueryLinksModeList[0].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind QueryLinksModeItem.Key.Equals(QueryLinksModeList[0].Key), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[0].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[0].Value)}" />
 
                                 <ToggleMenuFlyoutItem
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnQueryLinksModeSelectClicked}"
-                                    IsChecked="{x:Bind QueryLinksModeItem.Value.Equals(QueryLinksModeList[1].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind QueryLinksModeItem.Key.Equals(QueryLinksModeList[1].Key), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[1].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[1].Value)}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -818,6 +827,203 @@
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuOnContent')}"
                         Toggled="{x:Bind OnShellMenuToggled}" />
                 </Grid>
+
+                <!--  商店区域设置  -->
+                <Expander
+                    Padding="0"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    IsExpanded="True">
+
+                    <Expander.Header>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                FontSize="16"
+                                Glyph="&#xF49A;" />
+
+                            <StackPanel
+                                Grid.Column="1"
+                                Margin="0,12"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+
+                                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegion')}" />
+
+                                <TextBlock
+                                    x:Name="StoreRegionDescription"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip
+                                            MaxWidth="9999"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
+                                            Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Expander.Header>
+
+                    <Expander.Content>
+                        <StackPanel Padding="0" HorizontalAlignment="Stretch">
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegion')}" />
+                                    <TextBlock
+                                        x:Name="UseSystemRegionDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionDescription')}"
+                                                Visibility="{x:Bind UseSystemRegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <ToggleSwitch
+                                    Grid.Column="1"
+                                    MinWidth="0"
+                                    FlowDirection="{x:Bind controlHelper:ToggleSwitchHelper.GetFlowDirection(service:LanguageService.FlowDirection)}"
+                                    IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
+                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOffContent')}"
+                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOnContent')}"
+                                    Toggled="{x:Bind OnUseSystemRegionToggled}" />
+                            </Grid>
+
+                            <MenuFlyoutSeparator />
+
+                            <Grid
+                                Height="52"
+                                Padding="44,0,16,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegion')}" />
+                                    <TextBlock
+                                        x:Name="RegionDescription"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/RegionDescription')}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/RegionDescription')}"
+                                                Visibility="{x:Bind RegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <DropDownButton
+                                    Grid.Column="3"
+                                    VerticalAlignment="Center"
+                                    Content="{x:Bind StoreRegion.DisplayName, Mode=OneWay}"
+                                    IsEnabled="{x:Bind UseSystemRegionValue.Equals(x:False), Mode=OneWay}">
+
+                                    <DropDownButton.Flyout>
+                                        <Flyout
+                                            x:Name="StoreRegionFlyout"
+                                            Opened="{x:Bind OnStoreRegionFlyoutOpened}"
+                                            Placement="Bottom"
+                                            ShouldConstrainToRootBounds="False"
+                                            SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                                    <Setter Property="Padding" Value="0" />
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
+
+                                            <ListView
+                                                x:Name="StoreRegionListView"
+                                                MaxHeight="300"
+                                                Background="Transparent"
+                                                ItemsSource="{x:Bind StoreRegionCollection, Mode=OneWay}"
+                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                ScrollViewer.HorizontalScrollMode="Disabled"
+                                                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                                ScrollViewer.VerticalScrollMode="Enabled"
+                                                SelectionMode="None">
+
+                                                <ListView.ItemContainerStyle>
+                                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                        <Setter Property="Padding" Value="0" />
+                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                        <Setter Property="Margin" Value="0,1" />
+                                                        <Setter Property="MinHeight" Value="0 " />
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate x:DataType="model:StoreRegionModel">
+                                                        <ToggleMenuFlyoutItem
+                                                            Height="32"
+                                                            Padding="11,0"
+                                                            Command="{StaticResource StoreRegionCommand}"
+                                                            CommandParameter="{x:Bind}"
+                                                            IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                                            Text="{x:Bind StoreRegionInfo.DisplayName}" />
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </Flyout>
+                                    </DropDownButton.Flyout>
+                                </DropDownButton>
+                            </Grid>
+                        </StackPanel>
+                    </Expander.Content>
+                </Expander>
 
                 <!--  链接过滤设置  -->
                 <Expander
@@ -1199,7 +1405,7 @@
                                 <DropDownButton
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Content="{x:Bind WinGetInstallMode.Key, Mode=OneWay}">
+                                    Content="{x:Bind WinGetInstallMode.Value, Mode=OneWay}">
 
                                     <DropDownButton.Flyout>
                                         <MenuFlyout Placement="Bottom">
@@ -1207,17 +1413,17 @@
                                                 Height="32"
                                                 Padding="11,0"
                                                 Click="{x:Bind OnWinGetInstallModeSelectClicked}"
-                                                IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[0].Value), Mode=OneWay}"
+                                                IsChecked="{x:Bind WinGetInstallMode.Key.Equals(WinGetInstallModeList[0].Key), Mode=OneWay}"
                                                 Tag="0"
-                                                Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[0].Key)}" />
+                                                Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[0].Value)}" />
 
                                             <ToggleMenuFlyoutItem
                                                 Height="32"
                                                 Padding="11,0"
                                                 Click="{x:Bind OnWinGetInstallModeSelectClicked}"
-                                                IsChecked="{x:Bind WinGetInstallMode.Value.Equals(WinGetInstallModeList[1].Value), Mode=OneWay}"
+                                                IsChecked="{x:Bind WinGetInstallMode.Key.Equals(WinGetInstallModeList[1].Key), Mode=OneWay}"
                                                 Tag="1"
-                                                Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[1].Key)}" />
+                                                Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[1].Value)}" />
                                         </MenuFlyout>
                                     </DropDownButton.Flyout>
                                 </DropDownButton>
@@ -1510,7 +1716,7 @@
                                 <DropDownButton
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Content="{x:Bind DoEngineMode.Key, Mode=OneWay}"
+                                    Content="{x:Bind DoEngineMode.Value, Mode=OneWay}"
                                     IsEnabled="{x:Bind helper:InfoHelper.IsDeliveryOptimizationEnabled}">
 
                                     <DropDownButton.Flyout>
@@ -1519,17 +1725,17 @@
                                                 Height="32"
                                                 Padding="11,0"
                                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
-                                                IsChecked="{x:Bind DoEngineMode.Value.Equals(DoEngineModeList[0].Value), Mode=OneWay}"
+                                                IsChecked="{x:Bind DoEngineMode.Key.Equals(DoEngineModeList[0].Key), Mode=OneWay}"
                                                 Tag="0"
-                                                Text="{x:Bind sys:Convert.ToString(DoEngineModeList[0].Key)}" />
+                                                Text="{x:Bind sys:Convert.ToString(DoEngineModeList[0].Value)}" />
 
                                             <ToggleMenuFlyoutItem
                                                 Height="32"
                                                 Padding="11,0"
                                                 Click="{x:Bind OnDoEngineModeSelectClicked}"
-                                                IsChecked="{x:Bind DoEngineMode.Value.Equals(DoEngineModeList[1].Value), Mode=OneWay}"
+                                                IsChecked="{x:Bind DoEngineMode.Key.Equals(DoEngineModeList[1].Key), Mode=OneWay}"
                                                 Tag="1"
-                                                Text="{x:Bind sys:Convert.ToString(DoEngineModeList[1].Key)}" />
+                                                Text="{x:Bind sys:Convert.ToString(DoEngineModeList[1].Value)}" />
                                         </MenuFlyout>
                                     </DropDownButton.Flyout>
                                 </DropDownButton>
@@ -1606,7 +1812,7 @@
                     <DropDownButton
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Content="{x:Bind InstallMode.Key, Mode=OneWay}">
+                        Content="{x:Bind InstallMode.Value, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
@@ -1614,17 +1820,17 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnInstallModeSelectClicked}"
-                                    IsChecked="{x:Bind InstallMode.Value.Equals(InstallModeList[0].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind InstallMode.Key.Equals(InstallModeList[0].Key), Mode=OneWay}"
                                     Tag="0"
-                                    Text="{x:Bind sys:Convert.ToString(InstallModeList[0].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(InstallModeList[0].Value)}" />
 
                                 <ToggleMenuFlyoutItem
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnInstallModeSelectClicked}"
-                                    IsChecked="{x:Bind InstallMode.Value.Equals(InstallModeList[1].Value), Mode=OneWay}"
+                                    IsChecked="{x:Bind InstallMode.Key.Equals(InstallModeList[1].Key), Mode=OneWay}"
                                     Tag="1"
-                                    Text="{x:Bind sys:Convert.ToString(InstallModeList[1].Key)}" />
+                                    Text="{x:Bind sys:Convert.ToString(InstallModeList[1].Value)}" />
                             </MenuFlyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>

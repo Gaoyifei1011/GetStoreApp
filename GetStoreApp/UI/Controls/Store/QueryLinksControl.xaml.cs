@@ -1182,7 +1182,7 @@ namespace GetStoreApp.UI.Controls.Store
                     };
 
                     historyList.Insert(0, historyItem);
-                    if (historyList.Count is 3)
+                    if (historyList.Count is 4)
                     {
                         historyList.RemoveAt(historyList.Count - 1);
                     }

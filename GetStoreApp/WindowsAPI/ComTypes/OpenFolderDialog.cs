@@ -69,8 +69,8 @@ namespace GetStoreApp.WindowsAPI.ComTypes
                     }
 
                     FileOpenDialog.GetResult(out IShellItem pItem);
-                    pItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out IntPtr pszString);
-                    SelectedPath = Marshal.PtrToStringUni(pszString);
+                    pItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string pszString);
+                    SelectedPath = pszString;
                     return true;
                 }
                 else

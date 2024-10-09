@@ -40,7 +40,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="ppszName">一个值，当此函数成功返回时，接收指向检索的显示名称的指针的地址。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetDisplayName(SIGDN sigdnName, out IntPtr ppszName);
+        int GetDisplayName(SIGDN sigdnName, [MarshalAs(UnmanagedType.LPWStr)] out string ppszName);
 
         /// <summary>
         /// 获取 IShellItem 对象的请求属性集。

@@ -541,7 +541,7 @@ namespace GetStoreApp.Views.Pages
 
         public ObservableCollection<DictionaryEntry> BreadCollection { get; } =
         [
-            new DictionaryEntry(ResourceService.GetLocalized("AppManager/AppList"), "AppList")
+            new DictionaryEntry("AppList", ResourceService.GetLocalized("AppManager/AppList"))
         ];
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1136,7 +1136,7 @@ namespace GetStoreApp.Views.Pages
                         if (packageDict is not null)
                         {
                             InitializeAppInfo(packageDict);
-                            BreadCollection.Add(new DictionaryEntry(ResourceService.GetLocalized("AppManager/AppInformation"), "AppInformation"));
+                            BreadCollection.Add(new DictionaryEntry("AppInformation", ResourceService.GetLocalized("AppManager/AppInformation")));
                         }
                     });
                 });

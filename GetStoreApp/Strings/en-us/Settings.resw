@@ -486,4 +486,19 @@
   <data name="ShellMenuOffContent" xml:space="preserve">
     <value>Hide</value>
   </data>
+  <data name="DownloadWebView2" xml:space="preserve">
+    <value>Download WebView2</value>
+  </data>
+  <data name="UseSystemRegionOffContent" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="UseSystemRegionOnContent" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="UseSystemRegion" xml:space="preserve">
+    <value>Use system country or region value</value>
+  </data>
+  <data name="CurrentCountryOrRegion" xml:space="preserve">
+    <value>Current country or region: {0}</value>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.Graphics.Effects;
 using WinRT;
 using WinRT.Interop;
@@ -28,7 +29,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="index">此方法返回时，此参数将包含 属性的索引。</param>
         /// <param name="mapping">指示强类型效果属性如何映射到基础 Direct2D 效果属性。</param>
         /// <returns>此方法返回 HRESULT 成功或错误代码。</returns>
-        int GetNamedPropertyMapping(IntPtr name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping);
+        int GetNamedPropertyMapping(string name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping);
 
         /// <summary>
         /// 检索效果的属性计数。
@@ -109,7 +110,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                 catch (Exception e)
                 {
                     ExceptionHelpers.SetErrorInfo(e);
-                    return Marshal.GetHRForException(e);
+                    return ExceptionAsHResultMarshaller<int>.ConvertToUnmanaged(e);
                 }
             }
 
@@ -128,7 +129,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                         *mapping = 0;
                     }
 
-                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetNamedPropertyMapping(name, out uint indexObject, out GRAPHICS_EFFECT_PROPERTY_MAPPING mappingObject);
+                    int hr = ComWrappersSupport.FindObject<IGraphicsEffectD2D1Interop>(thisPtr).GetNamedPropertyMapping(Utf16StringMarshaller.ConvertToManaged((ushort*)name), out uint indexObject, out GRAPHICS_EFFECT_PROPERTY_MAPPING mappingObject);
                     if (hr >= 0)
                     {
                         *index = indexObject;
@@ -139,7 +140,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                 catch (Exception e)
                 {
                     ExceptionHelpers.SetErrorInfo(e);
-                    return Marshal.GetHRForException(e);
+                    return ExceptionAsHResultMarshaller<int>.ConvertToUnmanaged(e);
                 }
             }
 
@@ -163,7 +164,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                 catch (Exception e)
                 {
                     ExceptionHelpers.SetErrorInfo(e);
-                    return Marshal.GetHRForException(e);
+                    return ExceptionAsHResultMarshaller<int>.ConvertToUnmanaged(e);
                 }
             }
 
@@ -187,7 +188,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                 catch (Exception e)
                 {
                     ExceptionHelpers.SetErrorInfo(e);
-                    return Marshal.GetHRForException(e);
+                    return ExceptionAsHResultMarshaller<int>.ConvertToUnmanaged(e);
                 }
             }
 
@@ -211,7 +212,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                 catch (Exception e)
                 {
                     ExceptionHelpers.SetErrorInfo(e);
-                    return Marshal.GetHRForException(e);
+                    return ExceptionAsHResultMarshaller<int>.ConvertToUnmanaged(e);
                 }
             }
 
@@ -235,7 +236,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                 catch (Exception e)
                 {
                     ExceptionHelpers.SetErrorInfo(e);
-                    return Marshal.GetHRForException(e);
+                    return ExceptionAsHResultMarshaller<int>.ConvertToUnmanaged(e);
                 }
             }
         }

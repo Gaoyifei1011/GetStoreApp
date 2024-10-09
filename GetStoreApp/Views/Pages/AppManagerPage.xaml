@@ -68,7 +68,7 @@
                         <BreadcrumbBarItem Content="{Binding}">
                             <BreadcrumbBarItem.ContentTemplate>
                                 <DataTemplate x:DataType="collection:DictionaryEntry">
-                                    <TextBlock FontSize="18" Text="{x:Bind Key}" />
+                                    <TextBlock FontSize="18" Text="{x:Bind Value}" />
                                 </DataTemplate>
                             </BreadcrumbBarItem.ContentTemplate>
                         </BreadcrumbBarItem>

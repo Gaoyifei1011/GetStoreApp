@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using Windows.Globalization;
 
 namespace GetStoreApp.Models.Controls.Settings
 {
     /// <summary>
-    /// 语言模型
+    /// 区域模型
     /// </summary>
-    public sealed partial class LanguageModel : INotifyPropertyChanged
+    public sealed partial class StoreRegionModel : INotifyPropertyChanged
     {
-        public KeyValuePair<string, string> LangaugeInfo { get; set; }
+        public GeographicRegion StoreRegionInfo { get; set; }
 
         private bool _isChecked;
 

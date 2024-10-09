@@ -2,7 +2,6 @@
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -15,11 +14,11 @@ namespace GetStoreApp.Services.Controls.Settings
     {
         private static readonly string themeSettingsKey = ConfigKey.ThemeKey;
 
-        private static DictionaryEntry defaultAppTheme;
+        private static KeyValuePair<string, string> defaultAppTheme;
 
-        private static DictionaryEntry _appTheme;
+        private static KeyValuePair<string, string> _appTheme;
 
-        public static DictionaryEntry AppTheme
+        public static KeyValuePair<string, string> AppTheme
         {
             get { return _appTheme; }
 
@@ -33,7 +32,7 @@ namespace GetStoreApp.Services.Controls.Settings
             }
         }
 
-        public static List<DictionaryEntry> ThemeList { get; private set; }
+        public static List<KeyValuePair<string, string>> ThemeList { get; private set; }
 
         public static event PropertyChangedEventHandler PropertyChanged;
 
@@ -44,7 +43,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             ThemeList = ResourceService.ThemeList;
 
-            defaultAppTheme = ThemeList.Find(item => item.Value.ToString().Equals(nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
+            defaultAppTheme = ThemeList.Find(item => item.Key.Equals(nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
 
             AppTheme = GetTheme();
         }
@@ -52,7 +51,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的主题值，如果设置没有存储，使用默认值
         /// </summary>
-        private static DictionaryEntry GetTheme()
+        private static KeyValuePair<string, string> GetTheme()
         {
             object theme = LocalSettingsService.ReadSetting<object>(themeSettingsKey);
 
@@ -62,7 +61,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 return defaultAppTheme;
             }
 
-            DictionaryEntry selectedTheme = ThemeList.Find(item => item.Value.Equals(theme));
+            KeyValuePair<string, string> selectedTheme = ThemeList.Find(item => item.Key.Equals(theme));
 
             return selectedTheme.Key is null ? defaultAppTheme : selectedTheme;
         }
@@ -70,11 +69,11 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 应用主题发生修改时修改设置存储的主题值
         /// </summary>
-        public static void SetTheme(DictionaryEntry theme)
+        public static void SetTheme(KeyValuePair<string, string> theme)
         {
             AppTheme = theme;
 
-            LocalSettingsService.SaveSetting(themeSettingsKey, theme.Value);
+            LocalSettingsService.SaveSetting(themeSettingsKey, theme.Key);
         }
     }
 }

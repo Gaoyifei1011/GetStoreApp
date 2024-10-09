@@ -339,6 +339,10 @@ namespace GetStoreApp.UI.Controls.Store
                     };
 
                     historyList.Insert(0, historyItem);
+                    if (historyList.Count is 4)
+                    {
+                        historyList.RemoveAt(historyList.Count - 1);
+                    }
                     HistoryStorageService.SaveSearchStoreData(historyList);
 
                     DispatcherQueue.TryEnqueue(() =>

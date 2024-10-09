@@ -2,7 +2,6 @@
 using GetStoreApp.Services.Root;
 using Microsoft.Management.Deployment;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -19,11 +18,11 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static bool UseDevVersion { get; private set; }
 
-        public static DictionaryEntry DefaultWinGetInstallMode { get; set; }
+        public static KeyValuePair<string, string> DefaultWinGetInstallMode { get; set; }
 
-        public static DictionaryEntry WinGetInstallMode { get; set; }
+        public static KeyValuePair<string, string> WinGetInstallMode { get; set; }
 
-        public static List<DictionaryEntry> WinGetInstallModeList { get; set; }
+        public static List<KeyValuePair<string, string>> WinGetInstallModeList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的是否使用开发版本布尔值和 WinGet 程序包安装方式值
@@ -34,7 +33,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             WinGetInstallModeList = ResourceService.WinGetInstallModeList;
 
-            DefaultWinGetInstallMode = WinGetInstallModeList.Find(item => item.Value.ToString().Equals(PackageInstallMode.Interactive.ToString(), StringComparison.OrdinalIgnoreCase));
+            DefaultWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(PackageInstallMode.Interactive.ToString(), StringComparison.OrdinalIgnoreCase));
 
             WinGetInstallMode = GetWinGetInstallMode();
         }
@@ -68,17 +67,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的 WinGet 程序包安装方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static DictionaryEntry GetWinGetInstallMode()
+        private static KeyValuePair<string, string> GetWinGetInstallMode()
         {
             object winGetInstallMode = LocalSettingsService.ReadSetting<object>(winGetInstallModeSettingsKey);
 
             if (winGetInstallMode is null)
             {
                 SetWinGetInstallMode(DefaultWinGetInstallMode);
-                return WinGetInstallModeList.Find(item => item.Value.Equals(DefaultWinGetInstallMode.Value));
+                return WinGetInstallModeList.Find(item => item.Key.Equals(DefaultWinGetInstallMode.Key));
             }
 
-            DictionaryEntry selectedWinGetInstallMode = WinGetInstallModeList.Find(item => item.Value.Equals(winGetInstallMode));
+            KeyValuePair<string, string> selectedWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(winGetInstallMode));
 
             return selectedWinGetInstallMode.Key is null ? DefaultWinGetInstallMode : selectedWinGetInstallMode;
         }
@@ -86,11 +85,11 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的 WinGet 程序包安装方式
         /// </summary>
-        public static void SetWinGetInstallMode(DictionaryEntry winGetInstallMode)
+        public static void SetWinGetInstallMode(KeyValuePair<string, string> winGetInstallMode)
         {
             WinGetInstallMode = winGetInstallMode;
 
-            LocalSettingsService.SaveSetting(winGetInstallModeSettingsKey, winGetInstallMode.Value);
+            LocalSettingsService.SaveSetting(winGetInstallModeSettingsKey, winGetInstallMode.Key);
         }
     }
 }

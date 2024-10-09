@@ -5,7 +5,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
@@ -19,7 +18,7 @@ namespace GetStoreApp.Services.Controls.Download
     {
         private static bool isInitialized;
         private static int badgeCount;
-        private static DictionaryEntry doEngineMode;
+        private static KeyValuePair<string, string> doEngineMode;
 
         public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
 

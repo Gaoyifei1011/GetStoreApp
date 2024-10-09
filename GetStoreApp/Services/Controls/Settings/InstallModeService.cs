@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -13,11 +12,11 @@ namespace GetStoreApp.Services.Controls.Settings
     {
         private static readonly string settingsKey = ConfigKey.InstallModeKey;
 
-        private static DictionaryEntry defaultInstallMode;
+        private static KeyValuePair<string, string> defaultInstallMode;
 
-        public static DictionaryEntry InstallMode { get; private set; }
+        public static KeyValuePair<string, string> InstallMode { get; private set; }
 
-        public static List<DictionaryEntry> InstallModeList { get; private set; }
+        public static List<KeyValuePair<string, string>> InstallModeList { get; private set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的应用安装方式值
@@ -26,7 +25,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             InstallModeList = ResourceService.InstallModeList;
 
-            defaultInstallMode = InstallModeList.Find(item => item.Value.ToString().Equals("AppInstall", StringComparison.OrdinalIgnoreCase));
+            defaultInstallMode = InstallModeList.Find(item => item.Key.Equals("AppInstall", StringComparison.OrdinalIgnoreCase));
 
             InstallMode = GetInstallMode();
         }
@@ -34,17 +33,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的应用安装方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static DictionaryEntry GetInstallMode()
+        private static KeyValuePair<string, string> GetInstallMode()
         {
             object installMode = LocalSettingsService.ReadSetting<object>(settingsKey);
 
             if (installMode is null)
             {
                 SetInstallMode(defaultInstallMode);
-                return InstallModeList.Find(item => item.Value.Equals(defaultInstallMode.Value));
+                return InstallModeList.Find(item => item.Key.Equals(defaultInstallMode.Key));
             }
 
-            DictionaryEntry selectedInstallMode = InstallModeList.Find(item => item.Value.Equals(installMode));
+            KeyValuePair<string, string> selectedInstallMode = InstallModeList.Find(item => item.Key.Equals(installMode));
 
             return selectedInstallMode.Key is null ? defaultInstallMode : selectedInstallMode;
         }
@@ -52,11 +51,11 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 应用安装方式发生修改时修改设置存储的应用安装方式值
         /// </summary>
-        public static void SetInstallMode(DictionaryEntry installMode)
+        public static void SetInstallMode(KeyValuePair<string, string> installMode)
         {
             InstallMode = installMode;
 
-            LocalSettingsService.SaveSetting(settingsKey, installMode.Value);
+            LocalSettingsService.SaveSetting(settingsKey, installMode.Key);
         }
     }
 }

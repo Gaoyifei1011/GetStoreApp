@@ -36,7 +36,7 @@ namespace GetStoreAppShellExtension
                 IntPtr pIUnknown = (IntPtr)ComInterfaceMarshaller<ShellMenuClassFactory>.ConvertToUnmanaged(classFactory);
 
                 int hresult = Marshal.QueryInterface(pIUnknown, in riid, out *ppv);
-                Marshal.Release(pIUnknown);
+                StrategyBasedComWrappers.DefaultIUnknownStrategy.Release((void*)pIUnknown);
 
                 return hresult;
             }

@@ -2,7 +2,6 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -20,15 +19,15 @@ namespace GetStoreApp.Services.Controls.Settings
         private static readonly string downloadFolderKey = ConfigKey.DownloadFolderKey;
         private static readonly string doEngineModeKey = ConfigKey.DoEngineModeKey;
 
-        private static DictionaryEntry defaultDoEngineMode;
+        private static KeyValuePair<string, string> defaultDoEngineMode;
 
         public static StorageFolder DefaultDownloadFolder { get; private set; }
 
         public static StorageFolder DownloadFolder { get; private set; }
 
-        public static DictionaryEntry DoEngineMode { get; private set; }
+        public static KeyValuePair<string, string> DoEngineMode { get; private set; }
 
-        public static List<DictionaryEntry> DoEngineModeList { get; } = ResourceService.DoEngineModeList;
+        public static List<KeyValuePair<string, string>> DoEngineModeList { get; } = ResourceService.DoEngineModeList;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
@@ -74,17 +73,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的下载引擎方式值，如果设置没有存储，使用默认值
         /// </summary>
-        private static DictionaryEntry GetDoEngineMode()
+        private static KeyValuePair<string, string> GetDoEngineMode()
         {
             object doEngineMode = LocalSettingsService.ReadSetting<object>(doEngineModeKey);
 
             if (doEngineMode is null)
             {
                 SetDoEngineMode(defaultDoEngineMode);
-                return DoEngineModeList.Find(item => item.Value.Equals(defaultDoEngineMode.Value));
+                return DoEngineModeList.Find(item => item.Key.Equals(defaultDoEngineMode.Key));
             }
 
-            DictionaryEntry selectedDoEngine = DoEngineModeList.Find(item => item.Value.Equals(doEngineMode));
+            KeyValuePair<string, string> selectedDoEngine = DoEngineModeList.Find(item => item.Key.Equals(doEngineMode));
 
             return selectedDoEngine.Key is null ? defaultDoEngineMode : selectedDoEngine;
         }
@@ -102,11 +101,11 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 应用下载引擎发生修改时修改设置存储的下载引擎方式值
         /// </summary>
-        public static void SetDoEngineMode(DictionaryEntry doEngineMode)
+        public static void SetDoEngineMode(KeyValuePair<string, string> doEngineMode)
         {
             DoEngineMode = doEngineMode;
 
-            LocalSettingsService.SaveSetting(doEngineModeKey, doEngineMode.Value);
+            LocalSettingsService.SaveSetting(doEngineModeKey, doEngineMode.Key);
         }
 
         /// <summary>

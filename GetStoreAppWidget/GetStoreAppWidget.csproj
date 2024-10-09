@@ -33,7 +33,7 @@
     <Win32Resource>GetStoreAppWidget.res</Win32Resource>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
-    <WindowsSdkPackageVersion>10.0.26100.47</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.48</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 

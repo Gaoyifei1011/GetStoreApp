@@ -486,4 +486,19 @@
   <data name="RestartExplorer" xml:space="preserve">
     <value>重启资源管理器</value>
   </data>
+  <data name="DownloadWebView2" xml:space="preserve">
+    <value>下载 WebView2</value>
+  </data>
+  <data name="UseSystemRegionOffContent" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="UseSystemRegionOnContent" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="UseSystemRegion" xml:space="preserve">
+    <value>使用系统国家或地区值</value>
+  </data>
+  <data name="CurrentCountryOrRegion" xml:space="preserve">
+    <value>当前国家或区域：{0}</value>
+  </data>
 </root>

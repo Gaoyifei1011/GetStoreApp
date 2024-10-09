@@ -17,8 +17,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
 
         public const int MAX_PATH = 260;
 
-        public static IntPtr INVALID_HANDLE_VALUE { get; } = new IntPtr(-1);
-
         /// <summary>
         /// 为调用进程分配一个新的控制台。
         /// </summary>
@@ -37,6 +35,17 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         [LibraryImport(Kernel32, EntryPoint = "AttachConsole", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool AttachConsole(int dwProcessId = -1);
+
+        /// <summary>
+        /// 枚举由两个字母组成的国际标准化组织 (ISO) 3166-1 代码或数字联合国 (联合国) 系列 M，编号 49 (M.49) 操作系统上可用的地理位置代码。
+        /// </summary>
+        /// <param name="geoClass">要枚举其可用的双字母 ISO 3166-1 或数字 UN M.49 代码的地理位置类。</param>
+        /// <param name="geoEnumProc">指向应用程序定义的回调函数 Geo_EnumNameProc的指针。 EnumSystemGeoNames 函数针对操作系统上可用的地理位置的每个双字母 ISO 3166-1 或数字 UN M.49 代码调用此回调函数，直到回调函数返回 FALSE。</param>
+        /// <param name="data">要传递给 genEnumProc 参数指定的回调函数的应用程序特定信息。</param>
+        /// <returns>如果成功，则返回非零值，否则返回 0。</returns>
+        [LibraryImport(Kernel32, EntryPoint = "EnumSystemGeoNames", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool EnumSystemGeoNames(SYSGEOCLASS geoClass, IntPtr geoEnumProc, IntPtr data);
 
         /// <summary>
         /// 从其控制台中分离调用进程。

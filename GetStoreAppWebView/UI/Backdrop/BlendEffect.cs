@@ -25,9 +25,9 @@ namespace GetStoreAppWebView.UI.Backdrop
             return 0;
         }
 
-        public int GetNamedPropertyMapping(IntPtr name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
+        public int GetNamedPropertyMapping(string name, out uint index, out GRAPHICS_EFFECT_PROPERTY_MAPPING mapping)
         {
-            switch (Marshal.PtrToStringUni(name))
+            switch (name)
             {
                 case nameof(Mode):
                     {

@@ -136,8 +136,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                GeographicRegion geographicRegion = new();
-                string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market={1}&locale={2}&deviceFamily=Windows.Desktop", productId, geographicRegion.CodeTwoLetter, LanguageService.AppLanguage.Value);
+                string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market={1}&locale={2}&deviceFamily=Windows.Desktop", productId, StoreRegionService.StoreRegion.CodeTwoLetter, LanguageService.AppLanguage.Key);
 
                 HttpClient httpClient = new();
                 HttpResponseMessage responseMessage = await httpClient.GetAsync(new(categoryIDAPI)).AsTask(cancellationTokenSource.Token);
@@ -172,15 +171,16 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                         if (skusArray.Count > 0)
                         {
-                            try
+                            appInfoModel.CategoryID = string.Empty;
+                            JsonObject jsonObject = skusArray[0].GetObject();
+                            if (jsonObject.TryGetValue("FulfillmentData", out IJsonValue jsonValue))
                             {
-                                string fulfillmentData = skusArray[0].GetObject().GetNamedValue("FulfillmentData").GetString();
+                                string fulfillmentData = jsonValue.GetString();
                                 if (JsonObject.TryParse(fulfillmentData, out JsonObject fulfillmentDataObject))
                                 {
                                     appInfoModel.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
                                 }
                             }
-                            catch (Exception) { }
                             appInformationResult = new Tuple<bool, AppInfoModel>(true, appInfoModel);
                         }
                     }
@@ -493,7 +493,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                string url = "https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/" + productId;
+                string url = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/{0}?market={1}", productId, StoreRegionService.StoreRegion.CodeTwoLetter);
 
                 HttpClient httpClient = new();
                 HttpResponseMessage responseMessage = await httpClient.GetAsync(new(url)).AsTask(cancellationTokenSource.Token);

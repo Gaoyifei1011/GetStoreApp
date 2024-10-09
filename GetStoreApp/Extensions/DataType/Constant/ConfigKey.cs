@@ -25,6 +25,12 @@
 
         public const string EncryptedPackageFilterKey = "EncryptedPackageFilterValue";
 
+        public const string QueryLinksModeKey = "QueryLinksMode";
+
+        public const string StoreRegionKey = "StoreRegion";
+
+        public const string ShellMenuKey = "ShellMenu";
+
         public const string TaskbarPinInfoKey = "TaskbarPinInfo";
 
         public const string ThemeKey = "AppTheme";
@@ -33,13 +39,9 @@
 
         public const string WebKernelKey = "WebKernel";
 
-        public const string QueryLinksModeKey = "QueryLinksMode";
-
-        public const string ShellMenuKey = "ShellMenu";
+        public const string WindowHeightKey = "WindowHeight";
 
         public const string WindowWidthKey = "WindowWidth";
-
-        public const string WindowHeightKey = "WindowHeight";
 
         public const string WindowPositionXAxisKey = "WindowPositionXAxis";
 
@@ -48,5 +50,7 @@
         public const string WinGetConfigKey = "WinGetConfig";
 
         public const string WinGetInstallModeKey = "WinGetInstallMode";
+
+        public const string UseSystemRegionKey = "UseSystemRegion";
     }
 }

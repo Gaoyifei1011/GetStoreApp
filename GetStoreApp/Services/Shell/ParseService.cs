@@ -68,7 +68,7 @@ namespace GetStoreApp.Services.Shell
             int fileNameHeaderLength = CharExtension.GetStringDisplayLengthEx(fileNameHeader);
             int fileSizeHeaderLength = CharExtension.GetStringDisplayLengthEx(fileSizeHeader);
 
-            int serialNumberColumnLength = (serialNumberHeaderLength > queryLinksList.Count.ToString().Length ? serialNumberHeaderLength : queryLinksList.Count.ToString().Length) + 3;
+            int serialNumberColumnLength = (serialNumberHeaderLength > Convert.ToString(queryLinksList.Count).Length ? serialNumberHeaderLength : Convert.ToString(queryLinksList.Count).Length) + 3;
 
             int fileNameContentMaxLength = 0;
             foreach (QueryLinksModel queryLinksItem in queryLinksList)

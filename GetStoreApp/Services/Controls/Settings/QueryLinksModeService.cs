@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -13,11 +12,11 @@ namespace GetStoreApp.Services.Controls.Settings
     {
         private static readonly string queryLinksModeSettingsKey = ConfigKey.QueryLinksModeKey;
 
-        private static DictionaryEntry defaultQueryLinksMode;
+        private static KeyValuePair<string, string> defaultQueryLinksMode;
 
-        private static DictionaryEntry _queryLinksMode;
+        private static KeyValuePair<string, string> _queryLinksMode;
 
-        public static DictionaryEntry QueryLinksMode
+        public static KeyValuePair<string, string> QueryLinksMode
         {
             get { return _queryLinksMode; }
 
@@ -31,7 +30,7 @@ namespace GetStoreApp.Services.Controls.Settings
             }
         }
 
-        public static List<DictionaryEntry> QueryLinksModeList { get; private set; }
+        public static List<KeyValuePair<string, string>> QueryLinksModeList { get; private set; }
 
         public static event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,7 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             QueryLinksModeList = ResourceService.QueryLinksModeList;
 
-            defaultQueryLinksMode = QueryLinksModeList.Find(item => item.Value.ToString() is "Official");
+            defaultQueryLinksMode = QueryLinksModeList.Find(item => item.Key is "Official");
 
             QueryLinksMode = GetQueryLinksMode();
         }
@@ -50,7 +49,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的查询链接方式选择值，如果设置没有存储，使用默认值
         /// </summary>
-        private static DictionaryEntry GetQueryLinksMode()
+        private static KeyValuePair<string, string> GetQueryLinksMode()
         {
             object queryLinksModeValue = LocalSettingsService.ReadSetting<object>(queryLinksModeSettingsKey);
 
@@ -60,7 +59,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 return defaultQueryLinksMode;
             }
 
-            DictionaryEntry selectedQueryLinksMode = QueryLinksModeList.Find(item => item.Value.Equals(queryLinksModeValue));
+            KeyValuePair<string, string> selectedQueryLinksMode = QueryLinksModeList.Find(item => item.Key.Equals(queryLinksModeValue));
 
             return selectedQueryLinksMode.Key is null ? defaultQueryLinksMode : selectedQueryLinksMode;
         }
@@ -68,11 +67,11 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 查询链接方式发生修改时修改设置存储的查询链接方式值
         /// </summary>
-        public static void SetQueryLinksMode(DictionaryEntry queryLinksMode)
+        public static void SetQueryLinksMode(KeyValuePair<string, string> queryLinksMode)
         {
             QueryLinksMode = queryLinksMode;
 
-            LocalSettingsService.SaveSetting(queryLinksModeSettingsKey, queryLinksMode.Value);
+            LocalSettingsService.SaveSetting(queryLinksModeSettingsKey, queryLinksMode.Key);
         }
     }
 }

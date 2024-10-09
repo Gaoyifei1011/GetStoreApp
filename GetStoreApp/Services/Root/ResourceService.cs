@@ -6,7 +6,6 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
@@ -22,8 +21,8 @@ namespace GetStoreApp.Services.Root
     {
         private static bool isInitialized;
 
-        private static DictionaryEntry _defaultAppLanguage;
-        private static DictionaryEntry _currentAppLanguage;
+        private static KeyValuePair<string, string> _defaultAppLanguage;
+        private static KeyValuePair<string, string> _currentAppLanguage;
 
         private static readonly ResourceContext defaultResourceContext = new();
         private static readonly ResourceContext currentResourceContext = new();
@@ -37,34 +36,34 @@ namespace GetStoreApp.Services.Root
 
         public static List<InfoBarModel> SearchStoreInfoList { get; } = [];
 
-        public static List<DictionaryEntry> BackdropList { get; } = [];
+        public static List<KeyValuePair<string, string>> BackdropList { get; } = [];
 
-        public static List<DictionaryEntry> WebKernelList { get; } = [];
+        public static List<KeyValuePair<string, string>> WebKernelList { get; } = [];
 
-        public static List<DictionaryEntry> QueryLinksModeList { get; } = [];
+        public static List<KeyValuePair<string, string>> QueryLinksModeList { get; } = [];
 
-        public static List<DictionaryEntry> InstallModeList { get; } = [];
+        public static List<KeyValuePair<string, string>> InstallModeList { get; } = [];
 
-        public static List<DictionaryEntry> ThemeList { get; } = [];
+        public static List<KeyValuePair<string, string>> ThemeList { get; } = [];
 
         public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
-        public static List<DictionaryEntry> WinGetInstallModeList { get; } = [];
+        public static List<KeyValuePair<string, string>> WinGetInstallModeList { get; } = [];
 
-        public static List<DictionaryEntry> DoEngineModeList { get; } = [];
+        public static List<KeyValuePair<string, string>> DoEngineModeList { get; } = [];
 
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
         /// <param name="defaultAppLanguage">默认语言名称</param>
         /// <param name="currentAppLanguage">当前语言名称</param>
-        public static void InitializeResource(DictionaryEntry defaultAppLanguage, DictionaryEntry currentAppLanguage)
+        public static void InitializeResource(KeyValuePair<string, string> defaultAppLanguage, KeyValuePair<string, string> currentAppLanguage)
         {
             _defaultAppLanguage = defaultAppLanguage;
             _currentAppLanguage = currentAppLanguage;
 
-            defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage.Value.ToString();
-            currentResourceContext.QualifierValues["Language"] = _currentAppLanguage.Value.ToString();
+            defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage.Key.ToString();
+            currentResourceContext.QualifierValues["Language"] = _currentAppLanguage.Key.ToString();
 
             isInitialized = true;
         }
@@ -217,12 +216,12 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeBackdropList()
         {
-            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropDefault"), nameof(SystemBackdropTheme.Default)));
-            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropMica"), nameof(MicaKind) + nameof(MicaKind.Base)));
-            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropMicaAlt"), nameof(MicaKind) + nameof(MicaKind.BaseAlt)));
-            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropAcrylic"), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default)));
-            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropAcrylicBase"), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base)));
-            BackdropList.Add(new DictionaryEntry(GetLocalized("Settings/BackdropAcrylicThin"), nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin)));
+            BackdropList.Add(KeyValuePair.Create(nameof(SystemBackdropTheme.Default), GetLocalized("Settings/BackdropDefault")));
+            BackdropList.Add(KeyValuePair.Create(nameof(MicaKind) + nameof(MicaKind.Base), GetLocalized("Settings/BackdropMica")));
+            BackdropList.Add(KeyValuePair.Create(nameof(MicaKind) + nameof(MicaKind.BaseAlt), GetLocalized("Settings/BackdropMicaAlt")));
+            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), GetLocalized("Settings/BackdropAcrylic")));
+            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), GetLocalized("Settings/BackdropAcrylicBase")));
+            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin), GetLocalized("Settings/BackdropAcrylicThin")));
         }
 
         /// <summary>
@@ -230,8 +229,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeWebKernelList()
         {
-            WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelWebView"), "WebView"));
-            WebKernelList.Add(new DictionaryEntry(GetLocalized("Settings/WebKernelWebView2"), "WebView2"));
+            WebKernelList.Add(KeyValuePair.Create("WebView", GetLocalized("Settings/WebKernelWebView")));
+            WebKernelList.Add(KeyValuePair.Create("WebView2", GetLocalized("Settings/WebKernelWebView2")));
         }
 
         /// <summary>
@@ -239,8 +238,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeQueryLinksModeList()
         {
-            QueryLinksModeList.Add(new DictionaryEntry(GetLocalized("Settings/QueryLinksModeOfficial"), "Official"));
-            QueryLinksModeList.Add(new DictionaryEntry(GetLocalized("Settings/QueryLinksModeThirdParty"), "ThirdParty"));
+            QueryLinksModeList.Add(KeyValuePair.Create("Official", GetLocalized("Settings/QueryLinksModeOfficial")));
+            QueryLinksModeList.Add(KeyValuePair.Create("ThirdParty", GetLocalized("Settings/QueryLinksModeThirdParty")));
         }
 
         /// <summary>
@@ -248,8 +247,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeInstallModeList()
         {
-            InstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/AppInstall"), "AppInstall"));
-            InstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/CodeInstall"), "CodeInstall"));
+            InstallModeList.Add(KeyValuePair.Create("AppInstall", GetLocalized("Settings/AppInstall")));
+            InstallModeList.Add(KeyValuePair.Create("CodeInstall", GetLocalized("Settings/CodeInstall")));
         }
 
         /// <summary>
@@ -257,9 +256,9 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeThemeList()
         {
-            ThemeList.Add(new DictionaryEntry(GetLocalized("Settings/ThemeDefault"), nameof(ElementTheme.Default)));
-            ThemeList.Add(new DictionaryEntry(GetLocalized("Settings/ThemeLight"), nameof(ElementTheme.Light)));
-            ThemeList.Add(new DictionaryEntry(GetLocalized("Settings/ThemeDark"), nameof(ElementTheme.Dark)));
+            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Default), GetLocalized("Settings/ThemeDefault")));
+            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Light), GetLocalized("Settings/ThemeLight")));
+            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Dark), GetLocalized("Settings/ThemeDark")));
         }
 
         /// <summary>
@@ -298,8 +297,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeWinGetInstallModeList()
         {
-            WinGetInstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/InteractiveInstall"), nameof(PackageInstallMode.Interactive)));
-            WinGetInstallModeList.Add(new DictionaryEntry(GetLocalized("Settings/SlientInstall"), nameof(PackageInstallMode.Silent)));
+            WinGetInstallModeList.Add(KeyValuePair.Create(nameof(PackageInstallMode.Interactive), GetLocalized("Settings/InteractiveInstall")));
+            WinGetInstallModeList.Add(KeyValuePair.Create(nameof(PackageInstallMode.Silent), GetLocalized("Settings/SlientInstall")));
         }
 
         /// <summary>
@@ -307,8 +306,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeDoEngineModeList()
         {
-            DoEngineModeList.Add(new DictionaryEntry(GetLocalized("Settings/DoEngineDo"), "DeliveryOptimization"));
-            DoEngineModeList.Add(new DictionaryEntry(GetLocalized("Settings/DoEngineBits"), "BITS"));
+            DoEngineModeList.Add(KeyValuePair.Create("DeliveryOptimization", GetLocalized("Settings/DoEngineDo")));
+            DoEngineModeList.Add(KeyValuePair.Create("BITS", GetLocalized("Settings/DoEngineBits")));
         }
 
         /// <summary>
@@ -324,14 +323,14 @@ namespace GetStoreApp.Services.Root
                 }
                 catch (Exception currentResourceException)
                 {
-                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _currentAppLanguage.Value), currentResourceException);
+                    LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context with langauge {0} failed.", _currentAppLanguage.Key), currentResourceException);
                     try
                     {
                         return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
                     }
                     catch (Exception defaultResourceException)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context string with langauge {0} failed.", _defaultAppLanguage.Value), defaultResourceException);
+                        LogService.WriteLog(LoggingLevel.Warning, string.Format("Get resource context string with langauge {0} failed.", _defaultAppLanguage.Key), defaultResourceException);
                         return resource;
                     }
                 }

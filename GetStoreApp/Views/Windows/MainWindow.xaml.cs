@@ -122,14 +122,14 @@ namespace GetStoreApp.Views.Windows
 
         private List<KeyValuePair<string, Type>> PageList { get; } =
         [
-            new KeyValuePair<string, Type>("Store",typeof(StorePage)),
-            new KeyValuePair<string, Type>("AppUpdate", typeof(AppUpdatePage)),
-            new KeyValuePair<string, Type>("WinGet", typeof(WinGetPage)),
-            new KeyValuePair<string, Type>("AppManager", typeof(AppManagerPage)),
-            new KeyValuePair<string, Type>("Download", typeof(DownloadPage)),
-            new KeyValuePair<string, Type>("Web",null ),
-            new KeyValuePair<string, Type>("About", typeof(AboutPage)),
-            new KeyValuePair<string, Type>("Settings", typeof(SettingsPage))
+            KeyValuePair.Create("Store",typeof(StorePage)),
+            KeyValuePair.Create("AppUpdate", typeof(AppUpdatePage)),
+            KeyValuePair.Create("WinGet", typeof(WinGetPage)),
+            KeyValuePair.Create("AppManager", typeof(AppManagerPage)),
+            KeyValuePair.Create("Download", typeof(DownloadPage)),
+            KeyValuePair.Create<string, Type>("Web",null),
+            KeyValuePair.Create("About", typeof(AboutPage)),
+            KeyValuePair.Create("Settings", typeof(SettingsPage))
         ];
 
         public List<NavigationModel> NavigationItemList { get; } = [];
@@ -701,9 +701,9 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void SetWindowTheme()
         {
-            WindowTheme = ThemeService.AppTheme.Value.Equals(ThemeService.ThemeList[0].Value)
+            WindowTheme = ThemeService.AppTheme.Equals(ThemeService.ThemeList[0])
                 ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark
-                : Enum.TryParse(ThemeService.AppTheme.Value.ToString(), out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
+                : Enum.TryParse(ThemeService.AppTheme.Key, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
 
         /// <summary>
@@ -711,27 +711,27 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetSystemBackdrop()
         {
-            if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[1].Value))
+            if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[1]))
             {
                 SystemBackdrop = new MaterialBackdrop(MicaKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[2].Value))
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[2]))
             {
                 SystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[3].Value))
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[3]))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[4].Value))
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[4]))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Value.Equals(BackdropService.BackdropList[5].Value))
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[5]))
             {
                 SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
@@ -896,7 +896,7 @@ namespace GetStoreApp.Views.Windows
                 // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
                 case WindowMessage.WM_SETTINGCHANGE:
                     {
-                        if (ThemeService.AppTheme.Value == ThemeService.ThemeList[0].Value)
+                        if (ThemeService.AppTheme.Equals(ThemeService.ThemeList[0]))
                         {
                             WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                         }
