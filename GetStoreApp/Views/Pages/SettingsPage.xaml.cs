@@ -205,6 +205,22 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private GeographicRegion _currentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
+
+        public GeographicRegion CurrentCountryOrRegion
+        {
+            get { return _currentCountryOrRegion; }
+
+            set
+            {
+                if (!Equals(_currentCountryOrRegion, value))
+                {
+                    _currentCountryOrRegion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentCountryOrRegion)));
+                }
+            }
+        }
+
         private GeographicRegion _storeRegion;
 
         public GeographicRegion StoreRegion
@@ -398,6 +414,9 @@ namespace GetStoreApp.Views.Pages
                     });
                 }
             }
+
+            GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            StoreRegionService.ServiceChanged += OnServiceChanged;
         }
 
         #region 第一部分：重写父类事件
@@ -860,6 +879,14 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 打开系统区域设置
+        /// </summary>
+        private async void OnSystemRegionSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
+        }
+
+        /// <summary>
         /// 设置是否使用系统默认区域
         /// </summary>
         private void OnUseSystemRegionToggled(object sender, RoutedEventArgs args)
@@ -951,6 +978,55 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第三部分：设置页面——挂载的事件
+
+        #region 第四部分：自定义事件
+
+        /// <summary>
+        /// 应用程序退出时触发的事件
+        /// </summary>
+        private void OnApplicationExit(object sender, EventArgs args)
+        {
+            try
+            {
+                GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+                StoreRegionService.ServiceChanged -= OnServiceChanged;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Unregister store region service event failed", e);
+            }
+        }
+
+        /// <summary>
+        /// 设置选项发生变化时触发的事件
+        /// </summary>
+        private void OnServiceChanged(object sender, EventArgs args)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                if (!CurrentCountryOrRegion.CodeTwoLetter.Equals(StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
+                {
+                    CurrentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
+                }
+
+                if (UseSystemRegionValue)
+                {
+                    StoreRegion = StoreRegionService.DefaultStoreRegion;
+
+                    foreach (StoreRegionModel item in StoreRegionCollection)
+                    {
+                        item.IsChecked = false;
+                        if (StoreRegion.CodeTwoLetter.Equals(item.StoreRegionInfo.CodeTwoLetter))
+                        {
+                            StoreRegion = item.StoreRegionInfo;
+                            item.IsChecked = true;
+                        }
+                    }
+                }
+            });
+        }
+
+        #endregion 第四部分：自定义事件
 
         private string LocalizeDisplayNumber(KeyValuePair<string, string> selectedBackdrop)
         {

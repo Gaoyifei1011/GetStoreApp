@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -58,9 +59,9 @@ namespace GetStoreApp.Services.Root
                     await httpRequestSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(httpRequestFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), httpRequestGuid.ToString().ToUpper()));
                     httpRequestSession.Dispose();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return;
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
                 finally
                 {
@@ -107,9 +108,9 @@ namespace GetStoreApp.Services.Root
                     await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpper()));
                     exceptionSession.Dispose();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return;
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
                 finally
                 {
@@ -166,8 +167,9 @@ namespace GetStoreApp.Services.Root
                 });
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return false;
             }
         }

@@ -393,4 +393,13 @@
   <data name="WinGetPackageDescription2" xml:space="preserve">
     <value>The WinGet application provides a package-friendly graphical interface that includes searching and installing required applications, managing installed and upgradeable applications on the device. It is easy to operate and manage traditional applications (i.e. non-store applications) on the device.</value>
   </data>
+  <data name="QueryLinksMode" xml:space="preserve">
+    <value>Query links mode instruction</value>
+  </data>
+  <data name="QueryLinksModeDescription" xml:space="preserve">
+    <value>The official interface can support both packaged and unpackaged apps (classic apps) of the store, while the third-party interface only supports packaged apps of the store</value>
+  </data>
+  <data name="QueryLinksCountryOrRegion" xml:space="preserve">
+    <value>When you use the official API to search for links to unpackaged apps in your store, you can search them according to the country or region of the store that you set in your settings.</value>
+  </data>
 </root>

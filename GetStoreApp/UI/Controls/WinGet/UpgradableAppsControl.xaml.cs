@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -275,7 +276,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             WinGetInstance.InstallingStateDict.Add(upgradableApps.AppID, upgradeTokenSource);
                         }
-                        catch (Exception) { }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
                         finally
                         {
                             WinGetInstance.installStateLock.Exit();
@@ -311,7 +315,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                             {
                                 WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
-                            catch (Exception) { }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
                             finally
                             {
                                 WinGetInstance.installStateLock.Exit();
@@ -349,7 +356,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                             {
                                 WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                             }
-                            catch (Exception) { }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
                             finally
                             {
                                 WinGetInstance.installStateLock.Exit();
@@ -391,7 +401,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
-                        catch (Exception) { }
+                        catch (Exception exception)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(exception);
+                        }
                         finally
                         {
                             WinGetInstance.installStateLock.Exit();
@@ -431,7 +444,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             WinGetInstance.InstallingStateDict.Remove(upgradableApps.AppID);
                         }
-                        catch (Exception) { }
+                        catch (Exception exception)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(exception);
+                        }
                         finally
                         {
                             WinGetInstance.installStateLock.Exit();

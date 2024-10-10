@@ -24,7 +24,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
         /// <returns>如果成功安装子类回调，则为 TRUE;否则为 FALSE。</returns>
         [LibraryImport(Comctl32, EntryPoint = "SetWindowSubclass", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetWindowSubclass(IntPtr hWnd, IntPtr pfnSubclass, uint uIdSubclass, IntPtr dwRefData);
+        public static partial bool SetWindowSubclass(IntPtr hWnd, SUBCLASSPROC pfnSubclass, uint uIdSubclass, IntPtr dwRefData);
 
         /// <summary>
         /// 在窗口的子类链中调用下一个处理程序。 子类链中的最后一个处理程序调用窗口的原始窗口过程。
@@ -46,6 +46,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Comctl32
         /// <returns>如果成功删除子类回调，则为 TRUE;否则为 FALSE。</returns>
         [LibraryImport(Comctl32, EntryPoint = "RemoveWindowSubclass", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool RemoveWindowSubclass(IntPtr hWnd, IntPtr pfnSubclass, uint uIdSubclass);
+        public static partial bool RemoveWindowSubclass(IntPtr hWnd, SUBCLASSPROC pfnSubclass, uint uIdSubclass);
     }
 }

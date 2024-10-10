@@ -105,7 +105,7 @@ namespace GetStoreAppWebView.WindowsAPI.PInvoke.User32
         /// 如果函数失败，则返回值为零。
         /// </returns>
         [LibraryImport(User32, EntryPoint = "RegisterClassW", SetLastError = false), PreserveSig]
-        public static partial ushort RegisterClass(ref WNDCLASS lpWndClass);
+        public static partial ushort RegisterClass(in WNDCLASS lpWndClass);
 
         /// <summary>
         /// 将指定的消息发送到窗口或窗口。 SendMessageW 函数调用指定窗口的窗口过程，在窗口过程处理消息之前不会返回。

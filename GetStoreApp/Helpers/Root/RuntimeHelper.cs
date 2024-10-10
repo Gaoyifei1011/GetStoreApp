@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.ApplicationModel;
 
 namespace GetStoreApp.Helpers.Root
@@ -26,8 +27,9 @@ namespace GetStoreApp.Helpers.Root
             {
                 IsMSIX = Package.Current is not null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 IsMSIX = false;
             }
         }

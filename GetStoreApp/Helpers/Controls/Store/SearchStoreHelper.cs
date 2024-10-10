@@ -3,6 +3,7 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,8 +42,9 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                 return jsonObject.Stringify();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return string.Empty;
             }
         }

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -962,8 +963,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["FamilyName"] = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["DisplayName"] = Unknown;
                     }
 
@@ -971,8 +973,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["FullName"] = string.IsNullOrEmpty(packageItem.Package.Id.FullName) ? Unknown : packageItem.Package.Id.FullName;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["FullName"] = Unknown;
                     }
 
@@ -980,8 +983,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["Description"] = string.IsNullOrEmpty(packageItem.Package.Description) ? Unknown : packageItem.Package.Description;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["FullName"] = Unknown;
                     }
 
@@ -991,8 +995,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["PublisherId"] = string.IsNullOrEmpty(packageItem.Package.Id.PublisherId) ? Unknown : packageItem.Package.Id.PublisherId;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["PublisherId"] = Unknown;
                     }
 
@@ -1003,8 +1008,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["Architecture"] = string.IsNullOrEmpty(packageItem.Package.Id.Architecture.ToString()) ? Unknown : packageItem.Package.Id.Architecture.ToString();
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["Architecture"] = Unknown;
                     }
 
@@ -1014,8 +1020,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["ResourceId"] = string.IsNullOrEmpty(packageItem.Package.Id.ResourceId) ? Unknown : packageItem.Package.Id.ResourceId;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["ResourceId"] = Unknown;
                     }
 
@@ -1023,8 +1030,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["IsBundle"] = packageItem.Package.IsBundle ? Yes : No;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["IsBundle"] = Unknown;
                     }
 
@@ -1032,19 +1040,20 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["IsDevelopmentMode"] = packageItem.Package.IsDevelopmentMode ? Yes : No;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["IsDevelopmentMode"] = Unknown;
                     }
-
                     packageDict["IsFramework"] = packageItem.IsFramework ? Yes : No;
 
                     try
                     {
                         packageDict["IsOptional"] = packageItem.Package.IsOptional ? Yes : No;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["IsOptional"] = Unknown;
                     }
 
@@ -1052,8 +1061,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["IsResourcePackage"] = packageItem.Package.IsResourcePackage ? Yes : No;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["IsResourcePackage"] = Unknown;
                     }
 
@@ -1061,8 +1071,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["IsStub"] = packageItem.Package.IsStub ? Yes : No;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["IsStub"] = Unknown;
                     }
 
@@ -1070,8 +1081,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageDict["VertifyIsOK"] = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["VertifyIsOK"] = Unknown;
                     }
 
@@ -1092,8 +1104,9 @@ namespace GetStoreApp.Views.Pages
                         }
                         packageDict["AppListEntryCollection"] = appListEntryList;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["AppListEntryCollection"] = new List<AppListEntry>();
                     }
 
@@ -1126,8 +1139,9 @@ namespace GetStoreApp.Views.Pages
                         dependenciesList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
                         packageDict["DependenciesCollection"] = dependenciesList;
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["DependenciesCollection"] = new List<PackageModel>();
                     }
 
@@ -1558,8 +1572,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return package.IsFramework;
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return false;
             }
         }
@@ -1573,8 +1588,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return package.GetAppListEntries().Count;
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return 0;
             }
         }
@@ -1588,8 +1604,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return string.IsNullOrEmpty(package.DisplayName) ? Unknown : package.DisplayName;
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return Unknown;
             }
         }
@@ -1603,8 +1620,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return string.IsNullOrEmpty(package.PublisherDisplayName) ? Unknown : package.PublisherDisplayName;
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return Unknown;
             }
         }
@@ -1618,8 +1636,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return new Version(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision).ToString();
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return new Version().ToString();
             }
         }
@@ -1633,8 +1652,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return package.InstalledDate.ToString("yyyy/MM/dd HH:mm");
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return DateTimeOffset.FromUnixTimeSeconds(0).ToString("yyyy/MM/dd HH:mm");
             }
         }
@@ -1648,8 +1668,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return package.SignatureKind;
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return PackageSignatureKind.None;
             }
         }
@@ -1663,8 +1684,9 @@ namespace GetStoreApp.Views.Pages
             {
                 return package.InstalledDate;
             }
-            catch
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 return DateTimeOffset.FromUnixTimeSeconds(0);
             }
         }

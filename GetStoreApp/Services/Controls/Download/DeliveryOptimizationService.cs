@@ -47,7 +47,10 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 count = DeliveryOptimizationDict.Count;
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
             finally
             {
                 deliveryOptimizationLock.Exit();
@@ -111,24 +114,24 @@ namespace GetStoreApp.Services.Controls.Download
 
                         // 添加下载信息
                         ComVariant displayNameVariant = ComVariant.Create(displayName);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_DisplayName, ref displayNameVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_DisplayName, displayNameVariant);
                         ComVariant urlVariant = ComVariant.Create(url);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_Uri, ref urlVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_Uri, urlVariant);
                         ComVariant filePathVariant = ComVariant.Create(saveFilePath);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, ref filePathVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_LocalPath, filePathVariant);
 
                         DODownloadStatusCallback doDownloadStatusCallback = new();
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
 
                         ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, (IntPtr)ComInterfaceMarshaller<object>.ConvertToUnmanaged(new UnknownWrapper(doDownloadStatusCallback).WrappedObject));
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_CallbackInterface, ref callbackInterfaceVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_CallbackInterface, callbackInterfaceVariant);
                         ComVariant foregroundVariant = ComVariant.Create(true);
-                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, ref foregroundVariant);
+                        doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, foregroundVariant);
 
                         ComVariant idVariant = ComVariant.Null;
-                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, ref idVariant);
+                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, out idVariant);
                         ComVariant totalSizeVariant = ComVariant.Null;
-                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_TotalSizeBytes, ref totalSizeVariant);
+                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_TotalSizeBytes, out totalSizeVariant);
                         doDownloadStatusCallback.DownloadID = new(idVariant.As<string>());
                         double size = Convert.ToDouble(totalSizeVariant.As<ulong>());
                         DownloadCreated?.Invoke(doDownloadStatusCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, Convert.ToDouble(totalSizeVariant.As<ulong>()));
@@ -139,7 +142,10 @@ namespace GetStoreApp.Services.Controls.Download
                         {
                             DeliveryOptimizationDict.TryAdd(doDownloadStatusCallback.DownloadID, Tuple.Create(doDownload, doDownloadStatusCallback));
                         }
-                        catch (Exception) { }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
                         finally
                         {
                             deliveryOptimizationLock.Exit();
@@ -279,7 +285,10 @@ namespace GetStoreApp.Services.Controls.Download
                             DeliveryOptimizationDict.Remove(callback.DownloadID);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
                     finally
                     {
                         deliveryOptimizationLock.Exit();

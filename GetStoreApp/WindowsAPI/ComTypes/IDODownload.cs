@@ -56,7 +56,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="propVal">生成的属性值，存储在 VARIANT 中。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int GetProperty(DODownloadProperty propId, ref ComVariant propVal);
+        int GetProperty(DODownloadProperty propId, out ComVariant propVal);
 
         /// <summary>
         /// 检索指向包含特定下载属性的 VARIANT 的指针。
@@ -65,6 +65,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="propVal">要设置的属性值，存储在 VARIANT 中。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int SetProperty(DODownloadProperty propId, ref ComVariant propVal);
+        int SetProperty(DODownloadProperty propId, in ComVariant propVal);
     }
 }

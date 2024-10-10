@@ -3,7 +3,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using Windows.Globalization;
 
@@ -16,7 +15,6 @@ namespace GetStoreApp.Services.Controls.Settings
     {
         private static readonly string useSystemRegionKey = ConfigKey.UseSystemRegionKey;
         private static readonly string storeRegionKey = ConfigKey.StoreRegionKey;
-        private static readonly GeographicRegion systemRegion = new();
         private static GEO_ENUMNAMEPROC enumNameProc;
 
         private static readonly bool defaultUseSystemRegionValue = true;
@@ -29,17 +27,39 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static List<GeographicRegion> StoreRegionList { get; } = [];
 
+        public static event EventHandler ServiceChanged;
+
         /// <summary>
         /// 应用在初始化前获取设置存储的区域值，如果设置值为空，设定默认的应用区域值
         /// </summary>
         public static void InitializeStoreRegion()
         {
             InitializeStoreRegionList();
-
+            GeographicRegion systemRegion = new();
             DefaultStoreRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
 
             UseSystemRegionValue = GetUseSystemRegionValue();
             StoreRegion = GetRegion();
+        }
+
+        /// <summary>
+        /// 当系统默认区域发生改变时，更新默认区域
+        /// </summary>
+        public static void UpdateDefaultRegion()
+        {
+            GeographicRegion systemRegion = new();
+
+            if (!systemRegion.CodeTwoLetter.Equals(DefaultStoreRegion.CodeTwoLetter))
+            {
+                DefaultStoreRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
+
+                if (UseSystemRegionValue)
+                {
+                    StoreRegion = DefaultStoreRegion;
+                }
+
+                ServiceChanged?.Invoke(null, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -48,7 +68,7 @@ namespace GetStoreApp.Services.Controls.Settings
         private static void InitializeStoreRegionList()
         {
             enumNameProc = new GEO_ENUMNAMEPROC(EnumNameProc);
-            Kernel32Library.EnumSystemGeoNames(SYSGEOCLASS.GEOCLASS_NATION, Marshal.GetFunctionPointerForDelegate(enumNameProc), IntPtr.Zero);
+            Kernel32Library.EnumSystemGeoNames(SYSGEOCLASS.GEOCLASS_NATION, enumNameProc, IntPtr.Zero);
             StoreRegionList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
         }
 
@@ -78,12 +98,20 @@ namespace GetStoreApp.Services.Controls.Settings
             if (storeRegion is null)
             {
                 SetRegion(DefaultStoreRegion);
-                DefaultStoreRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(DefaultStoreRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
+                return DefaultStoreRegion;
             }
 
             GeographicRegion selectedRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(storeRegion));
 
-            return selectedRegion is null ? DefaultStoreRegion : selectedRegion;
+            if (UseSystemRegionValue)
+            {
+                SetRegion(DefaultStoreRegion);
+                return DefaultStoreRegion;
+            }
+            else
+            {
+                return selectedRegion is null ? DefaultStoreRegion : selectedRegion;
+            }
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using System;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace GetStoreAppWebView.Helpers.Root
 {
@@ -25,8 +26,9 @@ namespace GetStoreAppWebView.Helpers.Root
                 string webViewVersion = CoreWebView2Environment.GetAvailableBrowserVersionString();
                 IsWebView2Installed = !string.IsNullOrEmpty(webViewVersion);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 IsWebView2Installed = false;
             }
         }

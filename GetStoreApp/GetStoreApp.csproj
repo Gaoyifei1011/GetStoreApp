@@ -5,8 +5,8 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DebuggerSupport>true</DebuggerSupport>
-    <DebugType>pdbonly</DebugType>
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -214,10 +214,10 @@
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
-  <!--<Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
+  <Target Name="AutoPublish" AfterTargets="AfterBuild" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Debug|true|true'">
     <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Publish" />
     <Copy SourceFiles="$(NativeOutputPath)$(AssemblyName).exe" DestinationFiles="$(ProjectDir)obj\$(Platform)\$(Configuration)\$(TargetFramework)\$(RuntimeIdentifier)\apphost.exe" />
-  </Target>-->
+  </Target>
   
   <!-- 捆绑前对二进制文件进行后处理 -->
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">

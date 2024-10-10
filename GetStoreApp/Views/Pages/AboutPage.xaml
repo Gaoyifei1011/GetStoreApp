@@ -706,6 +706,29 @@
                                 Margin="30,10,16,10"
                                 FontSize="15"
                                 FontWeight="Normal"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/QueryLinksMode')}"
+                                TextAlignment="Left" />
+                            <TextBlock
+                                Margin="30,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/QueryLinksModeDescription')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+                            <TextBlock
+                                Margin="30,0,16,5"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/QueryLinksCountryOrRegion')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <MenuFlyoutSeparator />
+
+                            <TextBlock
+                                Margin="30,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
                                 Text="{x:Bind root:ResourceService.GetLocalized('About/LinkFilter')}"
                                 TextAlignment="Left" />
                             <TextBlock

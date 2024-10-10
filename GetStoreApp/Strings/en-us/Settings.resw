@@ -499,6 +499,21 @@
     <value>Use system country or region value</value>
   </data>
   <data name="CurrentCountryOrRegion" xml:space="preserve">
-    <value>Current country or region: {0}</value>
+    <value>Current country or region: </value>
+  </data>
+  <data name="StoreCountryOrRegion" xml:space="preserve">
+    <value>Country or region</value>
+  </data>
+  <data name="StoreCountryOrRegionDescription" xml:space="preserve">
+    <value>Set Microsoft Store countries and regions</value>
+  </data>
+  <data name="SystemRegionSettings" xml:space="preserve">
+    <value>System region settings</value>
+  </data>
+  <data name="StoreRegion" xml:space="preserve">
+    <value>Store region</value>
+  </data>
+  <data name="StoreRegionDescription" xml:space="preserve">
+    <value>Set the Microsoft Store market area</value>
   </data>
 </root>

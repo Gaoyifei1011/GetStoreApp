@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.ApplicationModel.Resources.Core;
 
 namespace GetStoreAppShellExtension.Services.Root
@@ -44,14 +45,17 @@ namespace GetStoreAppShellExtension.Services.Root
                 {
                     return resourceMap.GetValue(resource, currentResourceContext).ValueAsString;
                 }
-                catch (Exception)
+                catch (Exception currentResourceException)
                 {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(currentResourceException);
+
                     try
                     {
                         return resourceMap.GetValue(resource, defaultResourceContext).ValueAsString;
                     }
-                    catch (Exception)
+                    catch (Exception defaultResourceException)
                     {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(defaultResourceException);
                         return resource;
                     }
                 }

@@ -45,7 +45,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果成功，则返回非零值，否则返回 0。</returns>
         [LibraryImport(Kernel32, EntryPoint = "EnumSystemGeoNames", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool EnumSystemGeoNames(SYSGEOCLASS geoClass, IntPtr geoEnumProc, IntPtr data);
+        public static partial bool EnumSystemGeoNames(SYSGEOCLASS geoClass, GEO_ENUMNAMEPROC geoEnumProc, IntPtr data);
 
         /// <summary>
         /// 从其控制台中分离调用进程。
@@ -105,7 +105,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
         [LibraryImport(Kernel32, EntryPoint = "SetConsoleCtrlHandler", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool SetConsoleCtrlHandler(IntPtr handlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
+        public static partial bool SetConsoleCtrlHandler(ConsoleEventDelegate handlerRoutine, [MarshalAs(UnmanagedType.Bool)] bool add);
 
         /// <summary>
         /// 从当前光标位置开始，将字符串写入控制台屏幕缓冲区。

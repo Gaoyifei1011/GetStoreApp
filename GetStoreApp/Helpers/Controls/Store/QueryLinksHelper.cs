@@ -5,13 +5,13 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation.Diagnostics;
-using Windows.Globalization;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -367,7 +367,10 @@ namespace GetStoreApp.Helpers.Controls.Store
                                     });
                                     countdownEvent.Signal();
                                 }
-                                catch (Exception) { }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
                                 finally
                                 {
                                     appxPackagesLock.Exit();
@@ -548,7 +551,10 @@ namespace GetStoreApp.Helpers.Controls.Store
                                     });
                                     countdownEvent.Signal();
                                 }
-                                catch (Exception) { }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
                                 finally
                                 {
                                     nonAppxPackagesLock.Exit();
@@ -572,7 +578,10 @@ namespace GetStoreApp.Helpers.Controls.Store
                                     });
                                     countdownEvent.Signal();
                                 }
-                                catch (Exception) { }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
                                 finally
                                 {
                                     nonAppxPackagesLock.Exit();

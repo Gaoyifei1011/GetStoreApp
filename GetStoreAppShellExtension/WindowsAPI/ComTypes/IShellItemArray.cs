@@ -19,7 +19,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
         /// <param name="ppvOut">此方法返回时，包含 riid 中指定的对象，该对象由 rbhid 指定的处理程序返回。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int BindToHandler(IntPtr pbc, ref Guid bhid, ref Guid riid, out IntPtr ppvOut);
+        int BindToHandler(IntPtr pbc, in Guid bhid, in Guid riid, out IntPtr ppvOut);
 
         /// <summary>
         /// 获取属性存储。
@@ -29,7 +29,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
         /// <param name="ppv">此方法返回时，包含 riid 中请求的接口指针。 这通常是 IPropertyStore 或 IPropertyStoreCapabilities。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetPropertyStore(int flags, ref Guid riid, out IntPtr ppv);
+        int GetPropertyStore(int flags, in Guid riid, out IntPtr ppv);
 
         /// <summary>
         /// 获取 shell 项数组中项的属性说明列表。
@@ -39,7 +39,7 @@ namespace GetStoreAppShellExtension.WindowsAPI.ComTypes
         /// <param name="ppv">此方法返回时，包含 riid 中请求的接口。 这通常是 IPropertyDescriptionList。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetPropertyDescriptionList(IntPtr keyType, ref Guid riid, out IntPtr ppv);
+        int GetPropertyDescriptionList(IntPtr keyType, in Guid riid, out IntPtr ppv);
 
         /// <summary>
         /// 获取 IShellItemArray 中包含的项集的属性。 如果数组包含多个项，则此方法检索的属性不是单个项的属性，而是所有项的所有请求属性的逻辑组合。

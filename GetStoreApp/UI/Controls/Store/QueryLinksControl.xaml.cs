@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -560,7 +561,10 @@ namespace GetStoreApp.UI.Controls.Store
 
                 IsSelectMode = true;
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
             finally
             {
                 queryLinksLock.Exit();
@@ -581,7 +585,10 @@ namespace GetStoreApp.UI.Controls.Store
                     queryLinksItem.IsSelected = true;
                 }
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
             finally
             {
                 queryLinksLock.Exit();
@@ -602,7 +609,10 @@ namespace GetStoreApp.UI.Controls.Store
                     queryLinksItem.IsSelected = false;
                 }
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
             finally
             {
                 queryLinksLock.Exit();
@@ -630,7 +640,10 @@ namespace GetStoreApp.UI.Controls.Store
                         }
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
                 finally
                 {
                     queryLinksLock.Exit();
@@ -686,7 +699,10 @@ namespace GetStoreApp.UI.Controls.Store
                         }
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
                 finally
                 {
                     queryLinksLock.Exit();
@@ -738,7 +754,10 @@ namespace GetStoreApp.UI.Controls.Store
                         }
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
                 finally
                 {
                     queryLinksLock.Exit();
@@ -849,7 +868,10 @@ namespace GetStoreApp.UI.Controls.Store
                             queryLinksItem.IsSelectMode = false;
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
                     finally
                     {
                         queryLinksLock.Exit();
@@ -874,7 +896,10 @@ namespace GetStoreApp.UI.Controls.Store
                     queryLinksItem.IsSelectMode = false;
                 }
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
             finally
             {
                 queryLinksLock.Exit();
@@ -895,7 +920,10 @@ namespace GetStoreApp.UI.Controls.Store
                     int ClickedIndex = QueryLinksCollection.IndexOf(queryLinksItem);
                     QueryLinksCollection[ClickedIndex].IsSelected = !QueryLinksCollection[ClickedIndex].IsSelected;
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
                 finally
                 {
                     queryLinksLock.Exit();
@@ -1020,7 +1048,10 @@ namespace GetStoreApp.UI.Controls.Store
                                         Task.Delay(1);
                                     }
                                 }
-                                catch (Exception) { }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
                                 finally
                                 {
                                     queryLinksLock.Exit();
@@ -1110,7 +1141,10 @@ namespace GetStoreApp.UI.Controls.Store
                                     Task.Delay(1);
                                 }
                             }
-                            catch (Exception) { }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
                             finally
                             {
                                 queryLinksLock.Exit();

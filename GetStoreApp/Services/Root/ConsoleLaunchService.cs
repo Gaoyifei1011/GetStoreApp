@@ -46,7 +46,7 @@ namespace GetStoreApp.Services.Root
                 consoleLaunchArgs.Add(arg);
             }
             ConsoleEventDelegate ctrlDelegate = new(OnConsoleCtrlHandler);
-            Kernel32Library.SetConsoleCtrlHandler(Marshal.GetFunctionPointerForDelegate(ctrlDelegate), true);
+            Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
             DownloadSchedulerService.InitializeDownloadScheduler(false);
             DownloadSchedulerService.DownloadCreated += DownloadService.OnDownloadCreated;
             DownloadSchedulerService.DownloadProgressing += DownloadService.OnDownloadProgressing;

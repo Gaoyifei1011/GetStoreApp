@@ -7,6 +7,7 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.System;
@@ -117,8 +118,9 @@ namespace GetStoreApp.Services.Shell
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
                     string inputString = ConsoleHelper.ReadLine();
                     if (inputString is "Y" or "y")

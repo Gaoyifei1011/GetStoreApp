@@ -17,6 +17,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="status">指向包含下载状态 的DO_DOWNLOAD_STATUS 结构的指针。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int OnStatusChange([MarshalAs(UnmanagedType.Interface)] IDODownload download, ref DO_DOWNLOAD_STATUS status);
+        int OnStatusChange([MarshalAs(UnmanagedType.Interface)] IDODownload download, DO_DOWNLOAD_STATUS status);
     }
 }

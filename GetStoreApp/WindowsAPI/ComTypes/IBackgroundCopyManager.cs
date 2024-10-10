@@ -28,7 +28,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="ppJob">指向 JobID 指定的作业的 IBackgroundCopyJob 接口指针。 完成后，释放 ppJob。</param>
         /// <returns>如果函数成功，则返回 S_OK。 否则，它将返回 HRESULT错误代码。</returns>
         [PreserveSig]
-        int GetJob(ref Guid jobID, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob ppJob);
+        int GetJob(in Guid jobID, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob ppJob);
 
         /// <summary>
         /// 检索指向枚举器对象的接口指针，该对象用于枚举传输队列中的 作业 。 枚举器中作业的顺序是任意的。

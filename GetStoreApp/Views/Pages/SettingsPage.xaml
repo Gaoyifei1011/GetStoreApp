@@ -2,7 +2,6 @@
     x:Class="GetStoreApp.Views.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:collection="using:System.Collections"
     xmlns:controlHelper="using:GetStoreApp.Helpers.Controls.Extensions"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -855,21 +854,21 @@
                                 VerticalAlignment="Center"
                                 Orientation="Vertical">
 
-                                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegion')}" />
+                                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreCountryOrRegion')}" />
 
                                 <TextBlock
-                                    x:Name="StoreRegionDescription"
+                                    x:Name="StoreCountryOrRegionDescription"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreCountryOrRegionDescription')}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             MaxWidth="9999"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
-                                            Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/StoreCountryOrRegionDescription')}"
+                                            Visibility="{x:Bind StoreCountryOrRegionDescription.IsTextTrimmed, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
                             </StackPanel>
@@ -887,6 +886,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel
@@ -898,25 +898,37 @@
                                         VerticalAlignment="Center"
                                         Style="{StaticResource BodyTextBlockStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegion')}" />
+
                                     <TextBlock
-                                        x:Name="UseSystemRegionDescription"
+                                        x:Name="CurrentCountryOrRegionText"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionDescription')}"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/CurrentCountryOrRegion')}" />
+                                        <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
+
                                         <ToolTipService.ToolTip>
-                                            <ToolTip
-                                                MaxWidth="9999"
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionDescription')}"
-                                                Visibility="{x:Bind UseSystemRegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                            <ToolTip MaxWidth="9999" Visibility="{x:Bind CurrentCountryOrRegionText.IsTextTrimmed, Mode=OneWay}">
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/CurrentCountryOrRegion')}" />
+                                                    <Run Text="{x:Bind CurrentCountryOrRegion.DisplayName, Mode=OneWay}" />
+                                                </TextBlock>
+                                            </ToolTip>
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>
 
-                                <ToggleSwitch
+                                <HyperlinkButton
                                     Grid.Column="1"
+                                    Margin="0,0,6,0"
+                                    VerticalAlignment="Center"
+                                    Click="{x:Bind OnSystemRegionSettingsClicked}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemRegionSettings')}" />
+
+                                <ToggleSwitch
+                                    Grid.Column="2"
                                     MinWidth="0"
                                     FlowDirection="{x:Bind controlHelper:ToggleSwitchHelper.GetFlowDirection(service:LanguageService.FlowDirection)}"
                                     IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
@@ -947,18 +959,18 @@
                                         Style="{StaticResource BodyTextBlockStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegion')}" />
                                     <TextBlock
-                                        x:Name="RegionDescription"
+                                        x:Name="StoreRegionDescription"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/RegionDescription')}"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap">
 
                                         <ToolTipService.ToolTip>
                                             <ToolTip
                                                 MaxWidth="9999"
-                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/RegionDescription')}"
-                                                Visibility="{x:Bind RegionDescription.IsTextTrimmed, Mode=OneWay}" />
+                                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/StoreRegionDescription')}"
+                                                Visibility="{x:Bind StoreRegionDescription.IsTextTrimmed, Mode=OneWay}" />
                                         </ToolTipService.ToolTip>
                                     </TextBlock>
                                 </StackPanel>

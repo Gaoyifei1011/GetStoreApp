@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -56,8 +57,9 @@ namespace GetStoreAppWebView.Services.Root
                     await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpper()));
                     exceptionSession.Dispose();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     return;
                 }
                 finally
@@ -105,8 +107,9 @@ namespace GetStoreAppWebView.Services.Root
                     await exceptionSession.SaveToFileAsync(await StorageFolder.GetFolderFromPathAsync(exceptionFolderPath), string.Format("Logs {0} {1}.etl", DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"), exceptionGuid.ToString().ToUpperInvariant()));
                     exceptionSession.Dispose();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     return;
                 }
                 finally

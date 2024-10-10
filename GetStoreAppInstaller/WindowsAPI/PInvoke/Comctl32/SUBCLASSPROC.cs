@@ -1,5 +1,6 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using System;
+using System.Runtime.InteropServices;
 
 namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32
 {
@@ -13,5 +14,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32
     /// <param name="uIdSubclass">子类 ID。</param>
     /// <param name="dwRefData">提供给 SetWindowSubclass 函数的引用数据。 这可用于将子类实例与“this”指针相关联。</param>
     /// <returns>返回值是消息处理的结果，取决于发送的消息。</returns>
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     public delegate IntPtr SUBCLASSPROC(IntPtr hWnd, WindowMessage uMsg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData);
 }

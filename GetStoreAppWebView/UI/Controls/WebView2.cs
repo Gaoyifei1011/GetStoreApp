@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Input;
 using Windows.Foundation;
@@ -1326,7 +1325,7 @@ namespace GetStoreAppWebView.UI.Controls
                                     hInstance = hInstance,
                                     lpszClassName = (IntPtr)Utf16StringMarshaller.ConvertToUnmanaged(classname),
                                 };
-                                User32Library.RegisterClass(ref wc);
+                                User32Library.RegisterClass(wc);
                             }
 
                             tempHostHwnd = User32Library.CreateWindowEx(0, classname, "WebView2 Temporary Parent", 0x00000000, 0, 0, 0, 0, IntPtr.Zero, IntPtr.Zero, hInstance, IntPtr.Zero);

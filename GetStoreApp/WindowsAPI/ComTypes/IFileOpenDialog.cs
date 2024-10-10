@@ -189,7 +189,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         /// <param name="guid">要与此对话状态关联的 GUID。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int SetClientGuid(ref Guid guid);
+        int SetClientGuid(in Guid guid);
 
         /// <summary>
         /// 指示对话框清除所有持久状态信息。

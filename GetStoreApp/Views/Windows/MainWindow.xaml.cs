@@ -28,7 +28,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
@@ -165,7 +165,7 @@ namespace GetStoreApp.Views.Windows
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0, IntPtr.Zero);
+            Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0, IntPtr.Zero);
 
             SetWindowTheme();
             SetSystemBackdrop();
@@ -187,7 +187,10 @@ namespace GetStoreApp.Views.Windows
                     materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
                 }
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
         }
 
         /// <summary>
@@ -273,7 +276,7 @@ namespace GetStoreApp.Views.Windows
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
                     DownloadSchedulerService.TerminateDownload();
-                    Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0);
+                    Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0);
                     (Application.Current as WinUIApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
@@ -291,7 +294,7 @@ namespace GetStoreApp.Views.Windows
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
-                Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, Marshal.GetFunctionPointerForDelegate(mainWindowSubClassProc), 0);
+                Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0);
                 (Application.Current as WinUIApp).Dispose();
             }
         }
@@ -900,6 +903,8 @@ namespace GetStoreApp.Views.Windows
                         {
                             WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                         }
+
+                        StoreRegionService.UpdateDefaultRegion();
                         break;
                     }
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息

@@ -1,7 +1,6 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using System;
-using System.Runtime.InteropServices;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.System;
@@ -315,7 +314,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
                 }
 
                 windowSubClassProc = new SUBCLASSPROC(OnWindowSubClassProc);
-                Comctl32Library.SetWindowSubclass(windowHandle, Marshal.GetFunctionPointerForDelegate(windowSubClassProc), 0, IntPtr.Zero);
+                Comctl32Library.SetWindowSubclass(windowHandle, windowSubClassProc, 0, IntPtr.Zero);
 
                 isInitialized = true;
                 UpdateBrush();
@@ -395,7 +394,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
                         rootElement.ActualThemeChanged -= OnActualThemeChanged;
                     }
 
-                    Comctl32Library.RemoveWindowSubclass(windowHandle, Marshal.GetFunctionPointerForDelegate(windowSubClassProc), 0);
+                    Comctl32Library.RemoveWindowSubclass(windowHandle, windowSubClassProc, 0);
 
                     if (DesktopWindowTarget.Root is SpriteVisual spriteVisual && spriteVisual.Brush is not null)
                     {

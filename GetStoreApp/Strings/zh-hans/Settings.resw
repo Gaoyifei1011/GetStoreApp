@@ -499,6 +499,21 @@
     <value>使用系统国家或地区值</value>
   </data>
   <data name="CurrentCountryOrRegion" xml:space="preserve">
-    <value>当前国家或区域：{0}</value>
+    <value>当前国家或区域：</value>
+  </data>
+  <data name="StoreCountryOrRegion" xml:space="preserve">
+    <value>国家和地区</value>
+  </data>
+  <data name="StoreCountryOrRegionDescription" xml:space="preserve">
+    <value>设置微软商店的国家或地区</value>
+  </data>
+  <data name="SystemRegionSettings" xml:space="preserve">
+    <value>系统区域设置</value>
+  </data>
+  <data name="StoreRegion" xml:space="preserve">
+    <value>商店区域</value>
+  </data>
+  <data name="StoreRegionDescription" xml:space="preserve">
+    <value>设置微软商店市场区域</value>
   </data>
 </root>

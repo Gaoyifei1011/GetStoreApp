@@ -75,7 +75,10 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 count = BitsDict.Count;
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
             finally
             {
                 bitsLock.Exit();
@@ -151,7 +154,10 @@ namespace GetStoreApp.Services.Controls.Download
                         {
                             BitsDict.TryAdd(downloadID, Tuple.Create(downloadJob, backgroundCopyCallback));
                         }
-                        catch (Exception) { }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
                         finally
                         {
                             bitsLock.Exit();
@@ -294,7 +300,10 @@ namespace GetStoreApp.Services.Controls.Download
                             BitsDict.Remove(callback.DownloadID);
                         }
                     }
-                    catch (Exception) { }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
                     finally
                     {
                         bitsLock.Exit();

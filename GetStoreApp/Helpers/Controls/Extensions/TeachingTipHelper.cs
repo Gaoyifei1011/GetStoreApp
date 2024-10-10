@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.Helpers.Controls.Extensions
@@ -34,7 +35,10 @@ namespace GetStoreApp.Helpers.Controls.Extensions
                         }
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
             };
             await Task.Delay(duration);
             teachingTip.IsOpen = false;
