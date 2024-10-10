@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Models.Controls.Store;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,26 @@ namespace GetStoreApp.Helpers.Controls.Store
                     ["MatchType"] = JsonValue.CreateStringValue("Substring")
                 };
 
+                JsonObject requestMatchObject = new()
+                {
+                    ["KeyWord"] = JsonValue.CreateStringValue(StoreRegionService.StoreRegion.CodeTwoLetter),
+                    ["MatchType"] = JsonValue.CreateStringValue("CaseInsensitive")
+                };
+
+                JsonArray filtersArray =
+                [
+                    new JsonObject()
+                    {
+                        ["PackageMatchField"] = JsonValue.CreateStringValue("Market"),
+                        ["RequestMatch"] = requestMatchObject
+                    },
+                ];
+
                 JsonObject jsonObject = new()
                 {
-                    ["Query"] = queryObject
+                    ["MaximunResults"] = JsonValue.CreateNumberValue(1000),
+                    ["Filters"] = filtersArray,
+                    ["Query"] = queryObject,
                 };
 
                 return jsonObject.Stringify();
@@ -49,6 +67,9 @@ namespace GetStoreApp.Helpers.Controls.Store
             }
         }
 
+        /// <summary>
+        /// 搜索商店应用
+        /// </summary>
         public static async Task<Tuple<bool, List<SearchStoreModel>>> SerachStoreAppsAsync(string generatedContent)
         {
             // 添加超时设置（半分钟后停止获取）

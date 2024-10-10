@@ -400,6 +400,6 @@
     <value>The official interface can support both packaged and unpackaged apps (classic apps) of the store, while the third-party interface only supports packaged apps of the store</value>
   </data>
   <data name="QueryLinksCountryOrRegion" xml:space="preserve">
-    <value>When you use the official API to search for links to unpackaged apps in your store, you can search them according to the country or region of the store that you set in your settings.</value>
+    <value>When you use the official interface to search for apps from the store or to search for links to apps from the store, search according to the country or region of the store that you set in the settings.</value>
   </data>
 </root>

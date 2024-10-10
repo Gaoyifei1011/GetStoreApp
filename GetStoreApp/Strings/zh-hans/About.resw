@@ -400,6 +400,6 @@
     <value>官方接口可以同时支持商店的打包应用和非打包应用（传统应用），而第三方接口仅支持商店的打包应用</value>
   </data>
   <data name="QueryLinksCountryOrRegion" xml:space="preserve">
-    <value>使用官方接口查询商店的非打包应用的链接时，根据您在设置中设定的商店的国家或地区进行检索。</value>
+    <value>使用官方接口搜索商店应用或查询商店的应用的链接时，根据您在设置中设定的商店的国家或地区进行检索。</value>
   </data>
 </root>
