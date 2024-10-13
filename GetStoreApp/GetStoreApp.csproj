@@ -29,7 +29,7 @@
     <RootNamespace>GetStoreApp</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <Win32Resource>GetStoreApp.res</Win32Resource>
@@ -206,11 +206,6 @@
     <Page Remove="WinUIApp.xaml" />
 
     <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Assets\Icon\ShellMenu\AppInformation.ico" CopyToOutputDirectory="Always" />
-    <Content Update="Assets\Icon\ShellMenu\PowerShell.ico" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->

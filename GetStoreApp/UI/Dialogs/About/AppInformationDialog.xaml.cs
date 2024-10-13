@@ -113,22 +113,22 @@ namespace GetStoreApp.UI.Dialogs.About
 
             Task.Run(async () =>
             {
-                IReadOnlyList<Package> dependencyList = Package.Current.Dependencies;
+                IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
 
-                foreach (Package dependency in dependencyList)
+                foreach (Package dependencyPackage in dependencyPackageList)
                 {
-                    if (dependency.DisplayName.Contains("WindowsAppRuntime"))
+                    if (dependencyPackage.DisplayName.Contains("WindowsAppRuntime"))
                     {
                         // Windows 应用 SDK 版本信息
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            WindowsAppSDKVersion = new Version(dependency.Id.Version.Major, dependency.Id.Version.Minor, dependency.Id.Version.Build, dependency.Id.Version.Revision).ToString();
+                            WindowsAppSDKVersion = new Version(dependencyPackage.Id.Version.Major, dependencyPackage.Id.Version.Minor, dependencyPackage.Id.Version.Build, dependencyPackage.Id.Version.Revision).ToString();
                         });
 
                         // WinUI 3 版本信息
                         try
                         {
-                            StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependency.InstalledLocation.Path, "Microsoft.UI.Xaml.Controls.dll"));
+                            StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.Controls.dll"));
                             IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
                             DispatcherQueue.TryEnqueue(() =>
                             {
@@ -143,45 +143,45 @@ namespace GetStoreApp.UI.Dialogs.About
                                 WinUI3Version = new Version().ToString();
                             });
                         }
-
-                        // Windows UI 版本信息
-                        try
-                        {
-                            StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.SystemDataPath.System, "Windows.UI.Xaml.dll"));
-                            IDictionary<string, object> windowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                WindowsUIVersion = windowsUIFileProperties[fileVersionProperty] is not null ? Convert.ToString(windowsUIFileProperties[fileVersionProperty]) : string.Empty;
-                            });
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                WindowsUIVersion = new Version().ToString();
-                            });
-                        }
-
-                        // WebView2 SDK 版本信息
-                        try
-                        {
-                            StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
-                            IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                WebView2SDKVersion = webView2CoreFileProperties[fileVersionProperty] is not null ? Convert.ToString(webView2CoreFileProperties[fileVersionProperty]) : string.Empty;
-                            });
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Get WebView2 SDK version failed.", e);
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                WebView2SDKVersion = new Version().ToString();
-                            });
-                        }
                     }
+                }
+
+                // Windows UI 版本信息
+                try
+                {
+                    StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.SystemDataPath.System, "Windows.UI.Xaml.dll"));
+                    IDictionary<string, object> windowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        WindowsUIVersion = windowsUIFileProperties[fileVersionProperty] is not null ? Convert.ToString(windowsUIFileProperties[fileVersionProperty]) : string.Empty;
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        WindowsUIVersion = new Version().ToString();
+                    });
+                }
+
+                // WebView2 SDK 版本信息
+                try
+                {
+                    StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
+                    IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        WebView2SDKVersion = webView2CoreFileProperties[fileVersionProperty] is not null ? Convert.ToString(webView2CoreFileProperties[fileVersionProperty]) : string.Empty;
+                    });
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Get WebView2 SDK version failed.", e);
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        WebView2SDKVersion = new Version().ToString();
+                    });
                 }
             });
 

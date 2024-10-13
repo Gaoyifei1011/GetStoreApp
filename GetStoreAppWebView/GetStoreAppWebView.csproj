@@ -30,7 +30,7 @@
     <RootNamespace>GetStoreAppWebView</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseUwp>true</UseUwp>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
@@ -52,8 +52,6 @@
 
   <ItemGroup>    
     <Content Remove="Assets\GetStoreAppWebView.ico" />
-    <Content Remove="Styles\Mile.Xaml.Styles.SunValley.xbf" />
-    <MyEmbeddedItems Include="Styles\Mile.Xaml.Styles.SunValley.xbf" />
     
     <!-- Temporary workaround, remove when https://github.com/dotnet/sdk/pull/41936 is available in the .NET SDK -->
     <CompilerVisibleProperty Include="CsWinRTUseWindowsUIXamlProjections" />
@@ -65,12 +63,13 @@
     <None Remove="Pages\MainPage.xaml" />
     <None Remove="Pages\TaskbarPinPage.xaml" />
     <None Remove="Styles\UWP\AppbarButton.xaml" />
-
+    
+    <PackageReference Include="DisposableMemory.ModernNetUAP.WinUI" Version="2.8.6.3-preview" />
     <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.3" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.5" />
-    <PackageReference Include="Mile.Xaml" Version="2.3.1064" GeneratePathProperty="True" IncludeAssets="none" PrivateAssets="all" />
-
+    
     <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\TaskbarPinPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -87,23 +86,5 @@
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
     <!-- 对生成的 GetStoreAppWebView.exe 文件进行数字签名 -->
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
-  </Target>
-
-  <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->
-  <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
-    <Copy SourceFiles="@(MyEmbeddedItems)" DestinationFiles="@(MyEmbeddedItems->'$(IntermediateOutputPath)embed\Styles\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-    <ReadLinesFromFile File="$(_EmbedFileResfilePath)">
-      <Output TaskParameter="Lines" ItemName="ItemsFromFile" />
-    </ReadLinesFromFile>
-    <ItemGroup>
-      <MyEmbeddedFileList Include="@(ItemsFromFile)" />
-      <MyEmbeddedFileList Include="@(MyEmbeddedItems)" />
-    </ItemGroup>
-    <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
-  </Target>
-
-  <!-- 复制 Mile.Xaml.Styles.SunValley.xbf 所需要的文件到输出根目录 -->
-  <Target Name="CopyXBFToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(PkgMile_Xaml)\Redist\Styles\Mile.Xaml.Styles.SunValley.xbf" DestinationFolder="Styles" />
   </Target>
 </Project>

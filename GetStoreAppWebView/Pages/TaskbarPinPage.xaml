@@ -4,9 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:root="using:GetStoreAppWebView.Services.Root"
     xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
+    xmlns:wux="using:Windows.UI.Xaml"
     xmlns:wuxc="using:Windows.UI.Xaml.Controls"
+    x:Name="TaskbarPinPageRoot"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
@@ -16,5 +20,24 @@
             FontSize="16"
             Text="{x:Bind root:ResourceService.GetLocalized('WebView/TaskbarPinTip')}"
             TextWrapping="Wrap" />
+
+        <wux:VisualStateManager.VisualStateGroups>
+            <wux:VisualStateGroup>
+                <wux:VisualState x:Name="MicaBackdrop">
+                    <wux:VisualState.Setters>
+                        <wux:Setter Target="TaskbarPinPageRoot.Background">
+                            <wux:Setter.Value>
+                                <wux:Setter Target="TaskbarPinPageRoot.Background" Value="Transparent" />
+                            </wux:Setter.Value>
+                        </wux:Setter>
+                    </wux:VisualState.Setters>
+                </wux:VisualState>
+                <wux:VisualState x:Name="DesktopAcrylicBackdrop">
+                    <wux:VisualState.Setters>
+                        <wux:Setter Target="TaskbarPinPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                    </wux:VisualState.Setters>
+                </wux:VisualState>
+            </wux:VisualStateGroup>
+        </wux:VisualStateManager.VisualStateGroups>
     </wuxc:Grid>
 </wuxc:Page>

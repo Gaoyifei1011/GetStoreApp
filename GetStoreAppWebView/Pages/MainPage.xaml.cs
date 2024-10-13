@@ -2,10 +2,9 @@
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
-using GetStoreAppWebView.UI.Backdrop;
-using GetStoreAppWebView.UI.Controls;
 using GetStoreAppWebView.UI.Dialogs;
 using GetStoreAppWebView.WindowsAPI.ComTypes;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
@@ -39,6 +38,22 @@ namespace GetStoreAppWebView.Pages
         private readonly CoreApplicationView coreApplicationView = CoreApplication.GetCurrentView();
         private readonly IInternalCoreWindow2 internalCoreWindow2 = Window.Current.CoreWindow.As<IInternalCoreWindow2>();
         private readonly EventHandler windowPositionChangedEventHandler;
+
+        private bool _enableBackdropMaterial;
+
+        public bool EnableBackdropMaterial
+        {
+            get { return _enableBackdropMaterial; }
+
+            set
+            {
+                if (!Equals(_enableBackdropMaterial, value))
+                {
+                    _enableBackdropMaterial = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EnableBackdropMaterial)));
+                }
+            }
+        }
 
         private bool _canGoBack;
 
@@ -141,14 +156,15 @@ namespace GetStoreAppWebView.Pages
 
             if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
+                EnableBackdropMaterial = true;
                 VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
             }
             else
             {
+                EnableBackdropMaterial = false;
                 VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
             }
 
-            Background = new MicaBrush();
             windowPositionChangedEventHandler = new EventHandler(OnWindowPositionChanged);
             internalCoreWindow2.AddWindowPositionChanged(MarshalInterface<EventHandler>.CreateMarshaler(windowPositionChangedEventHandler).ThisPtr, out EventRegistrationToken token);
         }

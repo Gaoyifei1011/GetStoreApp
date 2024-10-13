@@ -113,13 +113,14 @@
 
 ### 项目引用（按英文首字母排序）
 
+> * [DisposableMemory.ModernNetUAP.WinUI](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
 > * [DisposableMemory.ModernNetUAP.XamlCompiler](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
+> * [Microsoft.UI.Xaml](https://github.com/microsoft/microsoft-ui-xaml)&emsp;
 > * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
-> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
   
 [学习过程中参考或使用的代码](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [辅助工具](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;
@@ -128,10 +129,7 @@
 
 ### 下载与安装注意事项
 
-> * 该程序使用的是 Windows 应用 SDK 构建的，建议您的系统版本为 Windows 11（代号 22H2 / 内部版本号 22621）或更高版本，最低版本为Windows 10（代号 2004 / 内部版本号 19041）或更高版本。
-> * 如果您的系统是 Windows 10，应用功能存在一些限制：
-    不支持设置云母/云母 Alt 背景色
-> * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases)页面的二进制安装文件已经打包成压缩包。请解压压缩包并使用 Powershell 管理员模式（必要情况下）运行 install.ps1 文件方可实现快速安装。
+> * 该程序使用的是 Windows 应用 SDK 构建的，建议您的系统版本为Windows 11（代号 21H2 / 内部版本号 22000）或更高版本，最低版本为Windows 11（代号 21H2 / 内部版本号 22000）或更高版本。> * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases)页面的二进制安装文件已经打包成压缩包。请解压压缩包并使用 Powershell 管理员模式（必要情况下）运行 install.ps1 文件方可实现快速安装。
 > * 自行下载项目源代码并编译。（请仔细阅读下面的项目编译步骤）
 
 ------
@@ -140,10 +138,10 @@
 
 #### <p align="center">必须安装的工具</p>
 
-> * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * .NET桌面开发（Visual Studio Installer 中安装，.NET SDK 版本 7.0，.NET Framework SDK 版本 4.8.1）
+> * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com) 
+> * .NET桌面开发（Visual Studio Installer 中安装，.NET SDK 版本 9.0）
 > * [WinGet 程序包管理器](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) （推荐安装）
-> * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （推荐安装）
+> * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) （推荐安装）
 
 #### <p align="center">编译步骤</p>
 

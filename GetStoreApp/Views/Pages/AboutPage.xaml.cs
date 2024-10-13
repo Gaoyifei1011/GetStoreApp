@@ -57,13 +57,14 @@ namespace GetStoreApp.Views.Pages
         //项目引用信息
         private List<DictionaryEntry> ReferenceList { get; } =
         [
+            new DictionaryEntry("DisposableMemory.ModernNetUAP.WinUI","https://github.com/driver1998/ModernNetUAP.XamlCompiler"),
             new DictionaryEntry("DisposableMemory.ModernNetUAP.XamlCompiler","https://github.com/driver1998/ModernNetUAP.XamlCompiler"),
+            new DictionaryEntry("Microsoft.UI.Xaml", "https://github.com/microsoft/microsoft-ui-xaml"),
             new DictionaryEntry("Microsoft.Web.WebView2","https://aka.ms/webview"),
             new DictionaryEntry("Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"),
             new DictionaryEntry("Microsoft.Windows.SDK.BuildTools","https://aka.ms/WinSDKProjectURL"),
             new DictionaryEntry("Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
             new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),
-            new DictionaryEntry("Mile.Xaml", "https://github.com/ProjectMile/Mile.Xaml"),
         ];
 
         //项目感谢者信息

@@ -4,6 +4,7 @@ using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.KernelBase;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -15,6 +16,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
+using Windows.System;
 using WinRT;
 
 // 抑制 CA1806 警告
@@ -65,12 +67,57 @@ namespace GetStoreApp
             {
                 DownloadSchedulerService.InitializeDownloadScheduler(true);
                 DesktopLaunchService.InitializeLaunchAsync(args).Wait();
+                IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
+
+                foreach (Package dependencyPacakge in dependencyPackageList)
+                {
+                    PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
+
+                    switch (Package.Current.Id.Architecture)
+                    {
+                        case ProcessorArchitecture.X86:
+                            {
+                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86;
+                                break;
+                            }
+                        case ProcessorArchitecture.X64:
+                            {
+                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X64;
+                                break;
+                            }
+                        case ProcessorArchitecture.Arm64:
+                            {
+                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Arm64;
+                                break;
+                            }
+                        case ProcessorArchitecture.X86OnArm64:
+                            {
+                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86A64;
+                                break;
+                            }
+                        case ProcessorArchitecture.Neutral:
+                            {
+                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Neutral;
+                                break;
+                            }
+                        case ProcessorArchitecture.Unknown:
+                            {
+                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
+                                break;
+                            }
+                    }
+
+                    if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime") && KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeKind.PackageDependencyLifetimeKind_Process, string.Empty, CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
+                    {
+                        KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out IntPtr _, out _);
+                    }
+                }
 
                 // 启动桌面程序
                 Application.Start((param) =>
                 {
-                    SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread()));
-                    _ = new WinUIApp();
+                    SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread()));
+                    new WinUIApp();
                 });
             }
             // 以控制台程序方式启动

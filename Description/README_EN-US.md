@@ -114,13 +114,14 @@ All the content of the program has been developed
 
 ### Project References (Sort by alphabetical order)
 
+> * [DisposableMemory.ModernNetUAP.WinUI](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
 > * [DisposableMemory.ModernNetUAP.XamlCompiler](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
+> * [Microsoft.UI.Xaml](https://github.com/microsoft/microsoft-ui-xaml)&emsp;
 > * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
 > * [Microsoft.Windows.SDK.BuildTools](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
-> * [Mile.Xaml](https://github.com/ProjectMile/Mile.Xaml)&emsp;
   
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [Auxiliary Tools](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;
@@ -129,7 +130,7 @@ All the content of the program has been developed
 
 ### Download and installation considerations
 
-> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 10 (codename 2004 / build 19041) or later.
+> * The program is built using the Windows Apps SDK, and it is recommended that your system version be Windows 11 (codename 21H2 / build 22000) or later, and the minimum version is Windows 11 (codename 21H2 / build 22000) or later.
 > * If your system is Windows 10, there are some limitations to app functionality:
     Setting the mica/mica alt background color is not supported
 > * [Release](https://github.com/Gaoyifei1011/GetStoreApp/releases) The binary installation file for the page has been packaged into a compressed package. Unzip the package and run the install.ps1 file in Powershell admin mode (if necessary) for a quick installation.
@@ -141,10 +142,10 @@ All the content of the program has been developed
 
 #### <p align="center">Tools that must be installed</p>
 
-> * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/) 
-> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 7.0, .NET Framework SDK Version 4.8.1)
+> * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com) 
+> * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 9.0)
 > * [WinGet package manager](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) (install recommendedly)
-> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/) （install recommendedly）
+> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) （install recommendedly）
 
 #### <p align="center">Compilation steps</p>
 

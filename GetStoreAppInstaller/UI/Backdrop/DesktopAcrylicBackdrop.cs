@@ -536,18 +536,8 @@ namespace GetStoreAppInstaller.UI.Backdrop
         {
             if (isInitialized)
             {
-                ElementTheme actualTheme = ElementTheme.Default;
-
-                // 如果传入的 FrameworkElement 为空值，则由系统默认主题色值决定窗口的背景色
-                if (rootElement is not null)
-                {
-                    // 主题值为默认时，窗口背景色主题值则由 FrameworkElement 决定
-                    actualTheme = RequestedTheme is ElementTheme.Default ? rootElement.ActualTheme : RequestedTheme;
-                }
-                else
-                {
-                    actualTheme = Windows.UI.Xaml.Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                }
+                // 如果传入的 FrameworkElement 为空值，则由系统默认主题色值决定窗口的背景色。主题值为默认时，窗口背景色主题值则由 FrameworkElement 决定
+                ElementTheme actualTheme = rootElement is not null ? (RequestedTheme is ElementTheme.Default ? rootElement.ActualTheme : RequestedTheme) : (Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark); ;
 
                 float tintOpacity;
                 float luminosityOpacity;

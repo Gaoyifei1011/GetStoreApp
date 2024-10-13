@@ -612,14 +612,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             UpgradableAppsCollection.Add(upgradableAppsItem);
                         }
 
-                        if (MatchResultList.Count is 0)
-                        {
-                            IsUpgradableAppsEmpty = true;
-                        }
-                        else
-                        {
-                            IsUpgradableAppsEmpty = false;
-                        }
+                        IsUpgradableAppsEmpty = MatchResultList.Count is 0;
                         IsLoadedCompleted = true;
                     });
                 }

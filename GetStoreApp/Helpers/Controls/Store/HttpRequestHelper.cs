@@ -140,18 +140,8 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         public static InfoBarSeverity CheckRequestState(RequestModel HttpRequestData)
         {
-            // 服务器请求异常，返回状态值3
-            if (HttpRequestData.RequestId is not 0)
-            {
-                return InfoBarSeverity.Error;
-            }
-
-            // 服务器请求成功
-            else
-            {
-                // 成功下返回值为成功，否则返回警告
-                return HttpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.", StringComparison.OrdinalIgnoreCase) ? InfoBarSeverity.Success : InfoBarSeverity.Warning;
-            }
+            // 服务器请求异常，返回错误状态值，成功下返回成功状态值，否则返回警告状态值
+            return HttpRequestData.RequestId is not 0 ? InfoBarSeverity.Error : HttpRequestData.RequestContent.Contains("The links were successfully received from the Microsoft Store server.", StringComparison.OrdinalIgnoreCase) ? InfoBarSeverity.Success : InfoBarSeverity.Warning;
         }
     }
 }

@@ -45,14 +45,7 @@ namespace GetStoreAppShellExtension.Commands
             }
             pceltFetched = (uint)(index - start);
 
-            if (index - start == celt)
-            {
-                return 0;
-            }
-            else
-            {
-                return 1;
-            }
+            return index - start == celt ? 0 : 1;
         }
 
         /// <summary>
