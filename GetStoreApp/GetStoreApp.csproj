@@ -5,8 +5,6 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DebuggerSupport>false</DebuggerSupport>
-    <DebugType>none</DebugType>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -47,6 +45,16 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
     <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DebuggerSupport>true</DebuggerSupport>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

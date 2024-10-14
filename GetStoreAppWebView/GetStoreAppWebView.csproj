@@ -5,8 +5,6 @@
     <AssemblyName>GetStoreAppWebView</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DebuggerSupport>false</DebuggerSupport>
-    <DebugType>none</DebugType>
     <DefaultXamlRuntime>UAP</DefaultXamlRuntime>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
@@ -50,13 +48,18 @@
     <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DebuggerSupport>true</DebuggerSupport>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>    
     <Content Remove="Assets\GetStoreAppWebView.ico" />
-    
-    <!-- Temporary workaround, remove when https://github.com/dotnet/sdk/pull/41936 is available in the .NET SDK -->
-    <CompilerVisibleProperty Include="CsWinRTUseWindowsUIXamlProjections" />
-    <RuntimeHostConfigurationOption Include="CSWINRT_USE_WINDOWS_UI_XAML_PROJECTIONS" Value="$(CsWinRTUseWindowsUIXamlProjections)" Trim="true" />
-
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Remove="Dialogs\ProcessFailedDialog.xaml" />

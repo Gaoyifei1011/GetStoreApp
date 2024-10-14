@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.UI.Dialogs.About.AppInformationDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:collection="using:System.Collections"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -18,100 +19,42 @@
 
     <ContentDialog.Resources>
         <x:Double x:Key="ContentDialogMinWidth">480</x:Double>
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+        <Thickness x:Key="ContentDialogPadding">24,24,24,24</Thickness>
     </ContentDialog.Resources>
 
-    <StackPanel>
-        <Grid Margin="0,0,0,3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="0"
-                Margin="0,0,0,5"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsAppSDKVersion')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="0,0,0,5"
-                Text="{x:Bind WindowsAppSDKVersion, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
-        </Grid>
+    <ItemsView
+        CornerRadius="0"
+        ItemsSource="{x:Bind AppInformationCollection, Mode=OneWay}"
+        SelectionMode="None">
 
-        <Grid Margin="0,0,0,3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="0"
-                Margin="0,0,0,5"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinUI3Version')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="0,0,0,5"
-                Text="{x:Bind WinUI3Version, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
-        </Grid>
+        <ItemsView.Layout>
+            <StackLayout />
+        </ItemsView.Layout>
 
-        <Grid Margin="0,0,0,3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="0"
-                Margin="0,0,0,5"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WindowsUIVersion')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="0,0,0,5"
-                Text="{x:Bind WindowsUIVersion, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
-        </Grid>
+        <ItemsView.ItemTemplate>
+            <DataTemplate x:DataType="collection:DictionaryEntry">
+                <ItemContainer>
+                    <Grid Margin="1,0,0,5" ColumnSpacing="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-        <Grid Margin="0,0,0,3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="0"
-                Margin="0,0,0,5"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WebView2SDKVersion')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-            <TextBlock
-                Grid.Column="1"
-                Margin="0,0,0,5"
-                Text="{x:Bind WebView2SDKVersion, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
-        </Grid>
-
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="0"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/DoNetVersion')}"
-                TextAlignment="Justify"
-                TextWrapping="Wrap" />
-            <TextBlock
-                Grid.Column="1"
-                Text="{x:Bind DoNetVersion, Mode=OneWay}"
-                TextAlignment="DetectFromContent"
-                TextWrapping="Wrap" />
-        </Grid>
-    </StackPanel>
+                        <TextBlock
+                            Grid.Column="0"
+                            Text="{x:Bind Key}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="{x:Bind Value.ToString()}"
+                            TextAlignment="DetectFromContent"
+                            TextWrapping="Wrap" />
+                    </Grid>
+                </ItemContainer>
+            </DataTemplate>
+        </ItemsView.ItemTemplate>
+    </ItemsView>
 </ContentDialog>

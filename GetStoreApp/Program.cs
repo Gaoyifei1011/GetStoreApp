@@ -51,7 +51,7 @@ namespace GetStoreApp
                             if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
                             {
                                 appListEntry.LaunchAsync().AsTask().Wait();
-                                return;
+                                break;
                             }
                         }
                     }
@@ -67,49 +67,57 @@ namespace GetStoreApp
             {
                 DownloadSchedulerService.InitializeDownloadScheduler(true);
                 DesktopLaunchService.InitializeLaunchAsync(args).Wait();
+
+                // 使用 MSIX 动态依赖包 API，强行修改静态包图的依赖顺序，解决 WinUI 3 桌面应用程序加载时错误加载成 WinUI 2 程序集，导致程序启动失败的问题
                 IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
+                PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
+
+                switch (Package.Current.Id.Architecture)
+                {
+                    case ProcessorArchitecture.X86:
+                        {
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86;
+                            break;
+                        }
+                    case ProcessorArchitecture.X64:
+                        {
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X64;
+                            break;
+                        }
+                    case ProcessorArchitecture.Arm64:
+                        {
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Arm64;
+                            break;
+                        }
+                    case ProcessorArchitecture.X86OnArm64:
+                        {
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86A64;
+                            break;
+                        }
+                    case ProcessorArchitecture.Neutral:
+                        {
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Neutral;
+                            break;
+                        }
+                    case ProcessorArchitecture.Unknown:
+                        {
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
+                            break;
+                        }
+                }
 
                 foreach (Package dependencyPacakge in dependencyPackageList)
                 {
-                    PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
-
-                    switch (Package.Current.Id.Architecture)
-                    {
-                        case ProcessorArchitecture.X86:
-                            {
-                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86;
-                                break;
-                            }
-                        case ProcessorArchitecture.X64:
-                            {
-                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X64;
-                                break;
-                            }
-                        case ProcessorArchitecture.Arm64:
-                            {
-                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Arm64;
-                                break;
-                            }
-                        case ProcessorArchitecture.X86OnArm64:
-                            {
-                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86A64;
-                                break;
-                            }
-                        case ProcessorArchitecture.Neutral:
-                            {
-                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Neutral;
-                                break;
-                            }
-                        case ProcessorArchitecture.Unknown:
-                            {
-                                packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
-                                break;
-                            }
-                    }
-
                     if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime") && KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeKind.PackageDependencyLifetimeKind_Process, string.Empty, CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
                     {
-                        KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out IntPtr _, out _);
+                        if (KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out _, out _) is 0)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                 }
 

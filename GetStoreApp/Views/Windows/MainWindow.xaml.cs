@@ -2,7 +2,6 @@
 using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
@@ -927,7 +926,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = InfoHelper.SystemVersion.Build >= 22000 ? new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale) : new Point(localPoint.X, localPoint.Y)
+                                Position = new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale)
                             };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);

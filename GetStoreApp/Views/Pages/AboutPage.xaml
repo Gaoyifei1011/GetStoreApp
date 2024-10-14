@@ -651,29 +651,6 @@
                                 Margin="30,10,16,10"
                                 FontSize="15"
                                 FontWeight="Normal"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/Backdrop')}"
-                                TextAlignment="Left" />
-                            <TextBlock
-                                Margin="30,0,16,5"
-                                FontSize="14"
-                                FontWeight="Normal"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/BackdropDescription')}"
-                                TextAlignment="Justify"
-                                TextWrapping="Wrap" />
-
-                            <HyperlinkButton
-                                Margin="30,0,16,5"
-                                Padding="0"
-                                Click="{x:Bind OnSystemInformationClicked}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
-                                Style="{StaticResource HyperlinkButtonStyle}" />
-
-                            <MenuFlyoutSeparator />
-
-                            <TextBlock
-                                Margin="30,10,16,10"
-                                FontSize="15"
-                                FontWeight="Normal"
                                 Text="{x:Bind root:ResourceService.GetLocalized('About/Language')}"
                                 TextAlignment="Left" />
                             <TextBlock
@@ -688,6 +665,11 @@
                                 Margin="30,0,16,5"
                                 Orientation="Horizontal"
                                 Spacing="15">
+
+                                <HyperlinkButton
+                                    Click="{x:Bind OnSystemInformationClicked}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
+                                    Style="{StaticResource HyperlinkButtonStyle}" />
 
                                 <HyperlinkButton
                                     Click="{x:Bind OnAppInformationClicked}"

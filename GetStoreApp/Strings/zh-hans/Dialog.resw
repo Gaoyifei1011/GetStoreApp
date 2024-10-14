@@ -378,4 +378,7 @@
   <data name="WindowsUIVersion" xml:space="preserve">
     <value>Windows UI 版本：</value>
   </data>
+  <data name="WinUI2Version" xml:space="preserve">
+    <value>WinUI 2 版本：</value>
+  </data>
 </root>

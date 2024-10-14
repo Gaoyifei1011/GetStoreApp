@@ -5,8 +5,6 @@
     <AssemblyName>GetStoreAppWidget</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DebuggerSupport>false</DebuggerSupport>
-    <DebugType>none</DebugType>
     <Deterministic>true</Deterministic>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
     <ForceAotCompile>true</ForceAotCompile>
@@ -47,7 +45,18 @@
     <RuntimeIdentifier>win-arm64</RuntimeIdentifier>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <DebuggerSupport>true</DebuggerSupport>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebuggerSupport>false</DebuggerSupport>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
+    <Content Remove="Assets\GetStoreAppWidget.ico" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.5" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
