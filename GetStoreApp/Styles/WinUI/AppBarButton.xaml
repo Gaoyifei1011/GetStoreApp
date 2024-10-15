@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml" />
+        <XamlControlsResources />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="AppBarButtonStyle" TargetType="AppBarButton">

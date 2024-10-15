@@ -5,15 +5,14 @@
     HighContrastAdjustment="None">
 
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/Themes/themeresources.xaml" />
+        <XamlControlsResources>
+            <XamlControlsResources.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/AppBarButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/HyperlinkButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/MenuFlyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/TeachingTip.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+            </XamlControlsResources.MergedDictionaries>
+        </XamlControlsResources>
     </Application.Resources>
 </Application>

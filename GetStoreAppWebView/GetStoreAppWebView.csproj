@@ -34,7 +34,7 @@
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <WebView2EnableCsWinRTProjection>true</WebView2EnableCsWinRTProjection>
     <Win32Resource>GetStoreAppWebView.res</Win32Resource>
-    <WindowsSdkPackageVersion>10.0.26100.48</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.54</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -71,7 +71,7 @@
     <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.3" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.5" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
     
     <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

@@ -35,7 +35,7 @@
     <UseUwpTools>true</UseUwpTools>
     <UseWindowsForms>true</UseWindowsForms>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
-    <WindowsSdkPackageVersion>10.0.26100.48</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.54</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -61,8 +61,6 @@
   
   <ItemGroup>
     <ApplicationDefinition Include="XamlIslandsApp.xaml" />
-    <Content Remove="Styles\Mile.Xaml.Styles.SunValley.xbf" />
-    <MyEmbeddedItems Include="Styles\Mile.Xaml.Styles.SunValley.xbf" />
     
     <Manifest Include="$(ApplicationManifest)" />
 
@@ -73,7 +71,7 @@
     <Page Remove="XamlIslandsApp.xaml" />
 
     <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.3" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.5" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
     <PackageReference Include="Mile.Xaml" Version="2.3.1064" GeneratePathProperty="True" />
   </ItemGroup>
 
@@ -87,22 +85,5 @@
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
     <!-- 对生成的 GetStoreAppInstaller.exe 文件进行数字签名 -->
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
-  </Target>
-
-  <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
-    <Copy SourceFiles="@(MyEmbeddedItems)" DestinationFiles="@(MyEmbeddedItems->'$(IntermediateOutputPath)embed\Styles\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-    <ReadLinesFromFile File="$(_EmbedFileResfilePath)">
-      <Output TaskParameter="Lines" ItemName="ItemsFromFile" />
-    </ReadLinesFromFile>
-    <ItemGroup>
-      <MyEmbeddedFileList Include="@(ItemsFromFile)" />
-      <MyEmbeddedFileList Include="@(MyEmbeddedItems)" />
-    </ItemGroup>
-    <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
-  </Target>
-
-  <!-- 复制 Mile.Xaml.Styles.SunValley.xbf 所需要的文件到输出根目录 -->
-  <Target Name="CopyXBFToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(PkgMile_Xaml)\Redist\Styles\Mile.Xaml.Styles.SunValley.xbf" DestinationFolder="Styles" />
   </Target>
 </Project>
