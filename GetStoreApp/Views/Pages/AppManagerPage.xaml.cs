@@ -1215,9 +1215,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                IsIncrease = Convert.ToBoolean(toggleMenuFlyoutItem.Tag);
+                IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
                 InitializeData();
             }
         }
@@ -1227,9 +1227,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                SelectedRule = (AppSortRuleKind)toggleMenuFlyoutItem.Tag;
+                SelectedRule = (AppSortRuleKind)radioMenuFlyoutItem.Tag;
                 InitializeData();
             }
         }

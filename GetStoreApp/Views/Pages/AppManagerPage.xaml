@@ -175,18 +175,20 @@
                                     Padding="11,0,11,0"
                                     Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortWay')}">
 
-                                    <ToggleMenuFlyoutItem
+                                    <RadioMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
+                                        GroupName="SortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
                                         Tag="True"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortIncrease')}" />
 
-                                    <ToggleMenuFlyoutItem
+                                    <RadioMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnSortWayClicked}"
+                                        GroupName="SortWayRadioGroup"
                                         IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
                                         Tag="False"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortDecrease')}" />
@@ -197,26 +199,29 @@
                                     Padding="11,0,11,0"
                                     Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortRule')}">
 
-                                    <ToggleMenuFlyoutItem
+                                    <RadioMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
+                                        GroupName="SortRuleRadioGroup"
                                         IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByDisplayName')}" />
 
-                                    <ToggleMenuFlyoutItem
+                                    <RadioMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
+                                        GroupName="SortRuleRadioGroup"
                                         IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByPublisher')}" />
 
-                                    <ToggleMenuFlyoutItem
+                                    <RadioMenuFlyoutItem
                                         Height="32"
                                         Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
+                                        GroupName="SortRuleRadioGroup"
                                         IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.InstallDate}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByInstalledDate')}" />

@@ -490,9 +490,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                SelectedType = TypeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                SelectedType = TypeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
                 LinkPlaceHolderText = sampleTitle + sampleLink;
 
@@ -505,9 +505,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                SelectedChannel = ChannelList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                SelectedChannel = ChannelList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
             }
         }
 

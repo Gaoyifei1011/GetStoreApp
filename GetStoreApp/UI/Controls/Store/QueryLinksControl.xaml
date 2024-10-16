@@ -43,18 +43,20 @@
 
             <DropDownButton.Flyout>
                 <MenuFlyout Placement="Bottom">
-                    <ToggleMenuFlyoutItem
+                    <RadioMenuFlyoutItem
                         Height="32"
                         Padding="11,0"
                         Click="{x:Bind OnTypeSelectClicked}"
+                        GroupName="TypeRadioGroup"
                         IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[0].InternalName), Mode=OneWay}"
                         Tag="0"
                         Text="{x:Bind TypeList[0].DisplayName}" />
 
-                    <ToggleMenuFlyoutItem
+                    <RadioMenuFlyoutItem
                         Height="32"
                         Padding="11,0"
                         Click="{x:Bind OnTypeSelectClicked}"
+                        GroupName="TypeRadioGroup"
                         IsChecked="{x:Bind SelectedType.InternalName.Equals(TypeList[1].InternalName), Mode=OneWay}"
                         Tag="1"
                         Text="{x:Bind TypeList[1].DisplayName}" />
@@ -69,34 +71,38 @@
 
             <DropDownButton.Flyout>
                 <MenuFlyout Placement="Bottom">
-                    <ToggleMenuFlyoutItem
+                    <RadioMenuFlyoutItem
                         Height="32"
                         Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
+                        GroupName="ChannelRadioGroup"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[0].InternalName), Mode=OneWay}"
                         Tag="0"
                         Text="{x:Bind ChannelList[0].DisplayName}" />
 
-                    <ToggleMenuFlyoutItem
+                    <RadioMenuFlyoutItem
                         Height="32"
                         Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
+                        GroupName="ChannelRadioGroup"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[1].InternalName), Mode=OneWay}"
                         Tag="1"
                         Text="{x:Bind ChannelList[1].DisplayName}" />
 
-                    <ToggleMenuFlyoutItem
+                    <RadioMenuFlyoutItem
                         Height="32"
                         Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
+                        GroupName="ChannelRadioGroup"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[2].InternalName), Mode=OneWay}"
                         Tag="2"
                         Text="{x:Bind ChannelList[2].DisplayName}" />
 
-                    <ToggleMenuFlyoutItem
+                    <RadioMenuFlyoutItem
                         Height="32"
                         Padding="11,0"
                         Click="{x:Bind OnChannelSelectClicked}"
+                        GroupName="ChannelRadioGroup"
                         IsChecked="{x:Bind SelectedChannel.InternalName.Equals(ChannelList[3].InternalName), Mode=OneWay}"
                         Tag="3"
                         Text="{x:Bind ChannelList[3].DisplayName}" />

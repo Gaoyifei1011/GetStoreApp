@@ -539,9 +539,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                Theme = ThemeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                Theme = ThemeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 ThemeService.SetTheme(Theme);
             }
         }
@@ -551,9 +551,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                Backdrop = BackdropList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                Backdrop = BackdropList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 BackdropService.SetBackdrop(Backdrop);
             }
         }
@@ -587,9 +587,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWebKernelSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                WebKernelItem = WebKernelList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                WebKernelItem = WebKernelList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 WebKernelService.SetWebKernel(WebKernelItem);
             }
         }
@@ -599,9 +599,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 QueryLinksModeService.SetQueryLinksMode(QueryLinksModeItem);
             }
         }
@@ -634,9 +634,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
             {
-                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 WinGetConfigService.SetWinGetInstallMode(WinGetInstallMode);
             }
         }
@@ -783,9 +783,9 @@ namespace GetStoreApp.Views.Pages
 
         private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                DoEngineMode = DoEngineModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                DoEngineMode = DoEngineModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 DownloadOptionsService.SetDoEngineMode(DoEngineMode);
             }
         }
@@ -795,9 +795,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem && toggleMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
-                InstallMode = InstallModeList[Convert.ToInt32(toggleMenuFlyoutItem.Tag)];
+                InstallMode = InstallModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 InstallModeService.SetInstallMode(InstallMode);
             }
         }

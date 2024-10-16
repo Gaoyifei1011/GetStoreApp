@@ -243,9 +243,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
             {
-                IsIncrease = Convert.ToBoolean(toggleMenuFlyoutItem.Tag);
+                IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
                 InitializeData();
             }
         }
@@ -255,9 +255,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is ToggleMenuFlyoutItem toggleMenuFlyoutItem)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
             {
-                SelectedRule = (AppSortRuleKind)toggleMenuFlyoutItem.Tag;
+                SelectedRule = (AppSortRuleKind)radioMenuFlyoutItem.Tag;
                 InitializeData();
             }
         }
