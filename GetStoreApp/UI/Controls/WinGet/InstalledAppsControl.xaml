@@ -8,7 +8,6 @@
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
     mc:Ignorable="d">
 
@@ -67,7 +66,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind sys:String.Format(InstalledAppsCountInfo, InstalledAppsCollection.Count), Mode=OneWay}"
+            Text="{x:Bind x:String.Format(InstalledAppsCountInfo, InstalledAppsCollection.Count), Mode=OneWay}"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstalledAppsCollection.Count), Mode=OneWay}" />
 
         <AutoSuggestBox
@@ -139,7 +138,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnSortRuleClicked}"
                                 GroupName="SortRuleRadioGroup"
-                                IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
                                 Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
 
@@ -148,7 +147,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnSortRuleClicked}"
                                 GroupName="SortRuleRadioGroup"
-                                IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
                                 Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
                         </MenuFlyoutSubItem>

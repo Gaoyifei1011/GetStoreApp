@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
     mc:Ignorable="d">
 
@@ -66,7 +65,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind sys:String.Format(UpgradableAppsCountInfo, UpgradableAppsCollection.Count), Mode=OneWay}"
+            Text="{x:Bind x:String.Format(UpgradableAppsCountInfo, UpgradableAppsCollection.Count), Mode=OneWay}"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}" />
 
         <StackPanel

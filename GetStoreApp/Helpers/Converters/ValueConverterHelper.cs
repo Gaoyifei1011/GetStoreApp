@@ -16,11 +16,6 @@ namespace GetStoreApp.Helpers.Converters
             return totalSize.Equals(default) ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
         }
 
-        public static Uri UriConvert(object uri)
-        {
-            return new Uri(uri.ToString());
-        }
-
         /// <summary>
         /// 整数值与控件显示值转换
         /// </summary>

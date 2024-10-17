@@ -4,7 +4,6 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI;
 using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation.Diagnostics;
 

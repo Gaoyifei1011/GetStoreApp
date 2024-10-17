@@ -9,7 +9,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -29,6 +28,7 @@ using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.StartScreen;
+using Windows.UI.Text;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -540,9 +540,13 @@ namespace GetStoreApp.Views.Pages
 
         private ObservableCollection<PackageModel> DependenciesCollection { get; } = [];
 
-        public ObservableCollection<DictionaryEntry> BreadCollection { get; } =
+        public ObservableCollection<ContentLinkInfo> BreadCollection { get; } =
         [
-            new DictionaryEntry("AppList", ResourceService.GetLocalized("AppManager/AppList"))
+            new ContentLinkInfo()
+            {
+                DisplayText = ResourceService.GetLocalized("AppManager/AppList"),
+                SecondaryText = "AppList"
+            }
         ];
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1150,7 +1154,11 @@ namespace GetStoreApp.Views.Pages
                         if (packageDict is not null)
                         {
                             InitializeAppInfo(packageDict);
-                            BreadCollection.Add(new DictionaryEntry("AppInformation", ResourceService.GetLocalized("AppManager/AppInformation")));
+                            BreadCollection.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = ResourceService.GetLocalized("AppManager/AppInformation"),
+                                SecondaryText = "AppInformation"
+                            });
                         }
                     });
                 });
@@ -1174,10 +1182,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
         {
-            DictionaryEntry breadItem = (DictionaryEntry)args.Item;
+            ContentLinkInfo breadItem = args.Item as ContentLinkInfo;
             if (BreadCollection.Count is 2)
             {
-                if (breadItem.Value.Equals(BreadCollection[0].Value))
+                if (breadItem.SecondaryText.Equals(BreadCollection[0].SecondaryText))
                 {
                     BackToAppList();
                 }

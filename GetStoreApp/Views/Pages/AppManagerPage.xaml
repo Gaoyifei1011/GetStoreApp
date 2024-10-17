@@ -11,7 +11,7 @@
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
+    xmlns:text="using:Windows.UI.Text"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -64,11 +64,11 @@
                 ItemsSource="{x:Bind BreadCollection, Mode=OneWay}">
 
                 <BreadcrumbBar.ItemTemplate>
-                    <DataTemplate x:DataType="collection:DictionaryEntry">
+                    <DataTemplate x:DataType="text:ContentLinkInfo">
                         <BreadcrumbBarItem Content="{Binding}">
                             <BreadcrumbBarItem.ContentTemplate>
-                                <DataTemplate x:DataType="collection:DictionaryEntry">
-                                    <TextBlock FontSize="18" Text="{x:Bind Value}" />
+                                <DataTemplate x:DataType="text:ContentLinkInfo">
+                                    <TextBlock FontSize="18" Text="{x:Bind DisplayText}" />
                                 </DataTemplate>
                             </BreadcrumbBarItem.ContentTemplate>
                         </BreadcrumbBarItem>
@@ -147,7 +147,7 @@
                 <TextBlock
                     Grid.Column="3"
                     VerticalAlignment="Center"
-                    Text="{x:Bind sys:String.Format(PackageCountInfo, AppManagerDataCollection.Count), Mode=OneWay}"
+                    Text="{x:Bind x:String.Format(PackageCountInfo, AppManagerDataCollection.Count), Mode=OneWay}"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppManagerDataCollection.Count), Mode=OneWay}" />
 
                 <StackPanel
@@ -204,7 +204,7 @@
                                         Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="SortRuleRadioGroup"
-                                        IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                        IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByDisplayName')}" />
 
@@ -213,7 +213,7 @@
                                         Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="SortRuleRadioGroup"
-                                        IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                        IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByPublisher')}" />
 
@@ -222,7 +222,7 @@
                                         Padding="11,0"
                                         Click="{x:Bind OnSortRuleClicked}"
                                         GroupName="SortRuleRadioGroup"
-                                        IsChecked="{x:Bind sys:Object.Equals(SelectedRule, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
+                                        IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.InstallDate), Mode=OneWay}"
                                         Tag="{x:Bind enum:AppSortRuleKind.InstallDate}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SortByInstalledDate')}" />
                                 </MenuFlyoutSubItem>

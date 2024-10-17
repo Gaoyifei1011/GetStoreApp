@@ -69,7 +69,7 @@
             <TextBlock
                 Grid.Column="3"
                 VerticalAlignment="Center"
-                Text="{x:Bind sys:String.Format(DownloadingCountInfo, DownloadingCollection.Count), Mode=OneWay}"
+                Text="{x:Bind x:String.Format(DownloadingCountInfo, DownloadingCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}" />
 
             <StackPanel
@@ -370,7 +370,7 @@
                                 <ProgressBar
                                     Grid.Row="1"
                                     IsIndeterminate="False"
-                                    ShowPaused="{x:Bind sys:Object.Equals(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}"
+                                    ShowPaused="{x:Bind x:Object.Equals(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}"
                                     Value="{x:Bind converter:ValueConverterHelper.DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
                             </Grid>
 

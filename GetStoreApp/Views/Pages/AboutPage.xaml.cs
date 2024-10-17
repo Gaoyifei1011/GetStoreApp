@@ -9,7 +9,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -24,6 +23,7 @@ using Windows.Foundation.Diagnostics;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
+using Windows.UI.Text;
 using Windows.Web.Http;
 
 // 抑制 IDE0060 警告
@@ -55,29 +55,29 @@ namespace GetStoreApp.Views.Pages
         }
 
         //项目引用信息
-        private List<DictionaryEntry> ReferenceList { get; } =
+        private List<ContentLinkInfo> ReferenceList { get; } =
         [
-            new DictionaryEntry("DisposableMemory.ModernNetUAP.WinUI","https://github.com/driver1998/ModernNetUAP.XamlCompiler"),
-            new DictionaryEntry("DisposableMemory.ModernNetUAP.XamlCompiler","https://github.com/driver1998/ModernNetUAP.XamlCompiler"),
-            new DictionaryEntry("Microsoft.UI.Xaml", "https://github.com/microsoft/microsoft-ui-xaml"),
-            new DictionaryEntry("Microsoft.Web.WebView2","https://aka.ms/webview"),
-            new DictionaryEntry("Microsoft.Windows.CsWinRT","https://github.com/microsoft/cswinrt"),
-            new DictionaryEntry("Microsoft.Windows.SDK.BuildTools","https://aka.ms/WinSDKProjectURL"),
-            new DictionaryEntry("Microsoft.WindowsAppSDK","https://github.com/microsoft/windowsappsdk"),
-            new DictionaryEntry("Microsoft.WindowsPackageManager.ComInterop", "https://github.com/microsoft/winget-cli"),
+            new ContentLinkInfo() { DisplayText = "DisposableMemory.ModernNetUAP.WinUI",Uri = new Uri("https://github.com/driver1998/ModernNetUAP.XamlCompiler") },
+            new ContentLinkInfo() { DisplayText = "DisposableMemory.ModernNetUAP.XamlCompiler",Uri =  new Uri("https://github.com/driver1998/ModernNetUAP.XamlCompiler") },
+            new ContentLinkInfo() { DisplayText = "Microsoft.UI.Xaml",Uri = new Uri("https://github.com/microsoft/microsoft-ui-xaml") },
+            new ContentLinkInfo() { DisplayText = "Microsoft.Web.WebView2",Uri = new Uri("https://aka.ms/webview") },
+            new ContentLinkInfo() { DisplayText = "Microsoft.Windows.CsWinRT",Uri = new Uri("https://github.com/microsoft/cswinrt") },
+            new ContentLinkInfo() { DisplayText = "Microsoft.Windows.SDK.BuildTools",Uri = new Uri("https://aka.ms/WinSDKProjectURL") },
+            new ContentLinkInfo() { DisplayText = "Microsoft.WindowsAppSDK",Uri = new Uri("https://github.com/microsoft/windowsappsdk") },
+            new ContentLinkInfo() { DisplayText = "Microsoft.WindowsPackageManager.ComInterop",Uri = new Uri("https://github.com/microsoft/winget-cli") },
         ];
 
         //项目感谢者信息
-        private List<DictionaryEntry> ThanksList { get; } =
+        private List<ContentLinkInfo> ThanksList { get; } =
         [
-            new DictionaryEntry("AndromedaMelody", "https://github.com/AndromedaMelody"),
-            new DictionaryEntry("cnbluefire", "https://github.com/cnbluefire"),
-            new DictionaryEntry("GreenShadeZhang", "https://github.com/GreenShadeZhang"),
-            new DictionaryEntry("hez2010", "https://github.com/hez2010"),
-            new DictionaryEntry("飞翔", "https://fionlen.azurewebsites.net"),
-            new DictionaryEntry("MouriNaruto", "https://github.com/MouriNaruto"),
-            new DictionaryEntry("TaylorShi", "https://github.com/TaylorShi"),
-            new DictionaryEntry("wherewhere", "https://github.com/wherewhere"),
+            new ContentLinkInfo() { DisplayText = "AndromedaMelody",Uri = new Uri("https://github.com/AndromedaMelody") },
+            new ContentLinkInfo() { DisplayText = "cnbluefire",Uri = new Uri("https://github.com/cnbluefire") },
+            new ContentLinkInfo() { DisplayText = "GreenShadeZhang",Uri = new Uri("https://github.com/GreenShadeZhang") },
+            new ContentLinkInfo() { DisplayText = "hez2010",Uri = new Uri("https://github.com/hez2010") },
+            new ContentLinkInfo() { DisplayText = "飞翔",Uri = new Uri("https://fionlen.azurewebsites.net") },
+            new ContentLinkInfo() { DisplayText = "MouriNaruto",Uri = new Uri("https://github.com/MouriNaruto") },
+            new ContentLinkInfo() { DisplayText = "TaylorShi",Uri = new Uri("https://github.com/TaylorShi") },
+            new ContentLinkInfo() { DisplayText = "wherewhere",Uri = new Uri("https://github.com/wherewhere") },
         ];
 
         public event PropertyChangedEventHandler PropertyChanged;

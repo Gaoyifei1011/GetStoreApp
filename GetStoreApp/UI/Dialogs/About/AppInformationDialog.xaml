@@ -2,11 +2,11 @@
     x:Class="GetStoreApp.UI.Dialogs.About.AppInformationDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:collection="using:System.Collections"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:service="using:GetStoreApp.Services.Controls.Settings"
+    xmlns:text="using:Windows.UI.Text"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/AppInformationTitle')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/CloseDialog')}"
@@ -34,7 +34,7 @@
         </ItemsView.Layout>
 
         <ItemsView.ItemTemplate>
-            <DataTemplate x:DataType="collection:DictionaryEntry">
+            <DataTemplate x:DataType="text:ContentLinkInfo">
                 <ItemContainer>
                     <Grid Margin="1,0,0,5" ColumnSpacing="6">
                         <Grid.ColumnDefinitions>
@@ -44,12 +44,12 @@
 
                         <TextBlock
                             Grid.Column="0"
-                            Text="{x:Bind Key}"
+                            Text="{x:Bind DisplayText}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
                         <TextBlock
                             Grid.Column="1"
-                            Text="{x:Bind Value.ToString()}"
+                            Text="{x:Bind SecondaryText}"
                             TextAlignment="DetectFromContent"
                             TextWrapping="Wrap" />
                     </Grid>

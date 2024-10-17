@@ -5,7 +5,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
+using Windows.UI.Text;
 
 namespace GetStoreApp.UI.Dialogs.About
 {
@@ -26,7 +26,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
         private List<string> PropertyNamesList => [fileVersionProperty];
 
-        private ObservableCollection<DictionaryEntry> AppInformationCollection { get; } = [];
+        private ObservableCollection<ContentLinkInfo> AppInformationCollection { get; } = [];
 
         public AppInformationDialog()
         {
@@ -35,26 +35,38 @@ namespace GetStoreApp.UI.Dialogs.About
             Task.Run(async () =>
             {
                 IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
-                List<KeyValuePair<string, Version>> dependencyInformationList = [];
+                List<ContentLinkInfo> dependencyInformationList = [];
 
                 foreach (Package dependencyPackage in dependencyPackageList)
                 {
                     if (dependencyPackage.DisplayName.Contains("WindowsAppRuntime"))
                     {
                         // Windows 应用 SDK 版本信息
-                        dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion"), new Version(dependencyPackage.Id.Version.Major, dependencyPackage.Id.Version.Minor, dependencyPackage.Id.Version.Build, dependencyPackage.Id.Version.Revision)));
+                        dependencyInformationList.Add(new ContentLinkInfo()
+                        {
+                            DisplayText = ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion"),
+                            SecondaryText = new Version(dependencyPackage.Id.Version.Major, dependencyPackage.Id.Version.Minor, dependencyPackage.Id.Version.Build, dependencyPackage.Id.Version.Revision).ToString()
+                        });
 
                         // WinUI 3 版本信息
                         try
                         {
                             StorageFile winUI3File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.dll"));
                             IDictionary<string, object> winUI3FileProperties = await winUI3File.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                            dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WinUI3Version"), winUI3FileProperties[fileVersionProperty] is not null ? new Version(winUI3FileProperties[fileVersionProperty].ToString()) : new Version()));
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = ResourceService.GetLocalized("Dialog/WinUI3Version"),
+                                SecondaryText = (winUI3FileProperties[fileVersionProperty] is not null ? new Version(winUI3FileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                            });
                         }
                         catch (Exception e)
                         {
                             LogService.WriteLog(LoggingLevel.Warning, "Get WinUI 3 version failed.", e);
-                            dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WinUI3Version"), new Version()));
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = ResourceService.GetLocalized("Dialog/WinUI3Version"),
+                                SecondaryText = new Version().ToString()
+                            });
                         }
                         break;
                     }
@@ -69,12 +81,20 @@ namespace GetStoreApp.UI.Dialogs.About
                         {
                             StorageFile winUI2File = await StorageFile.GetFileFromPathAsync(Path.Combine(dependencyPackage.InstalledLocation.Path, "Microsoft.UI.Xaml.dll"));
                             IDictionary<string, object> winUI2FileProperties = await winUI2File.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                            dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WinUI2Version"), winUI2FileProperties[fileVersionProperty] is not null ? new Version(winUI2FileProperties[fileVersionProperty].ToString()) : new Version()));
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = ResourceService.GetLocalized("Dialog/WinUI2Version"),
+                                SecondaryText = (winUI2FileProperties[fileVersionProperty] is not null ? new Version(winUI2FileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                            });
                         }
                         catch (Exception e)
                         {
                             LogService.WriteLog(LoggingLevel.Warning, "Get WinUI 2 version failed.", e);
-                            dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WinUI2Version"), new Version()));
+                            dependencyInformationList.Add(new ContentLinkInfo()
+                            {
+                                DisplayText = ResourceService.GetLocalized("Dialog/WinUI2Version"),
+                                SecondaryText = new Version().ToString()
+                            });
                         }
                         break;
                     }
@@ -85,12 +105,20 @@ namespace GetStoreApp.UI.Dialogs.About
                 {
                     StorageFile windowsUIFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.SystemDataPath.System, "Windows.UI.Xaml.dll"));
                     IDictionary<string, object> windowsUIFileProperties = await windowsUIFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                    dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WindowsUIVersion"), windowsUIFileProperties[fileVersionProperty] is not null ? new Version(windowsUIFileProperties[fileVersionProperty].ToString()) : new Version()));
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Dialog/WindowsUIVersion"),
+                        SecondaryText = (windowsUIFileProperties[fileVersionProperty] is not null ? new Version(windowsUIFileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                    });
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Warning, "Get Windows UI version failed.", e);
-                    dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WindowsUIVersion"), new Version()));
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Dialog/WindowsUIVersion"),
+                        SecondaryText = new Version().ToString()
+                    });
                 }
 
                 // WebView2 SDK 版本信息
@@ -98,22 +126,34 @@ namespace GetStoreApp.UI.Dialogs.About
                 {
                     StorageFile webView2CoreFile = await StorageFile.GetFileFromPathAsync(Path.Combine(InfoHelper.AppInstalledLocation, "Microsoft.Web.WebView2.Core.dll"));
                     IDictionary<string, object> webView2CoreFileProperties = await webView2CoreFile.Properties.RetrievePropertiesAsync(PropertyNamesList);
-                    dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WebView2SDKVersion"), webView2CoreFileProperties[fileVersionProperty] is not null ? new Version(webView2CoreFileProperties[fileVersionProperty].ToString()) : new Version()));
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Dialog/WebView2SDKVersion"),
+                        SecondaryText = (webView2CoreFileProperties[fileVersionProperty] is not null ? new Version(webView2CoreFileProperties[fileVersionProperty].ToString()) : new Version()).ToString()
+                    });
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Warning, "Get WebView2 SDK version failed.", e);
-                    dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/WebView2SDKVersion"), new Version()));
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Dialog/WebView2SDKVersion"),
+                        SecondaryText = new Version().ToString()
+                    });
                 }
 
                 // .NET 版本信息
-                dependencyInformationList.Add(KeyValuePair.Create(ResourceService.GetLocalized("Dialog/DoNetVersion"), Environment.Version));
+                dependencyInformationList.Add(new ContentLinkInfo()
+                {
+                    DisplayText = ResourceService.GetLocalized("Dialog/DoNetVersion"),
+                    SecondaryText = Environment.Version.ToString()
+                });
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    foreach (KeyValuePair<string, Version> dependencyInformation in dependencyInformationList)
+                    foreach (ContentLinkInfo dependencyInformation in dependencyInformationList)
                     {
-                        AppInformationCollection.Add(new DictionaryEntry(dependencyInformation.Key, dependencyInformation.Value));
+                        AppInformationCollection.Add(dependencyInformation);
                     }
                 });
             });
@@ -129,10 +169,10 @@ namespace GetStoreApp.UI.Dialogs.About
             Task.Run(() =>
             {
                 StringBuilder stringBuilder = new();
-                foreach (DictionaryEntry appInformationItem in AppInformationCollection)
+                foreach (ContentLinkInfo appInformationItem in AppInformationCollection)
                 {
-                    stringBuilder.Append(appInformationItem.Key);
-                    stringBuilder.Append(appInformationItem.Value);
+                    stringBuilder.Append(appInformationItem.DisplayText);
+                    stringBuilder.Append(appInformationItem.SecondaryText);
                     stringBuilder.Append(Environment.NewLine);
                 }
 

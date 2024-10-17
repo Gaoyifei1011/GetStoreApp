@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sys="using:System"
     xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     x:Name="WinGetRoot"
     Loaded="{x:Bind OnLoaded}"
@@ -231,14 +230,14 @@
                                                             Margin="0,0,8,0"
                                                             VerticalAlignment="Center"
                                                             FontSize="14"
-                                                            Text="{x:Bind sys:String.Format('{0}%', DownloadProgress), Mode=OneWay}"
+                                                            Text="{x:Bind x:String.Format('{0}%', DownloadProgress), Mode=OneWay}"
                                                             TextAlignment="Right">
 
                                                             <ToolTipService.ToolTip>
                                                                 <ToolTip MaxWidth="9999">
                                                                     <TextBlock>
                                                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadProgressToolTip')}" />
-                                                                        <Run Text="{x:Bind sys:String.Format('{0}%', DownloadProgress), Mode=OneWay}" />
+                                                                        <Run Text="{x:Bind x:String.Format('{0}%', DownloadProgress), Mode=OneWay}" />
                                                                     </TextBlock>
                                                                 </ToolTip>
                                                             </ToolTipService.ToolTip>

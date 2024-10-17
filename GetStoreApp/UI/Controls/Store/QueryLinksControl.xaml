@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
-    xmlns:sys="using:System"
     Padding="0,0,0,30"
     Spacing="3"
     mc:Ignorable="d">
@@ -571,7 +570,7 @@
                         Visibility="{x:Bind IsPackagedApp, Mode=OneWay}" />
                 </Grid>
 
-                <TextBlock Text="{x:Bind sys:String.Format(QueryLinksCountInfo, QueryLinksCollection.Count), Mode=OneWay}" />
+                <TextBlock Text="{x:Bind x:String.Format(QueryLinksCountInfo, QueryLinksCollection.Count), Mode=OneWay}" />
             </StackPanel>
 
             <TextBlock

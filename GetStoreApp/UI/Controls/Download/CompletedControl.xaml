@@ -69,7 +69,7 @@
         <TextBlock
             Grid.Column="3"
             VerticalAlignment="Center"
-            Text="{x:Bind sys:String.Format(CompletedCountInfo, CompletedCollection.Count), Mode=OneWay}"
+            Text="{x:Bind x:String.Format(CompletedCountInfo, CompletedCollection.Count), Mode=OneWay}"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}" />
 
         <StackPanel
@@ -356,7 +356,7 @@
                                     VerticalAlignment="Center"
                                     x:Load="{x:Bind InstallError.Equals(x:False), Mode=OneWay}"
                                     FontSize="14"
-                                    Text="{x:Bind sys:String.Format(InstalledValue, InstallValue), Mode=OneWay}"
+                                    Text="{x:Bind x:String.Format(InstalledValue, InstallValue), Mode=OneWay}"
                                     TextAlignment="Left" />
 
                                 <TextBlock

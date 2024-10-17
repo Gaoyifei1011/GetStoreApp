@@ -8,6 +8,8 @@
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
+    xmlns:text="using:Windows.UI.Text"
     Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
@@ -345,17 +347,17 @@
                             </ItemsView.Layout>
 
                             <ItemsView.ItemTemplate>
-                                <DataTemplate x:DataType="collection:DictionaryEntry">
+                                <DataTemplate x:DataType="text:ContentLinkInfo">
                                     <ItemContainer>
                                         <HyperlinkButton
                                             Width="320"
                                             Padding="5,8"
                                             HorizontalContentAlignment="Center"
-                                            NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
+                                            NavigateUri="{x:Bind Uri}">
 
                                             <HyperlinkButton.Content>
                                                 <TextBlock
-                                                    Text="{x:Bind Key}"
+                                                    Text="{x:Bind DisplayText}"
                                                     TextTrimming="CharacterEllipsis"
                                                     TextWrapping="NoWrap" />
                                             </HyperlinkButton.Content>
@@ -364,7 +366,7 @@
                                                 <ToolTip MaxWidth="9999">
                                                     <StackPanel>
                                                         <TextBlock>
-                                                            <Run Text="{x:Bind Key}" />
+                                                            <Run Text="{x:Bind DisplayText}" />
                                                             <LineBreak />
                                                             <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
                                                         </TextBlock>
@@ -890,17 +892,17 @@
                                 </ItemsView.Layout>
 
                                 <ItemsView.ItemTemplate>
-                                    <DataTemplate x:DataType="collection:DictionaryEntry">
+                                    <DataTemplate x:DataType="text:ContentLinkInfo">
                                         <ItemContainer>
                                             <HyperlinkButton
                                                 Width="150"
                                                 Padding="5,8"
                                                 HorizontalContentAlignment="Center"
-                                                NavigateUri="{x:Bind converter:ValueConverterHelper.UriConvert(Value)}">
+                                                NavigateUri="{x:Bind Uri}">
 
                                                 <HyperlinkButton.Content>
                                                     <TextBlock
-                                                        Text="{x:Bind Key}"
+                                                        Text="{x:Bind DisplayText}"
                                                         TextTrimming="CharacterEllipsis"
                                                         TextWrapping="NoWrap" />
                                                 </HyperlinkButton.Content>
@@ -909,7 +911,7 @@
                                                     <ToolTip MaxWidth="9999">
                                                         <StackPanel>
                                                             <TextBlock>
-                                                                <Run Text="{x:Bind Key}" />
+                                                                <Run Text="{x:Bind DisplayText}" />
                                                                 <LineBreak />
                                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
                                                             </TextBlock>
