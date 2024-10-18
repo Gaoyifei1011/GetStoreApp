@@ -8,6 +8,7 @@ using GetStoreApp.WindowsAPI.PInvoke.KernelBase;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.ApplicationModel.DynamicDependency;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -70,47 +71,47 @@ namespace GetStoreApp
 
                 // 使用 MSIX 动态依赖包 API，强行修改静态包图的依赖顺序，解决 WinUI 3 桌面应用程序加载时错误加载成 WinUI 2 程序集，导致程序启动失败的问题
                 IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
-                PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
+                PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.None;
 
                 switch (Package.Current.Id.Architecture)
                 {
                     case ProcessorArchitecture.X86:
                         {
-                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86;
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.X86;
                             break;
                         }
                     case ProcessorArchitecture.X64:
                         {
-                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X64;
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.X64;
                             break;
                         }
                     case ProcessorArchitecture.Arm64:
                         {
-                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Arm64;
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.Arm64;
                             break;
                         }
                     case ProcessorArchitecture.X86OnArm64:
                         {
-                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_X86A64;
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.X86OnArm64;
                             break;
                         }
                     case ProcessorArchitecture.Neutral:
                         {
-                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_Neutral;
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.Neutral;
                             break;
                         }
                     case ProcessorArchitecture.Unknown:
                         {
-                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.PackageDependencyProcessorArchitectures_None;
+                            packageDependencyProcessorArchitectures = PackageDependencyProcessorArchitectures.None;
                             break;
                         }
                 }
 
                 foreach (Package dependencyPacakge in dependencyPackageList)
                 {
-                    if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime") && KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeKind.PackageDependencyLifetimeKind_Process, string.Empty, CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
+                    if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime") && KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new Microsoft.Windows.ApplicationModel.DynamicDependency.PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind.Process, string.Empty, WindowsAPI.PInvoke.KernelBase.CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
                     {
-                        if (KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out _, out _) is 0)
+                        if (KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, WindowsAPI.PInvoke.KernelBase.AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out _, out _) is 0)
                         {
                             break;
                         }

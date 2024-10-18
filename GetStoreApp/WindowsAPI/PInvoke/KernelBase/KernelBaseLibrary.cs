@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Windows.ApplicationModel;
+using Microsoft.Windows.ApplicationModel.DynamicDependency;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.KernelBase
 {
@@ -21,7 +21,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.KernelBase
         /// <param name="packageFullName">此方法返回时，包含指向以 null 结尾的 Unicode 字符串的指针的地址，该字符串指定已解析依赖项的包的全名。 调用 HeapFree 不再需要此资源后，调用方负责释放此资源。</param>
         /// <returns>如果函数成功，则返回 ERROR_SUCCESS。 否则，函数将返回错误代码。</returns>
         [LibraryImport(KernelBase, EntryPoint = "AddPackageDependency", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int AddPackageDependency([MarshalAs(UnmanagedType.LPWStr)] string packageDependencyId, int rank, AddPackageDependencyOptions options, out IntPtr packageDependencyContext, [MarshalAs(UnmanagedType.LPWStr)] out string packageFullName);
+        public static partial int AddPackageDependency([MarshalAs(UnmanagedType.LPWStr)] string packageDependencyId, int rank, AddPackageDependencyOptions options, out PackageDependencyContextId packageDependencyContext, [MarshalAs(UnmanagedType.LPWStr)] out string packageFullName);
 
         /// <summary>
         /// 使用指定的包系列名称、最低版本和其他条件，为当前应用的框架包依赖项创建安装时引用。
@@ -36,6 +36,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.KernelBase
         /// <param name="packageDependencyId">此方法返回时，包含指向以 null 结尾的 Unicode 字符串的指针的地址，该字符串指定新包依赖项的 ID。 调用 HeapFree 不再需要此资源后，调用方负责释放此资源。</param>
         /// <returns>如果该函数成功，则返回 ERROR_SUCCESS。 否则，该函数将返回错误代码。</returns>
         [LibraryImport(KernelBase, EntryPoint = "TryCreatePackageDependency", SetLastError = true, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial int TryCreatePackageDependency(IntPtr user, [MarshalAs(UnmanagedType.LPWStr)] string packageFamilyName, PackageVersion minVersion, PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures, PackageDependencyLifetimeKind lifetimeKind, [MarshalAs(UnmanagedType.LPWStr)] string lifetimeArtifact, CreatePackageDependencyOptions options, [MarshalAs(UnmanagedType.LPWStr)] out string packageDependencyId);
+        public static partial int TryCreatePackageDependency(IntPtr user, [MarshalAs(UnmanagedType.LPWStr)] string packageFamilyName, PackageVersion minVersion, PackageDependencyProcessorArchitectures packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind lifetimeKind, [MarshalAs(UnmanagedType.LPWStr)] string lifetimeArtifact, CreatePackageDependencyOptions options, [MarshalAs(UnmanagedType.LPWStr)] out string packageDependencyId);
     }
 }

@@ -22,6 +22,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -48,10 +49,11 @@ namespace GetStoreApp.Views.Windows
     /// </summary>
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private readonly SUBCLASSPROC mainWindowSubClassProc;
-        private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly ContentCoordinateConverter contentCoordinateConverter;
+        private readonly ContentIsland contentIsland;
+        private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly OverlappedPresenter overlappedPresenter;
+        private readonly SUBCLASSPROC mainWindowSubClassProc;
 
         public new static MainWindow Current { get; private set; }
 
@@ -147,7 +149,11 @@ namespace GetStoreApp.Views.Windows
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
+            contentIsland.Environment.SettingChanged += OnSettingChanged;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
+
+            WindowsXamlManager windowsXamlManager = WindowsXamlManager.GetForCurrentThread();
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -209,13 +215,19 @@ namespace GetStoreApp.Views.Windows
 
             if (Content is not null && Content.XamlRoot is not null)
             {
-                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32((int)(AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale), (int)AppTitlebar.Margin.Top, (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale), (int)(AppTitlebar.ActualHeight * Content.XamlRoot.RasterizationScale))]);
+                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
+                    [new RectInt32(
+                        (int)(AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale),
+                        (int)AppTitlebar.Margin.Top,
+                        (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale),
+                        (int)(AppTitlebar.ActualHeight * Content.XamlRoot.RasterizationScale))
+                    ]);
             }
         }
 
         #endregion 第一部分：窗口类事件
 
-        #region 第二部分：窗口辅助类（AppWindow）挂载的事件
+        #region 第二部分：窗口辅助类挂载的事件
 
         /// <summary>
         /// 窗口位置变化发生的事件
@@ -270,6 +282,7 @@ namespace GetStoreApp.Views.Windows
                 if (result is ContentDialogResult.Primary)
                 {
                     AppWindow.Changed -= OnAppWindowChanged;
+                    contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     ApplicationData.Current.DataChanged -= OnDataChanged;
                     ThemeService.PropertyChanged -= OnServicePropertyChanged;
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
@@ -289,6 +302,7 @@ namespace GetStoreApp.Views.Windows
             else
             {
                 AppWindow.Changed -= OnAppWindowChanged;
+                contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 ApplicationData.Current.DataChanged -= OnDataChanged;
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
@@ -298,7 +312,23 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        #endregion 第二部分：窗口辅助类（AppWindow）挂载的事件
+        /// <summary>
+        /// 内容岛设置发生更改时触发的事件
+        /// </summary>
+        private void OnSettingChanged(ContentIslandEnvironment sender, ContentEnvironmentSettingChangedEventArgs args)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                if (ThemeService.AppTheme.Equals(ThemeService.ThemeList[0]))
+                {
+                    WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+                }
+
+                StoreRegionService.UpdateDefaultRegion();
+            });
+        }
+
+        #endregion 第二部分：窗口辅助类挂载的事件
 
         #region 第三部分：窗口右键菜单事件
 
@@ -893,17 +923,6 @@ namespace GetStoreApp.Views.Windows
                             }
                         }
 
-                        break;
-                    }
-                // 应用主题设置跟随系统发生变化时，当系统主题设置发生变化时修改修改应用背景色
-                case WindowMessage.WM_SETTINGCHANGE:
-                    {
-                        if (ThemeService.AppTheme.Equals(ThemeService.ThemeList[0]))
-                        {
-                            WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
-                        }
-
-                        StoreRegionService.UpdateDefaultRegion();
                         break;
                     }
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
