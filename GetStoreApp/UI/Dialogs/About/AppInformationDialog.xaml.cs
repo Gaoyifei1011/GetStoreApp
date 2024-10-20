@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
@@ -168,17 +167,15 @@ namespace GetStoreApp.UI.Dialogs.About
 
             Task.Run(() =>
             {
-                StringBuilder stringBuilder = new();
+                List<string> appInformationCopyStringList = [];
                 foreach (ContentLinkInfo appInformationItem in AppInformationCollection)
                 {
-                    stringBuilder.Append(appInformationItem.DisplayText);
-                    stringBuilder.Append(appInformationItem.SecondaryText);
-                    stringBuilder.Append(Environment.NewLine);
+                    appInformationCopyStringList.Add(appInformationItem.DisplayText + appInformationItem.SecondaryText);
                 }
 
                 DispatcherQueue.TryEnqueue(async () =>
                 {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
                     sender.Hide();
                     await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
                 });

@@ -109,7 +109,7 @@ namespace GetStoreApp
 
                 foreach (Package dependencyPacakge in dependencyPackageList)
                 {
-                    if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime") && KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new Microsoft.Windows.ApplicationModel.DynamicDependency.PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind.Process, string.Empty, WindowsAPI.PInvoke.KernelBase.CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
+                    if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime") && KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new Windows.ApplicationModel.PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind.Process, string.Empty, WindowsAPI.PInvoke.KernelBase.CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
                     {
                         if (KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, WindowsAPI.PInvoke.KernelBase.AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out _, out _) is 0)
                         {

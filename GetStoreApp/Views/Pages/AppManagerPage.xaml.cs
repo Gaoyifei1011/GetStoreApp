@@ -14,7 +14,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -584,14 +583,14 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        StringBuilder copyBuilder = new();
-                        copyBuilder.AppendLine(package.DisplayName);
-                        copyBuilder.AppendLine(package.Id.FamilyName);
-                        copyBuilder.AppendLine(package.Id.FullName);
+                        List<string> copyDependencyInformationCopyStringList = []; ;
+                        copyDependencyInformationCopyStringList.Add(package.DisplayName);
+                        copyDependencyInformationCopyStringList.Add(package.Id.FamilyName);
+                        copyDependencyInformationCopyStringList.Add(package.Id.FullName);
 
                         DispatcherQueue.TryEnqueue(async () =>
                         {
-                            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
+                            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyDependencyInformationCopyStringList));
                             await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
                         });
                     }
@@ -1317,29 +1316,29 @@ namespace GetStoreApp.Views.Pages
         {
             Task.Run(() =>
             {
-                StringBuilder copyBuilder = new();
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/DisplayName"), DisplayName));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FamilyName"), FamilyName));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FullName"), FullName));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Description"), Description));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherName"), PublisherName));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherId"), PublisherId));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Version"), Version));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/InstalledDate"), InstalledDate));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Architecture"), Architecture));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/SignatureKind"), SignatureKind));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/ResourceId"), ResourceId));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsBundle"), IsBundle));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsDevelopmentMode"), IsDevelopmentMode));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsFramework"), IsFramework));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsOptional"), IsOptional));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsResourcePackage"), IsResourcePackage));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsStub"), IsStub));
-                copyBuilder.AppendLine(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/VertifyIsOK"), VertifyIsOK));
+                List<string> copyStringList = [];
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/DisplayName"), DisplayName));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FamilyName"), FamilyName));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FullName"), FullName));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Description"), Description));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherName"), PublisherName));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherId"), PublisherId));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Version"), Version));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/InstalledDate"), InstalledDate));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Architecture"), Architecture));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/SignatureKind"), SignatureKind));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/ResourceId"), ResourceId));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsBundle"), IsBundle));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsDevelopmentMode"), IsDevelopmentMode));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsFramework"), IsFramework));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsOptional"), IsOptional));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsResourcePackage"), IsResourcePackage));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsStub"), IsStub));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/VertifyIsOK"), VertifyIsOK));
 
                 DispatcherQueue.TryEnqueue(async () =>
                 {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyBuilder.ToString());
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyStringList));
                     await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
                 });
             });

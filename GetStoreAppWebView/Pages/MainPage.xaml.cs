@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
@@ -378,20 +377,6 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private async void OnCoreProcessFailed(object sender, CoreWebView2ProcessFailedEventArgs args)
         {
-            StringBuilder processFailedBuilder = new();
-            processFailedBuilder.Append("ProcessFailedKind:");
-            processFailedBuilder.Append(args.ProcessFailedKind.ToString());
-            processFailedBuilder.Append(Environment.NewLine);
-            processFailedBuilder.Append("Reason:");
-            processFailedBuilder.Append(args.Reason.ToString());
-            processFailedBuilder.Append(Environment.NewLine);
-            processFailedBuilder.Append("ExitCode:");
-            processFailedBuilder.Append(args.ExitCode);
-            processFailedBuilder.Append(Environment.NewLine);
-            processFailedBuilder.Append("ProcessDescription:");
-            processFailedBuilder.Append(args.ProcessDescription);
-            processFailedBuilder.Append(Environment.NewLine);
-
             Dictionary<string, string> logInformationDict = new()
             {
                 { "Process failed kind", args.ProcessFailedKind.ToString() },

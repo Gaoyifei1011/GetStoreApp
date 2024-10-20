@@ -5,8 +5,9 @@ using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GetStoreApp.UI.Dialogs.Download
@@ -82,15 +83,15 @@ namespace GetStoreApp.UI.Dialogs.Download
 
             Task.Run(() =>
             {
-                StringBuilder stringBuilder = new();
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileName") + FileName);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
-                stringBuilder.AppendLine(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
+                List<string> copyFileInformationCopyStringList = [];
+                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileName") + FileName);
+                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
+                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
+                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
 
                 DispatcherQueue.TryEnqueue(async () =>
                 {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
                     sender.Hide();
                     await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
                 });

@@ -4,11 +4,12 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using Windows.Security.Cryptography;
+using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -54,12 +55,12 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] ContentBytes = Encoding.UTF8.GetBytes(content);
+                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
 
                 HttpStringContent httpContent = new(content);
                 httpContent.Headers.Expires = DateTime.Now;
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/x-www-form-urlencoded");
-                httpContent.Headers.ContentLength = Convert.ToUInt64(ContentBytes.Length);
+                httpContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();

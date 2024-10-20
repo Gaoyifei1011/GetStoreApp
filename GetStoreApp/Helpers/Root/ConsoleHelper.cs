@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
-using System.Text;
 
 namespace GetStoreApp.Helpers.Root
 {
@@ -45,17 +44,9 @@ namespace GetStoreApp.Helpers.Root
             IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_INPUT_HANDLE);
 
             const int bufferSize = 1024;
-            byte[] buffer = new byte[bufferSize];
-
+            char[] buffer = new char[bufferSize];
             Kernel32Library.ReadConsole(consoleHandle, buffer, bufferSize, out int charsRead, IntPtr.Zero);
-            int numberOfCharsRead = (charsRead - 2) * 2;
-            byte[] b = new byte[numberOfCharsRead];
-            for (int i = 0; i < numberOfCharsRead; i++)
-            {
-                b[i] = buffer[i];
-            }
-
-            return Encoding.UTF8.GetString(Encoding.Convert(Encoding.Unicode, Encoding.UTF8, b));
+            return new string(buffer)[..(charsRead - Environment.NewLine.Length)];
         }
 
         /// <summary>
@@ -81,12 +72,9 @@ namespace GetStoreApp.Helpers.Root
         {
             if (!IsExited)
             {
+                value = value + Environment.NewLine;
                 IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
-
-                StringBuilder valueBuilder = new();
-                valueBuilder.AppendLine(value);
-
-                return Kernel32Library.WriteConsole(consoleHandle, valueBuilder.ToString(), valueBuilder.Length, out _, IntPtr.Zero);
+                return Kernel32Library.WriteConsole(consoleHandle, value, value.Length, out _, IntPtr.Zero);
             }
             else
             {

@@ -22,7 +22,6 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -153,8 +152,6 @@ namespace GetStoreApp.Views.Windows
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
-            WindowsXamlManager windowsXamlManager = WindowsXamlManager.GetForCurrentThread();
-
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
             inputNonClientPointerSource = InputNonClientPointerSource.GetForWindowId(AppWindow.Id);
@@ -187,7 +184,7 @@ namespace GetStoreApp.Views.Windows
         {
             try
             {
-                if (Visible && SystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
+                if (AppWindow.IsVisible && SystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
                     materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
                 }

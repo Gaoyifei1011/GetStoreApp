@@ -10,34 +10,25 @@
     xmlns:wux="using:Windows.UI.Xaml"
     xmlns:wuxc="using:Windows.UI.Xaml.Controls"
     x:Name="TaskbarPinPageRoot"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
 
-    <wuxc:Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+    <wuxc:StackPanel
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Center"
+        Spacing="5">
+
         <wuxc:TextBlock
+            HorizontalAlignment="Center"
+            FontSize="20"
+            Text="{x:Bind root:ResourceService.GetLocalized('WebView/PinAppToTaskbar')}"
+            TextWrapping="Wrap" />
+
+        <wuxc:TextBlock
+            HorizontalAlignment="Center"
             FontSize="16"
             Text="{x:Bind root:ResourceService.GetLocalized('WebView/TaskbarPinTip')}"
             TextWrapping="Wrap" />
-
-        <wux:VisualStateManager.VisualStateGroups>
-            <wux:VisualStateGroup>
-                <wux:VisualState x:Name="MicaBackdrop">
-                    <wux:VisualState.Setters>
-                        <wux:Setter Target="TaskbarPinPageRoot.Background">
-                            <wux:Setter.Value>
-                                <wux:Setter Target="TaskbarPinPageRoot.Background" Value="Transparent" />
-                            </wux:Setter.Value>
-                        </wux:Setter>
-                    </wux:VisualState.Setters>
-                </wux:VisualState>
-                <wux:VisualState x:Name="DesktopAcrylicBackdrop">
-                    <wux:VisualState.Setters>
-                        <wux:Setter Target="TaskbarPinPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
-                    </wux:VisualState.Setters>
-                </wux:VisualState>
-            </wux:VisualStateGroup>
-        </wux:VisualStateManager.VisualStateGroups>
-    </wuxc:Grid>
+    </wuxc:StackPanel>
 </wuxc:Page>

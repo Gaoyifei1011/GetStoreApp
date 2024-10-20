@@ -5,11 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation.Diagnostics;
+using Windows.Security.Cryptography;
+using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -81,12 +82,11 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] contentBytes = Encoding.UTF8.GetBytes(generatedContent);
-
+                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(generatedContent, BinaryStringEncoding.Utf8);
                 HttpStringContent httpStringContent = new(generatedContent);
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("text/json");
-                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();

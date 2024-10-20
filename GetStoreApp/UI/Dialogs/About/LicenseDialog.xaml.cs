@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
-using System.Text;
+using Windows.Security.Cryptography;
 
 namespace GetStoreApp.UI.Dialogs.About
 {
@@ -34,7 +34,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
             DispatcherQueue.TryEnqueue(async () =>
             {
-                LicenseText = Encoding.UTF8.GetString(await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/LICENSE"));
+                LicenseText = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/LICENSE"));
             });
         }
     }

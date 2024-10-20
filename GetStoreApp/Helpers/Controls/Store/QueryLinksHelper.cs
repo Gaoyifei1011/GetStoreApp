@@ -6,12 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation.Diagnostics;
+using Windows.Security.Cryptography;
+using Windows.Storage.Streams;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -55,12 +56,12 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] contentBytes = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/cookie.xml");
+                IBuffer contentBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/cookie.xml");
 
-                HttpStringContent httpStringContent = new(Encoding.UTF8.GetString(contentBytes));
+                HttpStringContent httpStringContent = new(CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, contentBuffer));
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
-                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
@@ -234,14 +235,14 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] wubytesArray = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/wu.xml");
-                string fileListXml = Encoding.UTF8.GetString(wubytesArray).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
-                byte[] contentBytes = Encoding.UTF8.GetBytes(fileListXml);
+                IBuffer wuBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/wu.xml");
+                string fileListXml = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, wuBuffer).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
+                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(fileListXml, BinaryStringEncoding.Utf8);
 
                 HttpStringContent httpStringContent = new(fileListXml);
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
-                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
@@ -409,14 +410,14 @@ namespace GetStoreApp.Helpers.Controls.Store
 
             try
             {
-                byte[] urlbytesArray = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/url.xml");
-                string url = Encoding.UTF8.GetString(urlbytesArray).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
-                byte[] contentBytes = Encoding.UTF8.GetBytes(url);
+                IBuffer urlBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/url.xml");
+                string url = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, urlBuffer).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
+                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(url, BinaryStringEncoding.Utf8);
 
                 HttpStringContent httpContent = new(url);
                 httpContent.Headers.Expires = DateTime.Now;
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
-                httpContent.Headers.ContentLength = Convert.ToUInt64(contentBytes.Length);
+                httpContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();

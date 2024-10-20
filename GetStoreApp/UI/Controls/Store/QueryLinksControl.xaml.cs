@@ -21,7 +21,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -524,15 +523,13 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
         {
-            StringBuilder appInformationBuilder = new();
-            appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppName"));
-            appInformationBuilder.AppendLine(AppInfo.Name);
-            appInformationBuilder.Append(ResourceService.GetLocalized("Store/QueryedAppPublisher"));
-            appInformationBuilder.AppendLine(AppInfo.Publisher);
-            appInformationBuilder.AppendLine(ResourceService.GetLocalized("Store/QueryedAppDescription"));
-            appInformationBuilder.AppendLine(AppInfo.Description);
+            List<string> appInformationCopyStringList = [];
+            appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppName") + AppInfo.Name);
+            appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppPublisher") + AppInfo.Publisher);
+            appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppDescription"));
+            appInformationCopyStringList.Add(AppInfo.Description);
 
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformationBuilder.ToString());
+            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
             await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
         }
 
@@ -659,20 +656,15 @@ namespace GetStoreApp.UI.Controls.Store
                     return;
                 };
 
-                StringBuilder stringBuilder = new();
-
+                List<string> queryLinksCopyStringList = [];
                 foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
-                    stringBuilder.AppendLine(string.Format("[\n{0}\n{1}\n{2}\n]",
-                        queryLinksItem.FileName,
-                        queryLinksItem.FileLink,
-                        queryLinksItem.FileSize)
-                        );
+                    queryLinksCopyStringList.Add(string.Format("[\n{0}\n{1}\n{2}\n]", queryLinksItem.FileName, queryLinksItem.FileLink, queryLinksItem.FileSize));
                 }
 
                 DispatcherQueue.TryEnqueue(async () =>
                 {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
                     await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
                 });
             });
@@ -718,16 +710,15 @@ namespace GetStoreApp.UI.Controls.Store
                     return;
                 };
 
-                StringBuilder stringBuilder = new();
-
+                List<string> queryLinksCopyStringList = [];
                 foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                 {
-                    stringBuilder.AppendLine(queryLinksItem.FileLink);
+                    queryLinksCopyStringList.Add(queryLinksItem.FileLink);
                 }
 
                 DispatcherQueue.TryEnqueue(async () =>
                 {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(stringBuilder.ToString());
+                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
                     await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
                 });
             });

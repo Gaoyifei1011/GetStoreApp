@@ -1,7 +1,9 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Enums;
 using GetStoreAppWebView.Pages;
+using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -9,9 +11,14 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Shell;
 using Windows.UI.ViewManagement;
+using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Hosting;
 
 namespace GetStoreAppWebView
 {
@@ -21,6 +28,7 @@ namespace GetStoreAppWebView
     public partial class App : Application, IDisposable
     {
         private bool isDisposed;
+        private readonly Dictionary<UIContext, AppWindow> appWindowList = [];
 
         public App()
         {
@@ -35,23 +43,38 @@ namespace GetStoreAppWebView
         {
             base.OnActivated(args);
 
-            if (args.Kind is ActivationKind.Protocol && args is ProtocolActivatedEventArgs protocolActivatedEventArgs && protocolActivatedEventArgs.PreviousExecutionState is not ApplicationExecutionState.Running)
+            if (args.Kind is ActivationKind.Protocol && args is ProtocolActivatedEventArgs protocolActivatedEventArgs)
             {
                 if (protocolActivatedEventArgs.Uri.AbsoluteUri is "webbrowser:")
                 {
-                    Window.Current.Content = new MainPage();
-                    Window.Current.Activate();
+                    if (appWindowList.Count is 0)
+                    {
+                        Window.Current.CoreWindow.FlowDirection = LanguageService.FlowDirection is FlowDirection.LeftToRight ? CoreWindowFlowDirection.LeftToRight : CoreWindowFlowDirection.RightToLeft;
+                        Window.Current.Content = new MainPage();
+                        Window.Current.Activate();
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 else if (protocolActivatedEventArgs.Uri.AbsoluteUri is "taskbarpinner:")
                 {
-                    ApplicationView applicationView = ApplicationView.GetForCurrentView();
-                    CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
-                    Window.Current.Content = new TaskbarPinPage();
-                    applicationView.Title = ResourceService.GetLocalized("WebView/PinAppToTaskbar");
-                    Window.Current.Activate();
-                    ViewModePreferences preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                    preferences.CustomSize = new Size(400, 200);
-                    await applicationView.TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                    AppWindow appWindow = await AppWindow.TryCreateAsync();
+                    appWindowList.Add(appWindow.UIContext, appWindow);
+                    appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+                    ElementCompositionPreview.SetAppWindowContent(appWindow, new TaskbarPinPage());
+                    appWindow.Title = ResourceService.GetLocalized("WebView/PinAppToTaskbar");
+                    await appWindow.TryShowAsync();
+
+                    if (Window.Current.Content is Grid)
+                    {
+                        await ApplicationView.GetForCurrentView().TryConsolidateAsync();
+                    }
+
+                    appWindow.Presenter.RequestPresentation(AppWindowPresentationKind.CompactOverlay);
+                    appWindow.RequestSize(new Size(400, 200));
+
                     bool pinResult = false;
 
                     try
@@ -82,8 +105,8 @@ namespace GetStoreAppWebView
                     {
                         ResultService.SaveResult(StorageDataKind.TaskbarPinnedResult, pinResult.ToString());
                         ApplicationData.Current.SignalDataChanged();
-
-                        Dispose();
+                        await appWindow.CloseAsync();
+                        appWindowList.Remove(appWindow.UIContext);
                     }
                 }
             }

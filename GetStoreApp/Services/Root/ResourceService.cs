@@ -345,22 +345,21 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 获取嵌入的数据
         /// </summary>
-        public static async Task<byte[]> GetEmbeddedDataAsync(string resource)
+        public static async Task<IBuffer> GetEmbeddedDataAsync(string resource)
         {
             try
             {
                 IRandomAccessStream randomAccessStream = await resourceMap.GetValue(resource).GetValueAsStreamAsync();
                 DataReader dataReader = new(randomAccessStream);
                 await dataReader.LoadAsync((uint)randomAccessStream.Size);
-                byte[] bytesArray = new byte[randomAccessStream.Size];
-                dataReader.ReadBytes(bytesArray);
+                IBuffer buffer = dataReader.DetachBuffer();
                 dataReader.Dispose();
-                return bytesArray;
+                return buffer;
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Warning, "Get resource embedData failed.", e);
-                return [];
+                return default;
             }
         }
     }

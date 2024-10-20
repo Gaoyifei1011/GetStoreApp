@@ -13,6 +13,7 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
+
     <wuxc:Grid ActualThemeChanged="{x:Bind OnActualThemeChanged}">
         <wuxc:Grid.RowDefinitions>
             <wuxc:RowDefinition Height="Auto" />
@@ -104,7 +105,7 @@
                     <wuxc:ColumnDefinition Width="*" />
                 </wuxc:Grid.ColumnDefinitions>
 
-                <wuxc:ProgressRing
+                <muxc:ProgressRing
                     Width="20"
                     Height="20"
                     Margin="0,0,5,0"
