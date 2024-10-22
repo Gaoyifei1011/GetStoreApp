@@ -2,11 +2,12 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest</AnalysisLevel>
-    <AssemblyName>Microsoft.Management.Deployment.Projection</AssemblyName>
+    <AssemblyName>Microsoft.UI.Xaml.Projection</AssemblyName>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <CsWinRTFilters>-include Microsoft.Management.Deployment</CsWinRTFilters>
+    <CsWinRTFilters>-include Microsoft.UI.Xaml</CsWinRTFilters>
     <CSWinRTWindowsMetadata>10.0.26100.0</CSWinRTWindowsMetadata>
+    <CsWinRTUseWindowsUIXamlProjections>true</CsWinRTUseWindowsUIXamlProjections>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -21,11 +22,12 @@
     <OutputType>Library</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
     <PublishAot>true</PublishAot>
-    <RootNamespace>Microsoft.Management.Deployment.Projection</RootNamespace>
+    <RootNamespace>Microsoft.UI.Xaml.Projection</RootNamespace>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
+    <UseUwp>true</UseUwp>
     <WindowsSdkPackageVersion>10.0.26100.54</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
@@ -51,18 +53,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <CsWinRTInputs Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" />
-
-    <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
-    <Content Include="$(TargetDir)\winrtact.dll" ExcludeFromSingleFile="true" Link="winrtact.dll" CopyToOutputDirectory="Always" />
-
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.8.1911" GeneratePathProperty="true" IncludeAssets="none" />
+    <CsWinRTInputs Include="$(PkgMicrosoft_UI_Xaml)\lib\uap10.0\Microsoft.UI.Xaml.winmd" />
+    <CsWinRTInputs Include="$(PkgMicrosoft_Web_WebView2)\lib\Microsoft.Web.WebView2.Core.winmd" />
+    
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" ExcludeAssets="build;buildtransitive;compile;runtime" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
-  </ItemGroup>
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" ExcludeAssets="build;buildtransitive;compile;runtime" GeneratePathProperty="true" />
 
-  <!-- 复制 Microsoft.WindowsPackageManager.ComInterop 所需要的文件到输出根目录 -->
-  <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
-    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\runtimes\win10-$(Platform)\native\winrtact.dll" DestinationFolder="$(TargetDir)" />
-  </Target>
+    <Reference Include="$(PkgMicrosoft_Web_WebView2)\lib_manual\net8.0-windows10.0.17763.0\Microsoft.Web.WebView2.Core.Projection.dll" />
+  </ItemGroup>
 </Project>

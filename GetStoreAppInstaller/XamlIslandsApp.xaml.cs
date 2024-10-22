@@ -1,5 +1,4 @@
 ﻿using Mile.Xaml;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller
 {

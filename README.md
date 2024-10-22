@@ -120,8 +120,6 @@
 
 ### 项目引用（按英文首字母排序）
 
-> * [DisposableMemory.ModernNetUAP.WinUI](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
-> * [DisposableMemory.ModernNetUAP.XamlCompiler](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
 > * [Microsoft.UI.Xaml](https://github.com/microsoft/microsoft-ui-xaml)&emsp;
 > * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;

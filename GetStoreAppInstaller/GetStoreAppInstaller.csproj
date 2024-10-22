@@ -5,7 +5,6 @@
     <AssemblyName>GetStoreAppInstaller</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DefaultXamlRuntime>UAP</DefaultXamlRuntime>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -70,7 +69,6 @@
     <Page Update="TestPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="XamlIslandsApp.xaml" />
 
-    <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.3" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
     <PackageReference Include="Mile.Xaml" Version="2.3.1064" GeneratePathProperty="True" />
   </ItemGroup>

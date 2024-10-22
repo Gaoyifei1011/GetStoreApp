@@ -19,8 +19,14 @@ namespace GetStoreAppWidget
         /// </summary>
         public void CreateWidget(WidgetContext widgetContext)
         {
-            string id = widgetContext.Id;
-            string definitionId = widgetContext.DefinitionId;
+            WidgetUpdateRequestOptions widgetUpdateRequestOptions = new(widgetContext.Id);
+            widgetUpdateRequestOptions.Template = "StoreAppUpdateWidget";
+            widgetUpdateRequestOptions.Data = "StoreAppData";
+            widgetUpdateRequestOptions.CustomState = "";
+
+            if (widgetContext.DefinitionId.Equals(nameof(StoreAppUpdateWidget)))
+            {
+            }
         }
 
         /// <summary>

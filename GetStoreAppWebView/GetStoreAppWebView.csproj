@@ -5,7 +5,6 @@
     <AssemblyName>GetStoreAppWebView</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <DefaultXamlRuntime>UAP</DefaultXamlRuntime>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -67,11 +66,10 @@
     <None Remove="Pages\TaskbarPinPage.xaml" />
     <None Remove="Styles\UWP\AppbarButton.xaml" />
     
-    <PackageReference Include="DisposableMemory.ModernNetUAP.WinUI" Version="2.8.6.3-preview" />
-    <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.3" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
+    <ProjectReference Include="..\Microsoft.UI.Xaml.Projection\Microsoft.UI.Xaml.Projection.csproj" />
     
     <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

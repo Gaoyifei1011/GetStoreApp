@@ -114,8 +114,6 @@ All the content of the program has been developed
 
 ### Project References (Sort by alphabetical order)
 
-> * [DisposableMemory.ModernNetUAP.WinUI](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
-> * [DisposableMemory.ModernNetUAP.XamlCompiler](https://github.com/driver1998/ModernNetUAP.XamlCompiler)&emsp;
 > * [Microsoft.UI.Xaml](https://github.com/microsoft/microsoft-ui-xaml)&emsp;
 > * [Microsoft.Web.WebView2](https://aka.ms/webview)&emsp;
 > * [Microsoft.Windows.CsWinRT](https://github.com/microsoft/cswinrt)&emsp;
@@ -145,7 +143,7 @@ All the content of the program has been developed
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com) 
 > * . NET Desktop Development (Installed in Visual Studio Installer, .NET SDK Version 9.0)
 > * [WinGet package manager](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) (install recommendedly)
-> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) （install recommendedly）
+> * [Microsoft Edge WebView2 Runtime](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) (install recommendedly)
 
 #### <p align="center">Compilation steps</p>
 
@@ -176,6 +174,7 @@ All the content of the program has been developed
 > * [AndromedaMelody](https://github.com/AndromedaMelody)&emsp;
 > * [cnbluefire](https://github.com/cnbluefire)&emsp;
 > * [GreenShadeZhang](https://github.com/GreenShadeZhang)&emsp;
+> * [hez2010](https://github.com/hez2010)&emsp;
 > * [飞翔](https://fionlen.azurewebsites.net)&emsp;
 > * [MouriNaruto](https://github.com/MouriNaruto)&emsp;
 > * [TaylorShi](https://github.com/TaylorShi)&emsp;

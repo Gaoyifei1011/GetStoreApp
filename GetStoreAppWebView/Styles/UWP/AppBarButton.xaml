@@ -1,122 +1,120 @@
-﻿<wux:ResourceDictionary
+﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:automation="using:Windows.UI.Xaml.Automation"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-    xmlns:wux="using:Windows.UI.Xaml"
-    xmlns:wuxc="using:Windows.UI.Xaml.Controls">
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
-    <wux:ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary.MergedDictionaries>
         <controls:XamlControlsResources />
-    </wux:ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary.MergedDictionaries>
 
-    <wux:Style x:Key="AppBarButtonStyle" TargetType="AppBarButton">
-        <wux:Setter Property="Background" Value="{ThemeResource AppBarButtonBackground}" />
-        <wux:Setter Property="Foreground" Value="{ThemeResource AppBarButtonForeground}" />
-        <wux:Setter Property="BorderBrush" Value="{ThemeResource AppBarButtonBorderBrush}" />
-        <wux:Setter Property="HorizontalAlignment" Value="Left" />
-        <wux:Setter Property="VerticalAlignment" Value="Top" />
-        <wux:Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-        <wux:Setter Property="FontWeight" Value="Normal" />
-        <wux:Setter Property="Width" Value="Auto" />
-        <wux:Setter Property="Height" Value="Auto" />
-        <wux:Setter Property="MinHeight" Value="48" />
-        <wux:Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-        <wux:Setter Property="FocusVisualMargin" Value="-3" />
-        <wux:Setter Property="AllowFocusOnInteraction" Value="False" />
-        <wux:Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
-        <wux:Setter Property="KeyboardAcceleratorPlacementMode" Value="Hidden" />
-        <wux:Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
-        <wux:Setter Property="Template">
-            <wux:Setter.Value>
-                <wuxc:ControlTemplate TargetType="wuxc:AppBarButton">
-                    <wuxc:Grid
+    <Style x:Key="AppBarButtonStyle" TargetType="AppBarButton">
+        <Setter Property="Background" Value="{ThemeResource AppBarButtonBackground}" />
+        <Setter Property="Foreground" Value="{ThemeResource AppBarButtonForeground}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource AppBarButtonBorderBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="MinHeight" Value="48" />
+        <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+        <Setter Property="FocusVisualMargin" Value="-3" />
+        <Setter Property="AllowFocusOnInteraction" Value="False" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+        <Setter Property="KeyboardAcceleratorPlacementMode" Value="Hidden" />
+        <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="AppBarButton">
+                    <Grid
                         x:Name="Root"
                         MinWidth="{TemplateBinding MinWidth}"
                         MaxWidth="{TemplateBinding MaxWidth}"
                         Background="Transparent">
-                        <wuxc:Border
+                        <Border
                             x:Name="AppBarButtonInnerBorder"
                             Margin="{ThemeResource AppBarButtonInnerBorderMargin}"
-                            wuxc:Control.IsTemplateFocusTarget="True"
                             Background="{TemplateBinding Background}"
                             BackgroundSizing="{TemplateBinding BackgroundSizing}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            Control.IsTemplateFocusTarget="True"
                             CornerRadius="{TemplateBinding CornerRadius}">
-                            <wuxc:Border.BackgroundTransition>
-                                <wux:BrushTransition Duration="0:0:0.083" />
-                            </wuxc:Border.BackgroundTransition>
-                        </wuxc:Border>
-                        <wuxc:Grid
+                            <Border.BackgroundTransition>
+                                <BrushTransition Duration="0:0:0.083" />
+                            </Border.BackgroundTransition>
+                        </Border>
+                        <Grid
                             x:Name="ContentRoot"
                             Height="{ThemeResource AppBarThemeCompactHeight}"
                             Margin="12,0,12,0">
 
-                            <wuxc:Grid.ColumnDefinitions>
-                                <wuxc:ColumnDefinition Width="*" />
-                                <wuxc:ColumnDefinition Width="Auto" />
-                            </wuxc:Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                            <wuxc:Viewbox
+                            <Viewbox
                                 x:Name="ContentViewbox"
                                 Height="{ThemeResource AppBarButtonContentHeight}"
                                 HorizontalAlignment="Stretch"
                                 automation:AutomationProperties.AccessibilityView="Raw">
-                                <wuxc:ContentPresenter
+                                <ContentPresenter
                                     x:Name="Content"
                                     Content="{TemplateBinding Icon}"
                                     Foreground="{TemplateBinding Foreground}" />
-                            </wuxc:Viewbox>
-                            <wuxc:TextBlock
+                            </Viewbox>
+                            <TextBlock
                                 x:Name="TextLabel"
+                                Grid.Column="1"
                                 Margin="8,0,0,0"
                                 VerticalAlignment="Center"
                                 automation:AutomationProperties.AccessibilityView="Raw"
-                                wuxc:Grid.Column="1"
                                 FontFamily="{TemplateBinding FontFamily}"
                                 FontSize="12"
                                 Foreground="{TemplateBinding Foreground}"
                                 Text="{TemplateBinding Label}"
                                 TextAlignment="Left"
                                 TextWrapping="NoWrap" />
-                        </wuxc:Grid>
+                        </Grid>
 
-                        <wux:VisualStateManager.VisualStateGroups>
-                            <wux:VisualStateGroup x:Name="CommonStates">
-                                <wux:VisualState x:Name="Normal" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
 
-                                <wux:VisualState x:Name="PointerOver">
-                                    <wux:VisualState.Setters>
-                                        <wux:Setter Target="AppBarButtonInnerBorder.Background" Value="{ThemeResource AppBarButtonBackgroundPointerOver}" />
-                                        <wux:Setter Target="AppBarButtonInnerBorder.BorderBrush" Value="{ThemeResource AppBarButtonBorderBrushPointerOver}" />
-                                        <wux:Setter Target="Content.Foreground" Value="{ThemeResource AppBarButtonForegroundPointerOver}" />
-                                        <wux:Setter Target="TextLabel.Foreground" Value="{ThemeResource AppBarButtonForegroundPointerOver}" />
-                                    </wux:VisualState.Setters>
-                                </wux:VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="AppBarButtonInnerBorder.Background" Value="{ThemeResource AppBarButtonBackgroundPointerOver}" />
+                                        <Setter Target="AppBarButtonInnerBorder.BorderBrush" Value="{ThemeResource AppBarButtonBorderBrushPointerOver}" />
+                                        <Setter Target="Content.Foreground" Value="{ThemeResource AppBarButtonForegroundPointerOver}" />
+                                        <Setter Target="TextLabel.Foreground" Value="{ThemeResource AppBarButtonForegroundPointerOver}" />
+                                    </VisualState.Setters>
+                                </VisualState>
 
-                                <wux:VisualState x:Name="Pressed">
-                                    <wux:VisualState.Setters>
-                                        <wux:Setter Target="AppBarButtonInnerBorder.Background" Value="{ThemeResource AppBarButtonBackgroundPressed}" />
-                                        <wux:Setter Target="AppBarButtonInnerBorder.BorderBrush" Value="{ThemeResource AppBarButtonBorderBrushPressed}" />
-                                        <wux:Setter Target="Content.Foreground" Value="{ThemeResource AppBarButtonForegroundPressed}" />
-                                        <wux:Setter Target="TextLabel.Foreground" Value="{ThemeResource AppBarButtonForegroundPressed}" />
-                                    </wux:VisualState.Setters>
-                                </wux:VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="AppBarButtonInnerBorder.Background" Value="{ThemeResource AppBarButtonBackgroundPressed}" />
+                                        <Setter Target="AppBarButtonInnerBorder.BorderBrush" Value="{ThemeResource AppBarButtonBorderBrushPressed}" />
+                                        <Setter Target="Content.Foreground" Value="{ThemeResource AppBarButtonForegroundPressed}" />
+                                        <Setter Target="TextLabel.Foreground" Value="{ThemeResource AppBarButtonForegroundPressed}" />
+                                    </VisualState.Setters>
+                                </VisualState>
 
-                                <wux:VisualState x:Name="Disabled">
-                                    <wux:VisualState.Setters>
-                                        <wux:Setter Target="AppBarButtonInnerBorder.Background" Value="{ThemeResource AppBarButtonBackgroundDisabled}" />
-                                        <wux:Setter Target="AppBarButtonInnerBorder.BorderBrush" Value="{ThemeResource AppBarButtonBorderBrushDisabled}" />
-                                        <wux:Setter Target="Content.Foreground" Value="{ThemeResource AppBarButtonForegroundDisabled}" />
-                                        <wux:Setter Target="TextLabel.Foreground" Value="{ThemeResource AppBarButtonForegroundDisabled}" />
-                                    </wux:VisualState.Setters>
-                                </wux:VisualState>
-                            </wux:VisualStateGroup>
-                        </wux:VisualStateManager.VisualStateGroups>
-                    </wuxc:Grid>
-                </wuxc:ControlTemplate>
-            </wux:Setter.Value>
-        </wux:Setter>
-    </wux:Style>
-</wux:ResourceDictionary>
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="AppBarButtonInnerBorder.Background" Value="{ThemeResource AppBarButtonBackgroundDisabled}" />
+                                        <Setter Target="AppBarButtonInnerBorder.BorderBrush" Value="{ThemeResource AppBarButtonBorderBrushDisabled}" />
+                                        <Setter Target="Content.Foreground" Value="{ThemeResource AppBarButtonForegroundDisabled}" />
+                                        <Setter Target="TextLabel.Foreground" Value="{ThemeResource AppBarButtonForegroundDisabled}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -1,4 +1,4 @@
-﻿<wuxc:Page
+﻿<Page
     x:Class="GetStoreAppWebView.Pages.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,22 +7,20 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:root="using:GetStoreAppWebView.Services.Root"
     xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
-    xmlns:wux="using:Windows.UI.Xaml"
-    xmlns:wuxc="using:Windows.UI.Xaml.Controls"
     x:Name="MainPageRoot"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
 
-    <wuxc:Grid ActualThemeChanged="{x:Bind OnActualThemeChanged}">
-        <wuxc:Grid.RowDefinitions>
-            <wuxc:RowDefinition Height="Auto" />
-            <wuxc:RowDefinition Height="Auto" />
-            <wuxc:RowDefinition Height="*" />
-        </wuxc:Grid.RowDefinitions>
+    <Grid ActualThemeChanged="{x:Bind OnActualThemeChanged}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <!--  应用标题栏内容  -->
-        <wuxc:Grid
+        <Grid
             x:Name="AppTitlebar"
             Height="45"
             Margin="16,0,0,0"
@@ -31,161 +29,161 @@
             Background="Transparent">
 
             <!--  标题栏应用名称  -->
-            <wuxc:TextBlock
+            <TextBlock
+                Grid.Column="1"
                 Margin="0,2,0,0"
                 VerticalAlignment="Center"
-                wuxc:Grid.Column="1"
                 Style="{StaticResource CaptionTextBlockStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
                 TextWrapping="NoWrap" />
-        </wuxc:Grid>
+        </Grid>
 
-        <wuxc:Grid
+        <Grid
+            Grid.Row="1"
             Height="45"
-            Padding="0"
-            wuxc:Grid.Row="1">
+            Padding="0">
 
-            <wuxc:Grid.ColumnDefinitions>
-                <wuxc:ColumnDefinition Width="*" />
-                <wuxc:ColumnDefinition Width="Auto" />
-                <wuxc:ColumnDefinition Width="*" />
-            </wuxc:Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <wuxc:StackPanel
+            <StackPanel
+                Grid.Column="0"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                wuxc:Grid.Column="0"
                 Background="Transparent"
                 Orientation="Horizontal"
                 Spacing="2">
 
-                <wuxc:AppBarButton
+                <AppBarButton
                     Click="{x:Bind OnBrowserBackClicked}"
                     IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WebView/Back')}"
                     Style="{StaticResource AppBarButtonStyle}">
 
-                    <wuxc:AppBarButton.Icon>
-                        <wuxc:FontIcon Glyph="&#xE72B;" />
-                    </wuxc:AppBarButton.Icon>
-                </wuxc:AppBarButton>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72B;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <wuxc:AppBarButton
+                <AppBarButton
                     Click="{x:Bind OnBrowserForwardClicked}"
                     IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WebView/Forward')}"
                     Style="{StaticResource AppBarButtonStyle}">
 
-                    <wuxc:AppBarButton.Icon>
-                        <wuxc:FontIcon Glyph="&#xE72A;" />
-                    </wuxc:AppBarButton.Icon>
-                </wuxc:AppBarButton>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72A;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <wuxc:AppBarButton
+                <AppBarButton
                     Click="{x:Bind OnRefreshClicked}"
                     IsEnabled="{x:Bind IsLoading.Equals(x:False), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WebView/Refresh')}"
                     Style="{StaticResource AppBarButtonStyle}">
 
-                    <wuxc:AppBarButton.Icon>
-                        <wuxc:FontIcon Glyph="&#xE72C;" />
-                    </wuxc:AppBarButton.Icon>
-                </wuxc:AppBarButton>
-            </wuxc:StackPanel>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72C;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </StackPanel>
 
-            <wuxc:Grid
+            <Grid
+                Grid.Column="1"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                wuxc:Grid.Column="1">
+                VerticalAlignment="Center">
 
-                <wuxc:Grid.ColumnDefinitions>
-                    <wuxc:ColumnDefinition Width="*" />
-                    <wuxc:ColumnDefinition Width="Auto" />
-                    <wuxc:ColumnDefinition Width="*" />
-                </wuxc:Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
                 <muxc:ProgressRing
+                    Grid.Column="0"
                     Width="20"
                     Height="20"
                     Margin="0,0,5,0"
                     HorizontalAlignment="Right"
-                    wuxc:Grid.Column="0"
                     IsActive="{x:Bind IsLoading, Mode=OneWay}"
                     Visibility="{x:Bind IsLoading, Mode=OneWay}" />
-                <wuxc:TextBlock
+                <TextBlock
+                    Grid.Column="1"
                     VerticalAlignment="Center"
-                    wuxc:Grid.Column="1"
                     Text="{x:Bind root:ResourceService.GetLocalized('WebView/WebTitle')}" />
-                <wuxc:TextBlock
+                <TextBlock
+                    Grid.Column="2"
                     VerticalAlignment="Center"
-                    wuxc:Grid.Column="2"
                     Text="{x:Bind root:ResourceService.GetLocalized('WebView/Loading')}"
                     Visibility="{x:Bind IsLoading, Mode=OneWay}" />
-            </wuxc:Grid>
+            </Grid>
 
-            <wuxc:StackPanel
+            <StackPanel
+                Grid.Column="2"
                 Margin="0,0,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                wuxc:Grid.Column="2"
                 Background="Transparent"
                 Orientation="Horizontal"
                 Spacing="2">
 
-                <wuxc:AppBarButton
+                <AppBarButton
                     Click="{x:Bind OnDownloadClicked}"
                     IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WebView/Download')}"
                     Style="{StaticResource AppBarButtonStyle}">
 
-                    <wuxc:AppBarButton.Icon>
-                        <wuxc:FontIcon Glyph="&#xE896;" />
-                    </wuxc:AppBarButton.Icon>
-                </wuxc:AppBarButton>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE896;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <wuxc:AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WebView/More')}" Style="{StaticResource AppBarButtonStyle}">
+                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WebView/More')}" Style="{StaticResource AppBarButtonStyle}">
 
-                    <wuxc:AppBarButton.Icon>
-                        <wuxc:FontIcon Glyph="&#xE712;" />
-                    </wuxc:AppBarButton.Icon>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE712;" />
+                    </AppBarButton.Icon>
 
-                    <wuxc:AppBarButton.Flyout>
-                        <wuxc:MenuFlyout Placement="Bottom">
-                            <wuxc:MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
 
-                                <wuxc:MenuFlyoutItem.Icon>
-                                    <wuxc:FontIcon Glyph="&#xE774;" />
-                                </wuxc:MenuFlyoutItem.Icon>
-                            </wuxc:MenuFlyoutItem>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE774;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                            <wuxc:MenuFlyoutSeparator />
+                            <MenuFlyoutSeparator />
 
-                            <wuxc:MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
+                            <MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
 
-                                <wuxc:MenuFlyoutItem.Icon>
-                                    <wuxc:FontIcon Glyph="&#xE8b7;" />
-                                </wuxc:MenuFlyoutItem.Icon>
-                            </wuxc:MenuFlyoutItem>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE8b7;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
 
-                            <wuxc:MenuFlyoutItem
+                            <MenuFlyoutItem
                                 Click="{x:Bind OnClearWebCacheClicked}"
                                 IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
                                 Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
 
-                                <wuxc:MenuFlyoutItem.Icon>
-                                    <wuxc:FontIcon Glyph="&#xE74D;" />
-                                </wuxc:MenuFlyoutItem.Icon>
-                            </wuxc:MenuFlyoutItem>
-                        </wuxc:MenuFlyout>
-                    </wuxc:AppBarButton.Flyout>
-                </wuxc:AppBarButton>
-            </wuxc:StackPanel>
-        </wuxc:Grid>
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE74D;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+            </StackPanel>
+        </Grid>
 
-        <wuxc:WebView
+        <WebView
             x:Name="WebViewBrowser"
-            wuxc:Grid.Row="2"
+            Grid.Row="2"
             x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[0])}"
             NavigationCompleted="{x:Bind OnNavigationCompleted}"
             NavigationStarting="{x:Bind OnNavigationStarting}"
@@ -195,7 +193,7 @@
 
         <muxc:WebView2
             x:Name="WebView2Browser"
-            wuxc:Grid.Row="2"
+            Grid.Row="2"
             x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[1])}"
             CoreProcessFailed="{x:Bind OnCoreProcessFailed}"
             CoreWebView2Initialized="{x:Bind OnCoreWebView2Initialized}"
@@ -204,23 +202,23 @@
             NavigationStarting="{x:Bind OnWebView2NavigationStarting}"
             Source="{x:Bind Source, Mode=OneWay}" />
 
-        <wux:VisualStateManager.VisualStateGroups>
-            <wux:VisualStateGroup>
-                <wux:VisualState x:Name="MicaBackdrop">
-                    <wux:VisualState.Setters>
-                        <wux:Setter Target="MainPageRoot.Background">
-                            <wux:Setter.Value>
-                                <wux:Setter Target="MainPageRoot.Background" Value="Transparent" />
-                            </wux:Setter.Value>
-                        </wux:Setter>
-                    </wux:VisualState.Setters>
-                </wux:VisualState>
-                <wux:VisualState x:Name="DesktopAcrylicBackdrop">
-                    <wux:VisualState.Setters>
-                        <wux:Setter Target="MainPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
-                    </wux:VisualState.Setters>
-                </wux:VisualState>
-            </wux:VisualStateGroup>
-        </wux:VisualStateManager.VisualStateGroups>
-    </wuxc:Grid>
-</wuxc:Page>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="MicaBackdrop">
+                    <VisualState.Setters>
+                        <Setter Target="MainPageRoot.Background">
+                            <Setter.Value>
+                                <Setter Target="MainPageRoot.Background" Value="Transparent" />
+                            </Setter.Value>
+                        </Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopAcrylicBackdrop">
+                    <VisualState.Setters>
+                        <Setter Target="MainPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>

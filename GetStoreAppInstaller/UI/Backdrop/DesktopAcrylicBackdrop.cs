@@ -9,8 +9,6 @@ using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Composition.Desktop;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 
 // 抑制 CA1822 警告
 #pragma warning disable CA1822

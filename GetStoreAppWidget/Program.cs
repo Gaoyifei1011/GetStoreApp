@@ -20,6 +20,7 @@ namespace GetStoreAppWidget
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
+        [STAThread]
         public static unsafe void Main()
         {
             ComWrappersSupport.InitializeComWrappers();

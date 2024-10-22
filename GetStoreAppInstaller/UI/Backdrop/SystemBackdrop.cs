@@ -1,7 +1,6 @@
 ﻿using System;
 using Windows.UI;
 using Windows.UI.Composition.Desktop;
-using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller.UI.Backdrop
 {

@@ -1,6 +1,4 @@
-﻿using Windows.UI.Xaml.Controls;
-
-namespace GetStoreAppInstaller
+﻿namespace GetStoreAppInstaller
 {
     public sealed partial class MainPage : Page
     {
