@@ -1,5 +1,8 @@
-﻿using GetStoreAppWidget.WindowsAPI.PInvoke.Ole32;
+﻿using GetStoreAppWidget.Services.Controls.Settings;
+using GetStoreAppWidget.Services.Root;
+using GetStoreAppWidget.WindowsAPI.PInvoke.Ole32;
 using System;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using WinRT;
@@ -15,19 +18,22 @@ namespace GetStoreAppWidget
     public class Program
     {
         private static readonly WidgetProviderFactory widgetProviderFactory = new();
-        private static AutoResetEvent autoResetEvent = new(false);
+        private static readonly AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+
+        public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>
-        [STAThread]
-        public static unsafe void Main()
+        [MTAThread]
+        public static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
-            Ole32Library.CoRegisterClassObject(typeof(WidgetProvider).GUID, (IntPtr)ComInterfaceMarshaller<WidgetProviderFactory>.ConvertToUnmanaged(widgetProviderFactory), CLSCTX.CLSCTX_LOCAL_SERVER, REGCLS.REGCLS_MULTIPLEUSE, out uint registrationHandle);
+            LanguageService.InitializeLanguage();
+            ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            Ole32Library.CoRegisterClassObject(typeof(WidgetProvider).GUID, StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(widgetProviderFactory, CreateComInterfaceFlags.None), CLSCTX.CLSCTX_LOCAL_SERVER, REGCLS.REGCLS_MULTIPLEUSE, out uint registrationHandle);
             autoResetEvent.WaitOne();
             autoResetEvent.Dispose();
-            autoResetEvent = null;
             Ole32Library.CoRevokeClassObject(registrationHandle);
         }
 
@@ -36,7 +42,7 @@ namespace GetStoreAppWidget
         /// </summary>
         public static void CloseWidget()
         {
-            autoResetEvent?.Set();
+            autoResetEvent.Set();
         }
     }
 }

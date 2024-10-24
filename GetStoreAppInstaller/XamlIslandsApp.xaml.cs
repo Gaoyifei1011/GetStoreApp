@@ -1,6 +1,4 @@
-﻿using Mile.Xaml;
-
-namespace GetStoreAppInstaller
+﻿namespace GetStoreAppInstaller
 {
     public sealed partial class XamlIslandsApp : Application
     {

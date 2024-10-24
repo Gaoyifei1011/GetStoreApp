@@ -8,6 +8,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
     Padding="0,0,0,30"
+    x:Name="QueryLinksRoot"
     Spacing="3"
     mc:Ignorable="d">
 
@@ -111,7 +112,7 @@
 
         <TextBox
             Grid.Column="2"
-            IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
+            IsEnabled="{x:Bind IsNotQueryingLinks, Mode=OneWay}"
             KeyDown="{x:Bind OnKeyDown}"
             PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
             Text="{x:Bind LinkText, Mode=OneWay}"
@@ -123,7 +124,7 @@
             VerticalAlignment="Bottom"
             Click="{x:Bind OnQueryLinksClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}"
-            IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
+            IsEnabled="{x:Bind IsNotQueryingLinks, Mode=OneWay}"
             Style="{StaticResource AccentButtonStyle}" />
     </Grid>
 
@@ -380,6 +381,7 @@
                                         Margin="10,0,0,0"
                                         Command="{StaticResource FillinCommand}"
                                         CommandParameter="{x:Bind}"
+                                        IsEnabled="{Binding ElementName=QueryLinksRoot, Path=IsNotQueryingLinks}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
                                         Style="{StaticResource HyperlinkButtonStyle}" />
 

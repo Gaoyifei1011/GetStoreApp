@@ -3,8 +3,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI;
 using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices.Marshalling;
+using System.Runtime.InteropServices;
 using Windows.Foundation.Diagnostics;
 
 namespace GetStoreApp.WindowsAPI.ComTypes
@@ -24,11 +23,11 @@ namespace GetStoreApp.WindowsAPI.ComTypes
 
         public string RootFolder { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        public unsafe OpenFolderDialog(WindowId windowId)
+        public OpenFolderDialog(WindowId windowId)
         {
             if (windowId.Value is 0)
             {
-                throw new Win32Exception("窗口句柄无效");
+                throw new Exception("窗口句柄无效");
             }
 
             parentWindowId = windowId;
@@ -36,13 +35,13 @@ namespace GetStoreApp.WindowsAPI.ComTypes
 
             if (result is 0)
             {
-                FileOpenDialog = ComInterfaceMarshaller<IFileOpenDialog>.ConvertToManaged((void*)ppv);
+                FileOpenDialog = (IFileOpenDialog)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.Unwrap);
             }
 
             FileOpenDialog.SetOptions(FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS);
             FileOpenDialog.SetTitle(Description);
             Shell32Library.SHCreateItemFromParsingName(RootFolder, IntPtr.Zero, typeof(IShellItem).GUID, out IntPtr initialFolder);
-            FileOpenDialog.SetFolder(ComInterfaceMarshaller<IShellItem>.ConvertToManaged((void*)initialFolder));
+            FileOpenDialog.SetFolder((IShellItem)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(initialFolder, CreateObjectFlags.Unwrap));
         }
 
         ~OpenFolderDialog()

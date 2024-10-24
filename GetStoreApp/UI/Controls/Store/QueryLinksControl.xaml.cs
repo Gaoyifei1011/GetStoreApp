@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -34,6 +35,7 @@ namespace GetStoreApp.UI.Controls.Store
     /// <summary>
     /// 查找链接控件
     /// </summary>
+    [GeneratedBindableCustomProperty]
     public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
     {
         private readonly Lock queryLinksLock = new();
@@ -107,18 +109,18 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isQueryingLinks;
+        private bool _isNotQueryingLinks = true;
 
-        public bool IsQueryingLinks
+        public bool IsNotQueryingLinks
         {
-            get { return _isQueryingLinks; }
+            get { return _isNotQueryingLinks; }
 
             set
             {
-                if (!Equals(_isQueryingLinks, value))
+                if (!Equals(_isNotQueryingLinks, value))
                 {
-                    _isQueryingLinks = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQueryingLinks)));
+                    _isNotQueryingLinks = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotQueryingLinks)));
                 }
             }
         }
@@ -931,7 +933,7 @@ namespace GetStoreApp.UI.Controls.Store
         {
             // 设置获取数据时的相关控件状态
             LinkText = string.IsNullOrEmpty(LinkText) ? sampleLink : LinkText;
-            IsQueryingLinks = true;
+            IsNotQueryingLinks = false;
             SetControlState(InfoBarSeverity.Informational);
 
             // 商店接口查询方式
@@ -1012,7 +1014,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            IsQueryingLinks = false;
+                            IsNotQueryingLinks = true;
 
                             if (queryLinksList.Count > 0)
                             {
@@ -1060,7 +1062,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            IsQueryingLinks = false;
+                            IsNotQueryingLinks = true;
                             SetControlState(InfoBarSeverity.Error);
                             ResultControlVisable = false;
                         });
@@ -1113,7 +1115,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            IsQueryingLinks = false;
+                            IsNotQueryingLinks = true;
                             IsAppInfoVisible = false;
                             IsPackagedApp = !string.IsNullOrEmpty(categoryId);
 
@@ -1146,7 +1148,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            IsQueryingLinks = false;
+                            IsNotQueryingLinks = true;
                             SetControlState(InfoBarSeverity.Warning);
                             ResultControlVisable = false;
                             IsAppInfoVisible = false;
@@ -1156,7 +1158,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            IsQueryingLinks = false;
+                            IsNotQueryingLinks = true;
                             SetControlState(InfoBarSeverity.Error);
                             ResultControlVisable = false;
                             IsAppInfoVisible = false;

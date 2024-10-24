@@ -3,7 +3,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.Marshalling;
+using System.Runtime.InteropServices;
 using Windows.Globalization;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -137,9 +137,9 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 遍历所有的区域
         /// </summary>
-        private static unsafe bool EnumNameProc(IntPtr unmamedParam1, IntPtr unmamedParam2)
+        private static bool EnumNameProc(IntPtr unmamedParam1, IntPtr unmamedParam2)
         {
-            string region = Utf16StringMarshaller.ConvertToManaged((ushort*)unmamedParam1);
+            string region = Marshal.PtrToStringUni(unmamedParam1);
             if (GeographicRegion.IsSupported(region))
             {
                 StoreRegionList.Add(new(region));

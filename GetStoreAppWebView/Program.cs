@@ -8,6 +8,9 @@ using Windows.System;
 using Windows.UI.Xaml;
 using WinRT;
 
+// 抑制 CA1806 警告
+#pragma warning disable CA1806
+
 namespace GetStoreAppWebView
 {
     /// <summary>

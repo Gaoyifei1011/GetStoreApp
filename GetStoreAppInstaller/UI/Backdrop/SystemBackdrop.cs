@@ -1,8 +1,4 @@
-﻿using System;
-using Windows.UI;
-using Windows.UI.Composition.Desktop;
-
-namespace GetStoreAppInstaller.UI.Backdrop
+﻿namespace GetStoreAppInstaller.UI.Backdrop
 {
     /// <summary>
     /// 抽象类：系统背景色

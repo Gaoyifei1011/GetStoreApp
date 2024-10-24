@@ -1,9 +1,4 @@
-﻿using Mile.Xaml;
-using System;
-using System.Windows.Forms;
-using WinRT;
-
-namespace GetStoreAppInstaller
+﻿namespace GetStoreAppInstaller
 {
     /// <summary>
     /// 获取商店应用 应用安装器

@@ -1,0 +1,99 @@
+{
+  "Title": "商店可更新应用列表",
+  "BackgroundImage": "",
+  "UpdateItem": [
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    },
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    },
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    },
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    },
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    },
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    },
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    },
+    {
+      "Text": "",
+      "OldVersion": "",
+      "NewVersion": "",
+      "Url": "",
+      "Button": "",
+      "ToolTip": "",
+      "Action": "UpdateItem1",
+      "Visibility": false
+    }
+  ],
+  "AvailableUpdateText": "",
+  "UpdateAll": {
+    "Title": "",
+    "Action": "UpdateAll"
+  },
+  "Refresh": {
+    "Title": "",
+    "Action": "Refresh"
+  },
+  "ViewMore": {
+    "Title": "",
+    "Action": "ViewMore"
+  }
+}

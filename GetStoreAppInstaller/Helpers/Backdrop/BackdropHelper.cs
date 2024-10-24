@@ -1,7 +1,4 @@
-﻿using System;
-using Windows.System;
-using Windows.UI.Composition.Desktop;
-using WindowsTools.WindowsAPI.ComTypes;
+﻿using WindowsTools.WindowsAPI.ComTypes;
 
 namespace GetStoreAppInstaller.Helpers.Backdrop
 {

@@ -1,14 +1,5 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
-using System;
-using Windows.Foundation.Metadata;
-using Windows.Graphics.Display;
-using Windows.System;
-using Windows.System.Power;
-using Windows.UI;
-using Windows.UI.Composition;
-using Windows.UI.Composition.Desktop;
-using Windows.UI.ViewManagement;
 
 // 抑制 CA1822 警告
 #pragma warning disable CA1822

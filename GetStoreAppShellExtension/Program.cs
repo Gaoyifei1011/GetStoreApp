@@ -13,6 +13,8 @@ namespace GetStoreAppShellExtension
     /// </summary>
     public static class Program
     {
+        public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
+
         static Program()
         {
             ComWrappersSupport.InitializeComWrappers();
@@ -33,13 +35,8 @@ namespace GetStoreAppShellExtension
             if (clsid.Equals(typeof(RootExplorerCommand).GUID))
             {
                 ShellMenuClassFactory classFactory = new();
-                IntPtr pIUnknown = (IntPtr)ComInterfaceMarshaller<ShellMenuClassFactory>.ConvertToUnmanaged(classFactory);
-
-                int hresult = StrategyBasedComWrappers.DefaultIUnknownStrategy.QueryInterface((void*)pIUnknown, in riid, out void* ppObj);
-                *ppv = (IntPtr)ppObj;
-                StrategyBasedComWrappers.DefaultIUnknownStrategy.Release((void*)pIUnknown);
-
-                return hresult;
+                IntPtr pIUnknown = StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(classFactory, CreateComInterfaceFlags.None);
+                return Marshal.QueryInterface(pIUnknown, in riid, out *ppv);
             }
 
             return unchecked((int)0x80040111);

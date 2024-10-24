@@ -1,9 +1,4 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
-using System;
-using System.Runtime.InteropServices;
-using Windows.Foundation;
-using Windows.Graphics.Effects;
-using Windows.UI;
 
 namespace GetStoreAppInstaller.UI.Backdrop
 {

@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.System;
+using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -23,22 +24,23 @@ namespace GetStoreApp.UI.Controls.Store
     /// <summary>
     /// 搜索应用控件
     /// </summary>
+    [GeneratedBindableCustomProperty]
     public sealed partial class SearchStoreControl : StackPanel, INotifyPropertyChanged
     {
         private string SearchStoreCountInfo { get; } = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
 
-        private bool _isSearchingStore;
+        private bool _isNotSearchingStore = true;
 
-        public bool IsSeachingStore
+        public bool IsNotSeachingStore
         {
-            get { return _isSearchingStore; }
+            get { return _isNotSearchingStore; }
 
             set
             {
-                if (!Equals(_isSearchingStore, value))
+                if (!Equals(_isNotSearchingStore, value))
                 {
-                    _isSearchingStore = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSeachingStore)));
+                    _isNotSearchingStore = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotSeachingStore)));
                 }
             }
         }
@@ -248,7 +250,7 @@ namespace GetStoreApp.UI.Controls.Store
         public void SearchStore()
         {
             SearchText = string.IsNullOrEmpty(SearchText) ? "Microsoft Corporation" : SearchText;
-            IsSeachingStore = true;
+            IsNotSeachingStore = false;
             SetControlState(InfoBarSeverity.Informational);
 
             Task.Run(async () =>
@@ -265,7 +267,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            IsSeachingStore = false;
+                            IsNotSeachingStore = true;
                             SetControlState(InfoBarSeverity.Success);
                             ResultControlVisable = true;
                             UpdateHistory(searchText);
@@ -282,7 +284,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            IsSeachingStore = false;
+                            IsNotSeachingStore = true;
                             SetControlState(InfoBarSeverity.Warning);
                             ResultControlVisable = false;
                         });
@@ -293,7 +295,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        IsSeachingStore = false;
+                        IsNotSeachingStore = true;
                         SetControlState(InfoBarSeverity.Error);
                         ResultControlVisable = false;
                     });

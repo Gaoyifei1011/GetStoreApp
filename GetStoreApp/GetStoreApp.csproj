@@ -9,7 +9,7 @@
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
-    <ForceAotCompile>true</ForceAotCompile>
+    <ForceAotCompile>false</ForceAotCompile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -59,6 +59,7 @@
 
   <ItemGroup>
     <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
+    
     <Content Include="Assets\Icon\Control\About.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppUpdate.png" CopyToOutputDirectory="Always" />
@@ -129,11 +130,11 @@
 
     <Manifest Include="$(ApplicationManifest)" />
 
-    <MyEmbeddedItems Include="Assets\Embed\cookie.xml" />
-    <MyEmbeddedItems Include="Assets\Embed\Lengths.bin" />
-    <MyEmbeddedItems Include="Assets\Embed\LICENSE" />
-    <MyEmbeddedItems Include="Assets\Embed\url.xml" />
-    <MyEmbeddedItems Include="Assets\Embed\wu.xml" />
+    <MainAppEmbeddedItem Include="Assets\Embed\cookie.xml" />
+    <MainAppEmbeddedItem Include="Assets\Embed\Lengths.bin" />
+    <MainAppEmbeddedItem Include="Assets\Embed\LICENSE" />
+    <MainAppEmbeddedItem Include="Assets\Embed\url.xml" />
+    <MainAppEmbeddedItem Include="Assets\Embed\wu.xml" />
 
     <None Remove="Assets\LICENSE" />
     <None Remove="Styles\WinUI\AppbarButton.xaml" />
@@ -229,14 +230,14 @@
   </Target>
 
   <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->
-  <Target Name="AddMyEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
-    <Copy SourceFiles="@(MyEmbeddedItems)" DestinationFiles="@(MyEmbeddedItems->'$(IntermediateOutputPath)embed\Assets\Embed\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  <Target Name="AddMainAppEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
+    <Copy SourceFiles="@(MainAppEmbeddedItem)" DestinationFiles="@(MainAppEmbeddedItem->'$(IntermediateOutputPath)embed\Assets\Embed\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     <ReadLinesFromFile File="$(_EmbedFileResfilePath)">
       <Output TaskParameter="Lines" ItemName="ItemsFromFile" />
     </ReadLinesFromFile>
     <ItemGroup>
       <MyEmbeddedFileList Include="@(ItemsFromFile)" />
-      <MyEmbeddedFileList Include="@(MyEmbeddedItems)" />
+      <MyEmbeddedFileList Include="@(MainAppEmbeddedItem)" />
     </ItemGroup>
     <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
   </Target>

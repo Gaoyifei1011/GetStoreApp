@@ -164,7 +164,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(async () =>
                 {
-                    AutoResetEvent autoResetEvent = new(false);
                     try
                     {
                         UninstallOptions uninstallOptions = WinGetService.CreateUninstallOptions();
@@ -184,14 +183,15 @@ namespace GetStoreApp.UI.Controls.WinGet
                             if (unInstallResult.RebootRequired)
                             {
                                 ContentDialogResult result = ContentDialogResult.None;
+                                AutoResetEvent uninstallResetEvent = new(false);
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
                                     result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UnInstall, installedApps.AppName), this);
-                                    autoResetEvent.Set();
+                                    uninstallResetEvent.Set();
                                 });
 
-                                autoResetEvent.WaitOne();
-                                autoResetEvent.Dispose();
+                                uninstallResetEvent.WaitOne();
+                                uninstallResetEvent.Dispose();
 
                                 if (result is ContentDialogResult.Primary)
                                 {

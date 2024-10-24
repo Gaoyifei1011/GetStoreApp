@@ -57,6 +57,20 @@
 
   <ItemGroup>
     <Content Remove="Assets\GetStoreAppWidget.ico" />
+    <Content Remove="Assets\Widgets\StoreAppsUpdateWidgetData.json" />
+    <Content Remove="Assets\Widgets\StoreAppsUpdateWidgetTemplateLarge.json" />
+    <Content Remove="Assets\Widgets\StoreAppsUpdateWidgetTemplateMedium.json" />
+    <Content Remove="Assets\Widgets\Win32AppUpdateWidgetData.json" />
+    <Content Remove="Assets\Widgets\Win32AppUpdateWidgetTemplateLarge.json" />
+    <Content Remove="Assets\Widgets\Win32AppUpdateWidgetTemplateMedium.json" />
+
+    <WidgetEmbeddedItem Include="Assets\Widgets\StoreAppsUpdateWidgetData.json" />
+    <WidgetEmbeddedItem Include="Assets\Widgets\StoreAppsUpdateWidgetTemplateLarge.json" />
+    <WidgetEmbeddedItem Include="Assets\Widgets\StoreAppsUpdateWidgetTemplateMedium.json" />
+    <WidgetEmbeddedItem Include="Assets\Widgets\Win32AppUpdateWidgetData.json" />
+    <WidgetEmbeddedItem Include="Assets\Widgets\Win32AppUpdateWidgetTemplateLarge.json" />
+    <WidgetEmbeddedItem Include="Assets\Widgets\Win32AppUpdateWidgetTemplateMedium.json" />
+
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
@@ -76,5 +90,18 @@
   <Target Name="DigitialSignGeneratedFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
     <!-- 对生成的 GetStoreAppWidget.exe 文件进行数字签名 -->
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
+  </Target>
+
+  <!-- 将需要的文件嵌入到包资源索引文件（Pri）中 -->
+  <Target Name="AddWidgetEmbeddedItems" BeforeTargets="_GenerateProjectPriFileCore" AfterTargets="_CalculateInputsForGenerateProjectPriFileCore">
+    <Copy SourceFiles="@(WidgetEmbeddedItem)" DestinationFiles="@(WidgetEmbeddedItem->'$(IntermediateOutputPath)embed\Assets\Widgets\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <ReadLinesFromFile File="$(_EmbedFileResfilePath)">
+      <Output TaskParameter="Lines" ItemName="ItemsFromFile" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+      <MyEmbeddedFileList Include="@(ItemsFromFile)" />
+      <MyEmbeddedFileList Include="@(WidgetEmbeddedItem)" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
   </Target>
 </Project>

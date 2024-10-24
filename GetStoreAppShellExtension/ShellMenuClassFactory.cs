@@ -1,6 +1,7 @@
 ﻿using GetStoreAppShellExtension.Commands;
 using GetStoreAppShellExtension.WindowsAPI.ComTypes;
 using System;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
 namespace GetStoreAppShellExtension
@@ -13,7 +14,7 @@ namespace GetStoreAppShellExtension
     {
         private readonly IExplorerCommand rootExplorerCommand = new RootExplorerCommand();
 
-        public unsafe int CreateInstance(IntPtr pUnkOuter, in Guid riid, out IntPtr ppvObject)
+        public int CreateInstance(IntPtr pUnkOuter, in Guid riid, out IntPtr ppvObject)
         {
             if (pUnkOuter != IntPtr.Zero)
             {
@@ -21,7 +22,7 @@ namespace GetStoreAppShellExtension
                 return unchecked((int)0x80040110);
             }
 
-            ppvObject = (IntPtr)ComInterfaceMarshaller<IExplorerCommand>.ConvertToUnmanaged(rootExplorerCommand);
+            ppvObject = Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(rootExplorerCommand, CreateComInterfaceFlags.None);
             return 0;
         }
 

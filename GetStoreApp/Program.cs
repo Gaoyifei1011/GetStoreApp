@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.DynamicDependency;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -30,6 +31,8 @@ namespace GetStoreApp
     /// </summary>
     public class Program
     {
+        public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
+
         /// <summary>
         /// 应用程序的主入口点
         /// </summary>

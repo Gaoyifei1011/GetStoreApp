@@ -1,4 +1,7 @@
-﻿using Microsoft.Windows.Widgets.Providers;
+﻿using GetStoreAppWidget.Services.Root;
+using Microsoft.Windows.Widgets;
+using Microsoft.Windows.Widgets.Providers;
+using Windows.Security.Cryptography;
 
 namespace GetStoreAppWidget
 {
@@ -7,6 +10,10 @@ namespace GetStoreAppWidget
     /// </summary>
     public partial class WidgetProvider : IWidgetProvider
     {
+        public WidgetProvider()
+        {
+        }
+
         /// <summary>
         /// 通知小组件提供程序，小组件主机当前有兴趣从提供程序接收更新的内容。
         /// </summary>
@@ -17,16 +24,42 @@ namespace GetStoreAppWidget
         /// <summary>
         /// 通知小组件提供程序已创建新小组件，例如，当用户将小组件添加到小组件主机时。
         /// </summary>
-        public void CreateWidget(WidgetContext widgetContext)
+        public async void CreateWidget(WidgetContext widgetContext)
         {
             WidgetUpdateRequestOptions widgetUpdateRequestOptions = new(widgetContext.Id);
-            widgetUpdateRequestOptions.Template = "StoreAppUpdateWidget";
-            widgetUpdateRequestOptions.Data = "StoreAppData";
-            widgetUpdateRequestOptions.CustomState = "";
 
             if (widgetContext.DefinitionId.Equals(nameof(StoreAppUpdateWidget)))
             {
+                if (widgetContext.Size is WidgetSize.Large)
+                {
+                    widgetUpdateRequestOptions.Template = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Assets/Widgets/StoreAppsUpdateWidgetTemplateLarge.json"));
+                }
+                else if (widgetContext.Size is WidgetSize.Medium)
+                {
+                    widgetUpdateRequestOptions.Template = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Assets/Widgets/StoreAppsUpdateWidgetTemplateMedium.json"));
+                }
+
+                widgetUpdateRequestOptions.Data = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Assets/Widgets/StoreAppsUpdateWidgetData.json"));
             }
+            else if (widgetContext.DefinitionId.Equals(nameof(Win32AppUpdateWidget)))
+            {
+                if (widgetContext.Size is WidgetSize.Large)
+                {
+                    widgetUpdateRequestOptions.Template = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Assets/Widgets/Win32AppsUpdateWidgetTemplateLarge.json"));
+                }
+                else if (widgetContext.Size is WidgetSize.Medium)
+                {
+                    widgetUpdateRequestOptions.Template = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Assets/Widgets/Win32AppsUpdateWidgetTemplateMedium.json"));
+                }
+
+                widgetUpdateRequestOptions.Data = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Assets/Widgets/Win32AppsUpdateWidgetData.json"));
+            }
+            else
+            {
+                Program.CloseWidget();
+            }
+
+            WidgetManager.GetDefault().UpdateWidget(widgetUpdateRequestOptions);
         }
 
         /// <summary>

@@ -2,7 +2,6 @@
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
 using Windows.Storage;
-using Windows.System.Profile;
 
 namespace GetStoreApp.Helpers.Root
 {

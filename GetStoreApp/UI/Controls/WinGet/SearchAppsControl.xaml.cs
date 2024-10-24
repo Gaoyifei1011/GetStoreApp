@@ -134,7 +134,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 Task.Run(async () =>
                 {
-                    AutoResetEvent autoResetEvent = new(false);
                     try
                     {
                         DispatcherQueue.TryEnqueue(() =>
@@ -294,14 +293,15 @@ namespace GetStoreApp.UI.Controls.WinGet
                             if (installResult.RebootRequired)
                             {
                                 ContentDialogResult result = ContentDialogResult.None;
+                                AutoResetEvent installResetEvent = new(false);
                                 DispatcherQueue.TryEnqueue(async () =>
                                 {
                                     result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UpgradeInstall, searchApps.AppName), this);
-                                    autoResetEvent.Set();
+                                    installResetEvent.Set();
                                 });
 
-                                autoResetEvent.WaitOne();
-                                autoResetEvent.Dispose();
+                                installResetEvent.WaitOne();
+                                installResetEvent.Dispose();
 
                                 if (result is ContentDialogResult.Primary)
                                 {

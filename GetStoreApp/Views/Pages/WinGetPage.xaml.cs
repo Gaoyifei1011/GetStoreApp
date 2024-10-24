@@ -9,7 +9,7 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices.Marshalling;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -34,7 +34,7 @@ namespace GetStoreApp.Views.Pages
 
         public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = [];
 
-        public unsafe WinGetPage()
+        public WinGetPage()
         {
             InitializeComponent();
 
@@ -44,7 +44,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (createResult is 0)
                 {
-                    openControlPanel = ComInterfaceMarshaller<IOpenControlPanel>.ConvertToManaged((void*)ppv);
+                    openControlPanel = (IOpenControlPanel)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.Unwrap);
                 }
             });
         }
