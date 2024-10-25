@@ -186,8 +186,8 @@
                                         Margin="10,0,0,0"
                                         Command="{StaticResource FillinCommand}"
                                         CommandParameter="{x:Bind HistoryContent}"
-                                        IsEnabled="{Binding ElementName=SearchStoreRoot, Path=IsNotSeachingStore}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
+                                        IsEnabled="{Binding ElementName=SearchStoreRoot, Path=IsNotSeachingStore}"
                                         Style="{StaticResource HyperlinkButtonStyle}" />
                                 </Grid>
                             </ItemContainer>

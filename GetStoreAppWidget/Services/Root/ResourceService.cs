@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
-using Windows.Foundation.Diagnostics;
 using Windows.Storage.Streams;
 
 namespace GetStoreAppWidget.Services.Root

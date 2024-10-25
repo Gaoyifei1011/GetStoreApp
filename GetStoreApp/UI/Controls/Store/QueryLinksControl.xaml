@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:store="using:GetStoreApp.Models.Controls.Store"
-    Padding="0,0,0,30"
     x:Name="QueryLinksRoot"
+    Padding="0,0,0,30"
     Spacing="3"
     mc:Ignorable="d">
 
@@ -381,8 +381,8 @@
                                         Margin="10,0,0,0"
                                         Command="{StaticResource FillinCommand}"
                                         CommandParameter="{x:Bind}"
-                                        IsEnabled="{Binding ElementName=QueryLinksRoot, Path=IsNotQueryingLinks}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
+                                        IsEnabled="{Binding ElementName=QueryLinksRoot, Path=IsNotQueryingLinks}"
                                         Style="{StaticResource HyperlinkButtonStyle}" />
 
                                     <HyperlinkButton

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Windows.ApplicationModel.DynamicDependency;
+using System;
 using System.Runtime.InteropServices;
-using Microsoft.Windows.ApplicationModel.DynamicDependency;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.KernelBase
 {

@@ -10,9 +10,11 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
+using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -27,6 +29,8 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
@@ -36,6 +40,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.StartScreen;
+using WinRT;
 using WinRT.Interop;
 
 // 抑制 IDE0060 警告
@@ -50,6 +55,8 @@ namespace GetStoreApp.Views.Windows
     {
         private readonly ContentCoordinateConverter contentCoordinateConverter;
         private readonly ContentIsland contentIsland;
+        private readonly DisplayInformation displayInformation;
+        private readonly IDisplayInformation2 displayInformation2;
         private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
@@ -148,9 +155,11 @@ namespace GetStoreApp.Views.Windows
             AppWindow.TitleBar.InactiveBackgroundColor = Colors.Transparent;
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
+            displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
+            displayInformation2 = displayInformation.As<IDisplayInformation2>();
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             contentIsland.Environment.SettingChanged += OnSettingChanged;
-            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -210,14 +219,14 @@ namespace GetStoreApp.Views.Windows
                 IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             }
 
-            if (Content is not null && Content.XamlRoot is not null)
+            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
             {
                 inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
                     [new RectInt32(
-                        (int)(AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale),
+                        (int)(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
                         (int)AppTitlebar.Margin.Top,
-                        (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * Content.XamlRoot.RasterizationScale),
-                        (int)(AppTitlebar.ActualHeight * Content.XamlRoot.RasterizationScale))
+                        (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
+                        (int)(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
                     ]);
             }
         }
@@ -509,7 +518,10 @@ namespace GetStoreApp.Views.Windows
                 IsBackEnabled = CanGoBack();
             }
 
-            inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32((int)(45 * Content.XamlRoot.RasterizationScale), 0, (int)((AppWindow.Size.Width - 45) * Content.XamlRoot.RasterizationScale), (int)(45 * Content.XamlRoot.RasterizationScale))]);
+            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
+            {
+                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32((int)(45 * rawPixelsPerViewPixel), 0, (int)((AppWindow.Size.Width - 45) * rawPixelsPerViewPixel), (int)(45 * rawPixelsPerViewPixel))]);
+            }
         }
 
         /// <summary>
@@ -903,7 +915,7 @@ namespace GetStoreApp.Views.Windows
                 // 窗口大小发生更改时的消息
                 case WindowMessage.WM_GETMINMAXINFO:
                     {
-                        if (Content is not null && Content.XamlRoot is not null)
+                        if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
                         {
                             MINMAXINFO minMaxInfo;
 
@@ -911,8 +923,8 @@ namespace GetStoreApp.Views.Windows
                             {
                                 minMaxInfo = *(MINMAXINFO*)lParam;
                             }
-                            minMaxInfo.ptMinTrackSize.X = (int)(960 * Content.XamlRoot.RasterizationScale);
-                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * Content.XamlRoot.RasterizationScale);
+                            minMaxInfo.ptMinTrackSize.X = (int)(960 * rawPixelsPerViewPixel);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * rawPixelsPerViewPixel);
 
                             unsafe
                             {
@@ -934,7 +946,7 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (wParam.ToUInt32() is 2 && Content is not null && Content.XamlRoot is not null)
+                        if (wParam.ToUInt32() is 2 && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
                         {
                             PointInt32 screenPoint = new(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
@@ -942,7 +954,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale)
+                                Position = new Point(localPoint.X / rawPixelsPerViewPixel, localPoint.Y / rawPixelsPerViewPixel)
                             };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
