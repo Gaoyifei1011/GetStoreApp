@@ -1,8 +1,15 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using Windows.Foundation;
+using Windows.Graphics.Effects;
+using WinRT;
 
 namespace GetStoreAppInstaller.UI.Backdrop
 {
-    [Guid("48FC9F51-F6AC-48F1-8B58-3B28AC46F76D")]
+    [GeneratedComClass, Guid("48FC9F51-F6AC-48F1-8B58-3B28AC46F76D")]
     public sealed partial class CompositeEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         private readonly IPropertyValueStatics propertyValue = PropertyValue.As<IPropertyValueStatics>();
@@ -63,16 +70,16 @@ namespace GetStoreAppInstaller.UI.Backdrop
             return 0;
         }
 
-        public int GetSource(uint index, out IGraphicsEffectSource source)
+        public int GetSource(uint index, out IntPtr source)
         {
             if (index < Sources.Count)
             {
-                source = Sources[(int)index];
+                source = MarshalInterface<IGraphicsEffectSource>.FromManaged(Sources[(int)index]);
                 return 0;
             }
             else
             {
-                source = null;
+                source = IntPtr.Zero;
                 return 2147483637;
             }
         }

@@ -1,6 +1,10 @@
-﻿namespace WindowsTools.WindowsAPI.ComTypes
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+
+namespace WindowsTools.WindowsAPI.ComTypes
 {
-    [GeneratedComInterface, Guid("29E691FA-4567-4DCA-B319-D0F207EB6807"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GeneratedComInterface, Guid("29E691FA-4567-4DCA-B319-D0F207EB6807")]
     public partial interface ICompositorDesktopInterop
     {
         [PreserveSig]

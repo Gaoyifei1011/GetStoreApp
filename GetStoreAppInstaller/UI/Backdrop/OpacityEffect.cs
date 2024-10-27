@@ -1,8 +1,14 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using Windows.Foundation;
+using Windows.Graphics.Effects;
+using WinRT;
 
 namespace GetStoreAppInstaller.UI.Backdrop
 {
-    [Guid("811D79A4-DE28-4454-8094-C64685F8BD4C")]
+    [GeneratedComClass, Guid("811D79A4-DE28-4454-8094-C64685F8BD4C")]
     public sealed partial class OpacityEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         private readonly IPropertyValueStatics propertyValue = PropertyValue.As<IPropertyValueStatics>();
@@ -62,9 +68,9 @@ namespace GetStoreAppInstaller.UI.Backdrop
             return 0;
         }
 
-        public int GetSource(uint index, out IGraphicsEffectSource source)
+        public int GetSource(uint index, out IntPtr source)
         {
-            source = Source;
+            source = MarshalInterface<IGraphicsEffectSource>.FromManaged(Source);
             return 0;
         }
 

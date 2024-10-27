@@ -1,4 +1,7 @@
-﻿namespace GetStoreAppInstaller.UI.Backdrop
+﻿using System;
+using Windows.UI;
+
+namespace GetStoreAppInstaller.UI.Backdrop
 {
     public static class ColorConversion
     {

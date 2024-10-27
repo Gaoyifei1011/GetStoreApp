@@ -9,7 +9,7 @@
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
-    <ForceAotCompile>true</ForceAotCompile>
+    <ForceAotCompile>false</ForceAotCompile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -31,7 +31,7 @@
     <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
-    <UseUwpTools>true</UseUwpTools>
+    <UseUwp>true</UseUwp>
     <UseWindowsForms>true</UseWindowsForms>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
     <WindowsSdkPackageVersion>10.0.26100.54</WindowsSdkPackageVersion>
@@ -59,18 +59,20 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ApplicationDefinition Include="XamlIslandsApp.xaml" />
+    <ApplicationDefinition Include="XamlIslandsApp.xaml" SubType="Designer" />
     
     <Manifest Include="$(ApplicationManifest)" />
-
-    <None Remove="TestPage.xaml" />
+    <None Remove="MainPage.xaml" />
     <None Remove="XamlIslandsApp.xaml" />
-
-    <Page Update="TestPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    
     <Page Remove="XamlIslandsApp.xaml" />
-
+    <Page Update="MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    
+    <PackageReference Include="DisposableMemory.ModernNetUAP.XamlCompiler" Version="0.2.4" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
     <PackageReference Include="Mile.Xaml" Version="2.3.1064" GeneratePathProperty="True" />
+
+    <ProjectReference Include="..\Microsoft.UI.Xaml.Projection\Microsoft.UI.Xaml.Projection.csproj" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->

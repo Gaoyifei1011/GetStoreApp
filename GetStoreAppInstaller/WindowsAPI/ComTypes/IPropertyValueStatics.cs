@@ -1,4 +1,10 @@
-﻿namespace GetStoreAppInstaller.WindowsAPI.ComTypes
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using Windows.Foundation;
+using WinRT;
+
+namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 创建可在属性存储中存储的 IPropertyValue 对象。

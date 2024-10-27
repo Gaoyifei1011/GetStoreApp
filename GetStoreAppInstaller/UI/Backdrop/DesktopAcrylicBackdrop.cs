@@ -1,5 +1,18 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
+using System;
+using System.Collections.Generic;
+using System.Numerics;
+using Windows.Foundation.Metadata;
+using Windows.Graphics.Display;
+using Windows.System;
+using Windows.System.Power;
+using Windows.UI;
+using Windows.UI.Composition;
+using Windows.UI.Composition.Desktop;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 // 抑制 CA1822 警告
 #pragma warning disable CA1822
@@ -12,7 +25,6 @@ namespace GetStoreAppInstaller.UI.Backdrop
     public sealed partial class DesktopAcrylicBackdrop : SystemBackdrop
     {
         private bool isInitialized;
-        private bool isWindowClosed;
         private bool isActivated = true;
         private bool useDesktopAcrylicBackdrop;
 
@@ -497,7 +509,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
             {
                 if (DesktopWindowTarget.Root is SpriteVisual spriteVisual)
                 {
-                    //spriteVisual.Size = new Vector2(formRoot.Width, formRoot.Height);
+                    spriteVisual.Size = new Vector2((float)(rootElement.ActualWidth * displayInformation.RawPixelsPerViewPixel), (float)(rootElement.ActualHeight * displayInformation.RawPixelsPerViewPixel));
                 }
             });
         }
@@ -565,7 +577,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
                     // 直接设置新笔刷
                     oldBrush?.Dispose();
                     (DesktopWindowTarget.Root as SpriteVisual).Brush = newBrush;
-                    //(DesktopWindowTarget.Root as SpriteVisual).Size = new Vector2(formRoot.Width, formRoot.Height);
+                    (DesktopWindowTarget.Root as SpriteVisual).Size = new Vector2((float)rootElement.ActualWidth, (float)rootElement.ActualHeight);
                 }
                 else
                 {
@@ -573,7 +585,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
                     CompositionBrush crossFadeBrush = CreateCrossFadeEffectBrush(compositor, oldBrush, newBrush);
                     ScalarKeyFrameAnimation animation = CreateCrossFadeAnimation(compositor);
                     (DesktopWindowTarget.Root as SpriteVisual).Brush = crossFadeBrush;
-                    //(DesktopWindowTarget.Root as SpriteVisual).Size = new Vector2(formRoot.Width, formRoot.Height);
+                    (DesktopWindowTarget.Root as SpriteVisual).Size = new Vector2((float)rootElement.ActualWidth, (float)rootElement.ActualHeight);
 
                     CompositionScopedBatch crossFadeAnimationBatch = compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
                     crossFadeBrush.StartAnimation("CrossFade.CrossFade", animation);
@@ -584,7 +596,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
                         crossFadeBrush.Dispose();
                         oldBrush.Dispose();
                         (DesktopWindowTarget.Root as SpriteVisual).Brush = newBrush;
-                        //(DesktopWindowTarget.Root as SpriteVisual).Size = new Vector2(formRoot.Width, formRoot.Height);
+                        (DesktopWindowTarget.Root as SpriteVisual).Size = new Vector2((float)rootElement.ActualWidth, (float)rootElement.ActualHeight);
                     };
                 }
             }
@@ -718,7 +730,8 @@ namespace GetStoreAppInstaller.UI.Backdrop
                 CrossFade = 0
             };
 
-            CompositionEffectBrush crossFadeEffectBrush = compositor.CreateEffectFactory(crossFadeEffect, ["Crossfade.CrossFade"]).CreateBrush();
+            List<string> animatablePropertiesList = ["Crossfade.CrossFade"];
+            CompositionEffectBrush crossFadeEffectBrush = compositor.CreateEffectFactory(crossFadeEffect, animatablePropertiesList).CreateBrush();
             crossFadeEffectBrush.Comment = "Crossfade";
 
             crossFadeEffectBrush.SetSourceParameter("source1", from);
@@ -744,24 +757,15 @@ namespace GetStoreAppInstaller.UI.Backdrop
         /// </summary>
         private IntPtr OnWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
-            // 窗口大小发生变化时的消息
-            if (Msg is WindowMessage.WM_SIZE)
-            {
-                if (DesktopWindowTarget.Root is SpriteVisual spriteVisual)
-                {
-                    //spriteVisual.Size = new Vector2(formRoot.Width, formRoot.Height);
-                }
-            }
             // 窗口关闭时的消息
-            else if (Msg is WindowMessage.WM_CLOSE)
+            if (Msg is WindowMessage.WM_CLOSE)
             {
-                isWindowClosed = true;
                 Dispose();
             }
             // 窗口激活状态发生变化时的消息
             else if (Msg is WindowMessage.WM_ACTIVATE)
             {
-                isActivated = true;
+                isActivated = wParam != UIntPtr.Zero;
                 UpdateBrush();
             }
 

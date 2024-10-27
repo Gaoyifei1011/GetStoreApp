@@ -29,9 +29,9 @@ using WinRT;
 namespace GetStoreAppWebView.Pages
 {
     /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
+    /// 显示网页
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class WebViewPage : Page, INotifyPropertyChanged
     {
         private readonly ApplicationView applicationView = ApplicationView.GetForCurrentView();
         private readonly CoreApplicationView coreApplicationView = CoreApplication.GetCurrentView();
@@ -136,7 +136,7 @@ namespace GetStoreAppWebView.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public MainPage()
+        public WebViewPage()
         {
             InitializeComponent();
 

@@ -62,8 +62,8 @@
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Remove="Dialogs\ProcessFailedDialog.xaml" />
-    <None Remove="Pages\MainPage.xaml" />
     <None Remove="Pages\TaskbarPinPage.xaml" />
+    <None Remove="Pages\WebViewPage.xaml" />
     <None Remove="Styles\UWP\AppbarButton.xaml" />
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" />
@@ -72,7 +72,7 @@
     <ProjectReference Include="..\Microsoft.UI.Xaml.Projection\Microsoft.UI.Xaml.Projection.csproj" />
     
     <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Pages\WebViewPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\TaskbarPinPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\UWP\AppbarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
   </ItemGroup>

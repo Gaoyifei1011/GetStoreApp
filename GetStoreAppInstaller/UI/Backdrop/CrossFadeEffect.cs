@@ -1,8 +1,14 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using Windows.Foundation;
+using Windows.Graphics.Effects;
+using WinRT;
 
 namespace GetStoreAppInstaller.UI.Backdrop
 {
-    [Guid("12F575E8-4DB1-485F-9A84-03A07DD3829F")]
+    [GeneratedComClass, Guid("12F575E8-4DB1-485F-9A84-03A07DD3829F")]
     public sealed partial class CrossFadeEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         private readonly IPropertyValueStatics propertyValue = PropertyValue.As<IPropertyValueStatics>();
@@ -64,21 +70,21 @@ namespace GetStoreAppInstaller.UI.Backdrop
             return 0;
         }
 
-        public int GetSource(uint index, out IGraphicsEffectSource source)
+        public int GetSource(uint index, out IntPtr source)
         {
             if (index is 0)
             {
-                source = Source1;
+                source = MarshalInterface<IGraphicsEffectSource>.FromManaged(Source1);
                 return 0;
             }
             else if (index is 1)
             {
-                source = Source2;
+                source = MarshalInterface<IGraphicsEffectSource>.FromManaged(Source2);
                 return 0;
             }
             else
             {
-                source = null;
+                source = IntPtr.Zero;
                 return 2147483637;
             }
         }

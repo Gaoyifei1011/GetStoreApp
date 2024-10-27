@@ -1,8 +1,14 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using Windows.Foundation;
+using Windows.Graphics.Effects;
+using WinRT;
 
 namespace GetStoreAppInstaller.UI.Backdrop
 {
-    [Guid("1FEB6D69-2FE6-4AC9-8C58-1D7F93E7A6A5")]
+    [GeneratedComClass, Guid("1FEB6D69-2FE6-4AC9-8C58-1D7F93E7A6A5")]
     public sealed partial class GaussianBlurEffect : IGraphicsEffect, IGraphicsEffectSource, IGraphicsEffectD2D1Interop
     {
         private readonly IPropertyValueStatics propertyValue = PropertyValue.As<IPropertyValueStatics>();
@@ -99,16 +105,16 @@ namespace GetStoreAppInstaller.UI.Backdrop
             return 0;
         }
 
-        public int GetSource(uint index, out IGraphicsEffectSource source)
+        public int GetSource(uint index, out IntPtr source)
         {
             if (index is 0)
             {
-                source = Source;
+                source = MarshalInterface<IGraphicsEffectSource>.FromManaged(Source);
                 return 0;
             }
             else
             {
-                source = null;
+                source = IntPtr.Zero;
                 return 2147483637;
             }
         }
