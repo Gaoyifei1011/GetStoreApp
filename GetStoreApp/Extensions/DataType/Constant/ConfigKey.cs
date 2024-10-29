@@ -47,8 +47,6 @@
 
         public const string WindowPositionYAxisKey = "WindowPositionYAxis";
 
-        public const string WinGetConfigKey = "WinGetConfig";
-
         public const string WinGetInstallModeKey = "WinGetInstallMode";
 
         public const string UseSystemRegionKey = "UseSystemRegion";

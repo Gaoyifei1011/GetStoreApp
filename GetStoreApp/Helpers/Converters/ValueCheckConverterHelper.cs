@@ -28,15 +28,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 判断 WinGet 程序包是否存在
-        /// </summary>
-        public static bool IsWinGetExisted(bool isOfficialVersionExisted, bool isDevVersionExisted, bool needReverseValue)
-        {
-            bool result = isOfficialVersionExisted || isDevVersionExisted;
-            return needReverseValue ? !result : result;
-        }
-
-        /// <summary>
         /// 检查痕迹清理对话框按钮是否可用
         /// </summary>
         public static bool IsTraceCleanupButtonEnabled(bool isSelected, bool isCleaning)

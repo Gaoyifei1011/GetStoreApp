@@ -3,6 +3,8 @@ using GetStoreApp.Services.Root;
 using Microsoft.Management.Deployment;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using Windows.ApplicationModel;
 
 namespace GetStoreApp.Services.Controls.Settings
 {
@@ -11,12 +13,9 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class WinGetConfigService
     {
-        private static readonly string winGetConfigSettingsKey = ConfigKey.WinGetConfigKey;
         private static readonly string winGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
 
-        private static readonly bool defaultUseDevVersion;
-
-        public static bool UseDevVersion { get; private set; }
+        public static bool IsWinGetInstalled { get; private set; }
 
         public static KeyValuePair<string, string> DefaultWinGetInstallMode { get; set; }
 
@@ -29,39 +28,13 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void InitializeWinGetConfig()
         {
-            UseDevVersion = GetUseDevVersion();
-
             WinGetInstallModeList = ResourceService.WinGetInstallModeList;
 
             DefaultWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(PackageInstallMode.Interactive.ToString(), StringComparison.OrdinalIgnoreCase));
 
             WinGetInstallMode = GetWinGetInstallMode();
-        }
 
-        /// <summary>
-        /// 获取设置存储的是否使用开发版本布尔值，如果设置没有存储，使用默认值
-        /// </summary>
-        private static bool GetUseDevVersion()
-        {
-            bool? useDevVersion = LocalSettingsService.ReadSetting<bool?>(winGetConfigSettingsKey);
-
-            if (!useDevVersion.HasValue)
-            {
-                SetUseDevVersion(defaultUseDevVersion);
-                return defaultUseDevVersion;
-            }
-
-            return Convert.ToBoolean(useDevVersion);
-        }
-
-        /// <summary>
-        /// 使用说明按钮显示发生修改时修改设置存储的是否使用开发版本布尔值
-        /// </summary>
-        public static void SetUseDevVersion(bool useDevVersion)
-        {
-            UseDevVersion = useDevVersion;
-
-            LocalSettingsService.SaveSetting(winGetConfigSettingsKey, useDevVersion);
+            IsWinGetInstalled = GetWinGetInstalledState();
         }
 
         /// <summary>
@@ -90,6 +63,23 @@ namespace GetStoreApp.Services.Controls.Settings
             WinGetInstallMode = winGetInstallMode;
 
             LocalSettingsService.SaveSetting(winGetInstallModeSettingsKey, winGetInstallMode.Key);
+        }
+
+        /// <summary>
+        /// 获取 WinGet 的安装状态
+        /// </summary>
+        private static bool GetWinGetInstalledState()
+        {
+            Windows.Management.Deployment.PackageManager packageManager = new();
+            foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
+            {
+                if (package.Id.FullName.Contains("Microsoft.DesktopAppInstaller") && File.Exists(Path.Combine(package.InstalledPath, "WinGet.exe")))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

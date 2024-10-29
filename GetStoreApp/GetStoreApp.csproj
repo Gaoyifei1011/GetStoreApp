@@ -9,6 +9,7 @@
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
+    <EnableDefaultPriItems>false</EnableDefaultPriItems>
     <ForceAotCompile>true</ForceAotCompile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -59,6 +60,8 @@
 
   <ItemGroup>
     <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
+
+    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="SourceItemGroup" />
     
     <Content Include="Assets\Icon\Control\About.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
@@ -137,6 +140,61 @@
     <MainAppEmbeddedItem Include="Assets\Embed\wu.xml" />
 
     <None Remove="Assets\LICENSE" />
+    <None Remove="Strings\ar\About.resjson" />
+    <None Remove="Strings\ar\AppManager.resjson" />
+    <None Remove="Strings\ar\AppUpdate.resjson" />
+    <None Remove="Strings\ar\Console.resjson" />
+    <None Remove="Strings\ar\Dialog.resjson" />
+    <None Remove="Strings\ar\Download.resjson" />
+    <None Remove="Strings\ar\Notification.resjson" />
+    <None Remove="Strings\ar\Resources.resjson" />
+    <None Remove="Strings\ar\Settings.resjson" />
+    <None Remove="Strings\ar\Store.resjson" />
+    <None Remove="Strings\ar\WebView.resjson" />
+    <None Remove="Strings\ar\Window.resjson" />
+    <None Remove="Strings\ar\WinGet.resjson" />
+    <None Remove="Strings\en-us\About.resjson" />
+    <None Remove="Strings\en-us\AppManager.resjson" />
+    <None Remove="Strings\en-us\AppUpdate.resjson" />
+    <None Remove="Strings\en-us\Console.resjson" />
+    <None Remove="Strings\en-us\Dialog.resjson" />
+    <None Remove="Strings\en-us\Download.resjson" />
+    <None Remove="Strings\en-us\Notification.resjson" />
+    <None Remove="Strings\en-us\Resources.resjson" />
+    <None Remove="Strings\en-us\Settings.resjson" />
+    <None Remove="Strings\en-us\ShellMenu.resjson" />
+    <None Remove="Strings\en-us\Store.resjson" />
+    <None Remove="Strings\en-us\WebView.resjson" />
+    <None Remove="Strings\en-us\Window.resjson" />
+    <None Remove="Strings\en-us\WinGet.resjson" />
+    <None Remove="Strings\he-IL\About.resjson" />
+    <None Remove="Strings\he-IL\AppManager.resjson" />
+    <None Remove="Strings\he-IL\AppUpdate.resjson" />
+    <None Remove="Strings\he-IL\Console.resjson" />
+    <None Remove="Strings\he-IL\Dialog.resjson" />
+    <None Remove="Strings\he-IL\Download.resjson" />
+    <None Remove="Strings\he-IL\Notification.resjson" />
+    <None Remove="Strings\he-IL\Resources.resjson" />
+    <None Remove="Strings\he-IL\Settings.resjson" />
+    <None Remove="Strings\he-IL\ShellMenu.resjson" />
+    <None Remove="Strings\he-IL\Store.resjson" />
+    <None Remove="Strings\he-IL\WebView.resjson" />
+    <None Remove="Strings\he-IL\Window.resjson" />
+    <None Remove="Strings\he-IL\WinGet.resjson" />
+    <None Remove="Strings\zh-hans\About.resjson" />
+    <None Remove="Strings\zh-hans\AppManager.resjson" />
+    <None Remove="Strings\zh-hans\AppUpdate.resjson" />
+    <None Remove="Strings\zh-hans\Console.resjson" />
+    <None Remove="Strings\zh-hans\Dialog.resjson" />
+    <None Remove="Strings\zh-hans\Download.resjson" />
+    <None Remove="Strings\zh-hans\Notification.resjson" />
+    <None Remove="Strings\zh-hans\Resources.resjson" />
+    <None Remove="Strings\zh-hans\Settings.resjson" />
+    <None Remove="Strings\zh-hans\ShellMenu.resjson" />
+    <None Remove="Strings\zh-hans\Store.resjson" />
+    <None Remove="Strings\zh-hans\WebView.resjson" />
+    <None Remove="Strings\zh-hans\Window.resjson" />
+    <None Remove="Strings\zh-hans\WinGet.resjson" />
     <None Remove="Styles\WinUI\AppbarButton.xaml" />
     <None Remove="Styles\WinUI\HyperlinkButton.xaml" />
     <None Remove="Styles\WinUI\InfoBar.xaml" />
@@ -214,6 +272,62 @@
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="WinUIApp.xaml" />
 
+    <PRIResource Include="Strings\ar\About.resjson" />
+    <PRIResource Include="Strings\ar\AppManager.resjson" />
+    <PRIResource Include="Strings\ar\AppUpdate.resjson" />
+    <PRIResource Include="Strings\ar\Console.resjson" />
+    <PRIResource Include="Strings\ar\Dialog.resjson" />
+    <PRIResource Include="Strings\ar\Download.resjson" />
+    <PRIResource Include="Strings\ar\Notification.resjson" />
+    <PRIResource Include="Strings\ar\Resources.resjson" />
+    <PRIResource Include="Strings\ar\Settings.resjson" />
+    <PRIResource Include="Strings\ar\Store.resjson" />
+    <PRIResource Include="Strings\ar\WebView.resjson" />
+    <PRIResource Include="Strings\ar\Window.resjson" />
+    <PRIResource Include="Strings\ar\WinGet.resjson" />
+    <PRIResource Include="Strings\en-us\About.resjson" />
+    <PRIResource Include="Strings\en-us\AppManager.resjson" />
+    <PRIResource Include="Strings\en-us\AppUpdate.resjson" />
+    <PRIResource Include="Strings\en-us\Console.resjson" />
+    <PRIResource Include="Strings\en-us\Dialog.resjson" />
+    <PRIResource Include="Strings\en-us\Download.resjson" />
+    <PRIResource Include="Strings\en-us\Notification.resjson" />
+    <PRIResource Include="Strings\en-us\Resources.resjson" />
+    <PRIResource Include="Strings\en-us\Settings.resjson" />
+    <PRIResource Include="Strings\en-us\ShellMenu.resjson" />
+    <PRIResource Include="Strings\en-us\Store.resjson" />
+    <PRIResource Include="Strings\en-us\WebView.resjson" />
+    <PRIResource Include="Strings\en-us\Window.resjson" />
+    <PRIResource Include="Strings\en-us\WinGet.resjson" />
+    <PRIResource Include="Strings\he-IL\About.resjson" />
+    <PRIResource Include="Strings\he-IL\AppManager.resjson" />
+    <PRIResource Include="Strings\he-IL\AppUpdate.resjson" />
+    <PRIResource Include="Strings\he-IL\Console.resjson" />
+    <PRIResource Include="Strings\he-IL\Dialog.resjson" />
+    <PRIResource Include="Strings\he-IL\Download.resjson" />
+    <PRIResource Include="Strings\he-IL\Notification.resjson" />
+    <PRIResource Include="Strings\he-IL\Resources.resjson" />
+    <PRIResource Include="Strings\he-IL\Settings.resjson" />
+    <PRIResource Include="Strings\he-IL\ShellMenu.resjson" />
+    <PRIResource Include="Strings\he-IL\Store.resjson" />
+    <PRIResource Include="Strings\he-IL\WebView.resjson" />
+    <PRIResource Include="Strings\he-IL\Window.resjson" />
+    <PRIResource Include="Strings\he-IL\WinGet.resjson" />
+    <PRIResource Include="Strings\zh-hans\About.resjson" />
+    <PRIResource Include="Strings\zh-hans\AppManager.resjson" />
+    <PRIResource Include="Strings\zh-hans\AppUpdate.resjson" />
+    <PRIResource Include="Strings\zh-hans\Console.resjson" />
+    <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
+    <PRIResource Include="Strings\zh-hans\Download.resjson" />
+    <PRIResource Include="Strings\zh-hans\Notification.resjson" />
+    <PRIResource Include="Strings\zh-hans\Resources.resjson" />
+    <PRIResource Include="Strings\zh-hans\Settings.resjson" />
+    <PRIResource Include="Strings\zh-hans\ShellMenu.resjson" />
+    <PRIResource Include="Strings\zh-hans\Store.resjson" />
+    <PRIResource Include="Strings\zh-hans\WebView.resjson" />
+    <PRIResource Include="Strings\zh-hans\Window.resjson" />
+    <PRIResource Include="Strings\zh-hans\WinGet.resjson" />
+
     <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
   </ItemGroup>
 
@@ -240,5 +354,12 @@
       <MyEmbeddedFileList Include="@(MainAppEmbeddedItem)" />
     </ItemGroup>
     <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
+  </Target>
+
+  <!--将 resjson 资源文件嵌入到包资源索引中-->
+  <Target Name="InjectAdditionalFiles" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun">
+    <ItemGroup>
+      <AdditionalFiles Include="@(PRIResource)" SourceItemGroup="PRIResource" />
+    </ItemGroup>
   </Target>
 </Project>

@@ -26,10 +26,13 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
@@ -691,7 +694,7 @@ namespace GetStoreApp.Views.Windows
             {
                 string dataContent = ResultService.ReadResult(dataKind);
                 ResultService.SaveResult(StorageDataKind.None, string.Empty);
-                await ToastNotificationService.HandleToastNotificationAsync(dataContent);
+                await ToastNotificationService.HandleToastNotificationAsync(dataContent, true);
 
                 DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
                 {
@@ -1061,7 +1064,19 @@ namespace GetStoreApp.Views.Windows
 
                 if (!isConnected)
                 {
-                    ToastNotificationService.Show(NotificationKind.NetworkError);
+                    Task.Run(() =>
+                    {
+                        // 显示网络连接异常通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/NetworkError1")));
+                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/NetworkError2")));
+                        AppNotificationButton checkNetWorkConnectionButton = new(ResourceService.GetLocalized("Notification/CheckNetWorkConnection"));
+                        checkNetWorkConnectionButton.Arguments.Add("action", "CheckNetWorkConnection");
+                        appNotificationBuilder.AddButton(checkNetWorkConnectionButton);
+                        AppNotification appNotification = appNotificationBuilder.BuildNotification();
+                        ToastNotificationService.Show(appNotification);
+                    });
                 }
             }
             catch (Exception e)

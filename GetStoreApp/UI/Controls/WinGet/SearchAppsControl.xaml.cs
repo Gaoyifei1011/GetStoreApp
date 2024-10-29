@@ -13,6 +13,7 @@ using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,7 +35,7 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class SearchAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly PackageManager SearchAppsManager;
+        private readonly PackageManager searchAppsManager;
         private string cachedSearchText;
         private AutoResetEvent autoResetEvent;
         private WinGetPage WinGetInstance;
@@ -101,7 +102,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             try
             {
-                SearchAppsManager = WinGetService.CreatePackageManager();
+                searchAppsManager = new();
             }
             catch (Exception e)
             {
@@ -149,10 +150,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        InstallOptions installOptions = WinGetService.CreateInstallOptions();
-
-                        installOptions.PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default;
-                        installOptions.PackageInstallScope = PackageInstallScope.Any;
+                        InstallOptions installOptions = new()
+                        {
+                            PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default,
+                            PackageInstallScope = PackageInstallScope.Any
+                        };
 
                         // 更新安装进度
                         Progress<InstallProgress> progressCallBack = new((installProgress) =>
@@ -282,12 +284,16 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.installStateLock.Exit();
                         }
 
-                        InstallResult installResult = await SearchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, installOptions).AsTask(installTokenSource.Token, progressCallBack);
+                        InstallResult installResult = await searchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, installOptions).AsTask(installTokenSource.Token, progressCallBack);
 
                         // 获取安装完成后的结果信息
                         if (installResult.Status is InstallResultStatus.Ok)
                         {
-                            ToastNotificationService.Show(NotificationKind.WinGetInstallSuccessfully, searchApps.AppName);
+                            // 显示 WinGet 应用安装成功通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), searchApps.AppName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
@@ -311,7 +317,19 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         else
                         {
-                            ToastNotificationService.Show(NotificationKind.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
+                            // 显示 WinGet 应用安装失败通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed1"), searchApps.AppName));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
+                            AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
+                            installWithCommandButton.Arguments.Add("action", string.Format("InstallWithCommand:{0}", searchApps.AppID));
+                            AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                            openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
+                            appNotificationBuilder.AddButton(installWithCommandButton);
+                            appNotificationBuilder.AddButton(openDownloadFolderButton);
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         }
 
                         try
@@ -413,7 +431,20 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        ToastNotificationService.Show(NotificationKind.WinGetInstallFailed, searchApps.AppName, searchApps.AppID);
+                        // 显示 WinGet 应用安装失败通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed1"), searchApps.AppName));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
+                        AppNotificationButton installWithCommandButton = new("Notification/InstallWithCommand");
+                        installWithCommandButton.Arguments.Add("action", string.Format
+                            ("InstallWithCommand:{0}", searchApps.AppID));
+                        AppNotificationButton openDownloadFolderButton = new("Notification/OpenDownloadFolder");
+                        openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
+                        appNotificationBuilder.AddButton(installWithCommandButton);
+                        appNotificationBuilder.AddButton(openDownloadFolderButton);
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     }
                 });
             }
@@ -513,24 +544,26 @@ namespace GetStoreApp.UI.Controls.WinGet
                 autoResetEvent ??= new AutoResetEvent(false);
                 Task.Run(async () =>
                 {
-                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = SearchAppsManager.GetPackageCatalogs();
-                    CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetService.CreateCreateCompositePackageCatalogOptions();
+                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = searchAppsManager.GetPackageCatalogs();
+                    CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
 
                     for (int index = 0; index < packageCatalogsList.Count; index++)
                     {
                         PackageCatalogReference catalogReference = packageCatalogsList[index];
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
-                    PackageCatalogReference catalogRef = SearchAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                    PackageCatalogReference catalogRef = searchAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
 
                     if ((await catalogRef.ConnectAsync()).PackageCatalog is PackageCatalog searchCatalog)
                     {
-                        FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
-                        PackageMatchFilter nameMatchFilter = WinGetService.CreatePacakgeMatchFilter();
+                        FindPackagesOptions findPackagesOptions = new();
                         // 根据应用的名称寻找符合条件的结果
-                        nameMatchFilter.Field = PackageMatchField.Name;
-                        nameMatchFilter.Option = PackageFieldMatchOption.ContainsCaseInsensitive;
-                        nameMatchFilter.Value = cachedSearchText;
+                        PackageMatchFilter nameMatchFilter = new()
+                        {
+                            Field = PackageMatchField.Name,
+                            Option = PackageFieldMatchOption.ContainsCaseInsensitive,
+                            Value = cachedSearchText
+                        };
                         findPackagesOptions.Filters.Add(nameMatchFilter);
                         FindPackagesResult findResult = await searchCatalog.FindPackagesAsync(findPackagesOptions);
 

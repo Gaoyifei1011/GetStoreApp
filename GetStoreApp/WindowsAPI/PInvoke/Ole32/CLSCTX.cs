@@ -139,6 +139,8 @@
 
         CLSCTX_ACTIVATE_ARM32_SERVER = 0x2000000,
 
+        CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION = 0x4000000,
+
         /// <summary>
         /// 用于加载代理/存根 DLL。此标志保留供内部使用，不打算直接从代码使用。
         /// </summary>

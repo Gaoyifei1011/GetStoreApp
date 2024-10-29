@@ -4,6 +4,8 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -228,9 +230,19 @@ namespace GetStoreApp.Services.Controls.Download
 
                 if (DownloadSchedulerList.Count is 0)
                 {
+                    // 显示下载文件完成通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted1"));
+                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted2"));
+                    AppNotificationButton viewDownloadPageButton = new(ResourceService.GetLocalized("Notification/ViewDownloadPage"));
+                    viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
+                    appNotificationBuilder.AddButton(viewDownloadPageButton);
+                    AppNotification appNotification = appNotificationBuilder.BuildNotification();
+
                     MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
                         {
-                            ToastNotificationService.Show(NotificationKind.DownloadCompleted);
+                            ToastNotificationService.Show(appNotification);
                         });
                 }
             }
@@ -434,9 +446,19 @@ namespace GetStoreApp.Services.Controls.Download
 
                 if (DownloadSchedulerList.Count is 0)
                 {
+                    // 显示下载文件完成通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted1"));
+                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted2"));
+                    AppNotificationButton viewDownloadPageButton = new(ResourceService.GetLocalized("Notification/ViewDownloadPage"));
+                    viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
+                    appNotificationBuilder.AddButton(viewDownloadPageButton);
+                    AppNotification appNotification = appNotificationBuilder.BuildNotification();
+
                     MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
                     {
-                        ToastNotificationService.Show(NotificationKind.DownloadCompleted);
+                        ToastNotificationService.Show(appNotification);
                     });
                 }
             }

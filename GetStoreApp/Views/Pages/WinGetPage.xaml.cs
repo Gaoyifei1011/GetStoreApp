@@ -1,5 +1,6 @@
-using GetStoreApp.Helpers.Converters;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
@@ -9,10 +10,14 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
+using Windows.Management.Deployment;
 using Windows.System;
 
 // 抑制 IDE0060 警告
@@ -135,7 +140,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (ValueCheckConverterHelper.IsWinGetExisted(WinGetService.IsOfficialVersionExisted, WinGetService.IsDevVersionExisted, false))
+            if (WinGetConfigService.IsWinGetInstalled)
             {
                 SearchApps.InitializeWingetInstance(this);
                 UpgradableApps.InitializeWingetInstance(this);

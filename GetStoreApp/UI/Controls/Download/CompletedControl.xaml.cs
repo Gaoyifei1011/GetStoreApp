@@ -14,6 +14,7 @@ using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -261,8 +262,12 @@ namespace GetStoreApp.UI.Controls.Download
                                     {
                                         // 安装目标应用，并获取安装进度
                                         DeploymentResult installResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+
                                         // 显示安装成功通知
-                                        ToastNotificationService.Show(NotificationKind.InstallApp, "Successfully", completedFile.Name);
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), completedFile.Name));
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                     }
                                     // 安装失败显示失败信息
                                     catch (Exception e)
@@ -279,7 +284,11 @@ namespace GetStoreApp.UI.Controls.Download
                                         });
 
                                         // 显示安装失败通知
-                                        ToastNotificationService.Show(NotificationKind.InstallApp, "Error", completedFile.Name, e.Message);
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed1"), completedFile.Name));
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), e.Message));
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                     }
                                     // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
                                     finally

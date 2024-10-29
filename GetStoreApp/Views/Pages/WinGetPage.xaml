@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     xmlns:wc="using:GetStoreApp.UI.Controls.WinGet"
     x:Name="WinGetRoot"
     Loaded="{x:Bind OnLoaded}"
@@ -29,7 +30,7 @@
             x:Name="WinGetHeader"
             Grid.Row="0"
             Margin="20,0,30,3"
-            x:Load="{x:Bind converter:ValueCheckConverterHelper.IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}"
+            x:Load="{x:Bind service:WinGetConfigService.IsWinGetInstalled}"
             ColumnSpacing="5">
 
             <Grid.ColumnDefinitions>
@@ -369,7 +370,7 @@
         <Grid
             x:Name="WinGetContent"
             Grid.Row="1"
-            x:Load="{x:Bind converter:ValueCheckConverterHelper.IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:False)}">
+            x:Load="{x:Bind service:WinGetConfigService.IsWinGetInstalled}">
 
             <wc:SearchAppsControl x:Name="SearchApps" />
             <wc:InstalledAppsControl x:Name="InstalledApps" />
@@ -383,7 +384,7 @@
             Grid.RowSpan="2"
             Padding="30,0"
             HorizontalAlignment="Center"
-            x:Load="{x:Bind converter:ValueCheckConverterHelper.IsWinGetExisted(root:WinGetService.IsOfficialVersionExisted, root:WinGetService.IsDevVersionExisted, x:True)}">
+            x:Load="{x:Bind service:WinGetConfigService.IsWinGetInstalled.Equals(x:False)}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

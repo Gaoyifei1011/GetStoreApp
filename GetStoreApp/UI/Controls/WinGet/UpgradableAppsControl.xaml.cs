@@ -13,6 +13,7 @@ using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,7 +35,7 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class UpgradableAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly PackageManager UpgradableAppsManager;
+        private readonly PackageManager upgradableAppsManager;
         private AutoResetEvent autoResetEvent;
         private WinGetPage WinGetInstance;
 
@@ -84,13 +85,15 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             try
             {
-                UpgradableAppsManager = WinGetService.CreatePackageManager();
+                upgradableAppsManager = new();
+                autoResetEvent.Set();
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "Upgradable apps information initialized failed.", e);
                 return;
             }
+
             GetUpgradableApps();
             InitializeData();
         }
@@ -149,10 +152,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        InstallOptions installOptions = WinGetService.CreateInstallOptions();
-
-                        installOptions.PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default;
-                        installOptions.PackageInstallScope = PackageInstallScope.Any;
+                        InstallOptions installOptions = new()
+                        {
+                            PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default,
+                            PackageInstallScope = PackageInstallScope.Any
+                        };
 
                         // 更新升级进度
                         Progress<InstallProgress> progressCallBack = new((installProgress) =>
@@ -284,13 +288,17 @@ namespace GetStoreApp.UI.Controls.WinGet
                             WinGetInstance.installStateLock.Exit();
                         }
 
-                        InstallResult installResult = await UpgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, installOptions).AsTask(upgradeTokenSource.Token, progressCallBack);
+                        InstallResult installResult = await upgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, installOptions).AsTask(upgradeTokenSource.Token, progressCallBack);
 
                         // 获取升级完成后的结果信息
                         // 升级完成，从列表中删除该应用
                         if (installResult.Status is InstallResultStatus.Ok)
                         {
-                            ToastNotificationService.Show(NotificationKind.WinGetUpgradeSuccessfully, upgradableApps.AppName);
+                            // 显示 WinGet 应用升级成功通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), upgradableApps.AppName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (installResult.RebootRequired)
@@ -390,7 +398,19 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 }
                             });
 
-                            ToastNotificationService.Show(NotificationKind.WinGetUpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
+                            // 显示 WinGet 应用升级失败通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed1"), upgradableApps.AppName));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
+                            AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
+                            installWithCommandButton.Arguments.Add("action", string.Format("InstallWithCommand:{0}", "TestAppID"));
+                            AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                            openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
+                            appNotificationBuilder.AddButton(installWithCommandButton);
+                            appNotificationBuilder.AddButton(openDownloadFolderButton);
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         }
                     }
                     // 操作被用户所取消异常
@@ -479,7 +499,20 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         });
 
-                        ToastNotificationService.Show(NotificationKind.WinGetUpgradeFailed, upgradableApps.AppName, upgradableApps.AppID);
+                        // 显示 WinGet 应用升级失败通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed1"), upgradableApps.AppName));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
+                        AppNotificationButton leftNotificationButton = new("Notification/InstallWithCommand");
+                        leftNotificationButton.Arguments.Add("action", string.Format
+                            ("InstallWithCommand:{0}", upgradableApps.AppID));
+                        AppNotificationButton rightNotificationButton = new("Notification/OpenDownloadFolder");
+                        rightNotificationButton.Arguments.Add("action", "OpenDownloadFolder");
+                        appNotificationBuilder.AddButton(leftNotificationButton);
+                        appNotificationBuilder.AddButton(rightNotificationButton);
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     }
                 });
             }
@@ -533,9 +566,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                 autoResetEvent ??= new AutoResetEvent(false);
                 Task.Run(async () =>
                 {
-                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = UpgradableAppsManager.GetPackageCatalogs();
-                    CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = WinGetService.CreateCreateCompositePackageCatalogOptions();
-                    PackageCatalogReference searchCatalogReference = UpgradableAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
+                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = upgradableAppsManager.GetPackageCatalogs();
+                    CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
+                    PackageCatalogReference searchCatalogReference = upgradableAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
                     for (int index = 0; index < packageCatalogsList.Count; index++)
                     {
@@ -543,11 +576,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
                     createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
-                    PackageCatalogReference packageCatalogReference = UpgradableAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                    PackageCatalogReference packageCatalogReference = upgradableAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
 
                     if ((await packageCatalogReference.ConnectAsync()).PackageCatalog is PackageCatalog upgradableCatalog)
                     {
-                        FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
+                        FindPackagesOptions findPackagesOptions = new();
                         FindPackagesResult findResult = await upgradableCatalog.FindPackagesAsync(findPackagesOptions);
 
                         for (int index = 0; index < findResult.Matches.Count; index++)

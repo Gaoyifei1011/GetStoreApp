@@ -41,10 +41,6 @@ namespace GetStoreApp.Views.Pages
     {
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
-        private bool IsOfficialVersionExisted { get; } = WinGetService.IsOfficialVersionExisted;
-
-        private bool IsDevVersionExisted { get; } = WinGetService.IsDevVersionExisted;
-
         private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
 
         public KeyValuePair<string, string> Theme
@@ -265,22 +261,6 @@ namespace GetStoreApp.Views.Pages
                 {
                     _blockMapFilterValue = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(BlockMapFilterValue)));
-                }
-            }
-        }
-
-        private bool _useDevVersion = WinGetConfigService.UseDevVersion;
-
-        public bool UseDevVersion
-        {
-            get { return _useDevVersion; }
-
-            set
-            {
-                if (!Equals(_useDevVersion, value))
-                {
-                    _useDevVersion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UseDevVersion)));
                 }
             }
         }
@@ -950,18 +930,6 @@ namespace GetStoreApp.Views.Pages
             {
                 LinkFilterService.SetBlockMapFilterValue(toggleSwitch.IsOn);
                 BlockMapFilterValue = toggleSwitch.IsOn;
-            }
-        }
-
-        /// <summary>
-        /// 当两个版本共存时，设置是否优先使用开发版本
-        /// </summary>
-        private void OnWinGetConfigToggled(object sender, RoutedEventArgs args)
-        {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                WinGetConfigService.SetUseDevVersion(toggleSwitch.IsOn);
-                UseDevVersion = toggleSwitch.IsOn;
             }
         }
 

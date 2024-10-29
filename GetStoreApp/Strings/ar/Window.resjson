@@ -1,0 +1,19 @@
+{
+  "About": "حول",
+  "AppManager": "مدير التطبيقات",
+  "AppTitle": "GetStoreApp",
+  "AppUpdate": "تحديث التطبيق",
+  "Close": "إغلاق",
+  "Download": "إدارة التنزيلات",
+  "Maximize": "تكبير",
+  "Minimize": "تصغير",
+  "Move": "نقل",
+  "NavigationFailed": "فشل التنقل في الصفحة {0}",
+  "PinToStartScreen": "تثبيت على شاشة البدء",
+  "Restore": "استعادة",
+  "Settings": "الإعدادات",
+  "Size": "الحجم",
+  "Store": "متجر Microsoft",
+  "Web": "فتح المتصفح",
+  "WinGet": "حزمة WinGet"
+}

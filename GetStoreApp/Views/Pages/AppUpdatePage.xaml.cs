@@ -5,6 +5,8 @@ using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -336,7 +338,12 @@ namespace GetStoreApp.Views.Pages
                     sender.StatusChanged -= OnAppInstallItemStatausChanged;
 
                     AppInstallingDict.Remove(appUpdateItem.PackageFamilyName);
-                    ToastNotificationService.Show(NotificationKind.AppUpdate, appUpdateItem.DisplayName);
+
+                    // 显示商店应用更新成功通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), appUpdateItem.DisplayName));
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     break;
                 }
             }

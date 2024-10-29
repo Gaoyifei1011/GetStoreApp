@@ -40,8 +40,6 @@ namespace GetStoreApp
             MainWindow.Current.Show(true);
             SetAppIcon();
 
-            WinGetService.InitializeService();
-
             if (JumpList.IsSupported())
             {
                 Task.Run(async () =>

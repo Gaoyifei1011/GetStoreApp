@@ -11,6 +11,7 @@ using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -127,7 +128,8 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             try
             {
-                installedAppsManager = WinGetService.CreatePackageManager();
+                installedAppsManager = new();
+                autoResetEvent.Set();
             }
             catch (Exception e)
             {
@@ -166,10 +168,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        UninstallOptions uninstallOptions = WinGetService.CreateUninstallOptions();
-
-                        uninstallOptions.PackageUninstallMode = PackageUninstallMode.Interactive;
-                        uninstallOptions.PackageUninstallScope = PackageUninstallScope.Any;
+                        UninstallOptions uninstallOptions = new()
+                        {
+                            PackageUninstallMode = PackageUninstallMode.Interactive,
+                            PackageUninstallScope = PackageUninstallScope.Any
+                        };
 
                         UninstallResult unInstallResult = await installedAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
 
@@ -177,7 +180,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 卸载成功，从列表中删除该应用
                         if (unInstallResult.Status is UninstallResultStatus.Ok)
                         {
-                            ToastNotificationService.Show(NotificationKind.WinGetUnInstallSuccessfully, installedApps.AppName);
+                            // 显示 WinGet 应用卸载成功通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallSuccessfully"), installedApps.AppName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
                             // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                             if (unInstallResult.RebootRequired)
@@ -215,20 +222,49 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         else
                         {
-                            ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
+                            // 显示 WinGet 应用卸载失败通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed1"), installedApps.AppName));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
+                            AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                            openSettingsButton.Arguments.Add("action", "OpenSettings");
+                            appNotificationBuilder.AddButton(openSettingsButton);
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                         }
                     }
                     // 操作被用户所取消异常
                     catch (OperationCanceledException e)
                     {
                         LogService.WriteLog(LoggingLevel.Information, "App uninstalling operation canceled.", e);
-                        ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
+
+                        // 显示 WinGet 应用升级失败通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed1"), installedApps.AppName));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
+                        AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                        openSettingsButton.Arguments.Add("action", "OpenSettings");
+                        appNotificationBuilder.AddButton(openSettingsButton);
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     }
                     // 其他异常
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Error, "App uninstalling failed.", e);
-                        ToastNotificationService.Show(NotificationKind.WinGetUnInstallFailed, installedApps.AppName);
+
+                        // 显示 WinGet 应用升级失败通知
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed1"), installedApps.AppName));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
+                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
+                        AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                        openSettingsButton.Arguments.Add("action", "OpenSettings");
+                        appNotificationBuilder.AddButton(openSettingsButton);
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     }
                 });
             }
@@ -316,7 +352,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                     if ((await searchCatalogReference.ConnectAsync()).PackageCatalog is PackageCatalog installedCatalog)
                     {
-                        FindPackagesOptions findPackagesOptions = WinGetService.CreateFindPackagesOptions();
+                        FindPackagesOptions findPackagesOptions = new();
                         FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
 
                         IReadOnlyList<MatchResult> list = findResult.Matches;

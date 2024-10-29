@@ -1,0 +1,8 @@
+{
+  "RootMenu": "获取商店应用",
+  "PSInstall": "使用 PowerShell 安装",
+  "PSInstallAdmin": "使用 PowerShell 安装 (管理员)",
+  "PSRegister": "使用 PowerShell 注册应用",
+  "AppInstallAdmin": "使用应用安装器安装 (管理员)",
+  "AppInstall": "使用应用安装器安装"
+}

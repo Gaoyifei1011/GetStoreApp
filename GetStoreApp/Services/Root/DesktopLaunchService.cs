@@ -3,6 +3,7 @@ using GetStoreApp.Views.Pages;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
@@ -17,10 +18,10 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class DesktopLaunchService
     {
+        private static bool isLaunched = false;
         private static AppActivationArguments appActivationArguments;
         private static IActivatedEventArgs activatedEventArgs;
         private static ActivationKind activationKind = ActivationKind.Launch;
-
         private static readonly List<string> desktopLaunchArgs = [];
 
         // 应用启动时使用的参数
@@ -43,6 +44,7 @@ namespace GetStoreApp.Services.Root
                 desktopLaunchArgs.Add(arg);
             }
 
+            isLaunched = AppInstance.GetInstances().Count > 1;
             appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
             activatedEventArgs = appActivationArguments.Data as IActivatedEventArgs;
             await ParseStartupKindAsync(activatedEventArgs is null ? ActivationKind.Launch : activatedEventArgs.Kind);
@@ -161,7 +163,7 @@ namespace GetStoreApp.Services.Root
                 string sendData = string.Format("{0} {1} {2}", LaunchArgs["TypeName"], LaunchArgs["ChannelName"], LaunchArgs["Link"] is null ? "PlaceHolderText" : LaunchArgs["Link"]);
                 ResultService.SaveResult(StorageDataKind.DesktopLaunch, sendData);
 
-                if (!currentInstance.IsCurrent)
+                if (isLaunched)
                 {
                     ApplicationData.Current.SignalDataChanged();
 
@@ -215,7 +217,7 @@ namespace GetStoreApp.Services.Root
                         ResultService.SaveResult(StorageDataKind.ShareTarget, sendData);
                     }
 
-                    if (!currentInstance.IsCurrent)
+                    if (isLaunched)
                     {
                         ApplicationData.Current.SignalDataChanged();
 
@@ -241,9 +243,9 @@ namespace GetStoreApp.Services.Root
 
                 ResultService.SaveResult(StorageDataKind.ToastNotification, sendData);
 
-                if (currentInstance.IsCurrent)
+                if (!isLaunched)
                 {
-                    await ToastNotificationService.HandleToastNotificationAsync(desktopLaunchArgs[0]);
+                    await ToastNotificationService.HandleToastNotificationAsync(desktopLaunchArgs[0], false);
                 }
                 else
                 {

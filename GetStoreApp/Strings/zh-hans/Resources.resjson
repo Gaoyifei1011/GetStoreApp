@@ -1,0 +1,16 @@
+{
+  "AppDescription": "获取商店应用",
+  "AppDisplayName": "获取商店应用",
+  "AppShortDisplayName": "获取商店应用",
+  "Fast": "快速",
+  "PackageDisplayName": "获取商店应用",
+  "ProductID": "产品 ID",
+  "Retail": "正式版",
+  "RP": "发布预览",
+  "Slow": "慢速",
+  "SystemBackdropControllerInitializeFailed": "应用的背景色控制器初始化失败",
+  "TaskbarPinner": "任务栏固定程序",
+  "TaskbarProtocolName": "任务栏固定辅助程序",
+  "URL": "URL（链接）",
+  "WebBrowserProtocolName": "网页浏览器"
+}

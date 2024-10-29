@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -583,7 +584,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        List<string> copyDependencyInformationCopyStringList = []; ;
+                        List<string> copyDependencyInformationCopyStringList = [];
                         copyDependencyInformationCopyStringList.Add(package.DisplayName);
                         copyDependencyInformationCopyStringList.Add(package.Id.FamilyName);
                         copyDependencyInformationCopyStringList.Add(package.Id.FullName);
@@ -899,7 +900,11 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                         {
-                                            ToastNotificationService.Show(NotificationKind.UWPUnInstallSuccessfully, pacakgeItem.Package.DisplayName);
+                                            // 显示 UWP 应用卸载成功通知
+                                            AppNotificationBuilder appNotificationBuilder = new();
+                                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallSuccessfully"), pacakgeItem.Package.DisplayName));
+                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
                                             AppManagerDataCollection.Remove(pacakgeItem);
                                             break;
@@ -919,11 +924,22 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
                                         {
-                                            ToastNotificationService.Show(NotificationKind.UWPUnInstallFailed,
-                                                pacakgeItem.Package.DisplayName,
-                                                uninstallResult.ExtendedErrorCode.HResult.ToString(),
-                                                uninstallResult.ErrorText
-                                                );
+                                            // 显示 UWP 应用卸载失败通知
+                                            AppNotificationBuilder appNotificationBuilder = new();
+                                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed1"), pacakgeItem.Package.DisplayName));
+                                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUnInstallFailed2"));
+
+                                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                                            {
+                                                 ResourceService.GetLocalized("Notification/UWPUnInstallFailed3"),
+                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed4"), Convert.ToString(uninstallResult.ExtendedErrorCode.HResult)),
+                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed5"), uninstallResult.ErrorText)
+                                            }));
+                                            AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                                            openSettingsButton.Arguments.Add("action", "OpenSettings");
+                                            appNotificationBuilder.AddButton(openSettingsButton);
+                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
                                             LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
 

@@ -1,0 +1,16 @@
+{
+  "AppDescription": "GetStoreApp",
+  "AppDisplayName": "GetStoreApp",
+  "PackageDisplayName": "GetStoreApp",
+  "AppShortDisplayName": "GetStoreApp",
+  "Fast": "Fast",
+  "ProductID": "ProductID",
+  "Retail": "Retail",
+  "RP": "Release Preview",
+  "Slow": "Slow",
+  "URL": "URL(Link)",
+  "TaskbarProtocolName": "Taskbar Pinner",
+  "SystemBackdropControllerInitializeFailed": "The app's sytstem backdrop controller failed to initialize",
+  "TaskbarPinner": "Taskbar Pinner",
+  "WebBrowserProtocolName": "Web Browser"
+}
