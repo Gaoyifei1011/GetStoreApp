@@ -61,7 +61,7 @@ namespace GetStoreAppWebView.Services.Root
             }
             else
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new Exception());
+                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new NullReferenceException());
                 return resource;
             }
         }

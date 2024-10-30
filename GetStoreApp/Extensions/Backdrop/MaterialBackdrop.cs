@@ -41,7 +41,7 @@ namespace GetStoreApp.Extensions.Backdrop
 
             if (systemBackdropController is not null)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new Exception());
+                LogService.WriteLog(LoggingLevel.Warning, "Have you forgot to initialize app's resources?", new NullReferenceException());
                 (Application.Current as WinUIApp).Dispose();
             }
 

@@ -1,4 +1,3 @@
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
@@ -10,14 +9,11 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
+using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Management.Deployment;
 using Windows.System;
 
 // 抑制 IDE0060 警告
@@ -30,12 +26,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page
     {
+        private bool isInitialized;
         private readonly Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
         private IOpenControlPanel openControlPanel;
 
         public readonly Lock installStateLock = new();
 
-        internal Dictionary<string, CancellationTokenSource> InstallingStateDict { get; } = [];
+        internal Dictionary<string, IAsyncInfo> InstallingStateDict { get; } = [];
 
         public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = [];
 
@@ -77,12 +74,12 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        if (InstallingStateDict.TryGetValue(appId, out CancellationTokenSource tokenSource))
+                        if (InstallingStateDict.TryGetValue(appId, out IAsyncInfo asyncInfo))
                         {
-                            if (!tokenSource.IsCancellationRequested)
+                            if (asyncInfo.Status is not AsyncStatus.Canceled)
                             {
-                                tokenSource.Cancel();
-                                tokenSource.Dispose();
+                                asyncInfo.Cancel();
+                                asyncInfo.Close();
                             }
                         }
                     }
@@ -140,16 +137,21 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (WinGetConfigService.IsWinGetInstalled)
+            if (!isInitialized)
             {
-                SearchApps.InitializeWingetInstance(this);
-                UpgradableApps.InitializeWingetInstance(this);
+                if (WinGetConfigService.IsWinGetInstalled)
+                {
+                    SearchApps.InitializeWingetInstance(this);
+                    UpgradableApps.InitializeWingetInstance(this);
+                }
+
+                if (WinGetSelectorBar is not null)
+                {
+                    WinGetSelectorBar.SelectedItem = WinGetSelectorBar.Items[0];
+                }
             }
 
-            if (WinGetSelectorBar is not null)
-            {
-                WinGetSelectorBar.SelectedItem = WinGetSelectorBar.Items[0];
-            }
+            isInitialized = true;
         }
 
         /// <summary>

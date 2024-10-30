@@ -4,15 +4,16 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Data.Xml.Dom;
+using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
+using Windows.System.Threading;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -48,14 +49,12 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         public static async Task<string> GetCookieAsync()
         {
-            // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
             string cookieResult = string.Empty;
 
             try
             {
+                AutoResetEvent autoResetEvent = new(false);
+
                 IBuffer contentBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/cookie.xml");
 
                 HttpStringContent httpStringContent = new(CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, contentBuffer));
@@ -65,57 +64,97 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(cookieUri, httpStringContent).AsTask(cancellationTokenSource.Token);
+                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.PostAsync(cookieUri, httpStringContent);
 
-                // 请求成功
-                if (responseMessage.IsSuccessStatusCode)
+                // 添加超时设置（半分钟后停止获取）
+                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                 {
-                    Dictionary<string, string> responseDict = new()
+                    try
                     {
-                        { "Status code", responseMessage.StatusCode.ToString() },
-                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
-                    };
-
-                    LogService.WriteLog(LoggingLevel.Information, "Cookie request successfully.", responseDict);
-
-                    string responseString = await responseMessage.Content.ReadAsStringAsync();
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-
-                    XmlDocument responseStringDocument = new();
-                    responseStringDocument.LoadXml(responseString);
-
-                    XmlNodeList encryptedDataList = responseStringDocument.GetElementsByTagName("EncryptedData");
-                    if (encryptedDataList.Count > 0)
-                    {
-                        cookieResult = encryptedDataList[0].InnerText;
+                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
+                        {
+                            httpPostProgress.Cancel();
+                        }
                     }
-                }
-                else
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Cookie request cancel task failed", e);
+                    }
+                });
+
+                // HTTP POST 请求过程已完成
+                httpPostProgress.Completed += async (result, status) =>
                 {
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-                }
-            }
-            // 捕捉因为网络失去链接获取信息时引发的异常
-            catch (COMException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "Cookie request failed", e);
-            }
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "Cookie request timeout", e);
+                    httpPostProgress = null;
+                    try
+                    {
+                        // 获取 POST 请求已完成
+                        if (status is AsyncStatus.Completed)
+                        {
+                            HttpResponseMessage responseMessage = result.GetResults();
+
+                            // 请求成功
+                            if (responseMessage.IsSuccessStatusCode)
+                            {
+                                Dictionary<string, string> responseDict = new()
+                                {
+                                    { "Status code", responseMessage.StatusCode.ToString() },
+                                    { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                                };
+
+                                LogService.WriteLog(LoggingLevel.Information, "Cookie request successfully.", responseDict);
+
+                                string responseString = await responseMessage.Content.ReadAsStringAsync();
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+
+                                XmlDocument responseStringDocument = new();
+                                responseStringDocument.LoadXml(responseString);
+
+                                XmlNodeList encryptedDataList = responseStringDocument.GetElementsByTagName("EncryptedData");
+                                if (encryptedDataList.Count > 0)
+                                {
+                                    cookieResult = encryptedDataList[0].InnerText;
+                                }
+                            }
+                            else
+                            {
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+                            }
+                        }
+                        // 获取 POST 请求由于超时而被用户取消
+                        else if (status is AsyncStatus.Canceled)
+                        {
+                            LogService.WriteLog(LoggingLevel.Information, "Cookie request timeout", result.ErrorCode);
+                        }
+                        // 获取 POST 请求发生错误
+                        else if (status is AsyncStatus.Error)
+                        {
+                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                            LogService.WriteLog(LoggingLevel.Information, "Cookie request failed", result.ErrorCode);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Cookie request unknown exception", result.ErrorCode);
+                    }
+                    finally
+                    {
+                        result.Close();
+                        autoResetEvent.Set();
+                    }
+                };
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+                autoResetEvent = null;
             }
             // 其他异常
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Warning, "Cookie request unknown exception", e);
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
             }
 
             return cookieResult;
@@ -126,11 +165,9 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         /// <param name="productId">应用的产品 ID</param>
         /// <returns>打包应用：有，非打包应用：无</returns>
-        public static async Task<Tuple<bool, AppInfoModel>> GetAppInformationAsync(string productId)
+        public static Tuple<bool, AppInfoModel> GetAppInformation(string productId)
         {
             // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             Tuple<bool, AppInfoModel> appInformationResult = null;
             AppInfoModel appInfoModel = new();
@@ -139,80 +176,119 @@ namespace GetStoreApp.Helpers.Controls.Store
             {
                 string categoryIDAPI = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/products/{0}?market={1}&locale={2}&deviceFamily=Windows.Desktop", productId, StoreRegionService.StoreRegion.CodeTwoLetter, LanguageService.AppLanguage.Key);
 
+                AutoResetEvent autoResetEvent = new(false);
+
                 HttpClient httpClient = new();
-                HttpResponseMessage responseMessage = await httpClient.GetAsync(new(categoryIDAPI)).AsTask(cancellationTokenSource.Token);
+                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.GetAsync(new(categoryIDAPI));
 
-                // 请求成功
-                if (responseMessage.IsSuccessStatusCode)
+                // 添加超时设置（半分钟后停止获取）
+                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                 {
-                    Dictionary<string, string> responseDict = new()
+                    try
                     {
-                        { "Status code", responseMessage.StatusCode.ToString() },
-                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
-                    };
-
-                    LogService.WriteLog(LoggingLevel.Information, "App Information request successfully.", responseDict);
-
-                    string responseString = await responseMessage.Content.ReadAsStringAsync();
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-
-                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
-                    {
-                        JsonObject payLoadObject = responseStringObject.GetNamedValue("Payload").GetObject();
-
-                        appInfoModel.Name = payLoadObject.GetNamedString("Title");
-                        appInfoModel.Publisher = payLoadObject.GetNamedString("PublisherName");
-                        appInfoModel.Description = payLoadObject.GetNamedString("Description");
-                        appInfoModel.CategoryID = string.Empty;
-                        appInfoModel.ProductID = productId;
-
-                        JsonArray skusArray = payLoadObject.GetNamedArray("Skus");
-
-                        if (skusArray.Count > 0)
+                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
                         {
-                            appInfoModel.CategoryID = string.Empty;
-                            JsonObject jsonObject = skusArray[0].GetObject();
-                            if (jsonObject.TryGetValue("FulfillmentData", out IJsonValue jsonValue))
-                            {
-                                string fulfillmentData = jsonValue.GetString();
-                                if (JsonObject.TryParse(fulfillmentData, out JsonObject fulfillmentDataObject))
-                                {
-                                    appInfoModel.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
-                                }
-                            }
-                            appInformationResult = new Tuple<bool, AppInfoModel>(true, appInfoModel);
+                            httpPostProgress.Cancel();
                         }
                     }
-                }
-                else
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "App Information request cancel task failed", e);
+                    }
+                });
+
+                // HTTP POST 请求过程已完成
+                httpPostProgress.Completed += async (result, status) =>
                 {
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-                }
-            }
+                    httpPostProgress = null;
+                    try
+                    {
+                        // 获取 POST 请求已完成
+                        if (status is AsyncStatus.Completed)
+                        {
+                            HttpResponseMessage responseMessage = result.GetResults();
 
-            // 捕捉因为网络失去链接获取信息时引发的异常
-            catch (COMException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "App Information request failed", e);
-            }
+                            // 请求成功
+                            if (responseMessage.IsSuccessStatusCode)
+                            {
+                                Dictionary<string, string> responseDict = new()
+                                {
+                                    { "Status code", responseMessage.StatusCode.ToString() },
+                                    { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                                };
 
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "App Information request timeout", e);
-            }
+                                LogService.WriteLog(LoggingLevel.Information, "App Information request successfully.", responseDict);
 
+                                string responseString = await responseMessage.Content.ReadAsStringAsync();
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+
+                                if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                                {
+                                    JsonObject payLoadObject = responseStringObject.GetNamedValue("Payload").GetObject();
+
+                                    appInfoModel.Name = payLoadObject.GetNamedString("Title");
+                                    appInfoModel.Publisher = payLoadObject.GetNamedString("PublisherName");
+                                    appInfoModel.Description = payLoadObject.GetNamedString("Description");
+                                    appInfoModel.CategoryID = string.Empty;
+                                    appInfoModel.ProductID = productId;
+
+                                    JsonArray skusArray = payLoadObject.GetNamedArray("Skus");
+
+                                    if (skusArray.Count > 0)
+                                    {
+                                        appInfoModel.CategoryID = string.Empty;
+                                        JsonObject jsonObject = skusArray[0].GetObject();
+                                        if (jsonObject.TryGetValue("FulfillmentData", out IJsonValue jsonValue))
+                                        {
+                                            string fulfillmentData = jsonValue.GetString();
+                                            if (JsonObject.TryParse(fulfillmentData, out JsonObject fulfillmentDataObject))
+                                            {
+                                                appInfoModel.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
+                                            }
+                                        }
+                                        appInformationResult = new Tuple<bool, AppInfoModel>(true, appInfoModel);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+                            }
+                        }
+                        // 获取 POST 请求由于超时而被用户取消
+                        else if (status is AsyncStatus.Canceled)
+                        {
+                            LogService.WriteLog(LoggingLevel.Information, "App Information request timeout", result.ErrorCode);
+                        }
+                        // 获取 POST 请求发生错误
+                        else if (status is AsyncStatus.Error)
+                        {
+                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                            LogService.WriteLog(LoggingLevel.Information, "App Information request failed", result.ErrorCode);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "App Information request unknown exception", e);
+                    }
+                    finally
+                    {
+                        result.Close();
+                        autoResetEvent.Set();
+                    }
+                };
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+                autoResetEvent = null;
+            }
             // 其他异常
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Warning, "App Information request unknown exception", e);
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
             }
 
             return appInformationResult is null ? new Tuple<bool, AppInfoModel>(false, appInfoModel) : appInformationResult;
@@ -227,14 +303,12 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <returns>文件信息的字符串</returns>
         public static async Task<string> GetFileListXmlAsync(string cookie, string categoryId, string ring)
         {
-            // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
             string fileListXmlResult = string.Empty;
 
             try
             {
+                AutoResetEvent autoResetEvent = new(false);
+
                 IBuffer wuBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/wu.xml");
                 string fileListXml = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, wuBuffer).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
                 IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(fileListXml, BinaryStringEncoding.Utf8);
@@ -246,50 +320,90 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(fileListXmlUri, httpStringContent).AsTask(cancellationTokenSource.Token);
+                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.PostAsync(fileListXmlUri, httpStringContent);
 
-                // 请求成功
-                if (responseMessage.IsSuccessStatusCode)
+                // 添加超时设置（半分钟后停止获取）
+                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                 {
-                    Dictionary<string, string> responseDict = new()
+                    try
                     {
-                        { "Status code", responseMessage.StatusCode.ToString() },
-                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
+                        {
+                            httpPostProgress.Cancel();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "FileListXml request task cancel failed", e);
+                    }
+                });
 
-                    LogService.WriteLog(LoggingLevel.Information, "FileListXml request successfully.", responseDict);
-
-                    string responseString = await responseMessage.Content.ReadAsStringAsync();
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-
-                    fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
-                }
-                else
+                // HTTP POST 请求过程已完成
+                httpPostProgress.Completed += async (result, status) =>
                 {
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-                }
-            }
-            // 捕捉因为网络失去链接获取信息时引发的异常
-            catch (COMException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "FileListXml request failed", e);
-            }
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "FileListXml request timeout", e);
+                    httpPostProgress = null;
+                    try
+                    {
+                        // 获取 POST 请求已完成
+                        if (status is AsyncStatus.Completed)
+                        {
+                            HttpResponseMessage responseMessage = result.GetResults();
+
+                            // 请求成功
+                            if (responseMessage.IsSuccessStatusCode)
+                            {
+                                Dictionary<string, string> responseDict = new()
+                                {
+                                    { "Status code", responseMessage.StatusCode.ToString() },
+                                    { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                                };
+
+                                LogService.WriteLog(LoggingLevel.Information, "FileListXml request successfully.", responseDict);
+
+                                string responseString = await responseMessage.Content.ReadAsStringAsync();
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+
+                                fileListXmlResult = responseString.Replace("&lt;", "<").Replace("&gt;", ">");
+                            }
+                            else
+                            {
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+                            }
+                        }
+                        // 获取 POST 请求由于超时而被用户取消
+                        else if (status is AsyncStatus.Canceled)
+                        {
+                            LogService.WriteLog(LoggingLevel.Information, "FileListXml request timeout", result.ErrorCode);
+                        }
+                        // 获取 POST 请求发生错误
+                        else if (status is AsyncStatus.Error)
+                        {
+                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                            LogService.WriteLog(LoggingLevel.Information, "FileListXml request failed", result.ErrorCode);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "FileListXml request unknown exception", e);
+                    }
+                    finally
+                    {
+                        result.Close();
+                        autoResetEvent.Set();
+                    }
+                };
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+                autoResetEvent = null;
             }
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Network state unknown exception", e);
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
+                LogService.WriteLog(LoggingLevel.Warning, "FileListXml request unknown exception", e);
             }
 
             return fileListXmlResult;
@@ -402,14 +516,12 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <returns>商店应用安装包对应的下载链接</returns>
         private static async Task<string> GetAppxUrlAsync(string updateID, string revisionNumber, string ring, string digest)
         {
-            // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
             string urlResult = string.Empty;
 
             try
             {
+                AutoResetEvent autoResetEvent = new(false);
+
                 IBuffer urlBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/url.xml");
                 string url = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, urlBuffer).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
                 IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(url, BinaryStringEncoding.Utf8);
@@ -421,62 +533,102 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
-                HttpResponseMessage responseMessage = await httpClient.PostAsync(urlUri, httpContent).AsTask(cancellationTokenSource.Token);
+                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.PostAsync(urlUri, httpContent);
 
-                // 请求成功
-                if (responseMessage.IsSuccessStatusCode)
+                // 添加超时设置（半分钟后停止获取）
+                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                 {
-                    Dictionary<string, string> responseDict = new()
+                    try
                     {
-                        { "Status code", responseMessage.StatusCode.ToString() },
-                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
-                    };
-
-                    LogService.WriteLog(LoggingLevel.Information, "Appx Url request successfully.", responseDict);
-
-                    string responseString = await responseMessage.Content.ReadAsStringAsync();
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-
-                    XmlDocument responseStringDocument = new();
-                    responseStringDocument.LoadXml(responseString);
-
-                    XmlNodeList fileLocationList = responseStringDocument.DocumentElement.GetElementsByTagName("FileLocation");
-
-                    foreach (IXmlNode fileLocationNode in fileLocationList)
-                    {
-                        if (Equals(fileLocationNode.GetElementsByName("FileDigest").InnerText, digest))
+                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
                         {
-                            urlResult = fileLocationNode.GetElementsByName("Url").InnerText;
-                            break;
+                            httpPostProgress.Cancel();
                         }
                     }
-                }
-                else
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "Appx Url request task cancel failed", e);
+                    }
+                });
+
+                // HTTP POST 请求过程已完成
+                httpPostProgress.Completed += async (result, status) =>
                 {
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-                }
-            }
-            // 捕捉因为网络失去链接获取信息时引发的异常
-            catch (COMException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "Appx Url request failed", e);
-            }
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "Appx Url request timeout", e);
+                    httpPostProgress = null;
+                    try
+                    {
+                        // 获取 POST 请求已完成
+                        if (status is AsyncStatus.Completed)
+                        {
+                            HttpResponseMessage responseMessage = result.GetResults();
+
+                            // 请求成功
+                            if (responseMessage.IsSuccessStatusCode)
+                            {
+                                Dictionary<string, string> responseDict = new()
+                                {
+                                    { "Status code", responseMessage.StatusCode.ToString() },
+                                    { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                                };
+
+                                LogService.WriteLog(LoggingLevel.Information, "Appx Url request successfully.", responseDict);
+
+                                string responseString = await responseMessage.Content.ReadAsStringAsync();
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+
+                                XmlDocument responseStringDocument = new();
+                                responseStringDocument.LoadXml(responseString);
+
+                                XmlNodeList fileLocationList = responseStringDocument.DocumentElement.GetElementsByTagName("FileLocation");
+
+                                foreach (IXmlNode fileLocationNode in fileLocationList)
+                                {
+                                    if (Equals(fileLocationNode.GetElementsByName("FileDigest").InnerText, digest))
+                                    {
+                                        urlResult = fileLocationNode.GetElementsByName("Url").InnerText;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+                            }
+                        }
+                        // 获取 POST 请求由于超时而被用户取消
+                        else if (status is AsyncStatus.Canceled)
+                        {
+                            LogService.WriteLog(LoggingLevel.Information, "Appx Url request timeout", result.ErrorCode);
+                        }
+                        // 获取 POST 请求发生错误
+                        else if (status is AsyncStatus.Error)
+                        {
+                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                            LogService.WriteLog(LoggingLevel.Information, "Appx Url request failed", result.ErrorCode);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Appx Url request unknown exception", e);
+                    }
+                    finally
+                    {
+                        result.Close();
+                        autoResetEvent.Set();
+                    }
+                };
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+                autoResetEvent = null;
             }
             // 其他异常
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Warning, "Appx Url request unknown exception", e);
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
             }
 
             return urlResult;
@@ -487,137 +639,175 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         /// <param name="productId">产品 ID</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static async Task<List<QueryLinksModel>> GetNonAppxPackagesAsync(string productId)
+        public static List<QueryLinksModel> GetNonAppxPackages(string productId)
         {
-            // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
             List<QueryLinksModel> nonAppxPackagesList = [];
 
             try
             {
                 string url = string.Format("https://storeedgefd.dsx.mp.microsoft.com/v9.0/packageManifests/{0}?market={1}", productId, StoreRegionService.StoreRegion.CodeTwoLetter);
 
+                AutoResetEvent autoResetEvent = new(false);
+
                 HttpClient httpClient = new();
-                HttpResponseMessage responseMessage = await httpClient.GetAsync(new(url)).AsTask(cancellationTokenSource.Token);
+                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.GetAsync(new(url));
 
-                // 请求成功
-                if (responseMessage.IsSuccessStatusCode)
+                // 添加超时设置（半分钟后停止获取）
+                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                 {
-                    Dictionary<string, string> responseDict = new()
+                    try
                     {
-                        { "Status code", responseMessage.StatusCode.ToString() },
-                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
-                    };
-
-                    LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request successfully.", responseDict);
-
-                    string responseString = await responseMessage.Content.ReadAsStringAsync();
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-
-                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
-                    {
-                        JsonObject dataObject = responseStringObject.GetNamedValue("Data").GetObject();
-                        JsonObject versionsObject = dataObject.GetNamedValue("Versions").GetArray()[0].GetObject();
-                        JsonArray installersArray = versionsObject.GetNamedValue("Installers").GetArray();
-
-                        Lock nonAppxPackagesLock = new();
-                        CountdownEvent countdownEvent = new(installersArray.Count);
-
-                        foreach (IJsonValue installer in installersArray)
+                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
                         {
-                            JsonObject installerObject = installer.GetObject();
+                            httpPostProgress.Cancel();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request task cancel failed", e);
+                    }
+                });
 
-                            string installerType = installerObject.GetNamedString("InstallerType");
-                            string installerUrl = installerObject.GetNamedString("InstallerUrl");
-                            string fileSize = await GetNonAppxPackageFileSizeAsync(installerUrl);
-                            string fileSizeString = FileSizeHelper.ConvertFileSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
+                // HTTP GET 请求过程已完成
+                httpPostProgress.Completed += async (result, status) =>
+                {
+                    httpPostProgress = null;
+                    try
+                    {
+                        // 获取 GET 请求已完成
+                        if (status is AsyncStatus.Completed)
+                        {
+                            HttpResponseMessage responseMessage = result.GetResults();
 
-                            if (string.IsNullOrEmpty(installerType) || installerUrl.ToLower().EndsWith(".exe") || installerUrl.ToLower().EndsWith(".msi"))
+                            // 请求成功
+                            if (responseMessage.IsSuccessStatusCode)
                             {
-                                nonAppxPackagesLock.Enter();
+                                Dictionary<string, string> responseDict = new()
+                                {
+                                    { "Status code", responseMessage.StatusCode.ToString() },
+                                    { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                                };
 
-                                try
+                                LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request successfully.", responseDict);
+
+                                string responseString = await responseMessage.Content.ReadAsStringAsync();
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+
+                                if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
                                 {
-                                    nonAppxPackagesList.Add(new QueryLinksModel()
+                                    JsonObject dataObject = responseStringObject.GetNamedValue("Data").GetObject();
+                                    JsonObject versionsObject = dataObject.GetNamedValue("Versions").GetArray()[0].GetObject();
+                                    JsonArray installersArray = versionsObject.GetNamedValue("Installers").GetArray();
+
+                                    Lock nonAppxPackagesLock = new();
+                                    CountdownEvent countdownEvent = new(installersArray.Count);
+
+                                    foreach (IJsonValue installer in installersArray)
                                     {
-                                        FileName = installerUrl.Remove(installerUrl.LastIndexOf('.')).Remove(0, installerUrl.LastIndexOf('/') + 1),
-                                        FileLink = installerUrl,
-                                        FileSize = fileSizeString,
-                                        IsSelected = false,
-                                        IsSelectMode = false,
-                                    });
-                                    countdownEvent.Signal();
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                                finally
-                                {
-                                    nonAppxPackagesLock.Exit();
+                                        JsonObject installerObject = installer.GetObject();
+
+                                        string installerType = installerObject.GetNamedString("InstallerType");
+                                        string installerUrl = installerObject.GetNamedString("InstallerUrl");
+                                        string fileSize = GetNonAppxPackageFileSize(installerUrl);
+                                        string fileSizeString = FileSizeHelper.ConvertFileSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
+
+                                        if (string.IsNullOrEmpty(installerType) || installerUrl.ToLower().EndsWith(".exe") || installerUrl.ToLower().EndsWith(".msi"))
+                                        {
+                                            nonAppxPackagesLock.Enter();
+
+                                            try
+                                            {
+                                                nonAppxPackagesList.Add(new QueryLinksModel()
+                                                {
+                                                    FileName = installerUrl.Remove(installerUrl.LastIndexOf('.')).Remove(0, installerUrl.LastIndexOf('/') + 1),
+                                                    FileLink = installerUrl,
+                                                    FileSize = fileSizeString,
+                                                    IsSelected = false,
+                                                    IsSelectMode = false,
+                                                });
+                                                countdownEvent.Signal();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                            }
+                                            finally
+                                            {
+                                                nonAppxPackagesLock.Exit();
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string name = installerUrl.Split('/')[^1];
+
+                                            nonAppxPackagesLock.Enter();
+
+                                            try
+                                            {
+                                                nonAppxPackagesList.Add(new QueryLinksModel()
+                                                {
+                                                    FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
+                                                    FileLink = installerUrl,
+                                                    FileSize = fileSizeString,
+                                                    IsSelected = false,
+                                                    IsSelectMode = false,
+                                                });
+                                                countdownEvent.Signal();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                            }
+                                            finally
+                                            {
+                                                nonAppxPackagesLock.Exit();
+                                            }
+                                        }
+                                    }
+
+                                    countdownEvent.Wait();
+                                    countdownEvent.Dispose();
                                 }
                             }
                             else
                             {
-                                string name = installerUrl.Split('/')[^1];
-
-                                nonAppxPackagesLock.Enter();
-
-                                try
-                                {
-                                    nonAppxPackagesList.Add(new QueryLinksModel()
-                                    {
-                                        FileName = string.Format("{0} ({1}).{2}", name, installerObject.GetNamedString("InstallerLocale"), installerType),
-                                        FileLink = installerUrl,
-                                        FileSize = fileSizeString,
-                                        IsSelected = false,
-                                        IsSelectMode = false,
-                                    });
-                                    countdownEvent.Signal();
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                                finally
-                                {
-                                    nonAppxPackagesLock.Exit();
-                                }
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
                             }
                         }
-
-                        countdownEvent.Wait();
-                        countdownEvent.Dispose();
+                        // 获取 GET 请求由于超时而被用户取消
+                        else if (status is AsyncStatus.Canceled)
+                        {
+                            LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request timeout", result.ErrorCode);
+                        }
+                        // 获取 GET 请求发生错误
+                        else if (status is AsyncStatus.Error)
+                        {
+                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                            LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request failed", result.ErrorCode);
+                        }
                     }
-                }
-                else
-                {
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-                }
-            }
-            // 捕捉因为网络失去链接获取信息时引发的异常
-            catch (COMException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request failed", e);
-            }
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "Non Appx Url request timeout", e);
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Non Appx Url request unknown exception", e);
+                    }
+                    finally
+                    {
+                        result.Close();
+                        autoResetEvent.Set();
+                    }
+                };
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+                autoResetEvent = null;
             }
             // 其他异常
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Warning, "Non Appx Url request unknown exception", e);
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
             }
 
             return nonAppxPackagesList;
@@ -626,60 +816,98 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <summary>
         /// 获取非商店应用下载文件的大小
         /// </summary>
-        private static async Task<string> GetNonAppxPackageFileSizeAsync(string url)
+        private static string GetNonAppxPackageFileSize(string url)
         {
-            // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
             string fileSizeResult = "0";
 
             try
             {
+                AutoResetEvent autoResetEvent = new(false);
+
                 HttpClient httpClient = new();
                 HttpRequestMessage requestMessage = new(HttpMethod.Head, new(url));
-                HttpResponseMessage responseMessage = await httpClient.SendRequestAsync(requestMessage).AsTask(cancellationTokenSource.Token);
+                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.SendRequestAsync(requestMessage);
 
-                // 请求成功
-                if (responseMessage.IsSuccessStatusCode)
+                // 添加超时设置（半分钟后停止获取）
+                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                 {
-                    Dictionary<string, string> responseDict = new()
+                    try
                     {
-                        { "Status code", responseMessage.StatusCode.ToString() },
-                        { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                        { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
-                    };
+                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
+                        {
+                            httpPostProgress.Cancel();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "FileListXml request task cancel failed", e);
+                    }
+                });
 
-                    LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request successfully.", responseDict);
-
-                    fileSizeResult = Convert.ToString(responseMessage.Content.Headers.ContentLength);
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-                }
-                else
+                // HTTP POST 请求过程已完成
+                httpPostProgress.Completed += (result, status) =>
                 {
-                    httpClient.Dispose();
-                    responseMessage.Dispose();
-                }
-            }
-            // 捕捉因为网络失去链接获取信息时引发的异常
-            catch (COMException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "FileListXml request failed", e);
-            }
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException e)
-            {
-                LogService.WriteLog(LoggingLevel.Information, "FileListXml request timeout", e);
+                    httpPostProgress = null;
+                    try
+                    {
+                        // 获取 POST 请求已完成
+                        if (status is AsyncStatus.Completed)
+                        {
+                            HttpResponseMessage responseMessage = result.GetResults();
+
+                            // 请求成功
+                            if (responseMessage.IsSuccessStatusCode)
+                            {
+                                Dictionary<string, string> responseDict = new()
+                                {
+                                    { "Status code", responseMessage.StatusCode.ToString() },
+                                    { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                                };
+
+                                LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request successfully.", responseDict);
+
+                                fileSizeResult = Convert.ToString(responseMessage.Content.Headers.ContentLength);
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+                            }
+                            else
+                            {
+                                httpClient.Dispose();
+                                responseMessage.Dispose();
+                            }
+                        }
+                        // 获取 POST 请求由于超时而被用户取消
+                        else if (status is AsyncStatus.Canceled)
+                        {
+                            LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request timeout", result.ErrorCode);
+                        }
+                        // 获取 POST 请求发生错误
+                        else if (status is AsyncStatus.Error)
+                        {
+                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                            LogService.WriteLog(LoggingLevel.Information, "Non appx package file size request failed", result.ErrorCode);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Non appx package file size request unknown exception", e);
+                    }
+                    finally
+                    {
+                        result.Close();
+                        autoResetEvent.Set();
+                    }
+                };
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+                autoResetEvent = null;
             }
             // 其他异常
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "Network state unknown exception", e);
-            }
-            finally
-            {
-                cancellationTokenSource.Dispose();
+                LogService.WriteLog(LoggingLevel.Warning, "Non appx package file size request unknown exception", e);
             }
 
             return fileSizeResult;

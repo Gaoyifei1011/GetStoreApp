@@ -954,14 +954,14 @@ namespace GetStoreApp.UI.Controls.Store
                     string cookie = await QueryLinksHelper.GetCookieAsync();
 
                     // 获取应用信息
-                    Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    Tuple<bool, AppInfoModel> appInformationResult = QueryLinksHelper.GetAppInformation(productId);
 
                     if (appInformationResult.Item1)
                     {
                         // 解析非商店应用数据
                         if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                         {
-                            List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                            List<QueryLinksModel> nonAppxPackagesList = QueryLinksHelper.GetNonAppxPackages(productId);
                             foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                             {
                                 queryLinksList.Add(nonAppxPackage);
@@ -1073,7 +1073,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 第三方接口查询方式
             else if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[1]))
             {
-                Task.Run(async () =>
+                Task.Run(() =>
                 {
                     // 记录当前选定的选项和填入的内容
                     int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
@@ -1084,7 +1084,7 @@ namespace GetStoreApp.UI.Controls.Store
                     string generateContent = HtmlRequestHelper.GenerateRequestContent(SelectedType.InternalName, link, SelectedChannel.InternalName);
 
                     // 获取网页反馈回的原始数据
-                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+                    RequestModel httpRequestData = HtmlRequestHelper.HttpRequest(generateContent);
 
                     // 检查服务器返回获取的状态
                     InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);

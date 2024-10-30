@@ -11,8 +11,6 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
@@ -21,6 +19,7 @@ using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
+using Windows.System.Threading;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 using Windows.UI.Text;
@@ -283,65 +282,93 @@ namespace GetStoreApp.Views.Pages
             {
                 IsChecking = true;
 
-                Task.Run(async () =>
+                Task.Run(() =>
                 {
-                    // 添加超时设置（半分钟后停止获取）
-                    CancellationTokenSource cancellationTokenSource = new();
-                    cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
                     try
                     {
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
-                        HttpResponseMessage responseMessage = await httpClient.GetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest")).AsTask(cancellationTokenSource.Token);
+                        IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpGetProgress = httpClient.GetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest"));
 
-                        // 请求成功
-                        if (responseMessage.IsSuccessStatusCode)
+                        // 添加超时设置（半分钟后停止获取）
+                        ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                         {
-                            string responseString = await responseMessage.Content.ReadAsStringAsync();
-                            httpClient.Dispose();
-                            responseMessage.Dispose();
-
-                            if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name").Remove(0, 1)) is Version tagVersion)
+                            try
                             {
-                                bool isNewest = InfoHelper.AppVersion >= tagVersion;
-
-                                DispatcherQueue.TryEnqueue(async () =>
+                                if (httpGetProgress is not null && (httpGetProgress.Status is not AsyncStatus.Canceled || httpGetProgress.Status is not AsyncStatus.Completed || httpGetProgress.Status is not AsyncStatus.Error))
                                 {
-                                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
+                                    httpGetProgress.Cancel();
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Check update cancel task failed", e);
+                            }
+                        });
+
+                        // HTTP GET 请求过程已完成
+                        httpGetProgress.Completed += async (result, status) =>
+                        {
+                            httpGetProgress = null;
+                            try
+                            {
+                                // 获取 GET 请求已完成
+                                if (status is AsyncStatus.Completed)
+                                {
+                                    HttpResponseMessage responseMessage = result.GetResults();
+
+                                    // 请求成功
+                                    if (responseMessage.IsSuccessStatusCode)
+                                    {
+                                        string responseString = await responseMessage.Content.ReadAsStringAsync();
+
+                                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name").Remove(0, 1)) is Version tagVersion)
+                                        {
+                                            bool isNewest = InfoHelper.AppVersion >= tagVersion;
+
+                                            DispatcherQueue.TryEnqueue(async () =>
+                                            {
+                                                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
+                                            });
+                                        }
+                                    }
+
+                                    httpClient.Dispose();
+                                    responseMessage.Dispose();
+                                }
+                                // 获取 POST 请求由于超时而被用户取消
+                                else if (status is AsyncStatus.Canceled)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Information, "Check update request timeout", result.ErrorCode);
+                                    httpClient.Dispose();
+                                }
+                                // 获取 POST 请求发生错误
+                                else if (status is AsyncStatus.Error)
+                                {
+                                    // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                                    LogService.WriteLog(LoggingLevel.Information, "Check update request failed", result.ErrorCode);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Warning, "Check update request completed, but an unknown exception has occured", e);
+                            }
+                            finally
+                            {
+                                result.Close();
+                                threadPoolTimer.Cancel();
+
+                                DispatcherQueue.TryEnqueue(() =>
+                                {
+                                    IsChecking = false;
                                 });
                             }
-                        }
-                        else
-                        {
-                            httpClient.Dispose();
-                            responseMessage.Dispose();
-                        }
+                        };
                     }
-                    // 捕捉因为网络失去链接获取信息时引发的异常
-                    catch (COMException e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Information, "Check update request failed", e);
-                    }
-
-                    // 捕捉因访问超时引发的异常
-                    catch (TaskCanceledException e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Information, "Check update request timeout", e);
-                    }
-
                     // 其他异常
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Warning, "Check update request unknown exception", e);
-                    }
-                    finally
-                    {
-                        cancellationTokenSource.Dispose();
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            IsChecking = false;
-                        });
                     }
                 });
             }

@@ -3,13 +3,13 @@ using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
+using Windows.System.Threading;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -45,16 +45,14 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <summary>
         /// 发送网页请求并获取结果
         /// </summary>
-        public static async Task<RequestModel> HttpRequestAsync(string content)
+        public static RequestModel HttpRequest(string content)
         {
             RequestModel httpRequestResult = null;
 
-            // 添加超时设置（半分钟后停止获取）
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
-
             try
             {
+                AutoResetEvent autoResetEvent = new(false);
+
                 IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
 
                 HttpStringContent httpContent = new(content);
@@ -64,54 +62,98 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
-                HttpResponseMessage response = await httpClient.PostAsync(new Uri(API), httpContent).AsTask(cancellationTokenSource.Token);
+                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.PostAsync(new Uri(API), httpContent);
 
-                // 请求成功
-                if (response.IsSuccessStatusCode)
+                // 添加超时设置（半分钟后停止获取）
+                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
                 {
-                    RequestId = 0;
-                    RequestStatusCode = response.StatusCode.ToString();
-                    RequestContent = await response.Content.ReadAsStringAsync();
-
-                    Dictionary<string, string> responseDict = new()
+                    try
                     {
-                        { "Headers", response.Headers is null ? string.Empty : WhiteSpaceRegex.Replace(response.Headers.ToString(), string.Empty) },
-                        { "Response message:", response.RequestMessage is null ? string.Empty : WhiteSpaceRegex.Replace(response.RequestMessage.ToString(), string.Empty) }
-                    };
+                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
+                        {
+                            httpPostProgress.Cancel();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Http request task cancel failed", e);
+                    }
+                });
 
-                    LogService.WriteLog(LoggingLevel.Information, "Requested successfully.", responseDict);
-                }
-
-                // 请求失败
-                else
+                // HTTP POST 请求过程已完成
+                httpPostProgress.Completed += async (result, status) =>
                 {
-                    RequestId = 3;
-                    RequestStatusCode = string.Empty;
-                    RequestExceptionContent = string.Empty;
-                    RequestContent = string.Empty;
-                }
-            }
+                    httpPostProgress = null;
+                    try
+                    {
+                        // 获取 POST 请求已完成
+                        if (status is AsyncStatus.Completed)
+                        {
+                            HttpResponseMessage responseMessage = result.GetResults();
 
-            // 捕捉因为网络失去链接获取信息时引发的异常
-            catch (COMException e)
-            {
-                RequestId = 1;
-                RequestStatusCode = string.Empty;
-                RequestExceptionContent = e.Message;
-                RequestContent = string.Empty;
-                LogService.WriteLog(LoggingLevel.Warning, "Network disconnected.", e);
-            }
+                            // 请求成功
+                            if (responseMessage.IsSuccessStatusCode)
+                            {
+                                RequestId = 0;
+                                RequestStatusCode = responseMessage.StatusCode.ToString();
+                                RequestContent = await responseMessage.Content.ReadAsStringAsync();
 
-            // 捕捉因访问超时引发的异常
-            catch (TaskCanceledException e)
-            {
-                RequestId = 2;
-                RequestStatusCode = string.Empty;
-                RequestExceptionContent = e.Message;
-                RequestContent = string.Empty;
-                LogService.WriteLog(LoggingLevel.Warning, "Network access timeout.", e);
-            }
+                                Dictionary<string, string> responseDict = new()
+                                {
+                                    { "Headers", responseMessage.Headers is null ? string.Empty : WhiteSpaceRegex.Replace(responseMessage.Headers.ToString(), string.Empty) },
+                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : WhiteSpaceRegex.Replace(responseMessage.RequestMessage.ToString(), string.Empty) }
+                                };
 
+                                LogService.WriteLog(LoggingLevel.Information, "Http request requested successfully.", responseDict);
+                            }
+                            // 请求失败
+                            else
+                            {
+                                RequestId = 3;
+                                RequestStatusCode = string.Empty;
+                                RequestExceptionContent = string.Empty;
+                                RequestContent = string.Empty;
+                            }
+                        }
+                        // 获取 POST 请求由于超时而被用户取消
+                        else if (status is AsyncStatus.Canceled)
+                        {
+                            RequestId = 2;
+                            RequestStatusCode = string.Empty;
+                            RequestExceptionContent = result.ErrorCode.Message;
+                            RequestContent = string.Empty;
+                            LogService.WriteLog(LoggingLevel.Warning, "Http request timeout.", result.ErrorCode);
+                        }
+                        // 获取 POST 请求发生错误
+                        else if (status is AsyncStatus.Error)
+                        {
+                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
+                            RequestId = 1;
+                            RequestStatusCode = string.Empty;
+                            RequestExceptionContent = result.ErrorCode.Message;
+                            RequestContent = string.Empty;
+                            LogService.WriteLog(LoggingLevel.Warning, "Http request failed.", result.ErrorCode);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        RequestId = 3;
+                        RequestStatusCode = string.Empty;
+                        RequestExceptionContent = result.ErrorCode.Message;
+                        RequestContent = string.Empty;
+                        LogService.WriteLog(LoggingLevel.Warning, "Http request unknown exception", result.ErrorCode);
+                    }
+                    finally
+                    {
+                        result.Close();
+                        autoResetEvent.Set();
+                    }
+                };
+
+                autoResetEvent.WaitOne();
+                autoResetEvent.Dispose();
+                autoResetEvent = null;
+            }
             // 其他异常
             catch (Exception e)
             {
@@ -119,7 +161,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 RequestStatusCode = string.Empty;
                 RequestExceptionContent = e.Message;
                 RequestContent = string.Empty;
-                LogService.WriteLog(LoggingLevel.Warning, "Network state unknown.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "Http request unknown exception", e);
             }
             finally
             {
@@ -130,7 +172,6 @@ namespace GetStoreApp.Helpers.Controls.Store
                     RequestContent = RequestContent,
                     RequestExceptionContent = RequestExceptionContent
                 };
-                cancellationTokenSource.Dispose();
             }
 
             return httpRequestResult;

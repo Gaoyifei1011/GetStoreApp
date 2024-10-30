@@ -54,7 +54,7 @@ namespace GetStoreApp
                         {
                             if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
                             {
-                                appListEntry.LaunchAsync().AsTask().Wait();
+                                appListEntry.LaunchAsync().GetResults();
                                 break;
                             }
                         }

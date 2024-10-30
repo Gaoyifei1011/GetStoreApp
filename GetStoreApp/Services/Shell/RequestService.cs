@@ -66,14 +66,14 @@ namespace GetStoreApp.Services.Shell
                     AppInfoModel appInfo = null;
 
                     // 获取应用信息
-                    Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    Tuple<bool, AppInfoModel> appInformationResult = QueryLinksHelper.GetAppInformation(productId);
 
                     if (appInformationResult.Item1)
                     {
                         // 解析非商店应用数据
                         if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                         {
-                            List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
+                            List<QueryLinksModel> nonAppxPackagesList = QueryLinksHelper.GetNonAppxPackages(productId);
                             foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                             {
                                 queryLinksList.Add(nonAppxPackage);
@@ -152,7 +152,7 @@ namespace GetStoreApp.Services.Shell
                     string generateContent = HtmlRequestHelper.GenerateRequestContent(selectedType, linkText, selectedChannel);
 
                     // 获取网页反馈回的原始数据
-                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
+                    RequestModel httpRequestData = HtmlRequestHelper.HttpRequest(generateContent);
 
                     ConsoleHelper.Write(Environment.NewLine);
                     ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));

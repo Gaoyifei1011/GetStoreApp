@@ -129,7 +129,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             try
             {
                 installedAppsManager = new();
-                autoResetEvent.Set();
             }
             catch (Exception e)
             {

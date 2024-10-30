@@ -253,11 +253,11 @@ namespace GetStoreApp.UI.Controls.Store
             IsNotSeachingStore = false;
             SetControlState(InfoBarSeverity.Informational);
 
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 string searchText = SearchText;
                 string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
-                Tuple<bool, List<SearchStoreModel>> searchStoreResult = await SearchStoreHelper.SerachStoreAppsAsync(generatedContent);
+                Tuple<bool, List<SearchStoreModel>> searchStoreResult = SearchStoreHelper.SerachStoreApps(generatedContent);
 
                 // 获取成功
                 if (searchStoreResult.Item1)

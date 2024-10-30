@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
@@ -222,28 +223,31 @@ namespace GetStoreApp.UI.Controls.Download
                             else if (InstallModeService.InstallMode.Equals(InstallModeService.InstallModeList[1]))
                             {
                                 // 标记安装状态
+                                AutoResetEvent autoResetEvent = new(false);
+                                DispatcherQueue.TryEnqueue(() =>
+                                {
+                                    for (int index = 0; index < CompletedCollection.Count; index++)
+                                    {
+                                        if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                        {
+                                            CompletedCollection[index].IsInstalling = true;
+                                            break;
+                                        }
+                                    }
+
+                                    autoResetEvent.Set();
+                                });
+
+                                autoResetEvent.WaitOne();
+                                autoResetEvent.Dispose();
+
                                 try
                                 {
-                                    AutoResetEvent autoResetEvent = new(false);
-                                    DispatcherQueue.TryEnqueue(() =>
-                                    {
-                                        for (int index = 0; index < CompletedCollection.Count; index++)
-                                        {
-                                            if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
-                                            {
-                                                CompletedCollection[index].IsInstalling = true;
-                                                break;
-                                            }
-                                        }
-
-                                        autoResetEvent.Set();
-                                    });
-
-                                    autoResetEvent.WaitOne();
-                                    autoResetEvent.Dispose();
+                                    // 安装目标应用，并获取安装进度
+                                    IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None);
 
                                     // 更新安装进度
-                                    Progress<DeploymentProgress> progressCallBack = new((installProgress) =>
+                                    installPackageWithProgress.Progress += (result, progress) =>
                                     {
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
@@ -251,48 +255,52 @@ namespace GetStoreApp.UI.Controls.Download
                                             {
                                                 if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
                                                 {
-                                                    CompletedCollection[index].InstallValue = installProgress.percentage;
+                                                    CompletedCollection[index].InstallValue = progress.percentage;
                                                     break;
                                                 };
                                             }
                                         });
-                                    });
+                                    };
 
-                                    try
+                                    // 应用安装过程已结束
+                                    installPackageWithProgress.Completed += async (result, status) =>
                                     {
-                                        // 安装目标应用，并获取安装进度
-                                        DeploymentResult installResult = await packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.None).AsTask(progressCallBack);
+                                        installPackageWithProgress = null;
 
-                                        // 显示安装成功通知
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), completedFile.Name));
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    }
-                                    // 安装失败显示失败信息
-                                    catch (Exception e)
-                                    {
-                                        DispatcherQueue.TryEnqueue(() =>
+                                        // 安装完成
+                                        if (status is AsyncStatus.Completed)
                                         {
-                                            for (int index = 0; index < CompletedCollection.Count; index++)
+                                            // 显示安装成功通知
+                                            AppNotificationBuilder appNotificationBuilder = new();
+                                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), completedFile.Name));
+                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                        }
+                                        // 安装错误
+                                        else if (status is AsyncStatus.Error)
+                                        {
+                                            DispatcherQueue.TryEnqueue(() =>
                                             {
-                                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                                for (int index = 0; index < CompletedCollection.Count; index++)
                                                 {
-                                                    CompletedCollection[index].InstallError = true;
+                                                    if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                                    {
+                                                        CompletedCollection[index].InstallError = true;
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
 
-                                        // 显示安装失败通知
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed1"), completedFile.Name));
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), e.Message));
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    }
-                                    // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
-                                    finally
-                                    {
+                                            // 显示安装失败通知
+                                            AppNotificationBuilder appNotificationBuilder = new();
+                                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed1"), completedFile.Name));
+                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), result.ErrorCode.Message));
+                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                        }
+
+                                        result.Close();
+
+                                        // 恢复原来的安装信息显示（并延缓当前安装信息显示时间0.5秒）
                                         await Task.Delay(500);
                                         DispatcherQueue.TryEnqueue(() =>
                                         {
@@ -306,8 +314,9 @@ namespace GetStoreApp.UI.Controls.Download
                                                 }
                                             }
                                         });
-                                    }
+                                    };
                                 }
+                                // 安装失败显示失败信息
                                 catch (Exception e)
                                 {
                                     LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
