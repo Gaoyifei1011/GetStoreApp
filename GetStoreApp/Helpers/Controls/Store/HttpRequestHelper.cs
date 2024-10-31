@@ -7,8 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Security.Cryptography;
-using Windows.Storage.Streams;
 using Windows.System.Threading;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
@@ -53,12 +51,11 @@ namespace GetStoreApp.Helpers.Controls.Store
             {
                 AutoResetEvent autoResetEvent = new(false);
 
-                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
-
                 HttpStringContent httpContent = new(content);
                 httpContent.Headers.Expires = DateTime.Now;
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/x-www-form-urlencoded");
-                httpContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
+                httpContent.TryComputeLength(out ulong length);
+                httpContent.Headers.ContentLength = length;
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();

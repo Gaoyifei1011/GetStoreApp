@@ -5,12 +5,10 @@ using Microsoft.Management.Deployment;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
-using Windows.Storage.Streams;
 
 namespace GetStoreApp.Services.Root
 {
@@ -24,9 +22,10 @@ namespace GetStoreApp.Services.Root
         private static KeyValuePair<string, string> _defaultAppLanguage;
         private static KeyValuePair<string, string> _currentAppLanguage;
 
-        private static readonly ResourceContext defaultResourceContext = new();
-        private static readonly ResourceContext currentResourceContext = new();
-        private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
+        private static readonly ResourceManager resourceManager = new();
+        private static ResourceContext defaultResourceContext;
+        private static ResourceContext currentResourceContext;
+        private static ResourceMap resourceMap;
 
         public static List<TypeModel> TypeList { get; } = [];
 
@@ -61,6 +60,10 @@ namespace GetStoreApp.Services.Root
         {
             _defaultAppLanguage = defaultAppLanguage;
             _currentAppLanguage = currentAppLanguage;
+
+            defaultResourceContext = resourceManager.CreateResourceContext();
+            currentResourceContext = resourceManager.CreateResourceContext();
+            resourceMap = resourceManager.MainResourceMap;
 
             defaultResourceContext.QualifierValues["Language"] = _defaultAppLanguage.Key.ToString();
             currentResourceContext.QualifierValues["Language"] = _currentAppLanguage.Key.ToString();
@@ -345,16 +348,11 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 获取嵌入的数据
         /// </summary>
-        public static async Task<IBuffer> GetEmbeddedDataAsync(string resource)
+        public static byte[] GetEmbeddedData(string resource)
         {
             try
             {
-                IRandomAccessStream randomAccessStream = await resourceMap.GetValue(resource).GetValueAsStreamAsync();
-                DataReader dataReader = new(randomAccessStream);
-                await dataReader.LoadAsync((uint)randomAccessStream.Size);
-                IBuffer buffer = dataReader.DetachBuffer();
-                dataReader.Dispose();
-                return buffer;
+                return resourceMap.GetValue(resource).ValueAsBytes;
             }
             catch (Exception e)
             {

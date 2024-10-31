@@ -60,7 +60,7 @@ namespace GetStoreApp.Services.Shell
             {
                 while (requestState)
                 {
-                    string cookie = await QueryLinksHelper.GetCookieAsync();
+                    string cookie = QueryLinksHelper.GetCookie();
 
                     List<QueryLinksModel> queryLinksList = [];
                     AppInfoModel appInfo = null;
@@ -83,7 +83,7 @@ namespace GetStoreApp.Services.Shell
                         // 解析商店应用数据
                         else
                         {
-                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
+                            string fileListXml = QueryLinksHelper.GetFileListXml(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {

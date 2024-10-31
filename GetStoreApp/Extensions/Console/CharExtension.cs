@@ -1,7 +1,4 @@
 ﻿using GetStoreApp.Services.Root;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Storage.Streams;
 
 namespace GetStoreApp.Extensions.Console
 {
@@ -12,11 +9,9 @@ namespace GetStoreApp.Extensions.Console
     {
         private static byte[] lengths;
 
-        public static async Task InitializeAsync()
+        public static void Initialize()
         {
-            IBuffer buffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/Lengths.bin");
-            lengths = new byte[buffer.Length];
-            buffer.CopyTo(lengths);
+            lengths = ResourceService.GetEmbeddedData("Files/Assets/Embed/Lengths.bin");
         }
 
         /// <summary>

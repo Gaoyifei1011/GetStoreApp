@@ -939,7 +939,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 商店接口查询方式
             if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
             {
-                Task.Run(async () =>
+                Task.Run(() =>
                 {
                     List<QueryLinksModel> queryLinksList = [];
 
@@ -951,7 +951,7 @@ namespace GetStoreApp.UI.Controls.Store
                     // 解析链接对应的产品 ID
                     string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
 
-                    string cookie = await QueryLinksHelper.GetCookieAsync();
+                    string cookie = QueryLinksHelper.GetCookie();
 
                     // 获取应用信息
                     Tuple<bool, AppInfoModel> appInformationResult = QueryLinksHelper.GetAppInformation(productId);
@@ -970,7 +970,7 @@ namespace GetStoreApp.UI.Controls.Store
                         // 解析商店应用数据
                         else
                         {
-                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
+                            string fileListXml = QueryLinksHelper.GetFileListXml(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {

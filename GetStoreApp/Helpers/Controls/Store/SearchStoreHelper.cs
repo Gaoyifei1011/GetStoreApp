@@ -8,8 +8,6 @@ using System.Threading;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.Security.Cryptography;
-using Windows.Storage.Streams;
 using Windows.System.Threading;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
@@ -79,12 +77,11 @@ namespace GetStoreApp.Helpers.Controls.Store
             try
             {
                 AutoResetEvent autoResetEvent = new(false);
-
-                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(generatedContent, BinaryStringEncoding.Utf8);
                 HttpStringContent httpStringContent = new(generatedContent);
+                httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("text/json");
-                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
+                httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();

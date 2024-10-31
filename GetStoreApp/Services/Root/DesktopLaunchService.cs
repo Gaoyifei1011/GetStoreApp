@@ -3,7 +3,6 @@ using GetStoreApp.Views.Pages;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;

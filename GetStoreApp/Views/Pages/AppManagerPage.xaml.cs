@@ -885,7 +885,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     Task.Run(() =>
                     {
-                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = packageManager.RemovePackageAsync(package.Id.FullName);
+                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = packageManager.RemovePackageAsync(package.Id.FullName, RemovalOptions.None);
 
                         AutoResetEvent uninstallCompletedEvent = new(false);
 

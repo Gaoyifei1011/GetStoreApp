@@ -32,10 +32,7 @@ namespace GetStoreApp.UI.Dialogs.About
         {
             InitializeComponent();
 
-            DispatcherQueue.TryEnqueue(async () =>
-            {
-                LicenseText = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/LICENSE"));
-            });
+            LicenseText = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(ResourceService.GetEmbeddedData("Files/Assets/Embed/LICENSE")));
         }
     }
 }

@@ -12,7 +12,6 @@ using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Security.Cryptography;
-using Windows.Storage.Streams;
 using Windows.System.Threading;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
@@ -47,7 +46,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <summary>
         /// 获取微软商店服务器储存在用户本地终端上的数据
         /// </summary>
-        public static async Task<string> GetCookieAsync()
+        public static string GetCookie()
         {
             string cookieResult = string.Empty;
 
@@ -55,12 +54,12 @@ namespace GetStoreApp.Helpers.Controls.Store
             {
                 AutoResetEvent autoResetEvent = new(false);
 
-                IBuffer contentBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/cookie.xml");
-
-                HttpStringContent httpStringContent = new(CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, contentBuffer));
+                byte[] cookieByteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/cookie.xml");
+                HttpStringContent httpStringContent = new(CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(cookieByteArray)));
+                httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
-                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
+                httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
@@ -301,7 +300,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <param name="categoryId">category ID</param>
         /// <param name="ring">通道</param>
         /// <returns>文件信息的字符串</returns>
-        public static async Task<string> GetFileListXmlAsync(string cookie, string categoryId, string ring)
+        public static string GetFileListXml(string cookie, string categoryId, string ring)
         {
             string fileListXmlResult = string.Empty;
 
@@ -309,14 +308,14 @@ namespace GetStoreApp.Helpers.Controls.Store
             {
                 AutoResetEvent autoResetEvent = new(false);
 
-                IBuffer wuBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/wu.xml");
-                string fileListXml = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, wuBuffer).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
-                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(fileListXml, BinaryStringEncoding.Utf8);
+                byte[] wubyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/wu.xml");
+                string fileListXml = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(wubyteArray)).Replace("{1}", cookie).Replace("{2}", categoryId).Replace("{3}", ring);
 
                 HttpStringContent httpStringContent = new(fileListXml);
+                httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTime.Now;
                 httpStringContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
-                httpStringContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
+                httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
@@ -450,7 +449,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 foreach (IXmlNode securedFragmentNode in securedFragmentList)
                 {
                     IXmlNode securedFragmentCloneNode = securedFragmentNode;
-                    Task.Run(async () =>
+                    Task.Run(() =>
                     {
                         IXmlNode xmlNode = securedFragmentCloneNode.ParentNode.ParentNode;
 
@@ -465,7 +464,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                                 string digest = value.Item3;
                                 string revisionNumber = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("RevisionNumber").InnerText;
                                 string updateID = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("UpdateID").InnerText;
-                                string uri = await GetAppxUrlAsync(updateID, revisionNumber, ring, digest);
+                                string uri = GetAppxUrl(updateID, revisionNumber, ring, digest);
                                 string fileSizeString = FileSizeHelper.ConvertFileSizeToString(double.TryParse(fileSize, out double size) ? size : 0);
 
                                 appxPackagesLock.Enter();
@@ -514,7 +513,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// 获取商店应用安装包对应的下载链接
         /// </summary>
         /// <returns>商店应用安装包对应的下载链接</returns>
-        private static async Task<string> GetAppxUrlAsync(string updateID, string revisionNumber, string ring, string digest)
+        private static string GetAppxUrl(string updateID, string revisionNumber, string ring, string digest)
         {
             string urlResult = string.Empty;
 
@@ -522,14 +521,13 @@ namespace GetStoreApp.Helpers.Controls.Store
             {
                 AutoResetEvent autoResetEvent = new(false);
 
-                IBuffer urlBuffer = await ResourceService.GetEmbeddedDataAsync("Files/Assets/Embed/url.xml");
-                string url = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, urlBuffer).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
-                IBuffer contentBuffer = CryptographicBuffer.ConvertStringToBinary(url, BinaryStringEncoding.Utf8);
+                byte[] urlbyteArray = ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml");
+                string url = CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, CryptographicBuffer.CreateFromByteArray(ResourceService.GetEmbeddedData("Files/Assets/Embed/url.xml"))).Replace("{1}", updateID).Replace("{2}", revisionNumber).Replace("{3}", ring);
 
                 HttpStringContent httpContent = new(url);
                 httpContent.Headers.Expires = DateTime.Now;
                 httpContent.Headers.ContentType = new HttpMediaTypeHeaderValue("application/soap+xml");
-                httpContent.Headers.ContentLength = Convert.ToUInt64(contentBuffer.Length);
+                httpContent.Headers.ContentLength = Convert.ToUInt64(url.Length);
                 httpContent.Headers.ContentType.CharSet = "utf-8";
 
                 HttpClient httpClient = new();
