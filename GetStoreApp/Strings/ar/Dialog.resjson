@@ -30,7 +30,7 @@
   "FileInformationTitle": "معلومات الملف",
   "FileName": "اسم الملف:",
   "FilePath": "مسار الملف:",
-  "FileSHA1": "قيمة SHA1 للملف:",
+  "FileSHA256": "قيمة SHA256 للملف:",
   "FileSize": "حجم الملف:",
   "HistoryCleanError": "حدث خطأ أثناء عملية تنظيف السجل. يرجى التحقق من أذونات الوصول إلى السجل.",
   "HistoryRecord": "سجلات التاريخ",

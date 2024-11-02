@@ -18,7 +18,7 @@ namespace GetStoreAppWidget
     public class Program
     {
         private static readonly WidgetProviderFactory widgetProviderFactory = new();
-        private static readonly AutoResetEvent autoResetEvent = new AutoResetEvent(false);
+        private static readonly AutoResetEvent autoResetEvent = new(false);
 
         public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 

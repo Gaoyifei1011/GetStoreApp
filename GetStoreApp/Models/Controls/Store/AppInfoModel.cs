@@ -7,7 +7,7 @@ namespace GetStoreApp.Models.Controls.Store
     /// </summary>
     public sealed partial class AppInfoModel : INotifyPropertyChanged
     {
-        private string _name;
+        private string _name = string.Empty;
 
         public string Name
         {
@@ -23,7 +23,7 @@ namespace GetStoreApp.Models.Controls.Store
             }
         }
 
-        private string _publisher;
+        private string _publisher = string.Empty;
 
         public string Publisher
         {
@@ -39,7 +39,7 @@ namespace GetStoreApp.Models.Controls.Store
             }
         }
 
-        private string _description;
+        private string _description = string.Empty;
 
         public string Description
         {
@@ -55,7 +55,7 @@ namespace GetStoreApp.Models.Controls.Store
             }
         }
 
-        private string _categoryID;
+        private string _categoryID = string.Empty;
 
         public string CategoryID
         {

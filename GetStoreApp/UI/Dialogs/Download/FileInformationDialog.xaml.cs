@@ -4,6 +4,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace GetStoreApp.UI.Dialogs.Download
     /// </summary>
     public sealed partial class FileInformationDialog : ContentDialog, INotifyPropertyChanged
     {
+        private bool isInitialized;
+
         private string FileName { get; set; }
 
         private string FilePath { get; set; }
@@ -39,18 +42,18 @@ namespace GetStoreApp.UI.Dialogs.Download
             }
         }
 
-        private string _fileSHA1;
+        private string _fileSHA256 = string.Empty;
 
-        public string FileSHA1
+        public string FileSHA256
         {
-            get { return _fileSHA1; }
+            get { return _fileSHA256; }
 
             set
             {
-                if (!Equals(_fileSHA1, value))
+                if (!Equals(_fileSHA256, value))
                 {
-                    _fileSHA1 = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileSHA1)));
+                    _fileSHA256 = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileSHA256)));
                 }
             }
         }
@@ -63,39 +66,46 @@ namespace GetStoreApp.UI.Dialogs.Download
             FileName = completedItem.FileName;
             FilePath = completedItem.FilePath;
             FileSize = FileSizeHelper.ConvertFileSizeToString(completedItem.TotalSize);
-            Task.Run(async () =>
+        }
+
+        /// <summary>
+        /// 文件信息对话框初始化完成后触发的事件
+        /// </summary>
+        private async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (isInitialized)
             {
-                string fileShA1 = await IOHelper.GetFileSHA1Async(FilePath);
-                DispatcherQueue.TryEnqueue(() =>
+                isInitialized = true;
+
+                string fileShA256 = await Task.Run(async () =>
                 {
-                    FileSHA1 = fileShA1;
-                    FileCheckState = true;
+                    return await IOHelper.GetFileSHA256Async(FilePath);
                 });
-            });
+
+                FileSHA256 = fileShA256;
+                FileCheckState = true;
+            }
         }
 
         /// <summary>
         /// 复制文件信息
         /// </summary>
-        private void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void OnCopyFileInformationClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
+            List<string> copyFileInformationCopyStringList = [];
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
-                List<string> copyFileInformationCopyStringList = [];
                 copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileName") + FileName);
                 copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FilePath") + FilePath);
                 copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileSize") + FileSize);
-                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileSHA1") + FileSHA1);
-
-                DispatcherQueue.TryEnqueue(async () =>
-                {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
-                    sender.Hide();
-                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
-                });
+                copyFileInformationCopyStringList.Add(ResourceService.GetLocalized("Dialog/FileSHA256") + FileSHA256);
             });
+
+            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
+            sender.Hide();
+            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
         }
     }
 }

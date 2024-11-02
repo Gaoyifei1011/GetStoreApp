@@ -38,5 +38,5 @@
   "SerialNumberOutRange": "You inputed the serial number that is out of range, entered it incorrectly, do you want to re-input it? (Make sure to input \"Y\", exit entering other characters)",
   "Title": "GetStoreApp",
   "TypeInformation": "There are two types of acquisition apps:1. URL (link), 2.ProductID",
-  "URLSample": "URL(link) sample: https://www.microsoft.com/store/productId/9WZDNCRFJBMP"
+  "URLSample": "URL(link) sample: https://apps.microsoft.com/store/detail/9WZDNCRFJBMP"
 }

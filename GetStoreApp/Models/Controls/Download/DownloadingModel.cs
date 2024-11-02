@@ -95,9 +95,9 @@ namespace GetStoreApp.Models.Controls.Download
         public string FilePath { get; set; }
 
         /// <summary>
-        /// 文件SHA1值，用来校验文件
+        /// 文件SHA256值，用来校验文件
         /// </summary>
-        public string FileSHA1 { get; set; }
+        public string FileSHA256 { get; set; }
 
         /*
         3.下载文件的状态信息

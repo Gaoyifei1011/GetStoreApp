@@ -48,13 +48,13 @@ namespace GetStoreApp.Helpers.Root
         }
 
         /// <summary>
-        /// 获取文件的SHA1值
+        /// 获取文件的 SHA256 值
         /// </summary>
-        public static async Task<string> GetFileSHA1Async(string filePath)
+        public static async Task<string> GetFileSHA256Async(string filePath)
         {
             try
             {
-                HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha1);
+                HashAlgorithmProvider hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
 
                 StorageFile File = await StorageFile.GetFileFromPathAsync(filePath);
                 Stream stream = await File.OpenStreamForReadAsync();
@@ -85,7 +85,7 @@ namespace GetStoreApp.Helpers.Root
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Warning, "File SHA1 verify failed.", e);
+                LogService.WriteLog(LoggingLevel.Warning, "File SHA256 verify failed.", e);
                 return string.Empty;
             }
         }

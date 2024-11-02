@@ -157,21 +157,6 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
             };
-
-            Task.Run(() =>
-            {
-                List<HistoryModel> searchStoreHistoryList = HistoryStorageService.GetSearchStoreData();
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    HistoryCollection.Clear();
-                    Task.Delay(10);
-                    foreach (HistoryModel historyItem in searchStoreHistoryList)
-                    {
-                        HistoryCollection.Add(historyItem);
-                    }
-                });
-            });
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -216,6 +201,21 @@ namespace GetStoreApp.UI.Controls.Store
         #region 第二部分：搜索应用控件——挂载的事件
 
         /// <summary>
+        /// 搜索应用控件初始化完成后触发的事件
+        /// </summary>
+        private async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            List<HistoryModel> searchStoreHistoryList = await Task.Run(HistoryStorageService.GetSearchStoreData);
+
+            HistoryCollection.Clear();
+            await Task.Delay(10);
+            foreach (HistoryModel historyItem in searchStoreHistoryList)
+            {
+                HistoryCollection.Add(historyItem);
+            }
+        }
+
+        /// <summary>
         /// 输入文本框内容发生改变时响应的事件
         /// </summary>
         private void OnTextChanged(object sender, TextChangedEventArgs args)
@@ -247,60 +247,51 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 搜索应用
         /// </summary>
-        public void SearchStore()
+        public async void SearchStore()
         {
             SearchText = string.IsNullOrEmpty(SearchText) ? "Microsoft Corporation" : SearchText;
             IsNotSeachingStore = false;
             SetControlState(InfoBarSeverity.Informational);
 
-            Task.Run(() =>
+            Tuple<bool, List<SearchStoreModel>> searchStoreResult = await Task.Run(async () =>
             {
                 string searchText = SearchText;
                 string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
-                Tuple<bool, List<SearchStoreModel>> searchStoreResult = SearchStoreHelper.SerachStoreApps(generatedContent);
+                return await SearchStoreHelper.SerachStoreAppsAsync(generatedContent);
+            });
 
-                // 获取成功
-                if (searchStoreResult.Item1)
+            // 获取成功
+            if (searchStoreResult.Item1)
+            {
+                // 搜索成功，有数据
+                if (searchStoreResult.Item2.Count > 0)
                 {
-                    // 搜索成功，有数据
-                    if (searchStoreResult.Item2.Count > 0)
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            IsNotSeachingStore = true;
-                            SetControlState(InfoBarSeverity.Success);
-                            ResultControlVisable = true;
-                            UpdateHistory(searchText);
+                    IsNotSeachingStore = true;
+                    SetControlState(InfoBarSeverity.Success);
+                    ResultControlVisable = true;
+                    UpdateHistory(SearchText);
 
-                            SearchStoreCollection.Clear();
-                            foreach (SearchStoreModel searchStoreItem in searchStoreResult.Item2)
-                            {
-                                SearchStoreCollection.Add(searchStoreItem);
-                            }
-                        });
-                    }
-                    // 搜索成功，没有数据
-                    else
+                    SearchStoreCollection.Clear();
+                    foreach (SearchStoreModel searchStoreItem in searchStoreResult.Item2)
                     {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            IsNotSeachingStore = true;
-                            SetControlState(InfoBarSeverity.Warning);
-                            ResultControlVisable = false;
-                        });
+                        SearchStoreCollection.Add(searchStoreItem);
                     }
                 }
-                // 搜索失败
+                // 搜索成功，没有数据
                 else
                 {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        IsNotSeachingStore = true;
-                        SetControlState(InfoBarSeverity.Error);
-                        ResultControlVisable = false;
-                    });
+                    IsNotSeachingStore = true;
+                    SetControlState(InfoBarSeverity.Warning);
+                    ResultControlVisable = false;
                 }
-            });
+            }
+            // 搜索失败
+            else
+            {
+                IsNotSeachingStore = true;
+                SetControlState(InfoBarSeverity.Error);
+                ResultControlVisable = false;
+            }
         }
 
         /// <summary>

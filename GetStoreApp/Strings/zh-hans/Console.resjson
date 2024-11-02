@@ -38,5 +38,5 @@
   "SerialNumberOutRange": "您输入的序号已经超出了范围，输入有误，是否要重新输入？（确定输入“Y”，退出输入其他字符）",
   "Title": "获取商店应用",
   "TypeInformation": "获取应用有两种类型：1.URL（链接）、2.产品 ID",
-  "URLSample": "URL（链接）例子：https://www.microsoft.com/store/productId/9WZDNCRFJBMP"
+  "URLSample": "URL（链接）例子：https://apps.microsoft.com/store/detail/9WZDNCRFJBMP"
 }

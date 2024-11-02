@@ -30,7 +30,7 @@
   "FileInformationTitle": "File information",
   "FileName": "File name:",
   "FilePath": "File path:",
-  "FileSHA1": "File SHA1 value:",
+  "FileSHA256": "File SHA256 value:",
   "FileSize": "File size:",
   "HistoryCleanError": "An error occurred during the history cleaning process. Please check the history access permissions.",
   "HistoryRecord": "History records",

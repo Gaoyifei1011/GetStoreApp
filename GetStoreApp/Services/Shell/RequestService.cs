@@ -60,20 +60,20 @@ namespace GetStoreApp.Services.Shell
             {
                 while (requestState)
                 {
-                    string cookie = QueryLinksHelper.GetCookie();
+                    string cookie = await QueryLinksHelper.GetCookieAsync();
 
                     List<QueryLinksModel> queryLinksList = [];
                     AppInfoModel appInfo = null;
 
                     // 获取应用信息
-                    Tuple<bool, AppInfoModel> appInformationResult = QueryLinksHelper.GetAppInformation(productId);
+                    Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
 
                     if (appInformationResult.Item1)
                     {
                         // 解析非商店应用数据
                         if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                         {
-                            List<QueryLinksModel> nonAppxPackagesList = QueryLinksHelper.GetNonAppxPackages(productId);
+                            List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
                             foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                             {
                                 queryLinksList.Add(nonAppxPackage);
@@ -83,7 +83,7 @@ namespace GetStoreApp.Services.Shell
                         // 解析商店应用数据
                         else
                         {
-                            string fileListXml = QueryLinksHelper.GetFileListXml(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {
@@ -152,7 +152,7 @@ namespace GetStoreApp.Services.Shell
                     string generateContent = HtmlRequestHelper.GenerateRequestContent(selectedType, linkText, selectedChannel);
 
                     // 获取网页反馈回的原始数据
-                    RequestModel httpRequestData = HtmlRequestHelper.HttpRequest(generateContent);
+                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
                     ConsoleHelper.Write(Environment.NewLine);
                     ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
@@ -169,7 +169,7 @@ namespace GetStoreApp.Services.Shell
                                 ConsoleHelper.ResetTextColor();
                                 requestState = false;
                                 HtmlParseHelper.InitializeParseData(httpRequestData);
-                                List<QueryLinksModel> queryLinksList = HtmlParseHelper.HtmlParseLinks();
+                                List<QueryLinksModel> queryLinksList = HtmlParseHelper.HtmlParsePackagedAppLinks();
                                 await ParseService.ParseDataAsync(null, queryLinksList);
                                 break;
                             }

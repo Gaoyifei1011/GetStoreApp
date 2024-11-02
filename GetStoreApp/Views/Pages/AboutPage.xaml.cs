@@ -19,7 +19,6 @@ using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
-using Windows.System.Threading;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 using Windows.UI.Text;
@@ -132,43 +131,38 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 创建应用的桌面快捷方式
         /// </summary>
-        private void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
+        private async void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(() =>
-            {
-                bool isCreatedSuccessfully = false;
+            bool isCreatedSuccessfully = false;
 
-                try
-                {
-                    if (StoreConfiguration.IsPinToDesktopSupported())
-                    {
-                        StoreConfiguration.PinToDesktop(Package.Current.Id.FamilyName);
-                        isCreatedSuccessfully = true;
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
-                }
-                finally
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
-                    });
-                }
-            });
+            await Task.Run(() =>
+             {
+                 try
+                 {
+                     if (StoreConfiguration.IsPinToDesktopSupported())
+                     {
+                         StoreConfiguration.PinToDesktop(Package.Current.Id.FamilyName);
+                         isCreatedSuccessfully = true;
+                     }
+                 }
+                 catch (Exception e)
+                 {
+                     LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
+                 }
+             });
+
+            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
         }
 
         /// <summary>
         /// 将应用固定到“开始”屏幕
         /// </summary>
-        private void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                bool isPinnedSuccessfully = false;
+            bool isPinnedSuccessfully = false;
 
+            await Task.Run(async () =>
+            {
                 try
                 {
                     IReadOnlyList<AppListEntry> appEntries = await Package.Current.GetAppListEntriesAsync();
@@ -184,25 +178,20 @@ namespace GetStoreApp.Views.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
                 }
-                finally
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
-                    });
-                }
             });
+
+            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
         }
 
         /// <summary>
         /// 将应用固定到任务栏
         /// </summary>
-        private void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                bool isPinnedSuccessfully = false;
+            bool isPinnedSuccessfully = false;
 
+            await Task.Run(async () =>
+            {
                 try
                 {
                     string featureId = "com.microsoft.windows.taskbar.pin";
@@ -223,14 +212,9 @@ namespace GetStoreApp.Views.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
                 }
-                finally
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, isPinnedSuccessfully));
-                    });
-                }
             });
+
+            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, isPinnedSuccessfully));
         }
 
         /// <summary>
@@ -276,101 +260,57 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查更新
         /// </summary>
-        private void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
+        private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
             if (!IsChecking)
             {
                 IsChecking = true;
 
-                Task.Run(() =>
+                bool? isNewest = await Task.Run<bool?>(async () =>
                 {
                     try
                     {
+                        // 默认超时时间是 20 秒
                         HttpClient httpClient = new();
                         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36");
-                        IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpGetProgress = httpClient.GetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest"));
+                        HttpRequestResult httpRequestResult = await httpClient.TryGetAsync(new Uri("https://api.github.com/repos/Gaoyifei1011/GetStoreApp/releases/latest"));
+                        httpClient.Dispose();
 
-                        // 添加超时设置（半分钟后停止获取）
-                        ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
+                        // 请求成功
+                        if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                         {
-                            try
+                            string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+
+                            if (!string.IsNullOrEmpty(responseString))
                             {
-                                if (httpGetProgress is not null && (httpGetProgress.Status is not AsyncStatus.Canceled || httpGetProgress.Status is not AsyncStatus.Completed || httpGetProgress.Status is not AsyncStatus.Error))
+                                if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name").Remove(0, 1)) is Version tagVersion)
                                 {
-                                    httpGetProgress.Cancel();
+                                    return InfoHelper.AppVersion >= tagVersion;
                                 }
                             }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Warning, "Check update cancel task failed", e);
-                            }
-                        });
-
-                        // HTTP GET 请求过程已完成
-                        httpGetProgress.Completed += async (result, status) =>
+                        }
+                        // 请求失败
+                        else
                         {
-                            httpGetProgress = null;
-                            try
-                            {
-                                // 获取 GET 请求已完成
-                                if (status is AsyncStatus.Completed)
-                                {
-                                    HttpResponseMessage responseMessage = result.GetResults();
+                            LogService.WriteLog(LoggingLevel.Error, "Check update request failed", httpRequestResult.ExtendedError);
+                        }
 
-                                    // 请求成功
-                                    if (responseMessage.IsSuccessStatusCode)
-                                    {
-                                        string responseString = await responseMessage.Content.ReadAsStringAsync();
-
-                                        if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name").Remove(0, 1)) is Version tagVersion)
-                                        {
-                                            bool isNewest = InfoHelper.AppVersion >= tagVersion;
-
-                                            DispatcherQueue.TryEnqueue(async () =>
-                                            {
-                                                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest));
-                                            });
-                                        }
-                                    }
-
-                                    httpClient.Dispose();
-                                    responseMessage.Dispose();
-                                }
-                                // 获取 POST 请求由于超时而被用户取消
-                                else if (status is AsyncStatus.Canceled)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Information, "Check update request timeout", result.ErrorCode);
-                                    httpClient.Dispose();
-                                }
-                                // 获取 POST 请求发生错误
-                                else if (status is AsyncStatus.Error)
-                                {
-                                    // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
-                                    LogService.WriteLog(LoggingLevel.Information, "Check update request failed", result.ErrorCode);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Warning, "Check update request completed, but an unknown exception has occured", e);
-                            }
-                            finally
-                            {
-                                result.Close();
-                                threadPoolTimer.Cancel();
-
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    IsChecking = false;
-                                });
-                            }
-                        };
+                        httpRequestResult.Dispose();
                     }
                     // 其他异常
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Warning, "Check update request unknown exception", e);
+                        LogService.WriteLog(LoggingLevel.Error, "Check update request unknown exception", e);
                     }
+
+                    return null;
                 });
+
+                IsChecking = false;
+                if (isNewest.HasValue)
+                {
+                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest.Value));
+                }
             }
         }
 

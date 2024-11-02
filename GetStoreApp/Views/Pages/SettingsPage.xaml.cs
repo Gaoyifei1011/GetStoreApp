@@ -803,7 +803,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnClearClicked(object sender, RoutedEventArgs args)
         {
-            bool result = LogService.ClearLog();
+            bool result = await LogService.ClearLogAsync();
             await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.LogClean, result));
         }
 

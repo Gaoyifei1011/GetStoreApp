@@ -40,6 +40,7 @@ namespace GetStoreApp.UI.Controls.Store
     {
         private readonly Lock queryLinksLock = new();
 
+        private bool isInitialized;
         private string sampleLink;
         private readonly string sampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
 
@@ -77,7 +78,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private string _linkPlaceHolderText;
+        private string _linkPlaceHolderText = string.Empty;
 
         public string LinkPlaceHolderText
         {
@@ -93,7 +94,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private string _linkText;
+        private string _linkText = string.Empty;
 
         public string LinkText
         {
@@ -253,7 +254,7 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private static readonly List<string> SampleLinkList = ["https://www.microsoft.com/store/productId/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
+        private static readonly List<string> SampleLinkList = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
         private readonly List<InfoBarModel> QueryLinksInfoList = ResourceService.QueryLinksInfoList;
 
@@ -271,32 +272,8 @@ namespace GetStoreApp.UI.Controls.Store
         {
             InitializeComponent();
 
-            SelectedType = Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"])];
-            SelectedChannel = Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"])];
-            LinkText = DesktopLaunchService.LaunchArgs["Link"] is null ? string.Empty : (string)DesktopLaunchService.LaunchArgs["Link"];
-
-            sampleLink = SampleLinkList[0];
-            LinkPlaceHolderText = sampleTitle + sampleLink;
-
-            HistoryStorageService.QueryLinksCleared += () =>
-            {
-                DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
-            };
-
-            Task.Run(() =>
-            {
-                List<HistoryModel> queryLinksHistoryList = HistoryStorageService.GetQueryLinksData();
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    HistoryCollection.Clear();
-
-                    foreach (HistoryModel historyItem in queryLinksHistoryList)
-                    {
-                        HistoryCollection.Add(historyItem);
-                    }
-                });
-            });
+            SelectedType = TypeList[0];
+            SelectedChannel = ChannelList[3];
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -331,11 +308,12 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 根据设置存储的文件链接操作方式操作获取到的文件链接
         /// </summary>
-        private void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is QueryLinksModel queryLinksItem)
             {
-                Task.Run(() =>
+                bool isDownloadSuccessfully = false;
+                await Task.Run(() =>
                 {
                     List<DownloadSchedulerModel> downloadInfoList = [];
                     DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
@@ -374,7 +352,6 @@ namespace GetStoreApp.UI.Controls.Store
                         DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
                     }
 
-                    bool isDownloadSuccessfully = false;
                     bool isExisted = false;
                     string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
@@ -412,13 +389,10 @@ namespace GetStoreApp.UI.Controls.Store
                         DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
                         isDownloadSuccessfully = true;
                     }
-
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        // 显示下载任务创建成功消息
-                        await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
-                    });
                 });
+
+                // 显示下载任务创建成功消息
+                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
             }
         }
 
@@ -466,6 +440,41 @@ namespace GetStoreApp.UI.Controls.Store
         #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
 
         #region 第二部分：查找链接控件——挂载的事件
+
+        /// <summary>
+        /// 查询链接控件初始化完成后触发的事件
+        /// </summary>
+        private async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+
+                SelectedType = Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"])];
+                SelectedChannel = Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"])];
+                LinkText = DesktopLaunchService.LaunchArgs["Link"] is null ? string.Empty : (string)DesktopLaunchService.LaunchArgs["Link"];
+
+                sampleLink = SampleLinkList[0];
+                LinkPlaceHolderText = sampleTitle + sampleLink;
+
+                HistoryStorageService.QueryLinksCleared += () =>
+                {
+                    DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
+                };
+
+                List<HistoryModel> queryLinksHistoryList = await Task.Run(() =>
+                {
+                    return HistoryStorageService.GetQueryLinksData();
+                });
+
+                HistoryCollection.Clear();
+
+                foreach (HistoryModel historyItem in queryLinksHistoryList)
+                {
+                    HistoryCollection.Add(historyItem);
+                }
+            }
+        }
 
         /// <summary>
         /// 输入文本框内容发生改变时响应的事件
@@ -540,7 +549,7 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri(string.Format("https://www.microsoft.com/store/productId/{0}", AppInfo.ProductID)));
+            await Launcher.LaunchUriAsync(new Uri(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
         }
 
         /// <summary>
@@ -621,12 +630,12 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 复制选定项目的内容
         /// </summary>
-        private void OnCopySelectedClicked(object sender, RoutedEventArgs args)
+        private async void OnCopySelectedClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(() =>
-            {
-                List<QueryLinksModel> selectedQueryLinksList = [];
+            List<QueryLinksModel> selectedQueryLinksList = [];
 
+            await Task.Run(() =>
+            {
                 queryLinksLock.Enter();
 
                 try
@@ -647,40 +656,40 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     queryLinksLock.Exit();
                 }
-
-                // 内容为空时显示空提示对话框
-                if (selectedQueryLinksList.Count is 0)
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
-                    });
-                    return;
-                };
-
-                List<string> queryLinksCopyStringList = [];
-                foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
-                {
-                    queryLinksCopyStringList.Add(string.Format("[\n{0}\n{1}\n{2}\n]", queryLinksItem.FileName, queryLinksItem.FileLink, queryLinksItem.FileSize));
-                }
-
-                DispatcherQueue.TryEnqueue(async () =>
-                {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
-                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
-                });
             });
+
+            // 内容为空时显示空提示对话框
+            if (selectedQueryLinksList.Count is 0)
+            {
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                return;
+            }
+            else
+            {
+                List<string> queryLinksCopyStringList = [];
+
+                await Task.Run(() =>
+                {
+                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
+                    {
+                        queryLinksCopyStringList.Add(string.Format("[\n{0}\n{1}\n{2}\n]", queryLinksItem.FileName, queryLinksItem.FileLink, queryLinksItem.FileSize));
+                    }
+                });
+
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
+            }
         }
 
         /// <summary>
         /// 复制选定项目的链接
         /// </summary>
-        private void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
+        private async void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(() =>
-            {
-                List<QueryLinksModel> selectedQueryLinksList = [];
+            List<QueryLinksModel> selectedQueryLinksList = [];
 
+            await Task.Run(() =>
+            {
                 queryLinksLock.Enter();
 
                 try
@@ -701,40 +710,40 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     queryLinksLock.Exit();
                 }
-
-                // 内容为空时显示空提示对话框
-                if (selectedQueryLinksList.Count is 0)
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
-                    });
-                    return;
-                };
-
-                List<string> queryLinksCopyStringList = [];
-                foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
-                {
-                    queryLinksCopyStringList.Add(queryLinksItem.FileLink);
-                }
-
-                DispatcherQueue.TryEnqueue(async () =>
-                {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
-                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
-                });
             });
+
+            // 内容为空时显示空提示对话框
+            if (selectedQueryLinksList.Count is 0)
+            {
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                return;
+            }
+            else
+            {
+                List<string> queryLinksCopyStringList = [];
+
+                await Task.Run(() =>
+                {
+                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
+                    {
+                        queryLinksCopyStringList.Add(queryLinksItem.FileLink);
+                    }
+                });
+
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
+            }
         }
 
         /// <summary>
         /// 下载选定项目
         /// </summary>
-        private void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
+        private async void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(() =>
-            {
-                List<QueryLinksModel> selectedQueryLinksList = [];
+            List<QueryLinksModel> selectedQueryLinksList = [];
 
+            await Task.Run(() =>
+            {
                 queryLinksLock.Enter();
 
                 try
@@ -755,122 +764,121 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     queryLinksLock.Exit();
                 }
+            });
 
-                // 内容为空时显示空提示对话框
-                if (selectedQueryLinksList.Count is 0)
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
-                    });
-
-                    return;
-                };
-
-                List<DownloadSchedulerModel> downloadInfoList = [];
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-
-                try
-                {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
-                    {
-                        downloadInfoList.Add(downloadSchedulerItem);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
-                }
-                finally
-                {
-                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
-                }
-
-                DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
-
-                try
-                {
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
-                    {
-                        downloadInfoList.Add(downloadSchedulerItem);
-                    }
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Query download storage data failed", e);
-                }
-                finally
-                {
-                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
-                }
-
+            // 内容为空时显示空提示对话框
+            if (selectedQueryLinksList.Count is 0)
+            {
+                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                return;
+            }
+            else
+            {
                 bool isDownloadSuccessfully = false;
-                foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
+                List<DownloadSchedulerModel> downloadInfoList = [];
+
+                await Task.Run(() =>
                 {
-                    bool isExisted = false;
-                    string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
-
-                    // 检查下载文件信息是否已存在
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadInfoList)
-                    {
-                        if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
-                        {
-                            isExisted = true;
-                            break;
-                        }
-                    }
-
-                    if (!isExisted)
-                    {
-                        try
-                        {
-                            // 检查下载目录是否存在
-                            if (!Directory.Exists(DownloadOptionsService.DownloadFolder.Path))
-                            {
-                                Directory.CreateDirectory(DownloadOptionsService.DownloadFolder.Path);
-                            }
-
-                            // 检查是否已有重复文件，如果有，直接删除
-                            if (File.Exists(downloadFilePath))
-                            {
-                                File.Delete(downloadFilePath);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Delete existed file failed", e);
-                            continue;
-                        }
-
-                        DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
-                        isDownloadSuccessfully = true;
-                    }
-                }
-
-                DispatcherQueue.TryEnqueue(async () =>
-                {
-                    // 显示下载任务创建成功消息
-                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
-                    IsSelectMode = false;
-                    queryLinksLock.Enter();
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
                     try
                     {
-                        foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
                         {
-                            queryLinksItem.IsSelectMode = false;
+                            downloadInfoList.Add(downloadSchedulerItem);
                         }
                     }
                     catch (Exception e)
                     {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        LogService.WriteLog(LoggingLevel.Error, "Query download scheduler list failed", e);
                     }
                     finally
                     {
-                        queryLinksLock.Exit();
+                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                    }
+
+                    DownloadStorageService.DownloadStorageSemaphoreSlim?.Wait();
+
+                    try
+                    {
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
+                        {
+                            downloadInfoList.Add(downloadSchedulerItem);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Query download storage data failed", e);
+                    }
+                    finally
+                    {
+                        DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
+                    }
+
+                    foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
+                    {
+                        bool isExisted = false;
+                        string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
+
+                        // 检查下载文件信息是否已存在
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadInfoList)
+                        {
+                            if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                            {
+                                isExisted = true;
+                                break;
+                            }
+                        }
+
+                        if (!isExisted)
+                        {
+                            try
+                            {
+                                // 检查下载目录是否存在
+                                if (!Directory.Exists(DownloadOptionsService.DownloadFolder.Path))
+                                {
+                                    Directory.CreateDirectory(DownloadOptionsService.DownloadFolder.Path);
+                                }
+
+                                // 检查是否已有重复文件，如果有，直接删除
+                                if (File.Exists(downloadFilePath))
+                                {
+                                    File.Delete(downloadFilePath);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, "Delete existed file failed", e);
+                                continue;
+                            }
+
+                            DownloadSchedulerService.CreateDownload(queryLinksItem.FileLink, downloadFilePath);
+                            isDownloadSuccessfully = true;
+                        }
                     }
                 });
-            });
+
+                // 显示下载任务创建成功消息
+                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.DownloadCreate, isDownloadSuccessfully));
+                IsSelectMode = false;
+                queryLinksLock.Enter();
+
+                try
+                {
+                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                    {
+                        queryLinksItem.IsSelectMode = false;
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    queryLinksLock.Exit();
+                }
+            }
         }
 
         /// <summary>
@@ -939,7 +947,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 商店接口查询方式
             if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
             {
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     List<QueryLinksModel> queryLinksList = [];
 
@@ -951,17 +959,17 @@ namespace GetStoreApp.UI.Controls.Store
                     // 解析链接对应的产品 ID
                     string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
 
-                    string cookie = QueryLinksHelper.GetCookie();
+                    string cookie = await QueryLinksHelper.GetCookieAsync();
 
                     // 获取应用信息
-                    Tuple<bool, AppInfoModel> appInformationResult = QueryLinksHelper.GetAppInformation(productId);
+                    Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
 
                     if (appInformationResult.Item1)
                     {
                         // 解析非商店应用数据
                         if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
                         {
-                            List<QueryLinksModel> nonAppxPackagesList = QueryLinksHelper.GetNonAppxPackages(productId);
+                            List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
                             foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                             {
                                 queryLinksList.Add(nonAppxPackage);
@@ -970,7 +978,7 @@ namespace GetStoreApp.UI.Controls.Store
                         // 解析商店应用数据
                         else
                         {
-                            string fileListXml = QueryLinksHelper.GetFileListXml(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {
@@ -1073,7 +1081,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 第三方接口查询方式
             else if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[1]))
             {
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     // 记录当前选定的选项和填入的内容
                     int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
@@ -1084,7 +1092,7 @@ namespace GetStoreApp.UI.Controls.Store
                     string generateContent = HtmlRequestHelper.GenerateRequestContent(SelectedType.InternalName, link, SelectedChannel.InternalName);
 
                     // 获取网页反馈回的原始数据
-                    RequestModel httpRequestData = HtmlRequestHelper.HttpRequest(generateContent);
+                    RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
                     // 检查服务器返回获取的状态
                     InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);
@@ -1093,22 +1101,42 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         HtmlParseHelper.InitializeParseData(httpRequestData);
                         string categoryId = HtmlParseHelper.HtmlParseCID().ToUpper();
-                        List<QueryLinksModel> queryLinksList = HtmlParseHelper.HtmlParseLinks();
+                        List<QueryLinksModel> queryLinksList = [];
 
-                        // 按设置选项设置的内容过滤列表
-                        if (LinkFilterService.EncryptedPackageFilterValue)
+                        // CategoryID 为空，非打包应用
+                        if (string.IsNullOrEmpty(categoryId))
                         {
-                            queryLinksList.RemoveAll(item =>
-                            item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
-                            item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
-                            item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
-                            item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
-                            );
+                            List<QueryLinksModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
+
+                            foreach (QueryLinksModel queryLinksItem in nonPackagedAppsList)
+                            {
+                                queryLinksList.Add(queryLinksItem);
+                            }
                         }
-
-                        if (LinkFilterService.BlockMapFilterValue)
+                        else
                         {
-                            queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                            List<QueryLinksModel> packagedAppsList = HtmlParseHelper.HtmlParsePackagedAppLinks();
+
+                            // 按设置选项设置的内容过滤列表
+                            if (LinkFilterService.EncryptedPackageFilterValue)
+                            {
+                                queryLinksList.RemoveAll(item =>
+                                item.FileName.EndsWith(".eappx", StringComparison.OrdinalIgnoreCase) ||
+                                item.FileName.EndsWith(".emsix", StringComparison.OrdinalIgnoreCase) ||
+                                item.FileName.EndsWith(".eappxbundle", StringComparison.OrdinalIgnoreCase) ||
+                                item.FileName.EndsWith(".emsixbundle", StringComparison.OrdinalIgnoreCase)
+                                );
+                            }
+
+                            if (LinkFilterService.BlockMapFilterValue)
+                            {
+                                queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
+                            }
+
+                            foreach (QueryLinksModel queryLinksItem in packagedAppsList)
+                            {
+                                queryLinksList.Add(queryLinksItem);
+                            }
                         }
 
                         queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));

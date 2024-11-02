@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -26,6 +25,8 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class DownloadingControl : Grid, INotifyPropertyChanged
     {
+        private bool isInitialized;
+
         private string DownloadingCountInfo { get; } = ResourceService.GetLocalized("Download/DownloadingCountInfo");
 
         private bool _isSelectMode;
@@ -51,68 +52,6 @@ namespace GetStoreApp.UI.Controls.Download
         public DownloadingControl()
         {
             InitializeComponent();
-
-            Task.Run(() =>
-            {
-                GlobalNotificationService.ApplicationExit += OnApplicationExit;
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-
-                try
-                {
-                    List<DownloadSchedulerModel> downloadingSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
-                    AutoResetEvent autoResetEvent = new(false);
-
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        try
-                        {
-                            foreach (DownloadSchedulerModel downloadSchedulerItem in downloadingSchedulerList)
-                            {
-                                DownloadingCollection.Add(new DownloadingModel()
-                                {
-                                    DownloadID = downloadSchedulerItem.DownloadID,
-                                    DownloadStatus = downloadSchedulerItem.DownloadStatus,
-                                    FileName = downloadSchedulerItem.FileName,
-                                    FilePath = downloadSchedulerItem.FilePath,
-                                    FileLink = downloadSchedulerItem.FileLink,
-                                    FinishedSize = downloadSchedulerItem.FinishedSize,
-                                    IsNotOperated = true,
-                                    CurrentSpeed = 0,
-                                    TotalSize = downloadSchedulerItem.TotalSize,
-                                    IsSelected = false,
-                                    IsSelectMode = false
-                                });
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Initialize downloading collection failed", e);
-                        }
-                        finally
-                        {
-                            autoResetEvent.Set();
-                        }
-                    });
-
-                    autoResetEvent.WaitOne();
-                    autoResetEvent.Dispose();
-
-                    DownloadSchedulerService.DownloadCreated += OnDownloadCreated;
-                    DownloadSchedulerService.DownloadContinued += OnDownloadContinued;
-                    DownloadSchedulerService.DownloadPaused += OnDownloadPaused;
-                    DownloadSchedulerService.DownloadDeleted += OnDownloadDeleted;
-                    DownloadSchedulerService.DownloadProgressing += OnDownloadProgressing;
-                    DownloadSchedulerService.DownloadCompleted += OnDownloadCompleted;
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Initialize DownloadingCollection failed", e);
-                }
-                finally
-                {
-                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
-                }
-            });
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -186,6 +125,66 @@ namespace GetStoreApp.UI.Controls.Download
         #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
 
         #region 第二部分：正在下载中控件——挂载的事件
+
+        /// <summary>
+        /// 正在下载控件初始化完成后触发的事件
+        /// </summary>
+        private async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+
+                List<DownloadSchedulerModel> downloadingSchedulerList = await Task.Run(() =>
+                {
+                    GlobalNotificationService.ApplicationExit += OnApplicationExit;
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
+
+                    try
+                    {
+                        return DownloadSchedulerService.GetDownloadSchedulerList();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Initialize DownloadingCollection failed", e);
+                    }
+                    finally
+                    {
+                        DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                    }
+
+                    return [];
+                });
+
+                foreach (DownloadSchedulerModel downloadSchedulerItem in downloadingSchedulerList)
+                {
+                    DownloadingCollection.Add(new DownloadingModel()
+                    {
+                        DownloadID = downloadSchedulerItem.DownloadID,
+                        DownloadStatus = downloadSchedulerItem.DownloadStatus,
+                        FileName = downloadSchedulerItem.FileName,
+                        FilePath = downloadSchedulerItem.FilePath,
+                        FileLink = downloadSchedulerItem.FileLink,
+                        FinishedSize = downloadSchedulerItem.FinishedSize,
+                        IsNotOperated = true,
+                        CurrentSpeed = 0,
+                        TotalSize = downloadSchedulerItem.TotalSize,
+                        IsSelected = false,
+                        IsSelectMode = false
+                    });
+                }
+
+                await Task.Run(() =>
+                {
+                    DownloadSchedulerService.DownloadCreated += OnDownloadCreated;
+                    DownloadSchedulerService.DownloadContinued += OnDownloadContinued;
+                    DownloadSchedulerService.DownloadPaused += OnDownloadPaused;
+                    DownloadSchedulerService.DownloadDeleted += OnDownloadDeleted;
+                    DownloadSchedulerService.DownloadProgressing += OnDownloadProgressing;
+                    DownloadSchedulerService.DownloadCompleted += OnDownloadCompleted;
+                });
+            }
+        }
 
         /// <summary>
         /// 打开默认保存的文件夹

@@ -146,7 +146,7 @@
 
 > * [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com) 
 > * .NET桌面开发（Visual Studio Installer 中安装，.NET SDK 版本 9.0）
-> * [WinGet 程序包管理器](https://www.microsoft.com/store/productId/9NBLGGH4NNS1) （推荐安装）
+> * [WinGet 程序包管理器](https://apps.microsoft.com/store/detail/9NBLGGH4NNS1) （推荐安装）
 > * [Microsoft Edge WebView2 运行时](https://developer.microsoft.com/zh-cn/microsoft-edge/webview2) （推荐安装）
 
 #### <p align="center">编译步骤</p>

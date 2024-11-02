@@ -11,6 +11,7 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     Padding="0"
+    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
     <Grid.Resources>

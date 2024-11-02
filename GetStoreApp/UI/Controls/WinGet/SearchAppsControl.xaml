@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
+    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
     <Grid.Resources>

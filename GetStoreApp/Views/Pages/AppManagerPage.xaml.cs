@@ -15,7 +15,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
@@ -40,8 +39,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppManagerPage : Page, INotifyPropertyChanged
     {
+        private bool isInitialized;
         private bool needToRefreshData;
-        private AutoResetEvent autoResetEvent;
         private readonly PackageManager packageManager = new();
 
         private string Unknown { get; } = ResourceService.GetLocalized("AppManager/Unknown");
@@ -554,9 +553,6 @@ namespace GetStoreApp.Views.Pages
         public AppManagerPage()
         {
             InitializeComponent();
-
-            GetInstalledApps();
-            InitializeData();
         }
 
         #region 第一部分：应用管理页面——XamlUICommand 命令调用时挂载的事件
@@ -576,30 +572,28 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制依赖包信息
         /// </summary>
-        private void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is Package package)
             {
-                Task.Run(() =>
+                List<string> copyDependencyInformationCopyStringList = [];
+
+                await Task.Run(() =>
                 {
                     try
                     {
-                        List<string> copyDependencyInformationCopyStringList = [];
                         copyDependencyInformationCopyStringList.Add(package.DisplayName);
                         copyDependencyInformationCopyStringList.Add(package.Id.FamilyName);
                         copyDependencyInformationCopyStringList.Add(package.Id.FullName);
-
-                        DispatcherQueue.TryEnqueue(async () =>
-                        {
-                            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyDependencyInformationCopyStringList));
-                            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
-                        });
                     }
                     catch (Exception e)
                     {
                         LogService.WriteLog(LoggingLevel.Error, "App information copy failed", e);
                     }
                 });
+
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyDependencyInformationCopyStringList));
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
             }
         }
 
@@ -769,12 +763,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 固定应用到桌面
         /// </summary>
-        private void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Task.Run(() =>
-            {
-                bool isPinnedSuccessfully = false;
+            bool isPinnedSuccessfully = false;
 
+            await Task.Run(() =>
+            {
                 try
                 {
                     if (StoreConfiguration.IsPinToDesktopSupported())
@@ -787,27 +781,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
                 }
-                finally
-                {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Desktop, isPinnedSuccessfully));
-                    });
-                }
             });
+
+            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Desktop, isPinnedSuccessfully));
         }
 
         /// <summary>
         /// 固定应用入口到开始“屏幕”
         /// </summary>
-        private void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is AppListEntryModel appListEntryItem)
             {
-                Task.Run(async () =>
-                {
-                    bool isPinnedSuccessfully = false;
+                bool isPinnedSuccessfully = false;
 
+                await Task.Run(async () =>
+                {
                     try
                     {
                         StartScreenManager startScreenManager = StartScreenManager.GetDefault();
@@ -818,14 +807,9 @@ namespace GetStoreApp.Views.Pages
                     {
                         LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
                     }
-                    finally
-                    {
-                        DispatcherQueue.TryEnqueue(async () =>
-                        {
-                            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
-                        });
-                    }
                 });
+
+                await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
             }
         }
 
@@ -885,76 +869,9 @@ namespace GetStoreApp.Views.Pages
                 {
                     Task.Run(() =>
                     {
-                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallOperation = packageManager.RemovePackageAsync(package.Id.FullName, RemovalOptions.None);
+                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> uninstallProgress = packageManager.RemovePackageAsync(package.Id.FullName, RemovalOptions.None);
 
-                        AutoResetEvent uninstallCompletedEvent = new(false);
-
-                        uninstallOperation.Completed = (result, progress) =>
-                        {
-                            // 卸载成功
-                            if (result.Status is AsyncStatus.Completed)
-                            {
-                                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                                {
-                                    foreach (PackageModel pacakgeItem in AppManagerDataCollection)
-                                    {
-                                        if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
-                                        {
-                                            // 显示 UWP 应用卸载成功通知
-                                            AppNotificationBuilder appNotificationBuilder = new();
-                                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallSuccessfully"), pacakgeItem.Package.DisplayName));
-                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-
-                                            AppManagerDataCollection.Remove(pacakgeItem);
-                                            break;
-                                        }
-                                    }
-                                });
-                            }
-
-                            // 卸载失败
-                            else if (result.Status is AsyncStatus.Error)
-                            {
-                                DeploymentResult uninstallResult = uninstallOperation.GetResults();
-
-                                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                                {
-                                    foreach (PackageModel pacakgeItem in AppManagerDataCollection)
-                                    {
-                                        if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
-                                        {
-                                            // 显示 UWP 应用卸载失败通知
-                                            AppNotificationBuilder appNotificationBuilder = new();
-                                            appNotificationBuilder.AddArgument("action", "OpenApp");
-                                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed1"), pacakgeItem.Package.DisplayName));
-                                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUnInstallFailed2"));
-
-                                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                                            {
-                                                 ResourceService.GetLocalized("Notification/UWPUnInstallFailed3"),
-                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed4"), Convert.ToString(uninstallResult.ExtendedErrorCode.HResult)),
-                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed5"), uninstallResult.ErrorText)
-                                            }));
-                                            AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
-                                            openSettingsButton.Arguments.Add("action", "OpenSettings");
-                                            appNotificationBuilder.AddButton(openSettingsButton);
-                                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-
-                                            LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
-
-                                            pacakgeItem.IsUnInstalling = false;
-                                            break;
-                                        }
-                                    }
-                                });
-                            }
-
-                            uninstallCompletedEvent.Set();
-                        };
-
-                        uninstallCompletedEvent.WaitOne();
-                        uninstallCompletedEvent.Dispose();
+                        uninstallProgress.Completed = (result, progress) => OnUninstallCompleted(result, progress, package);
                     });
                 }
                 catch (Exception e)
@@ -967,13 +884,15 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 查看应用信息
         /// </summary>
-        private void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is PackageModel packageItem)
             {
-                Task.Run(() =>
+                Dictionary<string, object> packageDict = null;
+
+                await Task.Run(() =>
                 {
-                    Dictionary<string, object> packageDict = new()
+                    packageDict = new()
                     {
                         ["DisplayName"] = packageItem.DisplayName
                     };
@@ -1163,26 +1082,37 @@ namespace GetStoreApp.Views.Pages
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                         packageDict["DependenciesCollection"] = new List<PackageModel>();
                     }
-
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        if (packageDict is not null)
-                        {
-                            InitializeAppInfo(packageDict);
-                            BreadCollection.Add(new ContentLinkInfo()
-                            {
-                                DisplayText = ResourceService.GetLocalized("AppManager/AppInformation"),
-                                SecondaryText = "AppInformation"
-                            });
-                        }
-                    });
                 });
+
+                if (packageDict is not null)
+                {
+                    InitializeAppInfo(packageDict);
+                    BreadCollection.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("AppManager/AppInformation"),
+                        SecondaryText = "AppInformation"
+                    });
+                }
             }
         }
 
         #endregion 第一部分：应用管理页面——XamlUICommand 命令调用时挂载的事件
 
         #region 第二部分：应用管理页面——挂载的事件
+
+        /// <summary>
+        /// 应用管理页面初始化完成后触发的事件
+        /// </summary>
+        private async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+
+                await GetInstalledAppsAsync();
+                await InitializeDataAsync();
+            }
+        }
 
         /// <summary>
         /// 打开设置中的安装的应用
@@ -1210,25 +1140,25 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
-                InitializeData(true);
+                await InitializeDataAsync(true);
             }
         }
 
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        private async void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (sender is AutoSuggestBox autoSuggestBox)
             {
                 SearchText = autoSuggestBox.Text;
                 if (string.IsNullOrEmpty(SearchText))
                 {
-                    InitializeData();
+                    await InitializeDataAsync();
                 }
             }
         }
@@ -1236,24 +1166,24 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        private void OnSortWayClicked(object sender, RoutedEventArgs args)
+        private async void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
                 IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
-                InitializeData();
+                await InitializeDataAsync();
             }
         }
 
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
-        private void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
             {
                 SelectedRule = (AppSortRuleKind)radioMenuFlyoutItem.Tag;
-                InitializeData();
+                await InitializeDataAsync();
             }
         }
 
@@ -1303,23 +1233,23 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 刷新数据
         /// </summary>
-        private void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
-            GetInstalledApps();
-            InitializeData();
+            await GetInstalledAppsAsync();
+            await InitializeDataAsync();
         }
 
         /// <summary>
         /// 浮出菜单关闭后更新数据
         /// </summary>
-        private void OnClosed(object sender, object args)
+        private async void OnClosed(object sender, object args)
         {
             if (needToRefreshData)
             {
-                InitializeData();
+                await InitializeDataAsync();
             }
 
             needToRefreshData = false;
@@ -1328,11 +1258,11 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 复制应用信息
         /// </summary>
-        private void OnCopyClicked(object sender, RoutedEventArgs args)
+        private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(() =>
+            List<string> copyStringList = [];
+            await Task.Run(() =>
             {
-                List<string> copyStringList = [];
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/DisplayName"), DisplayName));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FamilyName"), FamilyName));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FullName"), FullName));
@@ -1351,16 +1281,81 @@ namespace GetStoreApp.Views.Pages
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsResourcePackage"), IsResourcePackage));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsStub"), IsStub));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/VertifyIsOK"), VertifyIsOK));
-
-                DispatcherQueue.TryEnqueue(async () =>
-                {
-                    bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyStringList));
-                    await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
-                });
             });
+
+            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyStringList));
+            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
         }
 
         #endregion 第二部分：应用管理页面——挂载的事件
+
+        #region 第三部分：应用管理页面——自定义事件
+
+        private void OnUninstallCompleted(IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> result, AsyncStatus status, Package package)
+        {
+            // 卸载成功
+            if (result.Status is AsyncStatus.Completed)
+            {
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                {
+                    foreach (PackageModel pacakgeItem in AppManagerDataCollection)
+                    {
+                        if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
+                        {
+                            // 显示 UWP 应用卸载成功通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallSuccessfully"), pacakgeItem.Package.DisplayName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+
+                            AppManagerDataCollection.Remove(pacakgeItem);
+                            break;
+                        }
+                    }
+                });
+            }
+
+            // 卸载失败
+            else if (result.Status is AsyncStatus.Error)
+            {
+                DeploymentResult uninstallResult = result.GetResults();
+
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                {
+                    foreach (PackageModel pacakgeItem in AppManagerDataCollection)
+                    {
+                        if (pacakgeItem.Package.Id.FullName == package.Id.FullName)
+                        {
+                            // 显示 UWP 应用卸载失败通知
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed1"), pacakgeItem.Package.DisplayName));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUnInstallFailed2"));
+
+                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                            {
+                                                 ResourceService.GetLocalized("Notification/UWPUnInstallFailed3"),
+                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed4"), Convert.ToString(uninstallResult.ExtendedErrorCode.HResult)),
+                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed5"), uninstallResult.ErrorText)
+                            }));
+                            AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                            openSettingsButton.Arguments.Add("action", "OpenSettings");
+                            appNotificationBuilder.AddButton(openSettingsButton);
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+
+                            LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
+
+                            pacakgeItem.IsUnInstalling = false;
+                            break;
+                        }
+                    }
+                });
+            }
+
+            result.Close();
+        }
+
+        #endregion 第三部分：应用管理页面——自定义事件
 
         /// <summary>
         /// 返回到应用信息页面
@@ -1376,41 +1371,32 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 加载系统已安装的应用信息
         /// </summary>
-        private void GetInstalledApps()
+        private async Task GetInstalledAppsAsync()
         {
-            autoResetEvent ??= new AutoResetEvent(false);
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 IEnumerable<Package> findResultList = packageManager.FindPackagesForUser(string.Empty);
                 foreach (Package packageItem in findResultList)
                 {
                     MatchResultList.Add(packageItem);
                 }
-
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                {
-                    IsPackageEmpty = MatchResultList.Count is 0;
-                });
-
-                autoResetEvent?.Set();
             });
+
+            IsPackageEmpty = MatchResultList.Count is 0;
         }
 
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        private void InitializeData(bool hasSearchText = false)
+        private async Task InitializeDataAsync(bool hasSearchText = false)
         {
             IsLoadedCompleted = false;
             AppManagerDataCollection.Clear();
 
-            Task.Run(() =>
+            if (MatchResultList.Count > 0)
             {
-                autoResetEvent?.WaitOne();
-                autoResetEvent?.Dispose();
-                autoResetEvent = null;
-
-                if (MatchResultList is not null)
+                List<PackageModel> packageList = [];
+                await Task.Run(() =>
                 {
                     // 备份数据
                     List<Package> backupList = MatchResultList;
@@ -1498,8 +1484,6 @@ namespace GetStoreApp.Views.Pages
                             }
                     }
 
-                    List<PackageModel> packageList = [];
-
                     // 根据搜索条件对搜索符合要求的数据
                     if (hasSearchText)
                     {
@@ -1528,25 +1512,15 @@ namespace GetStoreApp.Views.Pages
                             IsUnInstalling = false
                         });
                     }
+                });
 
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        foreach (PackageModel packageItem in packageList)
-                        {
-                            AppManagerDataCollection.Add(packageItem);
-                        }
-
-                        IsLoadedCompleted = true;
-                    });
-                }
-                else
+                foreach (PackageModel packageItem in packageList)
                 {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        IsLoadedCompleted = true;
-                    });
+                    AppManagerDataCollection.Add(packageItem);
                 }
-            });
+            }
+
+            IsLoadedCompleted = true;
         }
 
         /// <summary>

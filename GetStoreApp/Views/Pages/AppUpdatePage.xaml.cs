@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
@@ -109,32 +108,22 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 更新选定的应用
         /// </summary>
-        private void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnUpdateExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string packageFamilyName && !string.IsNullOrEmpty(packageFamilyName))
             {
-                Task.Run(async () =>
+                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                 {
-                    AppInstallItem appInstallItem = null;
-                    foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                    if (appUpdateItem.PackageFamilyName == packageFamilyName)
                     {
-                        if (appUpdateItem.PackageFamilyName == packageFamilyName)
+                        appUpdateItem.AppInstallState = AppInstallState.Pending;
+                        appUpdateItem.IsUpdating = true;
+                        appUpdateItem.InstallInformation = Pending;
+                        appUpdateItem.PercentComplete = 0;
+
+                        await Task.Run(async () =>
                         {
-                            AutoResetEvent autoResetEvent = new(false);
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                appUpdateItem.AppInstallState = AppInstallState.Pending;
-                                appUpdateItem.IsUpdating = true;
-                                appUpdateItem.InstallInformation = Pending;
-                                appUpdateItem.PercentComplete = 0;
-
-                                autoResetEvent.Set();
-                            });
-
-                            autoResetEvent.WaitOne();
-                            autoResetEvent.Dispose();
-
-                            appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
+                            AppInstallItem appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
 
                             if (appInstallItem is not null)
                             {
@@ -143,22 +132,22 @@ namespace GetStoreApp.Views.Pages
 
                                 AppInstallingDict.TryAdd(appInstallItem.PackageFamilyName, appInstallItem);
                             }
+                        });
 
-                            break;
-                        }
+                        break;
                     }
-                });
+                }
             }
         }
 
         /// <summary>
         /// 取消下载
         /// </summary>
-        private void OnCancelExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCancelExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string packageFamilyName && !string.IsNullOrEmpty(packageFamilyName))
             {
-                Task.Run(() =>
+                await Task.Run(() =>
                 {
                     if (AppInstallingDict.TryGetValue(packageFamilyName, out AppInstallItem appInstallItem))
                     {
@@ -175,22 +164,19 @@ namespace GetStoreApp.Views.Pages
 
                         AppInstallingDict.Remove(packageFamilyName);
                     }
-
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
-                        {
-                            if (appUpdateItem.PackageFamilyName == packageFamilyName)
-                            {
-                                appUpdateItem.AppInstallState = AppInstallState.Canceled;
-                                appUpdateItem.IsUpdating = false;
-                                appUpdateItem.InstallInformation = Canceled;
-                                appUpdateItem.PercentComplete = 0;
-                                break;
-                            }
-                        }
-                    });
                 });
+
+                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                {
+                    if (appUpdateItem.PackageFamilyName == packageFamilyName)
+                    {
+                        appUpdateItem.AppInstallState = AppInstallState.Canceled;
+                        appUpdateItem.IsUpdating = false;
+                        appUpdateItem.InstallInformation = Canceled;
+                        appUpdateItem.PercentComplete = 0;
+                        break;
+                    }
+                }
             }
         }
 
@@ -217,13 +203,14 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查商店应用更新
         /// </summary>
-        private void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
+        private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
             IsLoadedCompleted = false;
 
             if (!IsInitialized) IsInitialized = true;
 
-            Task.Run(async () =>
+            List<AppUpdateModel> appUpdateList = [];
+            await Task.Run(async () =>
             {
                 AppUpdateOptions updateOptions = new()
                 {
@@ -231,7 +218,6 @@ namespace GetStoreApp.Views.Pages
                     AllowForcedAppRestart = false
                 };
                 IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
-                List<AppUpdateModel> appUpdateList = [];
 
                 foreach (AppInstallItem upgradableApps in upgradableAppsList)
                 {
@@ -276,18 +262,15 @@ namespace GetStoreApp.Views.Pages
                         }
                     }
                 }
-
-                // 只添加未有的项
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    foreach (AppUpdateModel appUpdateItem in appUpdateList)
-                    {
-                        AppUpdateCollection.Add(appUpdateItem);
-                    }
-
-                    IsLoadedCompleted = true;
-                });
             });
+
+            // 只添加未有的项
+            foreach (AppUpdateModel appUpdateItem in appUpdateList)
+            {
+                AppUpdateCollection.Add(appUpdateItem);
+            }
+
+            IsLoadedCompleted = true;
         }
 
         /// <summary>
@@ -375,35 +358,39 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnAppInstallItemStatausChanged(AppInstallItem sender, object args)
         {
-            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+            DispatcherQueue.TryEnqueue(async () =>
             {
-                if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
+                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                 {
-                    AutoResetEvent autoResetEvent = new(false);
-                    AppInstallStatus appInstallStatus = sender.GetCurrentStatus();
-                    string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                    string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
-
-                    DispatcherQueue.TryEnqueue(() =>
+                    if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
                     {
-                        appUpdateItem.AppInstallState = appInstallStatus.InstallState;
-                        appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
-                        appUpdateItem.InstallInformation = installInformation;
-                        appUpdateItem.InstallSubInformation = installSubInformation;
-                        appUpdateItem.IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
-                            appInstallStatus.InstallState is AppInstallState.Error ||
-                            appInstallStatus.InstallState is AppInstallState.Paused ||
-                            appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
-                            appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
-                            appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired);
+                        AppInstallStatus appInstallStatus = null;
+                        string installInformation = string.Empty;
+                        string installSubInformation = string.Empty;
 
-                        autoResetEvent.Set();
-                    });
+                        await Task.Run(() =>
+                        {
+                            appInstallStatus = sender.GetCurrentStatus();
+                            installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
+                            installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                        });
 
-                    autoResetEvent.WaitOne();
-                    autoResetEvent.Dispose();
+                        if (appInstallStatus is not null)
+                        {
+                            appUpdateItem.AppInstallState = appInstallStatus.InstallState;
+                            appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
+                            appUpdateItem.InstallInformation = installInformation;
+                            appUpdateItem.InstallSubInformation = installSubInformation;
+                            appUpdateItem.IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
+                                appInstallStatus.InstallState is AppInstallState.Error ||
+                                appInstallStatus.InstallState is AppInstallState.Paused ||
+                                appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
+                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
+                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired);
+                        }
+                    }
                 }
-            }
+            });
         }
 
         #endregion 第三部分：自定义事件

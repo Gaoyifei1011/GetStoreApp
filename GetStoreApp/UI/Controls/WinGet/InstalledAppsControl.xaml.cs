@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -31,8 +30,8 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
-        private readonly PackageManager installedAppsManager;
-        private AutoResetEvent autoResetEvent;
+        private bool isInitialized;
+        private PackageManager installedAppsManager;
 
         private string InstalledAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo");
 
@@ -125,19 +124,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         public InstalledAppsControl()
         {
             InitializeComponent();
-
-            try
-            {
-                installedAppsManager = new();
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, "Installed apps information initialized failed.", e);
-                return;
-            }
-
-            GetInstalledApps();
-            InitializeData();
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -167,13 +153,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        UninstallOptions uninstallOptions = new()
+                        UninstallResult unInstallResult = await installedAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, new()
                         {
                             PackageUninstallMode = PackageUninstallMode.Interactive,
                             PackageUninstallScope = PackageUninstallScope.Any
-                        };
-
-                        UninstallResult unInstallResult = await installedAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, uninstallOptions);
+                        });
 
                         // 获取卸载后的结果信息
                         // 卸载成功，从列表中删除该应用
@@ -185,27 +169,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallSuccessfully"), installedApps.AppName));
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
-                            // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
-                            if (unInstallResult.RebootRequired)
-                            {
-                                ContentDialogResult result = ContentDialogResult.None;
-                                AutoResetEvent uninstallResetEvent = new(false);
-                                DispatcherQueue.TryEnqueue(async () =>
-                                {
-                                    result = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UnInstall, installedApps.AppName), this);
-                                    uninstallResetEvent.Set();
-                                });
-
-                                uninstallResetEvent.WaitOne();
-                                uninstallResetEvent.Dispose();
-
-                                if (result is ContentDialogResult.Primary)
-                                {
-                                    Shell32Library.ShellExecute(IntPtr.Zero, "open", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", null, WindowShowStyle.SW_SHOWNORMAL);
-                                }
-                            }
-
-                            DispatcherQueue.TryEnqueue(() =>
+                            DispatcherQueue.TryEnqueue(async () =>
                             {
                                 // 从已安装应用列表中移除已卸载完成的应用
                                 foreach (InstalledAppsModel installedAppsItem in InstalledAppsCollection)
@@ -216,6 +180,20 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         IsInstalledAppsEmpty = InstalledAppsCollection.Count is 0;
                                         break;
                                     }
+                                }
+
+                                // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
+                                if (unInstallResult.RebootRequired)
+                                {
+                                    ContentDialogResult contentDialogResult = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UnInstall, installedApps.AppName), this);
+
+                                    await Task.Run(() =>
+                                    {
+                                        if (contentDialogResult is ContentDialogResult.Primary)
+                                        {
+                                            Shell32Library.ShellExecute(IntPtr.Zero, "open", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", null, WindowShowStyle.SW_SHOWNORMAL);
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -274,63 +252,87 @@ namespace GetStoreApp.UI.Controls.WinGet
         #region 第二部分：已安装应用控件——挂载的事件
 
         /// <summary>
+        /// 已安装应用控件初始化完成后触发的事件
+        /// </summary>
+        private async void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (!isInitialized)
+            {
+                isInitialized = true;
+
+                try
+                {
+                    installedAppsManager = new();
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Installed apps information initialized failed.", e);
+                    return;
+                }
+
+                await GetInstalledAppsAsync();
+                await InitializeDataAsync();
+            }
+        }
+
+        /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        private void OnSortWayClicked(object sender, RoutedEventArgs args)
+        private async void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
             {
                 IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
-                InitializeData();
+                await InitializeDataAsync();
             }
         }
 
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
-        private void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
             {
                 SelectedRule = (AppSortRuleKind)radioMenuFlyoutItem.Tag;
-                InitializeData();
+                await InitializeDataAsync();
             }
         }
 
         /// <summary>
         /// 更新已安装应用数据
         /// </summary>
-        private void OnRefreshClicked(object sender, RoutedEventArgs args)
+        private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList.Clear();
             IsLoadedCompleted = false;
             SearchText = string.Empty;
-            GetInstalledApps();
-            InitializeData();
+            await GetInstalledAppsAsync();
+            await InitializeDataAsync();
         }
 
         /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
-        private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (!string.IsNullOrEmpty(SearchText))
             {
-                InitializeData(true);
+                await InitializeDataAsync(true);
             }
         }
 
         /// <summary>
         /// 文本输入框内容为空时，复原原来的内容
         /// </summary>
-        private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        private async void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (sender is AutoSuggestBox autoSuggestBox)
             {
                 SearchText = autoSuggestBox.Text;
                 if (string.IsNullOrEmpty(SearchText) && MatchResultList.Count > 0)
                 {
-                    InitializeData();
+                    await InitializeDataAsync();
                 }
             }
         }
@@ -340,12 +342,11 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 加载系统已安装的应用信息
         /// </summary>
-        private void GetInstalledApps()
+        private async Task GetInstalledAppsAsync()
         {
             try
             {
-                autoResetEvent ??= new AutoResetEvent(false);
-                Task.Run(async () =>
+                await Task.Run(async () =>
                 {
                     PackageCatalogReference searchCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
@@ -365,7 +366,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
                     }
-                    autoResetEvent?.Set();
                 });
             }
             catch (Exception e)
@@ -377,20 +377,15 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 初始化列表数据
         /// </summary>
-        private void InitializeData(bool hasSearchText = false)
+        private async Task InitializeDataAsync(bool hasSearchText = false)
         {
             InstalledAppsCollection.Clear();
-
-            Task.Run(() =>
+            if (MatchResultList.Count > 0)
             {
-                autoResetEvent?.WaitOne();
-                autoResetEvent?.Dispose();
-                autoResetEvent = null;
+                List<InstalledAppsModel> installedAppsList = [];
 
-                if (MatchResultList.Count > 0)
+                await Task.Run(() =>
                 {
-                    List<InstalledAppsModel> installedAppsList = [];
-
                     if (hasSearchText)
                     {
                         foreach (MatchResult matchItem in MatchResultList)
@@ -448,26 +443,20 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 break;
                             }
                     }
+                });
 
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        foreach (InstalledAppsModel installedApps in installedAppsList)
-                        {
-                            InstalledAppsCollection.Add(installedApps);
-                        }
-                        IsInstalledAppsEmpty = MatchResultList.Count is 0;
-                        IsLoadedCompleted = true;
-                    });
-                }
-                else
+                foreach (InstalledAppsModel installedApps in installedAppsList)
                 {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        IsInstalledAppsEmpty = true;
-                        IsLoadedCompleted = true;
-                    });
+                    InstalledAppsCollection.Add(installedApps);
                 }
-            });
+                IsInstalledAppsEmpty = MatchResultList.Count is 0;
+            }
+            else
+            {
+                IsInstalledAppsEmpty = true;
+            }
+
+            IsLoadedCompleted = true;
         }
     }
 }

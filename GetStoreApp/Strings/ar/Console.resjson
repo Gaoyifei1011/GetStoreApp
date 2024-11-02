@@ -38,5 +38,5 @@
   "SerialNumberOutRange": "أدخلت الرقم التسلسلي الذي يتجاوز النطاق، أو أدخلته بشكل خاطئ، هل ترغب في إعادة إدخاله؟ (تأكد من إدخال \"Y\"، والخروج بإدخال أحرف أخرى)",
   "Title": "GetStoreApp",
   "TypeInformation": "يوجد نوعان من تطبيقات الاستحواذ: 1. URL (رابط)، 2. ProductID",
-  "URLSample": "عينة URL (رابط): https://www.microsoft.com/store/productId/9WZDNCRFJBMP"
+  "URLSample": "عينة URL (رابط): https://apps.microsoft.com/store/detail/9WZDNCRFJBMP"
 }

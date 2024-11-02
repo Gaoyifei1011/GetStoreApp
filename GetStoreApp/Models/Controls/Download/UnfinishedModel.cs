@@ -71,9 +71,9 @@ namespace GetStoreApp.Models.Controls.Download
         public string FilePath { get; set; }
 
         /// <summary>
-        /// 文件SHA1值，用来校验文件
+        /// 文件SHA256值，用来校验文件
         /// </summary>
-        public string FileSHA1 { get; set; }
+        public string FileSHA256 { get; set; }
 
         /// <summary>
         /// 文件下载标志：0为下载失败，1为等待下载，2为暂停下载，3为正在下载，4为成功下载

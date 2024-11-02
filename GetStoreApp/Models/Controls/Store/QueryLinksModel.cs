@@ -61,9 +61,9 @@ namespace GetStoreApp.Models.Controls.Store
         public string FileLinkExpireTime { get; set; }
 
         /// <summary>
-        /// 文件SHA1值
+        /// 文件SHA256值
         /// </summary>
-        public string FileSHA1 { get; set; }
+        public string FileSHA256 { get; set; }
 
         /// <summary>
         /// 文件大小

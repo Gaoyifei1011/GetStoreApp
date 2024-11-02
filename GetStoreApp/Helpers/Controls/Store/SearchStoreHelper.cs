@@ -4,11 +4,9 @@ using GetStoreApp.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
-using System.Threading;
+using System.Threading.Tasks;
 using Windows.Data.Json;
-using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
-using Windows.System.Threading;
 using Windows.Web.Http;
 using Windows.Web.Http.Headers;
 
@@ -19,7 +17,7 @@ namespace GetStoreApp.Helpers.Controls.Store
     /// </summary>
     public static class SearchStoreHelper
     {
-        private static readonly string storeUri = "https://www.microsoft.com/store/productId/{0}";
+        private static readonly string storeUri = "https://apps.microsoft.com/store/detail/{0}";
         private static readonly Uri manifestSearchUri = new("https://storeedgefd.dsx.mp.microsoft.com/v9.0/manifestSearch");
 
         /// <summary>
@@ -69,14 +67,13 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <summary>
         /// 搜索商店应用
         /// </summary>
-        public static Tuple<bool, List<SearchStoreModel>> SerachStoreApps(string generatedContent)
+        public static async Task<Tuple<bool, List<SearchStoreModel>>> SerachStoreAppsAsync(string generatedContent)
         {
             bool requestResult = false;
             List<SearchStoreModel> searchStoreList = [];
 
             try
             {
-                AutoResetEvent autoResetEvent = new(false);
                 HttpStringContent httpStringContent = new(generatedContent);
                 httpStringContent.TryComputeLength(out ulong length);
                 httpStringContent.Headers.Expires = DateTime.Now;
@@ -84,99 +81,49 @@ namespace GetStoreApp.Helpers.Controls.Store
                 httpStringContent.Headers.ContentLength = length;
                 httpStringContent.Headers.ContentType.CharSet = "utf-8";
 
+                // 默认超时时间是 20 秒
                 HttpClient httpClient = new();
-                IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> httpPostProgress = httpClient.PostAsync(manifestSearchUri, httpStringContent);
+                HttpRequestResult httpRequestResult = await httpClient.TryPostAsync(manifestSearchUri, httpStringContent);
+                httpClient.Dispose();
 
-                // 添加超时设置（半分钟后停止获取）
-                ThreadPoolTimer threadPoolTimer = ThreadPoolTimer.CreateTimer((_) => { }, TimeSpan.FromSeconds(30), (_) =>
+                // 请求成功
+                if (httpRequestResult.Succeeded && httpRequestResult.ResponseMessage.IsSuccessStatusCode)
                 {
-                    try
+                    requestResult = true;
+                    Dictionary<string, string> responseDict = new()
                     {
-                        if (httpPostProgress is not null && (httpPostProgress.Status is not AsyncStatus.Canceled || httpPostProgress.Status is not AsyncStatus.Completed || httpPostProgress.Status is not AsyncStatus.Error))
-                        {
-                            httpPostProgress.Cancel();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Search store apps cancel task failed", e);
-                    }
-                });
+                        { "Status code", httpRequestResult.ResponseMessage.StatusCode.ToString() },
+                        { "Headers", httpRequestResult.ResponseMessage.Headers is null ? string.Empty : httpRequestResult.ResponseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
+                        { "Response message:", httpRequestResult.ResponseMessage.RequestMessage is null ? string.Empty : httpRequestResult.ResponseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
+                    };
 
-                // HTTP POST 请求过程已完成
-                httpPostProgress.Completed += async (result, status) =>
-                {
-                    httpPostProgress = null;
-                    try
-                    {
-                        // 获取 POST 请求已完成
-                        if (status is AsyncStatus.Completed)
-                        {
-                            HttpResponseMessage responseMessage = result.GetResults();
+                    LogService.WriteLog(LoggingLevel.Information, "Search store apps request successfully.", responseDict);
 
-                            // 请求成功
-                            if (responseMessage.IsSuccessStatusCode)
+                    string responseString = await httpRequestResult.ResponseMessage.Content.ReadAsStringAsync();
+
+                    if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
+                    {
+                        JsonArray dataArray = responseStringObject.GetNamedArray("Data");
+                        foreach (IJsonValue jsonValue in dataArray)
+                        {
+                            JsonObject jobject = jsonValue.GetObject();
+
+                            searchStoreList.Add(new SearchStoreModel()
                             {
-                                requestResult = true;
-                                Dictionary<string, string> responseDict = new()
-                                {
-                                    { "Status code", responseMessage.StatusCode.ToString() },
-                                    { "Headers", responseMessage.Headers is null ? string.Empty : responseMessage.Headers.ToString().Replace('\r', ' ').Replace('\n', ' ') },
-                                    { "Response message:", responseMessage.RequestMessage is null ? string.Empty : responseMessage.RequestMessage.ToString().Replace('\r', ' ').Replace('\n', ' ') }
-                                };
-
-                                LogService.WriteLog(LoggingLevel.Information, "Search store apps request successfully.", responseDict);
-
-                                string responseString = await responseMessage.Content.ReadAsStringAsync();
-
-                                if (JsonObject.TryParse(responseString, out JsonObject responseStringObject))
-                                {
-                                    JsonArray dataArray = responseStringObject.GetNamedArray("Data");
-                                    foreach (IJsonValue jsonValue in dataArray)
-                                    {
-                                        JsonObject jobject = jsonValue.GetObject();
-
-                                        searchStoreList.Add(new SearchStoreModel()
-                                        {
-                                            StoreAppLink = string.Format(storeUri, jobject.GetNamedString("PackageIdentifier")),
-                                            StoreAppName = jobject.GetNamedString("PackageName"),
-                                            StoreAppPublisher = jobject.GetNamedString("Publisher")
-                                        });
-                                    }
-                                }
-                            }
-
-                            responseMessage.Dispose();
-                        }
-                        // 获取 POST 请求由于超时而被用户取消
-                        else if (status is AsyncStatus.Canceled)
-                        {
-                            LogService.WriteLog(LoggingLevel.Information, "Search store apps request timeout", result.ErrorCode);
-                        }
-                        // 获取 POST 请求发生错误
-                        else if (status is AsyncStatus.Error)
-                        {
-                            // 捕捉因为网络失去链接获取信息时引发的异常和可能存在的其他异常
-                            LogService.WriteLog(LoggingLevel.Information, "Search store apps request failed", result.ErrorCode);
+                                StoreAppLink = string.Format(storeUri, jobject.GetNamedString("PackageIdentifier")),
+                                StoreAppName = jobject.GetNamedString("PackageName"),
+                                StoreAppPublisher = jobject.GetNamedString("Publisher")
+                            });
                         }
                     }
-                    // 其他异常
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Check update request completed, but an unknown exception has occured", e);
-                    }
-                    finally
-                    {
-                        httpClient.Dispose();
-                        result.Close();
-                        threadPoolTimer.Cancel();
-                        autoResetEvent.Set();
-                    }
-                };
+                }
+                // 请求失败
+                else
+                {
+                    LogService.WriteLog(LoggingLevel.Information, "Search store apps request failed", httpRequestResult.ExtendedError);
+                }
 
-                autoResetEvent.WaitOne();
-                autoResetEvent.Dispose();
-                autoResetEvent = null;
+                httpRequestResult.Dispose();
             }
             // 其他异常
             catch (Exception e)

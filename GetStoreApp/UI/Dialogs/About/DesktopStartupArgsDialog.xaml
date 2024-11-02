@@ -239,7 +239,7 @@
 
         <TextBlock
             Margin="0"
-            Text="GetStoreApp.exe &quot;https://www.microsoft.com/store/productId/9WZDNCRFJBMP&quot;"
+            Text="GetStoreApp.exe &quot;https://apps.microsoft.com/store/detail/9WZDNCRFJBMP&quot;"
             TextAlignment="Left"
             TextWrapping="Wrap" />
 

@@ -74,7 +74,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         /// <summary>
         /// 痕迹清理
         /// </summary>
-        private void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void OnCleanupNowClicked(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             args.Cancel = true;
 
@@ -84,15 +84,9 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
 
             IsCleaning = true;
-            TraceCleanup();
-        }
+            List<Tuple<CleanKind, bool>> cleanSuccessfullyDict = [];
 
-        /// <summary>
-        /// 痕迹清理
-        /// </summary>
-        private void TraceCleanup()
-        {
-            Task.Run(async () =>
+            await Task.Run(async () =>
             {
                 List<CleanKind> selectedCleanList = [];
 
@@ -104,7 +98,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
                     }
                 }
 
-                List<Tuple<CleanKind, bool>> cleanSuccessfullyDict = [];
                 foreach (CleanKind cleanArgs in selectedCleanList)
                 {
                     // 清理并反馈回结果，修改相应的状态信息
@@ -113,24 +106,21 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 }
 
                 await Task.Delay(1000);
-
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    foreach (Tuple<CleanKind, bool> cleanArgsTuple in cleanSuccessfullyDict)
-                    {
-                        foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
-                        {
-                            if (traceCleanupItem.InternalName.Equals(cleanArgsTuple.Item1))
-                            {
-                                traceCleanupItem.IsCleanFailed = !cleanArgsTuple.Item2;
-                                break;
-                            }
-                        }
-                    }
-
-                    IsCleaning = false;
-                });
             });
+
+            foreach (Tuple<CleanKind, bool> cleanArgsTuple in cleanSuccessfullyDict)
+            {
+                foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
+                {
+                    if (traceCleanupItem.InternalName.Equals(cleanArgsTuple.Item1))
+                    {
+                        traceCleanupItem.IsCleanFailed = !cleanArgsTuple.Item2;
+                        break;
+                    }
+                }
+            }
+
+            IsCleaning = false;
         }
     }
 }

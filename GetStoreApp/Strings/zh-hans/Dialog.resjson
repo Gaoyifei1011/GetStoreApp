@@ -30,7 +30,7 @@
   "FileInformationTitle": "文件信息",
   "FileName": "文件名：",
   "FilePath": "文件路径：",
-  "FileSHA1": "文件SHA1值：",
+  "FileSHA256": "文件SHA256值：",
   "FileSize": "文件大小：",
   "HistoryCleanError": "历史记录在清理的过程中发生了错误，请检查历史记录访问权限。",
   "HistoryRecord": "历史记录",

@@ -45,7 +45,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
         /// <summary>
         /// 安装信息
         /// </summary>
-        private string _installInformation;
+        private string _installInformation = string.Empty;
 
         public string InstallInformation
         {
@@ -61,7 +61,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
             }
         }
 
-        private string _installSubInformation;
+        private string _installSubInformation = string.Empty;
 
         public string InstallSubInformation
         {

@@ -633,24 +633,15 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
                         {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                NavigateTo(typeof(StorePage));
-                            });
+                            NavigateTo(typeof(StorePage));
                         }
                         if (startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
                         {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                NavigateTo(typeof(AppUpdatePage));
-                            });
+                            NavigateTo(typeof(AppUpdatePage));
                         }
                         else if (startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
                         {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                NavigateTo(typeof(WinGetPage));
-                            });
+                            NavigateTo(typeof(WinGetPage));
                         }
                         else if (startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
                         {
@@ -661,29 +652,23 @@ namespace GetStoreApp.Views.Windows
                         }
                         else if (startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
                         {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                NavigateTo(typeof(DownloadPage));
-                            });
+                            NavigateTo(typeof(DownloadPage));
                         }
                     }
                     else if (startupArgs.Length is 3)
                     {
-                        DispatcherQueue.TryEnqueue(() =>
+                        if (GetCurrentPageType() != typeof(StorePage))
                         {
-                            if (GetCurrentPageType() != typeof(StorePage))
-                            {
-                                NavigateTo(typeof(StorePage));
-                            }
+                            NavigateTo(typeof(StorePage));
+                        }
 
-                            if (WindowFrame.Content is StorePage storePage)
-                            {
-                                storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
-                                storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
-                                storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
-                                storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
-                            }
-                        });
+                        if (WindowFrame.Content is StorePage storePage)
+                        {
+                            storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
+                            storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
+                            storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                            storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                        }
                     }
 
                     Show();
