@@ -81,7 +81,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (storeNavigationArgs is AppNaviagtionArgs.Store)
             {
-                StoreScroll.ChangeView(null, 0, null, true);
+                StoreScroll.ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
             }
         }
 

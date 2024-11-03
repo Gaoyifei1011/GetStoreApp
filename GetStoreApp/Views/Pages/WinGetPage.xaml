@@ -16,6 +16,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
         <XamlUICommand x:Name="CancelInstallCommand" ExecuteRequested="{x:Bind OnCancelInstallExecuteRequested}" />
     </Page.Resources>
 
@@ -160,30 +163,21 @@
                                     TextWrapping="WrapWholeWords" />
                             </Grid>
 
-                            <ListView
+                            <ItemsView
                                 Grid.Row="1"
                                 Width="450"
                                 Height="200"
                                 ItemsSource="{x:Bind InstallingAppsCollection, Mode=OneWay}"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                ScrollViewer.HorizontalScrollMode="Disabled"
-                                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                ScrollViewer.VerticalScrollMode="Enabled"
                                 SelectionMode="None"
                                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstallingAppsCollection.Count), Mode=OneWay}">
 
-                                <ListView.ItemContainerStyle>
-                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                        <Setter Property="Padding" Value="0" />
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                        <Setter Property="Margin" Value="0,1" />
-                                        <Setter Property="MinHeight" Value="0 " />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
+                                <ItemsView.Layout>
+                                    <StackLayout />
+                                </ItemsView.Layout>
 
-                                <ListView.ItemTemplate>
+                                <ItemsView.ItemTemplate>
                                     <DataTemplate x:DataType="model:InstallingAppsModel">
-                                        <ItemContainer Margin="0,0,0,1">
+                                        <ItemContainer Margin="0,0,0,2">
                                             <Grid
                                                 Height="60"
                                                 Margin="2,0"
@@ -359,8 +353,8 @@
                                             </Grid>
                                         </ItemContainer>
                                     </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                                </ItemsView.ItemTemplate>
+                            </ItemsView>
                         </Grid>
                     </Flyout>
                 </Button.Flyout>

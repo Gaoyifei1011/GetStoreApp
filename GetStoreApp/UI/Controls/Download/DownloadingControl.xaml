@@ -15,12 +15,12 @@
     mc:Ignorable="d">
 
     <Grid.Resources>
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
         <XamlUICommand x:Name="ContinueCommand" ExecuteRequested="{x:Bind OnContinueExecuteRequested}" />
         <XamlUICommand x:Name="DeleteCommand" ExecuteRequested="{x:Bind OnDeleteExecuteRequested}" />
         <XamlUICommand x:Name="PauseCommand" ExecuteRequested="{x:Bind OnPauseExecuteRequested}" />
-
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </Grid.Resources>
 
     <Grid Padding="0">
@@ -202,31 +202,22 @@
                 TextAlignment="Center" />
         </Grid>
 
-        <ListView
+        <ItemsView
             Grid.Row="2"
             Padding="30,3,30,30"
-            IsItemClickEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
-            ItemClick="{x:Bind OnItemInvoked}"
+            IsItemInvokedEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
+            ItemInvoked="{x:Bind OnItemInvoked}"
             ItemsSource="{x:Bind DownloadingCollection, Mode=OneWay}"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            ScrollViewer.HorizontalScrollMode="Disabled"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}">
 
-            <ListView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Margin" Value="0,1" />
-                    <Setter Property="MinHeight" Value="0 " />
-                </Style>
-            </ListView.ItemContainerStyle>
+            <ItemsView.Layout>
+                <StackLayout />
+            </ItemsView.Layout>
 
-            <ListView.ItemTemplate>
+            <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="download:DownloadingModel">
-                    <ItemContainer Margin="0,0,0,1">
+                    <ItemContainer Margin="0,0,0,2">
                         <Grid
                             Height="66"
                             Padding="16,12"
@@ -438,7 +429,7 @@
                         </Grid>
                     </ItemContainer>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ItemsView.ItemTemplate>
+        </ItemsView>
     </Grid>
 </Grid>

@@ -14,18 +14,18 @@
     mc:Ignorable="d">
 
     <StackPanel.Resources>
+        <SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
         <XamlUICommand x:Name="CopyCommand" ExecuteRequested="{x:Bind OnCopyExecuteRequested}" />
         <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
         <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
         <XamlUICommand x:Name="CopyLinkCommand" ExecuteRequested="{x:Bind OnCopyLinkExecuteRequested}" />
         <XamlUICommand x:Name="CopyInformationCommand" ExecuteRequested="{x:Bind OnCopyInformationExecuteRequested}" />
-
-        <SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </StackPanel.Resources>
 
     <Grid Margin="0,0,1,0" ColumnSpacing="6">

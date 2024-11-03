@@ -15,15 +15,15 @@
     mc:Ignorable="d">
 
     <StackPanel.Resources>
-        <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
-        <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
-        <XamlUICommand x:Name="QueryLinksCommand" ExecuteRequested="{x:Bind OnQueryLinksExecuteRequested}" />
-
         <SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
+        <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
+        <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
+        <XamlUICommand x:Name="QueryLinksCommand" ExecuteRequested="{x:Bind OnQueryLinksExecuteRequested}" />
     </StackPanel.Resources>
 
     <Grid Margin="0,0,1,0" ColumnSpacing="6">

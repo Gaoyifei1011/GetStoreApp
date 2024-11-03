@@ -53,10 +53,9 @@
                 Content="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}" />
         </Grid>
 
-        <ScrollViewer
+        <ScrollView
             x:Name="SettingsScroll"
             Grid.Row="1"
-            HorizontalScrollBarVisibility="Disabled"
             HorizontalScrollMode="Disabled"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
@@ -444,43 +443,37 @@
                                     </Style>
                                 </Flyout.FlyoutPresenterStyle>
 
-                                <ListView
-                                    x:Name="LanguageListView"
+                                <ItemsView
+                                    x:Name="LanguageItemsView"
                                     MaxHeight="300"
                                     Background="Transparent"
                                     ItemsSource="{x:Bind LanguageCollection, Mode=OneWay}"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.HorizontalScrollMode="Disabled"
-                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.VerticalScrollMode="Enabled"
                                     SelectionMode="None">
 
-                                    <ListView.ItemContainerStyle>
-                                        <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                            <Setter Property="Padding" Value="0" />
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            <Setter Property="Margin" Value="0,1" />
-                                            <Setter Property="MinHeight" Value="0 " />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
+                                    <ItemsView.Resources>
+                                        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+                                        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+                                    </ItemsView.Resources>
 
-                                    <ItemsControl.ItemContainerTransitions>
-                                        <TransitionCollection />
-                                    </ItemsControl.ItemContainerTransitions>
+                                    <ItemsView.Layout>
+                                        <StackLayout />
+                                    </ItemsView.Layout>
 
-                                    <ListView.ItemTemplate>
+                                    <ItemsView.ItemTemplate>
                                         <DataTemplate x:DataType="model:LanguageModel">
-                                            <RadioMenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource LanguageCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                GroupName="LanguageRadioGroup"
-                                                IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                Text="{x:Bind sys:Convert.ToString(LangaugeInfo.Value)}" />
+                                            <ItemContainer>
+                                                <RadioMenuFlyoutItem
+                                                    Height="32"
+                                                    Padding="11,0"
+                                                    Command="{StaticResource LanguageCommand}"
+                                                    CommandParameter="{x:Bind}"
+                                                    GroupName="LanguageRadioGroup"
+                                                    IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                                    Text="{x:Bind sys:Convert.ToString(LangaugeInfo.Value)}" />
+                                            </ItemContainer>
                                         </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
+                                    </ItemsView.ItemTemplate>
+                                </ItemsView>
                             </Flyout>
                         </DropDownButton.Flyout>
                     </DropDownButton>
@@ -1015,43 +1008,37 @@
                                                 </Style>
                                             </Flyout.FlyoutPresenterStyle>
 
-                                            <ListView
-                                                x:Name="StoreRegionListView"
+                                            <ItemsView
+                                                x:Name="StoreRegionItemsView"
                                                 MaxHeight="300"
                                                 Background="Transparent"
                                                 ItemsSource="{x:Bind StoreRegionCollection, Mode=OneWay}"
-                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                                ScrollViewer.HorizontalScrollMode="Disabled"
-                                                ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                                ScrollViewer.VerticalScrollMode="Enabled"
                                                 SelectionMode="None">
 
-                                                <ListView.ItemContainerStyle>
-                                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                        <Setter Property="Padding" Value="0" />
-                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                        <Setter Property="Margin" Value="0,1" />
-                                                        <Setter Property="MinHeight" Value="0 " />
-                                                    </Style>
-                                                </ListView.ItemContainerStyle>
+                                                <ItemsView.Resources>
+                                                    <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+                                                    <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+                                                </ItemsView.Resources>
 
-                                                <ItemsControl.ItemContainerTransitions>
-                                                    <TransitionCollection />
-                                                </ItemsControl.ItemContainerTransitions>
+                                                <ItemsView.Layout>
+                                                    <StackLayout />
+                                                </ItemsView.Layout>
 
-                                                <ListView.ItemTemplate>
+                                                <ItemsView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:StoreRegionModel">
-                                                        <RadioMenuFlyoutItem
-                                                            Height="32"
-                                                            Padding="11,0"
-                                                            Command="{StaticResource StoreRegionCommand}"
-                                                            CommandParameter="{x:Bind}"
-                                                            GroupName="StoreRegionRadioGroup"
-                                                            IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                            Text="{x:Bind StoreRegionInfo.DisplayName}" />
+                                                        <ItemContainer>
+                                                            <RadioMenuFlyoutItem
+                                                                Height="32"
+                                                                Padding="11,0"
+                                                                Command="{StaticResource StoreRegionCommand}"
+                                                                CommandParameter="{x:Bind}"
+                                                                GroupName="StoreRegionRadioGroup"
+                                                                IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                                                Text="{x:Bind StoreRegionInfo.DisplayName}" />
+                                                        </ItemContainer>
                                                     </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
+                                                </ItemsView.ItemTemplate>
+                                            </ItemsView>
                                         </Flyout>
                                     </DropDownButton.Flyout>
                                 </DropDownButton>
@@ -1931,6 +1918,6 @@
                     </Expander.Content>
                 </Expander>
             </StackPanel>
-        </ScrollViewer>
+        </ScrollView>
     </Grid>
 </Page>

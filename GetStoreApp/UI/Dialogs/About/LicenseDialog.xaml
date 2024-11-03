@@ -15,8 +15,6 @@
 
     <TextBox
         IsReadOnly="True"
-        ScrollViewer.VerticalScrollBarVisibility="Auto"
-        ScrollViewer.VerticalScrollMode="Enabled"
         Text="{x:Bind LicenseText, Mode=OneWay}"
         TextWrapping="Wrap" />
 </ContentDialog>

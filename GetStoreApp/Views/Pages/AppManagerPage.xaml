@@ -20,6 +20,9 @@
         <x:Double x:Key="BreadcrumbBarChevronFontSize">16</x:Double>
         <Thickness x:Key="BreadcrumbBarChevronPadding">8,0</Thickness>
 
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
         <XamlUICommand x:Name="CopyAUMIDCommand" ExecuteRequested="{x:Bind OnCopyAUMIDExecuteRequested}" />
         <XamlUICommand x:Name="CopyDependencyInformationCommand" ExecuteRequested="{x:Bind OnCopyDependencyInformationExecuteRequested}" />
         <XamlUICommand x:Name="CopyDependencyNameCommand" ExecuteRequested="{x:Bind OnCopyDependencyNameExecuteRequested}" />
@@ -36,9 +39,6 @@
         <XamlUICommand x:Name="ShowMoreCommand" ExecuteRequested="{x:Bind OnShowMoreExecuteRequested}" />
         <XamlUICommand x:Name="UnInstallCommand" ExecuteRequested="{x:Bind OnUnInstallExecuteRequested}" />
         <XamlUICommand x:Name="ViewInformationCommand" ExecuteRequested="{x:Bind OnViewInformationExecuteRequested}" />
-
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </Page.Resources>
 
     <Grid Padding="0">
@@ -428,29 +428,20 @@
                             TextAlignment="Center" />
                     </Grid>
 
-                    <ListView
+                    <ItemsView
                         Grid.Row="1"
                         Padding="30,0,30,30"
                         ItemsSource="{x:Bind AppManagerDataCollection, Mode=OneWay}"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        ScrollViewer.HorizontalScrollMode="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                        ScrollViewer.VerticalScrollMode="Enabled"
                         SelectionMode="None"
                         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppManagerDataCollection.Count), Mode=OneWay}">
 
-                        <ListView.ItemContainerStyle>
-                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                <Setter Property="Padding" Value="0" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="Margin" Value="0,1" />
-                                <Setter Property="MinHeight" Value="0 " />
-                            </Style>
-                        </ListView.ItemContainerStyle>
+                        <ItemsView.Layout>
+                            <StackLayout />
+                        </ItemsView.Layout>
 
-                        <ListView.ItemTemplate>
+                        <ItemsView.ItemTemplate>
                             <DataTemplate x:DataType="appManager:PackageModel">
-                                <ItemContainer Margin="0,0,0,1">
+                                <ItemContainer Margin="0,0,0,2">
                                     <Grid>
                                         <Grid
                                             Height="60"
@@ -664,15 +655,15 @@
                                     </Grid>
                                 </ItemContainer>
                             </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        </ItemsView.ItemTemplate>
+                    </ItemsView>
                 </Grid>
             </Grid>
         </Grid>
 
         <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueCheckConverterHelper.IsCurrentControl(BreadCollection.Count, 2), Mode=OneWay}">
 
-            <ScrollViewer Margin="0,5,0,0">
+            <ScrollView Margin="0,5,0,0">
                 <StackPanel Margin="30,0,30,30" Spacing="3">
                     <Expander
                         HorizontalAlignment="Stretch"
@@ -1564,7 +1555,7 @@
                         </Expander.Content>
                     </Expander>
                 </StackPanel>
-            </ScrollViewer>
+            </ScrollView>
         </Grid>
     </Grid>
 </Page>

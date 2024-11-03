@@ -83,10 +83,9 @@
             Margin="35,0,35,3"
             Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-        <ScrollViewer
+        <ScrollView
             x:Name="StoreScroll"
             Grid.Row="3"
-            HorizontalScrollBarVisibility="Disabled"
             HorizontalScrollMode="Disabled"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
@@ -95,6 +94,6 @@
                 <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
                 <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
             </Grid>
-        </ScrollViewer>
+        </ScrollView>
     </Grid>
 </Page>

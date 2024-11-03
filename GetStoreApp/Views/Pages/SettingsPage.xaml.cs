@@ -482,11 +482,11 @@ namespace GetStoreApp.Views.Pages
             if (settingNavigationArgs is AppNaviagtionArgs.DownloadOptions)
             {
                 Point targetPosition = DownloadOptions.TransformToVisual(SettingsScroll).TransformPoint(currentPoint);
-                SettingsScroll.ChangeView(null, targetPosition.Y, null, true);
+                SettingsScroll.ScrollTo(0, targetPosition.Y, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
             }
             else
             {
-                SettingsScroll.ChangeView(null, 0, null, true);
+                SettingsScroll.ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
             }
         }
 
@@ -824,11 +824,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLanguageFlyoutOpened(object sender, object args)
         {
-            foreach (LanguageModel languageItem in LanguageCollection)
+            for (int index = 0; index < LanguageCollection.Count; index++)
             {
-                if (languageItem.IsChecked)
+                if (LanguageCollection[index].IsChecked)
                 {
-                    LanguageListView.ScrollIntoView(languageItem);
+                    LanguageItemsView.ScrollView.ScrollTo(0, index * 32 - 134, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
                     break;
                 }
             }
@@ -899,11 +899,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnStoreRegionFlyoutOpened(object sender, object args)
         {
-            foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
+            for (int index = 0; index < StoreRegionCollection.Count; index++)
             {
-                if (storeRegionItem.IsChecked)
+                if (StoreRegionCollection[index].IsChecked)
                 {
-                    StoreRegionListView.ScrollIntoView(storeRegionItem);
+                    StoreRegionItemsView.ScrollView.ScrollTo(0, index * 32 - 134, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
                     break;
                 }
             }

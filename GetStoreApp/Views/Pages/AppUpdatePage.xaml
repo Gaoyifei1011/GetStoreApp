@@ -11,11 +11,11 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <XamlUICommand x:Name="UpdateCommand" ExecuteRequested="{x:Bind OnUpdateExecuteRequested}" />
-        <XamlUICommand x:Name="CancelCommand" ExecuteRequested="{x:Bind OnCancelExecuteRequested}" />
-
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
+        <XamlUICommand x:Name="UpdateCommand" ExecuteRequested="{x:Bind OnUpdateExecuteRequested}" />
+        <XamlUICommand x:Name="CancelCommand" ExecuteRequested="{x:Bind OnCancelExecuteRequested}" />
     </Page.Resources>
 
     <Grid Padding="0">
@@ -196,10 +196,6 @@
                 Grid.Row="1"
                 Padding="30,0,30,30"
                 ItemsSource="{x:Bind AppUpdateCollection, Mode=OneWay}"
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                ScrollViewer.HorizontalScrollMode="Disabled"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollMode="Enabled"
                 SelectionMode="None"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}">
 

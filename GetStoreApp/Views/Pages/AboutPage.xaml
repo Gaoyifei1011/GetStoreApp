@@ -139,10 +139,9 @@
             </DropDownButton>
         </Grid>
 
-        <ScrollViewer
+        <ScrollView
             x:Name="AboutScroll"
             Grid.Row="1"
-            HorizontalScrollBarVisibility="Disabled"
             HorizontalScrollMode="Disabled"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
@@ -927,6 +926,6 @@
                     </Expander.Content>
                 </Expander>
             </StackPanel>
-        </ScrollViewer>
+        </ScrollView>
     </Grid>
 </Page>
