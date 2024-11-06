@@ -3,6 +3,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Windows.Globalization;
 
@@ -27,7 +28,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static List<GeographicRegion> StoreRegionList { get; } = [];
 
-        public static event EventHandler ServiceChanged;
+        public static event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 应用在初始化前获取设置存储的区域值，如果设置值为空，设定默认的应用区域值
@@ -58,7 +59,7 @@ namespace GetStoreApp.Services.Controls.Settings
                     StoreRegion = DefaultStoreRegion;
                 }
 
-                ServiceChanged?.Invoke(null, EventArgs.Empty);
+                PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(StoreRegion)));
             }
         }
 

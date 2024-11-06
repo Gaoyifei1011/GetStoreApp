@@ -1,6 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
 using System;
+using System.ComponentModel;
+using Windows.UI.Notifications;
 
 namespace GetStoreApp.Services.Controls.Settings
 {
@@ -15,12 +17,31 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static bool AppNotification { get; private set; }
 
+        private static NotificationSetting _notificationSetting;
+
+        public static NotificationSetting NotificationSetting
+        {
+            get { return _notificationSetting; }
+
+            private set
+            {
+                if (!Equals(_notificationSetting, value))
+                {
+                    _notificationSetting = value;
+                    PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(nameof(NotificationSetting)));
+                }
+            }
+        }
+
+        public static event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// 应用在初始化前获取设置存储的应用通知显示值
         /// </summary>
         public static void InitializeNotification()
         {
             AppNotification = GetNotification();
+            NotificationSetting = ToastNotificationService.AppToastNotifier.Setting;
         }
 
         /// <summary>
@@ -47,6 +68,14 @@ namespace GetStoreApp.Services.Controls.Settings
             AppNotification = appNotification;
 
             LocalSettingsService.SaveSetting(settingsKey, appNotification);
+        }
+
+        /// <summary>
+        /// 更新应用的通知状态
+        /// </summary>
+        public static void UpdateNotificationSetting()
+        {
+            NotificationSetting = ToastNotificationService.AppToastNotifier.Setting;
         }
     }
 }

@@ -12,22 +12,6 @@ namespace GetStoreApp.Helpers.Converters
     public static class ValueCheckConverterHelper
     {
         /// <summary>
-        /// 判断值是否相同（取反）
-        /// </summary>
-        public static bool ObjectCompareReverseConvert(object value, object comparedValue)
-        {
-            return !Equals(value, comparedValue);
-        }
-
-        /// <summary>
-        /// 判断两个版本是否共同存在
-        /// </summary>
-        public static bool IsVersionExisted(bool isOfficialVersionExisted, bool isDevVersionExisted)
-        {
-            return isOfficialVersionExisted && isDevVersionExisted;
-        }
-
-        /// <summary>
         /// 检查痕迹清理对话框按钮是否可用
         /// </summary>
         public static bool IsTraceCleanupButtonEnabled(bool isSelected, bool isCleaning)

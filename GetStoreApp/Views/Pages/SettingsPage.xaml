@@ -8,6 +8,7 @@
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreApp.Models.Controls.Settings"
+    xmlns:notification="using:Windows.UI.Notifications"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     xmlns:sys="using:System"
@@ -232,7 +233,8 @@
                     <DropDownButton
                         Grid.Column="3"
                         VerticalAlignment="Center"
-                        Content="{x:Bind LocalizeDisplayNumber(Backdrop), Mode=OneWay}">
+                        Content="{x:Bind LocalizeDisplayNumber(Backdrop), Mode=OneWay}"
+                        IsEnabled="{x:Bind AdvancedEffectsEnabled, Mode=OneWay}">
 
                         <DropDownButton.Flyout>
                             <MenuFlyout Placement="Bottom">
@@ -360,8 +362,7 @@
                         MinWidth="0"
                         Margin="0,-2,0,0"
                         FlowDirection="{x:Bind controlHelper:ToggleSwitchHelper.GetFlowDirection(service:LanguageService.FlowDirection)}"
-                        IsEnabled="{x:Bind converter:ValueCheckConverterHelper.ObjectCompareReverseConvert(Backdrop.Key, BackdropList[0].Key), Mode=OneWay}"
-                        IsEnabledChanged="{x:Bind OnIsEnabledChanged}"
+                        IsEnabled="{x:Bind AlwaysShowBackdropEnabled, Mode=OneWay}"
                         IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOnContent')}"
@@ -613,6 +614,7 @@
                         MinWidth="0"
                         Margin="0,-2,0,0"
                         FlowDirection="{x:Bind controlHelper:ToggleSwitchHelper.GetFlowDirection(service:LanguageService.FlowDirection)}"
+                        IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
                         IsOn="{x:Bind Notification, Mode=OneWay}"
                         OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
                         OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOnContent')}"

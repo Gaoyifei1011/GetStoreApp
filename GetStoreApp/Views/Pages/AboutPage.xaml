@@ -55,7 +55,10 @@
                 FontSize="22"
                 Text="{x:Bind root:ResourceService.GetLocalized('About/Title')}" />
 
-            <DropDownButton Grid.Column="1" Content="{x:Bind root:ResourceService.GetLocalized('About/Others')}">
+            <DropDownButton
+                Grid.Column="1"
+                Content="{x:Bind root:ResourceService.GetLocalized('About/Others')}"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/OthersToolTip')}">
 
                 <DropDownButton.Flyout>
                     <MenuFlyout Placement="Bottom">
@@ -841,10 +844,26 @@
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
                             <TextBlock
-                                Margin="30,0,16,10"
+                                Margin="30,0,16,5"
                                 FontSize="14"
                                 FontWeight="Normal"
                                 Text="{x:Bind root:ResourceService.GetLocalized('About/InstallModeDescription3')}"
+                                TextAlignment="Justify"
+                                TextWrapping="Wrap" />
+
+                            <MenuFlyoutSeparator />
+
+                            <TextBlock
+                                Margin="30,10,16,10"
+                                FontSize="15"
+                                FontWeight="Normal"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/OtherOptionInstruction')}"
+                                TextAlignment="Left" />
+                            <TextBlock
+                                Margin="30,0,16,10"
+                                FontSize="14"
+                                FontWeight="Normal"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/OtherOptionInstructionDescription')}"
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
                         </StackPanel>

@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Root
     /// </summary>
     public static class ToastNotificationService
     {
-        private static readonly ToastNotifier appToastNotifier = ToastNotificationManager.CreateToastNotifier();
+        public static ToastNotifier AppToastNotifier { get; } = ToastNotificationManager.CreateToastNotifier();
 
         /// <summary>
         /// 处理应用通知
@@ -121,7 +121,7 @@ namespace GetStoreApp.Services.Root
                 XmlDocument notificationDocument = new();
                 notificationDocument.LoadXml(appNotification.Payload);
                 ToastNotification notificaiton = new(notificationDocument);
-                appToastNotifier.Show(notificaiton);
+                AppToastNotifier.Show(notificaiton);
             }
             catch (Exception e)
             {

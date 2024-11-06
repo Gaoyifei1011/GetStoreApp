@@ -47,6 +47,8 @@
   "LinkFilter": "链接过滤说明",
   "MicrosoftStore": "1.微软商店",
   "MicrosoftStoreDescription": "应用打开后，选择您要获取的链接类型和通道类型。选择完成后，输入您要获取的链接内容，输入完成后，点击‘获取链接’按钮即可获取到商店链接对应的应用安装包。在成功获取后，您的输入记录将被储存，下一次打开应用后就可以快速获取到商店链接对应的应用安装包。",
+  "OtherOptionInstruction": "其他选项说明",
+  "OtherOptionInstructionDescription": "部分选项的功能启用与相应的系统设置选项有关，请确保对应的选项处于正常启用状态",
   "Others": "其他",
   "OthersToolTip": "其他选项",
   "PaidApps": "付费应用请从官方渠道下载",

@@ -73,7 +73,7 @@ namespace GetStoreApp.UI.Dialogs.Download
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (isInitialized)
+            if (!isInitialized)
             {
                 isInitialized = true;
 

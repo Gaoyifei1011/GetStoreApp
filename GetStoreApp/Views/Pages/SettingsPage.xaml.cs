@@ -27,6 +27,8 @@ using Windows.Management.Core;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI.Notifications;
+using Windows.UI.ViewManagement;
 using WinRT.Interop;
 
 // 抑制 CA1822，IDE0060 警告
@@ -40,6 +42,7 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
+        private UISettings uiSettings = new();
 
         private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
 
@@ -89,6 +92,38 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private bool _alwaysShowBackdropEnabled;
+
+        public bool AlwaysShowBackdropEnabled
+        {
+            get { return _alwaysShowBackdropEnabled; }
+
+            set
+            {
+                if (!Equals(_alwaysShowBackdropEnabled, value))
+                {
+                    _alwaysShowBackdropEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AlwaysShowBackdropEnabled)));
+                }
+            }
+        }
+
+        private bool _advancedEffectsEnabled;
+
+        public bool AdvancedEffectsEnabled
+        {
+            get { return _advancedEffectsEnabled; }
+
+            set
+            {
+                if (!Equals(_advancedEffectsEnabled, value))
+                {
+                    _advancedEffectsEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AdvancedEffectsEnabled)));
+                }
+            }
+        }
+
         private KeyValuePair<string, string> _appLanguage;
 
         public KeyValuePair<string, string> AppLanguage
@@ -133,6 +168,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     _notification = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Notification)));
+                }
+            }
+        }
+
+        private bool _notificationEnabled = NotificationService.NotificationSetting is NotificationSetting.Enabled;
+
+        public bool NotificationEnabled
+        {
+            get { return _notificationEnabled; }
+
+            private set
+            {
+                if (!Equals(_notificationEnabled, value))
+                {
+                    _notificationEnabled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationEnabled)));
                 }
             }
         }
@@ -353,6 +404,8 @@ namespace GetStoreApp.Views.Pages
         {
             InitializeComponent();
 
+            AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
+
             foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
             {
                 if (LanguageService.AppLanguage.Key.Equals(languageItem.Key))
@@ -395,8 +448,11 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
+            AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Backdrop.Key.Equals(BackdropList[0].Key);
+            uiSettings.AdvancedEffectsEnabledChanged += OnAdvancedEffectsEnabledChanged;
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
-            StoreRegionService.ServiceChanged += OnServiceChanged;
+            NotificationService.PropertyChanged += OnServicePropertyChanged;
+            StoreRegionService.PropertyChanged += OnServicePropertyChanged;
         }
 
         #region 第一部分：重写父类事件
@@ -535,6 +591,13 @@ namespace GetStoreApp.Views.Pages
             {
                 Backdrop = BackdropList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 BackdropService.SetBackdrop(Backdrop);
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Backdrop.Key.Equals(BackdropList[0].Key);
+
+                if (Backdrop.Equals(BackdropList[0]))
+                {
+                    AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
+                    AlwaysShowBackdropValue = false;
+                }
             }
         }
 
@@ -933,18 +996,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        /// <summary>
-        /// 当应用未启用背景色设置时，自动关闭始终显示背景色设置
-        /// </summary>
-        private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs args)
-        {
-            if (sender is ToggleSwitch)
-            {
-                AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
-                AlwaysShowBackdropValue = false;
-            }
-        }
-
         #endregion 第三部分：设置页面——挂载的事件
 
         #region 第四部分：自定义事件
@@ -957,7 +1008,9 @@ namespace GetStoreApp.Views.Pages
             try
             {
                 GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                StoreRegionService.ServiceChanged -= OnServiceChanged;
+                uiSettings.ColorValuesChanged -= OnAdvancedEffectsEnabledChanged;
+                NotificationService.PropertyChanged -= OnServicePropertyChanged;
+                StoreRegionService.PropertyChanged -= OnServicePropertyChanged;
             }
             catch (Exception e)
             {
@@ -966,32 +1019,54 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 设置选项发生变化时触发的事件
+        /// 在启用或禁用系统高级 UI 效果设置时发生的事件
         /// </summary>
-        private void OnServiceChanged(object sender, EventArgs args)
+        private void OnAdvancedEffectsEnabledChanged(UISettings sender, object args)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                if (!CurrentCountryOrRegion.CodeTwoLetter.Equals(StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
-                {
-                    CurrentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
-                }
+                AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled ? !Backdrop.Key.Equals(BackdropList[0].Key) : false;
+            });
+        }
 
-                if (UseSystemRegionValue)
+        /// <summary>
+        /// 设置选项发生变化时触发的事件
+        /// </summary>
+        private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName.Equals(nameof(NotificationService.NotificationSetting)))
+            {
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    StoreRegion = StoreRegionService.DefaultStoreRegion;
-
-                    foreach (StoreRegionModel item in StoreRegionCollection)
+                    NotificationEnabled = NotificationService.NotificationSetting is NotificationSetting.Enabled;
+                });
+            }
+            else if (args.PropertyName.Equals(nameof(StoreRegionService.StoreRegion)))
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (!CurrentCountryOrRegion.CodeTwoLetter.Equals(StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
                     {
-                        item.IsChecked = false;
-                        if (StoreRegion.CodeTwoLetter.Equals(item.StoreRegionInfo.CodeTwoLetter))
+                        CurrentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
+                    }
+
+                    if (UseSystemRegionValue)
+                    {
+                        StoreRegion = StoreRegionService.DefaultStoreRegion;
+
+                        foreach (StoreRegionModel item in StoreRegionCollection)
                         {
-                            StoreRegion = item.StoreRegionInfo;
-                            item.IsChecked = true;
+                            item.IsChecked = false;
+                            if (StoreRegion.CodeTwoLetter.Equals(item.StoreRegionInfo.CodeTwoLetter))
+                            {
+                                StoreRegion = item.StoreRegionInfo;
+                                item.IsChecked = true;
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
 
         #endregion 第四部分：自定义事件

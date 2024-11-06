@@ -47,6 +47,8 @@
   "LinkFilter": "Link filtering instructions",
   "MicrosoftStore": "1. Microsoft Store",
   "MicrosoftStoreDescription": "Once the app opens, select the type of link and channel you want to get. When the selection is complete, enter the link content you want to get, and when the input is complete, click the 'Get Link' button to get the app installation package corresponding to the store link. After successful acquisition, your input record will be stored, and the next time you open the app, you can quickly get the app installation package corresponding to the store link.",
+  "OtherOptionInstruction": "Other options instruction",
+  "OtherOptionInstructionDescription": "Some options are enabled in relation to the corresponding system settings options, so please make sure that the corresponding options are properly enabled",
   "Others": "Others",
   "OthersToolTip": "Other options",
   "PaidApps": "Please download the paid app from the official channel",

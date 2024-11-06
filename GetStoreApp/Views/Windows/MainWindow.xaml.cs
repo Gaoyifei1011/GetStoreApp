@@ -197,6 +197,8 @@ namespace GetStoreApp.Views.Windows
                 if (AppWindow.IsVisible && SystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
                     materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
+
+                    NotificationService.UpdateNotificationSetting();
                 }
             }
             catch (Exception e)
