@@ -136,9 +136,9 @@ namespace GetStoreApp
             else
             {
                 AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-                bool AttachResult = Kernel32Library.AttachConsole();
+                bool attachResult = Kernel32Library.AttachConsole();
 
-                if (!AttachResult)
+                if (!attachResult)
                 {
                     Kernel32Library.AllocConsole();
                 }

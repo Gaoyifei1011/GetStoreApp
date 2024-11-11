@@ -1,6 +1,4 @@
-﻿using GetStoreAppInstaller.Views.Windows;
-using Mile.Xaml;
-using System;
+﻿using System;
 using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller
@@ -11,9 +9,8 @@ namespace GetStoreAppInstaller
 
         public XamlIslandsApp()
         {
-            this.ThreadInitialize();
             InitializeComponent();
-            LoadComponent(this, new Uri("ms-appx:///XamlIslandsApp.xaml"));
+
             UnhandledException += OnUnhandledException;
         }
 
@@ -47,17 +44,17 @@ namespace GetStoreAppInstaller
         {
             if (!isDisposed)
             {
-                if (disposing)
-                {
-                    this.ThreadUninitialize();
+                //if (disposing)
+                //{
+                //    this.ThreadUninitialize();
 
-                    if (MainWindow.Current is not null && !MainWindow.Current.IsDisposed)
-                    {
-                        MainWindow.Current?.Close();
-                    }
+                //    if (MainWindow.Current is not null && !MainWindow.Current.IsDisposed)
+                //    {
+                //        MainWindow.Current?.Close();
+                //    }
 
-                    System.Windows.Forms.Application.Exit();
-                }
+                //    System.Windows.Forms.Application.Exit();
+                //}
 
                 isDisposed = true;
             }
