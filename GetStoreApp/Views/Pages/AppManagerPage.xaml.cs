@@ -1375,10 +1375,17 @@ namespace GetStoreApp.Views.Pages
         {
             await Task.Run(() =>
             {
-                IEnumerable<Package> findResultList = packageManager.FindPackagesForUser(string.Empty);
-                foreach (Package packageItem in findResultList)
+                try
                 {
-                    MatchResultList.Add(packageItem);
+                    IEnumerable<Package> findResultList = packageManager.FindPackagesForUser(string.Empty);
+                    foreach (Package packageItem in findResultList)
+                    {
+                        MatchResultList.Add(packageItem);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Find current user packages failed", e);
                 }
             });
 
@@ -1402,115 +1409,124 @@ namespace GetStoreApp.Views.Pages
                     List<Package> backupList = MatchResultList;
                     List<Package> appTypesList = [];
 
-                    // 根据选项是否筛选包含框架包的数据
-                    if (IsAppFramework)
+                    try
                     {
-                        foreach (Package packageItem in backupList)
+                        // 根据选项是否筛选包含框架包的数据
+                        if (IsAppFramework)
                         {
-                            if (packageItem.IsFramework == IsAppFramework)
+                            foreach (Package packageItem in backupList)
                             {
-                                appTypesList.Add(packageItem);
+                                if (packageItem.IsFramework == IsAppFramework)
+                                {
+                                    appTypesList.Add(packageItem);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        appTypesList = backupList;
-                    }
+                        else
+                        {
+                            appTypesList = backupList;
+                        }
 
-                    List<Package> filteredList = [];
-                    foreach (Package packageItem in appTypesList)
-                    {
-                        if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                        List<Package> filteredList = [];
+                        foreach (Package packageItem in appTypesList)
                         {
-                            filteredList.Add(packageItem);
+                            if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                            {
+                                filteredList.Add(packageItem);
+                            }
+                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                            {
+                                filteredList.Add(packageItem);
+                            }
+                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                            {
+                                filteredList.Add(packageItem);
+                            }
+                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                            {
+                                filteredList.Add(packageItem);
+                            }
+                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                            {
+                                filteredList.Add(packageItem);
+                            }
                         }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
-                        {
-                            filteredList.Add(packageItem);
-                        }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
-                        {
-                            filteredList.Add(packageItem);
-                        }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
-                        {
-                            filteredList.Add(packageItem);
-                        }
-                        else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
-                        {
-                            filteredList.Add(packageItem);
-                        }
-                    }
 
-                    // 对过滤后的列表数据进行排序
-                    switch (SelectedRule)
-                    {
-                        case AppSortRuleKind.DisplayName:
-                            {
-                                if (IsIncrease)
-                                {
-                                    filteredList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-                                }
-                                else
-                                {
-                                    filteredList.Sort((item1, item2) => item2.DisplayName.CompareTo(item1.DisplayName));
-                                }
-                                break;
-                            }
-                        case AppSortRuleKind.PublisherName:
-                            {
-                                if (IsIncrease)
-                                {
-                                    filteredList.Sort((item1, item2) => item1.PublisherDisplayName.CompareTo(item2.PublisherDisplayName));
-                                }
-                                else
-                                {
-                                    filteredList.Sort((item1, item2) => item2.PublisherDisplayName.CompareTo(item1.PublisherDisplayName));
-                                }
-                                break;
-                            }
-                        case AppSortRuleKind.InstallDate:
-                            {
-                                if (IsIncrease)
-                                {
-                                    filteredList.Sort((item1, item2) => item1.InstalledDate.CompareTo(item2.InstalledDate));
-                                }
-                                else
-                                {
-                                    filteredList.Sort((item1, item2) => item2.InstalledDate.CompareTo(item1.InstalledDate));
-                                }
-                                break;
-                            }
-                    }
-
-                    // 根据搜索条件对搜索符合要求的数据
-                    if (hasSearchText)
-                    {
-                        for (int index = filteredList.Count - 1; index >= 0; index--)
+                        // 对过滤后的列表数据进行排序
+                        switch (SelectedRule)
                         {
-                            if (!(filteredList[index].DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)))
+                            case AppSortRuleKind.DisplayName:
+                                {
+                                    if (IsIncrease)
+                                    {
+                                        filteredList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+                                    }
+                                    else
+                                    {
+                                        filteredList.Sort((item1, item2) => item2.DisplayName.CompareTo(item1.DisplayName));
+                                    }
+                                    break;
+                                }
+                            case AppSortRuleKind.PublisherName:
+                                {
+                                    if (IsIncrease)
+                                    {
+                                        filteredList.Sort((item1, item2) => item1.PublisherDisplayName.CompareTo(item2.PublisherDisplayName));
+                                    }
+                                    else
+                                    {
+                                        filteredList.Sort((item1, item2) => item2.PublisherDisplayName.CompareTo(item1.PublisherDisplayName));
+                                    }
+                                    break;
+                                }
+                            case AppSortRuleKind.InstallDate:
+                                {
+                                    if (IsIncrease)
+                                    {
+                                        filteredList.Sort((item1, item2) => item1.InstalledDate.CompareTo(item2.InstalledDate));
+                                    }
+                                    else
+                                    {
+                                        filteredList.Sort((item1, item2) => item2.InstalledDate.CompareTo(item1.InstalledDate));
+                                    }
+                                    break;
+                                }
+                        }
+
+                        // 根据搜索条件对搜索符合要求的数据
+                        if (hasSearchText)
+                        {
+                            for (int index = filteredList.Count - 1; index >= 0; index--)
                             {
-                                filteredList.RemoveAt(index);
+                                if (!(filteredList[index].DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].Description.Contains(SearchText, StringComparison.OrdinalIgnoreCase) || filteredList[index].PublisherDisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)))
+                                {
+                                    filteredList.RemoveAt(index);
+                                }
                             }
                         }
-                    }
 
-                    foreach (Package packageItem in filteredList)
-                    {
-                        packageList.Add(new PackageModel()
+                        foreach (Package packageItem in filteredList)
                         {
-                            IsFramework = GetIsFramework(packageItem),
-                            AppListEntryCount = GetAppListEntriesCount(packageItem),
-                            DisplayName = GetDisplayName(packageItem),
-                            InstallDate = GetInstallDate(packageItem),
-                            PublisherName = GetPublisherName(packageItem),
-                            Version = GetVersion(packageItem),
-                            SignatureKind = GetSignatureKind(packageItem),
-                            InstalledDate = GetInstalledDate(packageItem),
-                            Package = packageItem,
-                            IsUnInstalling = false
-                        });
+                            packageList.Add(new PackageModel()
+                            {
+                                IsFramework = GetIsFramework(packageItem),
+                                AppListEntryCount = GetAppListEntriesCount(packageItem),
+                                DisplayName = GetDisplayName(packageItem),
+                                InstallDate = GetInstallDate(packageItem),
+                                PublisherName = GetPublisherName(packageItem),
+                                Version = GetVersion(packageItem),
+                                SignatureKind = GetSignatureKind(packageItem),
+                                InstalledDate = GetInstalledDate(packageItem),
+                                Package = packageItem,
+                                IsUnInstalling = false
+                            });
+                        }
+
+                        throw new Exception();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Get local app data failed", e);
                     }
                 });
 

@@ -33,7 +33,7 @@
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseUwp>true</UseUwp>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
-    <WindowsSdkPackageVersion>10.0.26100.54</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.57</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -67,7 +67,7 @@
     <Page Remove="XamlIslandsApp.xaml" />
     <Page Update="MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <ProjectReference Include="..\Microsoft.UI.Xaml.Projection\Microsoft.UI.Xaml.Projection.csproj" />
   </ItemGroup>
 

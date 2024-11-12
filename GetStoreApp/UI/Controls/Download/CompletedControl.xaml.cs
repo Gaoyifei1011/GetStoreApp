@@ -176,58 +176,69 @@ namespace GetStoreApp.UI.Controls.Download
                 {
                     StorageFile completedFile = await Task.Run(async () =>
                     {
-                        return await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+                        try
+                        {
+                            return await StorageFile.GetFileFromPathAsync(completedItem.FilePath);
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Error, "Get File from path failed", e);
+                            return null;
+                        }
                     });
 
-                    try
+                    if (completedFile is not null)
                     {
-                        // 使用应用安装程序安装
-                        if (InstallModeService.InstallMode.Equals(InstallModeService.InstallModeList[0]))
+                        try
                         {
-                            await Task.Run(async () =>
+                            // 使用应用安装程序安装
+                            if (InstallModeService.InstallMode.Equals(InstallModeService.InstallModeList[0]))
                             {
-                                await Launcher.LaunchFileAsync(completedFile);
-                            });
-                        }
-                        // 直接安装
-                        else if (InstallModeService.InstallMode.Equals(InstallModeService.InstallModeList[1]))
-                        {
-                            // 标记安装状态
-                            for (int index = 0; index < CompletedCollection.Count; index++)
-                            {
-                                if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                await Task.Run(async () =>
                                 {
-                                    CompletedCollection[index].IsInstalling = true;
-                                    break;
-                                }
+                                    await Launcher.LaunchFileAsync(completedFile);
+                                });
                             }
-
-                            await Task.Run(() =>
+                            // 直接安装
+                            else if (InstallModeService.InstallMode.Equals(InstallModeService.InstallModeList[1]))
                             {
-                                try
+                                // 标记安装状态
+                                for (int index = 0; index < CompletedCollection.Count; index++)
                                 {
-                                    // 安装目标应用，并获取安装进度
-                                    IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.ForceUpdateFromAnyVersion | DeploymentOptions.ForceTargetApplicationShutdown);
-
-                                    // 更新安装进度
-                                    installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress, completedItem);
-
-                                    // 应用安装过程已结束
-                                    installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status, completedFile, completedItem);
+                                    if (CompletedCollection[index].DownloadKey.Equals(completedItem.DownloadKey))
+                                    {
+                                        CompletedCollection[index].IsInstalling = true;
+                                        break;
+                                    }
                                 }
-                                // 安装失败显示失败信息
-                                catch (Exception e)
+
+                                await Task.Run(() =>
                                 {
-                                    LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
-                                    return;
-                                }
-                            });
+                                    try
+                                    {
+                                        // 安装目标应用，并获取安装进度
+                                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.ForceUpdateFromAnyVersion | DeploymentOptions.ForceTargetApplicationShutdown);
+
+                                        // 更新安装进度
+                                        installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress, completedItem);
+
+                                        // 应用安装过程已结束
+                                        installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status, completedFile, completedItem);
+                                    }
+                                    // 安装失败显示失败信息
+                                    catch (Exception e)
+                                    {
+                                        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                                        return;
+                                    }
+                                });
+                            }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
-                        return;
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                            return;
+                        }
                     }
                 }
             }

@@ -119,7 +119,6 @@ namespace GetStoreAppWebView
         {
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.Exception);
-            Dispose();
         }
 
         /// <summary>

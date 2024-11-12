@@ -589,9 +589,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async Task GetSearchAppsAsync()
         {
-            try
+            await Task.Run(async () =>
             {
-                await Task.Run(async () =>
+                try
                 {
                     IReadOnlyList<PackageCatalogReference> packageCatalogsList = searchAppsManager.GetPackageCatalogs();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
@@ -621,12 +621,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             MatchResultList.Add(findResult.Matches[index]);
                         }
                     }
-                });
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Get search apps information failed.", e);
-            }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Get search apps information failed.", e);
+                }
+            });
         }
 
         /// <summary>
@@ -640,28 +640,35 @@ namespace GetStoreApp.UI.Controls.WinGet
                 List<SearchAppsModel> searchAppsList = [];
                 await Task.Run(() =>
                 {
-                    foreach (MatchResult matchItem in MatchResultList)
+                    try
                     {
-                        if (matchItem.CatalogPackage.DefaultInstallVersion is not null)
+                        foreach (MatchResult matchItem in MatchResultList)
                         {
-                            bool isInstalling = false;
-                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
+                            if (matchItem.CatalogPackage.DefaultInstallVersion is not null)
                             {
-                                if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                                bool isInstalling = false;
+                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                 {
-                                    isInstalling = true;
-                                    break;
+                                    if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                                    {
+                                        isInstalling = true;
+                                        break;
+                                    }
                                 }
+                                searchAppsList.Add(new SearchAppsModel()
+                                {
+                                    AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
+                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) || matchItem.CatalogPackage.DefaultInstallVersion.DisplayName.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) || matchItem.CatalogPackage.DefaultInstallVersion.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
+                                    AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                    IsInstalling = isInstalling,
+                                });
                             }
-                            searchAppsList.Add(new SearchAppsModel()
-                            {
-                                AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                                AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) || matchItem.CatalogPackage.DefaultInstallVersion.DisplayName.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                                AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) || matchItem.CatalogPackage.DefaultInstallVersion.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
-                                AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
-                                IsInstalling = isInstalling,
-                            });
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Initialize Searched apps data failed", e);
                     }
                 });
 

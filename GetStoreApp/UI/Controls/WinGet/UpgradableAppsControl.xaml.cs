@@ -584,9 +584,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async Task GetUpgradableAppsAsync()
         {
-            try
+            await Task.Run(async () =>
             {
-                await Task.Run(async () =>
+                try
                 {
                     IReadOnlyList<PackageCatalogReference> packageCatalogsList = upgradableAppsManager.GetPackageCatalogs();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
@@ -614,12 +614,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
                     }
-                });
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Get upgradable apps information failed.", e);
-            }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Get upgradable apps information failed.", e);
+                }
+            });
         }
 
         /// <summary>
@@ -633,28 +633,35 @@ namespace GetStoreApp.UI.Controls.WinGet
                 List<UpgradableAppsModel> upgradableAppsList = [];
                 await Task.Run(() =>
                 {
-                    foreach (MatchResult matchItem in MatchResultList)
+                    try
                     {
-                        bool isUpgrading = false;
-
-                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
+                        foreach (MatchResult matchItem in MatchResultList)
                         {
-                            if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                            bool isUpgrading = false;
+
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                             {
-                                isUpgrading = true;
-                                break;
+                                if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                                {
+                                    isUpgrading = true;
+                                    break;
+                                }
                             }
-                        }
 
-                        upgradableAppsList.Add(new UpgradableAppsModel()
-                        {
-                            AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                            AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                            AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
-                            AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
-                            AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
-                            IsUpgrading = isUpgrading
-                        });
+                            upgradableAppsList.Add(new UpgradableAppsModel()
+                            {
+                                AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
+                                AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
+                                AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
+                                AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                IsUpgrading = isUpgrading
+                            });
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Initialize upgrade apps data failed", e);
                     }
                 });
 

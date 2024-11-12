@@ -20,7 +20,6 @@ namespace GetStoreAppInstaller
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs args)
         {
             //LogService.WriteLog(EventLevel.Warning, "Xaml islands UI Exception", args.Exception);
-            Dispose();
         }
 
         /// <summary>

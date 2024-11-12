@@ -28,7 +28,7 @@
     <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseUwp>true</UseUwp>
-    <WindowsSdkPackageVersion>10.0.26100.54</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.26100.57</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
 
@@ -57,7 +57,7 @@
     <CsWinRTInputs Include="$(PkgMicrosoft_Web_WebView2)\lib\Microsoft.Web.WebView2.Core.winmd" />
     
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" ExcludeAssets="build;buildtransitive;compile;runtime" GeneratePathProperty="true" />
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.6" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" ExcludeAssets="build;buildtransitive;compile;runtime" GeneratePathProperty="true" />
 
     <Reference Include="$(PkgMicrosoft_Web_WebView2)\lib_manual\net8.0-windows10.0.17763.0\Microsoft.Web.WebView2.Core.Projection.dll" />

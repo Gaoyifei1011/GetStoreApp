@@ -344,9 +344,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async Task GetInstalledAppsAsync()
         {
-            try
+            await Task.Run(async () =>
             {
-                await Task.Run(async () =>
+                try
                 {
                     PackageCatalogReference searchCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
@@ -366,12 +366,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
                     }
-                });
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, "Get installed apps information failed.", e);
-            }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Get installed apps information failed.", e);
+                }
+            });
         }
 
         /// <summary>
@@ -386,11 +386,27 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                 await Task.Run(() =>
                 {
-                    if (hasSearchText)
+                    try
                     {
-                        foreach (MatchResult matchItem in MatchResultList)
+                        if (hasSearchText)
                         {
-                            if (matchItem.CatalogPackage.InstalledVersion.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                            foreach (MatchResult matchItem in MatchResultList)
+                            {
+                                if (matchItem.CatalogPackage.InstalledVersion.DisplayName.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    installedAppsList.Add(new InstalledAppsModel()
+                                    {
+                                        AppID = matchItem.CatalogPackage.InstalledVersion.Id,
+                                        AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.DisplayName,
+                                        AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
+                                        AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
+                                    });
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (MatchResult matchItem in MatchResultList)
                             {
                                 installedAppsList.Add(new InstalledAppsModel()
                                 {
@@ -401,47 +417,38 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 });
                             }
                         }
-                    }
-                    else
-                    {
-                        foreach (MatchResult matchItem in MatchResultList)
+
+                        switch (SelectedRule)
                         {
-                            installedAppsList.Add(new InstalledAppsModel()
-                            {
-                                AppID = matchItem.CatalogPackage.InstalledVersion.Id,
-                                AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.DisplayName,
-                                AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
-                                AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
-                            });
+                            case AppSortRuleKind.DisplayName:
+                                {
+                                    if (IsIncrease)
+                                    {
+                                        installedAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                                    }
+                                    else
+                                    {
+                                        installedAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                                    }
+                                    break;
+                                }
+                            case AppSortRuleKind.PublisherName:
+                                {
+                                    if (IsIncrease)
+                                    {
+                                        installedAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
+                                    }
+                                    else
+                                    {
+                                        installedAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
+                                    }
+                                    break;
+                                }
                         }
                     }
-
-                    switch (SelectedRule)
+                    catch (Exception e)
                     {
-                        case AppSortRuleKind.DisplayName:
-                            {
-                                if (IsIncrease)
-                                {
-                                    installedAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
-                                }
-                                else
-                                {
-                                    installedAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
-                                }
-                                break;
-                            }
-                        case AppSortRuleKind.PublisherName:
-                            {
-                                if (IsIncrease)
-                                {
-                                    installedAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
-                                }
-                                else
-                                {
-                                    installedAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
-                                }
-                                break;
-                            }
+                        LogService.WriteLog(LoggingLevel.Error, "Initialize installed apps data failed", e);
                     }
                 });
 

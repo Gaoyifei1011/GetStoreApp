@@ -123,7 +123,16 @@ namespace GetStoreApp.Views.Pages
 
                         await Task.Run(async () =>
                         {
-                            AppInstallItem appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
+                            AppInstallItem appInstallItem = null;
+
+                            try
+                            {
+                                appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, string.Format("Update app failed: package family name {0}", appUpdateItem.PackageFamilyName), e);
+                            }
 
                             if (appInstallItem is not null)
                             {
@@ -212,55 +221,62 @@ namespace GetStoreApp.Views.Pages
             List<AppUpdateModel> appUpdateList = [];
             await Task.Run(async () =>
             {
-                AppUpdateOptions updateOptions = new()
+                try
                 {
-                    AutomaticallyDownloadAndInstallUpdateIfFound = false,
-                    AllowForcedAppRestart = false
-                };
-                IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
-
-                foreach (AppInstallItem upgradableApps in upgradableAppsList)
-                {
-                    // 判断是否已经添加到 AppUpdateCollection 中，没有则添加
-                    bool isExisted = false;
-                    foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                    AppUpdateOptions updateOptions = new()
                     {
-                        if (appUpdateItem.PackageFamilyName.Equals(upgradableApps.PackageFamilyName))
-                        {
-                            isExisted = true;
-                        }
-                    }
+                        AutomaticallyDownloadAndInstallUpdateIfFound = false,
+                        AllowForcedAppRestart = false
+                    };
+                    IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
 
-                    if (!isExisted)
+                    foreach (AppInstallItem upgradableApps in upgradableAppsList)
                     {
-                        foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
+                        // 判断是否已经添加到 AppUpdateCollection 中，没有则添加
+                        bool isExisted = false;
+                        foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                         {
-                            if (packageItem.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
+                            if (appUpdateItem.PackageFamilyName.Equals(upgradableApps.PackageFamilyName))
                             {
-                                AppInstallStatus appInstallStatus = upgradableApps.GetCurrentStatus();
-                                string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                                string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                                isExisted = true;
+                            }
+                        }
 
-                                appUpdateList.Add(new AppUpdateModel()
+                        if (!isExisted)
+                        {
+                            foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
+                            {
+                                if (packageItem.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                                 {
-                                    AppInstallState = appInstallStatus.InstallState,
-                                    DisplayName = packageItem.DisplayName,
-                                    PublisherName = packageItem.PublisherDisplayName,
-                                    InstallInformation = installInformation,
-                                    InstallSubInformation = installSubInformation,
-                                    IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
-                                                 appInstallStatus.InstallState is AppInstallState.Starting ||
-                                                 appInstallStatus.InstallState is AppInstallState.Downloading ||
-                                                 appInstallStatus.InstallState is AppInstallState.RestoringData ||
-                                                 appInstallStatus.InstallState is AppInstallState.Installing,
-                                    PackageFamilyName = upgradableApps.PackageFamilyName,
-                                    PercentComplete = appInstallStatus.PercentComplete,
-                                    ProductId = upgradableApps.ProductId
-                                });
-                                break;
+                                    AppInstallStatus appInstallStatus = upgradableApps.GetCurrentStatus();
+                                    string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
+                                    string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+
+                                    appUpdateList.Add(new AppUpdateModel()
+                                    {
+                                        AppInstallState = appInstallStatus.InstallState,
+                                        DisplayName = packageItem.DisplayName,
+                                        PublisherName = packageItem.PublisherDisplayName,
+                                        InstallInformation = installInformation,
+                                        InstallSubInformation = installSubInformation,
+                                        IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
+                                                     appInstallStatus.InstallState is AppInstallState.Starting ||
+                                                     appInstallStatus.InstallState is AppInstallState.Downloading ||
+                                                     appInstallStatus.InstallState is AppInstallState.RestoringData ||
+                                                     appInstallStatus.InstallState is AppInstallState.Installing,
+                                        PackageFamilyName = upgradableApps.PackageFamilyName,
+                                        PercentComplete = appInstallStatus.PercentComplete,
+                                        ProductId = upgradableApps.ProductId
+                                    });
+                                    break;
+                                }
                             }
                         }
                     }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Check store update status failed", e);
                 }
             });
 
@@ -370,9 +386,16 @@ namespace GetStoreApp.Views.Pages
 
                         await Task.Run(() =>
                         {
-                            appInstallStatus = sender.GetCurrentStatus();
-                            installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                            installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                            try
+                            {
+                                appInstallStatus = sender.GetCurrentStatus();
+                                installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
+                                installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, "Get current app install status failed", e);
+                            }
                         });
 
                         if (appInstallStatus is not null)

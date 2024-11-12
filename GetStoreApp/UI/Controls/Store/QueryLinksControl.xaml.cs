@@ -462,10 +462,7 @@ namespace GetStoreApp.UI.Controls.Store
                     DispatcherQueue.TryEnqueue(HistoryCollection.Clear);
                 };
 
-                List<HistoryModel> queryLinksHistoryList = await Task.Run(() =>
-                {
-                    return HistoryStorageService.GetQueryLinksData();
-                });
+                List<HistoryModel> queryLinksHistoryList = await Task.Run(HistoryStorageService.GetQueryLinksData);
 
                 HistoryCollection.Clear();
 
