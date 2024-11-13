@@ -163,7 +163,7 @@ All the content of the program has been developed
 > * Complete the translation steps described above to ensure that all steps run smoothly.
 > * Open the GetStoreAppPackage packaging project, find the Package.appxmanifest file, right-click the file, click View Code, find the Sources tab, and add the corresponding language according to the template, such as "<Resource Language="EN-US"/>".
 > * Open the Strings folder of the GetStoreApp project and create the language you are using, for example ( English (United States) folder name is en-us , you can refer to the Table of Indicating Language (Culture) Codes and Countries and Regions)
-> * Open the resw file under the subfolder and translate each name.
+> * Open the resjson file under the subfolder and translate each name.
 > * Compile and run the code and test your language, when the application is first opened if there is no language you use to display English (United States) by default, it needs to be dynamically adjusted in the settings.
 > * Create a PR after completing the above steps, then submit the modified content to this project and wait for the merge.
 

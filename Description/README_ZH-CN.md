@@ -159,7 +159,7 @@
 > * 完成上面所述的翻译步骤，确保所有步骤能够顺利运行。
 > * 打开 GetStoreAppPackage 打包项目，找到 Package.appxmanifest 文件，右键该文件，点击查看代码，找到 Resources 标签，根据模板添加相对应的语言，例如“<Resource Language="EN-US"/>”。
 > * 打开 GetStoreApp 项目的 Strings 文件夹，并创建您使用的语言，比如（English(United States)）文件夹名称为 en-us，具体可以参考表示语言(文化)代码与国家地区对照表）。
-> * 打开子文件夹下的 resw 文件，对每一个名称进行翻译。
+> * 打开子文件夹下的 resjson 文件，对每一个名称进行翻译。
 > * 编译运行代码并测试您的语言，应用在初次打开的时候如果没有您使用的语言默认显示 English(United States)，需要在设置中动态调整。
 > * 完成上述步骤后创建 PR，然后将修改的内容提交到本项目，等待合并即可。
 

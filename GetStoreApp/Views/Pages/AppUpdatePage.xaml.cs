@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
@@ -42,6 +44,7 @@ namespace GetStoreApp.Views.Pages
         private readonly AppInstallManager appInstallManager = new();
         private readonly PackageManager packageManager = new();
 
+        private readonly Lock appinstallingLock = new();
         private readonly Dictionary<string, AppInstallItem> AppInstallingDict = [];
 
         private string AppUpdateCountInfo { get; } = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
@@ -134,12 +137,25 @@ namespace GetStoreApp.Views.Pages
                                 LogService.WriteLog(LoggingLevel.Error, string.Format("Update app failed: package family name {0}", appUpdateItem.PackageFamilyName), e);
                             }
 
-                            if (appInstallItem is not null)
-                            {
-                                appInstallItem.StatusChanged += OnAppInstallItemStatausChanged;
-                                appInstallItem.Completed += OnAppInstallItemCompleted;
+                            appinstallingLock.Enter();
 
-                                AppInstallingDict.TryAdd(appInstallItem.PackageFamilyName, appInstallItem);
+                            try
+                            {
+                                if (appInstallItem is not null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
+                                {
+                                    appInstallItem.StatusChanged += OnAppInstallItemStatausChanged;
+                                    appInstallItem.Completed += OnAppInstallItemCompleted;
+
+                                    AppInstallingDict.TryAdd(appInstallItem.PackageFamilyName, appInstallItem);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                            }
+                            finally
+                            {
+                                appinstallingLock.Exit();
                             }
                         });
 
@@ -158,20 +174,33 @@ namespace GetStoreApp.Views.Pages
             {
                 await Task.Run(() =>
                 {
-                    if (AppInstallingDict.TryGetValue(packageFamilyName, out AppInstallItem appInstallItem))
-                    {
-                        try
-                        {
-                            appInstallItem.Completed -= OnAppInstallItemCompleted;
-                            appInstallItem.StatusChanged -= OnAppInstallItemStatausChanged;
-                            appInstallItem.Cancel();
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Store app cancel install failed", e);
-                        }
+                    appinstallingLock.Enter();
 
-                        AppInstallingDict.Remove(packageFamilyName);
+                    try
+                    {
+                        if (AppInstallingDict.TryGetValue(packageFamilyName, out AppInstallItem appInstallItem))
+                        {
+                            try
+                            {
+                                appInstallItem.Completed -= OnAppInstallItemCompleted;
+                                appInstallItem.StatusChanged -= OnAppInstallItemStatausChanged;
+                                appInstallItem.Cancel();
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, "Store app cancel install failed", e);
+                            }
+
+                            AppInstallingDict.Remove(packageFamilyName);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        appinstallingLock.Exit();
                     }
                 });
 
@@ -230,13 +259,13 @@ namespace GetStoreApp.Views.Pages
                     };
                     IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
 
-                    foreach (AppInstallItem upgradableApps in upgradableAppsList)
+                    foreach (AppInstallItem upgradableAppItem in upgradableAppsList)
                     {
                         // 判断是否已经添加到 AppUpdateCollection 中，没有则添加
                         bool isExisted = false;
                         foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
                         {
-                            if (appUpdateItem.PackageFamilyName.Equals(upgradableApps.PackageFamilyName))
+                            if (appUpdateItem.PackageFamilyName.Equals(upgradableAppItem.PackageFamilyName))
                             {
                                 isExisted = true;
                             }
@@ -246,9 +275,9 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
                             {
-                                if (packageItem.Id.FamilyName.Equals(upgradableApps.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
+                                if (packageItem.Id.FamilyName.Equals(upgradableAppItem.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                                 {
-                                    AppInstallStatus appInstallStatus = upgradableApps.GetCurrentStatus();
+                                    AppInstallStatus appInstallStatus = upgradableAppItem.GetCurrentStatus();
                                     string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
                                     string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
 
@@ -261,13 +290,35 @@ namespace GetStoreApp.Views.Pages
                                         InstallSubInformation = installSubInformation,
                                         IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
                                                      appInstallStatus.InstallState is AppInstallState.Starting ||
+                                                     appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
                                                      appInstallStatus.InstallState is AppInstallState.Downloading ||
                                                      appInstallStatus.InstallState is AppInstallState.RestoringData ||
                                                      appInstallStatus.InstallState is AppInstallState.Installing,
-                                        PackageFamilyName = upgradableApps.PackageFamilyName,
+                                        PackageFamilyName = upgradableAppItem.PackageFamilyName,
                                         PercentComplete = appInstallStatus.PercentComplete,
-                                        ProductId = upgradableApps.ProductId
+                                        ProductId = upgradableAppItem.ProductId
                                     });
+
+                                    appinstallingLock.Enter();
+
+                                    try
+                                    {
+                                        if (upgradableAppItem is not null && !AppInstallingDict.ContainsKey(upgradableAppItem.PackageFamilyName))
+                                        {
+                                            upgradableAppItem.StatusChanged += OnAppInstallItemStatausChanged;
+                                            upgradableAppItem.Completed += OnAppInstallItemCompleted;
+
+                                            AppInstallingDict.TryAdd(upgradableAppItem.PackageFamilyName, upgradableAppItem);
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        appinstallingLock.Exit();
+                                    }
                                     break;
                                 }
                             }
@@ -311,12 +362,25 @@ namespace GetStoreApp.Views.Pages
                 {
                     AppInstallItem appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
 
-                    if (appInstallItem is not null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
-                    {
-                        appInstallItem.Completed += OnAppInstallItemCompleted;
-                        appInstallItem.StatusChanged += OnAppInstallItemStatausChanged;
+                    appinstallingLock.Enter();
 
-                        AppInstallingDict.TryAdd(appInstallItem.PackageFamilyName, appInstallItem);
+                    try
+                    {
+                        if (appInstallItem is not null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
+                        {
+                            appInstallItem.StatusChanged += OnAppInstallItemStatausChanged;
+                            appInstallItem.Completed += OnAppInstallItemCompleted;
+
+                            AppInstallingDict.TryAdd(appInstallItem.PackageFamilyName, appInstallItem);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        appinstallingLock.Exit();
                     }
                 }
             });
@@ -334,13 +398,30 @@ namespace GetStoreApp.Views.Pages
                     sender.Completed -= OnAppInstallItemCompleted;
                     sender.StatusChanged -= OnAppInstallItemStatausChanged;
 
-                    AppInstallingDict.Remove(appUpdateItem.PackageFamilyName);
+                    appinstallingLock.Enter();
+
+                    try
+                    {
+                        AppInstallingDict.Remove(appUpdateItem.PackageFamilyName);
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        appinstallingLock.Exit();
+                    }
 
                     // 显示商店应用更新成功通知
-                    AppNotificationBuilder appNotificationBuilder = new();
-                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), appUpdateItem.DisplayName));
-                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    if (appUpdateItem.AppInstallState is AppInstallState.Completed)
+                    {
+                        AppNotificationBuilder appNotificationBuilder = new();
+                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), appUpdateItem.DisplayName));
+                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                    }
+
                     break;
                 }
             }
@@ -404,12 +485,12 @@ namespace GetStoreApp.Views.Pages
                             appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
                             appUpdateItem.InstallInformation = installInformation;
                             appUpdateItem.InstallSubInformation = installSubInformation;
-                            appUpdateItem.IsUpdating = !(appInstallStatus.InstallState is AppInstallState.Canceled ||
-                                appInstallStatus.InstallState is AppInstallState.Error ||
-                                appInstallStatus.InstallState is AppInstallState.Paused ||
-                                appInstallStatus.InstallState is AppInstallState.PausedLowBattery ||
-                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRecommended ||
-                                appInstallStatus.InstallState is AppInstallState.PausedWiFiRequired);
+                            appUpdateItem.IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
+                                         appInstallStatus.InstallState is AppInstallState.Starting ||
+                                         appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
+                                         appInstallStatus.InstallState is AppInstallState.Downloading ||
+                                         appInstallStatus.InstallState is AppInstallState.RestoringData ||
+                                         appInstallStatus.InstallState is AppInstallState.Installing;
                         }
                     }
                 }
