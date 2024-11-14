@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -98,36 +99,39 @@
                 Text="{x:Bind x:String.Format(AppUpdateCountInfo, AppUpdateCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
-            <StackPanel
+            <ContentControl
                 Grid.Column="4"
                 Margin="0,0,10,0"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                Orientation="Horizontal"
-                Spacing="2">
+                IsEnabled="{x:Bind IsLoadedCompleted.Equals(x:True), Mode=OneWay}">
 
-                <AppBarButton
-                    Click="{x:Bind OnCheckUpdateClicked}"
-                    IsEnabled="{x:Bind IsLoadedCompleted.Equals(x:True), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                <StackPanel
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Orientation="Horizontal"
+                    Spacing="2">
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8CB;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    <AppBarButton
+                        Click="{x:Bind OnCheckUpdateClicked}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}"
+                        Style="{StaticResource AppBarButtonStyle}">
 
-                <AppBarButton
-                    Click="{x:Bind OnUpdateAllClicked}"
-                    IsEnabled="{x:Bind IsLoadedCompleted.Equals(x:True), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/UpdateAll')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8CB;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74A;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </StackPanel>
+                    <AppBarButton
+                        Click="{x:Bind OnUpdateAllClicked}"
+                        IsEnabled="{x:Bind sys:Convert.ToBoolean(AppUpdateCollection.Count), Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/UpdateAll')}"
+                        Style="{StaticResource AppBarButtonStyle}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE74A;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </StackPanel>
+            </ContentControl>
         </Grid>
 
         <Grid
