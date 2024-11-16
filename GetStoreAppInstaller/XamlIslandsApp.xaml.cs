@@ -10,7 +10,6 @@ namespace GetStoreAppInstaller
         public XamlIslandsApp()
         {
             InitializeComponent();
-
             UnhandledException += OnUnhandledException;
         }
 
@@ -43,18 +42,6 @@ namespace GetStoreAppInstaller
         {
             if (!isDisposed)
             {
-                //if (disposing)
-                //{
-                //    this.ThreadUninitialize();
-
-                //    if (MainWindow.Current is not null && !MainWindow.Current.IsDisposed)
-                //    {
-                //        MainWindow.Current?.Close();
-                //    }
-
-                //    System.Windows.Forms.Application.Exit();
-                //}
-
                 isDisposed = true;
             }
         }

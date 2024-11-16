@@ -11,7 +11,7 @@ namespace GetStoreAppShellExtension
     /// <summary>
     /// 获取商店应用 右键菜单扩展
     /// </summary>
-    public static class Program
+    public class Program
     {
         public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 

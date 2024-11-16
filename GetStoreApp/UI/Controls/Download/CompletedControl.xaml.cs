@@ -11,6 +11,7 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -298,7 +299,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 try
                 {
-                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
+                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
 
                     dataTransferManager.DataRequested += async (sender, args) =>
                     {
@@ -309,7 +310,7 @@ namespace GetStoreApp.UI.Controls.Download
                         deferral.Complete();
                     };
 
-                    DataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
+                    DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
                 }
                 catch (Exception e)
                 {
@@ -564,7 +565,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 try
                 {
-                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
+                    DataTransferManager dataTransferManager = DataTransferManagerInterop.GetForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
 
                     dataTransferManager.DataRequested += async (sender, args) =>
                     {
@@ -592,7 +593,7 @@ namespace GetStoreApp.UI.Controls.Download
                         deferral.Complete();
                     };
 
-                    DataTransferManagerInterop.ShowShareUIForWindow((IntPtr)MainWindow.Current.AppWindow.Id.Value);
+                    DataTransferManagerInterop.ShowShareUIForWindow(Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
                 }
                 catch (Exception e)
                 {

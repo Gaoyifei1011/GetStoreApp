@@ -45,7 +45,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.User32
         /// <param name="lParam">其他的消息特定信息。</param>
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
-        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, int wParam, IntPtr lParam);
+        public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, UIntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// 当仅针对当前正在运行的进程创建没有父级或所有者的窗口时，更改默认布局。

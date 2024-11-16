@@ -177,7 +177,7 @@ namespace GetStoreApp.Views.Windows
 
             // 为应用主窗口添加窗口过程
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0, IntPtr.Zero);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0, IntPtr.Zero);
 
             SetWindowTheme();
             SetSystemBackdrop();
@@ -297,7 +297,7 @@ namespace GetStoreApp.Views.Windows
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
                     TopMostService.PropertyChanged -= OnServicePropertyChanged;
                     DownloadSchedulerService.TerminateDownload();
-                    Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0);
+                    Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                     (Application.Current as WinUIApp).Dispose();
                 }
                 else if (result is ContentDialogResult.Secondary)
@@ -316,7 +316,7 @@ namespace GetStoreApp.Views.Windows
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
                 TopMostService.PropertyChanged -= OnServicePropertyChanged;
-                Comctl32Library.RemoveWindowSubclass((IntPtr)AppWindow.Id.Value, mainWindowSubClassProc, 0);
+                Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(AppWindow.Id), mainWindowSubClassProc, 0);
                 (Application.Current as WinUIApp).Dispose();
             }
         }
@@ -357,7 +357,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage((IntPtr)AppWindow.Id.Value, WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
             }
         }
 
@@ -369,7 +369,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage((IntPtr)AppWindow.Id.Value, WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
             }
         }
 
@@ -467,7 +467,7 @@ namespace GetStoreApp.Views.Windows
 
                     secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
 
-                    InitializeWithWindow.Initialize(secondaryTile, (IntPtr)AppWindow.Id.Value);
+                    InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
                     isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
                 }
             }

@@ -10,6 +10,7 @@ using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -751,7 +752,7 @@ namespace GetStoreApp.Views.Pages
                             try
                             {
                                 FolderPicker folderPicker = new();
-                                InitializeWithWindow.Initialize(folderPicker, (IntPtr)MainWindow.Current.AppWindow.Id.Value);
+                                InitializeWithWindow.Initialize(folderPicker, Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
                                 folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
 
                                 if (await folderPicker.PickSingleFolderAsync() is StorageFolder downloadFolder)

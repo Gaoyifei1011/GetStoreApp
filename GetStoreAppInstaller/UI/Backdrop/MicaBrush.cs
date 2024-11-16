@@ -93,7 +93,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
                 isConnected = true;
                 UpdateBrush();
                 uiSettings.ColorValuesChanged += OnColorValuesChanged;
-                Window.Current.CoreWindow.Activated += OnActivated;
+                Window.Current.Activated += OnActivated;
                 accessibilitySettings.HighContrastChanged += OnHighContrastChanged;
                 compositionCapabilities.Changed += OnCompositionCapabilitiesChanged;
                 PowerManager.EnergySaverStatusChanged += OnEnergySaverStatusChanged;
@@ -116,7 +116,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
             {
                 isConnected = false;
                 uiSettings.ColorValuesChanged -= OnColorValuesChanged;
-                Window.Current.CoreWindow.Activated -= OnActivated;
+                Window.Current.Activated -= OnActivated;
                 accessibilitySettings.HighContrastChanged -= OnHighContrastChanged;
                 compositionCapabilities.Changed -= OnCompositionCapabilitiesChanged;
                 PowerManager.EnergySaverStatusChanged -= OnEnergySaverStatusChanged;
@@ -145,7 +145,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
         /// <summary>
         /// 在窗口完成激活或停用时触发的事件
         /// </summary>
-        private void OnActivated(CoreWindow sender, WindowActivatedEventArgs args)
+        private void OnActivated(object sender, WindowActivatedEventArgs args)
         {
             UpdateBrush();
         }

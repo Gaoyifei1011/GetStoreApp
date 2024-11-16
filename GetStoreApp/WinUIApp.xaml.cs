@@ -3,6 +3,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Threading.Tasks;
@@ -17,8 +18,6 @@ namespace GetStoreApp
     public partial class WinUIApp : Application, IDisposable
     {
         private bool isDisposed;
-
-        private IntPtr[] hIcons;
 
         public Window Window { get; private set; }
 
@@ -38,7 +37,7 @@ namespace GetStoreApp
 
             Window = new MainWindow();
             MainWindow.Current.Show(true);
-            SetAppIcon();
+            SetAppIcon(MainWindow.Current.AppWindow);
 
             if (JumpList.IsSupported())
             {
@@ -93,13 +92,13 @@ namespace GetStoreApp
         /// <summary>
         /// 设置应用窗口图标
         /// </summary>
-        private void SetAppIcon()
+        private void SetAppIcon(AppWindow appWindow)
         {
             // 选中文件中的图标总数
             int iconTotalCount = User32Library.PrivateExtractIcons(Environment.ProcessPath, 0, 0, 0, null, null, 0, 0);
 
             // 用于接收获取到的图标指针
-            hIcons = new IntPtr[iconTotalCount];
+            IntPtr[] hIcons = new IntPtr[iconTotalCount];
 
             // 对应的图标id
             int[] ids = new int[iconTotalCount];
@@ -110,7 +109,7 @@ namespace GetStoreApp
             // GetStoreApp.exe 应用程序只有一个图标
             if (successCount >= 1 && hIcons[0] != IntPtr.Zero)
             {
-                MainWindow.Current.AppWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
+                appWindow.SetIcon(Win32Interop.GetIconIdFromIcon(hIcons[0]));
             }
         }
 

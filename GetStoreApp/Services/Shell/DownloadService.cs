@@ -22,7 +22,7 @@ namespace GetStoreApp.Services.Shell
     /// </summary>
     public static class DownloadService
     {
-        private static readonly AutoResetEvent autoResetEvent = new(false);
+        private static readonly SemaphoreSlim semaphoreSlim = new(1, 1);
 
         /// <summary>
         /// 下载任务已创建
@@ -53,7 +53,7 @@ namespace GetStoreApp.Services.Shell
             ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCompleted"), downloadSchedulerItem.FileName));
             ConsoleHelper.ResetTextColor();
             ConsoleHelper.Write(Environment.NewLine);
-            autoResetEvent?.Set();
+            semaphoreSlim?.Release();
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace GetStoreApp.Services.Shell
         private static void DownloadFile(string fileName, string fileLink)
         {
             DownloadSchedulerService.CreateDownload(fileLink, Path.Combine(DownloadOptionsService.DownloadFolder.Path, fileName));
-            autoResetEvent.WaitOne();
+            semaphoreSlim.Wait();
         }
 
         /// <summary>

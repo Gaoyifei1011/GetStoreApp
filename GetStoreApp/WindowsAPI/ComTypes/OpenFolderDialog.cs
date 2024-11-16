@@ -58,7 +58,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
             {
                 if (FileOpenDialog is not null)
                 {
-                    int result = FileOpenDialog.Show((IntPtr)parentWindowId.Value);
+                    int result = FileOpenDialog.Show(Win32Interop.GetWindowFromWindowId(parentWindowId));
 
                     if (result is not 0)
                     {
