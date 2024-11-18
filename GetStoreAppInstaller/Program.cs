@@ -6,8 +6,10 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using WinRT;
@@ -48,6 +50,7 @@ namespace GetStoreAppInstaller
             CoreAppWindow.Move(new PointInt32());
             CoreAppWindow.Resize(MainAppWindow.Size);
             User32Library.SetParent(coreWindowHandle, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id));
+            SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
             new XamlIslandsApp();
 
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.Dwmapi;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
+using System;
 using System.Collections.Generic;
 using Windows.System;
 using Windows.System.Power;
@@ -8,6 +11,7 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
+using WinRT;
 
 // 抑制 CA1822 警告
 #pragma warning disable CA1822
@@ -22,32 +26,32 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private bool isConnected;
         private bool useDesktopAcrylicBrush;
 
-        private readonly float defaultDesktopAcrylicDefaultLightTintOpacity = 0;
-        private readonly float defaultDesktopAcrylicDefaultLightLuminosityOpacity = 0.85f;
-        private readonly float defaultDesktopAcrylicDefaultDarkTintOpacity = 0.15f;
-        private readonly float defaultDesktopAcrylicDefaultDarkLuminosityOpacity = 96;
-        private readonly Color defaultDesktopAcrylicDefaultLightTintColor = Color.FromArgb(255, 252, 252, 252);
-        private readonly Color defaultDesktopAcrylicDefaultLightFallbackColor = Color.FromArgb(255, 249, 249, 249);
-        private readonly Color defaultDesktopAcrylicDefaultDarkTintColor = Color.FromArgb(255, 44, 44, 44);
-        private readonly Color defaultDesktopAcrylicDefaultDarkFallbackColor = Color.FromArgb(255, 44, 44, 44);
+        private readonly float desktopAcrylicDefaultLightTintOpacity;
+        private readonly float desktopAcrylicDefaultLightLuminosityOpacity = 0.85f;
+        private readonly float desktopAcrylicDefaultDarkTintOpacity = 0.15f;
+        private readonly float desktopAcrylicDefaultDarkLuminosityOpacity = 96;
+        private readonly Color desktopAcrylicDefaultLightTintColor = Color.FromArgb(255, 252, 252, 252);
+        private readonly Color desktopAcrylicDefaultLightFallbackColor = Color.FromArgb(255, 249, 249, 249);
+        private readonly Color desktopAcrylicDefaultDarkTintColor = Color.FromArgb(255, 44, 44, 44);
+        private readonly Color desktopAcrylicDefaultDarkFallbackColor = Color.FromArgb(255, 44, 44, 44);
 
-        private readonly float defaultDesktopAcrylicBaseLightTintOpacity = 0;
-        private readonly float defaultDesktopAcrylicBaseLightLuminosityOpacity = 0.9f;
-        private readonly float defaultDesktopAcrylicBaseDarkTintOpacity = 0.5f;
-        private readonly float defaultDesktopAcrylicBaseDarkLuminosityOpacity = 0.96f;
-        private readonly Color defaultDesktopAcrylicBaseLightTintColor = Color.FromArgb(255, 243, 243, 243);
-        private readonly Color defaultDesktopAcrylicBaseLightFallbackColor = Color.FromArgb(255, 238, 238, 238);
-        private readonly Color defaultDesktopAcrylicBaseDarkTintColor = Color.FromArgb(255, 32, 32, 32);
-        private readonly Color defaultDesktopAcrylicBaseDarkFallbackColor = Color.FromArgb(255, 28, 28, 28);
+        private readonly float desktopAcrylicBaseLightTintOpacity;
+        private readonly float desktopAcrylicBaseLightLuminosityOpacity = 0.9f;
+        private readonly float desktopAcrylicBaseDarkTintOpacity = 0.5f;
+        private readonly float desktopAcrylicBaseDarkLuminosityOpacity = 0.96f;
+        private readonly Color desktopAcrylicBaseLightTintColor = Color.FromArgb(255, 243, 243, 243);
+        private readonly Color desktopAcrylicBaseLightFallbackColor = Color.FromArgb(255, 238, 238, 238);
+        private readonly Color desktopAcrylicBaseDarkTintColor = Color.FromArgb(255, 32, 32, 32);
+        private readonly Color desktopAcrylicBaseDarkFallbackColor = Color.FromArgb(255, 28, 28, 28);
 
-        private readonly float defaultDesktopAcrylicThinLightTintOpacity = 0;
-        private readonly float defaultDesktopAcrylicThinLightLuminosityOpacity = 0.44f;
-        private readonly float defaultDesktopAcrylicThinDarkTintOpacity = 0.15f;
-        private readonly float defaultDesktopAcrylicThinDarkLuminosityOpacity = 0.64f;
-        private readonly Color defaultDesktopAcrylicThinLightTintColor = Color.FromArgb(255, 211, 211, 211);
-        private readonly Color defaultDesktopAcrylicThinLightFallbackColor = Color.FromArgb(255, 211, 211, 211);
-        private readonly Color defaultDesktopAcrylicThinDarkTintColor = Color.FromArgb(255, 84, 84, 84);
-        private readonly Color defaultDesktopAcrylicThinDarkFallbackColor = Color.FromArgb(255, 84, 84, 84);
+        private readonly float desktopAcrylicThinLightTintOpacity;
+        private readonly float desktopAcrylicThinLightLuminosityOpacity = 0.44f;
+        private readonly float desktopAcrylicThinDarkTintOpacity = 0.15f;
+        private readonly float desktopAcrylicThinDarkLuminosityOpacity = 0.64f;
+        private readonly Color desktopAcrylicThinLightTintColor = Color.FromArgb(255, 211, 211, 211);
+        private readonly Color desktopAcrylicThinLightFallbackColor = Color.FromArgb(255, 211, 211, 211);
+        private readonly Color desktopAcrylicThinDarkTintColor = Color.FromArgb(255, 84, 84, 84);
+        private readonly Color desktopAcrylicThinDarkFallbackColor = Color.FromArgb(255, 84, 84, 84);
 
         private readonly UISettings uiSettings = new();
         private readonly AccessibilitySettings accessibilitySettings = new();
@@ -57,10 +61,10 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private readonly bool isInputActive;
         private readonly bool useHostBackdropBrush;
         private readonly float blurAmount = 30f;
-        private readonly float lightTintOpacity = 0;
-        private readonly float lightLuminosityOpacity = 0;
-        private readonly float darkTintOpacity = 0;
-        private readonly float darkLuminosityOpacity = 0;
+        private readonly float lightTintOpacity;
+        private readonly float lightLuminosityOpacity;
+        private readonly float darkTintOpacity;
+        private readonly float darkLuminosityOpacity;
         private Color lightTintColor = Color.FromArgb(0, 0, 0, 0);
         private Color lightFallbackColor = Color.FromArgb(0, 0, 0, 0);
         private Color darkTintColor = Color.FromArgb(0, 0, 0, 0);
@@ -73,36 +77,44 @@ namespace GetStoreAppInstaller.UI.Backdrop
 
             if (desktopAcrylicKind is DesktopAcrylicKind.Default)
             {
-                lightTintOpacity = defaultDesktopAcrylicDefaultLightTintOpacity;
-                lightLuminosityOpacity = defaultDesktopAcrylicDefaultLightLuminosityOpacity;
-                darkTintOpacity = defaultDesktopAcrylicDefaultDarkTintOpacity;
-                darkLuminosityOpacity = defaultDesktopAcrylicDefaultDarkLuminosityOpacity;
-                lightTintColor = defaultDesktopAcrylicDefaultLightTintColor;
-                lightFallbackColor = defaultDesktopAcrylicDefaultLightFallbackColor;
-                darkTintColor = defaultDesktopAcrylicDefaultDarkTintColor;
-                darkFallbackColor = defaultDesktopAcrylicDefaultDarkFallbackColor;
+                lightTintOpacity = desktopAcrylicDefaultLightTintOpacity;
+                lightLuminosityOpacity = desktopAcrylicDefaultLightLuminosityOpacity;
+                darkTintOpacity = desktopAcrylicDefaultDarkTintOpacity;
+                darkLuminosityOpacity = desktopAcrylicDefaultDarkLuminosityOpacity;
+                lightTintColor = desktopAcrylicDefaultLightTintColor;
+                lightFallbackColor = desktopAcrylicDefaultLightFallbackColor;
+                darkTintColor = desktopAcrylicDefaultDarkTintColor;
+                darkFallbackColor = desktopAcrylicDefaultDarkFallbackColor;
             }
             else if (desktopAcrylicKind is DesktopAcrylicKind.Base)
             {
-                lightTintOpacity = defaultDesktopAcrylicBaseLightTintOpacity;
-                lightLuminosityOpacity = defaultDesktopAcrylicBaseLightLuminosityOpacity;
-                darkTintOpacity = defaultDesktopAcrylicBaseDarkTintOpacity;
-                darkLuminosityOpacity = defaultDesktopAcrylicBaseDarkLuminosityOpacity;
-                lightTintColor = defaultDesktopAcrylicBaseLightTintColor;
-                lightFallbackColor = defaultDesktopAcrylicBaseLightFallbackColor;
-                darkTintColor = defaultDesktopAcrylicBaseDarkTintColor;
-                darkFallbackColor = defaultDesktopAcrylicBaseDarkFallbackColor;
+                lightTintOpacity = desktopAcrylicBaseLightTintOpacity;
+                lightLuminosityOpacity = desktopAcrylicBaseLightLuminosityOpacity;
+                darkTintOpacity = desktopAcrylicBaseDarkTintOpacity;
+                darkLuminosityOpacity = desktopAcrylicBaseDarkLuminosityOpacity;
+                lightTintColor = desktopAcrylicBaseLightTintColor;
+                lightFallbackColor = desktopAcrylicBaseLightFallbackColor;
+                darkTintColor = desktopAcrylicBaseDarkTintColor;
+                darkFallbackColor = desktopAcrylicBaseDarkFallbackColor;
             }
             else
             {
-                lightTintOpacity = defaultDesktopAcrylicThinLightTintOpacity;
-                lightLuminosityOpacity = defaultDesktopAcrylicThinLightLuminosityOpacity;
-                darkTintOpacity = defaultDesktopAcrylicThinDarkTintOpacity;
-                darkLuminosityOpacity = defaultDesktopAcrylicThinDarkLuminosityOpacity;
-                lightTintColor = defaultDesktopAcrylicThinLightTintColor;
-                lightFallbackColor = defaultDesktopAcrylicThinLightFallbackColor;
-                darkTintColor = defaultDesktopAcrylicThinDarkTintColor;
-                darkFallbackColor = defaultDesktopAcrylicThinDarkFallbackColor;
+                lightTintOpacity = desktopAcrylicThinLightTintOpacity;
+                lightLuminosityOpacity = desktopAcrylicThinLightLuminosityOpacity;
+                darkTintOpacity = desktopAcrylicThinDarkTintOpacity;
+                darkLuminosityOpacity = desktopAcrylicThinDarkLuminosityOpacity;
+                lightTintColor = desktopAcrylicThinLightTintColor;
+                lightFallbackColor = desktopAcrylicThinLightFallbackColor;
+                darkTintColor = desktopAcrylicThinDarkTintColor;
+                darkFallbackColor = desktopAcrylicThinDarkFallbackColor;
+            }
+
+            // 桌面应用需要手动开启主机背景画笔
+            if (usehostBackdropBrush)
+            {
+                Window.Current.CoreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
+                int attrValue = Convert.ToInt32(usehostBackdropBrush);
+                DwmapiLibrary.DwmSetWindowAttribute(User32Library.GetParent(coreWindowHandle), DWMWINDOWATTRIBUTE.DWMWA_USE_HOSTBACKDROPBRUSH, ref attrValue, sizeof(int));
             }
         }
 
@@ -116,7 +128,6 @@ namespace GetStoreAppInstaller.UI.Backdrop
             if (!isConnected)
             {
                 isConnected = true;
-                UpdateBrush();
                 uiSettings.ColorValuesChanged += OnColorValuesChanged;
                 Window.Current.Activated += OnActivated;
                 accessibilitySettings.HighContrastChanged += OnHighContrastChanged;
@@ -127,6 +138,8 @@ namespace GetStoreAppInstaller.UI.Backdrop
                 {
                     rootElement.ActualThemeChanged += OnActualThemeChanged;
                 }
+
+                UpdateBrush();
             }
         }
 
@@ -214,9 +227,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
         {
             if (isConnected)
             {
-                ElementTheme actualTheme = ElementTheme.Default;
-
-                actualTheme = Window.Current.Content is FrameworkElement rootElement ? rootElement.ActualTheme : Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+                ElementTheme actualTheme = Window.Current.Content is FrameworkElement rootElement ? rootElement.ActualTheme : Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
 
                 float tintOpacity;
                 float luminosityOpacity;
@@ -240,16 +251,14 @@ namespace GetStoreAppInstaller.UI.Backdrop
 
                 useDesktopAcrylicBrush = uiSettings.AdvancedEffectsEnabled && PowerManager.EnergySaverStatus is not EnergySaverStatus.On && compositionCapabilities.AreEffectsSupported() && (isInputActive || Window.Current.CoreWindow.ActivationMode is not CoreWindowActivationMode.Deactivated);
 
-                Compositor compositor = Window.Current.Compositor;
-
                 if (accessibilitySettings.HighContrast)
                 {
                     tintColor = uiSettings.GetColorValue(UIColorType.Background);
                     useDesktopAcrylicBrush = false;
                 }
 
+                Compositor compositor = Window.Current.Compositor;
                 CompositionBrush newBrush = useDesktopAcrylicBrush ? BuildDesktopAcrylicEffectBrush(compositor, tintColor, tintOpacity, luminosityOpacity) : compositor.CreateColorBrush(fallbackColor);
-
                 CompositionBrush oldBrush = CompositionBrush;
 
                 if (oldBrush is null || oldBrush.Comment is "Crossfade")

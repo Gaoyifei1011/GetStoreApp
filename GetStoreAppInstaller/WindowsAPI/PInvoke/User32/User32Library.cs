@@ -14,6 +14,14 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         private const string User32 = "user32.dll";
 
         /// <summary>
+        /// 检索指定窗口的父级或所有者的句柄。
+        /// </summary>
+        /// <param name="hWnd">要检索其父窗口句柄的窗口的句柄。</param>
+        /// <returns>如果窗口是子窗口，则返回值是父窗口的句柄。 如果窗口是具有 WS_POPUP 样式的顶级窗口，则返回值是所有者窗口的句柄。如果函数失败，则返回值为 NULL。 </returns>
+        [LibraryImport(User32, EntryPoint = "GetParent", SetLastError = false), PreserveSig]
+        public static partial IntPtr GetParent(IntPtr hWnd);
+
+        /// <summary>
         /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
         /// </summary>
         /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类。</param>

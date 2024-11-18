@@ -14,7 +14,7 @@ namespace GetStoreAppInstaller
         public MainPage()
         {
             InitializeComponent();
-            Background = new MicaBrush(MicaKind.BaseAlt, true);
+            Background = new MicaBrush(MicaKind.Base, true);
         }
 
         private async void OnLearnProjectPlanClicked(object sender, RoutedEventArgs args)

@@ -1,3 +1,0 @@
-files:
-  - source: GetStoreApp/Strings/*/*.resw
-    translation: '%original_file_name%'

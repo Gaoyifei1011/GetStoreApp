@@ -20,23 +20,23 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private bool isConnected;
         private bool useMicaBrush;
 
-        private readonly float defaultMicaBaseLightTintOpacity = 0.5f;
-        private readonly float defaultMicaBaseLightLuminosityOpacity = 1;
-        private readonly float defaultMicaBaseDarkTintOpacity = 0.8f;
-        private readonly float defaultMicaBaseDarkLuminosityOpacity = 1;
-        private readonly Color defaultMicaBaseLightTintColor = Color.FromArgb(255, 243, 243, 243);
-        private readonly Color defaultMicaBaseLightFallbackColor = Color.FromArgb(255, 243, 243, 243);
-        private readonly Color defaultMicaBaseDarkTintColor = Color.FromArgb(255, 32, 32, 32);
-        private readonly Color defaultMicaBaseDarkFallbackColor = Color.FromArgb(255, 32, 32, 32);
+        private readonly float micaBaseLightTintOpacity = 0.5f;
+        private readonly float micaBaseLightLuminosityOpacity = 1;
+        private readonly float micaBaseDarkTintOpacity = 0.8f;
+        private readonly float micaBaseDarkLuminosityOpacity = 1;
+        private readonly Color micaBaseLightTintColor = Color.FromArgb(255, 243, 243, 243);
+        private readonly Color micaBaseLightFallbackColor = Color.FromArgb(255, 243, 243, 243);
+        private readonly Color micaBaseDarkTintColor = Color.FromArgb(255, 32, 32, 32);
+        private readonly Color micaBaseDarkFallbackColor = Color.FromArgb(255, 32, 32, 32);
 
-        private readonly float defaultMicaAltLightTintOpacity = 0.5f;
-        private readonly float defaultMicaAltLightLuminosityOpacity = 1;
-        private readonly float defaultMicaAltDarkTintOpacity = 0;
-        private readonly float defaultMicaAltDarkLuminosityOpacity = 1;
-        private readonly Color defaultMicaAltLightTintColor = Color.FromArgb(255, 218, 218, 218);
-        private readonly Color defaultMicaAltLightFallbackColor = Color.FromArgb(255, 218, 218, 218);
-        private readonly Color defaultMicaAltDarkTintColor = Color.FromArgb(255, 10, 10, 10);
-        private readonly Color defaultMicaAltDarkFallbackColor = Color.FromArgb(255, 10, 10, 10);
+        private readonly float micaAltLightTintOpacity = 0.5f;
+        private readonly float micaAltLightLuminosityOpacity = 1;
+        private readonly float micaAltDarkTintOpacity = 0;
+        private readonly float micaAltDarkLuminosityOpacity = 1;
+        private readonly Color micaAltLightTintColor = Color.FromArgb(255, 218, 218, 218);
+        private readonly Color micaAltLightFallbackColor = Color.FromArgb(255, 218, 218, 218);
+        private readonly Color micaAltDarkTintColor = Color.FromArgb(255, 10, 10, 10);
+        private readonly Color micaAltDarkFallbackColor = Color.FromArgb(255, 10, 10, 10);
 
         private readonly bool isInputActive;
         private readonly float lightTintOpacity;
@@ -53,31 +53,42 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private readonly CompositionCapabilities compositionCapabilities = CompositionCapabilities.GetForCurrentView();
         private readonly DispatcherQueue dispatcherQueue = Window.Current.CoreWindow.DispatcherQueue;
 
-        public MicaBrush(MicaKind micaKind, bool isInputActive)
+        /// <summary>
+        /// 检查是否支持云母背景色
+        /// </summary>
+        public static bool IsSupported
         {
-            this.isInputActive = isInputActive;
+            get
+            {
+                return ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush));
+            }
+        }
+
+        public MicaBrush(MicaKind micaKind, bool isinputActive)
+        {
+            isInputActive = isinputActive;
 
             if (micaKind is MicaKind.Base)
             {
-                lightTintOpacity = defaultMicaBaseLightTintOpacity;
-                lightLuminosityOpacity = defaultMicaBaseLightLuminosityOpacity;
-                darkTintOpacity = defaultMicaBaseDarkTintOpacity;
-                darkLuminosityOpacity = defaultMicaBaseDarkLuminosityOpacity;
-                lightTintColor = defaultMicaBaseLightTintColor;
-                lightFallbackColor = defaultMicaBaseLightFallbackColor;
-                darkTintColor = defaultMicaBaseDarkTintColor;
-                darkFallbackColor = defaultMicaBaseDarkFallbackColor;
+                lightTintOpacity = micaBaseLightTintOpacity;
+                lightLuminosityOpacity = micaBaseLightLuminosityOpacity;
+                darkTintOpacity = micaBaseDarkTintOpacity;
+                darkLuminosityOpacity = micaBaseDarkLuminosityOpacity;
+                lightTintColor = micaBaseLightTintColor;
+                lightFallbackColor = micaBaseLightFallbackColor;
+                darkTintColor = micaBaseDarkTintColor;
+                darkFallbackColor = micaBaseDarkFallbackColor;
             }
             else
             {
-                lightTintOpacity = defaultMicaAltLightTintOpacity;
-                lightLuminosityOpacity = defaultMicaAltLightLuminosityOpacity;
-                darkTintOpacity = defaultMicaAltDarkTintOpacity;
-                darkLuminosityOpacity = defaultMicaAltDarkLuminosityOpacity;
-                lightTintColor = defaultMicaAltLightTintColor;
-                lightFallbackColor = defaultMicaAltLightFallbackColor;
-                darkTintColor = defaultMicaAltDarkTintColor;
-                darkFallbackColor = defaultMicaAltDarkFallbackColor;
+                lightTintOpacity = micaAltLightTintOpacity;
+                lightLuminosityOpacity = micaAltLightLuminosityOpacity;
+                darkTintOpacity = micaAltDarkTintOpacity;
+                darkLuminosityOpacity = micaAltDarkLuminosityOpacity;
+                lightTintColor = micaAltLightTintColor;
+                lightFallbackColor = micaAltLightFallbackColor;
+                darkTintColor = micaAltDarkTintColor;
+                darkFallbackColor = micaAltDarkFallbackColor;
             }
         }
 
@@ -91,7 +102,6 @@ namespace GetStoreAppInstaller.UI.Backdrop
             if (!isConnected)
             {
                 isConnected = true;
-                UpdateBrush();
                 uiSettings.ColorValuesChanged += OnColorValuesChanged;
                 Window.Current.Activated += OnActivated;
                 accessibilitySettings.HighContrastChanged += OnHighContrastChanged;
@@ -102,6 +112,8 @@ namespace GetStoreAppInstaller.UI.Backdrop
                 {
                     rootElement.ActualThemeChanged += OnActualThemeChanged;
                 }
+
+                UpdateBrush();
             }
         }
 
@@ -189,9 +201,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
         {
             if (isConnected)
             {
-                ElementTheme actualTheme = ElementTheme.Default;
-
-                actualTheme = Window.Current.Content is FrameworkElement rootElement ? rootElement.ActualTheme : Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
+                ElementTheme actualTheme = Window.Current.Content is FrameworkElement rootElement ? rootElement.ActualTheme : Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
 
                 float tintOpacity;
                 float luminosityOpacity;
@@ -213,9 +223,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
                     fallbackColor = darkFallbackColor;
                 }
 
-                useMicaBrush = ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)) && uiSettings.AdvancedEffectsEnabled && PowerManager.EnergySaverStatus is not EnergySaverStatus.On && compositionCapabilities.AreEffectsSupported() && (isInputActive || Window.Current.CoreWindow.ActivationMode is not CoreWindowActivationMode.Deactivated);
-
-                Compositor compositor = Window.Current.Compositor;
+                useMicaBrush = IsSupported && uiSettings.AdvancedEffectsEnabled && PowerManager.EnergySaverStatus is not EnergySaverStatus.On && compositionCapabilities.AreEffectsSupported() && (isInputActive || Window.Current.CoreWindow.ActivationMode is not CoreWindowActivationMode.Deactivated);
 
                 if (accessibilitySettings.HighContrast)
                 {
@@ -223,8 +231,8 @@ namespace GetStoreAppInstaller.UI.Backdrop
                     useMicaBrush = false;
                 }
 
+                Compositor compositor = Window.Current.Compositor;
                 CompositionBrush newBrush = useMicaBrush ? BuildMicaEffectBrush(compositor, tintColor, tintOpacity, luminosityOpacity) : compositor.CreateColorBrush(fallbackColor);
-
                 CompositionBrush oldBrush = CompositionBrush;
 
                 if (oldBrush is null || CompositionBrush.Comment is "Crossfade")
@@ -338,6 +346,9 @@ namespace GetStoreAppInstaller.UI.Backdrop
             return crossFadeEffectBrush;
         }
 
+        /// <summary>
+        /// 为回退色创建动画效果
+        /// </summary>
         private ScalarKeyFrameAnimation CreateCrossFadeAnimation(Compositor compositor)
         {
             ScalarKeyFrameAnimation animation = compositor.CreateScalarKeyFrameAnimation();
