@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Windows.Graphics;
 
 // 抑制 CA1401 警告
 #pragma warning disable CA1401
@@ -14,12 +15,32 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         private const string User32 = "user32.dll";
 
         /// <summary>
-        /// 检索指定窗口的父级或所有者的句柄。
+        /// 检索鼠标光标的位置（以屏幕坐标为单位）。
         /// </summary>
-        /// <param name="hWnd">要检索其父窗口句柄的窗口的句柄。</param>
-        /// <returns>如果窗口是子窗口，则返回值是父窗口的句柄。 如果窗口是具有 WS_POPUP 样式的顶级窗口，则返回值是所有者窗口的句柄。如果函数失败，则返回值为 NULL。 </returns>
-        [LibraryImport(User32, EntryPoint = "GetParent", SetLastError = false), PreserveSig]
-        public static partial IntPtr GetParent(IntPtr hWnd);
+        /// <param name="lpPoint">指向接收光标屏幕坐标的 POINT 结构的指针。</param>
+        /// <returns>如果成功，则返回非零值，否则返回零。 要获得更多的错误信息，请调用 GetLastError。</returns>
+        [LibraryImport(User32, EntryPoint = "GetCursorPos", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool GetCursorPos(out PointInt32 lpPoint);
+
+        /// <summary>
+        /// 检索指定的系统指标或系统配置设置。
+        /// 请注意， GetSystemMetrics 检索的所有维度都以像素为单位。
+        /// </summary>
+        /// <param name="nIndex">要检索的系统指标或配置设置。 此参数的取值可为下列值之一： 请注意，所有SM_CX* 值为宽度，所有SM_CY* 值为高度。 另请注意，设计为返回布尔数据的所有设置将 TRUE 表示为任何非零值， FALSE 表示零值。</param>
+        /// <returns>如果函数成功，则返回值为请求的系统指标或配置设置。如果函数失败，返回值为 0。</returns>
+        [LibraryImport(User32, EntryPoint = "GetSystemMetrics", SetLastError = false), PreserveSig]
+        public static partial int GetSystemMetrics(SYSTEMMETRICSINDEX nIndex);
+
+        /// <summary>
+        /// 检索指定窗口的边框的尺寸。 尺寸以相对于屏幕左上角的屏幕坐标提供。
+        /// </summary>
+        /// <param name="handleRef">窗口的句柄。</param>
+        /// <param name="rect">指向 RECT 结构的指针，该结构接收窗口左上角和右下角的屏幕坐标。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 要获得更多的错误信息，请调用 GetLastError。</returns>
+        [LibraryImport(User32, EntryPoint = "GetWindowRect", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool GetWindowRect(IntPtr handleRef, out RECT rect);
 
         /// <summary>
         /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
@@ -40,6 +61,27 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>如果函数成功，则返回值是请求的值。如果函数失败，则返回值为零。</returns>
         [LibraryImport(User32, EntryPoint = "GetWindowLongPtrW", SetLastError = false), PreserveSig]
         public static partial int GetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex);
+
+        /// <summary>
+        /// 确定窗口是否最大化。
+        /// </summary>
+        /// <param name="hWnd">要测试的窗口的句柄。</param>
+        /// <returns>如果窗口已缩放，则返回值为非零值。如果未缩放窗口，则返回值为零。</returns>
+        [LibraryImport(User32, EntryPoint = "IsZoomed", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool IsZoomed(IntPtr hWnd);
+
+        /// <summary>
+        /// MapWindowPoints 函数将 (映射) 一组点从相对于一个窗口的坐标空间转换为相对于另一个窗口的坐标空间。
+        /// </summary>
+        /// <param name="hWndFrom">从中转换点的窗口的句柄。 如果此参数为 NULL 或HWND_DESKTOP，则假定这些点位于屏幕坐标中。</param>
+        /// <param name="hWndTo">指向要向其转换点的窗口的句柄。 如果此参数为 NULL 或HWND_DESKTOP，则点将转换为屏幕坐标。</param>
+        /// <param name="lpPoints">指向 POINT 结构的数组的指针，该数组包含要转换的点集。 这些点以设备单位为单位。 此参数还可以指向 RECT 结构，在这种情况下， cPoints 参数应设置为 2。</param>
+        /// <param name="cPoints">lpPoints 参数指向的数组中的 POINT 结构数。</param>
+        /// <returns>如果函数成功，则返回值的低序字是添加到每个源点的水平坐标以计算每个目标点的水平坐标的像素数。 (除此之外，如果正对 hWndFrom 和 hWndTo 之一进行镜像，则每个生成的水平坐标乘以 -1.) 高序字是添加到每个源点垂直坐标的像素数，以便计算每个目标点的垂直坐标。
+        /// 如果函数失败，则返回值为零。 在调用此方法之前调用 SetLastError ，以将错误返回值与合法的“0”返回值区分开来。</returns>
+        [LibraryImport(User32, EntryPoint = "MapWindowPoints", SetLastError = false), PreserveSig]
+        public static unsafe partial int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, ref PointInt32 lpPoints, uint cPoints);
 
         /// <summary>
         /// 创建从指定文件中提取的图标的句柄数组。
@@ -76,15 +118,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, UIntPtr wParam, IntPtr lParam);
 
         /// <summary>
-        /// 更改指定子窗口的父窗口。
-        /// </summary>
-        /// <param name="hWndChild">子窗口的句柄。</param>
-        /// <param name="hWndNewParent">新父窗口的句柄。 如果此参数为 NULL，桌面窗口将成为新的父窗口。 如果此参数 HWND_MESSAGE，则子窗口将成为仅消息窗口。</param>
-        /// <returns>如果函数成功，则返回值是上一个父窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
-        [LibraryImport(User32, EntryPoint = "SetParent", SetLastError = false), PreserveSig]
-        public static partial uint SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
-
-        /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。
         /// </summary>
         /// <param name="hWnd">窗口的句柄，间接地是窗口所属的类</param>
@@ -103,5 +136,20 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>如果函数成功，则返回值是指定偏移量的上一个值。如果函数失败，则返回值为零。 </returns>
         [LibraryImport(User32, EntryPoint = "SetWindowLongPtrW", SetLastError = false), PreserveSig]
         public static partial IntPtr SetWindowLongPtr(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong);
+
+        /// <summary>
+        /// 更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。
+        /// </summary>
+        /// <param name="hWnd">更改子窗口、弹出窗口或顶级窗口的大小、位置和 Z 顺序。 这些窗口根据屏幕上的外观进行排序。 最上面的窗口接收最高排名，是 Z 顺序中的第一个窗口。</param>
+        /// <param name="hWndInsertAfter">在 Z 顺序中定位窗口之前窗口的句柄。 </param>
+        /// <param name="X">在 Z 顺序中定位窗口之前窗口的句柄。 </param>
+        /// <param name="Y">窗口顶部的新位置，以客户端坐标表示。</param>
+        /// <param name="cx">窗口的新宽度（以像素为单位）。</param>
+        /// <param name="cy">窗口的新高度（以像素为单位）。</param>
+        /// <param name="uFlags">窗口大小调整和定位标志。</param>
+        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。 </returns>
+        [LibraryImport(User32, EntryPoint = "SetWindowPos", SetLastError = true), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
     }
 }

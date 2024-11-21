@@ -346,7 +346,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            overlappedPresenter.Restore();
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_RESTORE, 0);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, 0xF010, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
             }
         }
 
@@ -369,7 +369,7 @@ namespace GetStoreApp.Views.Windows
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, 0xF000, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
             }
         }
 
@@ -378,7 +378,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            overlappedPresenter.Minimize();
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MINIMIZE, 0);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            overlappedPresenter.Maximize();
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            (Application.Current as WinUIApp).Dispose();
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(AppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_CLOSE, 0);
         }
 
         #endregion 第三部分：窗口右键菜单事件

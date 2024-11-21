@@ -5,6 +5,10 @@
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:xaml="using:Windows.UI.Xaml">
     <Application.Resources>
-        <controls:XamlControlsResources />
+        <controls:XamlControlsResources>
+            <controls:XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/XamlIslands/MenuFlyout.xaml" />
+            </controls:XamlControlsResources.MergedDictionaries>
+        </controls:XamlControlsResources>
     </Application.Resources>
 </Application>

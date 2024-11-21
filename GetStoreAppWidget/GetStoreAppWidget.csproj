@@ -71,9 +71,9 @@
     <WidgetEmbeddedItem Include="Assets\Widgets\Win32AppUpdateWidgetTemplateLarge.json" />
     <WidgetEmbeddedItem Include="Assets\Widgets\Win32AppUpdateWidgetTemplateMedium.json" />
 
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241106002" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
   </ItemGroup>
 
   <ItemGroup>

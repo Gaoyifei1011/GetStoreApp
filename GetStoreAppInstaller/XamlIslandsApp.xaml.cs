@@ -43,6 +43,7 @@ namespace GetStoreAppInstaller
             if (!isDisposed)
             {
                 isDisposed = true;
+                Window.Current.CoreWindow.Close();
             }
         }
     }

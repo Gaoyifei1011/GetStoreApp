@@ -1,6 +1,5 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Dwmapi;
-using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
 using Windows.System;
@@ -70,10 +69,9 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private Color darkTintColor = Color.FromArgb(0, 0, 0, 0);
         private Color darkFallbackColor = Color.FromArgb(0, 0, 0, 0);
 
-        public DesktopAcrylicBrush(DesktopAcrylicKind desktopAcrylicKind, bool isinputActive, bool usehostBackdropBrush)
+        public DesktopAcrylicBrush(DesktopAcrylicKind desktopAcrylicKind, bool isinputActive)
         {
             isInputActive = isinputActive;
-            useHostBackdropBrush = usehostBackdropBrush;
 
             if (desktopAcrylicKind is DesktopAcrylicKind.Default)
             {
@@ -110,12 +108,9 @@ namespace GetStoreAppInstaller.UI.Backdrop
             }
 
             // 桌面应用需要手动开启主机背景画笔
-            if (usehostBackdropBrush)
-            {
-                Window.Current.CoreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
-                int attrValue = Convert.ToInt32(usehostBackdropBrush);
-                DwmapiLibrary.DwmSetWindowAttribute(User32Library.GetParent(coreWindowHandle), DWMWINDOWATTRIBUTE.DWMWA_USE_HOSTBACKDROPBRUSH, ref attrValue, sizeof(int));
-            }
+            Window.Current.CoreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
+            int attrValue = 1;
+            DwmapiLibrary.DwmSetWindowAttribute(coreWindowHandle, DWMWINDOWATTRIBUTE.DWMWA_USE_HOSTBACKDROPBRUSH, ref attrValue, sizeof(int));
         }
 
         /// <summary>

@@ -67,7 +67,7 @@
     <None Remove="Styles\UWP\AppbarButton.xaml" />
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2849.39" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <ProjectReference Include="..\Microsoft.UI.Xaml.Projection\Microsoft.UI.Xaml.Projection.csproj" />
     

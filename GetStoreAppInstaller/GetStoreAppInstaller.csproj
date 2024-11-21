@@ -18,7 +18,6 @@
     <IncludeSymbols>false</IncludeSymbols>
     <IsAotCompatible>true</IsAotCompatible>
     <LangVersion>latest</LangVersion>
-    <MileXamlNoSunValleyXamlStyle>true</MileXamlNoSunValleyXamlStyle>
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
     <MetricsSupport>false</MetricsSupport>
     <OptimizationPreference>Size</OptimizationPreference>
@@ -62,16 +61,15 @@
     
     <Manifest Include="$(ApplicationManifest)" />
     <None Remove="MainPage.xaml" />
+    <None Remove="Styles\XamlIslands\MenuFlyout.xaml" />
     <None Remove="XamlIslandsApp.xaml" />
-    
-    <Page Remove="XamlIslandsApp.xaml" />
+
     <Page Update="MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\XamlIslands\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Remove="XamlIslandsApp.xaml" />
     
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241106002" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
     <ProjectReference Include="..\Microsoft.UI.Xaml.Projection\Microsoft.UI.Xaml.Projection.csproj" />
-
-    <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.18362.0\Microsoft.InteractiveExperiences.Projection.dll" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
