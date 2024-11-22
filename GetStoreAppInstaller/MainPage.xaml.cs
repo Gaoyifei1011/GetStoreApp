@@ -44,15 +44,6 @@ namespace GetStoreAppInstaller
             Window.Current.CoreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowhandle);
             IsWindowMaximized = User32Library.IsZoomed(coreWindowhandle);
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
-
-            if (IsWindowMaximized)
-            {
-                VisualStateManager.GoToState(MaximizeButton, "WindowStateMaximized", false);
-            }
-            else
-            {
-                VisualStateManager.GoToState(MaximizeButton, "WindowStateNormal", false);
-            }
         }
 
         #region 第一部分：窗口右键菜单事件

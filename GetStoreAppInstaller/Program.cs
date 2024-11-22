@@ -86,15 +86,6 @@ namespace GetStoreAppInstaller
             {
                 Window.Current.CoreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowhandle);
                 (Window.Current.Content as MainPage).IsWindowMaximized = User32Library.IsZoomed(coreWindowhandle);
-
-                if ((Window.Current.Content as MainPage).IsWindowMaximized)
-                {
-                    VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateMaximized", false);
-                }
-                else
-                {
-                    VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateNormal", false);
-                }
             }
         }
 
@@ -162,15 +153,6 @@ namespace GetStoreAppInstaller
                             if ((Window.Current.Content as MainPage).TitlebarMenuFlyout.IsOpen)
                             {
                                 (Window.Current.Content as MainPage).TitlebarMenuFlyout.Hide();
-                            }
-
-                            if ((Window.Current.Content as MainPage).IsWindowMaximized)
-                            {
-                                VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateMaximized", false);
-                            }
-                            else
-                            {
-                                VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateNormal", false);
                             }
                         }
 
@@ -335,14 +317,24 @@ namespace GetStoreAppInstaller
                                     // 窗口标题栏和窗口三大按钮
                                     if (currentPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
                                     {
-                                        // 最大化按钮
-                                        if (windowRect.right - windowRect.left - currentPoint.X > 46 * 3 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.X + 2)
+                                        // 关闭按钮
+                                        if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
                                         {
-                                            return (IntPtr)HITTEST.HTCAPTION;
+                                            return (IntPtr)HITTEST.HTCLOSE;
+                                        }
+                                        // 最大化按钮
+                                        else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                        {
+                                            return (IntPtr)HITTEST.HTMAXBUTTON;
+                                        }
+                                        // 最小化按钮
+                                        else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                        {
+                                            return (IntPtr)HITTEST.HTMINBUTTON;
                                         }
                                         else
                                         {
-                                            return (IntPtr)HITTEST.HTCLIENT;
+                                            return (IntPtr)HITTEST.HTCAPTION;
                                         }
                                     }
                                     // 窗口内容区
@@ -369,14 +361,24 @@ namespace GetStoreAppInstaller
                                     // 窗口标题栏和窗口三大按钮
                                     if (currentPoint.Y < (30 + border.Y) * DisplayInformation.RawPixelsPerViewPixel)
                                     {
-                                        // 最大化按钮
-                                        if (windowRect.right - windowRect.left - currentPoint.X > 46 * 3 * DisplayInformation.RawPixelsPerViewPixel + 6)
+                                        // 关闭按钮
+                                        if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel)
                                         {
-                                            return (IntPtr)HITTEST.HTCAPTION;
+                                            return (IntPtr)HITTEST.HTCLOSE;
+                                        }
+                                        // 最大化按钮
+                                        else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel)
+                                        {
+                                            return (IntPtr)HITTEST.HTMAXBUTTON;
+                                        }
+                                        // 最小化按钮
+                                        else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel)
+                                        {
+                                            return (IntPtr)HITTEST.HTMINBUTTON;
                                         }
                                         else
                                         {
-                                            return (IntPtr)HITTEST.HTCLIENT;
+                                            return (IntPtr)HITTEST.HTCAPTION;
                                         }
                                     }
                                     // 窗口内容区
@@ -393,10 +395,10 @@ namespace GetStoreAppInstaller
                     {
                         MARGINS margins = new()
                         {
-                            cxLeftWidth = 1,
-                            cxRightWidth = 1,
-                            cyTopHeight = 1,
-                            cyBottomHeight = 1,
+                            cxLeftWidth = -1,
+                            cxRightWidth = -1,
+                            cyTopHeight = -1,
+                            cyBottomHeight = -1,
                         };
 
                         DwmapiLibrary.DwmExtendFrameIntoClientArea(hWnd, ref margins);
@@ -421,15 +423,6 @@ namespace GetStoreAppInstaller
                             if ((Window.Current.Content as MainPage).TitlebarMenuFlyout.IsOpen)
                             {
                                 (Window.Current.Content as MainPage).TitlebarMenuFlyout.Hide();
-                            }
-
-                            if ((Window.Current.Content as MainPage).IsWindowMaximized)
-                            {
-                                VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateMaximized", false);
-                            }
-                            else
-                            {
-                                VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateNormal", false);
                             }
                         }
 
