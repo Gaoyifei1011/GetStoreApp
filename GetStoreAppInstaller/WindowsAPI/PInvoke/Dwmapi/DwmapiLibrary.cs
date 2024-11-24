@@ -1,5 +1,4 @@
-﻿using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Dwmapi
@@ -10,20 +9,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Dwmapi
     public static partial class DwmapiLibrary
     {
         private const string Dwmapi = "dwmapi.dll";
-
-        /// <summary>
-        /// 桌面窗口管理器 (DWM 的默认窗口过程) 非工作区内的命中测试。
-        /// 还需要确保为WM_NCMOUSELEAVE消息调用 DwmDefWindowProc。 如果未为WM_NCMOUSELEAVE消息调用 DwmDefWindowProc，则当光标离开窗口时，DWM 不会从“最大化”、“最小化”和“关闭”按钮中删除突出显示。
-        /// </summary>
-        /// <param name="hwnd">接收消息的窗口过程的句柄。</param>
-        /// <param name="msg">消息。</param>
-        /// <param name="wParam">指定附加消息信息。 此参数的内容取决于 msg 参数的值。</param>
-        /// <param name="lParam">指定附加消息信息。 此参数的内容取决于 msg 参数的值。</param>
-        /// <param name="plResult">指向 LRESULT 值的指针，此方法成功返回后，接收命中测试的结果。</param>
-        /// <returns>如果 DwmDefWindowProc 处理了消息，则为 TRUE;否则为 FALSE。</returns>
-        [LibraryImport(Dwmapi, EntryPoint = "DwmDefWindowProc", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool DwmDefWindowProc(IntPtr hwnd, WindowMessage msg, UIntPtr wParam, IntPtr lParam, out IntPtr plResult);
 
         /// <summary>
         /// 获取一个值，该值指示是否启用桌面窗口管理器 (DWM) 组合。 运行 Windows 7 或更早版本的计算机上的应用程序可以通过处理 WM_DWMCOMPOSITIONCHANGED 通知来侦听组合状态更改。

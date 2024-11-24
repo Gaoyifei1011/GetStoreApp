@@ -29,9 +29,10 @@ namespace GetStoreAppInstaller
     /// </summary>
     public partial class Program
     {
-        public static DisplayInformation DisplayInformation { get; private set; }
-
+        private static bool isPressed;
         private static SUBCLASSPROC mainWindowSubClassProc;
+
+        public static DisplayInformation DisplayInformation { get; private set; }
 
         [STAThread]
         public static void Main()
@@ -40,7 +41,7 @@ namespace GetStoreAppInstaller
             InitializeResources();
 
             // 创建 CoreWindow
-            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.NOT_IMMERSIVE, "获取商店应用 应用安装器", 400, 400, 960, 600, 0, IntPtr.Zero, typeof(ICoreWindow).GUID, out IntPtr coreWindowPtr);
+            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.NOT_IMMERSIVE, "获取商店应用 应用安装器", 400, 400, 800, 600, 0, IntPtr.Zero, typeof(ICoreWindow).GUID, out IntPtr coreWindowPtr);
             CoreWindow coreWindow = CoreWindow.FromAbi(coreWindowPtr);
             coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
             SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
@@ -68,6 +69,7 @@ namespace GetStoreAppInstaller
             SetAppIcon(coreWindowHandle);
             coreWindow.Activate();
             XamlControlsResources xamlControlsResources = [];
+            xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/Button.xaml") });
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/MenuFlyout.xaml") });
             Application.Current.Resources = xamlControlsResources;
             Window.Current.Content = new MainPage();
@@ -86,6 +88,15 @@ namespace GetStoreAppInstaller
             {
                 Window.Current.CoreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowhandle);
                 (Window.Current.Content as MainPage).IsWindowMaximized = User32Library.IsZoomed(coreWindowhandle);
+
+                if ((Window.Current.Content as MainPage).IsWindowMaximized)
+                {
+                    VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateMaximized", false);
+                }
+                else
+                {
+                    VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "WindowStateNormal", false);
+                }
             }
         }
 
@@ -136,11 +147,6 @@ namespace GetStoreAppInstaller
         /// </summary>
         private static IntPtr MainWindowSubClassProc(IntPtr hWnd, WindowMessage Msg, UIntPtr wParam, IntPtr lParam, uint uIdSubclass, IntPtr dwRefData)
         {
-            if (DwmapiLibrary.DwmDefWindowProc(hWnd, Msg, wParam, lParam, out IntPtr result))
-            {
-                return result;
-            }
-
             switch (Msg)
             {
                 // 窗口移动时的消息
@@ -390,6 +396,216 @@ namespace GetStoreAppInstaller
                             }
                         }
                     }
+                // 鼠标在窗口客户区移动时触发的消息
+                case WindowMessage.WM_MOUSEMOVE:
+                    {
+                        PointInt32 currentPoint = new(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+                        User32Library.MapWindowPoints(IntPtr.Zero, hWnd, ref currentPoint, 2);
+
+                        PointInt32 border = new()
+                        {
+                            X = User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXFRAME) + User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXPADDEDBORDER),
+                            Y = User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CYFRAME) + User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXPADDEDBORDER)
+                        };
+
+                        User32Library.GetWindowRect(hWnd, out RECT windowRect);
+
+                        // 鼠标在窗口标题栏和窗口三大按钮区域内
+                        if (currentPoint.X > border.X && windowRect.right - windowRect.left - currentPoint.X > border.X)
+                        {
+                            if (User32Library.IsZoomed(hWnd))
+                            {
+                                if (currentPoint.Y >= 0 && windowRect.bottom - windowRect.top - currentPoint.Y > 0 && currentPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
+                                {
+                                    // 关闭按钮
+                                    if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "PointerOver", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最大化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最小化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (currentPoint.Y > border.Y && windowRect.bottom - windowRect.top - currentPoint.Y > border.Y && currentPoint.Y < (30 + border.Y) * DisplayInformation.RawPixelsPerViewPixel)
+                                {
+                                    // 关闭按钮
+                                    if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "PointerOver", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最大化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最小化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // 其他区域
+                        isPressed = false;
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                        break;
+                    }
+
+                // 鼠标在非客户区移动时的消息
+                case WindowMessage.WM_NCMOUSEMOVE:
+                    {
+                        PointInt32 currentPoint = new(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+                        User32Library.MapWindowPoints(IntPtr.Zero, hWnd, ref currentPoint, 2);
+
+                        PointInt32 border = new()
+                        {
+                            X = User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXFRAME) + User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXPADDEDBORDER),
+                            Y = User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CYFRAME) + User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXPADDEDBORDER)
+                        };
+
+                        User32Library.GetWindowRect(hWnd, out RECT windowRect);
+
+                        // 鼠标在窗口标题栏和窗口三大按钮区域内
+                        if (currentPoint.X > border.X && windowRect.right - windowRect.left - currentPoint.X > border.X)
+                        {
+                            if (User32Library.IsZoomed(hWnd))
+                            {
+                                if (currentPoint.Y >= 0 && windowRect.bottom - windowRect.top - currentPoint.Y > 0 && currentPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
+                                {
+                                    // 关闭按钮
+                                    if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "PointerOver", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最大化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最小化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (currentPoint.Y > border.Y && windowRect.bottom - windowRect.top - currentPoint.Y > border.Y && currentPoint.Y < (30 + border.Y) * DisplayInformation.RawPixelsPerViewPixel)
+                                {
+                                    // 关闭按钮
+                                    if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "PointerOver", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最大化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                    // 最小化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        if (!isPressed)
+                                        {
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "PointerOver", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                            VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // 其他区域
+                        isPressed = false;
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                        break;
+                    }
+
                 // 窗口框架重绘时的消息
                 case WindowMessage.WM_NCPAINT:
                     {
@@ -413,9 +629,10 @@ namespace GetStoreAppInstaller
                         }
                         break;
                     }
-                // 处理窗口非工作区左键释放的消息
+                // 处理窗口非工作区左键按下的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
+                        // 隐藏自定义的标题栏右键菜单
                         if (Window.Current is not null && Window.Current.Content is not null)
                         {
                             (Window.Current.Content as MainPage).IsWindowMaximized = User32Library.IsZoomed(hWnd);
@@ -426,15 +643,102 @@ namespace GetStoreAppInstaller
                             }
                         }
 
+                        PointInt32 currentPoint = new(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+                        User32Library.MapWindowPoints(IntPtr.Zero, hWnd, ref currentPoint, 2);
+
+                        PointInt32 border = new()
+                        {
+                            X = User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXFRAME) + User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXPADDEDBORDER),
+                            Y = User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CYFRAME) + User32Library.GetSystemMetrics(SYSTEMMETRICSINDEX.SM_CXPADDEDBORDER)
+                        };
+
+                        User32Library.GetWindowRect(hWnd, out RECT windowRect);
+
+                        // 鼠标在窗口标题栏和窗口三大按钮区域内
+                        if (currentPoint.X > border.X && windowRect.right - windowRect.left - currentPoint.X > border.X)
+                        {
+                            if (User32Library.IsZoomed(hWnd))
+                            {
+                                if (currentPoint.Y > 0 && windowRect.bottom - windowRect.top - currentPoint.Y > 0 && currentPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
+                                {
+                                    // 关闭按钮
+                                    if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        isPressed = true;
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Pressed", false);
+                                        break;
+                                    }
+                                    // 最大化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        isPressed = true;
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Pressed", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                        break;
+                                    }
+                                    // 最小化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel + 2 * border.Y)
+                                    {
+                                        isPressed = true;
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Pressed", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (currentPoint.Y > border.Y && windowRect.bottom - windowRect.top - currentPoint.Y > border.Y && currentPoint.Y < (30 + border.Y) * DisplayInformation.RawPixelsPerViewPixel)
+                                {
+                                    // 关闭按钮
+                                    if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        isPressed = true;
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "PointerOver", false);
+                                        break;
+                                    }
+                                    // 最大化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 2 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        isPressed = true;
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "PointerOver", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                        break;
+                                    }
+                                    // 最小化按钮
+                                    else if (windowRect.right - windowRect.left - currentPoint.X < 46 * 3 * DisplayInformation.RawPixelsPerViewPixel)
+                                    {
+                                        isPressed = true;
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "PointerOver", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        // 其他区域
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MinimizeButton, "Normal", false);
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).MaximizeButton, "Normal", false);
+                        VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
                         break;
                     }
+
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
                         if (wParam.ToUInt32() is 2 && DisplayInformation is not null)
                         {
-                            PointInt32 screenPoint = new(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-                            User32Library.MapWindowPoints(IntPtr.Zero, hWnd, ref screenPoint, 2);
+                            PointInt32 currentPoint = new(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+                            User32Library.MapWindowPoints(IntPtr.Zero, hWnd, ref currentPoint, 2);
 
                             PointInt32 border = new()
                             {
@@ -445,7 +749,7 @@ namespace GetStoreAppInstaller
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = new Point(screenPoint.X / DisplayInformation.RawPixelsPerViewPixel, screenPoint.Y / DisplayInformation.RawPixelsPerViewPixel)
+                                Position = new Point(currentPoint.X / DisplayInformation.RawPixelsPerViewPixel, currentPoint.Y / DisplayInformation.RawPixelsPerViewPixel)
                             };
 
                             (Window.Current.Content as MainPage).TitlebarMenuFlyout.ShowAt(null, options);
@@ -536,7 +840,7 @@ namespace GetStoreAppInstaller
                             else
                             {
                                 // 窗口处于右上角三个按键范围内
-                                if (currentPoint.Y >= 0 && windowRect.bottom - windowRect.top - currentPoint.Y >= 0 && currentPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
+                                if (currentPoint.Y >= 8 && windowRect.bottom - windowRect.top - currentPoint.Y >= 0 && currentPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
                                 {
                                     // 关闭按钮
                                     if (windowRect.right - windowRect.left - currentPoint.X < 46 * DisplayInformation.RawPixelsPerViewPixel)

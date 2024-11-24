@@ -2,6 +2,7 @@
     x:Class="GetStoreAppInstaller.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreAppInstaller.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreAppInstaller.Services.Root"
@@ -11,7 +12,6 @@
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
-
     <Page.Resources>
         <ResourceDictionary>
             <!--  标题栏右键菜单  -->
@@ -85,6 +85,108 @@
     </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                x:Name="MinimizeButton"
+                Grid.Column="0"
+                Width="46.0"
+                Height="{StaticResource CaptionButtonHeightWindowed}"
+                MinWidth="46.0"
+                x:FieldModifier="public"
+                AutomationProperties.AccessibilityView="Raw"
+                IsHitTestVisible="False"
+                Style="{StaticResource CaptionButton}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="MinimizeGlyph" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Dark">
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="MinimizeGlyph" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="HighContrast">
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="MinimizeGlyphContrast" />
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            <Button
+                x:Name="MaximizeButton"
+                Grid.Column="1"
+                Width="46.0"
+                Height="{StaticResource CaptionButtonHeightWindowed}"
+                MinWidth="46.0"
+                x:FieldModifier="public"
+                AutomationProperties.AccessibilityView="Raw"
+                IsHitTestVisible="False"
+                Style="{StaticResource CaptionButton}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="MaximizeGlyph" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Dark">
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="MaximizeGlyph" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="HighContrast">
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="MaximizeGlyphContrast" />
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+            <Button
+                x:Name="CloseButton"
+                Grid.Column="2"
+                Width="46.0"
+                Height="{StaticResource CaptionButtonHeightWindowed}"
+                MinWidth="46.0"
+                x:FieldModifier="public"
+                AutomationProperties.AccessibilityView="Raw"
+                IsHitTestVisible="False"
+                Style="{StaticResource CaptionButton}">
+                <Button.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.ThemeDictionaries>
+                            <ResourceDictionary x:Key="Light">
+                                <StaticResource x:Key="CaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
+                                <StaticResource x:Key="CaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
+                                <StaticResource x:Key="CaptionButtonForegroundPointerOver" ResourceKey="CloseButtonForegroundPointerOver" />
+                                <StaticResource x:Key="CaptionButtonForegroundPressed" ResourceKey="CloseButtonForegroundPressed" />
+                                <StaticResource x:Key="CaptionButtonBackground" ResourceKey="CloseButtonBackground" />
+                                <StaticResource x:Key="CaptionButtonBackgroundColor" ResourceKey="CloseButtonBackgroundColor" />
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="CloseGlyph" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="Dark">
+                                <StaticResource x:Key="CaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
+                                <StaticResource x:Key="CaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
+                                <StaticResource x:Key="CaptionButtonForegroundPointerOver" ResourceKey="CloseButtonForegroundPointerOver" />
+                                <StaticResource x:Key="CaptionButtonForegroundPressed" ResourceKey="CloseButtonForegroundPressed" />
+                                <StaticResource x:Key="CaptionButtonBackground" ResourceKey="CloseButtonBackground" />
+                                <StaticResource x:Key="CaptionButtonBackgroundColor" ResourceKey="CloseButtonBackgroundColor" />
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="CloseGlyph" />
+                            </ResourceDictionary>
+                            <ResourceDictionary x:Key="HighContrast">
+                                <StaticResource x:Key="CaptionButtonBackgroundPointerOver" ResourceKey="CloseButtonBackgroundPointerOver" />
+                                <StaticResource x:Key="CaptionButtonBackgroundPressed" ResourceKey="CloseButtonBackgroundPressed" />
+                                <StaticResource x:Key="CaptionButtonForegroundPointerOver" ResourceKey="CloseButtonForegroundPointerOver" />
+                                <StaticResource x:Key="CaptionButtonForegroundPressed" ResourceKey="CloseButtonForegroundPressed" />
+                                <StaticResource x:Key="CaptionButtonGlyph" ResourceKey="CloseGlyphContrast" />
+                            </ResourceDictionary>
+                        </ResourceDictionary.ThemeDictionaries>
+                    </ResourceDictionary>
+                </Button.Resources>
+            </Button>
+        </Grid>
 
         <StackPanel
             HorizontalAlignment="Center"

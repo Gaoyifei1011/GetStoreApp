@@ -7,6 +7,7 @@
     <Application.Resources>
         <controls:XamlControlsResources>
             <controls:XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/XamlIslands/Button.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/XamlIslands/MenuFlyout.xaml" />
             </controls:XamlControlsResources.MergedDictionaries>
         </controls:XamlControlsResources>
