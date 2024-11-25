@@ -807,18 +807,18 @@ namespace GetStoreApp.Views.Windows
             if (theme is ElementTheme.Light)
             {
                 titleBar.ButtonForegroundColor = Colors.Black;
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 0, 0, 0);
+                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(9, 0, 0, 0);
                 titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 0, 0, 0);
+                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(6, 0, 0, 0);
                 titleBar.ButtonPressedForegroundColor = Colors.Black;
                 titleBar.ButtonInactiveForegroundColor = Colors.Black;
             }
             else
             {
                 titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 255, 255, 255);
+                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(15, 255, 255, 255);
                 titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 255, 255, 255);
+                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(10, 255, 255, 255);
                 titleBar.ButtonPressedForegroundColor = Colors.White;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
             }

@@ -459,27 +459,25 @@ namespace GetStoreAppWebView.Pages
             titleBar.ForegroundColor = Colors.Transparent;
             titleBar.InactiveBackgroundColor = Colors.Transparent;
             titleBar.InactiveForegroundColor = Colors.Transparent;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 
             if (theme is ElementTheme.Light)
             {
-                titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.Black;
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 0, 0, 0);
+                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(9, 0, 0, 0);
                 titleBar.ButtonHoverForegroundColor = Colors.Black;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 0, 0, 0);
+                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(6, 0, 0, 0);
                 titleBar.ButtonPressedForegroundColor = Colors.Black;
-                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.Black;
             }
             else
             {
-                titleBar.ButtonBackgroundColor = Colors.Transparent;
                 titleBar.ButtonForegroundColor = Colors.White;
-                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(20, 255, 255, 255);
+                titleBar.ButtonHoverBackgroundColor = Color.FromArgb(15, 255, 255, 255);
                 titleBar.ButtonHoverForegroundColor = Colors.White;
-                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(30, 255, 255, 255);
+                titleBar.ButtonPressedBackgroundColor = Color.FromArgb(10, 255, 255, 255);
                 titleBar.ButtonPressedForegroundColor = Colors.White;
-                titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
                 titleBar.ButtonInactiveForegroundColor = Colors.White;
             }
         }

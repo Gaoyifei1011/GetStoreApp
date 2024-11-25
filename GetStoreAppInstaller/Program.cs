@@ -7,14 +7,17 @@ using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Windows.ApplicationModel.Core;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Graphics.Display;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 using WinRT;
@@ -172,7 +175,28 @@ namespace GetStoreAppInstaller
                         (Application.Current as XamlIslandsApp).Dispose();
                         break;
                     }
+                // 窗口大小发生更改时的消息
+                case WindowMessage.WM_GETMINMAXINFO:
+                    {
+                        if (DisplayInformation is not null)
+                        {
+                            MINMAXINFO minMaxInfo;
 
+                            unsafe
+                            {
+                                minMaxInfo = *(MINMAXINFO*)lParam;
+                            }
+                            minMaxInfo.ptMinTrackSize.X = (int)(700 * DisplayInformation.RawPixelsPerViewPixel);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(450 * DisplayInformation.RawPixelsPerViewPixel);
+
+                            unsafe
+                            {
+                                *(MINMAXINFO*)lParam = minMaxInfo;
+                            }
+                        }
+
+                        break;
+                    }
                 // 重新计算窗口工作区大小和位置时的消息
                 case WindowMessage.WM_NCCALCSIZE:
                     {
@@ -202,7 +226,7 @@ namespace GetStoreAppInstaller
                             }
 
                             Marshal.StructureToPtr(nccalcsize_params, lParam, false);
-                            return 768;
+                            return 0;
                         }
 
                         break;
@@ -500,7 +524,6 @@ namespace GetStoreAppInstaller
                         VisualStateManager.GoToState((Window.Current.Content as MainPage).CloseButton, "Normal", false);
                         break;
                     }
-
                 // 鼠标在非客户区移动时的消息
                 case WindowMessage.WM_NCMOUSEMOVE:
                     {

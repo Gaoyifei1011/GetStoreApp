@@ -2,6 +2,7 @@
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Uxtheme;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.ComponentModel;
 using Windows.System;
