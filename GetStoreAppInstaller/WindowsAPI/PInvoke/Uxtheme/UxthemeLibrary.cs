@@ -3,7 +3,7 @@
 // 抑制 CA1401 警告
 #pragma warning disable CA1401
 
-namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Uxtheme
+namespace GetStoreApp.WindowsAPI.PInvoke.Uxtheme
 {
     /// <summary>
     /// Uxtheme.dll 函数库

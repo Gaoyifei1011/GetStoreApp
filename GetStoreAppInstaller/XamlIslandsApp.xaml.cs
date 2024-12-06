@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GetStoreAppInstaller.Services.Root;
+using System;
+using Windows.Foundation.Diagnostics;
 using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller
@@ -18,7 +20,7 @@ namespace GetStoreAppInstaller
         /// </summary>
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs args)
         {
-            //LogService.WriteLog(EventLevel.Warning, "Xaml islands UI Exception", args.Exception);
+            LogService.WriteLog(LoggingLevel.Warning, "Xaml islands UI Exception", args.Exception);
         }
 
         /// <summary>
@@ -43,7 +45,6 @@ namespace GetStoreAppInstaller
             if (!isDisposed)
             {
                 isDisposed = true;
-                Window.Current.CoreWindow.Close();
             }
         }
     }

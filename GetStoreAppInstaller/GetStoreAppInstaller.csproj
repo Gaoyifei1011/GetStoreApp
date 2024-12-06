@@ -61,19 +61,19 @@
     
     <Manifest Include="$(ApplicationManifest)" />
     <None Remove="MainPage.xaml" />
-    <None Remove="Styles\XamlIslands\Button.xaml" />
-    <None Remove="Styles\XamlIslands\MenuFlyout.xaml" />
     <None Remove="XamlIslandsApp.xaml" />
 
-    <Page Update="MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\XamlIslands\Button.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\XamlIslands\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="XamlIslandsApp.xaml" />
-
+    <Page Update="Styles\XamlIslands\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\XamlIslands\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7-prerelease.241119001" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
 
     <Reference Include="$(PkgMicrosoft_UI_Xaml)\lib\net8.0-windows10.0.22621.0\Microsoft.UI.Xaml.Projection.dll" />
+    <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.18362.0\Microsoft.InteractiveExperiences.Projection.dll" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
