@@ -74,10 +74,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Management.Deployment.Projection\Microsoft.Management.Deployment.Projection.csproj" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.90-preview" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->

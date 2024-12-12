@@ -64,7 +64,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />
   </ItemGroup>
-  <!--临时测试项目，只能在 Visual Studio 2022 17.11 中编译-->
+  <!--临时测试项目-->
   <Target Name="GetStoreAppStompSourceProjectForWapProject" BeforeTargets="_ConvertItems">
     <ItemGroup>
       <!--Stomp all "SourceProject" values for all incoming dependencies to flatten the package.-->

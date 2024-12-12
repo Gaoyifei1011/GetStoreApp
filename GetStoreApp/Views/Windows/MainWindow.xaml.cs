@@ -161,6 +161,8 @@ namespace GetStoreApp.Views.Windows
             displayInformation2 = displayInformation.As<IDisplayInformation2>();
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             contentIsland.Environment.SettingChanged += OnSettingChanged;
+            InputKeyboardSource inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -222,7 +224,7 @@ namespace GetStoreApp.Views.Windows
                 IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             }
 
-            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
+            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
             {
                 inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
                     [new RectInt32(
@@ -335,6 +337,23 @@ namespace GetStoreApp.Views.Windows
 
                 StoreRegionService.UpdateDefaultRegion();
             });
+        }
+
+        /// <summary>
+        /// 处理键盘 Alt + Space 键弹出窗口右键菜单事件
+        /// </summary>
+        private void OnSystemKeyDown(InputKeyboardSource sender, KeyEventArgs args)
+        {
+            if (args.VirtualKey is VirtualKey.Space)
+            {
+                args.Handled = true;
+                FlyoutShowOptions options = new()
+                {
+                    Position = new Point(0, 45),
+                    ShowMode = FlyoutShowMode.Standard
+                };
+                TitlebarMenuFlyout.ShowAt(null, options);
+            }
         }
 
         #endregion 第二部分：窗口辅助类挂载的事件
@@ -534,9 +553,15 @@ namespace GetStoreApp.Views.Windows
                 IsBackEnabled = CanGoBack();
             }
 
-            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
+            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
             {
-                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32((int)(45 * rawPixelsPerViewPixel), 0, (int)((AppWindow.Size.Width - 45) * rawPixelsPerViewPixel), (int)(45 * rawPixelsPerViewPixel))]);
+                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
+                         [new RectInt32(
+                        (int)(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
+                        (int)AppTitlebar.Margin.Top,
+                        (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
+                        (int)(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
+                         ]);
             }
         }
 
@@ -848,26 +873,21 @@ namespace GetStoreApp.Views.Windows
         {
             if (isFirstActivate)
             {
-                bool? IsWindowMaximized = LocalSettingsService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
-                int? WindowWidth = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
-                int? WindowHeight = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
-                int? WindowPositionXAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
-                int? WindowPositionYAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
+                bool? isWindowMaximized = LocalSettingsService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
+                int? windowWidth = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
+                int? windowHeight = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
+                int? windowPositionXAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
+                int? windowPositionYAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
 
-                if (IsWindowMaximized.HasValue && IsWindowMaximized.Value is true)
+                if (isWindowMaximized.HasValue && isWindowMaximized.Value is true)
                 {
                     overlappedPresenter.Maximize();
                 }
                 else
                 {
-                    if (WindowWidth.HasValue && WindowHeight.HasValue && WindowPositionXAxis.HasValue && WindowPositionYAxis.HasValue)
+                    if (windowWidth.HasValue && windowHeight.HasValue && windowPositionXAxis.HasValue && windowPositionYAxis.HasValue)
                     {
-                        AppWindow.MoveAndResize(new RectInt32(
-                            WindowPositionXAxis.Value,
-                            WindowPositionYAxis.Value,
-                            WindowWidth.Value,
-                            WindowHeight.Value
-                            ));
+                        AppWindow.MoveAndResize(new RectInt32(windowPositionXAxis.Value, windowPositionYAxis.Value, windowWidth.Value, windowHeight.Value));
                     }
                 }
             }
@@ -967,28 +987,8 @@ namespace GetStoreApp.Views.Windows
                     {
                         SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToUInt32() & 0xFFF0);
 
-                        if (sysCommand is SYSTEMCOMMAND.SC_MOUSEMENU)
+                        if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU)
                         {
-                            FlyoutShowOptions options = new()
-                            {
-                                Position = new Point(0, 15),
-                                ShowMode = FlyoutShowMode.Standard
-                            };
-                            TitlebarMenuFlyout.ShowAt(null, options);
-                            return 0;
-                        }
-                        else if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU)
-                        {
-                            if (lParam is (IntPtr)VirtualKey.Space)
-                            {
-                                FlyoutShowOptions options = new()
-                                {
-                                    Position = new Point(0, 45),
-                                    ShowMode = FlyoutShowMode.Standard
-                                };
-                                TitlebarMenuFlyout.ShowAt(null, options);
-                            }
-
                             return 0;
                         }
                         break;

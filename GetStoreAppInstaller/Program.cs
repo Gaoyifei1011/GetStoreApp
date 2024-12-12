@@ -7,6 +7,8 @@ using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI;
 using Microsoft.UI.Content;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -15,7 +17,6 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Graphics.Display;
-using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -33,6 +34,8 @@ namespace GetStoreAppInstaller
     public class Program
     {
         private static SUBCLASSPROC mainWindowSubClassProc;
+        private static InputNonClientPointerSource inputNonClientPointerSource;
+        private static InputActivationListener inputActivationListener;
 
         public static AppWindow MainAppWindow { get; private set; }
 
@@ -63,8 +66,14 @@ namespace GetStoreAppInstaller
             CoreAppWindow.Move(new PointInt32());
             CoreAppWindow.Resize(MainAppWindow.Size);
             User32Library.SetParent(coreWindowHandle, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id));
-            SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
             DisplayInformation = DisplayInformation.GetForCurrentView();
+            DispatcherQueueController dispatcherQueueController = DispatcherQueueController.CreateOnCurrentThread();
+            MainAppWindow.AssociateWithDispatcherQueue(dispatcherQueueController.DispatcherQueue);
+            SynchronizationContext.SetSynchronizationContext(new Windows.System.DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
+            SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(MainAppWindow.DispatcherQueue));
+            inputNonClientPointerSource = InputNonClientPointerSource.GetForWindowId(MainAppWindow.Id);
+            inputActivationListener = InputActivationListener.GetForWindowId(MainAppWindow.Id);
+            inputActivationListener.InputActivationChanged += OnInputActivationChanged;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(MainAppWindow.Id);
             new XamlIslandsApp();
 
@@ -90,6 +99,7 @@ namespace GetStoreAppInstaller
             Application.Current.Resources = xamlControlsResources;
             Window.Current.Content = new MainPage();
             (Window.Current.Content as MainPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
+            (Window.Current.Content as MainPage).Loaded += OnLoaded;
             frameworkView.Run();
         }
 
@@ -106,6 +116,17 @@ namespace GetStoreAppInstaller
                 {
                     (Window.Current.Content as MainPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
                 }
+
+                if (DisplayInformation is not null && (Window.Current.Content as MainPage).AppTitlebar.IsLoaded)
+                {
+                    inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
+                        [new RectInt32(
+                        (int)((Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
+                        (int)(Window.Current.Content as MainPage).AppTitlebar.Margin.Top,
+                        (int)(MainAppWindow.Size.Width - (Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
+                        (int)((Window.Current.Content as MainPage).AppTitlebar.ActualHeight * DisplayInformation.RawPixelsPerViewPixel))
+                        ]);
+                }
             }
             else if (args.DidPositionChange)
             {
@@ -119,8 +140,42 @@ namespace GetStoreAppInstaller
         private static void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             MainAppWindow.Changed -= OnAppWindowChanged;
+            inputActivationListener.InputActivationChanged -= OnInputActivationChanged;
+            (Window.Current.Content as MainPage).Loaded -= OnLoaded;
             Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0);
             Window.Current.CoreWindow.Close();
+        }
+
+        /// <summary>
+        /// 窗口焦点状态发生变化时触发的事件
+        /// </summary>
+        private static void OnInputActivationChanged(InputActivationListener sender, InputActivationListenerActivationChangedEventArgs args)
+        {
+            if (sender.State is InputActivationState.Activated)
+            {
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_ACTIVATE, 1, 0);
+            }
+            else
+            {
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_ACTIVATE, 0, 0);
+            }
+        }
+
+        /// <summary>
+        /// 窗口内容加载完成后触发的方法
+        /// </summary>
+        private static void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (DisplayInformation is not null && (Window.Current.Content as MainPage).AppTitlebar.IsLoaded)
+            {
+                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
+                    [new RectInt32(
+                        (int)((Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
+                        (int)(Window.Current.Content as MainPage).AppTitlebar.Margin.Top,
+                        (int)(MainAppWindow.Size.Width - (Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
+                        (int)((Window.Current.Content as MainPage).AppTitlebar.ActualHeight * DisplayInformation.RawPixelsPerViewPixel))
+                    ]);
+            }
         }
 
         /// <summary>
@@ -130,12 +185,6 @@ namespace GetStoreAppInstaller
         {
             switch (Msg)
             {
-                // 窗口激活状态发生更改时的消息
-                case WindowMessage.WM_ACTIVATE:
-                    {
-                        User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), Msg, wParam, lParam);
-                        break;
-                    }
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
@@ -150,10 +199,11 @@ namespace GetStoreAppInstaller
                     {
                         if (wParam.ToUInt32() is 2 && Window.Current.Content is not null && DisplayInformation is not null)
                         {
+                            Point currentPoint = Window.Current.CoreWindow.PointerPosition;
                             PointInt32 screenPoint = new()
                             {
-                                X = Convert.ToInt32(Window.Current.CoreWindow.PointerPosition.X),
-                                Y = Convert.ToInt32(Window.Current.CoreWindow.PointerPosition.Y),
+                                X = Convert.ToInt32(currentPoint.X),
+                                Y = Convert.ToInt32(currentPoint.Y),
                             };
 
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
@@ -167,6 +217,17 @@ namespace GetStoreAppInstaller
                             (Window.Current.Content as MainPage).TitlebarMenuFlyout.ShowAt(Window.Current.Content, options);
                         }
                         return 0;
+                    }
+                // 选择窗口右键菜单的条目时接收到的消息
+                case WindowMessage.WM_SYSCOMMAND:
+                    {
+                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToUInt32() & 0xFFF0);
+
+                        if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU && lParam is (IntPtr)Windows.System.VirtualKey.Space)
+                        {
+                            return 0;
+                        }
+                        break;
                     }
             }
 
