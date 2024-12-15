@@ -62,7 +62,8 @@
     <ApplicationDefinition Include="WinUIApp.xaml" SubType="Designer" />
 
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="SourceItemGroup" />
-    
+
+    <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\About.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppUpdate.png" CopyToOutputDirectory="Always" />
@@ -234,7 +235,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.90-preview" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.90-preview" GeneratePathProperty="true" />
 
     <Page Update="Styles\WinUI\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -353,6 +354,10 @@
       <MyEmbeddedFileList Include="@(MainAppEmbeddedItem)" />
     </ItemGroup>
     <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
+  </Target>
+
+  <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
+    <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\uap10.0\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
   </Target>
 
   <!--将 resjson 资源文件嵌入到包资源索引中-->

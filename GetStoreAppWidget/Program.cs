@@ -10,6 +10,15 @@ using WinRT;
 // 抑制 CA1806 警告
 #pragma warning disable CA1806
 
+//开发完成后，这一部分内容加到 Package.AppxManifest 文件中
+//<com:Extension Category="windows.comServer">
+//  <com:ComServer>
+//    <com:ExeServer Executable="GetStoreAppWidget.exe" DisplayName="GetStoreAppWidget">
+//      <com:Class Id="F96AFBA5-38A4-DB97-DAC7-DE29871B26B5" DisplayName="GetStoreAppWidget" />
+//    </com:ExeServer>
+//  </com:ComServer>
+//</com:Extension>
+
 namespace GetStoreAppWidget
 {
     /// <summary>

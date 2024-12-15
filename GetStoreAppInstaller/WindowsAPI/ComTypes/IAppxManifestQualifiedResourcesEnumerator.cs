@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace WindowsTools.WindowsAPI.ComTypes
+namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 枚举程序包清单中定义的限定资源。

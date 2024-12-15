@@ -4,7 +4,10 @@ using System.Runtime.InteropServices.Marshalling;
 
 namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
-    [GeneratedComInterface, Guid("4e1bd148-55a0-4480-a3d1-15544710637c")]
+    /// <summary>
+    /// 表示包清单的对象模型，该模型提供用于访问清单元素和属性的方法。
+    /// </summary>
+    [GeneratedComInterface, Guid("4E1BD148-55A0-4480-A3D1-15544710637C")]
     public partial interface IAppxManifestReader
     {
         /// <summary>
@@ -13,7 +16,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="packageId">包标识符。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetPackageId(out IntPtr packageId);
+        int GetPackageId([MarshalAs(UnmanagedType.Interface)] out IAppxManifestPackageId2 packageId);
 
         /// <summary>
         /// 获取清单中定义的包的属性。
@@ -21,7 +24,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="packageProperties">包的属性，如清单所述。</param>
         /// <returns>如果该方法成功，则返回 S_OK。</returns>
         [PreserveSig]
-        int GetProperties(out IntPtr packageProperties);
+        int GetProperties([MarshalAs(UnmanagedType.Interface)] out IAppxManifestProperties packageProperties);
 
         /// <summary>
         /// 获取循环访问清单中定义的依赖项的枚举器。
@@ -29,7 +32,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="dependencies">循环访问依赖项的枚举器。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetPackageDependencies(out IntPtr dependencies);
+        int GetPackageDependencies([MarshalAs(UnmanagedType.Interface)] out IAppxManifestPackageDependenciesEnumerator dependencies);
 
         /// <summary>
         /// 获取包请求的功能列表。
@@ -45,7 +48,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="resources">循环访问资源的枚举器。</param>
         /// <returns>如果方法成功，则返回 S_OK。</returns>
         [PreserveSig]
-        int GetResources(out IntPtr resources);
+        int GetResources([MarshalAs(UnmanagedType.Interface)] out IAppxManifestResourcesEnumerator resources);
 
         /// <summary>
         /// 获取循环访问清单中定义的设备功能的枚举器。
@@ -53,7 +56,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="deviceCapabilities">循环访问设备功能的枚举器。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetDeviceCapabilities(out IntPtr deviceCapabilities);
+        int GetDeviceCapabilities([MarshalAs(UnmanagedType.Interface)] out IAppxManifestDeviceCapabilitiesEnumerator deviceCapabilities);
 
         /// <summary>
         /// 获取包清单中定义的指定先决条件。
@@ -70,7 +73,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="applications">循环访问应用程序的枚举器。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetApplications(out IntPtr applications);
+        int GetApplications([MarshalAs(UnmanagedType.Interface)] out IAppxManifestApplicationsEnumerator applications);
 
         /// <summary>
         /// 获取由清单读取者分析和读取的原始 XML。
@@ -78,6 +81,6 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="manifestStream">表示清单的 XML 内容的只读流。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetStream(out IntPtr manifestStream);
+        int GetStream([MarshalAs(UnmanagedType.Interface)] out IStream manifestStream);
     };
 }

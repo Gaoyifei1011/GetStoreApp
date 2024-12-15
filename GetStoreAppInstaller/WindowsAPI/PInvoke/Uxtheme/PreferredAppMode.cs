@@ -1,4 +1,4 @@
-﻿namespace GetStoreApp.WindowsAPI.PInvoke.Uxtheme
+﻿namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Uxtheme
 {
     /// <summary>
     /// 菜单主题样式

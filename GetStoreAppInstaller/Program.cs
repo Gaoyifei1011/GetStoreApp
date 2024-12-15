@@ -1,9 +1,10 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
+﻿using GetStoreAppInstaller.Pages;
 using GetStoreAppInstaller.Services.Controls.Settings;
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.Uxtheme;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI;
 using Microsoft.UI.Content;
@@ -197,7 +198,7 @@ namespace GetStoreAppInstaller
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (wParam.ToUInt32() is 2 && Window.Current.Content is not null && DisplayInformation is not null)
+                        if (wParam is 2 && Window.Current.Content is not null && DisplayInformation is not null)
                         {
                             Point currentPoint = Window.Current.CoreWindow.PointerPosition;
                             PointInt32 screenPoint = new()
@@ -221,7 +222,7 @@ namespace GetStoreAppInstaller
                 // 选择窗口右键菜单的条目时接收到的消息
                 case WindowMessage.WM_SYSCOMMAND:
                     {
-                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam.ToUInt32() & 0xFFF0);
+                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam & 0xFFF0);
 
                         if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU && lParam is (IntPtr)Windows.System.VirtualKey.Space)
                         {

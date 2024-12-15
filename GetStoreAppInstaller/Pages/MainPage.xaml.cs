@@ -10,7 +10,7 @@ using Windows.UI.Xaml.Controls;
 // 抑制 CA1822 警告
 #pragma warning disable CA1822
 
-namespace GetStoreAppInstaller
+namespace GetStoreAppInstaller.Pages
 {
     /// <summary>
     /// 应用主页面

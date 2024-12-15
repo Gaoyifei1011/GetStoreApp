@@ -13,7 +13,7 @@
   <Identity
 	  Name="Gaoyifei1011.GetStoreApp"
 	  Publisher="CN=高怡飞"
-	  Version="5.2.1212.0" />
+	  Version="5.2.1213.0" />
 
   <Properties>
     <DisplayName>ms-resource:PackageDisplayName</DisplayName>
@@ -61,14 +61,6 @@
             <com:SurrogateServer AppId="C098FAB9-A297-5829-B47E-07EBB207E64A" DisplayName="GetStoreAppShellExtension">
               <com:Class Id="C098FAB9-A297-5829-B47E-07EBB207E64A" Path="GetStoreAppShellExtension.dll" ThreadingModel="Both" />
             </com:SurrogateServer>
-          </com:ComServer>
-        </com:Extension>
-
-        <com:Extension Category="windows.comServer">
-          <com:ComServer>
-            <com:ExeServer Executable="GetStoreAppWidget.exe" DisplayName="GetStoreAppWidget">
-              <com:Class Id="F96AFBA5-38A4-DB97-DAC7-DE29871B26B5" DisplayName="GetStoreAppWidget" />
-            </com:ExeServer>
           </com:ComServer>
         </com:Extension>
 

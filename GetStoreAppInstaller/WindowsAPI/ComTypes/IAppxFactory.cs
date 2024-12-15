@@ -1,9 +1,8 @@
-﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace WindowsTools.WindowsAPI.ComTypes
+namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 创建用于读取和写入应用包的对象。
@@ -19,7 +18,7 @@ namespace WindowsTools.WindowsAPI.ComTypes
         /// <param name="packageWriter">此方法创建的包编写器。</param>
         /// <returns>如果方法成功，则返回 S_OK。 否则，它将返回一个错误代码。</returns>
         [PreserveSig]
-        int CreatePackageWriter(IntPtr outputStream, IntPtr settings, out IntPtr packageWriter);
+        int CreatePackageWriter([MarshalAs(UnmanagedType.Interface)] IStream outputStream, IntPtr settings, out IntPtr packageWriter);
 
         /// <summary>
         /// 从 IStream 提供的内容创建只读包读取器。 此方法不验证数字签名。
@@ -28,7 +27,7 @@ namespace WindowsTools.WindowsAPI.ComTypes
         /// <param name="packageReader">包读取器。</param>
         /// <returns>如果方法成功，则返回 S_OK。 否则，它将返回一个错误代码。</returns>
         [PreserveSig]
-        int CreatePackageReader(IntPtr inputStream, out IntPtr packageReader);
+        int CreatePackageReader([MarshalAs(UnmanagedType.Interface)] IStream inputStream, [MarshalAs(UnmanagedType.Interface)] out IAppxPackageReader packageReader);
 
         /// <summary>
         /// 根据 IStream 提供的内容创建只读清单对象模型。
@@ -37,7 +36,7 @@ namespace WindowsTools.WindowsAPI.ComTypes
         /// <param name="manifestReader">清单读取器。</param>
         /// <returns>如果方法成功，则返回 S_OK。 否则，它将返回一个错误代码。</returns>
         [PreserveSig]
-        int CreateManifestReader(IntPtr inputStream, [MarshalAs(UnmanagedType.Interface)] out IAppxManifestReader2 manifestReader);
+        int CreateManifestReader([MarshalAs(UnmanagedType.Interface)] IStream inputStream, [MarshalAs(UnmanagedType.Interface)] out IAppxManifestReader2 manifestReader);
 
         /// <summary>
         /// 根据 IStream 提供的内容创建只读块映射对象模型。
@@ -46,7 +45,7 @@ namespace WindowsTools.WindowsAPI.ComTypes
         /// <param name="blockMapReader">块映射读取器。</param>
         /// <returns>如果方法成功，则返回 S_OK。 否则，它将返回一个错误代码。</returns>
         [PreserveSig]
-        int CreateBlockMapReader(IntPtr inputStream, out IntPtr blockMapReader);
+        int CreateBlockMapReader([MarshalAs(UnmanagedType.Interface)] IStream inputStream, out IntPtr blockMapReader);
 
         /// <summary>
         /// 根据 IStream 和数字签名提供的内容创建只读块映射对象模型。
@@ -56,6 +55,6 @@ namespace WindowsTools.WindowsAPI.ComTypes
         /// <param name="blockMapReader">块映射读取器。</param>
         /// <returns>如果方法成功，则返回 S_OK。 否则，它将返回一个错误代码。</returns>
         [PreserveSig]
-        int CreateValidatedBlockMapReader(IntPtr blockMapStream, [MarshalAs(UnmanagedType.LPWStr)] string signatureFileName, out IntPtr blockMapReader);
+        int CreateValidatedBlockMapReader([MarshalAs(UnmanagedType.Interface)] IStream blockMapStream, [MarshalAs(UnmanagedType.LPWStr)] string signatureFileName, out IntPtr blockMapReader);
     }
 }

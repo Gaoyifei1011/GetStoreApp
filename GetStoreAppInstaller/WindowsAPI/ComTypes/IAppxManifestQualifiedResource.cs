@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 
-namespace WindowsTools.WindowsAPI.ComTypes
+namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 为捆绑包清单中的 <Resource> 元素提供只读对象模型。
@@ -15,6 +15,7 @@ namespace WindowsTools.WindowsAPI.ComTypes
         /// </summary>
         /// <param name="language">包含资源语言的字符串。</param>
         /// <returns>如果此方法成功，则返回 S_OK。否则，它将返回 HRESULT 错误代码。</returns>
+        [PreserveSig]
         int GetLanguage([MarshalAs(UnmanagedType.LPWStr)] out string language);
 
         /// <summary>
