@@ -5,8 +5,6 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -16,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -191,7 +188,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     {
                                         if (contentDialogResult is ContentDialogResult.Primary)
                                         {
-                                            Shell32Library.ShellExecute(IntPtr.Zero, "open", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", null, WindowShowStyle.SW_SHOWNORMAL);
+                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
                                         }
                                     });
                                 }

@@ -47,6 +47,7 @@
   "Queued": "Waiting",
   "Refresh": "רענן",
   "RefreshToolTip": "Refresh installed application data",
+  "RestartPC": "The computer will restart in two minutes, please save your personal files before shutting down",
   "SearchApps": "חפש אפליקציות",
   "SearchAppsEmptyDescription": "Unable to find a package that matches the entered criteria, please change the search criteria and try again",
   "SearchAppsPlaceHolderText": "חפש אפליקציות",

@@ -56,6 +56,13 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         public static partial bool FreeConsole();
 
         /// <summary>
+        /// 检索当前进程的伪句柄。
+        /// </summary>
+        /// <returns>返回值是当前进程的伪句柄。</returns>
+        [LibraryImport(Kernel32, EntryPoint = "GetCurrentProcess", SetLastError = false), PreserveSig]
+        public static partial IntPtr GetCurrentProcess();
+
+        /// <summary>
         /// 检索指定标准设备的句柄（标准输入、标准输出或标准错误）。
         /// </summary>
         /// <param name="nStdHandle">标准设备。</param>

@@ -383,7 +383,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             {
                                 if (contentDialogResult is ContentDialogResult.Primary)
                                 {
-                                    Shell32Library.ShellExecute(IntPtr.Zero, "open", Path.Combine(InfoHelper.SystemDataPath.Windows, "System32", "Shutdown.exe"), "-r -t 120", null, WindowShowStyle.SW_SHOWNORMAL);
+                                    ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
                                 }
                             });
                         }
