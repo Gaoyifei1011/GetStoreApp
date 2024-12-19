@@ -1,8 +1,8 @@
 {
   "RootMenu": "GetStoreApp",
-  "PSInstall": "Use PowerShell to install",
-  "PSInstallAdmin": "Use PowerShell to install (Admin)",
-  "PSRegister": "Use PowerShell to register app",
-  "AppInstallAdmin": "Use app installer to install (Admin)",
-  "AppInstall": "Use app installer to install"
+   "PSInstall": "להתקנה PowerShell -השתמש ב",
+  "PSInstallAdmin": "להתקנה (כמנהל) PowerShell -השתמש ב",
+  "PSRegister": "השתמש ב-PowerShell לרישום אפליקציה",
+  "AppInstallAdmin": "השתמש במתקין האפליקציה להתקנה (כמנהל)",
+  "AppInstall": "השתמש במתקין האפליקציה להתקנה"
 }
