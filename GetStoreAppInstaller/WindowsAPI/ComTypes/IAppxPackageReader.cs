@@ -50,6 +50,6 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="manifestReader">应用清单的对象模型。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetManifest([MarshalAs(UnmanagedType.Interface)] out IAppxManifestReader manifestReader);
+        int GetManifest([MarshalAs(UnmanagedType.Interface)] out IAppxManifestReader3 manifestReader);
     }
 }

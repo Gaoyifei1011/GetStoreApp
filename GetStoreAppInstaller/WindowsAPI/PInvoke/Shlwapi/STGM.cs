@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
+namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shlwapi
 {
     [Flags]
     public enum STGM

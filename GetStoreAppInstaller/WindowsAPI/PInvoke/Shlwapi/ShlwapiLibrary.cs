@@ -1,14 +1,14 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using System.Runtime.InteropServices;
 
-namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
+namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shlwapi
 {
     /// <summary>
-    /// Shell32.dll 函数库
+    /// Shlwapi.dll 函数库
     /// </summary>
-    public static partial class Shell32Library
+    public static partial class ShlwapiLibrary
     {
-        private const string Shell32 = "shell32.dll";
+        private const string Shlwapi = "shlwapi.dll";
 
         /// <summary>
         /// 打开或创建文件，并检索要读取或写入该文件的流。
@@ -20,7 +20,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32
         /// <param name="pstmTemplate">保留。</param>
         /// <param name="ppstm">接收与文件关联的流的 IStream 接口指针。</param>
         /// <returns>如果此函数成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
-        [LibraryImport(Shell32, EntryPoint = "SHCreateStreamOnFileEx", SetLastError = false), PreserveSig]
+        [LibraryImport(Shlwapi, EntryPoint = "SHCreateStreamOnFileEx", SetLastError = false), PreserveSig]
         public static partial int SHCreateStreamOnFileEx([MarshalAs(UnmanagedType.LPWStr)] string pszFile, STGM grfMode, uint dwAttributes, [MarshalAs(UnmanagedType.Bool)] bool fCreate, [MarshalAs(UnmanagedType.Interface)] IStream pstmTemplate, [MarshalAs(UnmanagedType.Interface)] out IStream ppstm);
     }
 }

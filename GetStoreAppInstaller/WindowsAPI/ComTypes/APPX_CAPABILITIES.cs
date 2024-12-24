@@ -1,8 +1,11 @@
-﻿namespace GetStoreAppInstaller.WindowsAPI.ComTypes
+﻿using System;
+
+namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
     /// <summary>
     /// 指定包请求的功能或特权。
     /// </summary>
+    [Flags]
     public enum APPX_CAPABILITIES
     {
         /// <summary>
