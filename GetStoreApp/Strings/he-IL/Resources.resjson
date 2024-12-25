@@ -3,14 +3,14 @@
   "AppDisplayName": "GetStoreApp",
   "PackageDisplayName": "GetStoreApp",
   "AppShortDisplayName": "GetStoreApp",
-  "Fast": "Fast",
+  "Fast": "מהיר",
   "ProductID": "ProductID",
-  "Retail": "Retail",
-  "RP": "Release Preview",
-  "Slow": "Slow",
-  "URL": "URL(Link)",
-  "TaskbarProtocolName": "Taskbar Pinner",
+  "Retail": "קמעונאי",
+  "RP": "שחרור תצוגה מקדימה",
+  "Slow": "איטי",
+  "URL": "קישור",
+  "TaskbarProtocolName": "הצמד לשורת המשימות",
   "SystemBackdropControllerInitializeFailed": "The app's sytstem backdrop controller failed to initialize",
-  "TaskbarPinner": "Taskbar Pinner",
-  "WebBrowserProtocolName": "Web Browser"
+  "TaskbarPinner": "הצמד לשורת המשימות",
+  "WebBrowserProtocolName": "דפדפן אינטרנט"
 }
