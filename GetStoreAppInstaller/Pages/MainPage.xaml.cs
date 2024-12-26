@@ -1,8 +1,14 @@
 ﻿using GetStoreAppInstaller.UI.Backdrop;
+using GetStoreAppInstaller.WindowsAPI.ComTypes;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.Shlwapi;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.InteropServices;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,6 +23,9 @@ namespace GetStoreAppInstaller.Pages
     /// </summary>
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
+        private static readonly Guid CLSID_AppxFactory = new("5842A140-FF9F-4166-8F5C-62F5B7B0C781");
+        private static readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
+
         private bool _isWindowMaximized;
 
         public bool IsWindowMaximized
@@ -112,6 +121,379 @@ namespace GetStoreAppInstaller.Pages
         private async void OnLearnProjectPlanClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp"));
+        }
+
+        /// <summary>
+        /// 解析应用包
+        /// </summary>
+        public static void ParsePackagedApp(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                if (ShlwapiLibrary.SHCreateStreamOnFileEx(filePath, STGM.STGM_READ | STGM.STGM_SHARE_EXCLUSIVE, 0, false, null, out IStream fileStream) is 0)
+                {
+                    string extensionName = Path.GetExtension(filePath);
+
+                    // 解析以 appx 或 msix 格式结尾的单个应用包
+                    if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+                        {
+                            IAppxFactory3 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+
+                            if (appxFactory is not null)
+                            {
+                                // 读取应用包内容
+                                if (appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                {
+                                    // 读取应用包清单
+                                    if (appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
+                                    {
+                                        // 获取应用包定义的应用程序列表
+                                        if (appxManifestReader.GetApplications(out IAppxManifestApplicationsEnumerator applicationsEnumerator) is 0)
+                                        {
+                                            while (applicationsEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                            {
+                                                if (applicationsEnumerator.GetCurrent(out IAppxManifestApplication appxManifestApplication) is 0)
+                                                {
+                                                    appxManifestApplication.GetAppUserModelId(out string appUserModelId);
+                                                    appxManifestApplication.GetStringValue("AppListEntry", out string appListEntry);
+                                                    appxManifestApplication.GetStringValue("BackgroundColor", out string backgroundColor);
+                                                    appxManifestApplication.GetStringValue("DefaultSize", out string defaultSize);
+                                                    appxManifestApplication.GetStringValue("Description", out string description);
+                                                    appxManifestApplication.GetStringValue("EntryPoint", out string entryPoint);
+                                                    appxManifestApplication.GetStringValue("Executable", out string executable);
+                                                    appxManifestApplication.GetStringValue("ForegroundText", out string foregroundText);
+                                                    appxManifestApplication.GetStringValue("ID", out string id);
+                                                    appxManifestApplication.GetStringValue("LockScreenLogo", out string lockScreenLogo);
+                                                    appxManifestApplication.GetStringValue("LockScreenNotification", out string lockScreenNotification);
+                                                    appxManifestApplication.GetStringValue("Logo", out string logo);
+                                                    appxManifestApplication.GetStringValue("MinWidth", out string minWidth);
+                                                    appxManifestApplication.GetStringValue("ShortName", out string shortName);
+                                                    appxManifestApplication.GetStringValue("SmallLogo", out string smallLogo);
+                                                    appxManifestApplication.GetStringValue("Square150x150Logo", out string square150x150Logo);
+                                                    appxManifestApplication.GetStringValue("Square30x30Logo", out string square30x30Logo);
+                                                    appxManifestApplication.GetStringValue("Square310x310Logo", out string square310x310Logo);
+                                                    appxManifestApplication.GetStringValue("Square44x44Logo", out string square44x44Logo);
+                                                    appxManifestApplication.GetStringValue("Square70x70Logo", out string square70x70Logo);
+                                                    appxManifestApplication.GetStringValue("Square71x71Logo", out string square71x71Logo);
+                                                    appxManifestApplication.GetStringValue("StartPage", out string startPage);
+                                                    appxManifestApplication.GetStringValue("Tall150x310Logo", out string tall150x310Logo);
+                                                    appxManifestApplication.GetStringValue("VisualGroup", out string visualGroup);
+                                                    appxManifestApplication.GetStringValue("WideLogo", out string wideLogo);
+                                                    appxManifestApplication.GetStringValue("Wide310x150Logo", out string wide310x150Logo);
+                                                }
+
+                                                applicationsEnumerator.MoveNext(out _);
+                                            }
+                                        }
+
+                                        // 获取应用包定义的功能列表
+                                        appxManifestReader.GetCapabilities(out APPX_CAPABILITIES capabilities);
+
+                                        // 获取应用包定义的静态依赖项列表
+                                        if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
+                                        {
+                                            while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                            {
+                                                if (dependenciesEnumerator.GetCurrent(out IAppxManifestPackageDependency2 appxManifestPackageDependency) is 0)
+                                                {
+                                                    appxManifestPackageDependency.GetMinVersion(out ulong dependencyMinVersion);
+                                                    appxManifestPackageDependency.GetName(out string dependencyName);
+                                                    appxManifestPackageDependency.GetPublisher(out string dependencyPublisher);
+                                                    appxManifestPackageDependency.GetMaxMajorVersionTested(out ushort dependencyMaxMajorVersionTested);
+                                                }
+
+                                                dependenciesEnumerator.MoveNext(out _);
+                                            }
+                                        }
+
+                                        // 获取应用包定义的包标识符
+                                        if (appxManifestReader.GetPackageId(out IAppxManifestPackageId2 packageId) is 0)
+                                        {
+                                            packageId.GetArchitecture2(out ProcessorArchitecture architecture);
+                                            packageId.GetName(out string name);
+                                            packageId.GetPackageFamilyName(out string packageFamilyName);
+                                            packageId.GetPackageFullName(out string packageFullName);
+                                            packageId.GetPublisher(out string publisher);
+                                            packageId.GetResourceId(out string resourceId);
+                                            packageId.GetVersion(out ulong version);
+                                        }
+
+                                        // 获取应用包定义的先决条件：最小系统版本号和最大测试系统版本号
+                                        appxManifestReader.GetPrerequisite("OSMinVersion", out ulong minVersion);
+                                        appxManifestReader.GetPrerequisite("OSMaxVersionTested", out ulong maxVersion);
+
+                                        // 获取应用包的属性
+                                        if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
+                                        {
+                                            packageProperties.GetBoolValue("Framework", out bool isFramework);
+
+                                            packageProperties.GetStringValue("Description", out string description);
+                                            packageProperties.GetStringValue("DisplayName", out string displayName);
+                                            packageProperties.GetStringValue("Logo", out string logo);
+                                            packageProperties.GetStringValue("PublisherDisplayName", out string publisherDisplayName);
+                                        }
+
+                                        // 获取应用包定义的资源
+                                        if (appxManifestReader.GetResources(out IAppxManifestResourcesEnumerator appxManifestResourcesEnumerator) is 0)
+                                        {
+                                            while (appxManifestResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                            {
+                                                appxManifestResourcesEnumerator.GetCurrent(out string resource);
+                                                appxManifestResourcesEnumerator.MoveNext(out _);
+                                            }
+                                        }
+
+                                        // 获取应用包定义的限定资源
+                                        if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
+                                        {
+                                            while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                            {
+                                                if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
+                                                {
+                                                }
+
+                                                appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
+                    else if (extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
+                        {
+                            IAppxBundleFactory2 appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
+                            if (appxBundleFactory is not null)
+                            {
+                                // 读取捆绑包的二进制文件内容
+                                if (appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0)
+                                {
+                                    // 读取捆绑包的二进制文件
+                                    appxBundleReader.GetPayloadPackages(out IAppxFilesEnumerator appxFilesEnumerator);
+
+                                    Dictionary<string, IAppxFile> bundleFileDict = [];
+                                    Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
+                                    IStream parseFileStream = null;
+
+                                    while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                    {
+                                        appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
+                                        appxFile.GetName(out string packageFileName);
+                                        string packageFileExtensionName = Path.GetExtension(packageFileName);
+
+                                        if (packageFileExtensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            bundleFileDict.Add(packageFileName, appxFile);
+                                        }
+
+                                        appxFilesEnumerator.MoveNext(out _);
+                                    }
+
+                                    if (osArchitecture is Architecture.X86)
+                                    {
+                                        foreach (string bundleFileName in bundleFileDict.Keys)
+                                        {
+                                            if (bundleFileName.Contains("x86", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                                            }
+                                        }
+                                    }
+                                    else if (osArchitecture is Architecture.X64)
+                                    {
+                                        foreach (string bundleFileName in bundleFileDict.Keys)
+                                        {
+                                            if (bundleFileName.Contains("x64", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                                            }
+                                        }
+                                    }
+                                    else if (osArchitecture is Architecture.Arm64)
+                                    {
+                                        foreach (string bundleFileName in bundleFileDict.Keys)
+                                        {
+                                            if (bundleFileName.Contains("arm64", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                                            }
+                                        }
+                                    }
+                                    else if (osArchitecture is Architecture.Arm)
+                                    {
+                                        foreach (string bundleFileName in bundleFileDict.Keys)
+                                        {
+                                            if (bundleFileName.Contains("arm", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                                            }
+                                        }
+                                    }
+
+                                    if (parseFileStream is null && bundleFileDict.Count > 0)
+                                    {
+                                        foreach (KeyValuePair<string, IAppxFile> appxFileItem in bundleFileDict)
+                                        {
+                                            appxFileItem.Value.GetStream(out parseFileStream);
+                                            if (parseFileStream is not null)
+                                            {
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    // 解析捆绑包里面包含的二进制安装文件
+                                    if (parseFileStream is not null)
+                                    {
+                                        if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+                                        {
+                                            IAppxFactory3 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+                                            if (appxFactory is not null)
+                                            {
+                                                // 读取应用包内容
+                                                if (appxFactory.CreatePackageReader2(parseFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                                {
+                                                    // 读取应用包清单
+                                                    if (appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
+                                                    {
+                                                        // 获取应用包定义的应用程序列表
+                                                        if (appxManifestReader.GetApplications(out IAppxManifestApplicationsEnumerator applicationsEnumerator) is 0)
+                                                        {
+                                                            while (applicationsEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                                            {
+                                                                if (applicationsEnumerator.GetCurrent(out IAppxManifestApplication appxManifestApplication) is 0)
+                                                                {
+                                                                    appxManifestApplication.GetAppUserModelId(out string appUserModelId);
+                                                                    appxManifestApplication.GetStringValue("AppListEntry", out string appListEntry);
+                                                                    appxManifestApplication.GetStringValue("BackgroundColor", out string backgroundColor);
+                                                                    appxManifestApplication.GetStringValue("DefaultSize", out string defaultSize);
+                                                                    appxManifestApplication.GetStringValue("Description", out string description);
+                                                                    appxManifestApplication.GetStringValue("EntryPoint", out string entryPoint);
+                                                                    appxManifestApplication.GetStringValue("Executable", out string executable);
+                                                                    appxManifestApplication.GetStringValue("ForegroundText", out string foregroundText);
+                                                                    appxManifestApplication.GetStringValue("ID", out string id);
+                                                                    appxManifestApplication.GetStringValue("LockScreenLogo", out string lockScreenLogo);
+                                                                    appxManifestApplication.GetStringValue("LockScreenNotification", out string lockScreenNotification);
+                                                                    appxManifestApplication.GetStringValue("Logo", out string logo);
+                                                                    appxManifestApplication.GetStringValue("MinWidth", out string minWidth);
+                                                                    appxManifestApplication.GetStringValue("ShortName", out string shortName);
+                                                                    appxManifestApplication.GetStringValue("SmallLogo", out string smallLogo);
+                                                                    appxManifestApplication.GetStringValue("Square150x150Logo", out string square150x150Logo);
+                                                                    appxManifestApplication.GetStringValue("Square30x30Logo", out string square30x30Logo);
+                                                                    appxManifestApplication.GetStringValue("Square310x310Logo", out string square310x310Logo);
+                                                                    appxManifestApplication.GetStringValue("Square44x44Logo", out string square44x44Logo);
+                                                                    appxManifestApplication.GetStringValue("Square70x70Logo", out string square70x70Logo);
+                                                                    appxManifestApplication.GetStringValue("Square71x71Logo", out string square71x71Logo);
+                                                                    appxManifestApplication.GetStringValue("StartPage", out string startPage);
+                                                                    appxManifestApplication.GetStringValue("Tall150x310Logo", out string tall150x310Logo);
+                                                                    appxManifestApplication.GetStringValue("VisualGroup", out string visualGroup);
+                                                                    appxManifestApplication.GetStringValue("WideLogo", out string wideLogo);
+                                                                    appxManifestApplication.GetStringValue("Wide310x150Logo", out string wide310x150Logo);
+                                                                }
+
+                                                                applicationsEnumerator.MoveNext(out _);
+                                                            }
+                                                        }
+
+                                                        // 获取应用包定义的功能列表
+                                                        appxManifestReader.GetCapabilities(out APPX_CAPABILITIES capabilities);
+
+                                                        // 获取应用包定义的静态依赖项列表
+                                                        if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
+                                                        {
+                                                            while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                                            {
+                                                                if (dependenciesEnumerator.GetCurrent(out IAppxManifestPackageDependency2 appxManifestPackageDependency) is 0)
+                                                                {
+                                                                    appxManifestPackageDependency.GetMinVersion(out ulong dependencyMinVersion);
+                                                                    appxManifestPackageDependency.GetName(out string dependencyName);
+                                                                    appxManifestPackageDependency.GetPublisher(out string dependencyPublisher);
+                                                                    appxManifestPackageDependency.GetMaxMajorVersionTested(out ushort dependencyMaxMajorVersionTested);
+                                                                }
+
+                                                                dependenciesEnumerator.MoveNext(out _);
+                                                            }
+                                                        }
+
+                                                        // 获取应用包定义的包标识符
+                                                        if (appxManifestReader.GetPackageId(out IAppxManifestPackageId2 packageId) is 0)
+                                                        {
+                                                            packageId.GetArchitecture2(out ProcessorArchitecture architecture);
+                                                            packageId.GetName(out string name);
+                                                            packageId.GetPackageFamilyName(out string packageFamilyName);
+                                                            packageId.GetPackageFullName(out string packageFullName);
+                                                            packageId.GetPublisher(out string publisher);
+                                                            packageId.GetResourceId(out string resourceId);
+                                                            packageId.GetVersion(out ulong version);
+                                                        }
+
+                                                        // 获取应用包定义的先决条件：最小系统版本号和最大测试系统版本号
+                                                        appxManifestReader.GetPrerequisite("OSMinVersion", out ulong minVersion);
+                                                        appxManifestReader.GetPrerequisite("OSMaxVersionTested", out ulong maxVersion);
+
+                                                        // 获取应用包的属性
+                                                        if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
+                                                        {
+                                                            packageProperties.GetBoolValue("Framework", out bool isFramework);
+
+                                                            packageProperties.GetStringValue("Description", out string description);
+                                                            packageProperties.GetStringValue("DisplayName", out string displayName);
+                                                            packageProperties.GetStringValue("Logo", out string logo);
+                                                            packageProperties.GetStringValue("PublisherDisplayName", out string publisherDisplayName);
+                                                        }
+
+                                                        // 获取应用包定义的资源
+                                                        if (appxManifestReader.GetResources(out IAppxManifestResourcesEnumerator appxManifestResourcesEnumerator) is 0)
+                                                        {
+                                                            while (appxManifestResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                                            {
+                                                                appxManifestResourcesEnumerator.GetCurrent(out string resource);
+                                                                appxManifestResourcesEnumerator.MoveNext(out _);
+                                                            }
+                                                        }
+
+                                                        // 获取应用包定义的限定资源
+                                                        if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
+                                                        {
+                                                            while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                                                            {
+                                                                if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
+                                                                {
+                                                                }
+
+                                                                appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // 解析以 appinstaller 格式结尾的应用包
+                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // 读取应用包内容失败，请检查文件是否存在问题
+                        if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+                        {
+                            IAppxFactory3 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+                            appxFactory?.CreateAppInstallerReader(fileStream, null, out IntPtr appInstallerReader);
+                        }
+                    }
+
+                    Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(fileStream, CreateComInterfaceFlags.None));
+                }
+            }
         }
     }
 }

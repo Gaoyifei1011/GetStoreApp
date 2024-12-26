@@ -13,6 +13,7 @@ using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
@@ -37,6 +38,8 @@ namespace GetStoreAppInstaller
         private static SUBCLASSPROC mainWindowSubClassProc;
         private static InputNonClientPointerSource inputNonClientPointerSource;
         private static InputActivationListener inputActivationListener;
+
+        public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
         public static AppWindow MainAppWindow { get; private set; }
 
