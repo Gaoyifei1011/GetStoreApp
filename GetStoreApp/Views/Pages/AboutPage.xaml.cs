@@ -78,8 +78,10 @@ namespace GetStoreApp.Views.Pages
             new ContentLinkInfo() { DisplayText = "hez2010",Uri = new Uri("https://github.com/hez2010") },
             new ContentLinkInfo() { DisplayText = "飞翔",Uri = new Uri("https://fionlen.azurewebsites.net") },
             new ContentLinkInfo() { DisplayText = "MouriNaruto",Uri = new Uri("https://github.com/MouriNaruto") },
+            new ContentLinkInfo() { DisplayText = "muhammadbahaa2001",Uri = new Uri("https://github.com/muhammadbahaa2001") },
             new ContentLinkInfo() { DisplayText = "TaylorShi",Uri = new Uri("https://github.com/TaylorShi") },
             new ContentLinkInfo() { DisplayText = "wherewhere",Uri = new Uri("https://github.com/wherewhere") },
+            new ContentLinkInfo() { DisplayText = "Y-PLONI",Uri = new Uri("https://github.com/Y-PLONI") },
         ];
 
         public event PropertyChangedEventHandler PropertyChanged;
