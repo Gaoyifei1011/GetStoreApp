@@ -47,7 +47,7 @@
   "WinGetInstallSuccessfully": "התקנת האפליקציה {0} הצליחה",
   "WinGetUnInstallFailed1": "הסרת האפליקציה {0} נכשלה",
   "WinGetUnInstallSuccessfully": "הסרת האפליקציה {0} הצליחה",
-  "WinGetUpgradeFailed1": "שדרוג האפליקציה {0} נכשל"",
+  "WinGetUpgradeFailed1": "שדרוג האפליקציה {0} נכשל",
   "WinGetUpgradeSuccessfully": "שדרוג האפליקציה {0} הצליח",
   "DownloadCompleted1": "הורדה הושלמה",
   "DownloadCompleted2": "כל המשימות הושלמו",
