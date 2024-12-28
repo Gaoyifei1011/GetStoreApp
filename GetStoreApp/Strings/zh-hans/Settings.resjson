@@ -70,6 +70,7 @@
   "QueryLinksModeThirdParty": "第三方接口",
   "RestartApp": "重启应用",
   "RestartAppToolTip": "应用设置发生修改后，部分选项需要重启后生效",
+  "Restarting": "重启中...",
   "SelectFolder": "选择文件夹",
   "SettingsInstruction": "设置说明",
   "SlientInstall": "以静默方式安装",

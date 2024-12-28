@@ -827,7 +827,15 @@
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
                         Click="{x:Bind OnRestartExplorerClicked}"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartExplorer')}" />
+                        IsEnabled="{x:Bind IsRestarting.Equals(x:False), Mode=OneWay}">
+
+                        <HyperlinkButton.Content>
+                            <Grid>
+                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/RestartExplorer')}" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsRestarting), Mode=OneWay}" />
+                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/Restarting')}" Visibility="{x:Bind IsRestarting, Mode=OneWay}" />
+                            </Grid>
+                        </HyperlinkButton.Content>
+                    </HyperlinkButton>
 
                     <ToggleSwitch
                         Grid.Column="3"

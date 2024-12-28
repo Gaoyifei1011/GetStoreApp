@@ -102,6 +102,7 @@
   "WinGetSettingsDescription": "התאמה אישית של פונקציית החבילה של WinGet",
   "LearnConfig": "למד תצורה",
   "RestartExplorer": "הפעל מחדש את סייר הקבצים",
+  "Restarting": "Restarting now...",
   "ShellMenu": "תפריט לחיצה ימנית על הקובץ",
   "ShellMenuDescription": "האם להציג את תפריט הלחיצה הימנית על הקובץ במערכת",
   "ShellMenuOnContent": "הצג",

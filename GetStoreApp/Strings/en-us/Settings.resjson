@@ -102,6 +102,7 @@
   "WinGetSettingsDescription": "Customizing the WinGet package's function",
   "LearnConfig": "Learn config",
   "RestartExplorer": "Restart explorer",
+  "Restarting": "Restarting now...",
   "ShellMenu": "File right-click menu",
   "ShellMenuDescription": "Whether to display the file right-click menu in the system",
   "ShellMenuOnContent": "Show",

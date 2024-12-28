@@ -70,6 +70,7 @@
   "QueryLinksModeThirdParty": "واجهة طرف ثالث",
   "RestartApp": "إعادة تشغيل التطبيق",
   "RestartAppToolTip": "بعد تعديل إعدادات التطبيق، تحتاج بعض الخيارات إلى إعادة التشغيل لتأخذ تأثيرها",
+  "Restarting": "Restarting now...",
   "SelectFolder": "اختر المجلد",
   "SettingsInstruction": "تعليمات الإعدادات",
   "SlientInstall": "تثبيت بصمت",
