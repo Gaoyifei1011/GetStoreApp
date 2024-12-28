@@ -84,5 +84,6 @@
   "AppName": "GetStoreApp",
   "WebView2SDKVersion": "إصدار WebView2 SDK:",
   "WebViewProcessFailedContent": "عملية المتصفح غير طبيعية والتطبيق على وشك الخروج",
-  "WebViewProcessFailedTitle": "فشل عملية الويب"
+  "WebViewProcessFailedTitle": "فشل عملية الويب",
+  "WinUI2Version": "WinUI 2 version:"
 }

@@ -86,5 +86,5 @@
   "WebViewProcessFailedContent": "The browser process is abnormal and the program is about to exit",
   "WebViewProcessFailedTitle": "Web process failed",
   "WindowsUIVersion": "Windows UI version:",
-  "WinUI2Vesion": "WinUI 2 version:"
+  "WinUI2Version": "WinUI 2 version:"
 }
