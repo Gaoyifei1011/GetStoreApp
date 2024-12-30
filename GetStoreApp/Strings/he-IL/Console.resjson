@@ -37,6 +37,6 @@
   "SerialNumberError": "הזנת את המספר הסידורי הלא נכון, האם אתה רוצה להזין אותו מחדש? (הקפד להזין 'Y', צא על ידי הכנסת תווים אחרים)",
   "SerialNumberOutRange": "הזנת את המספר הסידורי מחוץ לטווח, הזנת אותו בצורה שגויה, האם אתה רוצה להזין אותו מחדש? (הקפד להזין 'Y', צא על ידי הכנסת תווים אחרים)",
   "Title": "GetStoreApp",
-  "TypeInformation": "There are two types of acquisition apps:1. URL (link), 2.ProductID",
+  "TypeInformation": "ישנם שני דרכים לאיתור אפליקציות: א. לפי קישור, ב. לפי מזהה מוצר",
   "URLSample": "קישור לדוגמא: https://apps.microsoft.com/store/detail/9WZDNCRFJBMP"
 }
