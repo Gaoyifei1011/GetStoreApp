@@ -46,6 +46,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppWidget", "GetSto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetStoreAppInstaller", "GetStoreAppInstaller\GetStoreAppInstaller.csproj", "{620DEDCD-20BD-4A18-9A01-FFD2B12C18A7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{D1CD002B-EA89-4957-966F-0A79E537A2C8}"
+	ProjectSection(SolutionItems) = preProject
+		Configuration\MrtCore.PriGen.targets = Configuration\MrtCore.PriGen.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -147,6 +152,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{119BC62D-028A-420E-B1B6-D49B12D56320} = {23584989-CD5F-4D3C-BBD0-59E2C9A93B04}
 		{86DD9BE2-5280-46E5-956E-F31EC452BB22} = {23584989-CD5F-4D3C-BBD0-59E2C9A93B04}
+		{D1CD002B-EA89-4957-966F-0A79E537A2C8} = {23584989-CD5F-4D3C-BBD0-59E2C9A93B04}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A0E0485-2B4F-48FF-B84E-F6BB189242A9}

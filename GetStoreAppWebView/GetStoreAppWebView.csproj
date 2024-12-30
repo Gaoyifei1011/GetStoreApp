@@ -4,6 +4,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppWebView</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <CustomAfterMicrosoftCommonTargets>$(SolutionDir)Configuration\MrtCore.PriGen.targets</CustomAfterMicrosoftCommonTargets>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
