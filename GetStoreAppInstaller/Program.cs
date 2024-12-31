@@ -71,6 +71,7 @@ namespace GetStoreAppInstaller
             CoreAppWindow.Resize(MainAppWindow.Size);
             User32Library.SetParent(coreWindowHandle, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id));
             DisplayInformation = DisplayInformation.GetForCurrentView();
+            MainAppWindow.Resize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
             DispatcherQueueController dispatcherQueueController = DispatcherQueueController.CreateOnCurrentThread();
             MainAppWindow.AssociateWithDispatcherQueue(dispatcherQueueController.DispatcherQueue);
             SynchronizationContext.SetSynchronizationContext(new Windows.System.DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
@@ -189,6 +190,28 @@ namespace GetStoreAppInstaller
         {
             switch (Msg)
             {
+                // 窗口大小发生更改时的消息
+                case WindowMessage.WM_GETMINMAXINFO:
+                    {
+                        if (DisplayInformation is not null)
+                        {
+                            MINMAXINFO minMaxInfo;
+
+                            unsafe
+                            {
+                                minMaxInfo = *(MINMAXINFO*)lParam;
+                            }
+                            minMaxInfo.ptMinTrackSize.X = (int)(800 * DisplayInformation.RawPixelsPerViewPixel);
+                            minMaxInfo.ptMinTrackSize.Y = (int)(560 * DisplayInformation.RawPixelsPerViewPixel);
+
+                            unsafe
+                            {
+                                *(MINMAXINFO*)lParam = minMaxInfo;
+                            }
+                        }
+
+                        break;
+                    }
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
