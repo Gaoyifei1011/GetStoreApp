@@ -14,7 +14,7 @@
   "FileInformationCopy": "מידע הקובץ הועתק בהצלחה",
   "FileLost": "הקובץ המקומי הועבר או נמחק",
   "FolderPickerFailed": "נכשל בפתיחת בוחר התיקיות",
-  "HistoryCopy": "רשומת ההיסטוריה הועתקה בהצלחה ללוח",
+  "HistoryCopy": "הועתק ללוח",
   "HistorySelectedCopy": "{0} רשומות היסטוריה הועתקו בהצלחה ללוח",
   "InstallFailed1": "התקנת הקובץ {0} נכשלה",
   "InstallSuccessfully": "הקובץ {0} הותקן בהצלחה",
