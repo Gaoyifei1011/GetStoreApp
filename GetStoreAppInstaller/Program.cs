@@ -68,7 +68,7 @@ namespace GetStoreAppInstaller
             coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
             CoreAppWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(coreWindowHandle));
             CoreAppWindow.Move(new PointInt32());
-            CoreAppWindow.Resize(MainAppWindow.Size);
+            CoreAppWindow.Resize(MainAppWindow.ClientSize);
             User32Library.SetParent(coreWindowHandle, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id));
             DisplayInformation = DisplayInformation.GetForCurrentView();
             MainAppWindow.Resize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
@@ -77,6 +77,7 @@ namespace GetStoreAppInstaller
             SynchronizationContext.SetSynchronizationContext(new Windows.System.DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
             SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(MainAppWindow.DispatcherQueue));
             inputNonClientPointerSource = InputNonClientPointerSource.GetForWindowId(MainAppWindow.Id);
+            inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, MainAppWindow.Size.Width, (int)(45 * DisplayInformation.RawPixelsPerViewPixel))]);
             inputActivationListener = InputActivationListener.GetForWindowId(MainAppWindow.Id);
             inputActivationListener.InputActivationChanged += OnInputActivationChanged;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(MainAppWindow.Id);
@@ -104,7 +105,6 @@ namespace GetStoreAppInstaller
             Application.Current.Resources = xamlControlsResources;
             Window.Current.Content = new MainPage();
             (Window.Current.Content as MainPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
-            (Window.Current.Content as MainPage).Loaded += OnLoaded;
             frameworkView.Run();
         }
 
@@ -115,22 +115,16 @@ namespace GetStoreAppInstaller
         {
             if (args.DidSizeChange)
             {
-                CoreAppWindow.Resize(sender.Size);
+                CoreAppWindow.Resize(MainAppWindow.ClientSize);
 
                 if (Window.Current is not null && Window.Current.Content is not null)
                 {
                     (Window.Current.Content as MainPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
                 }
 
-                if (DisplayInformation is not null && (Window.Current.Content as MainPage).AppTitlebar.IsLoaded)
+                if (DisplayInformation is not null)
                 {
-                    inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
-                        [new RectInt32(
-                        (int)((Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
-                        (int)(Window.Current.Content as MainPage).AppTitlebar.Margin.Top,
-                        (int)(MainAppWindow.Size.Width - (Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
-                        (int)((Window.Current.Content as MainPage).AppTitlebar.ActualHeight * DisplayInformation.RawPixelsPerViewPixel))
-                        ]);
+                    inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, MainAppWindow.Size.Width, (int)(45 * DisplayInformation.RawPixelsPerViewPixel))]);
                 }
             }
             else if (args.DidPositionChange)
@@ -146,7 +140,6 @@ namespace GetStoreAppInstaller
         {
             MainAppWindow.Changed -= OnAppWindowChanged;
             inputActivationListener.InputActivationChanged -= OnInputActivationChanged;
-            (Window.Current.Content as MainPage).Loaded -= OnLoaded;
             Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0);
             Window.Current.CoreWindow.Close();
         }
@@ -163,23 +156,6 @@ namespace GetStoreAppInstaller
             else
             {
                 User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_ACTIVATE, 0, 0);
-            }
-        }
-
-        /// <summary>
-        /// 窗口内容加载完成后触发的方法
-        /// </summary>
-        private static void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (DisplayInformation is not null && (Window.Current.Content as MainPage).AppTitlebar.IsLoaded)
-            {
-                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
-                    [new RectInt32(
-                        (int)((Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
-                        (int)(Window.Current.Content as MainPage).AppTitlebar.Margin.Top,
-                        (int)(MainAppWindow.Size.Width - (Window.Current.Content as MainPage).AppTitlebar.Margin.Left * DisplayInformation.RawPixelsPerViewPixel),
-                        (int)((Window.Current.Content as MainPage).AppTitlebar.ActualHeight * DisplayInformation.RawPixelsPerViewPixel))
-                    ]);
             }
         }
 
