@@ -2,7 +2,7 @@
 using System;
 using Windows.UI.Xaml;
 
-namespace GetStoreApp.Helpers.Converters
+namespace GetStoreAppInstaller.Helpers.Converters
 {
     /// <summary>
     /// 值类型 / 内容转换辅助类

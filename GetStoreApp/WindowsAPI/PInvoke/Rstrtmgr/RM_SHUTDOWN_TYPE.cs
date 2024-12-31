@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WindowsTools.WindowsAPI.PInvoke.Rstrtmgr
+namespace GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr
 {
     /// <summary>
     /// 重启选项

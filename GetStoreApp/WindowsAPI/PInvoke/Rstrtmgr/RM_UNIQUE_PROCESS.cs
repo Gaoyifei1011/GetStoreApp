@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace WindowsTools.WindowsAPI.PInvoke.Rstrtmgr
+namespace GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr
 {
     /// <summary>
     /// 按进程的 PID 和进程开始的时间唯一标识进程。 可以将RM_UNIQUE_PROCESS结构的数组传递给 RmRegisterResources 函数。

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace WindowsTools.WindowsAPI.PInvoke.Rstrtmgr
+namespace GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr
 {
     /// <summary>
     /// RM_WRITE_STATUS_CALLBACK函数可由控制重启管理器的用户界面实现。 启动重启管理器会话的安装程序可以将指向此函数的指针传递给重启管理器函数，以接收一定百分比的完整性。 完整性百分比严格增加，并描述正在执行的当前操作和受影响的应用程序的名称。
