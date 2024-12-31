@@ -2,6 +2,7 @@
 using GetStoreAppInstaller.Services.Root;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Windows.Globalization;
 using Windows.UI.Xaml;
 
@@ -43,8 +44,7 @@ namespace GetStoreAppInstaller.Services.Controls.Settings
             }
 
             ApplicationLanguages.PrimaryLanguageOverride = AppLanguage;
-            //FlowDirection = CultureInfo.GetCultureInfo(AppLanguage).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-            FlowDirection = FlowDirection.LeftToRight;
+            FlowDirection = CultureInfo.GetCultureInfo(AppLanguage).TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
         }
     }
 }
