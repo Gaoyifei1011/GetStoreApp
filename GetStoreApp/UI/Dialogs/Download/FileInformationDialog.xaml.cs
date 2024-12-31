@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreApp.UI.Dialogs.Download
 {
     /// <summary>

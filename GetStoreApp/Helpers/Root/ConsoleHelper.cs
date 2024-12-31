@@ -72,7 +72,7 @@ namespace GetStoreApp.Helpers.Root
         {
             if (!IsExited)
             {
-                value = value + Environment.NewLine;
+                value += Environment.NewLine;
                 IntPtr consoleHandle = Kernel32Library.GetStdHandle(STD_HANDLE.STD_OUTPUT_HANDLE);
                 return Kernel32Library.WriteConsole(consoleHandle, value, value.Length, out _, IntPtr.Zero);
             }

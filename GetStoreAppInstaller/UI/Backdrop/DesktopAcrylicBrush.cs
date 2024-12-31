@@ -26,7 +26,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private bool isConnected;
         private bool useDesktopAcrylicBrush;
 
-        private readonly float desktopAcrylicDefaultLightTintOpacity;
+        private readonly float desktopAcrylicDefaultLightTintOpacity = 0f;
         private readonly float desktopAcrylicDefaultLightLuminosityOpacity = 0.85f;
         private readonly float desktopAcrylicDefaultDarkTintOpacity = 0.15f;
         private readonly float desktopAcrylicDefaultDarkLuminosityOpacity = 96;
@@ -35,7 +35,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private readonly Color desktopAcrylicDefaultDarkTintColor = Color.FromArgb(255, 44, 44, 44);
         private readonly Color desktopAcrylicDefaultDarkFallbackColor = Color.FromArgb(255, 44, 44, 44);
 
-        private readonly float desktopAcrylicBaseLightTintOpacity;
+        private readonly float desktopAcrylicBaseLightTintOpacity = 0f;
         private readonly float desktopAcrylicBaseLightLuminosityOpacity = 0.9f;
         private readonly float desktopAcrylicBaseDarkTintOpacity = 0.5f;
         private readonly float desktopAcrylicBaseDarkLuminosityOpacity = 0.96f;
@@ -44,7 +44,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
         private readonly Color desktopAcrylicBaseDarkTintColor = Color.FromArgb(255, 32, 32, 32);
         private readonly Color desktopAcrylicBaseDarkFallbackColor = Color.FromArgb(255, 28, 28, 28);
 
-        private readonly float desktopAcrylicThinLightTintOpacity;
+        private readonly float desktopAcrylicThinLightTintOpacity = 0f;
         private readonly float desktopAcrylicThinLightLuminosityOpacity = 0.44f;
         private readonly float desktopAcrylicThinDarkTintOpacity = 0.15f;
         private readonly float desktopAcrylicThinDarkLuminosityOpacity = 0.64f;

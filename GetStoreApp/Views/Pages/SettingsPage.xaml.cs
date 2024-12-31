@@ -9,6 +9,7 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.UI;
@@ -45,8 +46,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
+        private readonly UISettings uiSettings = new();
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
-        private UISettings uiSettings = new();
 
         private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
 
@@ -1103,7 +1104,7 @@ namespace GetStoreApp.Views.Pages
             DispatcherQueue.TryEnqueue(() =>
             {
                 AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
-                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled ? !Backdrop.Key.Equals(BackdropList[0].Key) : false;
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Backdrop.Key.Equals(BackdropList[0].Key);
             });
         }
 

@@ -15,6 +15,9 @@ using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.UI.Text;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreApp.UI.Dialogs.About
 {
     /// <summary>

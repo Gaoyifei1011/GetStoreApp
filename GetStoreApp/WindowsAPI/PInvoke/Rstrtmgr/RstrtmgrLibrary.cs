@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;
+using System.Runtime.InteropServices;
 
 // 抑制 CA1401 警告
 #pragma warning disable CA1401

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.UI.StartScreen;
 
+// 抑制 CA1822 警告
+#pragma warning disable CA1822
+
 namespace GetStoreApp
 {
     /// <summary>

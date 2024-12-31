@@ -16,8 +16,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 
-// 抑制 CA1822 警告
-#pragma warning disable CA1822
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreAppInstaller.Pages
 {
@@ -241,7 +241,7 @@ namespace GetStoreAppInstaller.Pages
 
         private ObservableCollection<string> CapabilitiesCollection { get; } = [];
 
-        private List<string> AddDependencyList = [];
+        private List<string> AddDependencyList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 

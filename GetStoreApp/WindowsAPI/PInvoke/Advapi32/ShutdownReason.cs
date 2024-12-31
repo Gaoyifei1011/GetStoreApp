@@ -25,7 +25,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Advapi32
         MinorMMC = 0x00000019,
         MinorNetworkConnectivity = 0x00000014,
         MinorNetworkCard = 0x00000009,
-        MinorOther = 0x00000000,
+        MinorOther = MajorOther,
         MinorOtherDriver = 0x0000000e,
         MinorPowerSupply = 0x0000000a,
         MinorProcessor = 0x00000008,
