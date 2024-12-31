@@ -57,7 +57,7 @@ namespace GetStoreAppInstaller
 
             // 应用主窗口
             MainAppWindow = AppWindow.Create();
-            MainAppWindow.Title = "获取商店应用 应用安装器";
+            MainAppWindow.Title = ResourceService.GetLocalized("Installer/AppTitle");
             MainAppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             MainAppWindow.Changed += OnAppWindowChanged;
             MainAppWindow.Closing += OnAppWindowClosing;
