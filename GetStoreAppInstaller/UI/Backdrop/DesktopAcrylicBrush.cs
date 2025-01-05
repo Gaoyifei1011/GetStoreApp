@@ -1,6 +1,5 @@
 ﻿using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Dwmapi;
-using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using System;
 using System.Collections.Generic;
 using Windows.System;
@@ -114,7 +113,7 @@ namespace GetStoreAppInstaller.UI.Backdrop
             {
                 Window.Current.CoreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
                 int attrValue = Convert.ToInt32(usehostBackdropBrush);
-                DwmapiLibrary.DwmSetWindowAttribute(User32Library.GetParent(coreWindowHandle), DWMWINDOWATTRIBUTE.DWMWA_USE_HOSTBACKDROPBRUSH, ref attrValue, sizeof(int));
+                DwmapiLibrary.DwmSetWindowAttribute(coreWindowHandle, DWMWINDOWATTRIBUTE.DWMWA_USE_HOSTBACKDROPBRUSH, ref attrValue, sizeof(int));
             }
         }
 
