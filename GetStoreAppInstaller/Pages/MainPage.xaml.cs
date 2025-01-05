@@ -1,4 +1,5 @@
 ﻿using GetStoreAppInstaller.Models;
+using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.UI.Backdrop;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32;
@@ -11,10 +12,18 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Foundation.Diagnostics;
+using Windows.Management.Deployment;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using WinRT.Interop;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -26,24 +35,12 @@ namespace GetStoreAppInstaller.Pages
     /// </summary>
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
-        private static readonly Guid CLSID_AppxFactory = new("5842A140-FF9F-4166-8F5C-62F5B7B0C781");
-        private static readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
+        private readonly Guid CLSID_AppxFactory = new("5842A140-FF9F-4166-8F5C-62F5B7B0C781");
+        private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
+        private readonly PackageManager packageManager = new();
 
-        private bool _showMoreEnabled;
-
-        public bool ShowMoreEnabled
-        {
-            get { return _showMoreEnabled; }
-
-            set
-            {
-                if (!Equals(_showMoreEnabled, value))
-                {
-                    _showMoreEnabled = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowMoreEnabled)));
-                }
-            }
-        }
+        private string fileName = string.Empty;
+        private IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress;
 
         private bool _isWindowMaximized;
 
@@ -57,6 +54,38 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _isWindowMaximized = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                }
+            }
+        }
+
+        private bool _isLoadCompleted;
+
+        public bool IsLoadCompleted
+        {
+            get { return _isLoadCompleted; }
+
+            set
+            {
+                if (!Equals(_isLoadCompleted, value))
+                {
+                    _isLoadCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadCompleted)));
+                }
+            }
+        }
+
+        private bool _isParseSuccessfully;
+
+        public bool IsParseSuccessfully
+        {
+            get { return _isParseSuccessfully; }
+
+            set
+            {
+                if (!Equals(_isParseSuccessfully, value))
+                {
+                    _isParseSuccessfully = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsParseSuccessfully)));
                 }
             }
         }
@@ -121,6 +150,118 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _version = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
+                }
+            }
+        }
+
+        private Version _minVersion;
+
+        public Version MinVersion
+        {
+            get { return _minVersion; }
+
+            set
+            {
+                if (!Equals(_minVersion, value))
+                {
+                    _minVersion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MinVersion)));
+                }
+            }
+        }
+
+        private Version _maxVersionTested;
+
+        public Version MaxVersionTested
+        {
+            get { return _maxVersionTested; }
+
+            set
+            {
+                if (!Equals(_maxVersionTested, value))
+                {
+                    _maxVersionTested = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxVersionTested)));
+                }
+            }
+        }
+
+        private string _packageFamilyName;
+
+        public string PackageFamilyName
+        {
+            get { return _packageFamilyName; }
+
+            set
+            {
+                if (!Equals(_packageFamilyName, value))
+                {
+                    _packageFamilyName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFamilyName)));
+                }
+            }
+        }
+
+        private string _packageFullName;
+
+        public string PackageFullName
+        {
+            get { return _packageFullName; }
+
+            set
+            {
+                if (!Equals(_packageFullName, value))
+                {
+                    _packageFullName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFullName)));
+                }
+            }
+        }
+
+        private string _supportedArchitecture;
+
+        public string SupportedArchitecture
+        {
+            get { return _supportedArchitecture; }
+
+            set
+            {
+                if (!Equals(_supportedArchitecture, value))
+                {
+                    _supportedArchitecture = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SupportedArchitecture)));
+                }
+            }
+        }
+
+        private string _isFramework;
+
+        public string IsFramework
+        {
+            get { return _isFramework; }
+
+            set
+            {
+                if (!Equals(_isFramework, value))
+                {
+                    _isFramework = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFramework)));
+                }
+            }
+        }
+
+        private string _packageType;
+
+        public string PackageType
+        {
+            get { return _packageType; }
+
+            set
+            {
+                if (!Equals(_packageType, value))
+                {
+                    _packageType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageType)));
                 }
             }
         }
@@ -241,7 +382,7 @@ namespace GetStoreAppInstaller.Pages
 
         private ObservableCollection<string> CapabilitiesCollection { get; } = [];
 
-        private List<string> AddDependencyList { get; } = [];
+        private List<string> DependencyList { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -252,10 +393,8 @@ namespace GetStoreAppInstaller.Pages
             Program.SetTitleBarTheme(ActualTheme);
             Program.SetClassicMenuTheme(ActualTheme);
 
-            for (int i = 0; i < 5; i++)
-            {
-                CapabilitiesCollection.Add("Test" + i.ToString());
-            }
+            IsLoadCompleted = true;
+            IsParseSuccessfully = true;
         }
 
         #region 第一部分：窗口右键菜单事件
@@ -265,7 +404,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_RESTORE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_RESTORE, 0);
         }
 
         /// <summary>
@@ -276,7 +415,7 @@ namespace GetStoreAppInstaller.Pages
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
             }
         }
 
@@ -288,7 +427,7 @@ namespace GetStoreAppInstaller.Pages
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
             }
         }
 
@@ -297,7 +436,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MINIMIZE, 0);
         }
 
         /// <summary>
@@ -305,7 +444,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
         }
 
         /// <summary>
@@ -313,7 +452,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_CLOSE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_CLOSE, 0);
         }
 
         #endregion 第一部分：窗口右键菜单事件
@@ -327,33 +466,240 @@ namespace GetStoreAppInstaller.Pages
         #region 第二部分：应用安装器主页面——挂载的事件
 
         /// <summary>
-        /// 查看更多 / 更少信息
+        /// 选择安装包
         /// </summary>
-        private void OnViewInformationClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenFackageClicked(object sender, RoutedEventArgs args)
         {
-            ShowMoreEnabled = !ShowMoreEnabled;
+            // 先使用 FileOpenPicker，FileOpenPicker 打开失败，再尝试使用 IFileDialog COM 接口选择文件，否则提示打开自定义文件选取框失败
+            bool result = false;
+
+            // 使用 FileOpenPicker
+            try
+            {
+                FileOpenPicker fileOpenPicker = new();
+                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id));
+                fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+
+                if (await fileOpenPicker.PickSingleFileAsync() is StorageFile storageFile)
+                {
+                    fileName = storageFile.Path;
+                }
+                result = true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
+            }
+
+            // 使用 IFileDialog
+            if (!result)
+            {
+                try
+                {
+                    OpenFileDialog openFileDialog = new(Program.CoreAppWindow.Id)
+                    {
+                        Description = ResourceService.GetLocalized("Installer/SelectPackage"),
+                    };
+
+                    if (openFileDialog.ShowDialog())
+                    {
+                        fileName = openFileDialog.SelectedFile;
+                    }
+
+                    result = true;
+                    openFileDialog.Dispose();
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
+                }
+            }
         }
 
         /// <summary>
         /// 添加依赖包
         /// </summary>
-        private void OnAddDependencyClicked(object sender, RoutedEventArgs args)
+        private async void OnAddDependencyClicked(object sender, RoutedEventArgs args)
         {
+            // 先使用 FileOpenPicker，FileOpenPicker 打开失败，再尝试使用 IFileDialog COM 接口选择文件，否则提示打开自定义文件选取框失败
+            bool result = false;
+
+            // 使用 FileOpenPicker
+            try
+            {
+                FileOpenPicker fileOpenPicker = new();
+                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id));
+                fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+
+                IReadOnlyList<StorageFile> filesList = await fileOpenPicker.PickMultipleFilesAsync();
+
+                if (filesList is not null)
+                {
+                    foreach (StorageFile file in filesList)
+                    {
+                        DependencyList.Add(file.Path);
+                    }
+                }
+
+                result = true;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
+            }
+
+            // 使用 IFileDialog
+            if (!result)
+            {
+                try
+                {
+                    OpenFileDialog openFileDialog = new(Program.CoreAppWindow.Id)
+                    {
+                        Description = ResourceService.GetLocalized("Installer/SelectDependencyPackage"),
+                        AllowMultiSelect = true
+                    };
+
+                    if (openFileDialog.ShowDialog())
+                    {
+                        fileName = openFileDialog.SelectedFile;
+                    }
+
+                    result = true;
+                    openFileDialog.Dispose();
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
+                }
+            }
         }
 
         /// <summary>
         /// 安装应用
         /// </summary>
-        private void OnInstallAppClicked(object sender, RoutedEventArgs args)
+        private async void OnInstallAppClicked(object sender, RoutedEventArgs args)
         {
+            await Task.Run(() =>
+            {
+                string extensionName = Path.GetExtension(fileName);
+
+                if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                {
+                    try
+                    {
+                        List<Uri> dependencyUriList = [];
+
+                        foreach (string dependencyItem in DependencyList)
+                        {
+                            dependencyUriList.Add(new Uri(dependencyItem));
+                        }
+
+                        // 安装目标应用，并获取安装进度
+                        installPackageWithProgress = packageManager.AddPackageAsync(new Uri(fileName), dependencyUriList, DeploymentOptions.ForceUpdateFromAnyVersion | DeploymentOptions.ForceTargetApplicationShutdown);
+
+                        // 更新安装进度
+                        installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);
+
+                        // 应用安装过程已结束
+                        installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status);
+                    }
+                    // 安装失败显示失败信息
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                    }
+                }
+                else if (extensionName.Equals(".appinstaller"))
+                {
+                    try
+                    {
+                        // 安装目标应用，并获取安装进度
+                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByAppInstallerFileAsync(new Uri(fileName), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, null);
+
+                        // 更新安装进度
+                        installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);
+
+                        // 应用安装过程已结束
+                        installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status);
+                    }
+                    // 安装失败显示失败信息
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 取消安装
+        /// </summary>
+        private void OnCancelInstallClicked(object sender, RoutedEventArgs args)
+        {
+            if (installPackageWithProgress is not null)
+            {
+                Task.Run(() =>
+                {
+                    installPackageWithProgress.Cancel();
+                    installPackageWithProgress.Close();
+                    installPackageWithProgress = null;
+                });
+            }
         }
 
         #endregion 第二部分：应用安装器主页面——挂载的事件
 
+        #region 第三部分：自定义事件
+
+        /// <summary>
+        /// 应用安装状态发生改变时触发的事件
+        /// </summary>
+        private async void OnInstallPackageProgressing(IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> result, DeploymentProgress progress)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                InstallProgressValue = progress.percentage;
+            });
+        }
+
+        /// <summary>
+        /// 应用安装完成时触发的事件
+        /// </summary>
+        private async void OnInstallPackageCompleted(IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> result, AsyncStatus status)
+        {
+            // 安装完成
+            if (status is AsyncStatus.Completed)
+            {
+                //// 显示安装成功通知
+                //AppNotificationBuilder appNotificationBuilder = new();
+                //appNotificationBuilder.AddArgument("action", "OpenApp");
+                //appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallSuccessfully"), completedFile.Name));
+                //ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+            }
+            // 安装错误
+            else if (status is AsyncStatus.Error)
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                });
+
+                //// 显示安装失败通知
+                //AppNotificationBuilder appNotificationBuilder = new();
+                //appNotificationBuilder.AddArgument("action", "OpenApp");
+                //appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed1"), completedFile.Name));
+                //appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), result.ErrorCode.Message));
+                //ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+            }
+
+            result.Close();
+        }
+
+        #endregion 第三部分：自定义事件
+
         /// <summary>
         /// 解析应用包
         /// </summary>
-        public static void ParsePackagedApp(string filePath)
+        public void ParsePackagedApp(string filePath)
         {
             if (File.Exists(filePath))
             {
