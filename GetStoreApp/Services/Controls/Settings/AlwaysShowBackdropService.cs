@@ -10,7 +10,7 @@ namespace GetStoreApp.Services.Controls.Settings
     {
         private static readonly string settingsKey = ConfigKey.AlwaysShowBackdropKey;
 
-        private static readonly bool defaultAlwaysShowBackdropValue;
+        private static readonly bool defaultAlwaysShowBackdropValue = false;
 
         public static bool AlwaysShowBackdropValue { get; private set; }
 

@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings
     {
         private static readonly string settingsKey = ConfigKey.TopMostKey;
 
-        private static readonly bool defaultTopMostValue;
+        private static readonly bool defaultTopMostValue = false;
 
         private static bool _topMostValue;
 
