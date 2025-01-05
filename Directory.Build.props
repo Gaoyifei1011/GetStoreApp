@@ -4,19 +4,6 @@
     <!--强制引入PackageReferences-->
     <ProjectCapability Include="PackageReferences" />
   </ItemGroup>
-  <PropertyGroup Label="NuGet" Condition="('$(MSBuildProjectExtension)' == '.vcxproj') Or ('$(MSBuildProjectExtension)' == '.wapproj')">
-    <!-- https://github.com/microsoft/react-native-windows/pull/8195 -->
-    <AssetTargetFallback>$(AssetTargetFallback);native;uap$(TargetPlatformVersion);</AssetTargetFallback>
-    <!-- https://github.com/microsoft/react-native-windows/pull/8195 -->
-    <TargetFrameworkMoniker>native,Version=v0.0</TargetFrameworkMoniker>
-    <!--指定自己的体系为native-->
-    <NuGetTargetMoniker Condition="'$(NuGetTargetMoniker)' == ''">native,Version=v0.0</NuGetTargetMoniker>
-    <TargetFrameworkMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCoreApp,Version=v9.0</TargetFrameworkMoniker>
-    <NuGetTargetMoniker Condition ="'$(DesignTimeBuild)' == 'true'">.NETCoreApp,Version=v9.0</NuGetTargetMoniker>
-    <!--如果不指定这一行，那么arm64平台会找不到RID而失败-->
-    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">win;win-x86;win-x64;win-arm;win-arm64</RuntimeIdentifiers>
-  </PropertyGroup>
-
   <!--从兼容性考虑，继续向上搜索 Directory.Build.props-->
   <PropertyGroup>
     <NoWarn>IDE0079</NoWarn>
