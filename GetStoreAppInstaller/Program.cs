@@ -10,6 +10,7 @@ using Microsoft.UI;
 using Microsoft.UI.Content;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
@@ -48,6 +49,15 @@ namespace GetStoreAppInstaller
         public static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
+
+            // 初始化应用启动参数
+            AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+
+            if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
+            {
+                return;
+            }
+
             InitializeResources();
 
             // 创建 CoreWindow
@@ -97,9 +107,9 @@ namespace GetStoreAppInstaller
             XamlControlsResources xamlControlsResources = [];
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/MenuFlyout.xaml") });
             Application.Current.Resources = xamlControlsResources;
-            Window.Current.Content = new MainPage();
+            Window.Current.Content = new MainPage(appActivationArguments);
             (Window.Current.Content as MainPage).IsWindowMaximized = (CoreAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
-            coreWindow.Activate();
+            Window.Current.Activate();
             frameworkView.Run();
         }
 
