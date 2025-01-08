@@ -1,8 +1,6 @@
-﻿using GetStoreApp.Views.Pages;
-using GetStoreApp.Views.Windows;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
-using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.IO;
@@ -25,17 +23,14 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理应用通知
         /// </summary>
-        public static async Task HandleToastNotificationAsync(string content, bool isLaunched)
+        public static async Task HandleToastNotificationAsync(string content)
         {
             string notificationArgs = new WwwFormUrlDecoder(content).GetFirstValueByName("action");
 
             if (notificationArgs is "CheckNetWorkConnection")
             {
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-                if (!isLaunched)
-                {
-                    Environment.Exit(0);
-                }
+                Environment.Exit(Environment.ExitCode);
             }
             else if (notificationArgs is "OpenDownloadFolder")
             {
@@ -49,18 +44,12 @@ namespace GetStoreApp.Services.Root
                     await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
                 }
 
-                if (!isLaunched)
-                {
-                    Environment.Exit(0);
-                }
+                Environment.Exit(Environment.ExitCode);
             }
             else if (notificationArgs is "OpenSettings")
             {
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-                if (!isLaunched)
-                {
-                    Environment.Exit(0);
-                }
+                Environment.Exit(Environment.ExitCode);
             }
             else if (notificationArgs.Contains("InstallWithCommand"))
             {
@@ -70,44 +59,17 @@ namespace GetStoreApp.Services.Root
                     string appId = splitList[1];
                     Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("install {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
                 }
-                if (!isLaunched)
-                {
-                    Environment.Exit(0);
-                }
+                Environment.Exit(Environment.ExitCode);
             }
             else if (notificationArgs.Contains("OpenApp"))
             {
-                if (Application.Current is null)
-                {
-                    DesktopLaunchService.InitializePage = typeof(StorePage);
-                }
-                else
-                {
-                    MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        if (MainWindow.Current.GetCurrentPageType() != typeof(StorePage))
-                        {
-                            MainWindow.Current.NavigateTo(typeof(StorePage));
-                        }
-                    });
-                }
+                string sendData = string.Join(' ', "ToastNotification", "OpenApp");
+                ResultService.SaveResult(StorageDataKind.ToastNotification, sendData);
             }
             else if (notificationArgs.Contains("ViewDownloadPage"))
             {
-                if (Application.Current is null)
-                {
-                    DesktopLaunchService.InitializePage = typeof(DownloadPage);
-                }
-                else
-                {
-                    MainWindow.Current.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        if (MainWindow.Current.GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            MainWindow.Current.NavigateTo(typeof(DownloadPage));
-                        }
-                    });
-                }
+                string sendData = string.Join(' ', "ToastNotification", "ViewDownloadPage");
+                ResultService.SaveResult(StorageDataKind.ToastNotification, sendData);
             }
         }
 

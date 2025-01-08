@@ -3,10 +3,12 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Shell;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using WinRT;
 
 namespace GetStoreApp.Services.Root
 {
@@ -38,12 +40,23 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 处理控制台应用启动的方式
         /// </summary>
-        public static async Task InitializeLaunchAsync(string[] args)
+        public static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments)
         {
-            foreach (string arg in args)
+            Windows.ApplicationModel.Activation.LaunchActivatedEventArgs launchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs.FromAbi((appActivationArguments.Data as IInspectable).ThisPtr);
+            string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
+
+            foreach (string arguments in argumentsArray)
             {
-                consoleLaunchArgs.Add(arg);
+                if (arguments.Contains("GetStoreApp.exe") || string.IsNullOrEmpty(arguments))
+                {
+                    continue;
+                }
+                else
+                {
+                    consoleLaunchArgs.Add(arguments);
+                }
             }
+
             ConsoleEventDelegate ctrlDelegate = new(OnConsoleCtrlHandler);
             Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
             DownloadSchedulerService.InitializeDownloadScheduler(false);
@@ -105,82 +118,77 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeRequestContent()
         {
-            if (consoleLaunchArgs.Count is not 1)
-            {
-                ParseLaunchArgs();
-                RequestService.InitializeWithoutQueryData();
-            }
-            else
+            int typeNameIndex = 1;
+            int channelNameIndex = 4;
+            string link = string.Empty;
+
+            // 手动输入参数
+            if (consoleLaunchArgs.Count is 1)
             {
                 // 选择类型
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/URLSample"));
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ProductIDSample"));
                 ConsoleHelper.Write(ResourceService.GetLocalized("Console/SelectType"));
-                int typeIndex;
+
                 try
                 {
-                    if (int.TryParse(ConsoleHelper.ReadLine(), out typeIndex) && (typeIndex is < 1 or > 4))
+                    if (int.TryParse(ConsoleHelper.ReadLine(), out typeNameIndex) && (typeNameIndex is < 1 or > 4))
                     {
-                        typeIndex = 1;
+                        typeNameIndex = 1;
                     }
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Warning, "Parse console params(type) failed.", e);
-                    typeIndex = 1;
+                    typeNameIndex = 1;
                 }
 
                 // 选择通道
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ChannelInformation"));
                 ConsoleHelper.Write(ResourceService.GetLocalized("Console/SelectChannel"));
-                int channelIndex;
+
                 try
                 {
-                    if (int.TryParse(ConsoleHelper.ReadLine(), out channelIndex) && (channelIndex is < 1 or > 4))
+                    if (int.TryParse(ConsoleHelper.ReadLine(), out channelNameIndex) && (channelNameIndex is < 1 or > 4))
                     {
-                        channelIndex = 4;
+                        channelNameIndex = 4;
                     }
                 }
                 catch (Exception e)
                 {
                     LogService.WriteLog(LoggingLevel.Warning, "Parse console params(channel) failed.", e);
-                    channelIndex = 4;
+                    channelNameIndex = 4;
                 }
 
                 // 输入链接
                 ConsoleHelper.Write(ResourceService.GetLocalized("Console/InputLink"));
-                string link = ConsoleHelper.ReadLine();
-
-                RequestService.InitializeQueryData(typeIndex, channelIndex, link);
+                link = ConsoleHelper.ReadLine();
             }
-        }
-
-        /// <summary>
-        /// 解析启动命令参数
-        /// </summary>
-        private static void ParseLaunchArgs()
-        {
-            if (consoleLaunchArgs.Count is 2)
+            // 只有两个参数：链接
+            else if (consoleLaunchArgs.Count is 2)
             {
-                LaunchArgs["Link"] = consoleLaunchArgs[1];
+                link = consoleLaunchArgs[1];
             }
+            // 多个参数
+            else if (consoleLaunchArgs.Count % 2 is 1)
+            {
+                int typeNameParameterIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                int channelNameParameterIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                int linkParameterIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+
+                typeNameIndex = typeNameParameterIndex is -1 ? 1 : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                channelNameIndex = channelNameParameterIndex is -1 ? 4 : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                link = linkParameterIndex is -1 ? string.Empty : consoleLaunchArgs[linkParameterIndex + 1];
+            }
+            // 非法参数
             else
             {
-                if (consoleLaunchArgs.Count % 2 is not 1)
-                {
-                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
-                    return;
-                }
-
-                int TypeNameIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                int ChannelNameIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                int LinkIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
-
-                LaunchArgs["TypeName"] = TypeNameIndex is -1 ? LaunchArgs["TypeName"] : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[TypeNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["ChannelName"] = ChannelNameIndex is -1 ? LaunchArgs["ChannelName"] : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[ChannelNameIndex + 1], StringComparison.OrdinalIgnoreCase));
-                LaunchArgs["Link"] = LinkIndex is -1 ? LaunchArgs["Link"] : consoleLaunchArgs[LinkIndex + 1];
+                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
+                Environment.Exit(Environment.ExitCode);
             }
+
+            RequestService.InitializeQueryData(typeNameIndex, channelNameIndex, link);
         }
     }
 }

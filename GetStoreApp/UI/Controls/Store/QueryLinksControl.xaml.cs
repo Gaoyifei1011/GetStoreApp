@@ -274,6 +274,7 @@ namespace GetStoreApp.UI.Controls.Store
 
             SelectedType = TypeList[0];
             SelectedChannel = ChannelList[3];
+            LinkText = string.Empty;
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -449,11 +450,6 @@ namespace GetStoreApp.UI.Controls.Store
             if (!isInitialized)
             {
                 isInitialized = true;
-
-                SelectedType = Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["TypeName"])];
-                SelectedChannel = Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(DesktopLaunchService.LaunchArgs["ChannelName"])];
-                LinkText = DesktopLaunchService.LaunchArgs["Link"] is null ? string.Empty : (string)DesktopLaunchService.LaunchArgs["Link"];
-
                 sampleLink = SampleLinkList[0];
                 LinkPlaceHolderText = sampleTitle + sampleLink;
 

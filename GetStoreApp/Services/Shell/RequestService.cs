@@ -24,24 +24,12 @@ namespace GetStoreApp.Services.Shell
         private static readonly List<string> ChannelList = ["WIF", "WIS", "RP", "Retail"];
 
         /// <summary>
-        /// 有参数模式下初始化请求的数据
-        /// </summary>
-        public static void InitializeWithoutQueryData()
-        {
-            selectedType = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["TypeName"])];
-
-            selectedChannel = Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"]) is -1 ? ChannelList[0] : ChannelList[Convert.ToInt32(ConsoleLaunchService.LaunchArgs["ChannelName"])];
-
-            linkText = ConsoleLaunchService.LaunchArgs["Link"] is null ? string.Empty : Convert.ToString(ConsoleLaunchService.LaunchArgs["Link"]);
-        }
-
-        /// <summary>
-        /// 无参数模式下初始化请求的数据
+        /// 初始化请求的数据
         /// </summary>
         public static void InitializeQueryData(int typeIndex, int channelIndex, string link)
         {
-            selectedType = TypeList[typeIndex - 1];
-            selectedChannel = ChannelList[channelIndex - 1];
+            selectedType = TypeList[typeIndex];
+            selectedChannel = ChannelList[channelIndex];
             linkText = link;
         }
 

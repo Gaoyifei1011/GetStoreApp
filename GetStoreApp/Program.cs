@@ -9,6 +9,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.DynamicDependency;
+using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
@@ -37,7 +38,7 @@ namespace GetStoreApp
         /// 应用程序的主入口点
         /// </summary>
         [STAThread]
-        public static void Main(string[] args)
+        public static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
             Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 0x20, 0);
@@ -63,14 +64,32 @@ namespace GetStoreApp
                 return;
             }
 
-            bool isDesktopProgram = args.Length is 0 || !args[0].Equals("Console", StringComparison.OrdinalIgnoreCase);
+            // 初始化应用启动参数
+            AppActivationArguments appActivationArguments = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+
+            bool isDesktopProgram = true;
+
+            if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
+            {
+                if (appActivationArguments.Data is IInspectable inspectable)
+                {
+                    Windows.ApplicationModel.Activation.LaunchActivatedEventArgs launchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr);
+                    string[] arguments = launchActivatedEventArgs.Arguments.Split(' ');
+
+                    if (arguments.Length >= 2 && arguments[1].Equals("Console", StringComparison.OrdinalIgnoreCase))
+                    {
+                        isDesktopProgram = false;
+                    }
+                }
+            }
+
             InitializeResourcesAsync(isDesktopProgram).Wait();
 
             // 以桌面应用程序方式正常启动
             if (isDesktopProgram)
             {
                 DownloadSchedulerService.InitializeDownloadScheduler(true);
-                DesktopLaunchService.InitializeLaunchAsync(args).Wait();
+                DesktopLaunchService.InitializeLaunchAsync(appActivationArguments).Wait();
 
                 // 使用 MSIX 动态依赖包 API，强行修改静态包图的依赖顺序，解决 WinUI 3 桌面应用程序加载时错误加载成 WinUI 2 程序集，导致程序启动失败的问题
                 IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
@@ -142,7 +161,7 @@ namespace GetStoreApp
                 {
                     Kernel32Library.AllocConsole();
                 }
-                ConsoleLaunchService.InitializeLaunchAsync(args).Wait();
+                ConsoleLaunchService.InitializeLaunchAsync(appActivationArguments).Wait();
                 Kernel32Library.FreeConsole();
             }
         }
@@ -153,7 +172,7 @@ namespace GetStoreApp
         private static void OnUnhandledException(object sender, System.UnhandledExceptionEventArgs args)
         {
             LogService.WriteLog(LoggingLevel.Error, "Unknown unhandled exception.", args.ExceptionObject as Exception);
-            Environment.Exit(0);
+            Environment.Exit(Environment.ExitCode);
         }
 
         /// <summary>

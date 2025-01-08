@@ -62,6 +62,8 @@ namespace GetStoreApp.Views.Windows
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
 
+        private bool isInitialized;
+
         public new static MainWindow Current { get; private set; }
 
         private bool _isWindowMaximized;
@@ -507,61 +509,167 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 导航控件加载完成后初始化内容，初始化导航控件属性、屏幕缩放比例值和应用的背景色
         /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
+        private async void OnLoaded(object sender, RoutedEventArgs args)
         {
-            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
-
-            // 导航控件加载完成后初始化内容
-            if (sender is NavigationView navigationView)
+            if (!isInitialized)
             {
-                foreach (object menuItem in navigationView.MenuItems)
-                {
-                    if (menuItem is NavigationViewItem navigationViewItem)
-                    {
-                        int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
+                isInitialized = true;
 
-                        NavigationItemList.Add(new NavigationModel()
+                // 设置标题栏主题
+                SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+
+                // 导航控件加载完成后初始化内容
+                if (sender is NavigationView navigationView)
+                {
+                    foreach (object menuItem in navigationView.MenuItems)
+                    {
+                        if (menuItem is NavigationViewItem navigationViewItem)
                         {
-                            NavigationTag = PageList[TagIndex].Key,
-                            NavigationItem = navigationViewItem,
-                            NavigationPage = PageList[TagIndex].Value,
-                        });
+                            int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
+
+                            NavigationItemList.Add(new NavigationModel()
+                            {
+                                NavigationTag = PageList[TagIndex].Key,
+                                NavigationItem = navigationViewItem,
+                                NavigationPage = PageList[TagIndex].Value,
+                            });
+                        }
+                    }
+
+                    foreach (object footerMenuItem in navigationView.FooterMenuItems)
+                    {
+                        if (footerMenuItem is NavigationViewItem navigationViewItem)
+                        {
+                            int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
+
+                            NavigationItemList.Add(new NavigationModel()
+                            {
+                                NavigationTag = PageList[TagIndex].Key,
+                                NavigationItem = navigationViewItem,
+                                NavigationPage = PageList[TagIndex].Value,
+                            });
+                        }
+                    }
+
+                    NavigateTo(typeof(StorePage));
+                    SelectedItem = NavigationItemList[0].NavigationItem;
+                    IsBackEnabled = CanGoBack();
+                }
+
+                // 初始化启动信息
+                StorageDataKind dataKind = ResultService.GetStorageDataKind();
+                string dataContent = ResultService.ReadResult(dataKind);
+                ResultService.SaveResult(StorageDataKind.None, string.Empty);
+
+                if (dataKind is StorageDataKind.Launch)
+                {
+                    string[] startupArgs = dataContent.Split(' ');
+
+                    // 正常启动重定向获得的内容
+                    if (startupArgs.Length >= 1 && startupArgs[0] is "Launch")
+                    {
+                        Show();
+
+                        // 应用已经启动
+                        if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                        {
+                            await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                        }
+                    }
+                    // 带有命令参数启动重定向获得的内容
+                    else if (startupArgs.Length >= 2 && startupArgs[0] is "Console")
+                    {
+                        if (GetCurrentPageType() != typeof(StorePage))
+                        {
+                            NavigateTo(typeof(StorePage));
+                        }
+
+                        if (startupArgs.Length is 4 && WindowFrame.Content is StorePage storePage)
+                        {
+                            storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[1])];
+                            storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[2]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[2])];
+                            storePage.QueryLinks.LinkText = startupArgs[3] is "PlaceHolderText" ? string.Empty : startupArgs[3];
+                            storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                        }
+                    }
+                    // 跳转列表或辅助磁贴启动重定向获得的内容
+                    else if (startupArgs.Length >= 1 && (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile"))
+                    {
+                        if (startupArgs.Length is 2 && startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
+                        {
+                            NavigateTo(typeof(StorePage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
+                        {
+                            NavigateTo(typeof(AppUpdatePage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
+                        {
+                            NavigateTo(typeof(WinGetPage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
+                        {
+                            NavigateTo(typeof(AppManagerPage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
+                        {
+                            NavigateTo(typeof(DownloadPage));
+                        }
                     }
                 }
-
-                foreach (object footerMenuItem in navigationView.FooterMenuItems)
+                // 从共享目标启动重定向获得的内容
+                else if (dataKind is StorageDataKind.ShareTarget)
                 {
-                    if (footerMenuItem is NavigationViewItem navigationViewItem)
+                    string[] startupArgs = dataContent.Split(' ');
+
+                    if (GetCurrentPageType() != typeof(StorePage))
                     {
-                        int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
-
-                        NavigationItemList.Add(new NavigationModel()
-                        {
-                            NavigationTag = PageList[TagIndex].Key,
-                            NavigationItem = navigationViewItem,
-                            NavigationPage = PageList[TagIndex].Value,
-                        });
+                        NavigateTo(typeof(StorePage));
                     }
-                }
 
-                SelectedItem = NavigationItemList[0].NavigationItem;
-                NavigateTo(typeof(StorePage));
-                if (DesktopLaunchService.InitializePage != typeof(StorePage))
+                    if (startupArgs.Length is 3 && WindowFrame.Content is StorePage storePage)
+                    {
+                        storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
+                        storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
+                        storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                        storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                    }
+
+                    Show();
+                }
+                // 从 Toast 通知启动重定向获得的内容
+                else if (dataKind is StorageDataKind.ToastNotification)
                 {
-                    NavigateTo(DesktopLaunchService.InitializePage);
-                }
-                IsBackEnabled = CanGoBack();
-            }
+                    string[] startupArgs = dataContent.Split(' ');
 
-            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
-            {
-                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
-                         [new RectInt32(
+                    if (startupArgs.Length is 2 && startupArgs[0] is "ToastNotification" && startupArgs[1] is "OpenApp")
+                    {
+                        if (GetCurrentPageType() != typeof(StorePage))
+                        {
+                            NavigateTo(typeof(StorePage));
+                        }
+                    }
+                    else if (startupArgs.Length is 2 && startupArgs[0] is "ToastNotification" && startupArgs[1] is "ViewDownloadPage")
+                    {
+                        if (GetCurrentPageType() != typeof(DownloadPage))
+                        {
+                            NavigateTo(typeof(DownloadPage));
+                        }
+                    }
+
+                    Show();
+                }
+
+                if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
+                {
+                    inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
+                             [new RectInt32(
                         (int)(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
                         (int)AppTitlebar.Margin.Top,
                         (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
                         (int)(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
-                         ]);
+                             ]);
+                }
             }
         }
 
@@ -639,97 +747,128 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 同步漫游应用程序数据时发生的事件
         /// </summary>
-        private async void OnDataChanged(ApplicationData sender, object args)
+        private void OnDataChanged(ApplicationData sender, object args)
         {
             StorageDataKind dataKind = ResultService.GetStorageDataKind();
+            string dataContent = ResultService.ReadResult(dataKind);
+            ResultService.SaveResult(StorageDataKind.None, string.Empty);
 
-            // 正常启动
-            if (dataKind is StorageDataKind.DesktopLaunch)
+            if (dataKind is StorageDataKind.Launch)
             {
-                string dataContent = ResultService.ReadResult(dataKind);
-                ResultService.SaveResult(StorageDataKind.None, string.Empty);
+                string[] startupArgs = dataContent.Split(' ');
 
-                DispatcherQueue.TryEnqueue(() =>
+                // 正常启动重定向获得的内容
+                if (startupArgs.Length >= 1 && startupArgs[0] is "Launch")
                 {
-                    Show();
-
-                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
+                    DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                        Show();
+
+                        // 应用已经启动
+                        if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                        {
+                            await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                        }
                     });
-                });
-            }
-            // 正常启动或从共享启动处启动，应用可能会附带启动参数
-            else if (dataKind is StorageDataKind.CommandLineLaunch || dataKind is StorageDataKind.ShareTarget)
-            {
-                string dataContent = ResultService.ReadResult(dataKind);
-                ResultService.SaveResult(StorageDataKind.None, string.Empty);
-
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                }
+                // 带有命令参数启动重定向获得的内容
+                else if (startupArgs.Length >= 2 && startupArgs[0] is "Console")
                 {
-                    string[] startupArgs = dataContent.Split(' ');
-
-                    if (startupArgs.Length is 2 && (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile"))
-                    {
-                        if (startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
-                        {
-                            NavigateTo(typeof(StorePage));
-                        }
-                        if (startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
-                        {
-                            NavigateTo(typeof(AppUpdatePage));
-                        }
-                        else if (startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
-                        {
-                            NavigateTo(typeof(WinGetPage));
-                        }
-                        else if (startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
-                        {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                NavigateTo(typeof(AppManagerPage));
-                            });
-                        }
-                        else if (startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            NavigateTo(typeof(DownloadPage));
-                        }
-                    }
-                    else if (startupArgs.Length is 3)
+                    DispatcherQueue.TryEnqueue(() =>
                     {
                         if (GetCurrentPageType() != typeof(StorePage))
                         {
                             NavigateTo(typeof(StorePage));
                         }
 
-                        if (WindowFrame.Content is StorePage storePage)
+                        if (startupArgs.Length is 4 && WindowFrame.Content is StorePage storePage)
                         {
-                            storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
-                            storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
-                            storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                            storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[1])];
+                            storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[2]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[2])];
+                            storePage.QueryLinks.LinkText = startupArgs[3] is "PlaceHolderText" ? string.Empty : startupArgs[3];
                             storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                        }
+                    });
+                }
+                // 跳转列表或辅助磁贴启动重定向获得的内容
+                else if (startupArgs.Length >= 1 && (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile"))
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        if (startupArgs.Length is 2 && startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
+                        {
+                            NavigateTo(typeof(StorePage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
+                        {
+                            NavigateTo(typeof(AppUpdatePage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
+                        {
+                            NavigateTo(typeof(WinGetPage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
+                        {
+                            NavigateTo(typeof(AppManagerPage));
+                        }
+                        else if (startupArgs.Length is 2 && startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
+                        {
+                            NavigateTo(typeof(DownloadPage));
+                        }
+                    });
+                }
+            }
+            // 从共享目标启动重定向获得的内容
+            else if (dataKind is StorageDataKind.ShareTarget)
+            {
+                string[] startupArgs = dataContent.Split(' ');
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (GetCurrentPageType() != typeof(StorePage))
+                    {
+                        NavigateTo(typeof(StorePage));
+                    }
+
+                    if (startupArgs.Length is 3 && WindowFrame.Content is StorePage storePage)
+                    {
+                        storePage.QueryLinks.SelectedType = Convert.ToInt32(startupArgs[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(startupArgs[0])];
+                        storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[1])];
+                        storePage.QueryLinks.LinkText = startupArgs[2] is "PlaceHolderText" ? string.Empty : startupArgs[2];
+                        storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                    }
+
+                    Show();
+                });
+            }
+            // 从 Toast 通知启动重定向获得的内容
+            else if (dataKind is StorageDataKind.ToastNotification)
+            {
+                string[] startupArgs = dataContent.Split(' ');
+
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                {
+                    if (startupArgs.Length is 2 && startupArgs[0] is "ToastNotification" && startupArgs[1] is "OpenApp")
+                    {
+                        if (GetCurrentPageType() != typeof(StorePage))
+                        {
+                            NavigateTo(typeof(StorePage));
+                        }
+                    }
+                    else if (startupArgs.Length is 2 && startupArgs[0] is "ToastNotification" && startupArgs[1] is "ViewDownloadPage")
+                    {
+                        if (GetCurrentPageType() != typeof(DownloadPage))
+                        {
+                            NavigateTo(typeof(DownloadPage));
                         }
                     }
 
                     Show();
                 });
             }
-            // 正常启动或从共享启动处启动，应用可能会附带启动参数
-            else if (dataKind is StorageDataKind.ToastNotification)
-            {
-                string dataContent = ResultService.ReadResult(dataKind);
-                ResultService.SaveResult(StorageDataKind.None, string.Empty);
-                await ToastNotificationService.HandleToastNotificationAsync(dataContent, true);
-
-                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                {
-                    Show();
-                });
-            }
+            // 任务栏应用固定结果
             else if (dataKind is StorageDataKind.TaskbarPinnedResult)
             {
-                string dataContent = ResultService.ReadResult(dataKind);
-                ResultService.SaveResult(StorageDataKind.None, string.Empty);
                 DispatcherQueue.TryEnqueue(async () =>
                 {
                     await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, Convert.ToBoolean(dataContent)));
