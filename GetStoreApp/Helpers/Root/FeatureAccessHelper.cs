@@ -12,7 +12,7 @@ namespace GetStoreApp.Helpers.Root
         private static readonly string packageFamilyName = Package.Current.Id.FamilyName;
 
         // Windows 11 22621 受限的 API 和对应的访问密钥
-        private static readonly Dictionary<string, string> LimitedAccessFeaturesDict = new()
+        private static readonly Dictionary<string, string> limitedAccessFeaturesDict = new()
         {
             { "com.microsoft.services.cortana.cortanaactionableinsights_v1", "nEVyyzytE6ankNk1CIAu6sZsh8vKLw3Q7glTOHB11po=" },
             { "com.microsoft.windows.applicationmodel.conversationalagent_v1", "hhrovbOc/z8TgeoWheL4RF5vLLJrKNAQpdyvhlTee6I" },
@@ -40,7 +40,7 @@ namespace GetStoreApp.Helpers.Root
         /// </summary>
         public static string GenerateTokenFromFeatureId(string featureId)
         {
-            string generatedContent = string.Format("{0}!{1}!{2}", featureId, LimitedAccessFeaturesDict[featureId], packageFamilyName);
+            string generatedContent = string.Format("{0}!{1}!{2}", featureId, limitedAccessFeaturesDict[featureId], packageFamilyName);
             byte[] computedHash = HashAlgorithmHelper.ComputeSHA256Hash(generatedContent);
             byte[] tokenBytes = new byte[16];
             Array.Copy(computedHash, tokenBytes, tokenBytes.Length);
