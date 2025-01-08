@@ -3,13 +3,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AnalysisLevel>latest</AnalysisLevel>
     <AssemblyName>GetStoreAppInstaller</AssemblyName>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
+    <CustomAfterMicrosoftCommonTargets>$(SolutionDir)Configuration\MrtCore.PriGen.targets</CustomAfterMicrosoftCommonTargets>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
+    <EnableDefaultPriItems>false</EnableDefaultPriItems>
     <ForceAotCompile>false</ForceAotCompile>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
@@ -72,8 +73,15 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
 
+    <PRIResource Include="Strings\en-us\Installer.resjson" />
+    <PRIResource Include="Strings\en-us\Window.resjson" />
+    <PRIResource Include="Strings\zh-hans\Installer.resjson" />
+    <PRIResource Include="Strings\zh-hans\Window.resjson" />
+    
     <Reference Include="$(PkgMicrosoft_UI_Xaml)\lib\net8.0-windows10.0.22621.0\Microsoft.UI.Xaml.Projection.dll" />
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.18362.0\Microsoft.InteractiveExperiences.Projection.dll" />
+    <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.18362.0\Microsoft.Windows.AppLifecycle.Projection.dll" />
+    <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.18362.0\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
@@ -86,5 +94,12 @@
   <Target Name="DigitialSignGeneratedExeFile" AfterTargets="GenerateSingleFileBundle" DependsOnTargets="PrepareForBundle" Condition="'$(Configuration)|$(ForceAotCompile)|$(PublishAot)' == 'Release|true|true'">
     <!-- 对生成的 GetStoreAppInstaller.exe 文件进行数字签名 -->
     <Exec Command="$(SolutionDir)signtool.exe sign /f $(SolutionDir)GetStoreAppPackage\GetStoreAppPackage_SignKey.pfx /t http://timestamp.digicert.com /fd SHA256 $(NativeOutputPath)$(AssemblyName).exe" />
+  </Target>
+
+  <!--将 resjson 资源文件嵌入到包资源索引中-->
+  <Target Name="InjectAdditionalFiles" BeforeTargets="GenerateMSBuildEditorConfigFileShouldRun">
+    <ItemGroup>
+      <AdditionalFiles Include="@(PRIResource)" SourceItemGroup="PRIResource" />
+    </ItemGroup>
   </Target>
 </Project>
