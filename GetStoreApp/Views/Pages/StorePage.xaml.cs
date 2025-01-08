@@ -2,7 +2,6 @@
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using Windows.System;
 
@@ -16,39 +15,11 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class StorePage : Page
     {
-        private AppNaviagtionArgs storeNavigationArgs = AppNaviagtionArgs.None;
-
         public StorePage()
         {
             InitializeComponent();
             StoreSelectorBar.SelectedItem = StoreSelectorBar.Items[0];
         }
-
-        #region 第一部分：重写父类事件
-
-        /// <summary>
-        /// 导航到该页面触发的事件
-        /// </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs args)
-        {
-            base.OnNavigatedTo(args);
-            if (args.Parameter is object[] navigationArgs)
-            {
-                storeNavigationArgs = (AppNaviagtionArgs)navigationArgs[0];
-                if (navigationArgs.Length is 4)
-                {
-                    QueryLinks.SelectedType = QueryLinks.TypeList.Find(item => item.InternalName.Equals(navigationArgs[1]));
-                    QueryLinks.SelectedChannel = QueryLinks.ChannelList.Find(item => item.InternalName.Equals(navigationArgs[2]));
-                    QueryLinks.LinkText = Convert.ToString(navigationArgs[3]);
-                }
-            }
-            else
-            {
-                storeNavigationArgs = AppNaviagtionArgs.None;
-            }
-        }
-
-        #endregion 第一部分：重写父类事件
 
         #region 第二部分：应用商店页面——挂载的事件
 
@@ -71,17 +42,6 @@ namespace GetStoreApp.Views.Pages
                     QueryLinks.Visibility = Visibility.Collapsed;
                     SearchStore.Visibility = Visibility.Visible;
                 }
-            }
-        }
-
-        /// <summary>
-        /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (storeNavigationArgs is AppNaviagtionArgs.Store)
-            {
-                StoreScroll.ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
             }
         }
 

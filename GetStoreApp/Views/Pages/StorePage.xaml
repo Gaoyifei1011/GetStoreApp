@@ -6,7 +6,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sc="using:GetStoreApp.UI.Controls.Store"
-    Loaded="{x:Bind OnLoaded}"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
