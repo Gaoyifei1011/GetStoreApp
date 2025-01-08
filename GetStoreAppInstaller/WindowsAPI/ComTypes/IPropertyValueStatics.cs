@@ -2,7 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using Windows.Foundation;
-using WinRT;
 
 namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
@@ -10,33 +9,8 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 创建可在属性存储中存储的 IPropertyValue 对象。
     /// </summary>
     [GeneratedComInterface, Guid("629BDBC8-D932-4FF4-96B9-8D96C5C1E858")]
-    public partial interface IPropertyValueStatics
+    public partial interface IPropertyValueStatics : IInspectable
     {
-        /// <summary>
-        /// 获取由当前Windows 运行时类实现的接口。
-        /// </summary>
-        /// <param name="iidCount">当前 Windows 运行时 对象实现的接口数，不包括 IUnknown 和 IInspectable 实现。</param>
-        /// <param name="iids">指向数组的指针，该数组包含当前 Windows 运行时 对象实现的每个接口的 IID。 排除 IUnknown 和 IInspectable 接口。</param>
-        /// <returns>此函数可以返回以下值。S_OK 和 E_OUTOFMEMORY</returns>
-        [PreserveSig]
-        int GetIids(out ulong iidCount, out IntPtr iids);
-
-        /// <summary>
-        /// 获取当前Windows 运行时 对象的完全限定名称。
-        /// </summary>
-        /// <param name="className">当前Windows 运行时对象的完全限定名称。</param>
-        /// <returns>此函数可以返回以下值。S_OK、E_OUTOFMEMORY 和 E_ILLEGAL_METHOD_CALL</returns>
-        [PreserveSig]
-        int GetRuntimeClassName(out IntPtr className);
-
-        /// <summary>
-        /// 获取当前Windows 运行时对象的信任级别。
-        /// </summary>
-        /// <param name="trustLevel">当前Windows 运行时对象的信任级别。 默认值为 BaseLevel。</param>
-        /// <returns>此方法始终返回 S_OK。</returns>
-        [PreserveSig]
-        int GetTrustLevel(out TrustLevel trustLevel);
-
         /// <summary>
         /// 创建表示空值的新 IPropertyValue 对象。
         /// </summary>
