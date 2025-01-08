@@ -1521,8 +1521,6 @@ namespace GetStoreApp.Views.Pages
                                 IsUnInstalling = false
                             });
                         }
-
-                        throw new Exception();
                     }
                     catch (Exception e)
                     {
