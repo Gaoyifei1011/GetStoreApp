@@ -11,6 +11,7 @@
     HorizontalContentAlignment="Center"
     VerticalContentAlignment="Center"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
+    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -203,8 +204,8 @@
                                     Height="34"
                                     Margin="0,0,3,0"
                                     Padding="0"
-                                    Click="{x:Bind OnOpenFackageClicked}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/OpenFackage')}">
+                                    Click="{x:Bind OnOpenPackageClicked}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/OpenPackage')}">
 
                                     <FontIcon FontSize="16" Glyph="&#xE8E5;" />
                                 </Button>
@@ -348,7 +349,7 @@
 
                             <muxc:Expander.Content>
                                 <StackPanel Spacing="3">
-                                    <Grid Margin="16,0,0,0">
+                                    <Grid Margin="16,0,10,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
@@ -363,14 +364,14 @@
                                         <TextBlock
                                             Grid.Column="1"
                                             FontSize="14"
-                                            Text="版本信息" />
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/VersionInformation')}" />
                                     </Grid>
 
-                                    <Grid Margin="44,0,0,0">
+                                    <Grid Margin="44,0,10,0">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="230" />
-                                            <ColumnDefinition Width="230" />
-                                            <ColumnDefinition Width="230" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0">
@@ -391,7 +392,7 @@
 
                                     <MenuFlyoutSeparator Margin="22,0" Background="{ThemeResource CardStrokeColorDefaultBrush}" />
 
-                                    <Grid Margin="16,0,0,0">
+                                    <Grid Margin="16,0,10,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="200" />
@@ -413,7 +414,7 @@
                                         <TextBlock Grid.Column="2" Text="{x:Bind PackageFamilyName, Mode=OneWay}" />
                                     </Grid>
 
-                                    <Grid Margin="16,0,0,0">
+                                    <Grid Margin="16,0,10,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="200" />
@@ -437,7 +438,7 @@
 
                                     <MenuFlyoutSeparator Margin="22,0" Background="{ThemeResource CardStrokeColorDefaultBrush}" />
 
-                                    <Grid Margin="16,0,0,0">
+                                    <Grid Margin="16,0,10,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="200" />
@@ -459,7 +460,7 @@
                                         <TextBlock Grid.Column="2" Text="{x:Bind SupportedArchitecture, Mode=OneWay}" />
                                     </Grid>
 
-                                    <Grid Margin="16,0,0,0">
+                                    <Grid Margin="16,0,10,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="200" />
@@ -481,7 +482,7 @@
                                         <TextBlock Grid.Column="2" Text="{x:Bind IsFramework, Mode=OneWay}" />
                                     </Grid>
 
-                                    <Grid Margin="16,0,0,0">
+                                    <Grid Margin="16,0,10,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="200" />
@@ -820,7 +821,10 @@
                 </ScrollViewer>
             </Grid>
 
-            <Grid Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseSuccessfully), Mode=OneWay}">
+            <Grid
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseSuccessfully), Mode=OneWay}">
                 <TextBlock FontSize="26" Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParseFailed')}" />
             </Grid>
         </Grid>
