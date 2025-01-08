@@ -146,7 +146,7 @@ namespace GetStoreAppWebView
             }
 
             LogService.CloseLog();
-            Environment.Exit(0);
+            Environment.Exit(Environment.ExitCode);
         }
     }
 }
