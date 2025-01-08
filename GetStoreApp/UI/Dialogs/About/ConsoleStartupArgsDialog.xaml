@@ -260,7 +260,7 @@
 
         <TextBlock
             Margin="0"
-            Text="GetStoreApp.exe Console -t &quot;pid&quot; -c &quot;rt&quot; &quot;-l&quot; &quot;9WZDNCRFJBMP&quot;"
+            Text="GetStoreApp.exe Console -t &quot;pid&quot; -c &quot;rt&quot; -l &quot;9WZDNCRFJBMP&quot;"
             TextAlignment="Justify"
             TextWrapping="Wrap" />
 
