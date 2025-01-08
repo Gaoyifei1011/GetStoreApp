@@ -92,7 +92,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 使用下载链接创建下载
         /// </summary>
-        public static unsafe void CreateDownload(string url, string saveFilePath)
+        public static void CreateDownload(string url, string saveFilePath)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -102,11 +102,11 @@ namespace GetStoreApp.Services.Controls.Download
                     IDODownload doDownload = null;
 
                     // 创建 IDoManager
-                    int createResult = Ole32Library.CoCreateInstance(CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IDOManager).GUID, out IntPtr doManagerPointer);
+                    int createResult = Ole32Library.CoCreateInstance(CLSID_DeliveryOptimization, IntPtr.Zero, CLSCTX.CLSCTX_LOCAL_SERVER, typeof(IDOManager).GUID, out IntPtr ppv);
 
                     if (createResult is 0)
                     {
-                        doManager = ComInterfaceMarshaller<IDOManager>.ConvertToManaged((void*)doManagerPointer);
+                        doManager = (IDOManager)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
                         doManager.CreateDownload(out doDownload);
                         ComWrappers.TryGetComInstance(doDownload, out IntPtr doDownloadPointer);
                         _ = Ole32Library.CoSetProxyBlanket(doDownloadPointer, uint.MaxValue, uint.MaxValue, new IntPtr(-1), 0, 3, IntPtr.Zero, 32);
@@ -123,7 +123,7 @@ namespace GetStoreApp.Services.Controls.Download
                         DODownloadStatusCallback doDownloadStatusCallback = new();
                         doDownloadStatusCallback.StatusChanged += OnStatusChanged;
 
-                        ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, (IntPtr)ComInterfaceMarshaller<object>.ConvertToUnmanaged(new UnknownWrapper(doDownloadStatusCallback).WrappedObject));
+                        ComVariant callbackInterfaceVariant = ComVariant.CreateRaw(VarEnum.VT_UNKNOWN, Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(doDownloadStatusCallback).WrappedObject, CreateComInterfaceFlags.None));
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_CallbackInterface, callbackInterfaceVariant);
                         ComVariant foregroundVariant = ComVariant.Create(true);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, foregroundVariant);

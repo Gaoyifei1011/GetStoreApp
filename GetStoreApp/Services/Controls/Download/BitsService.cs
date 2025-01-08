@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 初始化后台智能传输服务
         /// </summary>
-        public static unsafe void Initialize()
+        public static void Initialize()
         {
             if (backgroundCopyManager is null)
             {
@@ -52,7 +52,7 @@ namespace GetStoreApp.Services.Controls.Download
 
                         if (createResult is 0)
                         {
-                            backgroundCopyManager = ComInterfaceMarshaller<IBackgroundCopyManager>.ConvertToManaged((void*)ppv);
+                            backgroundCopyManager = (IBackgroundCopyManager)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.None);
                         }
                     }
                     catch (Exception e)
@@ -127,7 +127,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 使用下载链接创建下载
         /// </summary>
-        public static unsafe void CreateDownload(string url, string saveFilePath)
+        public static void CreateDownload(string url, string saveFilePath)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -143,7 +143,7 @@ namespace GetStoreApp.Services.Controls.Download
                             DownloadID = downloadID
                         };
                         backgroundCopyCallback.StatusChanged += OnStatusChanged;
-                        downloadJob.SetNotifyInterface((IntPtr)ComInterfaceMarshaller<object>.ConvertToUnmanaged(new UnknownWrapper(backgroundCopyCallback).WrappedObject));
+                        downloadJob.SetNotifyInterface(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(new UnknownWrapper(backgroundCopyCallback).WrappedObject, CreateComInterfaceFlags.None));
 
                         downloadJob.GetProgress(out BG_JOB_PROGRESS progress);
                         DownloadCreated?.Invoke(backgroundCopyCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, progress.BytesTotal is ulong.MaxValue ? 0 : progress.BytesTotal);
