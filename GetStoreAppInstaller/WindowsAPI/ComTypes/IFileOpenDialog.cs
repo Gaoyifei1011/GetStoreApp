@@ -27,7 +27,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         /// </summary>
         [PreserveSig]
-        int SetFileTypes(uint cFileTypes, IntPtr rgFilterSpec);
+        int SetFileTypes(uint cFileTypes, [In, MarshalAs(UnmanagedType.LPArray)] COMDLG_FILTERSPEC[] rgFilterSpec);
 
         /// <summary>
         /// 设置在对话框中显示为所选的文件类型。
@@ -213,7 +213,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="ppenum">指向 IShellItemArray 的指针的地址，可通过该地址访问对话框中选择的项。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetResults(out IntPtr ppenum);
+        int GetResults([MarshalAs(UnmanagedType.Interface)] out IShellItemArray ppenum);
 
         /// <summary>
         /// 获取对话框中当前选定的项。这些项目可能是在视图中选择的项目，也可能是在文件名编辑框中选择的文本。
