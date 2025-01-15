@@ -71,7 +71,7 @@
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7-prerelease.241119001" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
 
     <PRIResource Include="Strings\en-us\Installer.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />
