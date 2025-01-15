@@ -14,12 +14,12 @@ namespace GetStoreApp.WindowsAPI.ComTypes
     public partial class OpenFolderDialog : IDisposable
     {
         private readonly Guid CLSID_FileOpenDialog = new("DC1C5A9C-E88A-4dde-A5A1-60F82A20AEF7");
-        private IFileOpenDialog FileOpenDialog;
+        private IFileOpenDialog fileOpenDialog;
         private WindowId parentWindowId;
 
         public string Description { get; set; } = string.Empty;
 
-        public string SelectedPath { get; set; } = string.Empty;
+        public string SelectedPath { get; private set; } = string.Empty;
 
         public string RootFolder { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
@@ -31,17 +31,6 @@ namespace GetStoreApp.WindowsAPI.ComTypes
             }
 
             parentWindowId = windowId;
-            int result = Ole32Library.CoCreateInstance(CLSID_FileOpenDialog, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IFileOpenDialog).GUID, out IntPtr ppv);
-
-            if (result is 0)
-            {
-                FileOpenDialog = (IFileOpenDialog)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.Unwrap);
-            }
-
-            FileOpenDialog.SetOptions(FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS);
-            FileOpenDialog.SetTitle(Description);
-            Shell32Library.SHCreateItemFromParsingName(RootFolder, IntPtr.Zero, typeof(IShellItem).GUID, out IntPtr initialFolder);
-            FileOpenDialog.SetFolder((IShellItem)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(initialFolder, CreateObjectFlags.Unwrap));
         }
 
         ~OpenFolderDialog()
@@ -56,18 +45,27 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         {
             try
             {
-                if (FileOpenDialog is not null)
+                int result = Ole32Library.CoCreateInstance(CLSID_FileOpenDialog, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IFileOpenDialog).GUID, out IntPtr ppv);
+
+                if (result is 0)
                 {
-                    int result = FileOpenDialog.Show(Win32Interop.GetWindowFromWindowId(parentWindowId));
+                    fileOpenDialog = (IFileOpenDialog)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.Unwrap);
+
+                    fileOpenDialog.SetOptions(FILEOPENDIALOGOPTIONS.FOS_PICKFOLDERS);
+                    fileOpenDialog.SetTitle(Description);
+                    Shell32Library.SHCreateItemFromParsingName(RootFolder, IntPtr.Zero, typeof(IShellItem).GUID, out IntPtr initialFolder);
+                    fileOpenDialog.SetFolder((IShellItem)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(initialFolder, CreateObjectFlags.Unwrap));
+
+                    result = fileOpenDialog.Show(Win32Interop.GetWindowFromWindowId(parentWindowId));
 
                     if (result is not 0)
                     {
                         return false;
                     }
 
-                    FileOpenDialog.GetResult(out IShellItem pItem);
-                    pItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string pszString);
-                    SelectedPath = pszString;
+                    fileOpenDialog.GetResult(out IShellItem shellItem);
+                    shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string name);
+                    SelectedPath = name;
                     return true;
                 }
                 else
@@ -78,7 +76,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
-                FileOpenDialog = null;
+                fileOpenDialog = null;
                 return false;
             }
         }
@@ -101,7 +99,7 @@ namespace GetStoreApp.WindowsAPI.ComTypes
 
             lock (this)
             {
-                FileOpenDialog = null;
+                fileOpenDialog = null;
             }
         }
     }
