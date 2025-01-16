@@ -2,8 +2,10 @@
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
@@ -35,10 +37,11 @@ namespace GetStoreApp.Services.Root
                 List<string> argumentsList = [];
                 string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
                 string sendData = string.Empty;
+                string executableFileName = Path.GetFileName(Environment.ProcessPath);
 
                 foreach (string arguments in argumentsArray)
                 {
-                    if (arguments.Contains("GetStoreApp.exe") || string.IsNullOrEmpty(arguments))
+                    if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
                     {
                         continue;
                     }
@@ -115,8 +118,16 @@ namespace GetStoreApp.Services.Root
                 ShareTargetActivatedEventArgs shareTargetActivatedEventArgs = appActivationArguments.Data as ShareTargetActivatedEventArgs;
                 ShareOperation shareOperation = shareTargetActivatedEventArgs.ShareOperation;
                 shareOperation.ReportCompleted();
-                string sendData = string.Join(' ', -1, -1, Convert.ToString(await shareOperation.Data.GetUriAsync()));
-                ResultService.SaveResult(StorageDataKind.ShareTarget, sendData);
+
+                if (shareOperation.Data.Contains(StandardDataFormats.Uri))
+                {
+                    string sendData = string.Join(' ', -1, -1, Convert.ToString(await shareOperation.Data.GetUriAsync()));
+                    ResultService.SaveResult(StorageDataKind.ShareTarget, sendData);
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
             }
             // 应用通知启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)

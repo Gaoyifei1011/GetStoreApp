@@ -6,6 +6,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using WinRT;
@@ -44,10 +45,11 @@ namespace GetStoreApp.Services.Root
         {
             Windows.ApplicationModel.Activation.LaunchActivatedEventArgs launchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs.FromAbi((appActivationArguments.Data as IInspectable).ThisPtr);
             string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
+            string executableFileName = Path.GetFileName(Environment.ProcessPath);
 
             foreach (string arguments in argumentsArray)
             {
-                if (arguments.Contains("GetStoreApp.exe") || string.IsNullOrEmpty(arguments))
+                if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
                 {
                     continue;
                 }
