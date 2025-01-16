@@ -69,6 +69,7 @@ namespace GetStoreAppInstaller
             CoreAppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             CoreAppWindow.Changed += OnAppWindowChanged;
             CoreAppWindow.Closing += OnAppWindowClosing;
+            SetAppIcon(CoreAppWindow);
 
             SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(CoreAppWindow.Id);
@@ -103,7 +104,6 @@ namespace GetStoreAppInstaller
             frameworkView.Initialize(coreApplicationView);
             frameworkView.SetWindow(coreWindow);
 
-            SetAppIcon(CoreAppWindow);
             XamlControlsResources xamlControlsResources = [];
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/MenuFlyout.xaml") });
             Application.Current.Resources = xamlControlsResources;

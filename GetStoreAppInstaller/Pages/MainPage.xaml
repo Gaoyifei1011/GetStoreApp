@@ -8,9 +8,9 @@
     xmlns:model="using:GetStoreAppInstaller.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:root="using:GetStoreAppInstaller.Services.Root"
-    HorizontalContentAlignment="Center"
-    VerticalContentAlignment="Center"
+    x:Name="MainPageRoot"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
+    AllowDrop="{x:Bind CanDragFile, Mode=OneWay}"
     Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
@@ -102,730 +102,1005 @@
                     </MenuFlyoutItem.KeyboardAccelerators>
                 </MenuFlyoutItem>
             </MenuFlyout>
+
+            <XamlUICommand x:Name="DeleteDependencyPackageCommand" ExecuteRequested="{x:Bind OnDeleteDependencyPackageExecuteRequested}" />
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid>
-        <StackPanel
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        <Grid
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Spacing="10"
-            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLoadCompleted), Mode=OneWay}">
-            <muxc:ProgressRing Width="60" Height="60" />
-
-            <TextBlock FontSize="26" Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParsingApp')}" />
-        </StackPanel>
-
-        <Grid Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
-            <Grid
-                Margin="30,45,0,0"
-                RowSpacing="3"
-                Visibility="{x:Bind IsParseSuccessfully, Mode=OneWay}">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0" Margin="0,0,30,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid
-                        Grid.Column="0"
-                        Width="100"
-                        Height="100"
-                        Margin="0,0,12,0"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="{StaticResource ControlCornerRadius}">
-                        <Image Source="{x:Bind PackageIconImage, Mode=OneWay}" />
-                    </Grid>
-
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock
-                            Grid.Row="0"
-                            FontSize="26"
-                            FontWeight="SemiBold"
-                            Text="{x:Bind PackageName, Mode=OneWay}" />
-
-                        <TextBlock Grid.Row="1">
-                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
-                            <Run Text="{x:Bind Publisher, Mode=OneWay}" />
-                        </TextBlock>
-
-                        <muxc:ProgressBar
-                            Grid.Row="3"
-                            Padding="0,0,4,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            IsIndeterminate="{x:Bind IsInstallWaiting, Mode=OneWay}"
-                            ShowError="{x:Bind IsInstallFailed, Mode=OneWay}"
-                            Visibility="{x:Bind IsInstalling, Mode=OneWay}"
-                            Value="{x:Bind InstallProgressValue, Mode=OneWay}" />
-                    </Grid>
-
-                    <Grid
-                        Grid.Column="2"
-                        VerticalAlignment="Stretch"
-                        RowSpacing="2">
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <ContentControl
-                            Grid.Row="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Button
-                                    Grid.Column="0"
-                                    Width="34"
-                                    Height="34"
-                                    Margin="0,0,3,0"
-                                    Padding="0"
-                                    Click="{x:Bind OnOpenPackageClicked}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/OpenPackage')}">
-
-                                    <FontIcon FontSize="16" Glyph="&#xE8E5;" />
-                                </Button>
-
-                                <Button
-                                    Grid.Column="1"
-                                    Width="34"
-                                    Height="34"
-                                    Margin="0,0,3,0"
-                                    Padding="0"
-                                    Click="{x:Bind OnAddDependencyClicked}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/AddDependency')}">
-
-                                    <FontIcon FontSize="16" Glyph="&#xE710;" />
-                                </Button>
-
-                                <Button
-                                    Grid.Column="2"
-                                    Width="32"
-                                    Height="32"
-                                    Padding="0"
-                                    Click="{x:Bind OnInstallAppClicked}"
-                                    Style="{StaticResource AccentButtonStyle}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/InstallApp')}">
-
-                                    <FontIcon FontSize="16" Glyph="&#xE74B;" />
-                                </Button>
-                            </Grid>
-                        </ContentControl>
-
-                        <Button
-                            Grid.Row="0"
-                            Width="32"
-                            Height="32"
-                            Padding="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Click="{x:Bind OnCancelInstallClicked}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CancelInstall')}"
-                            Visibility="{x:Bind IsInstalling, Mode=OneWay}">
-
-                            <FontIcon FontSize="16" Glyph="&#xE74B;" />
-                        </Button>
-
-                        <Grid
-                            Grid.Row="1"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            ColumnSpacing="5">
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock
-                                Grid.Column="0"
-                                Margin="0,0,0,2"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind InstallStateString, Mode=OneWay}"
-                                TextAlignment="Right"
-                                Visibility="{x:Bind IsInstalling, Mode=OneWay}" />
-
-                            <Button
-                                Grid.Column="1"
-                                Width="28"
-                                Height="28"
-                                Padding="0"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
-                                Visibility="{x:Bind IsInstallFailed, Mode=OneWay}">
-
-                                <Button.Content>
-                                    <FontIcon FontSize="14" Glyph="&#xE783;" />
-                                </Button.Content>
-
-                                <Button.Flyout>
-                                    <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
-
-                                        <Flyout.FlyoutPresenterStyle>
-                                            <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
-                                                <Setter Property="Padding" Value="0" />
-                                                <Setter Property="Background" Value="Transparent" />
-                                                <Setter Property="Width" Value="300" />
-                                            </Style>
-                                        </Flyout.FlyoutPresenterStyle>
-
-                                        <Grid RowSpacing="3">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="*" />
-                                            </Grid.RowDefinitions>
-
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                FontSize="16"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
-
-                                            <TextBlock Grid.Row="1" Text="{x:Bind InstallFailedInformation, Mode=OneWay}" />
-                                        </Grid>
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-
-                <ScrollViewer
-                    Grid.Row="1"
-                    HorizontalScrollMode="Disabled"
-                    VerticalScrollBarVisibility="Auto"
-                    VerticalScrollMode="Enabled">
-
-                    <StackPanel Margin="0,0,30,0" Spacing="2">
-                        <muxc:Expander
-                            Padding="0,6,0,6"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            IsExpanded="True">
-
-                            <muxc:Expander.Header>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <FontIcon
-                                        Grid.Column="0"
-                                        Margin="0,0,12,0"
-                                        FontSize="16"
-                                        Glyph="&#xE946;" />
-
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/BasicInformation')}" />
-                                </Grid>
-                            </muxc:Expander.Header>
-
-                            <muxc:Expander.Content>
-                                <StackPanel Spacing="3">
-                                    <Grid Margin="16,0,10,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <FontIcon
-                                            Grid.Column="0"
-                                            Margin="0,0,16,0"
-                                            FontSize="12"
-                                            Glyph="&#xE915;" />
-
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            FontSize="14"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/VersionInformation')}" />
-                                    </Grid>
-
-                                    <Grid Margin="44,0,10,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0">
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
-                                            <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
-                                        </TextBlock>
-
-                                        <TextBlock Grid.Column="1">
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageMinVersion')}" />
-                                            <Run Text="{x:Bind MinVersion.ToString(), Mode=OneWay}" />
-                                        </TextBlock>
-
-                                        <TextBlock Grid.Column="2">
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageMaxVersionTested')}" />
-                                            <Run Text="{x:Bind MaxVersionTested.ToString(), Mode=OneWay}" />
-                                        </TextBlock>
-                                    </Grid>
-
-                                    <MenuFlyoutSeparator Margin="22,0" Background="{ThemeResource CardStrokeColorDefaultBrush}" />
-
-                                    <Grid Margin="16,0,10,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="200" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <FontIcon
-                                            Grid.Column="0"
-                                            Margin="0,0,16,0"
-                                            FontSize="12"
-                                            Glyph="&#xE915;" />
-
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            Margin="0,0,3,0"
-                                            FontSize="14"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFamilyName')}" />
-
-                                        <TextBlock Grid.Column="2" Text="{x:Bind PackageFamilyName, Mode=OneWay}" />
-                                    </Grid>
-
-                                    <Grid Margin="16,0,10,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="200" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <FontIcon
-                                            Grid.Column="0"
-                                            Margin="0,0,16,0"
-                                            FontSize="12"
-                                            Glyph="&#xE915;" />
-
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            Margin="0,0,3,0"
-                                            FontSize="14"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFullName')}" />
-
-                                        <TextBlock Grid.Column="2" Text="{x:Bind PackageFullName, Mode=OneWay}" />
-                                    </Grid>
-
-                                    <MenuFlyoutSeparator Margin="22,0" Background="{ThemeResource CardStrokeColorDefaultBrush}" />
-
-                                    <Grid Margin="16,0,10,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="200" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <FontIcon
-                                            Grid.Column="0"
-                                            Margin="0,0,16,0"
-                                            FontSize="12"
-                                            Glyph="&#xE915;" />
-
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            Margin="0,0,3,0"
-                                            FontSize="14"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/SupportedArchitecture')}" />
-
-                                        <TextBlock Grid.Column="2" Text="{x:Bind SupportedArchitecture, Mode=OneWay}" />
-                                    </Grid>
-
-                                    <Grid Margin="16,0,10,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="200" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <FontIcon
-                                            Grid.Column="0"
-                                            Margin="0,0,16,0"
-                                            FontSize="12"
-                                            Glyph="&#xE915;" />
-
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            Margin="0,0,3,0"
-                                            FontSize="14"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/IsFramework')}" />
-
-                                        <TextBlock Grid.Column="2" Text="{x:Bind IsFramework, Mode=OneWay}" />
-                                    </Grid>
-
-                                    <Grid Margin="16,0,10,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="200" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <FontIcon
-                                            Grid.Column="0"
-                                            Margin="0,0,16,0"
-                                            FontSize="12"
-                                            Glyph="&#xE915;" />
-
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            Margin="0,0,3,0"
-                                            FontSize="14"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageType')}" />
-
-                                        <TextBlock Grid.Column="2" Text="{x:Bind PackageType, Mode=OneWay}" />
-                                    </Grid>
-                                </StackPanel>
-                            </muxc:Expander.Content>
-                        </muxc:Expander>
-
-                        <muxc:Expander
-                            Padding="0"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            IsExpanded="True"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DependencyCollection.Count), Mode=OneWay}">
-
-                            <muxc:Expander.Header>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <FontIcon
-                                        Grid.Column="0"
-                                        Margin="0,0,12,0"
-                                        FontSize="16"
-                                        Glyph="&#xE8AB;" />
-
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageDependency')}" />
-                                </Grid>
-                            </muxc:Expander.Header>
-
-                            <muxc:Expander.Content>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <Grid
-                                        Grid.Row="0"
-                                        Height="35"
-                                        Padding="16,0,0,0"
-                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                        BorderThickness="0">
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock
-                                            x:Name="DependencyNameHeaderText"
-                                            Grid.Column="0"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
-                                                    Visibility="{x:Bind DependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <TextBlock
-                                            x:Name="DependencyPublisherHeaderText"
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
-                                                    Visibility="{x:Bind DependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <TextBlock
-                                            x:Name="DependencyMinVersionHeaderText"
-                                            Grid.Column="2"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
-                                                    Visibility="{x:Bind DependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-
-                                        <TextBlock
-                                            x:Name="DependencySatisfiedHeaderText"
-                                            Grid.Column="3"
-                                            VerticalAlignment="Center"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencySatisfied')}"
-                                            TextAlignment="Left"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
-
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip
-                                                    MaxWidth="9999"
-                                                    Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencySatisfied')}"
-                                                    Visibility="{x:Bind DependencySatisfiedHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </Grid>
-
-                                    <ListView
-                                        Grid.Row="1"
-                                        ItemsSource="{x:Bind DependencyCollection, Mode=OneWay}"
-                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                        ScrollViewer.HorizontalScrollMode="Disabled"
-                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                        ScrollViewer.VerticalScrollMode="Enabled"
-                                        SelectionMode="None">
-
-                                        <ListView.ItemContainerStyle>
-                                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                                                <Setter Property="Background" Value="Transparent" />
-                                                <Setter Property="Margin" Value="0" />
-                                                <Setter Property="MinHeight" Value="0" />
-                                                <Setter Property="Padding" Value="0" />
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="model:DependencyModel">
-                                                <Grid
-                                                    Height="35"
-                                                    Padding="16,0,0,0"
-                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                    BorderThickness="0,1,0,0">
-
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="2*" />
-                                                        <ColumnDefinition Width="2*" />
-                                                        <ColumnDefinition Width="*" />
-                                                        <ColumnDefinition Width="*" />
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock
-                                                        x:Name="DependencyNameText"
-                                                        Grid.Column="0"
-                                                        VerticalAlignment="Center"
-                                                        Text="{x:Bind DependencyName}"
-                                                        TextAlignment="Left"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap">
-
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Content="{x:Bind DependencyName}"
-                                                                Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                        </ToolTipService.ToolTip>
-                                                    </TextBlock>
-
-                                                    <TextBlock
-                                                        x:Name="DependencyMinVersionText"
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        Text="{x:Bind DependencyMinVersion.ToString()}"
-                                                        TextAlignment="Left"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap">
-
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Content="{x:Bind DependencyMinVersion.ToString()}"
-                                                                Visibility="{Binding ElementName=DependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                        </ToolTipService.ToolTip>
-                                                    </TextBlock>
-
-                                                    <TextBlock
-                                                        x:Name="DependencyPublisherText"
-                                                        Grid.Column="2"
-                                                        VerticalAlignment="Center"
-                                                        Text="{x:Bind DependencyPublisher}"
-                                                        TextAlignment="Left"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap">
-
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Content="{x:Bind DependencyPublisher}"
-                                                                Visibility="{Binding ElementName=DependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                        </ToolTipService.ToolTip>
-                                                    </TextBlock>
-
-                                                    <TextBlock
-                                                        x:Name="DependencySatisfiedText"
-                                                        Grid.Column="3"
-                                                        VerticalAlignment="Center"
-                                                        Text="{x:Bind DependencySatisfied.ToString()}"
-                                                        TextAlignment="Left"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap">
-
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Content="{x:Bind DependencySatisfied.ToString()}"
-                                                                Visibility="{Binding ElementName=DependencySatisfiedText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                        </ToolTipService.ToolTip>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
-                            </muxc:Expander.Content>
-                        </muxc:Expander>
-
-                        <muxc:Expander
-                            Padding="0"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            IsExpanded="True"
-                            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CapabilitiesCollection.Count), Mode=OneWay}">
-
-                            <muxc:Expander.Header>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <FontIcon
-                                        Grid.Column="0"
-                                        Margin="0,0,12,0"
-                                        FontSize="16"
-                                        Glyph="&#xE71D;" />
-
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageCapabilities')}" />
-                                </Grid>
-                            </muxc:Expander.Header>
-
-                            <muxc:Expander.Content>
-                                <GridView
-                                    Margin="16,2"
-                                    ItemsSource="{x:Bind CapabilitiesCollection, Mode=OneWay}"
-                                    SelectionMode="None">
-
-                                    <GridView.ItemContainerStyle>
-                                        <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
-                                            <Setter Property="Margin" Value="0" />
-                                            <Setter Property="MinHeight" Value="0" />
-                                        </Style>
-                                    </GridView.ItemContainerStyle>
-
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate x:DataType="x:String">
-                                            <GridViewItem
-                                                Width="230"
-                                                Height="30"
-                                                HorizontalContentAlignment="Left">
-                                                <Grid HorizontalAlignment="Left">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="*" />
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <FontIcon
-                                                        Grid.Column="0"
-                                                        Margin="0,0,12,0"
-                                                        FontSize="12"
-                                                        Glyph="&#xE915;" />
-
-                                                    <TextBlock
-                                                        x:Name="CapabilitiesText"
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        Text="{x:Bind}"
-                                                        TextAlignment="Left"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap">
-
-                                                        <ToolTipService.ToolTip>
-                                                            <ToolTip
-                                                                MaxWidth="9999"
-                                                                Content="{x:Bind}"
-                                                                Visibility="{Binding ElementName=CapabilitiesText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                        </ToolTipService.ToolTip>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </GridViewItem>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
-                            </muxc:Expander.Content>
-                        </muxc:Expander>
-                    </StackPanel>
-                </ScrollViewer>
-            </Grid>
+            RowSpacing="10"
+            Visibility="{x:Bind IsParseEmpty, Mode=OneWay}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto " />
+                <RowDefinition Height="Auto " />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                FontSize="26"
+                Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParseEmpty')}" />
+
+            <Button
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                Click="{x:Bind OnOpenPackageClicked}"
+                Content="{x:Bind root:ResourceService.GetLocalized('Installer/OpenPackage')}" />
+        </Grid>
+
+        <Grid Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseEmpty), Mode=OneWay}">
 
             <Grid
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseSuccessfully), Mode=OneWay}">
-                <TextBlock FontSize="26" Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParseFailed')}" />
+                RowSpacing="10"
+                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsLoadCompleted), Mode=OneWay}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto " />
+                    <RowDefinition Height="Auto " />
+                </Grid.RowDefinitions>
+
+                <muxc:ProgressRing
+                    Grid.Row="0"
+                    Width="60"
+                    Height="60" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    FontSize="26"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParsingApp')}" />
+            </Grid>
+
+            <Grid Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
+
+                <Grid
+                    Margin="30,45,0,0"
+                    RowSpacing="3"
+                    Visibility="{x:Bind IsParseSuccessfully, Mode=OneWay}">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,30,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid
+                            Grid.Column="0"
+                            Width="100"
+                            Height="100"
+                            Margin="0,0,12,0"
+                            Background="#3076C6"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource ControlCornerRadius}">
+                            <Image Source="{x:Bind PackageIconImage, Mode=OneWay}" />
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock
+                                Grid.Row="0"
+                                FontSize="26"
+                                FontWeight="SemiBold"
+                                Text="{x:Bind PackageName, Mode=OneWay}" />
+
+                            <TextBlock Grid.Row="1">
+                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
+                                <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
+                            </TextBlock>
+
+                            <muxc:ProgressBar
+                                Grid.Row="3"
+                                Padding="0,0,4,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                IsIndeterminate="{x:Bind IsInstallWaiting, Mode=OneWay}"
+                                ShowError="{x:Bind IsInstallFailed, Mode=OneWay}"
+                                Visibility="{x:Bind IsInstalling, Mode=OneWay}"
+                                Value="{x:Bind InstallProgressValue, Mode=OneWay}" />
+                        </Grid>
+
+                        <Grid
+                            Grid.Column="2"
+                            VerticalAlignment="Stretch"
+                            RowSpacing="2">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <ContentControl
+                                Grid.Row="0"
+                                Margin="5,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button
+                                        Grid.Column="0"
+                                        Width="34"
+                                        Height="34"
+                                        Margin="0,0,3,0"
+                                        Padding="0"
+                                        Click="{x:Bind OnOpenPackageClicked}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/OpenPackage')}">
+
+                                        <FontIcon FontSize="16" Glyph="&#xE8E5;" />
+                                    </Button>
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="34"
+                                        Height="34"
+                                        Margin="0,0,3,0"
+                                        Padding="0"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/AddDependency')}">
+
+                                        <Button.Content>
+                                            <FontIcon FontSize="16" Glyph="&#xE710;" />
+                                        </Button.Content>
+
+                                        <Button.Flyout>
+                                            <Flyout
+                                                x:Name="AddDependencyFlyout"
+                                                Placement="Bottom"
+                                                ShouldConstrainToRootBounds="False">
+
+                                                <Flyout.FlyoutPresenterStyle>
+                                                    <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                                        <Setter Property="Padding" Value="0" />
+                                                    </Style>
+                                                </Flyout.FlyoutPresenterStyle>
+
+                                                <Grid DataContext="{x:Bind MainPageRoot}">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="40" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <Grid
+                                                        Grid.Row="0"
+                                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0,0,0,1">
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <FontIcon
+                                                            Grid.Column="0"
+                                                            Margin="16,0,6,0"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="16"
+                                                            Glyph="&#xE71D;" />
+
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="14"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/SelectedDependencyPackage')}" />
+
+                                                        <Button
+                                                            Grid.Column="2"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Click="{x:Bind OnAddDependencyClicked}"
+                                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/AddDependency')}">
+
+                                                            <Button.Content>
+                                                                <FontIcon
+                                                                    Margin="4"
+                                                                    FontSize="16"
+                                                                    Glyph="&#xE710;" />
+                                                            </Button.Content>
+                                                        </Button>
+
+                                                        <Button
+                                                            Grid.Column="3"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Click="{x:Bind OnCloseFlyoutClicked}"
+                                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CloseFlyout')}">
+
+                                                            <Button.Content>
+                                                                <FontIcon
+                                                                    Margin="4"
+                                                                    FontSize="16"
+                                                                    Glyph="&#xE711;" />
+                                                            </Button.Content>
+                                                        </Button>
+                                                    </Grid>
+
+                                                    <Grid
+                                                        Grid.Row="1"
+                                                        Width="300"
+                                                        Height="100"
+                                                        Padding="20"
+                                                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(AddDependencyCollection.Count), Mode=OneWay}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/AddDependencyListEmpty')}"
+                                                            TextAlignment="Center"
+                                                            TextWrapping="WrapWholeWords" />
+                                                    </Grid>
+
+                                                    <ListView
+                                                        Grid.Row="1"
+                                                        Width="450"
+                                                        Height="200"
+                                                        ItemsSource="{x:Bind AddDependencyCollection, Mode=OneWay}"
+                                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                        ScrollViewer.HorizontalScrollMode="Disabled"
+                                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                        ScrollViewer.VerticalScrollMode="Enabled"
+                                                        SelectionMode="None">
+
+                                                        <ListView.ItemContainerStyle>
+                                                            <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Setter Property="Margin" Value="0" />
+                                                                <Setter Property="MinHeight" Value="0" />
+                                                                <Setter Property="Padding" Value="0" />
+                                                            </Style>
+                                                        </ListView.ItemContainerStyle>
+
+                                                        <ListView.ItemTemplate>
+                                                            <DataTemplate x:DataType="model:DependencyModel">
+                                                                <Grid
+                                                                    Height="60"
+                                                                    Margin="2,0"
+                                                                    Padding="16,0,6,0"
+                                                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                                    BorderThickness="1"
+                                                                    CornerRadius="{StaticResource ControlCornerRadius}">
+
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <Grid
+                                                                        Grid.Column="0"
+                                                                        VerticalAlignment="Center"
+                                                                        RowSpacing="2">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="Auto" />
+                                                                            <RowDefinition Height="Auto" />
+                                                                        </Grid.RowDefinitions>
+
+                                                                        <TextBlock
+                                                                            x:Name="DependencyNameText"
+                                                                            Grid.Row="0"
+                                                                            MinWidth="50"
+                                                                            Margin="0,0,5,0"
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="14"
+                                                                            Text="{x:Bind DependencyName}"
+                                                                            TextAlignment="Left"
+                                                                            TextTrimming="CharacterEllipsis">
+
+                                                                            <ToolTipService.ToolTip>
+                                                                                <ToolTip
+                                                                                    MaxWidth="9999"
+                                                                                    Content="{x:Bind DependencyName}"
+                                                                                    Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                            </ToolTipService.ToolTip>
+                                                                        </TextBlock>
+
+                                                                        <TextBlock
+                                                                            x:Name="DependencyInfoText"
+                                                                            Grid.Row="1"
+                                                                            MinWidth="50"
+                                                                            Margin="0,0,5,0"
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="14"
+                                                                            TextAlignment="Left"
+                                                                            TextTrimming="CharacterEllipsis">
+
+                                                                            <Run Text="{x:Bind DependencyMinVersion}" />
+                                                                            <Run Text=" | " />
+                                                                            <Run Text="{x:Bind DependencyPublisher}" />
+
+                                                                            <ToolTipService.ToolTip>
+                                                                                <ToolTip MaxWidth="9999" Visibility="{Binding ElementName=DependencyInfoText, Path=IsTextTrimmed, Mode=OneWay}">
+                                                                                    <TextBlock>
+                                                                                        <Run Text="{x:Bind DependencyMinVersion}" />
+                                                                                        <Run Text=" | " />
+                                                                                        <Run Text="{x:Bind DependencyPublisher}" />
+                                                                                    </TextBlock>
+                                                                                </ToolTip>
+                                                                            </ToolTipService.ToolTip>
+                                                                        </TextBlock>
+                                                                    </Grid>
+
+                                                                    <Button
+                                                                        Grid.Column="1"
+                                                                        Width="Auto"
+                                                                        Height="Auto"
+                                                                        Margin="10,0,0,0"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Command="{StaticResource DeleteDependencyPackageCommand}"
+                                                                        Style="{StaticResource AlternateCloseButtonStyle}"
+                                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/DeleteDependencyPackage')}">
+
+                                                                        <Button.Content>
+                                                                            <FontIcon
+                                                                                Margin="4"
+                                                                                FontSize="16"
+                                                                                Glyph="&#xE711;" />
+                                                                        </Button.Content>
+                                                                    </Button>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ListView.ItemTemplate>
+                                                    </ListView>
+                                                </Grid>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+
+                                    <Button
+                                        Grid.Column="2"
+                                        Width="32"
+                                        Height="32"
+                                        Padding="0"
+                                        Click="{x:Bind OnInstallAppClicked}"
+                                        Style="{StaticResource AccentButtonStyle}"
+                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/InstallApp')}">
+
+                                        <FontIcon FontSize="16" Glyph="&#xE74B;" />
+                                    </Button>
+                                </Grid>
+                            </ContentControl>
+
+                            <Button
+                                Grid.Row="0"
+                                Width="32"
+                                Height="32"
+                                Padding="0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Click="{x:Bind OnCancelInstallClicked}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CancelInstall')}"
+                                Visibility="{x:Bind IsInstalling, Mode=OneWay}">
+
+                                <FontIcon FontSize="16" Glyph="&#xE74B;" />
+                            </Button>
+
+                            <Grid
+                                Grid.Row="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                ColumnSpacing="5">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Margin="0,0,0,2"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind InstallStateString, Mode=OneWay}"
+                                    TextAlignment="Right"
+                                    Visibility="{x:Bind IsInstalling, Mode=OneWay}" />
+
+                                <Button
+                                    Grid.Column="1"
+                                    Width="28"
+                                    Height="28"
+                                    Padding="0"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
+                                    Visibility="{x:Bind IsInstallFailed, Mode=OneWay}">
+
+                                    <Button.Content>
+                                        <FontIcon FontSize="14" Glyph="&#xE783;" />
+                                    </Button.Content>
+
+                                    <Button.Flyout>
+                                        <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
+
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                                    <Setter Property="Padding" Value="0" />
+                                                    <Setter Property="Width" Value="300" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
+
+                                            <Grid RowSpacing="3">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    FontSize="16"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
+
+                                                <TextBlock Grid.Row="1" Text="{x:Bind InstallFailedInformation, Mode=OneWay}" />
+                                            </Grid>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <ScrollViewer
+                        Grid.Row="1"
+                        HorizontalScrollBarVisibility="Disabled"
+                        HorizontalScrollMode="Disabled"
+                        VerticalScrollBarVisibility="Auto"
+                        VerticalScrollMode="Enabled">
+
+                        <StackPanel Margin="0,0,30,0" Spacing="2">
+                            <muxc:Expander
+                                Padding="0,6,0,6"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                IsExpanded="True">
+
+                                <muxc:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE946;" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/BasicInformation')}" />
+                                    </Grid>
+                                </muxc:Expander.Header>
+
+                                <muxc:Expander.Content>
+                                    <StackPanel Spacing="3">
+                                        <Grid Margin="16,0,10,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <FontIcon
+                                                Grid.Column="0"
+                                                Margin="0,0,16,0"
+                                                FontSize="12"
+                                                Glyph="&#xE915;" />
+
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                FontSize="14"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/VersionInformation')}" />
+                                        </Grid>
+
+                                        <Grid Margin="44,0,10,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
+                                                <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
+                                            </TextBlock>
+
+                                            <TextBlock Grid.Column="1">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageMinVersion')}" />
+                                                <Run Text="{x:Bind MinVersion.ToString(), Mode=OneWay}" />
+                                            </TextBlock>
+
+                                            <TextBlock Grid.Column="2">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageMaxVersionTested')}" />
+                                                <Run Text="{x:Bind MaxVersionTested.ToString(), Mode=OneWay}" />
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <MenuFlyoutSeparator Margin="22,0,10,0" Background="{ThemeResource CardStrokeColorDefaultBrush}" />
+
+                                        <Grid Margin="16,0,10,0" RowSpacing="3">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <FontIcon
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Margin="0,0,16,0"
+                                                FontSize="12"
+                                                Glyph="&#xE915;" />
+
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                Margin="0,0,3,0"
+                                                FontSize="14"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageDescription')}" />
+
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Text="{x:Bind PackageDescription, Mode=OneWay}" />
+
+                                            <FontIcon
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Margin="0,0,16,0"
+                                                FontSize="12"
+                                                Glyph="&#xE915;" />
+
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="0,0,3,0"
+                                                FontSize="14"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFamilyName')}" />
+
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                Text="{x:Bind PackageFamilyName, Mode=OneWay}" />
+
+                                            <FontIcon
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Margin="0,0,16,0"
+                                                FontSize="12"
+                                                Glyph="&#xE915;" />
+
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                Margin="0,0,3,0"
+                                                FontSize="14"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFullName')}" />
+
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                Grid.Column="2"
+                                                Text="{x:Bind PackageFullName, Mode=OneWay}" />
+
+                                            <MenuFlyoutSeparator
+                                                Grid.Row="3"
+                                                Grid.ColumnSpan="3"
+                                                Margin="6,0,0,0"
+                                                Background="{ThemeResource CardStrokeColorDefaultBrush}" />
+
+                                            <FontIcon
+                                                Grid.Row="4"
+                                                Grid.Column="0"
+                                                Margin="0,0,16,0"
+                                                FontSize="12"
+                                                Glyph="&#xE915;" />
+
+                                            <TextBlock
+                                                Grid.Row="4"
+                                                Grid.Column="1"
+                                                Margin="0,0,3,0"
+                                                FontSize="14"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/SupportedArchitecture')}" />
+
+                                            <TextBlock
+                                                Grid.Row="4"
+                                                Grid.Column="2"
+                                                Text="{x:Bind SupportedArchitecture, Mode=OneWay}" />
+
+                                            <FontIcon
+                                                Grid.Row="5"
+                                                Grid.Column="0"
+                                                Margin="0,0,16,0"
+                                                FontSize="12"
+                                                Glyph="&#xE915;" />
+
+                                            <TextBlock
+                                                Grid.Row="5"
+                                                Grid.Column="1"
+                                                Margin="0,0,3,0"
+                                                FontSize="14"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/IsFramework')}" />
+
+                                            <TextBlock
+                                                Grid.Row="5"
+                                                Grid.Column="2"
+                                                Text="{x:Bind IsFramework, Mode=OneWay}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </muxc:Expander.Content>
+                            </muxc:Expander>
+
+                            <muxc:Expander
+                                Padding="0"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                IsExpanded="True"
+                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DependencyCollection.Count), Mode=OneWay}">
+
+                                <muxc:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE8AB;" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageDependency')}" />
+                                    </Grid>
+                                </muxc:Expander.Header>
+
+                                <muxc:Expander.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid
+                                            Grid.Row="0"
+                                            Height="35"
+                                            Padding="16,0,0,0"
+                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            BorderThickness="0">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock
+                                                x:Name="DependencyNameHeaderText"
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
+                                                        Visibility="{x:Bind DependencyNameHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                x:Name="DependencyPublisherHeaderText"
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
+                                                        Visibility="{x:Bind DependencyPublisherHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                x:Name="DependencyMinVersionHeaderText"
+                                                Grid.Column="2"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
+                                                        Visibility="{x:Bind DependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                x:Name="DependencySatisfiedHeaderText"
+                                                Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencySatisfied')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencySatisfied')}"
+                                                        Visibility="{x:Bind DependencySatisfiedHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <ListView
+                                            Grid.Row="1"
+                                            ItemsSource="{x:Bind DependencyCollection, Mode=OneWay}"
+                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                            ScrollViewer.HorizontalScrollMode="Disabled"
+                                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                            ScrollViewer.VerticalScrollMode="Enabled"
+                                            SelectionMode="None">
+
+                                            <ListView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="Margin" Value="0" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="model:DependencyModel">
+                                                    <Grid
+                                                        Height="35"
+                                                        Padding="16,0,0,0"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0,1,0,0">
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock
+                                                            x:Name="DependencyNameText"
+                                                            Grid.Column="0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind DependencyName}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind DependencyName}"
+                                                                    Visibility="{Binding ElementName=DependencyNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="DependencyPublisherText"
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind DependencyPublisher}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind DependencyPublisher}"
+                                                                    Visibility="{Binding ElementName=DependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="DependencyMinVersionText"
+                                                            Grid.Column="2"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind DependencyMinVersion.ToString()}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind DependencyMinVersion.ToString()}"
+                                                                    Visibility="{Binding ElementName=DependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="DependencySatisfiedText"
+                                                            Grid.Column="3"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind DependencySatisfied}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind DependencySatisfied}"
+                                                                    Visibility="{Binding ElementName=DependencySatisfiedText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
+                                </muxc:Expander.Content>
+                            </muxc:Expander>
+
+                            <muxc:Expander
+                                Padding="0"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                IsExpanded="True"
+                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CapabilitiesCollection.Count), Mode=OneWay}">
+
+                                <muxc:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE71D;" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageCapabilities')}" />
+                                    </Grid>
+                                </muxc:Expander.Header>
+
+                                <muxc:Expander.Content>
+                                    <GridView
+                                        Margin="16,2"
+                                        ItemsSource="{x:Bind CapabilitiesCollection, Mode=OneWay}"
+                                        SelectionMode="None">
+
+                                        <GridView.ItemContainerStyle>
+                                            <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                                <Setter Property="Margin" Value="0" />
+                                                <Setter Property="MinHeight" Value="0" />
+                                            </Style>
+                                        </GridView.ItemContainerStyle>
+
+                                        <GridView.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <GridViewItem
+                                                    Width="230"
+                                                    Height="30"
+                                                    HorizontalContentAlignment="Left">
+                                                    <Grid HorizontalAlignment="Left">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <FontIcon
+                                                            Grid.Column="0"
+                                                            Margin="0,0,12,0"
+                                                            FontSize="12"
+                                                            Glyph="&#xE915;" />
+
+                                                        <TextBlock
+                                                            x:Name="CapabilitiesText"
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind}"
+                                                                    Visibility="{Binding ElementName=CapabilitiesText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </GridViewItem>
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+                                    </GridView>
+                                </muxc:Expander.Content>
+                            </muxc:Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+                <Grid
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseSuccessfully), Mode=OneWay}">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto " />
+                        <RowDefinition Height="Auto " />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        FontSize="26"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/ParseFailed')}" />
+
+                    <Button
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Click="{x:Bind OnOpenOtherPackageClicked}"
+                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/OpenOtherPackage')}" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
