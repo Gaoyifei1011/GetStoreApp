@@ -555,7 +555,7 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 第一部分：应用管理页面——XamlUICommand 命令调用时挂载的事件
+        #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 复制应用入口的应用程序用户模型 ID
@@ -1096,7 +1096,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：应用管理页面——XamlUICommand 命令调用时挂载的事件
+        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
 
         #region 第二部分：应用管理页面——挂载的事件
 
