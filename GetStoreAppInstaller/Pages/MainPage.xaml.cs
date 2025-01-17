@@ -15,10 +15,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
@@ -192,38 +194,6 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _version = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Version)));
-                }
-            }
-        }
-
-        private Version _minVersion;
-
-        public Version MinVersion
-        {
-            get { return _minVersion; }
-
-            set
-            {
-                if (!Equals(_minVersion, value))
-                {
-                    _minVersion = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MinVersion)));
-                }
-            }
-        }
-
-        private Version _maxVersionTested;
-
-        public Version MaxVersionTested
-        {
-            get { return _maxVersionTested; }
-
-            set
-            {
-                if (!Equals(_maxVersionTested, value))
-                {
-                    _maxVersionTested = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MaxVersionTested)));
                 }
             }
         }
@@ -424,7 +394,9 @@ namespace GetStoreAppInstaller.Pages
 
         private ObservableCollection<string> CapabilitiesCollection { get; } = [];
 
-        private ObservableCollection<DependencyModel> AddDependencyCollection { get; } = [];
+        private ObservableCollection<TargetDeviceFamilyModel> TargetDeviceFamilyCollection { get; } = [];
+
+        private ObservableCollection<InstallDependencyModel> InstallDependencyCollection { get; } = [];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -614,7 +586,19 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnDeleteDependencyPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            // ToDo:
+            string dependencyFullName = args.Parameter as string;
+
+            if (!string.IsNullOrEmpty(dependencyFullName))
+            {
+                foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
+                {
+                    if (installDependencyItem.DependencyFullName.Equals(dependencyFullName))
+                    {
+                        InstallDependencyCollection.Remove(installDependencyItem);
+                        break;
+                    }
+                }
+            }
         }
 
         #endregion 第三部分：XamlUICommand 命令调用时挂载的事件
@@ -924,8 +908,14 @@ namespace GetStoreAppInstaller.Pages
                 {
                     foreach (StorageFile file in filesList)
                     {
-                        // TODO:
-                        //DependencyList.Add(file.Path);
+                        InstallDependencyCollection.Add(new InstallDependencyModel()
+                        {
+                            DependencyName = file.Name,
+                            DependencyVersion = new Version(),
+                            DependencyPublisher = string.Empty,
+                            DependencyFullName = Guid.NewGuid().ToString(),
+                            DependencyPath = file.Path
+                        });
                     }
                 }
 
@@ -955,7 +945,17 @@ namespace GetStoreAppInstaller.Pages
 
                     if (openFileDialog.ShowDialog())
                     {
-                        // TODO:
+                        foreach (string fileItem in openFileDialog.SelectedFileList)
+                        {
+                            InstallDependencyCollection.Add(new InstallDependencyModel()
+                            {
+                                DependencyName = Path.GetFileName(fileItem),
+                                DependencyVersion = new Version(),
+                                DependencyPublisher = string.Empty,
+                                DependencyFullName = Guid.NewGuid().ToString(),
+                                DependencyPath = fileItem
+                            });
+                        }
                     }
 
                     result = true;
@@ -966,6 +966,14 @@ namespace GetStoreAppInstaller.Pages
                     LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
                 }
             }
+        }
+
+        /// <summary>
+        /// 清空依赖包
+        /// </summary>
+        private void OnClearDependencyClicked(object sender, RoutedEventArgs args)
+        {
+            InstallDependencyCollection.Clear();
         }
 
         /// <summary>
@@ -995,11 +1003,11 @@ namespace GetStoreAppInstaller.Pages
                         try
                         {
                             List<Uri> dependencyUriList = [];
-                            // TODO:
-                            //foreach (string dependencyItem in DependencyList)
-                            //{
-                            //    dependencyUriList.Add(new Uri(dependencyItem));
-                            //}
+
+                            foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
+                            {
+                                dependencyUriList.Add(new Uri(installDependencyItem.DependencyPath));
+                            }
 
                             // 安装目标应用，并获取安装进度
                             installPackageWithProgress = packageManager.AddPackageAsync(new Uri(fileName), dependencyUriList, DeploymentOptions.ForceUpdateFromAnyVersion | DeploymentOptions.ForceTargetApplicationShutdown);
@@ -1113,6 +1121,8 @@ namespace GetStoreAppInstaller.Pages
 
         #endregion 第五部分：自定义事件
 
+        #region 第六部分：解析应用包信息
+
         /// <summary>
         /// 解析应用包
         /// </summary>
@@ -1125,13 +1135,14 @@ namespace GetStoreAppInstaller.Pages
             {
                 if (File.Exists(filePath))
                 {
-                    IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
-                    if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
-                    {
-                        string extensionName = Path.GetExtension(filePath);
+                    // 获取文件的扩展文件名称
+                    string extensionName = Path.GetExtension(filePath);
 
-                        // 解析以 appx 或 msix 格式结尾的单个应用包
-                        if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase))
+                    // 第一部分：解析以 appx 或 msix 格式结尾的单个应用包
+                    if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase))
+                    {
+                        IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
+                        if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                         {
                             if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
                             {
@@ -1144,163 +1155,51 @@ namespace GetStoreAppInstaller.Pages
                                     // 读取应用包内容
                                     if (appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                                     {
-                                        // 读取应用包清单
-                                        if (appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
+                                        // 解析资源包所有文件
+                                        Dictionary<string, IAppxFile> fileDict = ParsePackagePayloadFiles(appxPackageReader);
+
+                                        // 获取并解析本地资源文件
+                                        IStream resourceFileStream = GetPackageResourceFileStream(fileDict);
+
+                                        if (resourceFileStream is not null)
                                         {
-                                            // 获取应用包定义的功能列表
-                                            appxManifestReader.GetCapabilities(out APPX_CAPABILITIES capabilities);
-                                            parseDict.TryAdd("Capabilities", capabilities);
-
-                                            // 获取应用包定义的静态依赖项列表
-                                            if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
-                                            {
-                                                List<Dictionary<string, object>> dependencyInfoList = [];
-
-                                                while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                                {
-                                                    if (dependenciesEnumerator.GetCurrent(out IAppxManifestPackageDependency2 appxManifestPackageDependency) is 0)
-                                                    {
-                                                        appxManifestPackageDependency.GetMinVersion(out ulong dependencyMinVersion);
-                                                        appxManifestPackageDependency.GetName(out string dependencyName);
-                                                        appxManifestPackageDependency.GetPublisher(out string dependencyPublisher);
-                                                        appxManifestPackageDependency.GetMaxMajorVersionTested(out ushort dependencyMaxMajorVersionTested);
-
-                                                        Dictionary<string, object> dependencyInfoDict = [];
-
-                                                        PackageVersion dependencyMinPackageVersion = new(dependencyMinVersion);
-                                                        dependencyInfoDict.TryAdd("DependencyMinVersion", new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision));
-                                                        dependencyInfoDict.TryAdd("DependencyName", dependencyName);
-                                                        dependencyInfoDict.TryAdd("DependencyPublisher", dependencyPublisher);
-
-                                                        PackageVersion dependencyMaxPackageMajorVersionTested = new(dependencyMaxMajorVersionTested);
-                                                        dependencyInfoDict.TryAdd("DependencyMaxMajorVersionTested", new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision));
-                                                        dependencyInfoList.Add(dependencyInfoDict);
-                                                    }
-
-                                                    dependenciesEnumerator.MoveNext(out _);
-                                                }
-
-                                                parseDict.TryAdd("Dependency", dependencyInfoList);
-                                            }
-
-                                            // 获取应用包定义的包标识符
-                                            if (appxManifestReader.GetPackageId(out IAppxManifestPackageId2 packageId) is 0)
-                                            {
-                                                packageId.GetArchitecture2(out ProcessorArchitecture architecture);
-                                                packageId.GetPackageFamilyName(out string packageFamilyName);
-                                                packageId.GetPackageFullName(out string packageFullName);
-                                                packageId.GetVersion(out ulong version);
-
-                                                parseDict.TryAdd("ProcessorArchitecture", architecture);
-                                                parseDict.TryAdd("PackageFamilyName", packageFamilyName);
-                                                parseDict.TryAdd("PackageFullName", packageFullName);
-
-                                                PackageVersion packageVersion = new(version);
-                                                parseDict.TryAdd("Version", new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
-                                            }
-
-                                            // 获取应用包定义的先决条件：最小系统版本号和最大测试系统版本号
-                                            appxManifestReader.GetPrerequisite("OSMinVersion", out ulong minVersion);
-                                            appxManifestReader.GetPrerequisite("OSMaxVersionTested", out ulong maxMajorVersionTested);
-
-                                            PackageVersion minPackageVersion = new(minVersion);
-                                            parseDict.TryAdd("MinVersion", new Version(minPackageVersion.Major, minPackageVersion.Minor, minPackageVersion.Build, minPackageVersion.Revision));
-                                            PackageVersion maxPackageMajorVersionTested = new(maxMajorVersionTested);
-                                            parseDict.TryAdd("MaxMajorVersionTested", new Version(maxPackageMajorVersionTested.Major, maxPackageMajorVersionTested.Minor, maxPackageMajorVersionTested.Build, maxPackageMajorVersionTested.Revision));
-
-                                            // 获取应用包的属性
-                                            if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
-                                            {
-                                                packageProperties.GetBoolValue("Framework", out bool isFramework);
-
-                                                packageProperties.GetStringValue("Description", out string description);
-                                                packageProperties.GetStringValue("DisplayName", out string displayName);
-                                                packageProperties.GetStringValue("Logo", out string logo);
-                                                packageProperties.GetStringValue("PublisherDisplayName", out string publisherDisplayName);
-
-                                                parseDict.TryAdd("IsFramework", isFramework);
-                                                parseDict.TryAdd("Description", description);
-                                                parseDict.TryAdd("DisplayName", displayName);
-                                                parseDict.TryAdd("Logo", logo);
-                                                parseDict.TryAdd("PublisherDisplayName", publisherDisplayName);
-                                            }
-
-                                            // 获取应用包定义的资源
-                                            if (appxManifestReader.GetResources(out IAppxManifestResourcesEnumerator appxManifestResourcesEnumerator) is 0)
-                                            {
-                                                List<string> resourceList = [];
-
-                                                while (appxManifestResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                                {
-                                                    appxManifestResourcesEnumerator.GetCurrent(out string resource);
-                                                    resourceList.Add(resource);
-
-                                                    appxManifestResourcesEnumerator.MoveNext(out _);
-                                                }
-
-                                                parseDict.TryAdd("Resource", resourceList);
-                                            }
-
-                                            // 获取应用包定义的限定资源
-                                            if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
-                                            {
-                                                List<string> qualifiedResourceList = [];
-
-                                                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                                {
-                                                    if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
-                                                    {
-                                                        qualifiedResourceList.Add(language);
-                                                    }
-
-                                                    appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
-                                                }
-
-                                                parseDict.TryAdd("QualifiedResource", qualifiedResourceList);
-                                            }
+                                            ParsePackageResources(resourceFileStream);
+                                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
+                                            resourceFileStream = null;
                                         }
 
-                                        // 读取应用包文件
-                                        if (appxPackageReader.GetPayloadFiles(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
+                                        // 解析资源包清单文件
+                                        Dictionary<string, object> parseManifsetDict = ParsePackageManifest(appxPackageReader);
+
+                                        foreach (KeyValuePair<string, object> parseManifsetItem in parseManifsetDict)
                                         {
-                                            List<KeyValuePair<string, IAppxFile>> logoList = [];
+                                            parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
+                                        }
 
-                                            IStream imageFileStream = null;
-
-                                            if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
-                                            {
-                                                string logoFileName = Path.GetFileNameWithoutExtension(logo);
-
-                                                while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                                {
-                                                    appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
-                                                    appxFile.GetName(out string packageFileName);
-
-                                                    if (packageFileName.Contains(logoFileName))
-                                                    {
-                                                        logoList.Add(KeyValuePair.Create(packageFileName, appxFile));
-                                                    }
-
-                                                    appxFilesEnumerator.MoveNext(out _);
-                                                }
-
-                                                if (logoList.Count > 0)
-                                                {
-                                                    logoList[0].Value.GetStream(out imageFileStream);
-                                                }
-                                            }
-
+                                        // 获取应用包图标
+                                        if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
+                                        {
+                                            IStream imageFileStream = GetPackageLogo(logo, fileDict);
                                             parseDict.TryAdd("ImageLogo", imageFileStream);
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
-                        else if (extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                            randomAccessStream?.Dispose();
+                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(fileStream, CreateComInterfaceFlags.None));
+                            randomAccessStream = null;
+                            fileStream = null;
+                        }
+                    }
+
+                    // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
+                    else if (extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
                         {
-                            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
+                            IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
+                            if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                             {
                                 IAppxBundleFactory2 appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
 
@@ -1312,76 +1211,13 @@ namespace GetStoreAppInstaller.Pages
                                         // 读取捆绑包的二进制文件
                                         if (appxBundleReader.GetPayloadPackages(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
                                         {
-                                            Dictionary<string, IAppxFile> bundleFileDict = [];
-                                            Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
-                                            IStream parseFileStream = null;
+                                            Dictionary<string, IAppxFile> bundleFileDict = ParsePacakgeBundleFiles(appxFilesEnumerator);
 
-                                            while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                            {
-                                                appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
-                                                appxFile.GetName(out string packageFileName);
-                                                string packageFileExtensionName = Path.GetExtension(packageFileName);
+                                            // 获取并解析本地资源文件
+                                            IStream resourceFileStream = GetPackageBundleResourceFileStream(bundleFileDict);
 
-                                                if (packageFileExtensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase))
-                                                {
-                                                    bundleFileDict.Add(packageFileName, appxFile);
-                                                }
-
-                                                appxFilesEnumerator.MoveNext(out _);
-                                            }
-
-                                            if (osArchitecture is Architecture.X86)
-                                            {
-                                                foreach (string bundleFileName in bundleFileDict.Keys)
-                                                {
-                                                    if (bundleFileName.Contains("x86", StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
-                                                    }
-                                                }
-                                            }
-                                            else if (osArchitecture is Architecture.X64)
-                                            {
-                                                foreach (string bundleFileName in bundleFileDict.Keys)
-                                                {
-                                                    if (bundleFileName.Contains("x64", StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
-                                                    }
-                                                }
-                                            }
-                                            else if (osArchitecture is Architecture.Arm64)
-                                            {
-                                                foreach (string bundleFileName in bundleFileDict.Keys)
-                                                {
-                                                    if (bundleFileName.Contains("arm64", StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
-                                                    }
-                                                }
-                                            }
-                                            else if (osArchitecture is Architecture.Arm)
-                                            {
-                                                foreach (string bundleFileName in bundleFileDict.Keys)
-                                                {
-                                                    if (bundleFileName.Contains("arm", StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
-                                                    }
-                                                }
-                                            }
-
-                                            if (parseFileStream is null && bundleFileDict.Count > 0)
-                                            {
-                                                foreach (KeyValuePair<string, IAppxFile> appxFileItem in bundleFileDict)
-                                                {
-                                                    appxFileItem.Value.GetStream(out parseFileStream);
-                                                    if (parseFileStream is not null)
-                                                    {
-                                                        break;
-                                                    }
-                                                }
-                                            }
+                                            // 获取应用捆绑包安装文件
+                                            IStream parseFileStream = ParsePacakgeBundleFileStream(bundleFileDict);
 
                                             // 解析捆绑包里面包含的二进制安装文件
                                             if (parseFileStream is not null)
@@ -1396,140 +1232,72 @@ namespace GetStoreAppInstaller.Pages
                                                         // 读取应用包内容
                                                         if (appxFactory.CreatePackageReader2(parseFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                                                         {
-                                                            // 读取应用包清单
-                                                            if (appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
+                                                            // 解析资源包所有文件
+                                                            Dictionary<string, IAppxFile> fileDict = ParsePackagePayloadFiles(appxPackageReader);
+
+                                                            if (resourceFileStream is not null)
                                                             {
-                                                                // 获取应用包定义的功能列表
-                                                                appxManifestReader.GetCapabilities(out APPX_CAPABILITIES capabilities);
-                                                                parseDict.TryAdd("Capabilities", capabilities);
+                                                                ParsePackageResources(resourceFileStream);
+                                                                Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
+                                                                resourceFileStream = null;
+                                                            }
 
-                                                                // 获取应用包定义的静态依赖项列表
-                                                                if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
-                                                                {
-                                                                    List<Dictionary<string, object>> dependencyInfoList = [];
+                                                            // 解析资源包清单文件
+                                                            Dictionary<string, object> parseManifsetDict = ParsePackageManifest(appxPackageReader);
 
-                                                                    while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                                                    {
-                                                                        if (dependenciesEnumerator.GetCurrent(out IAppxManifestPackageDependency2 appxManifestPackageDependency) is 0)
-                                                                        {
-                                                                            appxManifestPackageDependency.GetMinVersion(out ulong dependencyMinVersion);
-                                                                            appxManifestPackageDependency.GetName(out string dependencyName);
-                                                                            appxManifestPackageDependency.GetPublisher(out string dependencyPublisher);
-                                                                            appxManifestPackageDependency.GetMaxMajorVersionTested(out ushort dependencyMaxMajorVersionTested);
+                                                            foreach (KeyValuePair<string, object> parseManifsetItem in parseManifsetDict)
+                                                            {
+                                                                parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
+                                                            }
 
-                                                                            Dictionary<string, object> dependencyInfoDict = [];
-
-                                                                            PackageVersion dependencyMinPackageVersion = new(dependencyMinVersion);
-                                                                            dependencyInfoDict.TryAdd("DependencyMinVersion", new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision));
-                                                                            dependencyInfoDict.TryAdd("DependencyName", dependencyName);
-                                                                            dependencyInfoDict.TryAdd("DependencyPublisher", dependencyPublisher);
-
-                                                                            PackageVersion dependencyMaxPackageMajorVersionTested = new(dependencyMaxMajorVersionTested);
-                                                                            dependencyInfoDict.TryAdd("DependencyMaxMajorVersionTested", new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision));
-                                                                            dependencyInfoList.Add(dependencyInfoDict);
-                                                                        }
-
-                                                                        dependenciesEnumerator.MoveNext(out _);
-                                                                    }
-                                                                }
-
-                                                                // 获取应用包定义的包标识符
-                                                                if (appxManifestReader.GetPackageId(out IAppxManifestPackageId2 packageId) is 0)
-                                                                {
-                                                                    packageId.GetArchitecture2(out ProcessorArchitecture architecture);
-                                                                    packageId.GetPackageFamilyName(out string packageFamilyName);
-                                                                    packageId.GetPackageFullName(out string packageFullName);
-                                                                    packageId.GetVersion(out ulong version);
-
-                                                                    parseDict.TryAdd("ProcessorArchitecture", architecture);
-                                                                    parseDict.TryAdd("PackageFamilyName", packageFamilyName);
-                                                                    parseDict.TryAdd("PackageFullName", packageFullName);
-
-                                                                    PackageVersion packageVersion = new(version);
-                                                                    parseDict.TryAdd("Version", new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
-                                                                }
-
-                                                                // 获取应用包定义的先决条件：最小系统版本号和最大测试系统版本号
-                                                                appxManifestReader.GetPrerequisite("OSMinVersion", out ulong minVersion);
-                                                                appxManifestReader.GetPrerequisite("OSMaxVersionTested", out ulong maxMajorVersionTested);
-
-                                                                PackageVersion minPackageVersion = new(minVersion);
-                                                                parseDict.TryAdd("MinVersion", new Version(minPackageVersion.Major, minPackageVersion.Minor, minPackageVersion.Build, minPackageVersion.Revision));
-                                                                PackageVersion maxPackageMajorVersionTested = new(maxMajorVersionTested);
-                                                                parseDict.TryAdd("MaxMajorVersionTested", new Version(maxPackageMajorVersionTested.Major, maxPackageMajorVersionTested.Minor, maxPackageMajorVersionTested.Build, maxPackageMajorVersionTested.Revision));
-
-                                                                // 获取应用包的属性
-                                                                if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
-                                                                {
-                                                                    packageProperties.GetBoolValue("Framework", out bool isFramework);
-
-                                                                    packageProperties.GetStringValue("Description", out string description);
-                                                                    packageProperties.GetStringValue("DisplayName", out string displayName);
-                                                                    packageProperties.GetStringValue("Logo", out string logo);
-                                                                    packageProperties.GetStringValue("PublisherDisplayName", out string publisherDisplayName);
-
-                                                                    parseDict.TryAdd("IsFramework", isFramework);
-                                                                    parseDict.TryAdd("Description", description);
-                                                                    parseDict.TryAdd("PublisherDisplayName", publisherDisplayName);
-                                                                }
-
-                                                                // 获取应用包定义的资源
-                                                                if (appxManifestReader.GetResources(out IAppxManifestResourcesEnumerator appxManifestResourcesEnumerator) is 0)
-                                                                {
-                                                                    List<string> resourceList = [];
-
-                                                                    while (appxManifestResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                                                    {
-                                                                        appxManifestResourcesEnumerator.GetCurrent(out string resource);
-                                                                        resourceList.Add(resource);
-
-                                                                        appxManifestResourcesEnumerator.MoveNext(out _);
-                                                                    }
-
-                                                                    parseDict.TryAdd("Resource", resourceList);
-                                                                }
-
-                                                                // 获取应用包定义的限定资源
-                                                                if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
-                                                                {
-                                                                    List<string> qualifiedResourceList = [];
-
-                                                                    while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
-                                                                    {
-                                                                        if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
-                                                                        {
-                                                                            qualifiedResourceList.Add(language);
-                                                                        }
-
-                                                                        appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
-                                                                    }
-
-                                                                    parseDict.TryAdd("QualifiedResource", qualifiedResourceList);
-                                                                }
+                                                            // 获取应用包图标
+                                                            if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
+                                                            {
+                                                                IStream imageFileStream = GetPackageLogo(logo, fileDict);
+                                                                parseDict.TryAdd("ImageLogo", imageFileStream);
                                                             }
                                                         }
                                                     }
+                                                }
+
+                                                Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(parseFileStream, CreateComInterfaceFlags.None));
+                                            }
+
+                                            string processorArchitecture = ParsePackageBundleArchitecture(bundleFileDict);
+
+                                            if (!string.IsNullOrEmpty(processorArchitecture))
+                                            {
+                                                if (parseDict.ContainsKey("ProcessorArchitecture"))
+                                                {
+                                                    parseDict["ProcessorArchitecture"] = processorArchitecture;
+                                                }
+                                                else
+                                                {
+                                                    parseDict.TryAdd("ProcessorArchitecture", processorArchitecture);
                                                 }
                                             }
                                         }
                                     }
                                 }
+
+                                randomAccessStream?.Dispose();
+                                Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(fileStream, CreateComInterfaceFlags.None));
+                                randomAccessStream = null;
+                                fileStream = null;
                             }
                         }
+                    }
 
-                        // 解析以 appinstaller 格式结尾的应用包
-                        else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    // 解析以 appinstaller 格式结尾的应用安装文件
+                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // 解析应用安装文件
+                        XmlDocument xmlDocument = await XmlDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filePath));
+
+                        if (xmlDocument is not null)
                         {
-                            // 读取应用包内容失败，请检查文件是否存在问题
-                            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
-                            {
-                                IAppxFactory3 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
-                                appxFactory?.CreateAppInstallerReader(fileStream, null, out IntPtr appInstallerReader);
-                            }
+                            parseResult = true;
                         }
-
-                        randomAccessStream.Dispose();
-                        Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(fileStream, CreateComInterfaceFlags.None));
                     }
                 }
             }
@@ -1540,6 +1308,435 @@ namespace GetStoreAppInstaller.Pages
 
             return Tuple.Create(parseResult, parseDict);
         }
+
+        /// <summary>
+        /// 解析应用包的所有文件
+        /// </summary>
+        private Dictionary<string, IAppxFile> ParsePackagePayloadFiles(IAppxPackageReader appxPackageReader)
+        {
+            Dictionary<string, IAppxFile> fileDict = [];
+
+            if (appxPackageReader.GetPayloadFiles(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
+            {
+                while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                {
+                    appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
+                    appxFile.GetName(out string packageFileName);
+                    fileDict.Add(packageFileName, appxFile);
+
+                    appxFilesEnumerator.MoveNext(out _);
+                }
+            }
+
+            return fileDict;
+        }
+
+        /// <summary>
+        /// 解析应用包的所有资源
+        /// </summary>
+        private void ParsePackageResources(IStream resourceFileStream)
+        {
+            // 分段 3 ：解析资源文件
+            if (resourceFileStream is not null)
+            {
+                ShCoreLibrary.CreateRandomAccessStreamOverStream(resourceFileStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out IntPtr ppv);
+                RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
+                Stream resourceStream = randomAccessStreamOverStream.AsStream();
+
+                if (resourceStream is not null)
+                {
+                    BinaryReader binaryReader = new(resourceStream, Encoding.ASCII, true);
+                }
+
+                randomAccessStreamOverStream?.Dispose();
+                resourceStream?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// 解析应用包清单
+        /// </summary>
+        private Dictionary<string, object> ParsePackageManifest(IAppxPackageReader appxPackageReader)
+        {
+            Dictionary<string, object> parseDict = [];
+
+            // 分段 4：读取应用包清单
+            if (appxPackageReader.GetManifest(out IAppxManifestReader3 appxManifestReader) is 0)
+            {
+                // 获取应用包定义的功能列表
+                appxManifestReader.GetCapabilities(out APPX_CAPABILITIES capabilities);
+                parseDict.TryAdd("Capabilities", capabilities);
+
+                // 获取应用包定义的静态依赖项列表
+                if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
+                {
+                    List<Dictionary<string, object>> dependencyInfoList = [];
+
+                    while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                    {
+                        if (dependenciesEnumerator.GetCurrent(out IAppxManifestPackageDependency2 appxManifestPackageDependency) is 0)
+                        {
+                            appxManifestPackageDependency.GetMinVersion(out ulong dependencyMinVersion);
+                            appxManifestPackageDependency.GetName(out string dependencyName);
+                            appxManifestPackageDependency.GetPublisher(out string dependencyPublisher);
+                            appxManifestPackageDependency.GetMaxMajorVersionTested(out ushort dependencyMaxMajorVersionTested);
+
+                            Dictionary<string, object> dependencyInfoDict = [];
+
+                            PackageVersion dependencyMinPackageVersion = new(dependencyMinVersion);
+                            dependencyInfoDict.TryAdd("DependencyMinVersion", new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision));
+                            dependencyInfoDict.TryAdd("DependencyName", dependencyName);
+                            dependencyInfoDict.TryAdd("DependencyPublisher", dependencyPublisher);
+
+                            PackageVersion dependencyMaxPackageMajorVersionTested = new(dependencyMaxMajorVersionTested);
+                            dependencyInfoDict.TryAdd("DependencyMaxMajorVersionTested", new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision));
+                            dependencyInfoList.Add(dependencyInfoDict);
+                        }
+
+                        dependenciesEnumerator.MoveNext(out _);
+                    }
+
+                    parseDict.TryAdd("Dependency", dependencyInfoList);
+                }
+
+                // 获取应用包定义的包标识符
+                if (appxManifestReader.GetPackageId(out IAppxManifestPackageId2 packageId) is 0)
+                {
+                    packageId.GetArchitecture2(out ProcessorArchitecture architecture);
+                    packageId.GetPackageFamilyName(out string packageFamilyName);
+                    packageId.GetPackageFullName(out string packageFullName);
+                    packageId.GetVersion(out ulong version);
+
+                    parseDict.TryAdd("ProcessorArchitecture", architecture.ToString());
+                    parseDict.TryAdd("PackageFamilyName", packageFamilyName);
+                    parseDict.TryAdd("PackageFullName", packageFullName);
+
+                    PackageVersion packageVersion = new(version);
+                    parseDict.TryAdd("Version", new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
+                }
+
+                // 获取包的目标设备系列
+                if (appxManifestReader.GetTargetDeviceFamilies(out IAppxManifestTargetDeviceFamiliesEnumerator appxManifestTargetDeviceFamiliesEnumerator) is 0)
+                {
+                    List<TargetDeviceFamilyModel> targetDeviceFamilyList = ParsePackageTargetDeviceFamily(appxManifestTargetDeviceFamiliesEnumerator);
+                    parseDict.TryAdd("TargetDeviceFamily", targetDeviceFamilyList);
+                }
+
+                // 获取应用包的属性
+                if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
+                {
+                    packageProperties.GetBoolValue("Framework", out bool isFramework);
+
+                    packageProperties.GetStringValue("Description", out string description);
+                    packageProperties.GetStringValue("DisplayName", out string displayName);
+                    packageProperties.GetStringValue("Logo", out string logo);
+                    packageProperties.GetStringValue("PublisherDisplayName", out string publisherDisplayName);
+
+                    parseDict.TryAdd("IsFramework", isFramework);
+                    parseDict.TryAdd("Description", description);
+                    parseDict.TryAdd("DisplayName", displayName);
+                    parseDict.TryAdd("Logo", logo);
+                    parseDict.TryAdd("PublisherDisplayName", publisherDisplayName);
+                }
+
+                // 获取应用包定义的资源
+                if (appxManifestReader.GetResources(out IAppxManifestResourcesEnumerator appxManifestResourcesEnumerator) is 0)
+                {
+                    List<string> resourceList = [];
+
+                    while (appxManifestResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                    {
+                        appxManifestResourcesEnumerator.GetCurrent(out string resource);
+                        resourceList.Add(resource);
+
+                        appxManifestResourcesEnumerator.MoveNext(out _);
+                    }
+
+                    parseDict.TryAdd("Resource", resourceList);
+                }
+
+                // 获取应用包定义的限定资源
+                if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
+                {
+                    List<string> qualifiedResourceList = [];
+
+                    while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                    {
+                        if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
+                        {
+                            qualifiedResourceList.Add(language);
+                        }
+
+                        appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
+                    }
+
+                    parseDict.TryAdd("QualifiedResource", qualifiedResourceList);
+                }
+            }
+
+            return parseDict;
+        }
+
+        private string ParsePackageBundleArchitecture(Dictionary<string, IAppxFile> bundleFileDict)
+        {
+            ProcessorArchitecture processorArchitecture = 0;
+            string x86 = ProcessorArchitecture.X86.ToString();
+            string x64 = ProcessorArchitecture.X64.ToString();
+            string arm = ProcessorArchitecture.Arm.ToString();
+            string arm64 = ProcessorArchitecture.Arm64.ToString();
+            string neutral = ProcessorArchitecture.Neutral.ToString();
+
+            foreach (string bundleFileName in bundleFileDict.Keys)
+            {
+                if (bundleFileName.Contains(x86, StringComparison.OrdinalIgnoreCase))
+                {
+                    processorArchitecture |= ProcessorArchitecture.X86;
+                }
+                else if (bundleFileName.Contains("x64", StringComparison.OrdinalIgnoreCase))
+                {
+                    processorArchitecture |= ProcessorArchitecture.X64;
+                }
+                else if (bundleFileName.Contains("arm", StringComparison.OrdinalIgnoreCase))
+                {
+                    processorArchitecture |= ProcessorArchitecture.Arm;
+                }
+                else if (bundleFileName.Contains("arm64", StringComparison.OrdinalIgnoreCase))
+                {
+                    processorArchitecture |= ProcessorArchitecture.Arm64;
+                }
+                else if (bundleFileName.Contains("neutral", StringComparison.OrdinalIgnoreCase))
+                {
+                    processorArchitecture |= ProcessorArchitecture.Neutral;
+                }
+            }
+
+            string architecture = string.Empty;
+
+            if (processorArchitecture.HasFlag(ProcessorArchitecture.X86))
+            {
+                architecture = x86;
+            }
+
+            if (processorArchitecture.HasFlag(ProcessorArchitecture.X64))
+            {
+                if (!string.IsNullOrEmpty(architecture))
+                {
+                    architecture += " | ";
+                }
+
+                architecture += x64;
+            }
+
+            if (processorArchitecture.HasFlag(ProcessorArchitecture.Arm))
+            {
+                if (!string.IsNullOrEmpty(architecture))
+                {
+                    architecture += " | ";
+                }
+
+                architecture += arm;
+            }
+
+            if (processorArchitecture.HasFlag(ProcessorArchitecture.Arm64))
+            {
+                if (!string.IsNullOrEmpty(architecture))
+                {
+                    architecture += " | ";
+                }
+
+                architecture += arm64;
+            }
+
+            if (processorArchitecture.HasFlag(ProcessorArchitecture.Neutral))
+            {
+                if (!string.IsNullOrEmpty(architecture))
+                {
+                    architecture += " | ";
+                }
+
+                architecture += neutral;
+            }
+
+            if (string.IsNullOrEmpty(architecture))
+            {
+                architecture = ResourceService.GetLocalized("Installer/Unknown");
+            }
+
+            return string.Format(ResourceService.GetLocalized("Installer/BundleHeader"), architecture);
+        }
+
+        /// <summary>
+        /// 应用包图标
+        /// </summary>
+        private IStream GetPackageLogo(string logo, Dictionary<string, IAppxFile> fileDict)
+        {
+            List<KeyValuePair<string, IAppxFile>> logoList = [];
+            IStream imageFileStream = null;
+            string logoFileName = Path.GetFileNameWithoutExtension(logo);
+
+            // 读取应用包图标
+            foreach (KeyValuePair<string, IAppxFile> fileItem in fileDict)
+            {
+                if (fileItem.Value.GetName(out string packageFileName) is 0 && packageFileName.Contains(logoFileName))
+                {
+                    logoList.Add(KeyValuePair.Create(packageFileName, fileItem.Value));
+                }
+            }
+
+            // TODO:更改应用包的识别方法
+            if (logoList.Count > 0)
+            {
+                logoList[0].Value.GetStream(out imageFileStream);
+            }
+
+            return imageFileStream;
+        }
+
+        /// <summary>
+        /// 获取应用包资源文件
+        /// </summary>
+        private IStream GetPackageResourceFileStream(Dictionary<string, IAppxFile> fileDict)
+        {
+            IStream resourceFileStream = null;
+
+            foreach (KeyValuePair<string, IAppxFile> fileItem in fileDict)
+            {
+                if (fileItem.Key.Equals("resources.pri", StringComparison.OrdinalIgnoreCase))
+                {
+                    fileItem.Value.GetStream(out resourceFileStream);
+                    break;
+                }
+            }
+
+            return resourceFileStream;
+        }
+
+        /// <summary>
+        /// 解析应用捆绑包的所有文件
+        /// </summary>
+        private Dictionary<string, IAppxFile> ParsePacakgeBundleFiles(IAppxFilesEnumerator appxFilesEnumerator)
+        {
+            Dictionary<string, IAppxFile> bundleFileDict = [];
+
+            while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+            {
+                appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
+                appxFile.GetName(out string packageFileName);
+                bundleFileDict.Add(packageFileName, appxFile);
+                appxFilesEnumerator.MoveNext(out _);
+            }
+
+            return bundleFileDict;
+        }
+
+        /// <summary>
+        /// 获取程序包面向的设备系列信息
+        /// </summary>
+        private List<TargetDeviceFamilyModel> ParsePackageTargetDeviceFamily(IAppxManifestTargetDeviceFamiliesEnumerator appxManifestTargetDeviceFamiliesEnumerator)
+        {
+            List<TargetDeviceFamilyModel> targetDeviceFamilyList = [];
+
+            while (appxManifestTargetDeviceFamiliesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+            {
+                appxManifestTargetDeviceFamiliesEnumerator.GetCurrent(out IAppxManifestTargetDeviceFamily appxManifestTargetDeviceFamily);
+                TargetDeviceFamilyModel targetDeviceFamilyItem = new();
+                appxManifestTargetDeviceFamily.GetName(out string targetDeviceName);
+                appxManifestTargetDeviceFamily.GetMinVersion(out ulong minVersion);
+                appxManifestTargetDeviceFamily.GetMaxVersionTested(out ulong maxVersionTested);
+
+                targetDeviceFamilyItem.TargetDeviceName = targetDeviceName;
+                PackageVersion minPackageVersion = new(minVersion);
+                targetDeviceFamilyItem.MinVersion = new Version(minPackageVersion.Major, minPackageVersion.Minor, minPackageVersion.Build, minPackageVersion.Revision);
+                PackageVersion maxPackageVersionTested = new(maxVersionTested);
+                targetDeviceFamilyItem.MaxVersionTested = new Version(maxPackageVersionTested.Major, maxPackageVersionTested.Minor, maxPackageVersionTested.Build, maxPackageVersionTested.Revision);
+
+                targetDeviceFamilyList.Add(targetDeviceFamilyItem);
+                appxManifestTargetDeviceFamiliesEnumerator.MoveNext(out _);
+            }
+
+            targetDeviceFamilyList.Sort((item1, item2) => item1.TargetDeviceName.CompareTo(item2.TargetDeviceName));
+            return targetDeviceFamilyList;
+        }
+
+        /// <summary>
+        /// 获取应用捆绑包资源文件
+        /// </summary>
+        private IStream GetPackageBundleResourceFileStream(Dictionary<string, IAppxFile> fileDict)
+        {
+            IStream resourceFileStream = null;
+
+            // TODO:添加应用捆绑包资源文件解析
+            return resourceFileStream;
+        }
+
+        /// <summary>
+        /// 解析捆绑包适合主机系统的文件
+        /// </summary>
+        private IStream ParsePacakgeBundleFileStream(Dictionary<string, IAppxFile> bundleFileDict)
+        {
+            Architecture osArchitecture = RuntimeInformation.ProcessArchitecture;
+            IStream parseFileStream = null;
+
+            if (osArchitecture is Architecture.X86)
+            {
+                foreach (string bundleFileName in bundleFileDict.Keys)
+                {
+                    if (bundleFileName.Contains("x86", StringComparison.OrdinalIgnoreCase))
+                    {
+                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                    }
+                }
+            }
+            else if (osArchitecture is Architecture.X64)
+            {
+                foreach (string bundleFileName in bundleFileDict.Keys)
+                {
+                    if (bundleFileName.Contains("x64", StringComparison.OrdinalIgnoreCase))
+                    {
+                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                    }
+                }
+            }
+            else if (osArchitecture is Architecture.Arm64)
+            {
+                foreach (string bundleFileName in bundleFileDict.Keys)
+                {
+                    if (bundleFileName.Contains("arm64", StringComparison.OrdinalIgnoreCase))
+                    {
+                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                    }
+                }
+            }
+            else if (osArchitecture is Architecture.Arm)
+            {
+                foreach (string bundleFileName in bundleFileDict.Keys)
+                {
+                    if (bundleFileName.Contains("arm", StringComparison.OrdinalIgnoreCase))
+                    {
+                        bundleFileDict[bundleFileName].GetStream(out parseFileStream);
+                    }
+                }
+            }
+
+            // TODO:添加资源包文件过滤（该类型包为空包）
+            if (parseFileStream is null && bundleFileDict.Count > 0)
+            {
+                foreach (KeyValuePair<string, IAppxFile> appxFileItem in bundleFileDict)
+                {
+                    appxFileItem.Value.GetStream(out parseFileStream);
+                    if (parseFileStream is not null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return parseFileStream;
+        }
+
+        #endregion 第六部分：解析应用包信息
+
+        #region 第七部分：更新应用包信息
 
         /// <summary>
         /// 恢复默认内容
@@ -1553,15 +1750,14 @@ namespace GetStoreAppInstaller.Pages
             PackageName = string.Empty;
             PublisherDisplayName = string.Empty;
             Version = new Version();
-            MinVersion = new Version();
-            MaxVersionTested = new Version();
             PackageFamilyName = string.Empty;
             PackageFullName = string.Empty;
             SupportedArchitecture = string.Empty;
             IsFramework = string.Empty;
             DependencyCollection.Clear();
             CapabilitiesCollection.Clear();
-            AddDependencyCollection.Clear();
+            InstallDependencyCollection.Clear();
+            TargetDeviceFamilyCollection.Clear();
         }
 
         /// <summary>
@@ -1573,9 +1769,9 @@ namespace GetStoreAppInstaller.Pages
 
             if (IsParseSuccessfully)
             {
-                Dictionary<string, object> parseResDict = resultDict.Item2;
+                Dictionary<string, object> parseDict = resultDict.Item2;
 
-                if (parseResDict.TryGetValue("Capabilities", out object appcapabilitiesObj))
+                if (parseDict.TryGetValue("Capabilities", out object appcapabilitiesObj))
                 {
                     APPX_CAPABILITIES appcapabilities = (APPX_CAPABILITIES)appcapabilitiesObj;
 
@@ -1640,7 +1836,7 @@ namespace GetStoreAppInstaller.Pages
                     }
                 }
 
-                if (parseResDict.TryGetValue("Dependency", out object dependencyObj))
+                if (parseDict.TryGetValue("Dependency", out object dependencyObj))
                 {
                     List<Dictionary<string, object>> dependencyList = dependencyObj as List<Dictionary<string, object>>;
 
@@ -1656,52 +1852,57 @@ namespace GetStoreAppInstaller.Pages
                     }
                 }
 
-                SupportedArchitecture = parseResDict.TryGetValue("ProcessorArchitecture", out object architectureObj) && architectureObj is ProcessorArchitecture architecture ? architecture.ToString() : ResourceService.GetLocalized("Installer/Unknown");
-                PackageName = parseResDict.TryGetValue("DisplayName", out object displayNameObj) && displayNameObj is string displayName ? displayName : ResourceService.GetLocalized("Installer/Unknown");
-                PackageFamilyName = parseResDict.TryGetValue("PackageFamilyName", out object packageFamilyNameObj) && packageFamilyNameObj is string packageFamilyName ? packageFamilyName : ResourceService.GetLocalized("Installer/Unknown");
-                PackageFullName = parseResDict.TryGetValue("PackageFullName", out object packageFullNameObj) && packageFullNameObj is string packageFullName ? packageFullName : ResourceService.GetLocalized("Installer/Unknown");
-                PublisherDisplayName = parseResDict.TryGetValue("PublisherDisplayName", out object publisherDisplayNameObj) && publisherDisplayNameObj is string publisherDisplayName ? publisherDisplayName : ResourceService.GetLocalized("Installer/Unknown");
-                IsFramework = parseResDict.TryGetValue("IsFramework", out object isFrameworkObj) && isFrameworkObj is bool isFramework ? isFramework ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : ResourceService.GetLocalized("Installer/Unknown");
+                if (parseDict.TryGetValue("TargetDeviceFamily", out object targetDeviceFamilyObj) && targetDeviceFamilyObj is List<TargetDeviceFamilyModel> targetDeviceFamilyList)
+                {
+                    foreach (TargetDeviceFamilyModel targetDeviceFamilyItem in targetDeviceFamilyList)
+                    {
+                        TargetDeviceFamilyCollection.Add(targetDeviceFamilyItem);
+                    }
+                }
 
-                if (parseResDict.TryGetValue("Version", out object versionObj) && versionObj is Version version)
+                SupportedArchitecture = parseDict.TryGetValue("ProcessorArchitecture", out object architectureObj) && architectureObj is string architecture ? architecture : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                PackageName = parseDict.TryGetValue("DisplayName", out object displayNameObj) && displayNameObj is string displayName ? displayName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                PackageFamilyName = parseDict.TryGetValue("PackageFamilyName", out object packageFamilyNameObj) && packageFamilyNameObj is string packageFamilyName ? packageFamilyName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                PackageFullName = parseDict.TryGetValue("PackageFullName", out object packageFullNameObj) && packageFullNameObj is string packageFullName ? packageFullName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                PublisherDisplayName = parseDict.TryGetValue("PublisherDisplayName", out object publisherDisplayNameObj) && publisherDisplayNameObj is string publisherDisplayName ? publisherDisplayName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                IsFramework = parseDict.TryGetValue("IsFramework", out object isFrameworkObj) && isFrameworkObj is bool isFramework ? isFramework ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+
+                if (parseDict.TryGetValue("Version", out object versionObj) && versionObj is Version version)
                 {
                     Version = version;
                 }
 
-                if (parseResDict.TryGetValue("MinVersion", out object minVersionObj) && minVersionObj is Version minVersion)
-                {
-                    MinVersion = minVersion;
-                }
-
-                if (parseResDict.TryGetValue("MaxMajorVersionTested", out object maxMajorVersionTestedObj) && maxMajorVersionTestedObj is Version maxMajorVersionTested)
-                {
-                    MaxVersionTested = maxMajorVersionTested;
-                }
-
-                if (parseResDict.TryGetValue("Description", out object descriptionObj) && descriptionObj is string description)
+                if (parseDict.TryGetValue("Description", out object descriptionObj) && descriptionObj is string description)
                 {
                     PackageDescription = string.IsNullOrEmpty(description) ? ResourceService.GetLocalized("Installer/None") : description;
                 }
 
-                if (parseResDict.TryGetValue("Resource", out object resourceListObj) && resourceListObj is List<string> resourceList)
+                if (parseDict.TryGetValue("Resource", out object resourceListObj) && resourceListObj is List<string> resourceList)
                 {
                 }
 
-                if (parseResDict.TryGetValue("QualifiedResource", out object qualifiedResourceListObj) && qualifiedResourceListObj is List<string> qualifiedResourceList)
+                if (parseDict.TryGetValue("QualifiedResource", out object qualifiedResourceListObj) && qualifiedResourceListObj is List<string> qualifiedResourceList)
                 {
                 }
 
                 try
                 {
-                    if (parseResDict.TryGetValue("ImageLogo", out object imageLogoStreamObj) && imageLogoStreamObj is IStream imageLogoStream && imageLogoStream is not null)
+                    if (parseDict.TryGetValue("ImageLogo", out object imageLogoStreamObj) && imageLogoStreamObj is IStream imageLogoStream && imageLogoStream is not null)
                     {
                         ShCoreLibrary.CreateRandomAccessStreamOverStream(imageLogoStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out IntPtr ppv);
                         RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
                         BitmapImage bitmapImage = new();
                         await bitmapImage.SetSourceAsync(randomAccessStreamOverStream);
                         PackageIconImage = bitmapImage;
-                        Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(imageLogoStream, CreateComInterfaceFlags.None));
-                        randomAccessStreamOverStream.Dispose();
+                        randomAccessStreamOverStream?.Dispose();
+
+                        if (imageLogoStream is not null)
+                        {
+                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(imageLogoStream, CreateComInterfaceFlags.None));
+                        }
+
+                        randomAccessStreamOverStream = null;
+                        imageLogoStream = null;
                     }
                     else
                     {
@@ -1717,5 +1918,7 @@ namespace GetStoreAppInstaller.Pages
             CanDragFile = true;
             IsLoadCompleted = true;
         }
+
+        #endregion 第七部分：更新应用包信息
     }
 }
