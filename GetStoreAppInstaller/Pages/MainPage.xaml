@@ -305,7 +305,7 @@
                                                             Margin="16,0,6,0"
                                                             VerticalAlignment="Center"
                                                             FontSize="16"
-                                                            Glyph="&#xE71D;" />
+                                                            Glyph="&#xE8BC;" />
 
                                                         <TextBlock
                                                             Grid.Column="1"
@@ -791,7 +791,7 @@
                                             Grid.Column="0"
                                             Margin="0,0,12,0"
                                             FontSize="16"
-                                            Glyph="&#xE8AB;" />
+                                            Glyph="&#xE7F8;" />
 
                                         <TextBlock
                                             Grid.Column="1"
