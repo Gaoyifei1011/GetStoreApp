@@ -14,6 +14,16 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         private const string User32 = "user32.dll";
 
         /// <summary>
+        /// 在用户界面特权隔离 (UIPI) 消息筛选器中添加或删除消息。
+        /// </summary>
+        /// <param name="msg">要向筛选器添加或从中删除的消息。</param>
+        /// <param name="flags">要执行的操作。</param>
+        /// <returns>如果成功，则为 TRUE;否则为 FALSE。</returns>
+        [LibraryImport(User32, EntryPoint = "ChangeWindowMessageFilter", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool ChangeWindowMessageFilter(WindowMessage message, ChangeFilterFlags dwFlag);
+
+        /// <summary>
         /// 检索其类名称和窗口名称与指定字符串匹配的窗口的句柄。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
         /// </summary>
         /// <param name="hWndParent">
@@ -32,7 +42,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// </param>
         /// <param name="lpszWindow">窗口名称（窗口的标题）。 如果此参数 NULL，则所有窗口名称都匹配。</param>
         /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值 NULL。</returns>
-        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16)]
+        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, [MarshalAs(UnmanagedType.LPWStr)] string lpszClass, [MarshalAs(UnmanagedType.LPWStr)] string lpszWindow);
 
         /// <summary>

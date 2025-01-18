@@ -586,9 +586,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnDeleteDependencyPackageExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            string dependencyFullName = args.Parameter as string;
-
-            if (!string.IsNullOrEmpty(dependencyFullName))
+            if (args.Parameter is string dependencyFullName && !string.IsNullOrEmpty(dependencyFullName))
             {
                 foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
                 {
@@ -1920,5 +1918,32 @@ namespace GetStoreAppInstaller.Pages
         }
 
         #endregion 第七部分：更新应用包信息
+
+        /// <summary>
+        /// 处理提权模式下的文件拖拽
+        /// </summary>
+        public async Task DealElevatedDragDropAsync(string filePath)
+        {
+            string extensionName = Path.GetExtension(filePath);
+
+            if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+            {
+                fileName = filePath;
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    IsParseEmpty = false;
+                    ResetResult();
+
+                    Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                    {
+                        return await ParsePackagedAppAsync(fileName);
+                    });
+
+                    await Task.Delay(500);
+                    await UpdateResultAsync(parseResult);
+                }
+            }
+        }
     }
 }

@@ -1,8 +1,10 @@
-﻿using GetStoreAppInstaller.Pages;
+﻿using GetStoreAppInstaller.Helpers.Root;
+using GetStoreAppInstaller.Pages;
 using GetStoreAppInstaller.Services.Controls.Settings;
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Uxtheme;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.WindowsUI;
@@ -12,12 +14,16 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Graphics.Display;
+using Windows.Management.Deployment;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -50,8 +56,29 @@ namespace GetStoreAppInstaller
         {
             ComWrappersSupport.InitializeComWrappers();
 
+            if (!RuntimeHelper.IsMSIX)
+            {
+                PackageManager packageManager = new();
+                foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
+                {
+                    if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
+                    {
+                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
+                        foreach (AppListEntry appListEntry in appListEntryList)
+                        {
+                            if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreAppInstaller"))
+                            {
+                                appListEntry.LaunchAsync().GetResults();
+                                break;
+                            }
+                        }
+                    }
+                }
+                return;
+            }
+
             // 初始化应用启动参数
-            AppActivationArguments appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+            AppActivationArguments appActivationArguments = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
 
             if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
             {
@@ -100,6 +127,13 @@ namespace GetStoreAppInstaller
                 SetWindowLongAuto(reunionWindowingCaptionControlsHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(reunionWindowingCaptionControlsHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowExStyle.WS_EX_TRANSPARENT);
             }
 
+            if (RuntimeHelper.IsElevated)
+            {
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_ADD);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_ADD);
+                Shell32Library.DragAcceptFiles(coreWindowHandle, true);
+            }
+
             FrameworkView frameworkView = new();
             frameworkView.Initialize(coreApplicationView);
             frameworkView.SetWindow(coreWindow);
@@ -120,9 +154,9 @@ namespace GetStoreAppInstaller
         {
             if (args.DidSizeChange)
             {
-                if (Window.Current is not null && Window.Current.Content is not null)
+                if (Window.Current is not null && Window.Current.Content is MainPage mainPage)
                 {
-                    (Window.Current.Content as MainPage).IsWindowMaximized = (CoreAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
+                    mainPage.IsWindowMaximized = (CoreAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
                 }
             }
         }
@@ -134,7 +168,17 @@ namespace GetStoreAppInstaller
         {
             CoreAppWindow.Changed -= OnAppWindowChanged;
             Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), mainWindowSubClassProc, 0);
-            Window.Current.CoreWindow.Close();
+
+            if (RuntimeHelper.IsElevated)
+            {
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_DROPFILES, ChangeFilterFlags.MSGFLT_REMOVE);
+                User32Library.ChangeWindowMessageFilter(WindowMessage.WM_COPYGLOBALDATA, ChangeFilterFlags.MSGFLT_REMOVE);
+            }
+
+            if (Window.Current is not null && Window.Current.CoreWindow is not null)
+            {
+                Window.Current.CoreWindow.Close();
+            }
         }
 
         /// <summary>
@@ -169,7 +213,7 @@ namespace GetStoreAppInstaller
                 // 处理窗口非客户区域消息
                 case WindowMessage.WM_NCHITTEST:
                     {
-                        if (Window.Current.CoreWindow is not null)
+                        if (Window.Current is not null && Window.Current.CoreWindow is not null)
                         {
                             Point currentPoint = Window.Current.CoreWindow.PointerPosition;
                             PointInt32 screenPoint = new()
@@ -268,16 +312,16 @@ namespace GetStoreAppInstaller
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
-                        if ((Window.Current.Content as MainPage).TitlebarMenuFlyout.IsOpen)
+                        if (Window.Current is not null && Window.Current.Content is MainPage mainPage && mainPage.TitlebarMenuFlyout.IsOpen)
                         {
-                            (Window.Current.Content as MainPage).TitlebarMenuFlyout.Hide();
+                            mainPage.TitlebarMenuFlyout.Hide();
                         }
                         break;
                     }
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (wParam is 2 && Window.Current.Content is not null && DisplayInformation is not null)
+                        if (wParam is 2 && Window.Current is not null && Window.Current.CoreWindow is not null && Window.Current.Content is MainPage mainPage && DisplayInformation is not null)
                         {
                             Point currentPoint = Window.Current.CoreWindow.PointerPosition;
                             PointInt32 screenPoint = new()
@@ -294,21 +338,55 @@ namespace GetStoreAppInstaller
                                 Position = new Point(localPoint.X / DisplayInformation.RawPixelsPerViewPixel, localPoint.Y / DisplayInformation.RawPixelsPerViewPixel)
                             };
 
-                            (Window.Current.Content as MainPage).TitlebarMenuFlyout.ShowAt(null, options);
+                            mainPage.TitlebarMenuFlyout.ShowAt(null, options);
                         }
                         return 0;
                     }
                 // 处理 Alt + space 按键弹出窗口右键菜单的消息
                 case WindowMessage.WM_SYSKEYDOWN:
                     {
-                        if ((wParam == (UIntPtr)VirtualKey.Space) && ((lParam & 0x20000000) is not 0))
+                        if ((wParam == (UIntPtr)VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is MainPage mainPage)
                         {
                             FlyoutShowOptions options = new()
                             {
                                 Position = new Point(0, 45),
                                 ShowMode = FlyoutShowMode.Standard
                             };
-                            (Window.Current.Content as MainPage).TitlebarMenuFlyout.ShowAt(null, options);
+                            mainPage.TitlebarMenuFlyout.ShowAt(null, options);
+                        }
+
+                        break;
+                    }
+                // 提升权限时允许应用接收拖放文件消息
+                case WindowMessage.WM_DROPFILES:
+                    {
+                        if (Window.Current is not null && Window.Current.Content is MainPage mainPage && Window.Current.CoreWindow is CoreWindow coreWindow)
+                        {
+                            Task.Run(() =>
+                            {
+                                List<string> filesList = [];
+                                char[] dragFileCharArray = new char[260];
+                                uint filesCount = Shell32Library.DragQueryFile(wParam, 0xffffffffu, null, 0);
+
+                                for (uint index = 0; index < filesCount; index++)
+                                {
+                                    if (Shell32Library.DragQueryFile(wParam, index, dragFileCharArray, (uint)dragFileCharArray.Length) > 0)
+                                    {
+                                        filesList.Add(new string(dragFileCharArray).Replace("\0", string.Empty));
+                                    }
+                                }
+
+                                Shell32Library.DragQueryPoint(wParam, out PointInt32 point);
+                                Shell32Library.DragFinish(wParam);
+
+                                if (filesList.Count > 0)
+                                {
+                                    coreWindow.DispatcherQueue.TryEnqueue(async () =>
+                                    {
+                                        await mainPage.DealElevatedDragDropAsync(filesList[0]);
+                                    });
+                                }
+                            });
                         }
 
                         break;
