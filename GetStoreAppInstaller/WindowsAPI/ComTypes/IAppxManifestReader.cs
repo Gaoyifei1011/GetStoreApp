@@ -73,7 +73,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="applications">循环访问应用程序的枚举器。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetApplications(out IntPtr applications);
+        int GetApplications([MarshalAs(UnmanagedType.Interface)] out IAppxManifestApplicationsEnumerator applications);
 
         /// <summary>
         /// 获取由清单读取者分析和读取的原始 XML。
