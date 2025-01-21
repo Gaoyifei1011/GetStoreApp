@@ -34,6 +34,7 @@
   "OpenPackage": "打开应用包",
   "OpenInstallerFile": "打开应用安装文件",
   "OpenOtherPackage": "打开应用包",
+  "PackageApplication":"应用入口信息",
   "PackageCapabilities": "应用包功能",
   "PackageDependency": "应用依赖包",
   "PackageDescription": "应用描述：",
