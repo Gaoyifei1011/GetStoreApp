@@ -194,6 +194,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
@@ -206,6 +207,11 @@
                             <TextBlock Grid.Row="1">
                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
                                 <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
+                            </TextBlock>
+
+                            <TextBlock Grid.Row="2">
+                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
+                                <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
                             </TextBlock>
 
                             <muxc:ProgressBar
@@ -354,6 +360,7 @@
                                                             VerticalAlignment="Center"
                                                             Click="{x:Bind OnCloseFlyoutClicked}"
                                                             Style="{StaticResource AlternateCloseButtonStyle}"
+                                                            Tag="AddDependencyFlyout"
                                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CloseFlyout')}">
 
                                                             <Button.Content>
@@ -520,10 +527,11 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 Click="{x:Bind OnCancelInstallClicked}"
+                                Style="{StaticResource AccentButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CancelInstall')}"
                                 Visibility="{x:Bind IsInstalling, Mode=OneWay}">
 
-                                <FontIcon FontSize="16" Glyph="&#xE74B;" />
+                                <FontIcon FontSize="16" Glyph="&#xE711;" />
                             </Button>
 
                             <Grid
@@ -547,8 +555,8 @@
 
                                 <Button
                                     Grid.Column="1"
-                                    Width="28"
-                                    Height="28"
+                                    Width="32"
+                                    Height="32"
                                     Padding="0"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/ViewErrorInformation')}"
                                     Visibility="{x:Bind IsInstallFailed, Mode=OneWay}">
@@ -558,27 +566,75 @@
                                     </Button.Content>
 
                                     <Button.Flyout>
-                                        <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
+                                        <Flyout
+                                            x:Name="ViewErrorInformationFlyout"
+                                            Placement="Bottom"
+                                            ShouldConstrainToRootBounds="False">
 
                                             <Flyout.FlyoutPresenterStyle>
                                                 <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
                                                     <Setter Property="Padding" Value="0" />
-                                                    <Setter Property="Width" Value="300" />
+                                                    <Setter Property="MinWidth" Value="0" />
                                                 </Style>
                                             </Flyout.FlyoutPresenterStyle>
 
-                                            <Grid RowSpacing="3">
+                                            <Grid>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="40" />
                                                     <RowDefinition Height="*" />
                                                 </Grid.RowDefinitions>
 
-                                                <TextBlock
+                                                <Grid
                                                     Grid.Row="0"
-                                                    FontSize="16"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
+                                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="0,0,0,1">
 
-                                                <TextBlock Grid.Row="1" Text="{x:Bind InstallFailedInformation, Mode=OneWay}" />
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <FontIcon
+                                                        Grid.Column="0"
+                                                        Margin="16,0,6,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        Glyph="&#xE783;" />
+
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/ErrorInformation')}" />
+
+                                                    <Button
+                                                        Grid.Column="2"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Click="{x:Bind OnCloseFlyoutClicked}"
+                                                        Style="{StaticResource AlternateCloseButtonStyle}"
+                                                        Tag="ViewErrorInformationFlyout"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CloseFlyout')}">
+
+                                                        <Button.Content>
+                                                            <FontIcon
+                                                                Margin="4"
+                                                                FontSize="16"
+                                                                Glyph="&#xE711;" />
+                                                        </Button.Content>
+                                                    </Button>
+                                                </Grid>
+
+                                                <Grid
+                                                    Grid.Row="1"
+                                                    Width="300"
+                                                    Height="100"
+                                                    Padding="20">
+
+                                                    <TextBlock Grid.Row="1" Text="{x:Bind InstallFailedInformation, Mode=OneWay}" />
+                                                </Grid>
                                             </Grid>
                                         </Flyout>
                                     </Button.Flyout>
@@ -627,27 +683,6 @@
 
                                 <muxc:Expander.Content>
                                     <StackPanel Spacing="3">
-                                        <Grid Margin="16,0,10,0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-
-                                            <FontIcon
-                                                Grid.Column="0"
-                                                Margin="0,0,16,0"
-                                                FontSize="12"
-                                                Glyph="&#xE915;" />
-
-                                            <TextBlock Grid.Column="1">
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
-                                                <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
-                                            </TextBlock>
-                                        </Grid>
-
-                                        <MenuFlyoutSeparator Margin="22,0,10,0" Background="{ThemeResource CardStrokeColorDefaultBrush}" />
-
                                         <Grid Margin="16,0,10,0" RowSpacing="3">
 
                                             <Grid.ColumnDefinitions>
@@ -1211,7 +1246,7 @@
                                             Grid.Column="0"
                                             Margin="0,0,12,0"
                                             FontSize="16"
-                                            Glyph="&#xE71D;" />
+                                            Glyph="&#xE8A1;" />
 
                                         <TextBlock
                                             Grid.Column="1"
@@ -1273,6 +1308,37 @@
                                         </GridView.ItemTemplate>
                                     </GridView>
                                 </muxc:Expander.Content>
+                            </muxc:Expander>
+
+                            <!--  应用包应用信息  -->
+                            <muxc:Expander
+                                Padding="0"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                IsExpanded="True"
+                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(ApplicationCollection.Count), Mode=OneWay}">
+
+                                <muxc:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE71D;" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageApplication')}" />
+                                    </Grid>
+                                </muxc:Expander.Header>
                             </muxc:Expander>
                         </StackPanel>
                     </ScrollViewer>
