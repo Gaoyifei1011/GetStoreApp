@@ -74,8 +74,10 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
 
     <PRIResource Include="Strings\en-us\Installer.resjson" />
+    <PRIResource Include="Strings\en-us\Notification.resjson" />
     <PRIResource Include="Strings\en-us\Window.resjson" />
     <PRIResource Include="Strings\zh-hans\Installer.resjson" />
+    <PRIResource Include="Strings\zh-hans\Notification.resjson" />
     <PRIResource Include="Strings\zh-hans\Window.resjson" />
     
     <Reference Include="$(PkgMicrosoft_UI_Xaml)\lib\net8.0-windows10.0.22621.0\Microsoft.UI.Xaml.Projection.dll" />
