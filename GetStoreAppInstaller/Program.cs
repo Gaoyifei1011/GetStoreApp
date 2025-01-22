@@ -140,6 +140,7 @@ namespace GetStoreAppInstaller
 
             XamlControlsResources xamlControlsResources = [];
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/MenuFlyout.xaml") });
+            xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/TeachingTip.xaml") });
             Application.Current.Resources = xamlControlsResources;
             Window.Current.Content = new MainPage(appActivationArguments);
             (Window.Current.Content as MainPage).IsWindowMaximized = (CoreAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
@@ -403,6 +404,11 @@ namespace GetStoreAppInstaller
         {
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            ResourceService.LocalizeReosurce();
+
+            AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
+            BackdropService.InitializeBackdrop();
+            ThemeService.InitializeTheme();
         }
 
         /// <summary>

@@ -1,10 +1,13 @@
 ﻿using GetStoreAppInstaller.Extensions.DataType.Enums;
 using GetStoreAppInstaller.Extensions.DataType.Methods;
 using GetStoreAppInstaller.Extensions.PriExtract;
+using GetStoreAppInstaller.Helpers.Controls.Extensions;
+using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Models;
 using GetStoreAppInstaller.Services.Controls.Settings;
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.UI.Backdrop;
+using GetStoreAppInstaller.UI.TeachingTips;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.SHCore;
@@ -72,6 +75,22 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _isWindowMaximized = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWindowMaximized)));
+                }
+            }
+        }
+
+        private ElementTheme _windowTheme;
+
+        public ElementTheme WindowTheme
+        {
+            get { return _windowTheme; }
+
+            set
+            {
+                if (!Equals(_windowTheme, value))
+                {
+                    _windowTheme = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
                 }
             }
         }
@@ -348,6 +367,22 @@ namespace GetStoreAppInstaller.Pages
             }
         }
 
+        private bool _isCancelInstall;
+
+        public bool IsCancelInstall
+        {
+            get { return _isCancelInstall; }
+
+            set
+            {
+                if (!Equals(_isCancelInstall, value))
+                {
+                    _isCancelInstall = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCancelInstall)));
+                }
+            }
+        }
+
         private string _installStateString;
 
         public string InstallStateString
@@ -360,22 +395,6 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _installStateString = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallStateString)));
-                }
-            }
-        }
-
-        private string _installStateVisible;
-
-        public string InstallStateVisible
-        {
-            get { return _installStateVisible; }
-
-            set
-            {
-                if (!Equals(_installStateVisible, value))
-                {
-                    _installStateVisible = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(InstallStateVisible)));
                 }
             }
         }
@@ -411,14 +430,39 @@ namespace GetStoreAppInstaller.Pages
         public MainPage(AppActivationArguments activationArguments)
         {
             InitializeComponent();
-            Background = new MicaBrush(MicaKind.BaseAlt, true);
             appActivationArguments = activationArguments;
+
+            WindowTheme = ThemeService.AppTheme.Equals(ThemeService.ThemeList[0])
+                ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark
+                : Enum.TryParse(ThemeService.AppTheme.Key, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
+
             Program.SetTitleBarTheme(ActualTheme);
             Program.SetClassicMenuTheme(ActualTheme);
 
-            IsInstalling = true;
-            InstallProgressValue = 60;
-            IsInstallWaiting = false;
+            if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[1]))
+            {
+                Background = new MicaBrush(MicaKind.Base, AlwaysShowBackdropService.AlwaysShowBackdropValue);
+            }
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[2]))
+            {
+                Background = new MicaBrush(MicaKind.BaseAlt, AlwaysShowBackdropService.AlwaysShowBackdropValue);
+            }
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[3]))
+            {
+                Background = new DesktopAcrylicBrush(DesktopAcrylicKind.Default, AlwaysShowBackdropService.AlwaysShowBackdropValue, true);
+            }
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[4]))
+            {
+                Background = new DesktopAcrylicBrush(DesktopAcrylicKind.Base, AlwaysShowBackdropService.AlwaysShowBackdropValue, true);
+            }
+            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[5]))
+            {
+                Background = new DesktopAcrylicBrush(DesktopAcrylicKind.Thin, AlwaysShowBackdropService.AlwaysShowBackdropValue, true);
+            }
+            else
+            {
+                VisualStateManager.GoToState(this, "BackgroundDefault", false);
+            }
         }
 
         #region 第一部分：重写父类事件
@@ -912,6 +956,7 @@ namespace GetStoreAppInstaller.Pages
                 {
                     foreach (StorageFile file in filesList)
                     {
+                        // TODO: 未完成
                         InstallDependencyCollection.Add(new InstallDependencyModel()
                         {
                             DependencyName = file.Name,
@@ -981,6 +1026,24 @@ namespace GetStoreAppInstaller.Pages
         }
 
         /// <summary>
+        /// 复制错误原因
+        /// </summary>
+        private async void OnCopyErrorInformationClicked(object sender, RoutedEventArgs args)
+        {
+            if (ViewErrorInformationFlyout.IsOpen)
+            {
+                ViewErrorInformationFlyout.Hide();
+            }
+
+            if (!string.IsNullOrEmpty(InstallFailedInformation))
+            {
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(InstallFailedInformation);
+
+                await TeachingTipHelper.ShowAsync(new DataCopyTip(copyResult, false));
+            }
+        }
+
+        /// <summary>
         /// 关闭浮出控件
         /// </summary>
         private void OnCloseFlyoutClicked(object sender, RoutedEventArgs args)
@@ -1005,6 +1068,12 @@ namespace GetStoreAppInstaller.Pages
         {
             if (File.Exists(fileName))
             {
+                CanDragFile = false;
+                IsInstalling = true;
+                IsInstallFailed = false;
+                InstallProgressValue = 0;
+                InstallStateString = ResourceService.GetLocalized("Installer/PrepareInstall");
+
                 await Task.Run(() =>
                 {
                     string extensionName = Path.GetExtension(fileName);
@@ -1065,18 +1134,9 @@ namespace GetStoreAppInstaller.Pages
         {
             if (installPackageWithProgress is not null)
             {
-                // TODO: 未完成
-                await Task.Run(() =>
-                {
-                    installPackageWithProgress.Cancel();
-                    installPackageWithProgress.Close();
-                    installPackageWithProgress = null;
-                });
-
-                // 更新应用安装状态
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                });
+                IsCancelInstall = false;
+                await Task.Run(installPackageWithProgress.Cancel);
+                IsCancelInstall = true;
             }
         }
 
@@ -1091,8 +1151,19 @@ namespace GetStoreAppInstaller.Pages
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                // TODO: 未完成
-                InstallProgressValue = progress.percentage;
+                if (progress.state is DeploymentProgressState.Queued)
+                {
+                    IsInstalling = true;
+                    IsInstallWaiting = true;
+                    InstallStateString = ResourceService.GetLocalized("Installer/WaitInstall");
+                }
+                else if (progress.state is DeploymentProgressState.Processing)
+                {
+                    IsInstalling = true;
+                    IsInstallWaiting = false;
+                    InstallProgressValue = progress.percentage;
+                    InstallStateString = string.Format(ResourceService.GetLocalized("Installer/InstallProgress"), progress.percentage);
+                }
             });
         }
 
@@ -1109,23 +1180,54 @@ namespace GetStoreAppInstaller.Pages
                 appNotificationBuilder.AddArgument("action", "OpenApp");
                 appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppInstallSuccessfully"), PackageName));
                 ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+
+                // 更新应用安装状态
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    CanDragFile = true;
+                    IsInstalling = false;
+                    InstallProgressValue = 0;
+                    IsInstallWaiting = false;
+                    IsInstallFailed = false;
+                    InstallFailedInformation = string.Empty;
+                });
             }
             // 安装错误
             else if (status is AsyncStatus.Error)
             {
+                string errorMessage = result.ErrorCode.Message;
+
                 // 显示安装失败通知
                 AppNotificationBuilder appNotificationBuilder = new();
                 appNotificationBuilder.AddArgument("action", "OpenApp");
                 appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppInstallFailed"), PackageName));
-                appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppInstallFailedReason"), result.ErrorCode.Message));
+                appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppInstallFailedReason"), errorMessage));
                 ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-            }
 
-            // 更新应用安装状态
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                // 更新应用安装状态
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    CanDragFile = true;
+                    IsInstalling = false;
+                    InstallProgressValue = 0;
+                    IsInstallWaiting = false;
+                    IsInstallFailed = true;
+                    InstallFailedInformation = errorMessage;
+                });
+            }
+            else if (status is AsyncStatus.Canceled)
             {
-                // TODO: 未完成
-            });
+                // 更新应用安装状态
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    CanDragFile = true;
+                    IsInstalling = false;
+                    InstallProgressValue = 0;
+                    IsInstallWaiting = false;
+                    IsInstallFailed = false;
+                    InstallFailedInformation = string.Empty;
+                });
+            }
 
             result.Close();
         }
@@ -1289,14 +1391,7 @@ namespace GetStoreAppInstaller.Pages
 
                                             if (!string.IsNullOrEmpty(processorArchitecture))
                                             {
-                                                if (parseDict.ContainsKey("ProcessorArchitecture"))
-                                                {
-                                                    parseDict["ProcessorArchitecture"] = processorArchitecture;
-                                                }
-                                                else
-                                                {
-                                                    parseDict.TryAdd("ProcessorArchitecture", processorArchitecture);
-                                                }
+                                                parseDict["ProcessorArchitecture"] = processorArchitecture;
                                             }
                                         }
                                     }
@@ -1348,12 +1443,27 @@ namespace GetStoreAppInstaller.Pages
                     appxManifestApplication.GetStringValue("Executable", out string executable);
                     appxManifestApplication.GetStringValue("ID", out string id);
 
+                    if (specifiedLanguageResourceDict is not null)
+                    {
+                        if (!string.IsNullOrEmpty(description))
+                        {
+                            if (description.StartsWith("ms-resource:") && specifiedLanguageResourceDict.TryGetValue(description.Replace("ms-resource:", @"resources\", StringComparison.OrdinalIgnoreCase), out string localizedDescription) || description.StartsWith("ms-resource:") && specifiedLanguageResourceDict.TryGetValue(description.Replace("ms-resource:", @"Resources\", StringComparison.OrdinalIgnoreCase), out localizedDescription))
+                            {
+                                description = localizedDescription;
+                            }
+                        }
+                        else
+                        {
+                            description = string.Empty;
+                        }
+                    }
+
                     ApplicationModel applicationItem = new()
                     {
-                        Description = description,
+                        AppDescription = description,
                         EntryPoint = entryPoint,
                         Executable = executable,
-                        ID = id
+                        AppID = id
                     };
 
                     applicationList.Add(applicationItem);
@@ -1361,8 +1471,7 @@ namespace GetStoreAppInstaller.Pages
                 }
             }
 
-            // TODO: 未完成
-            applicationList.Sort((item1, item2) => item1.ID.CompareTo(item2.ID));
+            applicationList.Sort((item1, item2) => item1.AppID.CompareTo(item2.AppID));
             return applicationList;
         }
 
@@ -1385,7 +1494,7 @@ namespace GetStoreAppInstaller.Pages
                     // 获取应用包定义的静态依赖项列表
                     if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
                     {
-                        List<Dictionary<string, object>> dependencyInfoList = [];
+                        List<Dictionary<string, object>> dependencyList = [];
 
                         while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
                         {
@@ -1396,22 +1505,22 @@ namespace GetStoreAppInstaller.Pages
                                 appxManifestPackageDependency.GetPublisher(out string dependencyPublisher);
                                 appxManifestPackageDependency.GetMaxMajorVersionTested(out ushort dependencyMaxMajorVersionTested);
 
-                                Dictionary<string, object> dependencyInfoDict = [];
+                                Dictionary<string, object> dependencyDict = [];
 
                                 PackageVersion dependencyMinPackageVersion = new(dependencyMinVersion);
-                                dependencyInfoDict.TryAdd("DependencyMinVersion", new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision));
-                                dependencyInfoDict.TryAdd("DependencyName", dependencyName);
-                                dependencyInfoDict.TryAdd("DependencyPublisher", dependencyPublisher);
+                                dependencyDict.TryAdd("DependencyMinVersion", new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision));
+                                dependencyDict.TryAdd("DependencyName", dependencyName);
+                                dependencyDict.TryAdd("DependencyPublisher", dependencyPublisher);
 
                                 PackageVersion dependencyMaxPackageMajorVersionTested = new(dependencyMaxMajorVersionTested);
-                                dependencyInfoDict.TryAdd("DependencyMaxMajorVersionTested", new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision));
-                                dependencyInfoList.Add(dependencyInfoDict);
+                                dependencyDict.TryAdd("DependencyMaxMajorVersionTested", new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision));
+                                dependencyList.Add(dependencyDict);
                             }
 
                             dependenciesEnumerator.MoveNext(out _);
                         }
 
-                        parseDict.TryAdd("Dependency", dependencyInfoList);
+                        parseDict.TryAdd("Dependency", dependencyList);
                     }
 
                     // 获取应用包定义的包标识符
@@ -2523,6 +2632,13 @@ namespace GetStoreAppInstaller.Pages
             PackageDescription = string.Empty;
             IsLoadCompleted = false;
             IsParseSuccessfully = false;
+            IsInstalling = false;
+            InstallProgressValue = 0;
+            IsInstallWaiting = false;
+            IsInstallFailed = false;
+            InstallStateString = string.Empty;
+            InstallFailedInformation = string.Empty;
+            IsCancelInstall = true;
             PackageIconImage = null;
             PackageName = string.Empty;
             PublisherDisplayName = string.Empty;
@@ -2653,15 +2769,9 @@ namespace GetStoreAppInstaller.Pages
                 PublisherDisplayName = parseDict.TryGetValue("PublisherDisplayName", out object publisherDisplayNameObj) && publisherDisplayNameObj is string publisherDisplayName ? publisherDisplayName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
                 IsFramework = parseDict.TryGetValue("IsFramework", out object isFrameworkObj) && isFrameworkObj is bool isFramework ? isFramework ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
 
-                if (parseDict.TryGetValue("Version", out object versionObj) && versionObj is Version version)
-                {
-                    Version = version;
-                }
+                Version = parseDict.TryGetValue("Version", out object versionObj) && versionObj is Version version ? version : new Version();
 
-                if (parseDict.TryGetValue("Description", out object descriptionObj) && descriptionObj is string description)
-                {
-                    PackageDescription = string.IsNullOrEmpty(description) ? ResourceService.GetLocalized("Installer/None") : description;
-                }
+                PackageDescription = parseDict.TryGetValue("Description", out object descriptionObj) && descriptionObj is string description ? string.IsNullOrEmpty(description) ? ResourceService.GetLocalized("Installer/None") : description : ResourceService.GetLocalized("Installer/None");
 
                 if (parseDict.TryGetValue("Resource", out object resourceListObj) && resourceListObj is List<string> resourceList)
                 {

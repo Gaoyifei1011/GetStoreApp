@@ -1,5 +1,6 @@
 {
   "AppInstallSuccessfully":"{0} install successfully",
   "AppInstallFailed": "{0} install failed",
-  "AppInstallFailedReason":"Error reason: {0}"
+  "AppInstallFailedReason":"Error reason: {0}",
+  "ErrorInformationSuccessfully":"The error information was copied successfully."
 }

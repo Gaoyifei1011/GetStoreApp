@@ -67,6 +67,8 @@
     <Page Remove="XamlIslandsApp.xaml" />
     <Page Update="Styles\XamlIslands\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\XamlIslands\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Styles\XamlIslands\TeachingTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\TeachingTips\DataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7-prerelease.241119001" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="true" />

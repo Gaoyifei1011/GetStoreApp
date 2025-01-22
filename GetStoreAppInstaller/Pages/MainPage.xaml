@@ -109,7 +109,6 @@
     </Page.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
         <Grid
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -220,13 +219,13 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 IsIndeterminate="{x:Bind IsInstallWaiting, Mode=OneWay}"
-                                ShowError="{x:Bind IsInstallFailed, Mode=OneWay}"
                                 Visibility="{x:Bind IsInstalling, Mode=OneWay}"
                                 Value="{x:Bind InstallProgressValue, Mode=OneWay}" />
                         </Grid>
 
                         <Grid
                             Grid.Column="2"
+                            Margin="10,0,0,0"
                             VerticalAlignment="Stretch"
                             RowSpacing="2">
 
@@ -527,6 +526,7 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 Click="{x:Bind OnCancelInstallClicked}"
+                                IsEnabled="{x:Bind IsCancelInstall, Mode=OneWay}"
                                 Style="{StaticResource AccentButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CancelInstall')}"
                                 Visibility="{x:Bind IsInstalling, Mode=OneWay}">
@@ -547,10 +547,11 @@
 
                                 <TextBlock
                                     Grid.Column="0"
-                                    Margin="0,0,0,2"
+                                    Margin="0,0,0,4"
                                     VerticalAlignment="Center"
+                                    FontSize="16"
                                     Text="{x:Bind InstallStateString, Mode=OneWay}"
-                                    TextAlignment="Right"
+                                    TextAlignment="Center"
                                     Visibility="{x:Bind IsInstalling, Mode=OneWay}" />
 
                                 <Button
@@ -594,6 +595,7 @@
                                                         <ColumnDefinition Width="Auto" />
                                                         <ColumnDefinition Width="*" />
                                                         <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
 
                                                     <FontIcon
@@ -613,6 +615,24 @@
                                                         Grid.Column="2"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
+                                                        Click="{x:Bind OnCopyErrorInformationClicked}"
+                                                        IsEnabled="{x:Bind converter:ValueConverterHelper.IsNotEmptyString(InstallFailedInformation), Mode=OneWay}"
+                                                        Style="{StaticResource AlternateCloseButtonStyle}"
+                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/CopyErrorInformation')}">
+
+                                                        <Button.Content>
+                                                            <FontIcon
+                                                                Margin="4"
+                                                                FontSize="16"
+                                                                Glyph="&#xE8C8;" />
+                                                        </Button.Content>
+                                                    </Button>
+
+                                                    <Button
+                                                        Grid.Column="3"
+                                                        Margin="-5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
                                                         Click="{x:Bind OnCloseFlyoutClicked}"
                                                         Style="{StaticResource AlternateCloseButtonStyle}"
                                                         Tag="ViewErrorInformationFlyout"
@@ -629,11 +649,11 @@
 
                                                 <Grid
                                                     Grid.Row="1"
-                                                    Width="300"
-                                                    Height="100"
-                                                    Padding="20">
+                                                    Width="450"
+                                                    MinHeight="100"
+                                                    Padding="16,8,16,8">
 
-                                                    <TextBlock Grid.Row="1" Text="{x:Bind InstallFailedInformation, Mode=OneWay}" />
+                                                    <TextBlock Text="{x:Bind InstallFailedInformation, Mode=OneWay}" TextWrapping="Wrap" />
                                                 </Grid>
                                             </Grid>
                                         </Flyout>
@@ -845,7 +865,7 @@
                                         <Grid
                                             Grid.Row="0"
                                             Height="35"
-                                            Padding="16,0,0,0"
+                                            Padding="16,0,16,0"
                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                             BorderThickness="0">
 
@@ -929,7 +949,7 @@
                                                 <DataTemplate x:DataType="model:TargetDeviceFamilyModel">
                                                     <Grid
                                                         Height="35"
-                                                        Padding="16,0,0,0"
+                                                        Padding="16,0,16,0"
                                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                         BorderThickness="0,1,0,0">
 
@@ -1037,7 +1057,7 @@
                                         <Grid
                                             Grid.Row="0"
                                             Height="35"
-                                            Padding="16,0,0,0"
+                                            Padding="16,0,16,0"
                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                             BorderThickness="0">
 
@@ -1139,7 +1159,7 @@
                                                 <DataTemplate x:DataType="model:DependencyModel">
                                                     <Grid
                                                         Height="35"
-                                                        Padding="16,0,0,0"
+                                                        Padding="16,0,16,0"
                                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                         BorderThickness="0,1,0,0">
 
@@ -1339,6 +1359,203 @@
                                             Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageApplication')}" />
                                     </Grid>
                                 </muxc:Expander.Header>
+
+                                <muxc:Expander.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid
+                                            Grid.Row="0"
+                                            Height="35"
+                                            Padding="16,0,16,0"
+                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            BorderThickness="0">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock
+                                                x:Name="AppIDHeaderText"
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppID')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/AppID')}"
+                                                        Visibility="{x:Bind AppIDHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                x:Name="AppDescriptionHeaderText"
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppDescription')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/AppDescription')}"
+                                                        Visibility="{x:Bind AppDescriptionHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                x:Name="ExecutableHeaderText"
+                                                Grid.Column="2"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/Executable')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/Executable')}"
+                                                        Visibility="{x:Bind ExecutableHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+
+                                            <TextBlock
+                                                x:Name="EntryPointHeaderText"
+                                                Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/EntryPoint')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/EntryPoint')}"
+                                                        Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+                                        </Grid>
+
+                                        <ListView
+                                            Grid.Row="1"
+                                            ItemsSource="{x:Bind ApplicationCollection, Mode=OneWay}"
+                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                            ScrollViewer.HorizontalScrollMode="Disabled"
+                                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                            ScrollViewer.VerticalScrollMode="Enabled"
+                                            SelectionMode="None">
+
+                                            <ListView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="Margin" Value="0" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate x:DataType="model:ApplicationModel">
+                                                    <Grid
+                                                        Height="35"
+                                                        Padding="16,0,16,0"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="0,1,0,0">
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock
+                                                            x:Name="AppIDText"
+                                                            Grid.Column="0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind AppID}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind AppID}"
+                                                                    Visibility="{Binding ElementName=AppIDText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="AppDescriptionText"
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind AppDescription}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind AppDescription}"
+                                                                    Visibility="{Binding ElementName=AppDescriptionText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="ExecutableText"
+                                                            Grid.Column="2"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind Executable}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind Executable}"
+                                                                    Visibility="{Binding ElementName=ExecutableText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="EntryPointText"
+                                                            Grid.Column="3"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind EntryPoint}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind EntryPoint}"
+                                                                    Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
+                                </muxc:Expander.Content>
                             </muxc:Expander>
                         </StackPanel>
                     </ScrollViewer>
@@ -1367,5 +1584,20 @@
                 </Grid>
             </Grid>
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="BackgroundDefault">
+                    <VisualState.Setters>
+                        <Setter Target="MainPageRoot.Background" Value="{ThemeResource DefaultBackgroundColorBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="BackgroundTransparent">
+                    <VisualState.Setters>
+                        <Setter Target="MainPageRoot.Background" Value="Transparent" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

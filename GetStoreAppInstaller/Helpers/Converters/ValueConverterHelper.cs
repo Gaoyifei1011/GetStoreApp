@@ -8,6 +8,14 @@ namespace GetStoreAppInstaller.Helpers.Converters
     public static class ValueConverterHelper
     {
         /// <summary>
+        /// 检查字符串是否为空
+        /// </summary>
+        public static bool IsNotEmptyString(string value)
+        {
+            return !string.IsNullOrEmpty(value);
+        }
+
+        /// <summary>
         /// 整数值与控件显示值转换
         /// </summary>
         public static Visibility IntToVisibilityConvert(int value)

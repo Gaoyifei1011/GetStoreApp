@@ -1,0 +1,23 @@
+<muxc:TeachingTip
+    x:Class="GetStoreAppInstaller.UI.TeachingTips.DataCopyTip"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:root="using:GetStoreAppInstaller.Services.Root"
+    IsLightDismissEnabled="False"
+    PlacementMargin="0,20,0,0"
+    PreferredPlacement="Bottom"
+    Style="{StaticResource TeachingTipStyle}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <TextBlock x:Name="CopySuccess" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />
+
+        <TextBlock
+            x:Name="CopyFailed"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyToClipboardFailed')}" />
+    </Grid>
+</muxc:TeachingTip>
