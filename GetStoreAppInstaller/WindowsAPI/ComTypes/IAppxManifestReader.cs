@@ -48,7 +48,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="resources">循环访问资源的枚举器。</param>
         /// <returns>如果方法成功，则返回 S_OK。</returns>
         [PreserveSig]
-        int GetResources([MarshalAs(UnmanagedType.Interface)] out IAppxManifestResourcesEnumerator resources);
+        int GetResources(out IntPtr resources);
 
         /// <summary>
         /// 获取循环访问清单中定义的设备功能的枚举器。

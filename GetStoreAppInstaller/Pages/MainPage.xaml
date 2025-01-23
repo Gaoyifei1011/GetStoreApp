@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreAppInstaller.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:language="using:Windows.Globalization"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:GetStoreAppInstaller.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
@@ -316,7 +317,7 @@
                                                             Grid.Column="1"
                                                             VerticalAlignment="Center"
                                                             FontSize="14"
-                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/SelectedDependencyPackage')}" />
+                                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/AddedDependencyPackage')}" />
 
                                                         <Button
                                                             Grid.Column="2"
@@ -670,10 +671,11 @@
                         VerticalScrollBarVisibility="Auto"
                         VerticalScrollMode="Enabled">
 
-                        <StackPanel Margin="0,0,30,30" Spacing="2">
+                        <StackPanel Margin="0,0,30,30">
 
                             <!--  基本信息  -->
                             <muxc:Expander
+                                Margin="0,0,0,2"
                                 Padding="0,6,0,6"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
@@ -827,6 +829,7 @@
 
                             <!--  目标设备信息  -->
                             <muxc:Expander
+                                Margin="0,0,0,2"
                                 Padding="0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
@@ -1019,6 +1022,7 @@
 
                             <!--  依赖项信息  -->
                             <muxc:Expander
+                                Margin="0,0,0,2"
                                 Padding="0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
@@ -1247,6 +1251,7 @@
 
                             <!--  应用包功能信息  -->
                             <muxc:Expander
+                                Margin="0,0,0,2"
                                 Padding="0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
@@ -1332,6 +1337,7 @@
 
                             <!--  应用包应用信息  -->
                             <muxc:Expander
+                                Margin="0,0,0,2"
                                 Padding="0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
@@ -1555,6 +1561,95 @@
                                             </ListView.ItemTemplate>
                                         </ListView>
                                     </Grid>
+                                </muxc:Expander.Content>
+                            </muxc:Expander>
+
+                            <!--  应用包语言信息  -->
+                            <muxc:Expander
+                                Padding="0"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                IsExpanded="True"
+                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(LanguageCollection.Count), Mode=OneWay}">
+
+                                <muxc:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xF2B7;" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageLanguage')}" />
+                                    </Grid>
+                                </muxc:Expander.Header>
+
+                                <muxc:Expander.Content>
+                                    <GridView
+                                        Margin="16,4,16,-4"
+                                        ItemsSource="{x:Bind LanguageCollection, Mode=OneWay}"
+                                        SelectionMode="None">
+
+                                        <GridView.ItemContainerStyle>
+                                            <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                                <Setter Property="Margin" Value="0" />
+                                                <Setter Property="MinHeight" Value="0" />
+                                            </Style>
+                                        </GridView.ItemContainerStyle>
+
+                                        <GridView.ItemTemplate>
+                                            <DataTemplate x:DataType="language:Language">
+                                                <GridViewItem
+                                                    Width="230"
+                                                    Height="30"
+                                                    HorizontalContentAlignment="Left">
+                                                    <Grid HorizontalAlignment="Left">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <FontIcon
+                                                            Grid.Column="0"
+                                                            Margin="0,0,12,0"
+                                                            FontSize="12"
+                                                            Glyph="&#xE915;" />
+
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind DisplayName}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip MaxWidth="9999">
+                                                                    <ToolTip.Content>
+                                                                        <TextBlock>
+                                                                            <Run Text="{x:Bind DisplayName}" />
+                                                                            <Run Text=" - " />
+                                                                            <Run Text="{x:Bind LanguageTag}" />
+                                                                        </TextBlock>
+                                                                    </ToolTip.Content>
+                                                                </ToolTip>
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </GridViewItem>
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+                                    </GridView>
                                 </muxc:Expander.Content>
                             </muxc:Expander>
                         </StackPanel>

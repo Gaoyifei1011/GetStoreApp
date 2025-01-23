@@ -20,6 +20,8 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 
         public bool AllowMultiSelect { get; set; } = false;
 
+        public bool UseCustomFilterTypes { get; set; } = false;
+
         public string Description { get; set; } = string.Empty;
 
         public string SelectedFile { get; private set; } = string.Empty;
@@ -70,20 +72,32 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
                         fileOpenDialog.SetOptions(FILEOPENDIALOGOPTIONS.FOS_ALLOWMULTISELECT);
                     }
 
-                    COMDLG_FILTERSPEC[] comdlgFilterSpecArray = new COMDLG_FILTERSPEC[FileTypeFilter.Count];
-
-                    for (int index = 0; index < FileTypeFilter.Count; index++)
+                    if (UseCustomFilterTypes)
                     {
-                        COMDLG_FILTERSPEC comdlgFilterSpec = new()
-                        {
-                            pszSpec = (char*)Marshal.StringToHGlobalUni(string.Empty),
-                            pszName = (char*)Marshal.StringToHGlobalUni(FileTypeFilter[index])
-                        };
+                        COMDLG_FILTERSPEC[] comdlgFilterSpecArray = new COMDLG_FILTERSPEC[FileTypeFilter.Count + 1];
+                        string allFileTypesString = string.Join(";", FileTypeFilter);
 
-                        comdlgFilterSpecArray[index] = comdlgFilterSpec;
+                        for (int index = 0; index < comdlgFilterSpecArray.Length; index++)
+                        {
+                            COMDLG_FILTERSPEC comdlgFilterSpec = new();
+
+                            if (index == comdlgFilterSpecArray.Length - 1)
+                            {
+                                comdlgFilterSpec.pszSpec = (char*)Marshal.StringToHGlobalUni(allFileTypesString);
+                                comdlgFilterSpec.pszName = (char*)Marshal.StringToHGlobalUni(ResourceService.GetLocalized("Installer/AllFiles"));
+                            }
+                            else
+                            {
+                                comdlgFilterSpec.pszSpec = (char*)Marshal.StringToHGlobalUni(FileTypeFilter[index]);
+                                comdlgFilterSpec.pszName = (char*)Marshal.StringToHGlobalUni(FileTypeFilter[index]);
+                            }
+
+                            comdlgFilterSpecArray[index] = comdlgFilterSpec;
+                        }
+
+                        fileOpenDialog.SetFileTypes((uint)comdlgFilterSpecArray.Length, comdlgFilterSpecArray);
                     }
 
-                    fileOpenDialog.SetFileTypes((uint)FileTypeFilter.Count, comdlgFilterSpecArray);
                     Shell32Library.SHCreateItemFromParsingName(RootFolder, nint.Zero, typeof(IShellItem).GUID, out nint initialFolder);
                     fileOpenDialog.SetFolder((IShellItem)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(initialFolder, CreateObjectFlags.Unwrap));
 
