@@ -187,7 +187,8 @@
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
                             CornerRadius="{StaticResource ControlCornerRadius}">
-                            <Image Source="{x:Bind PackageIconImage, Mode=OneWay}" />
+
+                            <Image Source="{x:Bind PackageIconImage, Mode=OneWay}" Stretch="None" />
                         </Grid>
 
                         <Grid Grid.Column="1">

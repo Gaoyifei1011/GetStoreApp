@@ -24,7 +24,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.DataTransfer;
@@ -60,6 +60,12 @@ namespace GetStoreAppInstaller.Pages
         private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
         private readonly PackageManager packageManager = new();
         private readonly AppActivationArguments appActivationArguments;
+
+        private readonly IAppxFactory3 appxFactory;
+        private readonly IAppxBundleFactory2 appxBundleFactory;
+
+        [GeneratedRegex(@"scale-(\d{3})", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        private static partial Regex ScaleRegex { get; }
 
         private string fileName = string.Empty;
         private IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress;
@@ -465,6 +471,16 @@ namespace GetStoreAppInstaller.Pages
             else
             {
                 VisualStateManager.GoToState(this, "BackgroundDefault", false);
+            }
+
+            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+            {
+                appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+            }
+
+            if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
+            {
+                appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
             }
         }
 
@@ -1272,45 +1288,40 @@ namespace GetStoreAppInstaller.Pages
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                         {
-                            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+                            if (appxFactory is not null && appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                             {
-                                IAppxFactory3 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+                                parseResult = true;
 
-                                if (appxFactory is not null && appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                // 解析安装包所有文件
+                                Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+
+                                // 获取并解析本地资源文件
+                                IStream resourceFileStream = GetPackageResourceFileStream(appxFileDict);
+                                Dictionary<string, Dictionary<string, string>> resourceDict = null;
+
+                                if (resourceFileStream is not null)
                                 {
-                                    parseResult = true;
+                                    resourceDict = ParsePackageResources(resourceFileStream);
+                                    Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
+                                    resourceFileStream = null;
+                                }
 
-                                    // 解析安装包所有文件
-                                    Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+                                // 从资源文件中查找符合的语言
+                                Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
 
-                                    // 获取并解析本地资源文件
-                                    IStream resourceFileStream = GetPackageResourceFileStream(appxFileDict);
-                                    Dictionary<string, Dictionary<string, string>> resourceDict = null;
+                                // 解析资源包清单文件
+                                Dictionary<string, object> parseManifestDict = ParsePackageManifest(appxPackageReader, false, specifiedLanguageResourceDict);
 
-                                    if (resourceFileStream is not null)
-                                    {
-                                        resourceDict = ParsePackageResources(resourceFileStream);
-                                        Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
-                                        resourceFileStream = null;
-                                    }
+                                foreach (KeyValuePair<string, object> parseManifsetItem in parseManifestDict)
+                                {
+                                    parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
+                                }
 
-                                    // 从资源文件中查找符合的语言
-                                    Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
-
-                                    // 解析资源包清单文件
-                                    Dictionary<string, object> parseManifestDict = ParsePackageManifest(appxPackageReader, false, specifiedLanguageResourceDict);
-
-                                    foreach (KeyValuePair<string, object> parseManifsetItem in parseManifestDict)
-                                    {
-                                        parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
-                                    }
-
-                                    // 获取应用包图标
-                                    if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
-                                    {
-                                        IStream imageFileStream = GetPackageLogo(logo, appxFileDict);
-                                        parseDict.TryAdd("ImageLogo", imageFileStream);
-                                    }
+                                // 获取应用包图标
+                                if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
+                                {
+                                    IStream imageFileStream = GetPackageLogo(logo, appxFileDict);
+                                    parseDict.TryAdd("ImageLogo", imageFileStream);
                                 }
                             }
 
@@ -1324,115 +1335,111 @@ namespace GetStoreAppInstaller.Pages
                     // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
                     else if (extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
+                        IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
+                        if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                         {
-                            IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
-                            if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
+                            if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0 && appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0)
                             {
-                                IAppxBundleFactory2 appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
+                                Dictionary<string, object> packageBundleManifestDict = ParsePackageBundleManifestInfo(appxBundleManifestReader);
+                                Dictionary<string, Dictionary<string, string>> resourceDict = [];
 
-                                if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0 && appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0)
+                                if (appxFactory is not null)
                                 {
-                                    Dictionary<string, object> packageBundleManifestDict = ParsePackageBundleManifestInfo(appxBundleManifestReader);
-                                    Dictionary<string, Dictionary<string, string>> resourceDict = [];
+                                    parseResult = true;
 
-                                    if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+                                    // 从资源文件中查找符合的语言
+                                    if (packageBundleManifestDict.TryGetValue("LanguageResource", out object languageResourceObj) && languageResourceObj is Dictionary<string, string> languageResourceDict)
                                     {
-                                        IAppxFactory3 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+                                        List<string> languageList = [];
 
-                                        if (appxFactory is not null)
+                                        foreach (KeyValuePair<string, string> languageResourceItem in languageResourceDict)
                                         {
-                                            parseResult = true;
+                                            // 获取安装包支持的语言
+                                            languageList.Add(languageResourceItem.Key);
+                                        }
 
-                                            // 从资源文件中查找符合的语言
-                                            if (packageBundleManifestDict.TryGetValue("QualifiedResource", out object qualifiedResourceObj) && qualifiedResourceObj is Dictionary<string, string> qualifiedResourceDict)
+                                        // 获取特定语言的资源文件
+                                        List<KeyValuePair<string, string>> specifiedLanguageResourceList = GetPackageBundleSpecifiedLanguageResource(languageResourceDict);
+
+                                        foreach (KeyValuePair<string, string> specifiedLanguageResourceItem in specifiedLanguageResourceList)
+                                        {
+                                            // 解析应用捆绑包对应符合的资源包
+                                            appxBundleReader.GetPayloadPackage(specifiedLanguageResourceItem.Value, out IAppxFile specifiedLanguageResourceFile);
+
+                                            if (specifiedLanguageResourceFile.GetStream(out IStream specifiedLanguageResourceFileStream) is 0 && appxFactory.CreatePackageReader2(specifiedLanguageResourceFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                                             {
-                                                List<string> qualifiedResourceList = [];
+                                                Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(specifiedLanguageResourceFileStream, CreateComInterfaceFlags.None));
 
-                                                foreach (KeyValuePair<string, string> qualifiedResourceItem in qualifiedResourceDict)
+                                                // 解析资源包所有文件
+                                                Dictionary<string, IAppxFile> fileDict = ParsePackagePayloadFiles(appxPackageReader);
+
+                                                // 获取并解析本地资源文件
+                                                IStream resourceFileStream = GetPackageResourceFileStream(fileDict);
+
+                                                if (resourceFileStream is not null)
                                                 {
-                                                    // 获取安装包支持的语言
-                                                    qualifiedResourceList.Add(qualifiedResourceItem.Key);
-                                                }
+                                                    Dictionary<string, Dictionary<string, string>> parseResourceDict = ParsePackageResources(resourceFileStream);
+                                                    Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
 
-                                                // 获取特定语言的资源文件
-                                                List<KeyValuePair<string, string>> specifiedLanguageResourceList = GetPackageBundleSpecifiedLanguageResource(qualifiedResourceDict);
-
-                                                foreach (KeyValuePair<string, string> specifiedLanguageResourceItem in specifiedLanguageResourceList)
-                                                {
-                                                    // 解析应用捆绑包对应符合的资源包
-                                                    appxBundleReader.GetPayloadPackage(specifiedLanguageResourceItem.Value, out IAppxFile specifiedLanguageResourceFile);
-
-                                                    if (specifiedLanguageResourceFile.GetStream(out IStream specifiedLanguageResourceFileStream) is 0 && appxFactory.CreatePackageReader2(specifiedLanguageResourceFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                                    foreach (KeyValuePair<string, Dictionary<string, string>> parseResourceItem in parseResourceDict)
                                                     {
-                                                        // 解析资源包所有文件
-                                                        Dictionary<string, IAppxFile> fileDict = ParsePackagePayloadFiles(appxPackageReader);
-
-                                                        // 获取并解析本地资源文件
-                                                        IStream resourceFileStream = GetPackageResourceFileStream(fileDict);
-
-                                                        if (resourceFileStream is not null)
+                                                        if (parseResourceItem.Key.Equals(specifiedLanguageResourceItem.Key, StringComparison.OrdinalIgnoreCase))
                                                         {
-                                                            Dictionary<string, Dictionary<string, string>> parseResourceDict = ParsePackageResources(resourceFileStream);
-                                                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(resourceFileStream, CreateComInterfaceFlags.None));
-
-                                                            foreach (KeyValuePair<string, Dictionary<string, string>> parseResourceItem in parseResourceDict)
-                                                            {
-                                                                if (parseResourceItem.Key.Equals(specifiedLanguageResourceItem.Key, StringComparison.OrdinalIgnoreCase))
-                                                                {
-                                                                    resourceDict.TryAdd(specifiedLanguageResourceItem.Key, parseResourceItem.Value);
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                qualifiedResourceList.Sort();
-                                                parseDict.TryAdd("QualifiedResource", qualifiedResourceList);
-                                            }
-
-                                            // 从资源文件中查找符合的语言
-                                            Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
-
-                                            // 解析应用
-                                            if (packageBundleManifestDict.TryGetValue("Application", out object applicationObj) && applicationObj is Dictionary<ProcessorArchitecture, string> applicationDict)
-                                            {
-                                                string applicationFileName = ParsePacakgeBundleCompatibleFile(applicationDict);
-                                                string architecture = ParsePackageBundleArchitecture(applicationDict);
-                                                parseDict.TryAdd("ProcessorArchitecture", architecture);
-
-                                                appxBundleReader.GetPayloadPackage(applicationFileName, out IAppxFile applicationFile);
-
-                                                if (applicationFile.GetStream(out IStream applicationFileStream) is 0)
-                                                {
-                                                    if (appxFactory.CreatePackageReader2(applicationFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
-                                                    {
-                                                        Dictionary<string, IAppxFile> fileDict = ParsePackagePayloadFiles(appxPackageReader);
-                                                        Dictionary<string, object> parseManifestDict = ParsePackageManifest(appxPackageReader, true, specifiedLanguageResourceDict);
-
-                                                        foreach (KeyValuePair<string, object> parseManifsetItem in parseManifestDict)
-                                                        {
-                                                            parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
-                                                        }
-
-                                                        // 获取应用包图标
-                                                        if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
-                                                        {
-                                                            IStream imageFileStream = GetPackageLogo(logo, fileDict);
-                                                            parseDict.TryAdd("ImageLogo", imageFileStream);
+                                                            resourceDict.TryAdd(specifiedLanguageResourceItem.Key, parseResourceItem.Value);
                                                         }
                                                     }
                                                 }
                                             }
                                         }
+
+                                        languageList.Sort();
+                                        parseDict.TryAdd("Language", languageList);
+                                    }
+
+                                    // 从资源文件中查找符合的语言
+                                    Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
+
+                                    // 解析应用
+                                    if (packageBundleManifestDict.TryGetValue("Application", out object applicationObj) && applicationObj is Dictionary<ProcessorArchitecture, string> applicationDict)
+                                    {
+                                        string applicationFileName = ParsePacakgeBundleCompatibleFile(applicationDict);
+                                        string architecture = ParsePackageBundleArchitecture(applicationDict);
+                                        parseDict.TryAdd("ProcessorArchitecture", architecture);
+
+                                        appxBundleReader.GetPayloadPackage(applicationFileName, out IAppxFile applicationFile);
+
+                                        if (applicationFile.GetStream(out IStream applicationFileStream) is 0 && appxFactory.CreatePackageReader2(applicationFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                        {
+                                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(applicationFileStream, CreateComInterfaceFlags.None));
+
+                                            Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+                                            Dictionary<string, object> parseManifestDict = ParsePackageManifest(appxPackageReader, true, specifiedLanguageResourceDict);
+
+                                            foreach (KeyValuePair<string, object> parseManifsetItem in parseManifestDict)
+                                            {
+                                                parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
+                                            }
+                                        }
+                                    }
+
+                                    // 从资源文件中查找符合的图标
+                                    if (packageBundleManifestDict.TryGetValue("ScaleResource", out object scaleResourceObj) && scaleResourceObj is List<string> scaleResourceList)
+                                    {
+                                        // 获取应用包图标
+                                        if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
+                                        {
+                                            Dictionary<string, IAppxFile> scaleBundleFileDict = ParsePacakgeBundleScaleFiles(appxBundleReader, scaleResourceList);
+                                            IStream imageFileStream = GetPackageBundleLogo(logo, scaleBundleFileDict);
+                                            parseDict.TryAdd("ImageLogo", imageFileStream);
+                                        }
                                     }
                                 }
-
-                                randomAccessStream?.Dispose();
-                                Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(fileStream, CreateComInterfaceFlags.None));
-                                randomAccessStream = null;
-                                fileStream = null;
                             }
+
+                            randomAccessStream?.Dispose();
+                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(fileStream, CreateComInterfaceFlags.None));
+                            randomAccessStream = null;
+                            fileStream = null;
                         }
                     }
 
@@ -1478,21 +1485,16 @@ namespace GetStoreAppInstaller.Pages
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                         {
-                            if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
+                            if (appxFactory is not null && appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                             {
-                                IAppxFactory3 appxFactory = (IAppxFactory3)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxFactoryPtr, CreateObjectFlags.Unwrap);
+                                parseResult = true;
 
-                                if (appxFactory is not null && appxFactory.CreatePackageReader2(fileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                                // 解析资源包清单文件
+                                Dictionary<string, object> parseManifsetDict = ParseDependencyPackageManifest(appxPackageReader);
+
+                                foreach (KeyValuePair<string, object> parseManifsetItem in parseManifsetDict)
                                 {
-                                    parseResult = true;
-
-                                    // 解析资源包清单文件
-                                    Dictionary<string, object> parseManifsetDict = ParseDependencyPackageManifest(appxPackageReader);
-
-                                    foreach (KeyValuePair<string, object> parseManifsetItem in parseManifsetDict)
-                                    {
-                                        parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
-                                    }
+                                    parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
                                 }
                             }
 
@@ -1511,8 +1513,6 @@ namespace GetStoreAppInstaller.Pages
                             IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                             if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
                             {
-                                IAppxBundleFactory2 appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
-
                                 if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0)
                                 {
                                     parseResult = true;
@@ -1579,6 +1579,9 @@ namespace GetStoreAppInstaller.Pages
             return applicationList;
         }
 
+        /// <summary>
+        /// 解析应用包的依赖信息
+        /// </summary>
         private List<Dictionary<string, object>> ParsePackageDependencies(IAppxManifestReader3 appxManifestReader)
         {
             List<Dictionary<string, object>> dependencyList = [];
@@ -1686,8 +1689,8 @@ namespace GetStoreAppInstaller.Pages
                     if (!isBundle)
                     {
                         // 获取应用包定义的限定资源
-                        List<string> qualifiedResourceList = ParsePackageQualifiedResources(appxManifestReader);
-                        parseDict.TryAdd("QualifiedResource", qualifiedResourceList);
+                        List<string> languageList = ParsePackageLanguage(appxManifestReader);
+                        parseDict.TryAdd("Language", languageList);
                     }
                 }
             }
@@ -1712,7 +1715,7 @@ namespace GetStoreAppInstaller.Pages
                 {
                     appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
                     appxFile.GetName(out string packageFileName);
-                    fileDict.Add(packageFileName, appxFile);
+                    fileDict.TryAdd(packageFileName, appxFile);
 
                     appxFilesEnumerator.MoveNext(out _);
                 }
@@ -1722,11 +1725,11 @@ namespace GetStoreAppInstaller.Pages
         }
 
         /// <summary>
-        /// 解析应用包定义的限定资源
+        /// 解析应用包定义的语言
         /// </summary>
-        private List<string> ParsePackageQualifiedResources(IAppxManifestReader3 appxManifestReader)
+        private List<string> ParsePackageLanguage(IAppxManifestReader3 appxManifestReader)
         {
-            List<string> qualifiedResourceList = [];
+            List<string> languageList = [];
 
             if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
@@ -1734,15 +1737,15 @@ namespace GetStoreAppInstaller.Pages
                 {
                     if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
                     {
-                        qualifiedResourceList.Add(language);
+                        languageList.Add(language);
                     }
 
                     appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
                 }
             }
 
-            qualifiedResourceList.Sort();
-            return qualifiedResourceList;
+            languageList.Sort();
+            return languageList;
         }
 
         /// <summary>
@@ -2221,7 +2224,8 @@ namespace GetStoreAppInstaller.Pages
         {
             Dictionary<string, object> packageManifestInfoDict = [];
             Dictionary<ProcessorArchitecture, string> applicationDict = [];
-            Dictionary<string, string> qualifiedResourceDict = [];
+            Dictionary<string, string> languageResourceDict = [];
+            List<string> scaleResourceList = [];
 
             if (appxBundleManifestReader.GetPackageInfoItems(out IAppxBundleManifestPackageInfoEnumerator appxBundleManifestPackageInfoEnumerator) is 0)
             {
@@ -2238,13 +2242,23 @@ namespace GetStoreAppInstaller.Pages
                         appxBundleManifestPackageInfo.GetPackageId(out IAppxManifestPackageId appxManifestPackageId);
                         appxManifestPackageId.GetArchitecture(out ProcessorArchitecture architecture);
                         applicationDict.TryAdd(architecture, fileName);
+                        scaleResourceList.Add(fileName);
+                    }
+                    else
+                    {
+                        bool isPackageBundleScale = GetIsPackageBundleScale(appxBundleManifestPackageInfo);
+
+                        if (isPackageBundleScale)
+                        {
+                            scaleResourceList.Add(fileName);
+                        }
                     }
 
-                    List<string> qualifiedResourceList = GetPackageBundleQualifiedResources(appxBundleManifestPackageInfo);
+                    List<string> languageResourceList = GetPackageBundleLanguage(appxBundleManifestPackageInfo);
 
-                    foreach (string qualifiedResourceItem in qualifiedResourceList)
+                    foreach (string languageResourceItem in languageResourceList)
                     {
-                        qualifiedResourceDict.TryAdd(qualifiedResourceItem, fileName);
+                        languageResourceDict.TryAdd(languageResourceItem, fileName);
                     }
 
                     appxBundleManifestPackageInfoEnumerator.MoveNext(out _);
@@ -2252,8 +2266,40 @@ namespace GetStoreAppInstaller.Pages
             }
 
             packageManifestInfoDict.TryAdd("Application", applicationDict);
-            packageManifestInfoDict.TryAdd("QualifiedResource", qualifiedResourceDict);
+            packageManifestInfoDict.TryAdd("LanguageResource", languageResourceDict);
+            packageManifestInfoDict.TryAdd("ScaleResource", scaleResourceList);
             return packageManifestInfoDict;
+        }
+
+        /// <summary>
+        /// 解析应用捆绑包带缩放资源的文件
+        /// </summary>
+        private Dictionary<string, IAppxFile> ParsePacakgeBundleScaleFiles(IAppxBundleReader appxBundleReader, List<string> scaleResourceList)
+        {
+            Dictionary<string, IAppxFile> bundleFileDict = [];
+
+            // 读取捆绑包的二进制文件
+            if (appxBundleReader.GetPayloadPackages(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
+            {
+                while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                {
+                    appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
+                    appxFile.GetName(out string packageFileName);
+
+                    foreach (string scaleResourceItem in scaleResourceList)
+                    {
+                        if (packageFileName.Equals(scaleResourceItem, StringComparison.OrdinalIgnoreCase))
+                        {
+                            bundleFileDict.TryAdd(packageFileName, appxFile);
+                            break;
+                        }
+                    }
+
+                    appxFilesEnumerator.MoveNext(out _);
+                }
+            }
+
+            return bundleFileDict;
         }
 
         /// <summary>
@@ -2279,30 +2325,67 @@ namespace GetStoreAppInstaller.Pages
         }
 
         /// <summary>
-        /// 应用包图标
+        /// 获取应用包图标
         /// </summary>
-        private IStream GetPackageLogo(string logo, Dictionary<string, IAppxFile> fileDict)
+        private IStream GetPackageLogo(string logo, Dictionary<string, IAppxFile> appxFileDict)
         {
             List<KeyValuePair<string, IAppxFile>> logoList = [];
-            IStream imageFileStream = null;
             string logoFileName = Path.GetFileNameWithoutExtension(logo);
+            string logoExtensionName = Path.GetExtension(logo);
+
+            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName, logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             // 读取应用包图标
-            foreach (KeyValuePair<string, IAppxFile> fileItem in fileDict)
+            foreach (KeyValuePair<string, IAppxFile> appxFileItem in appxFileDict)
             {
-                if (fileItem.Value.GetName(out string packageFileName) is 0 && packageFileName.Contains(logoFileName))
+                if (appxFileItem.Value.GetName(out string packageFileName) is 0 && logoRegex.IsMatch(packageFileName))
                 {
-                    logoList.Add(KeyValuePair.Create(packageFileName, fileItem.Value));
+                    logoList.Add(KeyValuePair.Create(packageFileName, appxFileItem.Value));
                 }
             }
 
-            // TODO:更改应用包图标的识别方法
-            if (logoList.Count > 0)
+            return GetSpecifiedLogoStream(logo, logoList);
+        }
+
+        /// <summary>
+        /// 获取应用捆绑包图标
+        /// </summary>
+        private IStream GetPackageBundleLogo(string logo, Dictionary<string, IAppxFile> scaleBundleFileDict)
+        {
+            List<KeyValuePair<string, IAppxFile>> logoList = [];
+            Dictionary<string, IAppxFile> logoDict = [];
+            string logoFileName = Path.GetFileNameWithoutExtension(logo);
+            string logoExtensionName = Path.GetExtension(logo);
+
+            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName, logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+            // 读取应用包图标
+            foreach (KeyValuePair<string, IAppxFile> scaleBundleItem in scaleBundleFileDict)
             {
-                logoList[0].Value.GetStream(out imageFileStream);
+                scaleBundleItem.Value.GetStream(out IStream bundleFileStream);
+
+                if (appxFactory is not null && appxFactory.CreatePackageReader2(bundleFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
+                {
+                    // 解析安装包所有文件
+                    Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
+
+                    // 读取应用包图标
+                    foreach (KeyValuePair<string, IAppxFile> appxFileItem in appxFileDict)
+                    {
+                        if (appxFileItem.Value.GetName(out string packageFileName) is 0 && logoRegex.IsMatch(packageFileName))
+                        {
+                            logoDict.TryAdd(packageFileName, appxFileItem.Value);
+                        }
+                    }
+                }
             }
 
-            return imageFileStream;
+            foreach (KeyValuePair<string, IAppxFile> logoItem in logoDict)
+            {
+                logoList.Add(KeyValuePair.Create(logoItem.Key, logoItem.Value));
+            }
+
+            return GetSpecifiedLogoStream(logo, logoList);
         }
 
         /// <summary>
@@ -2399,6 +2482,81 @@ namespace GetStoreAppInstaller.Pages
         }
 
         /// <summary>
+        /// 获取符合的图标流
+        /// </summary>
+        private IStream GetSpecifiedLogoStream(string logo, List<KeyValuePair<string, IAppxFile>> logoList)
+        {
+            IStream imageFileStream = null;
+            logoList.Sort((item1, item2) => item1.Key.CompareTo(item2.Key));
+
+            if (logoList.Count > 0)
+            {
+                int deviceDpi = (int)(Program.DisplayInformation.RawPixelsPerViewPixel * 100);
+
+                for (int logoIndex = 0; logoIndex < logoList.Count; logoIndex++)
+                {
+                    KeyValuePair<string, IAppxFile> logoItem = logoList[logoIndex];
+                    MatchCollection scaleMatchCollection = ScaleRegex.Matches(logoItem.Key);
+
+                    for (int index = 0; index < scaleMatchCollection.Count; index++)
+                    {
+                        Match matchItem = scaleMatchCollection[index];
+                        GroupCollection scaleDataListGroups = matchItem.Groups;
+
+                        // 选择符合设备缩放大小的图标文件
+                        if (scaleDataListGroups.Count is 2)
+                        {
+                            int scale = Convert.ToInt32(scaleDataListGroups[1].Value);
+
+                            if (scale >= deviceDpi)
+                            {
+                                logoItem.Value.GetStream(out imageFileStream);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (imageFileStream is not null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        // 若设备的缩放大小超过应用包提供的缩放大小，则使用最后一个
+                        if (logoIndex.Equals(logoList.Count - 1))
+                        {
+                            logoItem.Value.GetStream(out imageFileStream);
+                        }
+                    }
+                }
+
+                // 没有合适的，则使用文件名对应的图标
+                if (imageFileStream is null)
+                {
+                    foreach (KeyValuePair<string, IAppxFile> logoItem in logoList)
+                    {
+                        if (logoItem.Key.Equals(logo, StringComparison.OrdinalIgnoreCase))
+                        {
+                            logoItem.Value.GetStream(out imageFileStream);
+                            break;
+                        }
+                    }
+                }
+
+                // 没有选中，则选择第一个
+                if (imageFileStream is null)
+                {
+                    if (logoList.Count > 0)
+                    {
+                        logoList[0].Value.GetStream(out imageFileStream);
+                    }
+                }
+            }
+
+            return imageFileStream;
+        }
+
+        /// <summary>
         /// 获取特定语言的资源文件
         /// </summary>
         private List<KeyValuePair<string, string>> GetPackageBundleSpecifiedLanguageResource(Dictionary<string, string> resourceDict)
@@ -2483,28 +2641,51 @@ namespace GetStoreAppInstaller.Pages
         }
 
         /// <summary>
-        /// 获取应用捆绑包限定的资源
+        /// 获取应用捆绑包定义的语言
         /// </summary>
-        private List<string> GetPackageBundleQualifiedResources(IAppxBundleManifestPackageInfo appxBundleManifestPackageInfo)
+        private List<string> GetPackageBundleLanguage(IAppxBundleManifestPackageInfo appxBundleManifestPackageInfo)
         {
-            List<string> qualifiedResourceList = [];
+            List<string> languageResourceList = [];
 
-            // 获取应用包定义的限定资源
             if (appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
                 while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
                 {
                     if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
                     {
-                        qualifiedResourceList.Add(language);
+                        languageResourceList.Add(language);
                     }
 
                     appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
                 }
             }
 
-            qualifiedResourceList.Sort();
-            return qualifiedResourceList;
+            languageResourceList.Sort();
+            return languageResourceList;
+        }
+
+        /// <summary>
+        /// 获取应用捆绑包中定义资源缩放
+        /// </summary>
+        private bool GetIsPackageBundleScale(IAppxBundleManifestPackageInfo appxBundleManifestPackageInfo)
+        {
+            bool isPackageBundleScale = false;
+
+            if (appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
+            {
+                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                {
+                    if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetScale(out _) is 0)
+                    {
+                        isPackageBundleScale = true;
+                        break;
+                    }
+
+                    appxManifestQualifiedResourcesEnumerator.MoveNext(out _);
+                }
+            }
+
+            return isPackageBundleScale;
         }
 
         #endregion 第六部分：解析应用包信息
@@ -2660,11 +2841,11 @@ namespace GetStoreAppInstaller.Pages
                 Version = parseDict.TryGetValue("Version", out object versionObj) && versionObj is Version version ? version : new Version();
                 PackageDescription = parseDict.TryGetValue("Description", out object descriptionObj) && descriptionObj is string description ? string.IsNullOrEmpty(description) ? ResourceService.GetLocalized("Installer/None") : description : ResourceService.GetLocalized("Installer/None");
 
-                if (parseDict.TryGetValue("QualifiedResource", out object qualifiedResourceListObj) && qualifiedResourceListObj is List<string> qualifiedResourceList)
+                if (parseDict.TryGetValue("Language", out object languageObj) && languageObj is List<string> languageList)
                 {
-                    foreach (string qualifiedResource in qualifiedResourceList)
+                    foreach (string language in languageList)
                     {
-                        LanguageCollection.Add(new Language(qualifiedResource));
+                        LanguageCollection.Add(new Language(language));
                     }
                 }
 
