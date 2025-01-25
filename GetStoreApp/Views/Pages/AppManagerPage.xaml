@@ -487,7 +487,7 @@
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 FontSize="14"
-                                                Text="{x:Bind PublisherName}"
+                                                Text="{x:Bind PublisherDisplayName}"
                                                 TextAlignment="Left"
                                                 TextTrimming="CharacterEllipsis"
                                                 TextWrapping="NoWrap">
@@ -495,8 +495,8 @@
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip MaxWidth="9999">
                                                         <TextBlock>
-                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherNameToolTip')}" />
-                                                            <Run Text="{x:Bind PublisherName}" />
+                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
+                                                            <Run Text="{x:Bind PublisherDisplayName}" />
                                                         </TextBlock>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
@@ -805,13 +805,13 @@
                                 <TextBlock
                                     Grid.Row="5"
                                     Grid.Column="1"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherName')}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayName')}"
                                     TextWrapping="Wrap" />
 
                                 <TextBlock
                                     Grid.Row="5"
                                     Grid.Column="2"
-                                    Text="{x:Bind PublisherName, Mode=OneWay}"
+                                    Text="{x:Bind PublisherDisplayName, Mode=OneWay}"
                                     TextWrapping="Wrap" />
 
                                 <TextBlock
@@ -1434,7 +1434,7 @@
                                                         Margin="10,0,0,0"
                                                         VerticalAlignment="Center"
                                                         FontSize="14"
-                                                        Text="{x:Bind PublisherName}"
+                                                        Text="{x:Bind PublisherDisplayName}"
                                                         TextAlignment="Left"
                                                         TextTrimming="CharacterEllipsis"
                                                         TextWrapping="NoWrap">
@@ -1442,7 +1442,7 @@
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip
                                                                 MaxWidth="9999"
-                                                                Content="{x:Bind PublisherName}"
+                                                                Content="{x:Bind PublisherDisplayName}"
                                                                 Visibility="{Binding ElementName=DependencyPublisherText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                         </ToolTipService.ToolTip>
                                                     </TextBlock>

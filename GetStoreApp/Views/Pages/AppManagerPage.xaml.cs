@@ -1,3 +1,4 @@
+using GetStoreApp.Extensions.DataType.Class;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
@@ -307,18 +308,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private string _publisherName = string.Empty;
+        private string _publisherDisplayName = string.Empty;
 
-        public string PublisherName
+        public string PublisherDisplayName
         {
-            get { return _publisherName; }
+            get { return _publisherDisplayName; }
 
             set
             {
-                if (!Equals(_publisherName, value))
+                if (!Equals(_publisherDisplayName, value))
                 {
-                    _publisherName = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherName)));
+                    _publisherDisplayName = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PublisherDisplayName)));
                 }
             }
         }
@@ -888,150 +889,147 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is PackageModel packageItem)
             {
-                Dictionary<string, object> packageDict = null;
+                AppInformation appInformation = new();
 
                 await Task.Run(() =>
                 {
-                    packageDict = new()
-                    {
-                        ["DisplayName"] = packageItem.DisplayName
-                    };
+                    appInformation.DisplayName = packageItem.DisplayName;
 
                     try
                     {
-                        packageDict["FamilyName"] = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
+                        appInformation.PackageFamilyName = string.IsNullOrEmpty(packageItem.Package.Id.FamilyName) ? Unknown : packageItem.Package.Id.FamilyName;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["DisplayName"] = Unknown;
+                        appInformation.PackageFamilyName = Unknown;
                     }
 
                     try
                     {
-                        packageDict["FullName"] = string.IsNullOrEmpty(packageItem.Package.Id.FullName) ? Unknown : packageItem.Package.Id.FullName;
+                        appInformation.PackageFullName = string.IsNullOrEmpty(packageItem.Package.Id.FullName) ? Unknown : packageItem.Package.Id.FullName;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["FullName"] = Unknown;
+                        appInformation.PackageFullName = Unknown;
                     }
 
                     try
                     {
-                        packageDict["Description"] = string.IsNullOrEmpty(packageItem.Package.Description) ? Unknown : packageItem.Package.Description;
+                        appInformation.Description = string.IsNullOrEmpty(packageItem.Package.Description) ? Unknown : packageItem.Package.Description;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["FullName"] = Unknown;
+                        appInformation.Description = Unknown;
                     }
 
-                    packageDict["PublisherName"] = packageItem.PublisherName;
+                    appInformation.PublisherDisplayName = packageItem.PublisherDisplayName;
 
                     try
                     {
-                        packageDict["PublisherId"] = string.IsNullOrEmpty(packageItem.Package.Id.PublisherId) ? Unknown : packageItem.Package.Id.PublisherId;
+                        appInformation.PublisherId = string.IsNullOrEmpty(packageItem.Package.Id.PublisherId) ? Unknown : packageItem.Package.Id.PublisherId;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["PublisherId"] = Unknown;
+                        appInformation.PublisherId = Unknown;
                     }
 
-                    packageDict["Version"] = packageItem.Version;
-                    packageDict["InstalledDate"] = packageItem.InstallDate;
+                    appInformation.Version = packageItem.Version;
+                    appInformation.InstallDate = packageItem.InstallDate;
 
                     try
                     {
-                        packageDict["Architecture"] = string.IsNullOrEmpty(packageItem.Package.Id.Architecture.ToString()) ? Unknown : packageItem.Package.Id.Architecture.ToString();
+                        appInformation.Architecture = string.IsNullOrEmpty(packageItem.Package.Id.Architecture.ToString()) ? Unknown : packageItem.Package.Id.Architecture.ToString();
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["Architecture"] = Unknown;
+                        appInformation.Architecture = Unknown;
                     }
 
-                    packageDict["SignatureKind"] = ResourceService.GetLocalized(string.Format("AppManager/Signature{0}", packageItem.SignatureKind.ToString()));
+                    appInformation.SignatureKind = ResourceService.GetLocalized(string.Format("AppManager/Signature{0}", packageItem.SignatureKind.ToString()));
 
                     try
                     {
-                        packageDict["ResourceId"] = string.IsNullOrEmpty(packageItem.Package.Id.ResourceId) ? Unknown : packageItem.Package.Id.ResourceId;
+                        appInformation.ResourceId = string.IsNullOrEmpty(packageItem.Package.Id.ResourceId) ? Unknown : packageItem.Package.Id.ResourceId;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["ResourceId"] = Unknown;
+                        appInformation.ResourceId = Unknown;
                     }
 
                     try
                     {
-                        packageDict["IsBundle"] = packageItem.Package.IsBundle ? Yes : No;
+                        appInformation.IsBundle = packageItem.Package.IsBundle ? Yes : No;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["IsBundle"] = Unknown;
+                        appInformation.IsBundle = Unknown;
                     }
 
                     try
                     {
-                        packageDict["IsDevelopmentMode"] = packageItem.Package.IsDevelopmentMode ? Yes : No;
+                        appInformation.IsDevelopmentMode = packageItem.Package.IsDevelopmentMode ? Yes : No;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["IsDevelopmentMode"] = Unknown;
+                        appInformation.IsDevelopmentMode = Unknown;
                     }
-                    packageDict["IsFramework"] = packageItem.IsFramework ? Yes : No;
+
+                    appInformation.IsFramework = packageItem.IsFramework ? Yes : No;
 
                     try
                     {
-                        packageDict["IsOptional"] = packageItem.Package.IsOptional ? Yes : No;
+                        appInformation.IsOptional = packageItem.Package.IsOptional ? Yes : No;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["IsOptional"] = Unknown;
+                        appInformation.IsOptional = Unknown;
                     }
 
                     try
                     {
-                        packageDict["IsResourcePackage"] = packageItem.Package.IsResourcePackage ? Yes : No;
+                        appInformation.IsResourcePackage = packageItem.Package.IsResourcePackage ? Yes : No;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["IsResourcePackage"] = Unknown;
+                        appInformation.IsResourcePackage = Unknown;
                     }
 
                     try
                     {
-                        packageDict["IsStub"] = packageItem.Package.IsStub ? Yes : No;
+                        appInformation.IsStub = packageItem.Package.IsStub ? Yes : No;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["IsStub"] = Unknown;
+                        appInformation.IsStub = Unknown;
                     }
 
                     try
                     {
-                        packageDict["VertifyIsOK"] = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
+                        appInformation.VertifyIsOK = packageItem.Package.Status.VerifyIsOK() ? Yes : No;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["VertifyIsOK"] = Unknown;
+                        appInformation.VertifyIsOK = Unknown;
                     }
 
                     try
                     {
-                        List<AppListEntryModel> appListEntryList = [];
                         IReadOnlyList<AppListEntry> appListEntriesList = packageItem.Package.GetAppListEntries();
                         for (int index = 0; index < appListEntriesList.Count; index++)
                         {
-                            appListEntryList.Add(new AppListEntryModel()
+                            appInformation.AppListEntryList.Add(new AppListEntryModel()
                             {
                                 DisplayName = appListEntriesList[index].DisplayInfo.DisplayName,
                                 Description = appListEntriesList[index].DisplayInfo.Description,
@@ -1040,17 +1038,14 @@ namespace GetStoreApp.Views.Pages
                                 PackageFullName = packageItem.Package.Id.FullName
                             });
                         }
-                        packageDict["AppListEntryCollection"] = appListEntryList;
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["AppListEntryCollection"] = new List<AppListEntry>();
                     }
 
                     try
                     {
-                        List<PackageModel> dependenciesList = [];
                         IReadOnlyList<Package> dependcies = packageItem.Package.Dependencies;
 
                         if (dependcies.Count > 0)
@@ -1059,10 +1054,10 @@ namespace GetStoreApp.Views.Pages
                             {
                                 try
                                 {
-                                    dependenciesList.Add(new PackageModel()
+                                    appInformation.DependenciesList.Add(new PackageModel()
                                     {
                                         DisplayName = dependcies[index].DisplayName,
-                                        PublisherName = dependcies[index].PublisherDisplayName,
+                                        PublisherDisplayName = dependcies[index].PublisherDisplayName,
                                         Version = new Version(dependcies[index].Id.Version.Major, dependcies[index].Id.Version.Minor, dependcies[index].Id.Version.Build, dependcies[index].Id.Version.Revision).ToString(),
                                         Package = dependcies[index]
                                     });
@@ -1074,25 +1069,20 @@ namespace GetStoreApp.Views.Pages
                             }
                         }
 
-                        dependenciesList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
-                        packageDict["DependenciesCollection"] = dependenciesList;
+                        appInformation.DependenciesList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                        packageDict["DependenciesCollection"] = new List<PackageModel>();
                     }
                 });
 
-                if (packageDict is not null)
+                InitializeAppInfo(appInformation);
+                BreadCollection.Add(new ContentLinkInfo()
                 {
-                    InitializeAppInfo(packageDict);
-                    BreadCollection.Add(new ContentLinkInfo()
-                    {
-                        DisplayText = ResourceService.GetLocalized("AppManager/AppInformation"),
-                        SecondaryText = "AppInformation"
-                    });
-                }
+                    DisplayText = ResourceService.GetLocalized("AppManager/AppInformation"),
+                    SecondaryText = "AppInformation"
+                });
             }
         }
 
@@ -1267,7 +1257,7 @@ namespace GetStoreApp.Views.Pages
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FamilyName"), FamilyName));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FullName"), FullName));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Description"), Description));
-                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherName"), PublisherName));
+                copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherDisplayName"), PublisherDisplayName));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/PublisherId"), PublisherId));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/Version"), Version));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/InstalledDate"), InstalledDate));
@@ -1513,7 +1503,7 @@ namespace GetStoreApp.Views.Pages
                                 AppListEntryCount = GetAppListEntriesCount(packageItem),
                                 DisplayName = GetDisplayName(packageItem),
                                 InstallDate = GetInstallDate(packageItem),
-                                PublisherName = GetPublisherName(packageItem),
+                                PublisherDisplayName = GetPublisherDisplayName(packageItem),
                                 Version = GetVersion(packageItem),
                                 SignatureKind = GetSignatureKind(packageItem),
                                 InstalledDate = GetInstalledDate(packageItem),
@@ -1540,35 +1530,35 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 初始化应用信息
         /// </summary>
-        private void InitializeAppInfo(Dictionary<string, object> appInfoDict)
+        private void InitializeAppInfo(AppInformation appInformation)
         {
-            DisplayName = appInfoDict[nameof(DisplayName)].ToString();
-            FamilyName = appInfoDict[nameof(FamilyName)].ToString();
-            FullName = appInfoDict[nameof(FullName)].ToString();
-            Description = appInfoDict[nameof(Description)].ToString();
-            PublisherName = appInfoDict[nameof(PublisherName)].ToString();
-            PublisherId = appInfoDict[nameof(PublisherId)].ToString();
-            Version = appInfoDict[nameof(Version)].ToString();
-            InstalledDate = appInfoDict[nameof(InstalledDate)].ToString();
-            Architecture = appInfoDict[nameof(Architecture)].ToString();
-            SignatureKind = appInfoDict[nameof(SignatureKind)].ToString();
-            ResourceId = appInfoDict[nameof(ResourceId)].ToString();
-            IsBundle = appInfoDict[nameof(IsBundle)].ToString();
-            IsDevelopmentMode = appInfoDict[nameof(IsDevelopmentMode)].ToString();
-            IsFramework = appInfoDict[nameof(IsFramework)].ToString();
-            IsOptional = appInfoDict[nameof(IsOptional)].ToString();
-            IsResourcePackage = appInfoDict[nameof(IsResourcePackage)].ToString();
-            IsStub = appInfoDict[nameof(IsStub)].ToString();
-            VertifyIsOK = appInfoDict[nameof(VertifyIsOK)].ToString();
+            DisplayName = appInformation.DisplayName;
+            FamilyName = appInformation.PackageFamilyName;
+            FullName = appInformation.PackageFullName;
+            Description = appInformation.Description;
+            PublisherDisplayName = appInformation.PublisherDisplayName;
+            PublisherId = appInformation.PublisherId;
+            Version = appInformation.Version;
+            InstalledDate = appInformation.InstallDate;
+            Architecture = appInformation.Architecture;
+            SignatureKind = appInformation.SignatureKind;
+            ResourceId = appInformation.ResourceId;
+            IsBundle = appInformation.IsBundle;
+            IsDevelopmentMode = appInformation.IsDevelopmentMode;
+            IsFramework = appInformation.IsFramework;
+            IsOptional = appInformation.IsOptional;
+            IsResourcePackage = appInformation.IsResourcePackage;
+            IsStub = appInformation.IsStub;
+            VertifyIsOK = appInformation.VertifyIsOK;
 
             AppListEntryCollection.Clear();
-            foreach (AppListEntryModel appListEntry in appInfoDict[nameof(AppListEntryCollection)] as List<AppListEntryModel>)
+            foreach (AppListEntryModel appListEntry in appInformation.AppListEntryList)
             {
                 AppListEntryCollection.Add(appListEntry);
             }
 
             DependenciesCollection.Clear();
-            foreach (PackageModel packageItem in appInfoDict[nameof(DependenciesCollection)] as List<PackageModel>)
+            foreach (PackageModel packageItem in appInformation.DependenciesList)
             {
                 DependenciesCollection.Add(packageItem);
             }
@@ -1625,7 +1615,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用的发布者显示名称
         /// </summary>
-        private string GetPublisherName(Package package)
+        private string GetPublisherDisplayName(Package package)
         {
             try
             {

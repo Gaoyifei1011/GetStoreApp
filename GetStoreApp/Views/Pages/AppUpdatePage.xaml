@@ -240,7 +240,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         FontSize="14"
-                                        Text="{x:Bind PublisherName}"
+                                        Text="{x:Bind PublisherDisplayName}"
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap" />

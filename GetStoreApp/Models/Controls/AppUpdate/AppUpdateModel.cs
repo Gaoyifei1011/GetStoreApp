@@ -35,7 +35,7 @@ namespace GetStoreApp.Models.Controls.AppUpdate
         /// <summary>
         /// 发布者名称
         /// </summary>
-        public string PublisherName { get; set; }
+        public string PublisherDisplayName { get; set; }
 
         /// <summary>
         /// 应用的包系列名称

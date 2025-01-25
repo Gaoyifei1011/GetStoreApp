@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         AppInstallState = appInstallStatus.InstallState,
                                         DisplayName = packageItem.DisplayName,
-                                        PublisherName = packageItem.PublisherDisplayName,
+                                        PublisherDisplayName = packageItem.PublisherDisplayName,
                                         InstallInformation = installInformation,
                                         InstallSubInformation = installSubInformation,
                                         IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
