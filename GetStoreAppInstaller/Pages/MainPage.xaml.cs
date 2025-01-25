@@ -1,4 +1,5 @@
-﻿using GetStoreAppInstaller.Extensions.DataType.Enums;
+﻿using GetStoreAppInstaller.Extensions.DataType.Classes;
+using GetStoreAppInstaller.Extensions.DataType.Enums;
 using GetStoreAppInstaller.Extensions.DataType.Methods;
 using GetStoreAppInstaller.Extensions.PriExtract;
 using GetStoreAppInstaller.Helpers.Controls.Extensions;
@@ -20,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -582,7 +584,7 @@ namespace GetStoreAppInstaller.Pages
                 IsParseEmpty = false;
                 ResetResult();
 
-                Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                 {
                     return await ParsePackagedAppAsync(fileName);
                 });
@@ -725,7 +727,7 @@ namespace GetStoreAppInstaller.Pages
                         IsParseEmpty = false;
                         ResetResult();
 
-                        Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                        Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                         {
                             return await ParsePackagedAppAsync(fileName);
                         });
@@ -749,7 +751,7 @@ namespace GetStoreAppInstaller.Pages
                         IsParseEmpty = false;
                         ResetResult();
 
-                        Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                        Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                         {
                             return await ParsePackagedAppAsync(fileName);
                         });
@@ -778,7 +780,7 @@ namespace GetStoreAppInstaller.Pages
                             IsParseEmpty = false;
                             ResetResult();
 
-                            Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                            Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                             {
                                 return await ParsePackagedAppAsync(fileName);
                             });
@@ -862,7 +864,7 @@ namespace GetStoreAppInstaller.Pages
                 IsParseEmpty = false;
                 ResetResult();
 
-                Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                 {
                     return await ParsePackagedAppAsync(fileName);
                 });
@@ -942,7 +944,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 ResetResult();
 
-                Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                 {
                     return await ParsePackagedAppAsync(fileName);
                 });
@@ -977,21 +979,21 @@ namespace GetStoreAppInstaller.Pages
                 {
                     foreach (StorageFile file in filesList)
                     {
-                        Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                        Tuple<bool, DependencyAppInformation> parseResult = await Task.Run(async () =>
                         {
                             return await ParseDependencyAppAsync(file.Path);
                         });
 
                         if (parseResult.Item1)
                         {
-                            Dictionary<string, object> parseDict = parseResult.Item2;
+                            DependencyAppInformation dependencyAppInformation = parseResult.Item2;
 
                             InstallDependencyCollection.Add(new InstallDependencyModel()
                             {
                                 DependencyName = file.Name,
-                                DependencyVersion = parseDict.TryGetValue("Version", out object versionObj) && versionObj is Version version ? version : new Version(),
-                                DependencyPublisher = parseDict.TryGetValue("PublisherDisplayName", out object publisherDisplayNameObj) && publisherDisplayNameObj is string publisherDisplayName ? publisherDisplayName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")),
-                                DependencyFullName = parseDict.TryGetValue("PackageFullName", out object packageFullNameObj) && packageFullNameObj is string packageFullName ? packageFullName : Guid.NewGuid().ToString(),
+                                DependencyVersion = dependencyAppInformation.Version is not null ? dependencyAppInformation.Version : new Version(),
+                                DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : dependencyAppInformation.PublisherDisplayName,
+                                DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? Guid.NewGuid().ToString() : dependencyAppInformation.PackageFullName,
                                 DependencyPath = file.Path
                             });
                         }
@@ -1270,10 +1272,10 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 解析应用包
         /// </summary>
-        private async Task<Tuple<bool, Dictionary<string, object>>> ParsePackagedAppAsync(string filePath)
+        private async Task<Tuple<bool, PackageInformation>> ParsePackagedAppAsync(string filePath)
         {
             bool parseResult = false;
-            Dictionary<string, object> parseDict = [];
+            PackageInformation packageInformation = new();
 
             try
             {
@@ -1310,18 +1312,28 @@ namespace GetStoreAppInstaller.Pages
                                 Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
 
                                 // 解析资源包清单文件
-                                Dictionary<string, object> parseManifestDict = ParsePackageManifest(appxPackageReader, false, specifiedLanguageResourceDict);
+                                ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, false, specifiedLanguageResourceDict);
 
-                                foreach (KeyValuePair<string, object> parseManifsetItem in parseManifestDict)
-                                {
-                                    parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
-                                }
+                                packageInformation.Capabilities = manifestInformation.Capabilities;
+                                packageInformation.ProcessorArchitecture = manifestInformation.ProcessorArchitecture;
+                                packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
+                                packageInformation.PackageFullName = manifestInformation.PackageFullName;
+                                packageInformation.Version = manifestInformation.Version;
+                                packageInformation.IsFramework = manifestInformation.IsFramework;
+                                packageInformation.Description = manifestInformation.Description;
+                                packageInformation.DisplayName = manifestInformation.DisplayName;
+                                packageInformation.Logo = manifestInformation.Logo;
+                                packageInformation.PublisherDisplayName = manifestInformation.PublisherDisplayName;
+                                packageInformation.DependencyList = manifestInformation.DependencyList;
+                                packageInformation.TargetDeviceFamilyList = manifestInformation.TargetDeviceFamilyList;
+                                packageInformation.ApplicationList = manifestInformation.ApplicationList;
+                                packageInformation.LanguageList = manifestInformation.LanguageList;
 
                                 // 获取应用包图标
-                                if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
+                                if (!string.IsNullOrEmpty(packageInformation.Logo))
                                 {
-                                    IStream imageFileStream = GetPackageLogo(logo, appxFileDict);
-                                    parseDict.TryAdd("ImageLogo", imageFileStream);
+                                    IStream imageFileStream = GetPackageLogo(packageInformation.Logo, appxFileDict);
+                                    packageInformation.ImageLogo = imageFileStream;
                                 }
                             }
 
@@ -1340,7 +1352,7 @@ namespace GetStoreAppInstaller.Pages
                         {
                             if (appxBundleFactory is not null && appxBundleFactory.CreateBundleReader2(fileStream, null, out IAppxBundleReader appxBundleReader) is 0 && appxBundleReader.GetManifest(out IAppxBundleManifestReader appxBundleManifestReader) is 0)
                             {
-                                Dictionary<string, object> packageBundleManifestDict = ParsePackageBundleManifestInfo(appxBundleManifestReader);
+                                PackageManifestInformation packageManifestInformation = ParsePackageBundleManifestInfo(appxBundleManifestReader);
                                 Dictionary<string, Dictionary<string, string>> resourceDict = [];
 
                                 if (appxFactory is not null)
@@ -1348,18 +1360,18 @@ namespace GetStoreAppInstaller.Pages
                                     parseResult = true;
 
                                     // 从资源文件中查找符合的语言
-                                    if (packageBundleManifestDict.TryGetValue("LanguageResource", out object languageResourceObj) && languageResourceObj is Dictionary<string, string> languageResourceDict)
+                                    if (packageManifestInformation.LanguageResourceDict is not null)
                                     {
                                         List<string> languageList = [];
 
-                                        foreach (KeyValuePair<string, string> languageResourceItem in languageResourceDict)
+                                        foreach (KeyValuePair<string, string> languageResourceItem in packageManifestInformation.LanguageResourceDict)
                                         {
                                             // 获取安装包支持的语言
                                             languageList.Add(languageResourceItem.Key);
                                         }
 
                                         // 获取特定语言的资源文件
-                                        List<KeyValuePair<string, string>> specifiedLanguageResourceList = GetPackageBundleSpecifiedLanguageResource(languageResourceDict);
+                                        List<KeyValuePair<string, string>> specifiedLanguageResourceList = GetPackageBundleSpecifiedLanguageResource(packageManifestInformation.LanguageResourceDict);
 
                                         foreach (KeyValuePair<string, string> specifiedLanguageResourceItem in specifiedLanguageResourceList)
                                         {
@@ -1393,18 +1405,18 @@ namespace GetStoreAppInstaller.Pages
                                         }
 
                                         languageList.Sort();
-                                        parseDict.TryAdd("Language", languageList);
+                                        packageInformation.LanguageList = languageList;
                                     }
 
                                     // 从资源文件中查找符合的语言
                                     Dictionary<string, string> specifiedLanguageResourceDict = GetSpecifiedLanguageResource(resourceDict);
 
                                     // 解析应用
-                                    if (packageBundleManifestDict.TryGetValue("Application", out object applicationObj) && applicationObj is Dictionary<ProcessorArchitecture, string> applicationDict)
+                                    if (packageManifestInformation.ApplicationDict is not null)
                                     {
-                                        string applicationFileName = ParsePacakgeBundleCompatibleFile(applicationDict);
-                                        string architecture = ParsePackageBundleArchitecture(applicationDict);
-                                        parseDict.TryAdd("ProcessorArchitecture", architecture);
+                                        string applicationFileName = ParsePacakgeBundleCompatibleFile(packageManifestInformation.ApplicationDict);
+                                        string architecture = ParsePackageBundleArchitecture(packageManifestInformation.ApplicationDict);
+                                        packageInformation.ProcessorArchitecture = architecture;
 
                                         appxBundleReader.GetPayloadPackage(applicationFileName, out IAppxFile applicationFile);
 
@@ -1413,24 +1425,33 @@ namespace GetStoreAppInstaller.Pages
                                             Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(applicationFileStream, CreateComInterfaceFlags.None));
 
                                             Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
-                                            Dictionary<string, object> parseManifestDict = ParsePackageManifest(appxPackageReader, true, specifiedLanguageResourceDict);
+                                            ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, true, specifiedLanguageResourceDict);
 
-                                            foreach (KeyValuePair<string, object> parseManifsetItem in parseManifestDict)
-                                            {
-                                                parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
-                                            }
+                                            packageInformation.Capabilities = manifestInformation.Capabilities;
+                                            packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
+                                            packageInformation.PackageFullName = manifestInformation.PackageFullName;
+                                            packageInformation.Version = manifestInformation.Version;
+                                            packageInformation.IsFramework = manifestInformation.IsFramework;
+                                            packageInformation.Description = manifestInformation.Description;
+                                            packageInformation.DisplayName = manifestInformation.DisplayName;
+                                            packageInformation.Logo = manifestInformation.Logo;
+                                            packageInformation.PublisherDisplayName = manifestInformation.PublisherDisplayName;
+                                            packageInformation.DependencyList = manifestInformation.DependencyList;
+                                            packageInformation.TargetDeviceFamilyList = manifestInformation.TargetDeviceFamilyList;
+                                            packageInformation.ApplicationList = manifestInformation.ApplicationList;
+                                            packageInformation.LanguageList = manifestInformation.LanguageList;
                                         }
                                     }
 
                                     // 从资源文件中查找符合的图标
-                                    if (packageBundleManifestDict.TryGetValue("ScaleResource", out object scaleResourceObj) && scaleResourceObj is List<string> scaleResourceList)
+                                    if (packageManifestInformation.ScaleResourceList is not null)
                                     {
                                         // 获取应用包图标
-                                        if (parseDict.TryGetValue("Logo", out object logoObj) && logoObj is string logo)
+                                        if (!string.IsNullOrEmpty(packageInformation.Logo))
                                         {
-                                            Dictionary<string, IAppxFile> scaleBundleFileDict = ParsePacakgeBundleScaleFiles(appxBundleReader, scaleResourceList);
-                                            IStream imageFileStream = GetPackageBundleLogo(logo, scaleBundleFileDict);
-                                            parseDict.TryAdd("ImageLogo", imageFileStream);
+                                            Dictionary<string, IAppxFile> scaleBundleFileDict = ParsePacakgeBundleScaleFiles(appxBundleReader, packageManifestInformation.ScaleResourceList);
+                                            IStream imageFileStream = GetPackageBundleLogo(packageInformation.Logo, scaleBundleFileDict);
+                                            packageInformation.ImageLogo = imageFileStream;
                                         }
                                     }
                                 }
@@ -1442,16 +1463,29 @@ namespace GetStoreAppInstaller.Pages
                             fileStream = null;
                         }
                     }
-
+                    // TODO:未完成
                     // 解析以 appinstaller 格式结尾的应用安装文件
                     else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
                     {
                         // 解析应用安装文件
-                        XmlDocument xmlDocument = await XmlDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filePath));
+                        XmlLoadSettings xmlLoadSettings = new XmlLoadSettings();
+                        xmlLoadSettings.ElementContentWhiteSpace = true;
+
+                        XmlDocument xmlDocument = await XmlDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filePath), xmlLoadSettings);
 
                         if (xmlDocument is not null)
                         {
-                            parseResult = true;
+                            XmlNodeList mainPackageNodeList = xmlDocument.GetElementsByTagName("MainPackage");
+                            XmlNodeList mainBundleNodeList = xmlDocument.GetElementsByTagName("MainBundle");
+
+                            // 应用安装包
+                            if (mainPackageNodeList.Count > 0)
+                            {
+                            }
+                            // 应用捆绑包
+                            else if (mainBundleNodeList.Count > 0)
+                            {
+                            }
                         }
                     }
                 }
@@ -1461,16 +1495,16 @@ namespace GetStoreAppInstaller.Pages
                 LogService.WriteLog(LoggingLevel.Error, string.Format("Parse package {0} failed", filePath), e);
             }
 
-            return Tuple.Create(parseResult, parseDict);
+            return Tuple.Create(parseResult, packageInformation);
         }
 
         /// <summary>
         /// 解析依赖应用包
         /// </summary>
-        private async Task<Tuple<bool, Dictionary<string, object>>> ParseDependencyAppAsync(string filePath)
+        private async Task<Tuple<bool, DependencyAppInformation>> ParseDependencyAppAsync(string filePath)
         {
             bool parseResult = false;
-            Dictionary<string, object> parseDict = [];
+            DependencyAppInformation dependencyAppInformation = null;
 
             try
             {
@@ -1490,12 +1524,7 @@ namespace GetStoreAppInstaller.Pages
                                 parseResult = true;
 
                                 // 解析资源包清单文件
-                                Dictionary<string, object> parseManifsetDict = ParseDependencyPackageManifest(appxPackageReader);
-
-                                foreach (KeyValuePair<string, object> parseManifsetItem in parseManifsetDict)
-                                {
-                                    parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
-                                }
+                                dependencyAppInformation = ParseDependencyPackageManifest(appxPackageReader);
                             }
 
                             randomAccessStream?.Dispose();
@@ -1518,12 +1547,7 @@ namespace GetStoreAppInstaller.Pages
                                     parseResult = true;
 
                                     // 解析资源包清单文件
-                                    Dictionary<string, object> parseManifsetDict = ParseDependencyPackageBundleManifest(appxBundleReader);
-
-                                    foreach (KeyValuePair<string, object> parseManifsetItem in parseManifsetDict)
-                                    {
-                                        parseDict.TryAdd(parseManifsetItem.Key, parseManifsetItem.Value);
-                                    }
+                                    dependencyAppInformation = ParseDependencyPackageBundleManifest(appxBundleReader);
                                 }
 
                                 randomAccessStream?.Dispose();
@@ -1540,7 +1564,7 @@ namespace GetStoreAppInstaller.Pages
                 LogService.WriteLog(LoggingLevel.Error, string.Format("Parse package {0} failed", filePath), e);
             }
 
-            return Tuple.Create(parseResult, parseDict);
+            return Tuple.Create(parseResult, dependencyAppInformation);
         }
 
         /// <summary>
@@ -1582,9 +1606,9 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 解析应用包的依赖信息
         /// </summary>
-        private List<Dictionary<string, object>> ParsePackageDependencies(IAppxManifestReader3 appxManifestReader)
+        private List<DependencyInformation> ParsePackageDependencies(IAppxManifestReader3 appxManifestReader)
         {
-            List<Dictionary<string, object>> dependencyList = [];
+            List<DependencyInformation> dependencyList = [];
 
             // 获取应用包定义的静态依赖项列表
             if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
@@ -1598,16 +1622,16 @@ namespace GetStoreAppInstaller.Pages
                         appxManifestPackageDependency.GetPublisher(out string dependencyPublisher);
                         appxManifestPackageDependency.GetMaxMajorVersionTested(out ushort dependencyMaxMajorVersionTested);
 
-                        Dictionary<string, object> dependencyDict = [];
+                        DependencyInformation dependencyInformation = new();
 
                         PackageVersion dependencyMinPackageVersion = new(dependencyMinVersion);
-                        dependencyDict.TryAdd("DependencyMinVersion", new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision));
-                        dependencyDict.TryAdd("DependencyName", dependencyName);
-                        dependencyDict.TryAdd("DependencyPublisher", dependencyPublisher);
+                        dependencyInformation.DependencyMinVersion = new Version(dependencyMinPackageVersion.Major, dependencyMinPackageVersion.Minor, dependencyMinPackageVersion.Build, dependencyMinPackageVersion.Revision);
+                        dependencyInformation.DependencyName = dependencyName;
+                        dependencyInformation.DependencyPublisher = dependencyPublisher;
 
                         PackageVersion dependencyMaxPackageMajorVersionTested = new(dependencyMaxMajorVersionTested);
-                        dependencyDict.TryAdd("DependencyMaxMajorVersionTested", new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision));
-                        dependencyList.Add(dependencyDict);
+                        dependencyInformation.DependencyMaxMajorVersionTested = new Version(dependencyMaxPackageMajorVersionTested.Major, dependencyMaxPackageMajorVersionTested.Minor, dependencyMaxPackageMajorVersionTested.Build, dependencyMaxPackageMajorVersionTested.Revision);
+                        dependencyList.Add(dependencyInformation);
                     }
 
                     dependenciesEnumerator.MoveNext(out _);
@@ -1620,9 +1644,9 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 解析应用包清单
         /// </summary>
-        private Dictionary<string, object> ParsePackageManifest(IAppxPackageReader appxPackageReader, bool isBundle, Dictionary<string, string> specifiedLanguageResourceDict)
+        private ManifestInformation ParsePackageManifest(IAppxPackageReader appxPackageReader, bool isBundle, Dictionary<string, string> specifiedLanguageResourceDict)
         {
-            Dictionary<string, object> parseDict = [];
+            ManifestInformation manifestInformation = new();
 
             try
             {
@@ -1631,11 +1655,11 @@ namespace GetStoreAppInstaller.Pages
                 {
                     // 获取应用包定义的功能列表
                     appxManifestReader.GetCapabilities(out APPX_CAPABILITIES capabilities);
-                    parseDict.TryAdd("Capabilities", capabilities);
+                    manifestInformation.Capabilities = capabilities;
 
                     // 获取应用包定义的静态依赖项列表
-                    List<Dictionary<string, object>> dependencyList = ParsePackageDependencies(appxManifestReader);
-                    parseDict.TryAdd("Dependency", dependencyList);
+                    List<DependencyInformation> dependencyList = ParsePackageDependencies(appxManifestReader);
+                    manifestInformation.DependencyList = dependencyList;
 
                     // 获取应用包定义的包标识符
                     if (appxManifestReader.GetPackageId(out IAppxManifestPackageId2 packageId) is 0)
@@ -1647,23 +1671,23 @@ namespace GetStoreAppInstaller.Pages
 
                         if (!isBundle)
                         {
-                            parseDict.TryAdd("ProcessorArchitecture", architecture.ToString());
+                            manifestInformation.ProcessorArchitecture = architecture.ToString();
                         }
 
-                        parseDict.TryAdd("PackageFamilyName", packageFamilyName);
-                        parseDict.TryAdd("PackageFullName", packageFullName);
+                        manifestInformation.PackageFamilyName = packageFamilyName;
+                        manifestInformation.PackageFullName = packageFullName;
 
                         PackageVersion packageVersion = new(version);
-                        parseDict.TryAdd("Version", new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
+                        manifestInformation.Version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
                     }
 
                     // 获取包的目标设备系列
                     List<TargetDeviceFamilyModel> targetDeviceFamilyList = ParsePackageTargetDeviceFamily(appxManifestReader);
-                    parseDict.TryAdd("TargetDeviceFamily", targetDeviceFamilyList);
+                    manifestInformation.TargetDeviceFamilyList = targetDeviceFamilyList;
 
                     // 获取应用入口信息
                     List<ApplicationModel> applicationList = ParsePackageApplication(appxManifestReader, specifiedLanguageResourceDict);
-                    parseDict.TryAdd("Application", applicationList);
+                    manifestInformation.ApplicationList = applicationList;
 
                     // 获取应用包的属性
                     if (appxManifestReader.GetProperties(out IAppxManifestProperties packageProperties) is 0)
@@ -1679,18 +1703,18 @@ namespace GetStoreAppInstaller.Pages
                         displayName = GetLocalizedString(displayName, specifiedLanguageResourceDict);
                         publisherDisplayName = GetLocalizedString(publisherDisplayName, specifiedLanguageResourceDict);
 
-                        parseDict.TryAdd("IsFramework", isFramework);
-                        parseDict.TryAdd("Description", description);
-                        parseDict.TryAdd("DisplayName", displayName);
-                        parseDict.TryAdd("Logo", logo);
-                        parseDict.TryAdd("PublisherDisplayName", publisherDisplayName);
+                        manifestInformation.IsFramework = isFramework;
+                        manifestInformation.Description = description;
+                        manifestInformation.DisplayName = displayName;
+                        manifestInformation.Logo = logo;
+                        manifestInformation.PublisherDisplayName = publisherDisplayName;
                     }
 
                     if (!isBundle)
                     {
                         // 获取应用包定义的限定资源
                         List<string> languageList = ParsePackageLanguage(appxManifestReader);
-                        parseDict.TryAdd("Language", languageList);
+                        manifestInformation.LanguageList = languageList;
                     }
                 }
             }
@@ -1699,7 +1723,7 @@ namespace GetStoreAppInstaller.Pages
                 LogService.WriteLog(LoggingLevel.Error, "Parse package manifest failed", e);
             }
 
-            return parseDict;
+            return manifestInformation;
         }
 
         /// <summary>
@@ -2062,9 +2086,9 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 解析依赖包应用信息
         /// </summary>
-        private Dictionary<string, object> ParseDependencyPackageManifest(IAppxPackageReader appxPackageReader)
+        private DependencyAppInformation ParseDependencyPackageManifest(IAppxPackageReader appxPackageReader)
         {
-            Dictionary<string, object> parseDict = [];
+            DependencyAppInformation dependencyAppInformation = new();
 
             try
             {
@@ -2075,11 +2099,11 @@ namespace GetStoreAppInstaller.Pages
                     appxManifestPackageId.GetVersion(out ulong version);
                     appxManifestPackageId.GetPublisher(out string publisher);
 
-                    parseDict.TryAdd("PackageFullName", packageFullName);
-                    parseDict.TryAdd("PublisherDisplayName", publisher);
+                    dependencyAppInformation.PackageFullName = packageFullName;
+                    dependencyAppInformation.PublisherDisplayName = publisher;
 
                     PackageVersion packageVersion = new(version);
-                    parseDict.TryAdd("Version", new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
+                    dependencyAppInformation.Version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
                 }
             }
             catch (Exception e)
@@ -2087,15 +2111,15 @@ namespace GetStoreAppInstaller.Pages
                 LogService.WriteLog(LoggingLevel.Error, "Parse package manifest failed", e);
             }
 
-            return parseDict;
+            return dependencyAppInformation;
         }
 
         /// <summary>
         /// 解析依赖捆绑包应用信息
         /// </summary>
-        private Dictionary<string, object> ParseDependencyPackageBundleManifest(IAppxBundleReader appxBundleReader)
+        private DependencyAppInformation ParseDependencyPackageBundleManifest(IAppxBundleReader appxBundleReader)
         {
-            Dictionary<string, object> parseDict = [];
+            DependencyAppInformation dependencyAppInformation = new();
 
             try
             {
@@ -2106,11 +2130,11 @@ namespace GetStoreAppInstaller.Pages
                     appxManifestPackageId.GetVersion(out ulong version);
                     appxManifestPackageId.GetPublisher(out string publisher);
 
-                    parseDict.TryAdd("PackageFullName", packageFullName);
-                    parseDict.TryAdd("PublisherDisplayName", publisher);
+                    dependencyAppInformation.PackageFullName = packageFullName;
+                    dependencyAppInformation.PublisherDisplayName = publisher;
 
                     PackageVersion packageVersion = new(version);
-                    parseDict.TryAdd("Version", new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision));
+                    dependencyAppInformation.Version = new Version(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
                 }
             }
             catch (Exception e)
@@ -2118,7 +2142,7 @@ namespace GetStoreAppInstaller.Pages
                 LogService.WriteLog(LoggingLevel.Error, "Parse package manifest failed", e);
             }
 
-            return parseDict;
+            return dependencyAppInformation;
         }
 
         /// <summary>
@@ -2220,9 +2244,9 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 解析捆绑包每个包信息
         /// </summary>
-        private Dictionary<string, object> ParsePackageBundleManifestInfo(IAppxBundleManifestReader appxBundleManifestReader)
+        private PackageManifestInformation ParsePackageBundleManifestInfo(IAppxBundleManifestReader appxBundleManifestReader)
         {
-            Dictionary<string, object> packageManifestInfoDict = [];
+            PackageManifestInformation packageManifestInformation = new();
             Dictionary<ProcessorArchitecture, string> applicationDict = [];
             Dictionary<string, string> languageResourceDict = [];
             List<string> scaleResourceList = [];
@@ -2265,10 +2289,10 @@ namespace GetStoreAppInstaller.Pages
                 }
             }
 
-            packageManifestInfoDict.TryAdd("Application", applicationDict);
-            packageManifestInfoDict.TryAdd("LanguageResource", languageResourceDict);
-            packageManifestInfoDict.TryAdd("ScaleResource", scaleResourceList);
-            return packageManifestInfoDict;
+            packageManifestInformation.ApplicationDict = applicationDict;
+            packageManifestInformation.LanguageResourceDict = languageResourceDict;
+            packageManifestInformation.ScaleResourceList = scaleResourceList;
+            return packageManifestInformation;
         }
 
         /// <summary>
@@ -2307,13 +2331,35 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private string GetLocalizedString(string resource, Dictionary<string, string> resourceDict)
         {
-            // TODO:未完成
-
             if (!string.IsNullOrEmpty(resource) && resourceDict is not null)
             {
-                if (resource.StartsWith("ms-resource:") && resourceDict.TryGetValue(resource.Replace("ms-resource:", @"resources\", StringComparison.OrdinalIgnoreCase), out string localizedDescription) || resource.StartsWith("ms-resource:") && resourceDict.TryGetValue(resource.Replace("ms-resource:", @"Resources\", StringComparison.OrdinalIgnoreCase), out localizedDescription))
+                string msResource = "ms-resource:";
+                if (resource.StartsWith("ms-resource:"))
                 {
-                    resource = localizedDescription;
+                    string splitedResource = resource[msResource.Length..];
+
+                    string resourceKey;
+                    if (splitedResource.Contains('\\'))
+                    {
+                        resourceKey = splitedResource;
+                    }
+                    else if (resource.Contains('/'))
+                    {
+                        resourceKey = splitedResource.Replace('/', '\\');
+                    }
+                    else
+                    {
+                        resourceKey = string.Format(@"Resources\{0}", splitedResource);
+                    }
+
+                    foreach (KeyValuePair<string, string> resourceItem in resourceDict)
+                    {
+                        if (resourceItem.Key.Equals(resourceKey, StringComparison.OrdinalIgnoreCase))
+                        {
+                            resource = resourceItem.Value;
+                            break;
+                        }
+                    }
                 }
             }
             else
@@ -2330,10 +2376,10 @@ namespace GetStoreAppInstaller.Pages
         private IStream GetPackageLogo(string logo, Dictionary<string, IAppxFile> appxFileDict)
         {
             List<KeyValuePair<string, IAppxFile>> logoList = [];
-            string logoFileName = Path.GetFileNameWithoutExtension(logo);
             string logoExtensionName = Path.GetExtension(logo);
+            string logoFileName = logo[..^logoExtensionName.Length];
 
-            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName, logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName.Replace(@"\", @"\\"), logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             // 读取应用包图标
             foreach (KeyValuePair<string, IAppxFile> appxFileItem in appxFileDict)
@@ -2354,10 +2400,10 @@ namespace GetStoreAppInstaller.Pages
         {
             List<KeyValuePair<string, IAppxFile>> logoList = [];
             Dictionary<string, IAppxFile> logoDict = [];
-            string logoFileName = Path.GetFileNameWithoutExtension(logo);
             string logoExtensionName = Path.GetExtension(logo);
+            string logoFileName = logo[..^logoExtensionName.Length];
 
-            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName, logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName.Replace(@"\", @"\\"), logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             // 读取应用包图标
             foreach (KeyValuePair<string, IAppxFile> scaleBundleItem in scaleBundleFileDict)
@@ -2675,7 +2721,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
                 {
-                    if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetScale(out _) is 0)
+                    if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetScale(out uint scale) is 0 && scale is not 0)
                     {
                         isPackageBundleScale = true;
                         break;
@@ -2727,123 +2773,115 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 更新结果
         /// </summary>
-        private async Task UpdateResultAsync(Tuple<bool, Dictionary<string, object>> resultDict)
+        private async Task UpdateResultAsync(Tuple<bool, PackageInformation> resultDict)
         {
             IsParseSuccessfully = resultDict.Item1;
 
             if (IsParseSuccessfully)
             {
-                Dictionary<string, object> parseDict = resultDict.Item2;
+                PackageInformation packageInformation = resultDict.Item2;
 
-                if (parseDict.TryGetValue("Capabilities", out object appcapabilitiesObj))
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_INTERNET_CLIENT))
                 {
-                    APPX_CAPABILITIES appcapabilities = (APPX_CAPABILITIES)appcapabilitiesObj;
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_INTERNET_CLIENT))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInternetClient"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_INTERNET_CLIENT_SERVER))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInternetClientServer"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_PRIVATE_NETWORK_CLIENT_SERVER))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPrivateNetworkClientServer"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_DOCUMENTS_LIBRARY))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDocumentsLibrary"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_PICTURES_LIBRARY))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPicturesLibrary"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_VIDEOS_LIBRARY))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityVideosLibrary"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_MUSIC_LIBRARY))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMusicLibrary"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_ENTERPRISE_AUTHENTICATION))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseAuthentication"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_SHARED_USER_CERTIFICATES))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySharedUserCertificates"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_REMOVABLE_STORAGE))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRemoveStorage"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_APPOINTMENTS))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppointments"));
-                    }
-
-                    if (appcapabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_CONTACTS))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityContacts"));
-                    }
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInternetClient"));
                 }
 
-                if (parseDict.TryGetValue("Dependency", out object dependencyObj))
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_INTERNET_CLIENT_SERVER))
                 {
-                    List<Dictionary<string, object>> dependencyList = dependencyObj as List<Dictionary<string, object>>;
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInternetClientServer"));
+                }
 
-                    foreach (Dictionary<string, object> dependencyItem in dependencyList)
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_PRIVATE_NETWORK_CLIENT_SERVER))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPrivateNetworkClientServer"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_DOCUMENTS_LIBRARY))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDocumentsLibrary"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_PICTURES_LIBRARY))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPicturesLibrary"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_VIDEOS_LIBRARY))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityVideosLibrary"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_MUSIC_LIBRARY))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMusicLibrary"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_ENTERPRISE_AUTHENTICATION))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseAuthentication"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_SHARED_USER_CERTIFICATES))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySharedUserCertificates"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_REMOVABLE_STORAGE))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRemoveStorage"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_APPOINTMENTS))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppointments"));
+                }
+
+                if (packageInformation.Capabilities.HasFlag(APPX_CAPABILITIES.APPX_CAPABILITY_CONTACTS))
+                {
+                    CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityContacts"));
+                }
+
+                if (packageInformation.DependencyList is not null)
+                {
+                    foreach (DependencyInformation dependencyItem in packageInformation.DependencyList)
                     {
                         DependencyCollection.Add(new DependencyModel()
                         {
-                            DependencyName = dependencyItem["DependencyName"] as string,
-                            DependencyPublisher = dependencyItem["DependencyPublisher"] as string,
-                            DependencyMinVersion = dependencyItem["DependencyMinVersion"] as Version,
-                            DependencySatisfied = ResourceService.GetLocalized("Installer/Yes")
+                            DependencyName = dependencyItem.DependencyName,
+                            DependencyPublisher = dependencyItem.DependencyPublisher,
+                            DependencyMinVersion = dependencyItem.DependencyMinVersion,
                         });
                     }
                 }
 
-                if (parseDict.TryGetValue("TargetDeviceFamily", out object targetDeviceFamilyObj) && targetDeviceFamilyObj is List<TargetDeviceFamilyModel> targetDeviceFamilyList)
+                if (packageInformation.TargetDeviceFamilyList is not null)
                 {
-                    foreach (TargetDeviceFamilyModel targetDeviceFamilyItem in targetDeviceFamilyList)
+                    foreach (TargetDeviceFamilyModel targetDeviceFamilyItem in packageInformation.TargetDeviceFamilyList)
                     {
                         TargetDeviceFamilyCollection.Add(targetDeviceFamilyItem);
                     }
                 }
 
-                if (parseDict.TryGetValue("Application", out object applicationObj) && applicationObj is List<ApplicationModel> applicationList)
+                if (packageInformation.ApplicationList is not null)
                 {
-                    foreach (ApplicationModel applicationItem in applicationList)
+                    foreach (ApplicationModel applicationItem in packageInformation.ApplicationList)
                     {
                         ApplicationCollection.Add(applicationItem);
                     }
                 }
 
-                SupportedArchitecture = parseDict.TryGetValue("ProcessorArchitecture", out object architectureObj) && architectureObj is string architecture ? architecture : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                PackageName = parseDict.TryGetValue("DisplayName", out object displayNameObj) && displayNameObj is string displayName ? displayName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                PackageFamilyName = parseDict.TryGetValue("PackageFamilyName", out object packageFamilyNameObj) && packageFamilyNameObj is string packageFamilyName ? packageFamilyName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                PackageFullName = parseDict.TryGetValue("PackageFullName", out object packageFullNameObj) && packageFullNameObj is string packageFullName ? packageFullName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                PublisherDisplayName = parseDict.TryGetValue("PublisherDisplayName", out object publisherDisplayNameObj) && publisherDisplayNameObj is string publisherDisplayName ? publisherDisplayName : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                IsFramework = parseDict.TryGetValue("IsFramework", out object isFrameworkObj) && isFrameworkObj is bool isFramework ? isFramework ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                Version = parseDict.TryGetValue("Version", out object versionObj) && versionObj is Version version ? version : new Version();
-                PackageDescription = parseDict.TryGetValue("Description", out object descriptionObj) && descriptionObj is string description ? string.IsNullOrEmpty(description) ? ResourceService.GetLocalized("Installer/None") : description : ResourceService.GetLocalized("Installer/None");
+                SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.ProcessorArchitecture;
+                PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.DisplayName;
+                PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFamilyName;
+                PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFullName;
+                PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PublisherDisplayName;
+                IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
+                PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? ResourceService.GetLocalized("Installer/None") : packageInformation.Description;
 
-                if (parseDict.TryGetValue("Language", out object languageObj) && languageObj is List<string> languageList)
+                if (packageInformation.LanguageList is not null)
                 {
-                    foreach (string language in languageList)
+                    foreach (string language in packageInformation.LanguageList)
                     {
                         LanguageCollection.Add(new Language(language));
                     }
@@ -2851,22 +2889,16 @@ namespace GetStoreAppInstaller.Pages
 
                 try
                 {
-                    if (parseDict.TryGetValue("ImageLogo", out object imageLogoStreamObj) && imageLogoStreamObj is IStream imageLogoStream && imageLogoStream is not null)
+                    if (packageInformation.ImageLogo is not null)
                     {
-                        ShCoreLibrary.CreateRandomAccessStreamOverStream(imageLogoStream, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out IntPtr ppv);
+                        ShCoreLibrary.CreateRandomAccessStreamOverStream(packageInformation.ImageLogo, BSOS_OPTIONS.BSOS_DEFAULT, typeof(IRandomAccessStream).GUID, out IntPtr ppv);
                         RandomAccessStreamOverStream randomAccessStreamOverStream = RandomAccessStreamOverStream.FromAbi(ppv);
                         BitmapImage bitmapImage = new();
                         await bitmapImage.SetSourceAsync(randomAccessStreamOverStream);
                         PackageIconImage = bitmapImage;
                         randomAccessStreamOverStream?.Dispose();
-
-                        if (imageLogoStream is not null)
-                        {
-                            Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(imageLogoStream, CreateComInterfaceFlags.None));
-                        }
-
+                        Marshal.Release(Program.StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(packageInformation.ImageLogo, CreateComInterfaceFlags.None));
                         randomAccessStreamOverStream = null;
-                        imageLogoStream = null;
                     }
                     else
                     {
@@ -2901,7 +2933,7 @@ namespace GetStoreAppInstaller.Pages
                     IsParseEmpty = false;
                     ResetResult();
 
-                    Tuple<bool, Dictionary<string, object>> parseResult = await Task.Run(async () =>
+                    Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                     {
                         return await ParsePackagedAppAsync(fileName);
                     });

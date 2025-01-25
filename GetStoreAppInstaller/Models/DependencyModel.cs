@@ -21,10 +21,5 @@ namespace GetStoreAppInstaller.Models
         /// 依赖项最低版本
         /// </summary>
         public Version DependencyMinVersion { get; set; }
-
-        /// <summary>
-        /// 设备已安装的依赖项是否符合最低版本要求
-        /// </summary>
-        public string DependencySatisfied { get; set; }
     }
 }

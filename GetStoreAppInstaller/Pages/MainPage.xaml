@@ -200,19 +200,53 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock
+                                x:Name="PackageNameText"
                                 Grid.Row="0"
                                 FontSize="26"
                                 FontWeight="SemiBold"
-                                Text="{x:Bind PackageName, Mode=OneWay}" />
+                                Text="{x:Bind PackageName, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis">
 
-                            <TextBlock Grid.Row="1">
-                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
-                                <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind PackageName, Mode=OneWay}"
+                                        Visibility="{Binding ElementName=PackageNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
                             </TextBlock>
 
-                            <TextBlock Grid.Row="2">
+                            <TextBlock
+                                x:Name="PublisherText"
+                                Grid.Row="1"
+                                TextTrimming="CharacterEllipsis">
+                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
+                                <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999" Visibility="{Binding ElementName=PublisherText, Path=IsTextTrimmed, Mode=OneWay}">
+                                        <TextBlock Grid.Row="1">
+                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Publisher')}" />
+                                            <Run Text="{x:Bind PublisherDisplayName, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                x:Name="PackageVersionText"
+                                Grid.Row="2"
+                                TextTrimming="CharacterEllipsis">
                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
                                 <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999" Visibility="{Binding ElementName=PackageVersionText, Path=IsTextTrimmed, Mode=OneWay}">
+                                        <TextBlock Grid.Row="1">
+                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageVersion')}" />
+                                            <Run Text="{x:Bind Version.ToString(), Mode=OneWay}" />
+                                        </TextBlock>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
                             </TextBlock>
 
                             <muxc:ProgressBar
@@ -412,7 +446,7 @@
                                                             <DataTemplate x:DataType="model:InstallDependencyModel">
                                                                 <Grid
                                                                     Height="60"
-                                                                    Margin="2,0"
+                                                                    Margin="2,0,2,2"
                                                                     Padding="16,0,6,0"
                                                                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                                                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -869,7 +903,7 @@
                                         <Grid
                                             Grid.Row="0"
                                             Height="35"
-                                            Padding="16,0,16,0"
+                                            Padding="10,0,16,0"
                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                             BorderThickness="0">
 
@@ -882,6 +916,7 @@
                                             <TextBlock
                                                 x:Name="TargetDeviceNameHeaderText"
                                                 Grid.Column="0"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/TargetDeviceName')}"
                                                 TextAlignment="Left"
@@ -899,6 +934,7 @@
                                             <TextBlock
                                                 x:Name="MinVersionHeaderText"
                                                 Grid.Column="1"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/MinVersion')}"
                                                 TextAlignment="Left"
@@ -916,6 +952,7 @@
                                             <TextBlock
                                                 x:Name="MaxVersionTestedHeaderText"
                                                 Grid.Column="2"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/MaxVersionTested')}"
                                                 TextAlignment="Left"
@@ -953,7 +990,7 @@
                                                 <DataTemplate x:DataType="model:TargetDeviceFamilyModel">
                                                     <Grid
                                                         Height="35"
-                                                        Padding="16,0,16,0"
+                                                        Padding="10,0,16,0"
                                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                         BorderThickness="0,1,0,0">
 
@@ -966,6 +1003,7 @@
                                                         <TextBlock
                                                             x:Name="TargetDeviceNameText"
                                                             Grid.Column="0"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind TargetDeviceName}"
                                                             TextAlignment="Left"
@@ -983,6 +1021,7 @@
                                                         <TextBlock
                                                             x:Name="MinVersionText"
                                                             Grid.Column="1"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind MinVersion.ToString()}"
                                                             TextAlignment="Left"
@@ -1000,6 +1039,7 @@
                                                         <TextBlock
                                                             x:Name="MaxVersionTestedText"
                                                             Grid.Column="2"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind MaxVersionTested.ToString()}"
                                                             TextAlignment="Left"
@@ -1062,7 +1102,7 @@
                                         <Grid
                                             Grid.Row="0"
                                             Height="35"
-                                            Padding="16,0,16,0"
+                                            Padding="10,0,16,0"
                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                             BorderThickness="0">
 
@@ -1070,12 +1110,12 @@
                                                 <ColumnDefinition Width="2*" />
                                                 <ColumnDefinition Width="2*" />
                                                 <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock
                                                 x:Name="DependencyNameHeaderText"
                                                 Grid.Column="0"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyName')}"
                                                 TextAlignment="Left"
@@ -1093,6 +1133,7 @@
                                             <TextBlock
                                                 x:Name="DependencyPublisherHeaderText"
                                                 Grid.Column="1"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyPublisher')}"
                                                 TextAlignment="Left"
@@ -1110,6 +1151,7 @@
                                             <TextBlock
                                                 x:Name="DependencyMinVersionHeaderText"
                                                 Grid.Column="2"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
                                                 TextAlignment="Left"
@@ -1121,23 +1163,6 @@
                                                         MaxWidth="9999"
                                                         Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencyMinVersion')}"
                                                         Visibility="{x:Bind DependencyMinVersionHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                                                </ToolTipService.ToolTip>
-                                            </TextBlock>
-
-                                            <TextBlock
-                                                x:Name="DependencySatisfiedHeaderText"
-                                                Grid.Column="3"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/DependencySatisfied')}"
-                                                TextAlignment="Left"
-                                                TextTrimming="CharacterEllipsis"
-                                                TextWrapping="NoWrap">
-
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip
-                                                        MaxWidth="9999"
-                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/DependencySatisfied')}"
-                                                        Visibility="{x:Bind DependencySatisfiedHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                 </ToolTipService.ToolTip>
                                             </TextBlock>
                                         </Grid>
@@ -1164,7 +1189,7 @@
                                                 <DataTemplate x:DataType="model:DependencyModel">
                                                     <Grid
                                                         Height="35"
-                                                        Padding="16,0,16,0"
+                                                        Padding="10,0,16,0"
                                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                         BorderThickness="0,1,0,0">
 
@@ -1172,12 +1197,12 @@
                                                             <ColumnDefinition Width="2*" />
                                                             <ColumnDefinition Width="2*" />
                                                             <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
 
                                                         <TextBlock
                                                             x:Name="DependencyNameText"
                                                             Grid.Column="0"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind DependencyName}"
                                                             TextAlignment="Left"
@@ -1195,6 +1220,7 @@
                                                         <TextBlock
                                                             x:Name="DependencyPublisherText"
                                                             Grid.Column="1"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind DependencyPublisher}"
                                                             TextAlignment="Left"
@@ -1212,6 +1238,7 @@
                                                         <TextBlock
                                                             x:Name="DependencyMinVersionText"
                                                             Grid.Column="2"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind DependencyMinVersion.ToString()}"
                                                             TextAlignment="Left"
@@ -1223,23 +1250,6 @@
                                                                     MaxWidth="9999"
                                                                     Content="{x:Bind DependencyMinVersion.ToString()}"
                                                                     Visibility="{Binding ElementName=DependencyMinVersionText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                                            </ToolTipService.ToolTip>
-                                                        </TextBlock>
-
-                                                        <TextBlock
-                                                            x:Name="DependencySatisfiedText"
-                                                            Grid.Column="3"
-                                                            VerticalAlignment="Center"
-                                                            Text="{x:Bind DependencySatisfied}"
-                                                            TextAlignment="Left"
-                                                            TextTrimming="CharacterEllipsis"
-                                                            TextWrapping="NoWrap">
-
-                                                            <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Content="{x:Bind DependencySatisfied}"
-                                                                    Visibility="{Binding ElementName=DependencySatisfiedText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
@@ -1377,7 +1387,7 @@
                                         <Grid
                                             Grid.Row="0"
                                             Height="35"
-                                            Padding="16,0,16,0"
+                                            Padding="10,0,16,0"
                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                             BorderThickness="0">
 
@@ -1391,6 +1401,7 @@
                                             <TextBlock
                                                 x:Name="AppIDHeaderText"
                                                 Grid.Column="0"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppID')}"
                                                 TextAlignment="Left"
@@ -1408,6 +1419,7 @@
                                             <TextBlock
                                                 x:Name="AppDescriptionHeaderText"
                                                 Grid.Column="1"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppDescription')}"
                                                 TextAlignment="Left"
@@ -1425,6 +1437,7 @@
                                             <TextBlock
                                                 x:Name="ExecutableHeaderText"
                                                 Grid.Column="2"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/Executable')}"
                                                 TextAlignment="Left"
@@ -1442,6 +1455,7 @@
                                             <TextBlock
                                                 x:Name="EntryPointHeaderText"
                                                 Grid.Column="3"
+                                                Margin="6,0,0,0"
                                                 VerticalAlignment="Center"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/EntryPoint')}"
                                                 TextAlignment="Left"
@@ -1479,7 +1493,7 @@
                                                 <DataTemplate x:DataType="model:ApplicationModel">
                                                     <Grid
                                                         Height="35"
-                                                        Padding="16,0,16,0"
+                                                        Padding="10,0,16,0"
                                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                         BorderThickness="0,1,0,0">
 
@@ -1493,6 +1507,7 @@
                                                         <TextBlock
                                                             x:Name="AppIDText"
                                                             Grid.Column="0"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind AppID}"
                                                             TextAlignment="Left"
@@ -1510,6 +1525,7 @@
                                                         <TextBlock
                                                             x:Name="AppDescriptionText"
                                                             Grid.Column="1"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind AppDescription}"
                                                             TextAlignment="Left"
@@ -1527,6 +1543,7 @@
                                                         <TextBlock
                                                             x:Name="ExecutableText"
                                                             Grid.Column="2"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind Executable}"
                                                             TextAlignment="Left"
@@ -1544,6 +1561,7 @@
                                                         <TextBlock
                                                             x:Name="EntryPointText"
                                                             Grid.Column="3"
+                                                            Margin="6,0,0,0"
                                                             VerticalAlignment="Center"
                                                             Text="{x:Bind EntryPoint}"
                                                             TextAlignment="Left"

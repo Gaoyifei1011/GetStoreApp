@@ -88,7 +88,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
                 ushort childCount = binaryReader.ReadUInt16();
                 ushort firstChildIndex = binaryReader.ReadUInt16();
                 binaryReader.ExpectUInt16(0);
-                scopeExInfo.Add(new Tuple<ushort, ushort, ushort>(scopeIndex, childCount, firstChildIndex));
+                scopeExInfo.Add(Tuple.Create(scopeIndex, childCount, firstChildIndex));
             }
 
             ushort[] itemIndexPropertyToIndex = new ushort[numItems];
