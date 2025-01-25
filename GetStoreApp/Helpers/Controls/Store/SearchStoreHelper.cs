@@ -131,7 +131,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 LogService.WriteLog(LoggingLevel.Warning, "Search store apps request unknown exception", e);
             }
 
-            return new Tuple<bool, List<SearchStoreModel>>(requestResult, searchStoreList);
+            return Tuple.Create(requestResult, searchStoreList);
         }
     }
 }

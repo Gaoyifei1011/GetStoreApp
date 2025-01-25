@@ -102,7 +102,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 {
                     // 清理并反馈回结果，修改相应的状态信息
                     bool cleanReusult = TraceCleanupService.CleanAppTraceAsync(cleanArgs);
-                    cleanSuccessfullyDict.Add(new Tuple<CleanKind, bool>(cleanArgs, cleanReusult));
+                    cleanSuccessfullyDict.Add(Tuple.Create(cleanArgs, cleanReusult));
                 }
 
                 await Task.Delay(1000);

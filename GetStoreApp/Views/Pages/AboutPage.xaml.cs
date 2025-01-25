@@ -221,7 +221,7 @@ namespace GetStoreApp.Views.Pages
                             });
                         }
 
-                        return new Tuple<LimitedAccessFeatureStatus, bool>(accessResult.Status, isPinnedSuccessfully);
+                        return Tuple.Create(accessResult.Status, isPinnedSuccessfully);
                     }
                 }
                 catch (Exception e)
@@ -229,7 +229,7 @@ namespace GetStoreApp.Views.Pages
                     LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
                 }
 
-                return new Tuple<LimitedAccessFeatureStatus, bool>(LimitedAccessFeatureStatus.Unknown, false);
+                return Tuple.Create(LimitedAccessFeatureStatus.Unknown, false);
             });
 
             if (pinnedRsult.Item1 is LimitedAccessFeatureStatus.Available)

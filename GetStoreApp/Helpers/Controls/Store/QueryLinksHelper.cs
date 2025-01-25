@@ -182,7 +182,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 LogService.WriteLog(LoggingLevel.Warning, "App Information request unknown exception", e);
             }
 
-            return new Tuple<bool, AppInfoModel>(requestResult, appInfoModel);
+            return Tuple.Create(requestResult, appInfoModel);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                         if (!appxPackagesInfoDict.ContainsKey(name))
                         {
-                            appxPackagesInfoDict.Add(name, new Tuple<string, string, string>(extension, size, digest));
+                            appxPackagesInfoDict.Add(name, Tuple.Create(extension, size, digest));
                         }
                     }
                 }

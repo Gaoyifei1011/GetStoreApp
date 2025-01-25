@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Class;
+using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;

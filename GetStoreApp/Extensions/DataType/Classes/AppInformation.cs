@@ -1,7 +1,7 @@
 ﻿using GetStoreApp.Models.Controls.AppManager;
 using System.Collections.Generic;
 
-namespace GetStoreApp.Extensions.DataType.Class
+namespace GetStoreApp.Extensions.DataType.Classes
 {
     /// <summary>
     /// 应用信息类
