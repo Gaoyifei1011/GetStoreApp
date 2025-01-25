@@ -71,10 +71,10 @@
     <WidgetEmbeddedItem Include="Assets\Widgets\Win32AppUpdateWidgetTemplateLarge.json" />
     <WidgetEmbeddedItem Include="Assets\Widgets\Win32AppUpdateWidgetTemplateMedium.json" />
 
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2957.106" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" />
-    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.120-preview" />
+    <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.150-preview" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
