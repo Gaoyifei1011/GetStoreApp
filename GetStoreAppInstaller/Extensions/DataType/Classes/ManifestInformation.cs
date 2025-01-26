@@ -1,5 +1,4 @@
 ﻿using GetStoreAppInstaller.Models;
-using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +9,6 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
     /// </summary>
     public class ManifestInformation
     {
-        /// <summary>
-        /// 应用功能
-        /// </summary>
-        public APPX_CAPABILITIES Capabilities { get; set; }
-
         /// <summary>
         /// 应用包架构
         /// </summary>
@@ -59,6 +53,11 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         /// 应用包开发者显示名称
         /// </summary>
         public string PublisherDisplayName { get; set; }
+
+        /// <summary>
+        /// 应用功能列表
+        /// </summary>
+        public List<string> CapabilitiesList { get; set; }
 
         /// <summary>
         /// 依赖项列表

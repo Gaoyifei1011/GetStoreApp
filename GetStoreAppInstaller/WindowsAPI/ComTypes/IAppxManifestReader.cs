@@ -40,7 +40,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="capabilities">包请求的功能列表。 这是枚举值的按位组合。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetCapabilities(out APPX_CAPABILITIES capabilities);
+        int GetCapabilities(out uint capabilities);
 
         /// <summary>
         /// 获取一个枚举器，该枚举器循环访问清单中定义的资源。
@@ -56,7 +56,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <param name="deviceCapabilities">循环访问设备功能的枚举器。</param>
         /// <returns>如果该方法成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [PreserveSig]
-        int GetDeviceCapabilities([MarshalAs(UnmanagedType.Interface)] out IAppxManifestDeviceCapabilitiesEnumerator deviceCapabilities);
+        int GetDeviceCapabilities(out IntPtr deviceCapabilities);
 
         /// <summary>
         /// 获取包清单中定义的指定先决条件。

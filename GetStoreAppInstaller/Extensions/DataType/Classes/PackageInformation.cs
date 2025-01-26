@@ -11,11 +11,6 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
     public class PackageInformation
     {
         /// <summary>
-        /// 应用功能
-        /// </summary>
-        public APPX_CAPABILITIES Capabilities { get; set; }
-
-        /// <summary>
         /// 应用包架构
         /// </summary>
         public string ProcessorArchitecture { get; set; }
@@ -61,9 +56,19 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         public string PublisherDisplayName { get; set; }
 
         /// <summary>
+        /// 应用安装状态
+        /// </summary>
+        public string AppInstalledState { get; set; }
+
+        /// <summary>
         /// 应用包图标资源
         /// </summary>
         public IStream ImageLogo { get; set; }
+
+        /// <summary>
+        /// 应用功能列表
+        /// </summary>
+        public List<string> CapabilitiesList { get; set; }
 
         /// <summary>
         /// 依赖项列表

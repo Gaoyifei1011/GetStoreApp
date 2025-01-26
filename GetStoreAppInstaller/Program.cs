@@ -235,6 +235,14 @@ namespace GetStoreAppInstaller
                                         {
                                             return (IntPtr)HITTEST.HTLEFT;
                                         }
+                                        else if (localPoint.X < 2 * DisplayInformation.RawPixelsPerViewPixel)
+                                        {
+                                            return (IntPtr)HITTEST.HTCAPTION;
+                                        }
+                                        else if (localPoint.X < 42 * DisplayInformation.RawPixelsPerViewPixel)
+                                        {
+                                            return (IntPtr)HITTEST.HTCLIENT;
+                                        }
                                         else
                                         {
                                             if (CoreAppWindow.Size.Width - localPoint.X <= 16)
@@ -275,6 +283,14 @@ namespace GetStoreAppInstaller
                                         if (localPoint.X < 0)
                                         {
                                             return (IntPtr)HITTEST.HTLEFT;
+                                        }
+                                        else if (localPoint.X < 2 * DisplayInformation.RawPixelsPerViewPixel)
+                                        {
+                                            return (IntPtr)HITTEST.HTCAPTION;
+                                        }
+                                        else if (localPoint.X < 42 * DisplayInformation.RawPixelsPerViewPixel)
+                                        {
+                                            return (IntPtr)HITTEST.HTCLIENT;
                                         }
                                         else
                                         {
