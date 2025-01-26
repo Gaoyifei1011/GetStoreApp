@@ -63,6 +63,10 @@ namespace GetStoreApp.Services.Root
                     {
                         return;
                     }
+                    else if (argumentsList[0] is "Settings")
+                    {
+                        sendData = argumentsList[0];
+                    }
                     // 带参数启动：只有一个参数，直接输入链接
                     else
                     {

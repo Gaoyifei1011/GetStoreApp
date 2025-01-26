@@ -560,14 +560,24 @@ namespace GetStoreApp.Views.Windows
                 string[] startupArgs = dataContent.Split(' ');
 
                 // 正常启动重定向获得的内容
-                if (startupArgs.Length >= 1 && startupArgs[0] is "Launch")
+                if (startupArgs.Length >= 1)
                 {
-                    Show();
-
-                    // 应用已经启动
-                    if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                    if (startupArgs[0] is "Launch")
                     {
-                        await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                        Show();
+
+                        // 应用已经启动
+                        if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                        {
+                            await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                        }
+                    }
+                    else if (startupArgs[0] is "Settings")
+                    {
+                        if (GetCurrentPageType() != typeof(SettingsPage))
+                        {
+                            NavigateTo(typeof(SettingsPage));
+                        }
                     }
                 }
                 // 带有命令参数启动重定向获得的内容
@@ -751,18 +761,31 @@ namespace GetStoreApp.Views.Windows
                 string[] startupArgs = dataContent.Split(' ');
 
                 // 正常启动重定向获得的内容
-                if (startupArgs.Length >= 1 && startupArgs[0] is "Launch")
+                if (startupArgs.Length >= 1)
                 {
-                    DispatcherQueue.TryEnqueue(async () =>
+                    if (startupArgs[0] is "Launch")
                     {
-                        Show();
-
-                        // 应用已经启动
-                        if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                        DispatcherQueue.TryEnqueue(async () =>
                         {
-                            await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
-                        }
-                    });
+                            Show();
+
+                            // 应用已经启动
+                            if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                            {
+                                await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                            }
+                        });
+                    }
+                    else if (startupArgs[0] is "Settings")
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            if (GetCurrentPageType() != typeof(SettingsPage))
+                            {
+                                NavigateTo(typeof(SettingsPage));
+                            }
+                        });
+                    }
                 }
                 // 带有命令参数启动重定向获得的内容
                 else if (startupArgs.Length >= 2 && startupArgs[0] is "Console")
