@@ -1,5 +1,8 @@
 {
   "AppInformationCopy": "تم نسخ معلومات التطبيق بنجاح إلى الحافظة",
+  "AppInstallSuccessfully":"{0} install successfully",
+  "AppInstallFailed": "{0} install failed",
+  "AppInstallFailedReason":"Error reason: {0}",
   "AppUpdateSuccessfully": "تم تحديث التطبيق {0} بنجاح",
   "AppUserModelIdCopy": "تم نسخ AUMID بنجاح إلى الحافظة",
   "CheckNetWorkConnection": "تحقق من اتصال الشبكة",
@@ -11,6 +14,7 @@
   "DownloadCompleted1": "اكتمل التحميل",
   "DownloadCreateFailed": "فشل إنشاء مهمة التحميل",
   "DownloadCreateSuccessfully": "تم إنشاء مهمة التحميل بنجاح",
+  "ErrorInformationSuccessfully":"The error information was copied successfully.",
   "ExceptionCopy": "تم نسخ معلومات استثناء المتصفح بنجاح إلى الحافظة",
   "FileInformationCopy": "تم نسخ معلومات الملف بنجاح",
   "FileLost": "تم نقل الملف المحلي أو حذفه",

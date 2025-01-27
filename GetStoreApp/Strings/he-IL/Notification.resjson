@@ -1,5 +1,8 @@
 {
   "AppInformationCopy": "מידע האפליקציה הועתק בהצלחה ללוח",
+  "AppInstallSuccessfully":"{0} install successfully",
+  "AppInstallFailed": "{0} install failed",
+  "AppInstallFailedReason":"Error reason: {0}",
   "AppUpdateSuccessfully": "עדכון האפליקציה {0} הצליח",
   "AppUserModelIdCopy": "ה-AUMID הועתק בהצלחה ללוח",
   "CheckNetWorkConnection": "בדוק את החיבור לרשת",
@@ -10,6 +13,7 @@
   "DesktopShortFailed": "נכשל ביצירת קיצור הדרך בשולחן העבודה, צור אותו באופן ידני",
   "DownloadCreateFailed": "יצירת משימת ההורדה נכשלה",
   "DownloadCreateSuccessfully": "משימת ההורדה נוצרה בהצלחה",
+  "ErrorInformationSuccessfully":"The error information was copied successfully.",
   "ExceptionCopy": "מידע חריגת הדפדפן הועתק בהצלחה ללוח",
   "FileInformationCopy": "מידע הקובץ הועתק בהצלחה",
   "FileLost": "הקובץ המקומי הועבר או נמחק",

@@ -8,6 +8,7 @@
   "AppInstalledState":"App installed state: ",
   "AppNotInstall":"Not install",
   "AppTitle": "Package installer",
+  "AppUserModelId": "AUMID",
   "AddDependency": "Add a dependency package to install",
   "AddDependencyListEmpty":"No dependency packages have been added",
   "BasicInformation": "Basic information",

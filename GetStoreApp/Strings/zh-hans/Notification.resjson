@@ -1,5 +1,8 @@
 {
   "AppInformationCopy": "应用信息已成功复制到剪贴板",
+  "AppInstallSuccessfully":"{0} 安装成功",
+  "AppInstallFailed": "{0} 安装失败",
+  "AppInstallFailedReason":"错误原因：{0}",
   "AppUpdateSuccessfully": "应用 {0} 更新成功",
   "AppUserModelIdCopy": "应用程序用户模型 ID 已成功复制到剪贴板",
   "CopyToClipboardFailed": "复制内容到剪贴板失败，请检查剪贴板的访问权限",
@@ -10,6 +13,7 @@
   "DownloadCompleted1": "下载完成",
   "DownloadCreateFailed": "下载任务创建失败",
   "DownloadCreateSuccessfully": "下载任务创建成功",
+  "ErrorInformationSuccessfully":"错误信息复制成功",
   "ExceptionCopy": "浏览器异常信息已成功复制到剪贴板",
   "FileInformationCopy": "文件信息复制成功",
   "FileLost": "本地文件已发生移动或被删除",

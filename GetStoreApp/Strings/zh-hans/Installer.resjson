@@ -8,6 +8,7 @@
   "AppInstalledState":"应用安装状态：",
   "AppNotInstall":"未安装",
   "AppTitle": "应用安装器",
+  "AppUserModelId": "应用程序用户模型 ID",
   "AddDependency": "添加要安装的依赖包",
   "AddDependencyListEmpty":"当前暂无已添加的依赖包",
   "BasicInformation": "基本信息",

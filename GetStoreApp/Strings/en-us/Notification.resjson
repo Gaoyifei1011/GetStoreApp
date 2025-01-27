@@ -1,5 +1,8 @@
 {
   "AppInformationCopy": "The app information has been successfully copied to the clipboard",
+  "AppInstallSuccessfully":"{0} install successfully",
+  "AppInstallFailed": "{0} install failed",
+  "AppInstallFailedReason":"Error reason: {0}",
   "AppUpdateSuccessfully": "App {0} update successfully",
   "AppUserModelIdCopy": "The AUMID has been successfully copied to the clipboard",
   "CheckNetWorkConnection": "Check the network connection",
@@ -10,6 +13,7 @@
   "DesktopShortFailed": "The app's desktop shortcut failed to create, please create it manually",
   "DownloadCreateFailed": "The download task is created failed",
   "DownloadCreateSuccessfully": "The download task is created successfully",
+  "ErrorInformationSuccessfully":"The error information was copied successfully.",
   "ExceptionCopy": "The browser exception information has been successfully copied to the clipboard",
   "FileInformationCopy": "The file information is copied successfully",
   "FileLost": "The local file has been moved or deleted",

@@ -1,6 +1,0 @@
-{
-  "AppInstallSuccessfully":"{0} 安装成功",
-  "AppInstallFailed": "{0} 安装失败",
-  "AppInstallFailedReason":"错误原因：{0}",
-  "ErrorInformationSuccessfully":"错误信息复制成功"
-}
