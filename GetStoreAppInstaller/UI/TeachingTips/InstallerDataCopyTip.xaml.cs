@@ -7,9 +7,9 @@ namespace GetStoreAppInstaller.UI.TeachingTips
     /// <summary>
     /// 数据复制应用内通知
     /// </summary>
-    public sealed partial class DataCopyTip : TeachingTip
+    public sealed partial class InstallerDataCopyTip : TeachingTip
     {
-        public DataCopyTip(bool isSuccessfully = false, bool isMultiSelected = false, int count = 0)
+        public InstallerDataCopyTip(bool isSuccessfully = false, bool isMultiSelected = false, int count = 0)
         {
             InitializeComponent();
             InitializeContent(isSuccessfully, isMultiSelected, count);
