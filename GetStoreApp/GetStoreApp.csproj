@@ -72,8 +72,54 @@
     <Content Include="Assets\Icon\Control\Store.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\Web.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\WinGet.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Icon\Installer\Package.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\ShellMenu\AppInformation.ico" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\ShellMenu\PowerShell.ico" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\LargeTile.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\LargeTile.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\LargeTile.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\LargeTile.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\LargeTile.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SmallTile.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SmallTile.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SmallTile.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SmallTile.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SmallTile.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SplashScreen.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SplashScreen.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SplashScreen.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SplashScreen.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\SplashScreen.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square150x150Logo.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square150x150Logo.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square150x150Logo.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square150x150Logo.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square150x150Logo.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-lightunplated_targetsize-16.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-lightunplated_targetsize-24.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-lightunplated_targetsize-32.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-lightunplated_targetsize-48.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-lightunplated_targetsize-256.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-unplated_targetsize-16.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-unplated_targetsize-24.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-unplated_targetsize-32.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-unplated_targetsize-48.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.altform-unplated_targetsize-256.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.scale-400.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.targetsize-16.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.targetsize-24.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.targetsize-32.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.targetsize-48.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Square44x44Logo.targetsize-256.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Wide310x150Logo.scale-100.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Wide310x150Logo.scale-125.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Wide310x150Logo.scale-150.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Wide310x150Logo.scale-200.png" CopyToOutputDirectory="Always" />
+    <Content Include="Assets\Installer\Wide310x150Logo.scale-400.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\MainApp\LargeTile.scale-100.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\MainApp\LargeTile.scale-125.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\MainApp\LargeTile.scale-150.png" CopyToOutputDirectory="Always" />
@@ -147,6 +193,7 @@
     <None Remove="Strings\ar\Console.resjson" />
     <None Remove="Strings\ar\Dialog.resjson" />
     <None Remove="Strings\ar\Download.resjson" />
+    <None Remove="Strings\ar\Installer.resjson" />
     <None Remove="Strings\ar\Notification.resjson" />
     <None Remove="Strings\ar\Resources.resjson" />
     <None Remove="Strings\ar\Settings.resjson" />
@@ -160,6 +207,7 @@
     <None Remove="Strings\en-us\Console.resjson" />
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Download.resjson" />
+    <None Remove="Strings\en-us\Installer.resjson" />
     <None Remove="Strings\en-us\Notification.resjson" />
     <None Remove="Strings\en-us\Resources.resjson" />
     <None Remove="Strings\en-us\Settings.resjson" />
@@ -174,6 +222,7 @@
     <None Remove="Strings\he-IL\Console.resjson" />
     <None Remove="Strings\he-IL\Dialog.resjson" />
     <None Remove="Strings\he-IL\Download.resjson" />
+    <None Remove="Strings\he-IL\Installer.resjson" />
     <None Remove="Strings\he-IL\Notification.resjson" />
     <None Remove="Strings\he-IL\Resources.resjson" />
     <None Remove="Strings\he-IL\Settings.resjson" />
@@ -188,6 +237,7 @@
     <None Remove="Strings\zh-hans\Console.resjson" />
     <None Remove="Strings\zh-hans\Dialog.resjson" />
     <None Remove="Strings\zh-hans\Download.resjson" />
+    <None Remove="Strings\zh-hans\Installer.resjson" />
     <None Remove="Strings\zh-hans\Notification.resjson" />
     <None Remove="Strings\zh-hans\Resources.resjson" />
     <None Remove="Strings\zh-hans\Settings.resjson" />
@@ -280,6 +330,7 @@
     <PRIResource Include="Strings\ar\Console.resjson" />
     <PRIResource Include="Strings\ar\Dialog.resjson" />
     <PRIResource Include="Strings\ar\Download.resjson" />
+    <PRIResource Include="Strings\ar\Installer.resjson" />
     <PRIResource Include="Strings\ar\Notification.resjson" />
     <PRIResource Include="Strings\ar\Resources.resjson" />
     <PRIResource Include="Strings\ar\Settings.resjson" />
@@ -293,6 +344,7 @@
     <PRIResource Include="Strings\en-us\Console.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Download.resjson" />
+    <PRIResource Include="Strings\en-us\Installer.resjson" />
     <PRIResource Include="Strings\en-us\Notification.resjson" />
     <PRIResource Include="Strings\en-us\Resources.resjson" />
     <PRIResource Include="Strings\en-us\Settings.resjson" />
@@ -307,6 +359,7 @@
     <PRIResource Include="Strings\he-IL\Console.resjson" />
     <PRIResource Include="Strings\he-IL\Dialog.resjson" />
     <PRIResource Include="Strings\he-IL\Download.resjson" />
+    <PRIResource Include="Strings\he-IL\Installer.resjson" />
     <PRIResource Include="Strings\he-IL\Notification.resjson" />
     <PRIResource Include="Strings\he-IL\Resources.resjson" />
     <PRIResource Include="Strings\he-IL\Settings.resjson" />
@@ -321,6 +374,7 @@
     <PRIResource Include="Strings\zh-hans\Console.resjson" />
     <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
     <PRIResource Include="Strings\zh-hans\Download.resjson" />
+    <PRIResource Include="Strings\zh-hans\Installer.resjson" />
     <PRIResource Include="Strings\zh-hans\Notification.resjson" />
     <PRIResource Include="Strings\zh-hans\Resources.resjson" />
     <PRIResource Include="Strings\zh-hans\Settings.resjson" />

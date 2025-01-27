@@ -82,10 +82,10 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.6" GeneratePathProperty="true" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
-    <!--<ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />-->
+    <ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />
     <ProjectReference Include="..\GetStoreAppShellExtension\GetStoreAppShellExtension.csproj" />
     <ProjectReference Include="..\GetStoreAppWebView\GetStoreAppWebView.csproj" />
-    <ProjectReference Include="..\GetStoreAppWidget\GetStoreAppWidget.csproj" />
+    <!--<ProjectReference Include="..\GetStoreAppWidget\GetStoreAppWidget.csproj" />-->
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <!--将生成的文件放到应用包的根目录-->
