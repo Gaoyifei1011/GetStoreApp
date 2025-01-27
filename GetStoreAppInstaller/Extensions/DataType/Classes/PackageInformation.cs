@@ -61,6 +61,11 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         public string AppInstalledState { get; set; }
 
         /// <summary>
+        /// 应用是否已安装
+        /// </summary>
+        public bool IsAppInstalled { get; set; }
+
+        /// <summary>
         /// 应用包图标资源
         /// </summary>
         public IStream ImageLogo { get; set; }

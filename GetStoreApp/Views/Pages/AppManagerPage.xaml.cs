@@ -663,8 +663,10 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        ApplicationData applicationData = ApplicationDataManager.CreateForPackageFamily(package.Id.FamilyName);
-                        await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
+                        if (ApplicationDataManager.CreateForPackageFamily(package.Id.FamilyName) is ApplicationData applicationData)
+                        {
+                            await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
+                        }
                     }
                     catch (Exception e)
                     {

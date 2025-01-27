@@ -759,7 +759,8 @@
                                         <HyperlinkButton
                                             Grid.Column="2"
                                             Margin="0,0,-15,0"
-                                            Click="{x:Bind OnStartClicked}">
+                                            Click="{x:Bind OnStartClicked}"
+                                            Visibility="{x:Bind IsAppInstalled, Mode=OneWay}">
 
                                             <HyperlinkButton.Content>
                                                 <StackPanel Orientation="Horizontal">
@@ -789,16 +790,19 @@
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
+                                                        Click="{x:Bind OnStartAppClicked}"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('Installer/StartApp')}" />
 
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
+                                                        Click="{x:Bind OnOpenAppInstalledFolderClicked}"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppInstalledFolder')}" />
 
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
+                                                        Click="{x:Bind OnOpenAppCachedFolderClicked}"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppCachedFolder')}" />
                                                 </MenuFlyout>
                                             </FlyoutBase.AttachedFlyout>
@@ -1782,6 +1786,7 @@
                 <Grid
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    RowSpacing="10"
                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsParseSuccessfully), Mode=OneWay}">
 
                     <Grid.RowDefinitions>

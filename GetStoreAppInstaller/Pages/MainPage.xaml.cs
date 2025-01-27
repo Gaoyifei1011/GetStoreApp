@@ -31,11 +31,11 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
-using Windows.ApplicationModel.Store.Preview.InstallControl;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Globalization;
+using Windows.Management.Core;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -328,6 +328,22 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _appInstalledState = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstalledState)));
+                }
+            }
+        }
+
+        private bool _isAppInstalled;
+
+        public bool IsAppInstalled
+        {
+            get { return _isAppInstalled; }
+
+            set
+            {
+                if (!Equals(_isAppInstalled, value))
+                {
+                    _isAppInstalled = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInstalled)));
                 }
             }
         }
@@ -1227,11 +1243,82 @@ namespace GetStoreAppInstaller.Pages
         }
 
         /// <summary>
-        /// 启动应用
+        /// 显示启动应用浮出控件
         /// </summary>
         private void OnStartClicked(object sender, RoutedEventArgs args)
         {
             FlyoutBase.ShowAttachedFlyout(sender as FrameworkElement);
+        }
+
+        /// <summary>
+        /// 启动应用
+        /// </summary>
+        private void OnStartAppClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                foreach (Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
+                {
+                    if (package.Id.FamilyName.Equals(PackageFamilyName))
+                    {
+                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
+
+                        if (appListEntryList.Count > 0)
+                        {
+                            await appListEntryList[0].LaunchAsync();
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开应用安装目录
+        /// </summary>
+        private void OnOpenAppInstalledFolderClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                foreach (Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
+                {
+                    if (package.Id.FamilyName.Equals(PackageFamilyName))
+                    {
+                        try
+                        {
+                            await Launcher.LaunchFolderPathAsync(package.InstalledPath);
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, string.Format("{0} app installed folder open failed", package.DisplayName), e);
+                        }
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开应用缓存目录
+        /// </summary>
+        private void OnOpenAppCachedFolderClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                if (!string.IsNullOrEmpty(PackageFamilyName))
+                {
+                    try
+                    {
+                        if (ApplicationDataManager.CreateForPackageFamily(PackageFamilyName) is ApplicationData applicationData)
+                        {
+                            await Launcher.LaunchFolderAsync(applicationData.LocalFolder);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -1308,6 +1395,8 @@ namespace GetStoreAppInstaller.Pages
                     IsInstallWaiting = false;
                     IsInstallFailed = false;
                     InstallFailedInformation = string.Empty;
+                    IsAppInstalled = true;
+                    AppInstalledState = ResourceService.GetLocalized("Installer/AppInstalledNotNewVersion");
                 });
             }
             // 安装错误
@@ -1435,7 +1524,9 @@ namespace GetStoreAppInstaller.Pages
                                 if (package.Id.FullName.Contains(packageInformation.PackageFamilyName))
                                 {
                                     Version installedVersion = new(package.Id.Version.Major, package.Id.Version.Major, package.Id.Version.Build, package.Id.Version.Revision);
-                                    packageInformation.AppInstalledState = packageInformation.Version > installedVersion ? ResourceService.GetLocalized("Installer/AppInstalledNewVersion") : ResourceService.GetLocalized("Installer/AppInstalledNotNewVersion");
+                                    packageInformation.AppInstalledState = packageInformation.Version > installedVersion ? ResourceService.GetLocalized("Installer/AppInstalledNotNewVersion") : ResourceService.GetLocalized("Installer/AppInstalledNewVersion");
+                                    packageInformation.IsAppInstalled = true;
+                                    break;
                                 }
                             }
 
@@ -1576,7 +1667,9 @@ namespace GetStoreAppInstaller.Pages
                                 if (package.Id.FamilyName.Equals(packageInformation.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                                 {
                                     Version installedVersion = new(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision);
-                                    packageInformation.AppInstalledState = packageInformation.Version > installedVersion ? ResourceService.GetLocalized("Installer/AppInstalledNewVersion") : ResourceService.GetLocalized("Installer/AppInstalledNotNewVersion");
+                                    packageInformation.AppInstalledState = packageInformation.Version > installedVersion ? ResourceService.GetLocalized("Installer/AppInstalledNotNewVersion") : ResourceService.GetLocalized("Installer/AppInstalledNewVersion"); packageInformation.IsAppInstalled = true;
+                                    packageInformation.IsAppInstalled = true;
+                                    break;
                                 }
                             }
 
@@ -2909,6 +3002,7 @@ namespace GetStoreAppInstaller.Pages
             SupportedArchitecture = string.Empty;
             IsFramework = string.Empty;
             AppInstalledState = string.Empty;
+            IsAppInstalled = false;
             DependencyCollection.Clear();
             CapabilitiesCollection.Clear();
             ApplicationCollection.Clear();
@@ -2930,17 +3024,45 @@ namespace GetStoreAppInstaller.Pages
 
                 foreach (string capability in packageInformation.CapabilitiesList)
                 {
-                    if (capability.Equals("activity", StringComparison.OrdinalIgnoreCase))
+                    if (capability.Equals("accessoryManager", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAccessoryManager"));
+                    }
+                    else if (capability.Equals("activity", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityActivity"));
+                    }
+                    else if (capability.Equals("allAppMods", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAllAppMods"));
                     }
                     else if (capability.Equals("allJoyn", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAllJoyn"));
                     }
+                    else if (capability.Equals("allowElevation", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAllowElevation"));
+                    }
+                    else if (capability.Equals("appBroadcastServices", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppBroadcastServices"));
+                    }
+                    else if (capability.Equals("appCaptureServices", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppCaptureServices"));
+                    }
                     else if (capability.Equals("appCaptureSettings", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppCaptureSettings"));
+                    }
+                    else if (capability.Equals("appDiagnostics", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppDiagnostics"));
+                    }
+                    else if (capability.Equals("appLicensing", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppLicensing"));
                     }
                     else if (capability.Equals("appointments", StringComparison.OrdinalIgnoreCase))
                     {
@@ -2950,13 +3072,25 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppointmentsSystem"));
                     }
-                    else if (capability.Equals("accessoryManager", StringComparison.OrdinalIgnoreCase))
+                    else if (capability.Equals("audioDeviceConfiguration", StringComparison.OrdinalIgnoreCase))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAccessoryManager"));
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAudioDeviceConfiguration"));
                     }
                     else if (capability.Equals("backgroundMediaPlayback", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundMediaPlayback"));
+                    }
+                    else if (capability.Equals("backgroundMediaRecording", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundMediaRecording"));
+                    }
+                    else if (capability.Equals("backgroundSpatialPerception", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundSpatialPerception"));
+                    }
+                    else if (capability.Equals("backgroundVoIP", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundVoIP"));
                     }
                     else if (capability.Equals("blockedChatMessages", StringComparison.OrdinalIgnoreCase))
                     {
@@ -2966,9 +3100,25 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBluetooth"));
                     }
+                    else if (capability.Equals("broadFileSystemAccess", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBroadFileSystemAccess"));
+                    }
+                    else if (capability.Equals("cameraProcessingExtension", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCameraProcessingExtension"));
+                    }
                     else if (capability.Equals("cellularDeviceControl", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCellularDeviceControl"));
+                    }
+                    else if (capability.Equals("cellularDeviceIdentity", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCellularDeviceIdentity"));
+                    }
+                    else if (capability.Equals("cellularMessaging", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCellularMessaging"));
                     }
                     else if (capability.Equals("chat", StringComparison.OrdinalIgnoreCase))
                     {
@@ -2994,9 +3144,25 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityContactsSystem"));
                     }
+                    else if (capability.Equals("cortanaPermissions", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCortanaPermissions"));
+                    }
                     else if (capability.Equals("cortanaSpeechAccessory", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCortanaSpeechAccessory"));
+                    }
+                    else if (capability.Equals("customInstallActions", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCustomInstallActions"));
+                    }
+                    else if (capability.Equals("developmentModeNetwork", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDevelopmentModeNetwork"));
+                    }
+                    else if (capability.Equals("developmentModeNetwork", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDevelopmentModeNetwork"));
                     }
                     else if (capability.Equals("deviceManagementDmAccount", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3013,6 +3179,10 @@ namespace GetStoreAppInstaller.Pages
                     else if (capability.Equals("deviceManagementEmailAccount", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDeviceManagementWapSecurityPolicies"));
+                    }
+                    else if (capability.Equals("devicePortalProvider", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDevicePortalProvider"));
                     }
                     else if (capability.Equals("deviceUnlock", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3038,6 +3208,10 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseAuthentication"));
                     }
+                    else if (capability.Equals("enterpriseCloudSSO", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseCloudSSO"));
+                    }
                     else if (capability.Equals("enterpriseDataPolicy", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseDataPolicy"));
@@ -3046,33 +3220,41 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseDeviceLockdown"));
                     }
+                    else if (capability.Equals("expandedResources", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExpandedResources"));
+                    }
                     else if (capability.Equals("extendedBackgroundTaskTime", StringComparison.OrdinalIgnoreCase))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEextendedBackgroundTaskTime"));
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedBackgroundTaskTime"));
                     }
                     else if (capability.Equals("extendedExecutionBackgroundAudio", StringComparison.OrdinalIgnoreCase))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEextendedExecutionBackgroundAudio"));
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionBackgroundAudio"));
                     }
                     else if (capability.Equals("extendedExecutionCritical", StringComparison.OrdinalIgnoreCase))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEextendedExecutionCritical"));
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionCritical"));
                     }
                     else if (capability.Equals("extendedExecutionUnconstrained", StringComparison.OrdinalIgnoreCase))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEextendedExecutionUnconstrained"));
-                    }
-                    else if (capability.Equals("extendedBackgroundTaskTime", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEextendedBackgroundTaskTime"));
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionUnconstrained"));
                     }
                     else if (capability.Equals("firstSignInSettings", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityFirstSignInSettings"));
                     }
+                    else if (capability.Equals("gameBarServices", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGameBarServices"));
+                    }
                     else if (capability.Equals("gameList", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGameList"));
+                    }
+                    else if (capability.Equals("gameMonitor", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGameMonitor"));
                     }
                     else if (capability.Equals("gazeInput", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3102,13 +3284,13 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityHumanPresense"));
                     }
-                    else if (capability.Equals("inputInjectionBrokered", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInputInjectionBrokered"));
-                    }
                     else if (capability.Equals("inputForegroundObservation", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInputForegroundObservation"));
+                    }
+                    else if (capability.Equals("inputInjectionBrokered", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInputInjectionBrokered"));
                     }
                     else if (capability.Equals("inputObservation", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3130,6 +3312,10 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInteropServices"));
                     }
+                    else if (capability.Equals("localSystemServices", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocalSystemServices"));
+                    }
                     else if (capability.Equals("location", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocation"));
@@ -3137,6 +3323,10 @@ namespace GetStoreAppInstaller.Pages
                     else if (capability.Equals("locationHistory", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocationHistory"));
+                    }
+                    else if (capability.Equals("locationSystem", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocationSystem"));
                     }
                     else if (capability.Equals("lowLevel", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3150,6 +3340,62 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrophone"));
                     }
+                    else if (capability.Equals("Microsoft.cellularSARConfiguration_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftCellularSARConfiguration"));
+                    }
+                    else if (capability.Equals("Microsoft.classicAppCompat_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppCompat"));
+                    }
+                    else if (capability.Equals("Microsoft.classicAppCompatElevated_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppCompatElevated"));
+                    }
+                    else if (capability.Equals("Microsoft.classicAppInstaller_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppInstaller"));
+                    }
+                    else if (capability.Equals("Microsoft.coreAppActivation_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftCoreAppActivation"));
+                    }
+                    else if (capability.Equals("Microsoft.delegatedWebFeatures_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftDelegatedWebFeatures"));
+                    }
+                    else if (capability.Equals("Microsoft.deployFullTrustOnHost_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftDeployFullTrustOnHost"));
+                    }
+                    else if (capability.Equals("Microsoft.eSIMManagement_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftESIMManagement"));
+                    }
+                    else if (capability.Equals("Microsoft.nonUserConfigurableStartupTasks_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftNonUserConfigurableStartupTasks"));
+                    }
+                    else if (capability.Equals("Microsoft.notSupportedInCoreV1_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftNotSupportedInCoreV1"));
+                    }
+                    else if (capability.Equals("Microsoft.onDemandHotspotControl_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftOnDemandHotspotControl"));
+                    }
+                    else if (capability.Equals("Microsoft.requiresNonSMode_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftRequiresNonSMode"));
+                    }
+                    else if (capability.Equals("Microsoft.secondaryAuthenticationFactorForLogon_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftSecondaryAuthenticationFactorForLogon"));
+                    }
+                    else if (capability.Equals("modifiableApp", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityModifiableApp"));
+                    }
                     else if (capability.Equals("musicLibrary", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMusicLibrary"));
@@ -3161,6 +3407,10 @@ namespace GetStoreAppInstaller.Pages
                     else if (capability.Equals("networkDataPlanProvisioning", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityNetworkDataPlanProvisioning"));
+                    }
+                    else if (capability.Equals("networkDataUsageManagement", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityNetworkDataUsageManagement"));
                     }
                     else if (capability.Equals("networkingVpnProvider", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3178,13 +3428,29 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityOemPublicDirectory"));
                     }
+                    else if (capability.Equals("oneProcessVoIP", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityOneProcessVoIP"));
+                    }
                     else if (capability.Equals("optional", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityOptional"));
                     }
+                    else if (capability.Equals("packagedServices", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackagedServices"));
+                    }
+                    else if (capability.Equals("packageManagement", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackageManagement"));
+                    }
                     else if (capability.Equals("packagePolicySystem", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackagePolicySystem"));
+                    }
+                    else if (capability.Equals("packageWriteRedirectionCompatibilityShim", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackageWriteRedirectionCompatibilityShim"));
                     }
                     else if (capability.Equals("phoneCall", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3198,6 +3464,10 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPhoneCallHistorySystem"));
                     }
+                    else if (capability.Equals("phoneLineTransportManagement", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPhoneLineTransportManagement"));
+                    }
                     else if (capability.Equals("picturesLibrary", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPicturesLibrary"));
@@ -3205,6 +3475,14 @@ namespace GetStoreAppInstaller.Pages
                     else if (capability.Equals("pointOfService", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPointOfService"));
+                    }
+                    else if (capability.Equals("previewInkWorkspace", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPreviewInkWorkspace"));
+                    }
+                    else if (capability.Equals("previewPenWorkspace", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPreviewPenWorkspace"));
                     }
                     else if (capability.Equals("previewStore", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3217,6 +3495,10 @@ namespace GetStoreAppInstaller.Pages
                     else if (capability.Equals("privateNetworkClientServer", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPrivateNetworkClientServer"));
+                    }
+                    else if (capability.Equals("protectedApp", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityProtectedApp"));
                     }
                     else if (capability.Equals("proximity", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3250,6 +3532,10 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityScreenDuplication"));
                     }
+                    else if (capability.Equals("secondaryAuthenticationFactor", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySecondaryAuthenticationFactor"));
+                    }
                     else if (capability.Equals("secureAssessment", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySecureAssessment"));
@@ -3266,6 +3552,10 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySlapiQueryLicenseValue"));
                     }
+                    else if (capability.Equals("smbios", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySmbios"));
+                    }
                     else if (capability.Equals("smsSend", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySmsSend"));
@@ -3274,25 +3564,57 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySpatialPerception"));
                     }
+                    else if (capability.Equals("startScreenManagement", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityStartScreenManagement"));
+                    }
+                    else if (capability.Equals("storeLicenseManagement", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityStoreLicenseManagement"));
+                    }
                     else if (capability.Equals("systemManagement", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySystemManagement"));
+                    }
+                    else if (capability.Equals("targetedContent", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTargetedContent"));
+                    }
+                    else if (capability.Equals("teamEditionDeviceCredential", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTeamEditionDeviceCredential"));
                     }
                     else if (capability.Equals("teamEditionExperience", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTeamEditionExperience"));
                     }
+                    else if (capability.Equals("teamEditionView", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTeamEditionView"));
+                    }
+                    else if (capability.Equals("uiAccess", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUiAccess"));
+                    }
+                    else if (capability.Equals("uiAutomation", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUiAutomation"));
+                    }
                     else if (capability.Equals("unvirtualizedResources", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUnvirtualizedResources"));
+                    }
+                    else if (capability.Equals("usb", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUSB"));
                     }
                     else if (capability.Equals("userAccountInformation", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserAccountInformation"));
                     }
-                    else if (capability.Equals("usb", StringComparison.OrdinalIgnoreCase))
+                    else if (capability.Equals("userDataAccountsProvider", StringComparison.OrdinalIgnoreCase))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUSB"));
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserDataAccountsProvider"));
                     }
                     else if (capability.Equals("userDataTasks", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3302,13 +3624,17 @@ namespace GetStoreAppInstaller.Pages
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserDataSystem"));
                     }
+                    else if (capability.Equals("userNotificationListener", StringComparison.OrdinalIgnoreCase))
+                    {
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserNotificationListener"));
+                    }
                     else if (capability.Equals("userPrincipalName", StringComparison.OrdinalIgnoreCase))
                     {
                         CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserPrincipalName"));
                     }
-                    else if (capability.Equals("userNotificationListener", StringComparison.OrdinalIgnoreCase))
+                    else if (capability.Equals("userSystemId", StringComparison.OrdinalIgnoreCase))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserNotificationListener"));
+                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserSystemId"));
                     }
                     else if (capability.Equals("videosLibrary", StringComparison.OrdinalIgnoreCase))
                     {
@@ -3376,6 +3702,7 @@ namespace GetStoreAppInstaller.Pages
                 PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PublisherDisplayName;
                 IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
                 AppInstalledState = packageInformation.AppInstalledState;
+                IsAppInstalled = packageInformation.IsAppInstalled;
                 Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
                 PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? ResourceService.GetLocalized("Installer/None") : packageInformation.Description;
 
