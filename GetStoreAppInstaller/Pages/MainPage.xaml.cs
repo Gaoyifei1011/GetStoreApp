@@ -472,6 +472,168 @@ namespace GetStoreAppInstaller.Pages
 
         private ObservableCollection<InstallDependencyModel> InstallDependencyCollection { get; } = [];
 
+        private Dictionary<string, string> CapabilityDict { get; } = new()
+        {
+            { "accessorymanager", ResourceService.GetLocalized("Installer/CapabilityAccessoryManager") },
+            { "activity", ResourceService.GetLocalized("Installer/CapabilityActivity") },
+            { "allappmods", ResourceService.GetLocalized("Installer/CapabilityAllAppMods") },
+            { "alljoyn", ResourceService.GetLocalized("Installer/CapabilityAllJoyn") },
+            { "allowelevation", ResourceService.GetLocalized("Installer/CapabilityAllowElevation") },
+            { "appbroadcastservices", ResourceService.GetLocalized("Installer/CapabilityAppBroadcastServices") },
+            { "appcaptureservices", ResourceService.GetLocalized("Installer/CapabilityAppCaptureServices") },
+            { "appcapturesettings", ResourceService.GetLocalized("Installer/CapabilityAppCaptureSettings") },
+            { "appdiagnostics", ResourceService.GetLocalized("Installer/CapabilityAppDiagnostics") },
+            { "applicensing", ResourceService.GetLocalized("Installer/CapabilityAppLicensing") },
+            { "appointments", ResourceService.GetLocalized("Installer/CapabilityAppointments") },
+            { "appointmentssystem", ResourceService.GetLocalized("Installer/CapabilityAppointmentsSystem") },
+            { "audiodeviceconfiguration", ResourceService.GetLocalized("Installer/CapabilityAudioDeviceConfiguration") },
+            { "backgroundmediaplayback", ResourceService.GetLocalized("Installer/CapabilityBackgroundMediaPlayback") },
+            { "backgroundmediarecording", ResourceService.GetLocalized("Installer/CapabilityBackgroundMediaRecording") },
+            { "backgroundspatialperception", ResourceService.GetLocalized("Installer/CapabilityBackgroundSpatialPerception") },
+            { "backgroundvoip", ResourceService.GetLocalized("Installer/CapabilityBackgroundVoIP") },
+            { "blockedchatmessages", ResourceService.GetLocalized("Installer/CapabilityBlockedChatMessages") },
+            { "bluetooth", ResourceService.GetLocalized("Installer/CapabilityBluetooth") },
+            { "broadfilesystemaccess", ResourceService.GetLocalized("Installer/CapabilityBroadFileSystemAccess") },
+            { "cameraprocessingextension", ResourceService.GetLocalized("Installer/CapabilityCameraProcessingExtension") },
+            { "cellulardevicecontrol", ResourceService.GetLocalized("Installer/CapabilityCellularDeviceControl") },
+            { "cellulardeviceidentity", ResourceService.GetLocalized("Installer/CapabilityCellularDeviceIdentity") },
+            { "cellularmessaging", ResourceService.GetLocalized("Installer/CapabilityCellularMessaging") },
+            { "chat", ResourceService.GetLocalized("Installer/CapabilityChat") },
+            { "chatsystem", ResourceService.GetLocalized("Installer/CapabilityChatSystem") },
+            { "codegeneration", ResourceService.GetLocalized("Installer/CapabilityCodeGeneration") },
+            { "confirmappclose", ResourceService.GetLocalized("Installer/CapabilityConfirmAppClose") },
+            { "contacts", ResourceService.GetLocalized("Installer/CapabilityContacts") },
+            { "contactssystem", ResourceService.GetLocalized("Installer/CapabilityContactsSystem") },
+            { "cortanapermissions", ResourceService.GetLocalized("Installer/CapabilityCortanaPermissions") },
+            { "cortanaspeechaccessory", ResourceService.GetLocalized("Installer/CapabilityCortanaSpeechAccessory") },
+            { "custominstallactions", ResourceService.GetLocalized("Installer/CapabilityCustomInstallActions") },
+            { "developmentmodenetwork", ResourceService.GetLocalized("Installer/CapabilityDevelopmentModeNetwork") },
+            { "devicemanagementdmaccount", ResourceService.GetLocalized("Installer/CapabilityDeviceManagementDmAccount") },
+            { "devicemanagementemailaccount", ResourceService.GetLocalized("Installer/CapabilityDeviceManagementEmailAccount") },
+            { "devicemanagementfoundation", ResourceService.GetLocalized("Installer/CapabilityDeviceManagementFoundation") },
+            { "devicemanagementwapsecuritypolicies", ResourceService.GetLocalized("Installer/CapabilityDeviceManagementWapSecurityPolicies") },
+            { "deviceportalprovider", ResourceService.GetLocalized("Installer/CapabilityDevicePortalProvider") },
+            { "deviceunlock", ResourceService.GetLocalized("Installer/CapabilityDeviceUnlock") },
+            { "documentslibrary", ResourceService.GetLocalized("Installer/CapabilityDocumentsLibrary") },
+            { "dualsimtiles", ResourceService.GetLocalized("Installer/CapabilityDualSimTiles") },
+            { "email", ResourceService.GetLocalized("Installer/CapabilityEmail") },
+            { "emailsystem", ResourceService.GetLocalized("Installer/CapabilityEmailSystem") },
+            { "enterpriseauthentication", ResourceService.GetLocalized("Installer/CapabilityEnterpriseAuthentication") },
+            { "enterprisecloudsso", ResourceService.GetLocalized("Installer/CapabilityEnterpriseCloudSSO") },
+            { "enterprisedatapolicy", ResourceService.GetLocalized("Installer/CapabilityEnterpriseDataPolicy") },
+            { "enterprisedevicelockdown", ResourceService.GetLocalized("Installer/CapabilityEnterpriseDeviceLockdown") },
+            { "expandedresources", ResourceService.GetLocalized("Installer/CapabilityExpandedResources") },
+            { "extendedbackgroundtasktime", ResourceService.GetLocalized("Installer/CapabilityExtendedBackgroundTaskTime") },
+            { "extendedexecutionbackgroundaudio", ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionBackgroundAudio") },
+            { "extendedexecutioncritical", ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionCritical") },
+            { "extendedexecutionunconstrained", ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionUnconstrained") },
+            { "firstsigninsettings", ResourceService.GetLocalized("Installer/CapabilityFirstSignInSettings") },
+            { "gamebarservices", ResourceService.GetLocalized("Installer/CapabilityGameBarServices") },
+            { "gamelist", ResourceService.GetLocalized("Installer/CapabilityGameList") },
+            { "gamemonitor", ResourceService.GetLocalized("Installer/CapabilityGameMonitor") },
+            { "gazeinput", ResourceService.GetLocalized("Installer/CapabilityGazeInput") },
+            { "globalmediacontrol", ResourceService.GetLocalized("Installer/CapabilityGlobalMediaControl") },
+            { "graphicscapture", ResourceService.GetLocalized("Installer/CapabilityGraphicsCapture") },
+            { "graphicscaptureprogrammatic", ResourceService.GetLocalized("Installer/CapabilityGraphicsCaptureProgrammatic") },
+            { "graphicscapturewithoutborder", ResourceService.GetLocalized("Installer/CapabilityGraphicsCaptureWithoutBorder") },
+            { "humaninterfacedevice", ResourceService.GetLocalized("Installer/CapabilityHumanInterfaceDevice") },
+            { "humanpresence", ResourceService.GetLocalized("Installer/CapabilityHumanPresence") },
+            { "inputforegroundobservation", ResourceService.GetLocalized("Installer/CapabilityInputForegroundObservation") },
+            { "inputinjectionbrokered", ResourceService.GetLocalized("Installer/CapabilityInputInjectionBrokered") },
+            { "inputobservation", ResourceService.GetLocalized("Installer/CapabilityInputObservation") },
+            { "inputsuppression", ResourceService.GetLocalized("Installer/CapabilityInputSuppression") },
+            { "internetclient", ResourceService.GetLocalized("Installer/CapabilityInternetClient") },
+            { "internetclientserver", ResourceService.GetLocalized("Installer/CapabilityInternetClientServer") },
+            { "interopservices", ResourceService.GetLocalized("Installer/CapabilityInteropServices") },
+            { "localsystemservices", ResourceService.GetLocalized("Installer/CapabilityLocalSystemServices") },
+            { "location", ResourceService.GetLocalized("Installer/CapabilityLocation") },
+            { "locationhistory", ResourceService.GetLocalized("Installer/CapabilityLocationHistory") },
+            { "locationsystem", ResourceService.GetLocalized("Installer/CapabilityLocationSystem") },
+            { "lowlevel", ResourceService.GetLocalized("Installer/CapabilityLowLevel") },
+            { "lowleveldevices", ResourceService.GetLocalized("Installer/CapabilityLowLevelDevices") },
+            { "microphone", ResourceService.GetLocalized("Installer/CapabilityMicrophone") },
+            { "microsoft.cellularsarconfiguration_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftCellularSARConfiguration") },
+            { "microsoft.classicappcompat_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppCompat") },
+            { "microsoft.classicappcompatelevated_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppCompatElevated") },
+            { "microsoft.classicappinstaller_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppInstaller") },
+            { "microsoft.coreappactivation_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftCoreAppActivation") },
+            { "microsoft.delegatedwebfeatures_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftDelegatedWebFeatures") },
+            { "microsoft.deployfulltrustonhost_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftDeployFullTrustOnHost") },
+            { "microsoft.esimmanagement_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftESIMManagement") },
+            { "microsoft.nonuserconfigurablestartuptasks_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftNonUserConfigurableStartupTasks") },
+            { "microsoft.notsupportedincorev1_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftNotSupportedInCoreV1") },
+            { "microsoft.ondemandhotspotcontrol_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftOnDemandHotspotControl") },
+            { "microsoft.requiresnonsmode_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftRequiresNonSMode") },
+            { "microsoft.secondaryauthenticationfactorforlogon_8wekyb3d8bbwe", ResourceService.GetLocalized("Installer/CapabilityMicrosoftSecondaryAuthenticationFactorForLogon") },
+            { "modifiableapp", ResourceService.GetLocalized("Installer/CapabilityModifiableApp") },
+            { "musiclibrary", ResourceService.GetLocalized("Installer/CapabilityMusicLibrary") },
+            { "networkconnectionmanagerprovisioning", ResourceService.GetLocalized("Installer/CapabilityNetworkConnectionManagerProvisioning") },
+            { "networkdataplanprovisioning", ResourceService.GetLocalized("Installer/CapabilityNetworkDataPlanProvisioning") },
+            { "networkdatausagemanagement", ResourceService.GetLocalized("Installer/CapabilityNetworkDataUsageManagement") },
+            { "networkingvpnprovider", ResourceService.GetLocalized("Installer/CapabilityNetworkingVpnProvider") },
+            { "objects3d", ResourceService.GetLocalized("Installer/CapabilityObjects3D") },
+            { "oemdeployment", ResourceService.GetLocalized("Installer/CapabilityOemDeployment") },
+            { "oempublicdirectory", ResourceService.GetLocalized("Installer/CapabilityOemPublicDirectory") },
+            { "oneprocessvoip", ResourceService.GetLocalized("Installer/CapabilityOneProcessVoIP") },
+            { "optional", ResourceService.GetLocalized("Installer/CapabilityOptional") },
+            { "packagedservices", ResourceService.GetLocalized("Installer/CapabilityPackagedServices") },
+            { "packagemanagement", ResourceService.GetLocalized("Installer/CapabilityPackageManagement") },
+            { "packagepolicysystem", ResourceService.GetLocalized("Installer/CapabilityPackagePolicySystem") },
+            { "packagewriteredirectioncompatibilityshim", ResourceService.GetLocalized("Installer/CapabilityPackageWriteRedirectionCompatibilityShim") },
+            { "phonecall", ResourceService.GetLocalized("Installer/CapabilityPhoneCall") },
+            { "phonecallhistory", ResourceService.GetLocalized("Installer/CapabilityPhoneCallHistory") },
+            { "phonecallhistorysystem", ResourceService.GetLocalized("Installer/CapabilityPhoneCallHistorySystem") },
+            { "phonelinetransportmanagement", ResourceService.GetLocalized("Installer/CapabilityPhoneLineTransportManagement") },
+            { "pictureslibrary", ResourceService.GetLocalized("Installer/CapabilityPicturesLibrary") },
+            { "pointofservice", ResourceService.GetLocalized("Installer/CapabilityPointOfService") },
+            { "previewinkworkspace", ResourceService.GetLocalized("Installer/CapabilityPreviewInkWorkspace") },
+            { "previewpenworkspace", ResourceService.GetLocalized("Installer/CapabilityPreviewPenWorkspace") },
+            { "previewstore", ResourceService.GetLocalized("Installer/CapabilityPreviewStore") },
+            { "previewuicomposition", ResourceService.GetLocalized("Installer/CapabilityPreviewUiComposition") },
+            { "privatenetworkclientserver", ResourceService.GetLocalized("Installer/CapabilityPrivateNetworkClientServer") },
+            { "protectedapp", ResourceService.GetLocalized("Installer/CapabilityProtectedApp") },
+            { "proximity", ResourceService.GetLocalized("Installer/CapabilityProximity") },
+            { "radios", ResourceService.GetLocalized("Installer/CapabilityRadios") },
+            { "recordedcallsfolder", ResourceService.GetLocalized("Installer/CapabilityRecordedCallsFolder") },
+            { "remotepassportauthentication", ResourceService.GetLocalized("Installer/CapabilityRemotePassportAuthentication") },
+            { "remotesystem", ResourceService.GetLocalized("Installer/CapabilityRemoteSystem") },
+            { "removablestorage", ResourceService.GetLocalized("Installer/CapabilityRemovableStorage") },
+            { "runfulltrust", ResourceService.GetLocalized("Installer/CapabilityRunFullTrust") },
+            { "screenduplication", ResourceService.GetLocalized("Installer/CapabilityScreenDuplication") },
+            { "secondaryauthenticationfactor", ResourceService.GetLocalized("Installer/CapabilitySecondaryAuthenticationFactor") },
+            { "secureassessment", ResourceService.GetLocalized("Installer/CapabilitySecureAssessment") },
+            { "serialcommunication", ResourceService.GetLocalized("Installer/CapabilitySerialCommunication") },
+            { "sharedusercertificates", ResourceService.GetLocalized("Installer/CapabilitySharedUserCertificates") },
+            { "slapiquerylicensevalue", ResourceService.GetLocalized("Installer/CapabilitySlapiQueryLicenseValue") },
+            { "smbios", ResourceService.GetLocalized("Installer/CapabilitySmbios") },
+            { "smssend", ResourceService.GetLocalized("Installer/CapabilitySmsSend") },
+            { "spatialperception", ResourceService.GetLocalized("Installer/CapabilitySpatialPerception") },
+            { "startscreenmanagement", ResourceService.GetLocalized("Installer/CapabilityStartScreenManagement") },
+            { "storelicensemanagement", ResourceService.GetLocalized("Installer/CapabilityStoreLicenseManagement") },
+            { "systemmanagement", ResourceService.GetLocalized("Installer/CapabilitySystemManagement") },
+            { "targetedcontent", ResourceService.GetLocalized("Installer/CapabilityTargetedContent") },
+            { "teameditiondevicecredential", ResourceService.GetLocalized("Installer/CapabilityTeamEditionDeviceCredential") },
+            { "teameditionexperience", ResourceService.GetLocalized("Installer/CapabilityTeamEditionExperience") },
+            { "teameditionview", ResourceService.GetLocalized("Installer/CapabilityTeamEditionView") },
+            { "uiaccess", ResourceService.GetLocalized("Installer/CapabilityUiAccess") },
+            { "uiautomation", ResourceService.GetLocalized("Installer/CapabilityUiAutomation") },
+            { "unvirtualizedresources", ResourceService.GetLocalized("Installer/CapabilityUnvirtualizedResources") },
+            { "usb", ResourceService.GetLocalized("Installer/CapabilityUSB") },
+            { "useraccountinformation", ResourceService.GetLocalized("Installer/CapabilityUserAccountInformation") },
+            { "userdataaccountsprovider", ResourceService.GetLocalized("Installer/CapabilityUserDataAccountsProvider") },
+            { "userdatatasks", ResourceService.GetLocalized("Installer/CapabilityUserDataTasks") },
+            { "userdatasystem", ResourceService.GetLocalized("Installer/CapabilityUserDataSystem") },
+            { "usernotificationlistener", ResourceService.GetLocalized("Installer/CapabilityUserNotificationListener") },
+            { "userprincipalname", ResourceService.GetLocalized("Installer/CapabilityUserPrincipalName") },
+            { "usersystemid", ResourceService.GetLocalized("Installer/CapabilityUserSystemId") },
+            { "videoslibrary", ResourceService.GetLocalized("Installer/CapabilityVideosLibrary") },
+            { "voipcall", ResourceService.GetLocalized("Installer/CapabilityVoipCall") },
+            { "walletsystem", ResourceService.GetLocalized("Installer/CapabilityWalletSystem") },
+            { "webcam", ResourceService.GetLocalized("Installer/CapabilityWebCam") },
+            { "wificontrol", ResourceService.GetLocalized("Installer/CapabilityWifiControl") },
+            { "xboxaccessorymanagement", ResourceService.GetLocalized("Installer/CapabilityXboxAccessoryManagement") },
+        };
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainPage(AppActivationArguments activationArguments)
@@ -3024,641 +3186,9 @@ namespace GetStoreAppInstaller.Pages
 
                 foreach (string capability in packageInformation.CapabilitiesList)
                 {
-                    if (capability.Equals("accessoryManager", StringComparison.OrdinalIgnoreCase))
+                    if (CapabilityDict.TryGetValue(capability.ToLower(), out string capabilityValue))
                     {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAccessoryManager"));
-                    }
-                    else if (capability.Equals("activity", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityActivity"));
-                    }
-                    else if (capability.Equals("allAppMods", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAllAppMods"));
-                    }
-                    else if (capability.Equals("allJoyn", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAllJoyn"));
-                    }
-                    else if (capability.Equals("allowElevation", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAllowElevation"));
-                    }
-                    else if (capability.Equals("appBroadcastServices", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppBroadcastServices"));
-                    }
-                    else if (capability.Equals("appCaptureServices", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppCaptureServices"));
-                    }
-                    else if (capability.Equals("appCaptureSettings", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppCaptureSettings"));
-                    }
-                    else if (capability.Equals("appDiagnostics", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppDiagnostics"));
-                    }
-                    else if (capability.Equals("appLicensing", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppLicensing"));
-                    }
-                    else if (capability.Equals("appointments", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppointments"));
-                    }
-                    else if (capability.Equals("appointmentsSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAppointmentsSystem"));
-                    }
-                    else if (capability.Equals("audioDeviceConfiguration", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityAudioDeviceConfiguration"));
-                    }
-                    else if (capability.Equals("backgroundMediaPlayback", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundMediaPlayback"));
-                    }
-                    else if (capability.Equals("backgroundMediaRecording", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundMediaRecording"));
-                    }
-                    else if (capability.Equals("backgroundSpatialPerception", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundSpatialPerception"));
-                    }
-                    else if (capability.Equals("backgroundVoIP", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBackgroundVoIP"));
-                    }
-                    else if (capability.Equals("blockedChatMessages", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBlockedChatMessages"));
-                    }
-                    else if (capability.Equals("bluetooth", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBluetooth"));
-                    }
-                    else if (capability.Equals("broadFileSystemAccess", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityBroadFileSystemAccess"));
-                    }
-                    else if (capability.Equals("cameraProcessingExtension", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCameraProcessingExtension"));
-                    }
-                    else if (capability.Equals("cellularDeviceControl", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCellularDeviceControl"));
-                    }
-                    else if (capability.Equals("cellularDeviceIdentity", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCellularDeviceIdentity"));
-                    }
-                    else if (capability.Equals("cellularMessaging", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCellularMessaging"));
-                    }
-                    else if (capability.Equals("chat", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityChat"));
-                    }
-                    else if (capability.Equals("chatSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityChatSystem"));
-                    }
-                    else if (capability.Equals("codeGeneration", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCodeGeneration"));
-                    }
-                    else if (capability.Equals("confirmAppClose", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityConfirmAppClose"));
-                    }
-                    else if (capability.Equals("contacts", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityContacts"));
-                    }
-                    else if (capability.Equals("contactsSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityContactsSystem"));
-                    }
-                    else if (capability.Equals("cortanaPermissions", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCortanaPermissions"));
-                    }
-                    else if (capability.Equals("cortanaSpeechAccessory", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCortanaSpeechAccessory"));
-                    }
-                    else if (capability.Equals("customInstallActions", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityCustomInstallActions"));
-                    }
-                    else if (capability.Equals("developmentModeNetwork", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDevelopmentModeNetwork"));
-                    }
-                    else if (capability.Equals("developmentModeNetwork", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDevelopmentModeNetwork"));
-                    }
-                    else if (capability.Equals("deviceManagementDmAccount", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDeviceManagementDmAccount"));
-                    }
-                    else if (capability.Equals("deviceManagementFoundation", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDeviceManagementEmailAccount"));
-                    }
-                    else if (capability.Equals("deviceManagementWapSecurityPolicies", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDeviceManagementFoundation"));
-                    }
-                    else if (capability.Equals("deviceManagementEmailAccount", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDeviceManagementWapSecurityPolicies"));
-                    }
-                    else if (capability.Equals("devicePortalProvider", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDevicePortalProvider"));
-                    }
-                    else if (capability.Equals("deviceUnlock", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDeviceUnlock"));
-                    }
-                    else if (capability.Equals("documentsLibrary", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDocumentsLibrary"));
-                    }
-                    else if (capability.Equals("dualSimTiles", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityDualSimTiles"));
-                    }
-                    else if (capability.Equals("email", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEmail"));
-                    }
-                    else if (capability.Equals("emailSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEmailSystem"));
-                    }
-                    else if (capability.Equals("enterpriseAuthentication", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseAuthentication"));
-                    }
-                    else if (capability.Equals("enterpriseCloudSSO", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseCloudSSO"));
-                    }
-                    else if (capability.Equals("enterpriseDataPolicy", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseDataPolicy"));
-                    }
-                    else if (capability.Equals("enterpriseDeviceLockdown", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityEnterpriseDeviceLockdown"));
-                    }
-                    else if (capability.Equals("expandedResources", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExpandedResources"));
-                    }
-                    else if (capability.Equals("extendedBackgroundTaskTime", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedBackgroundTaskTime"));
-                    }
-                    else if (capability.Equals("extendedExecutionBackgroundAudio", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionBackgroundAudio"));
-                    }
-                    else if (capability.Equals("extendedExecutionCritical", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionCritical"));
-                    }
-                    else if (capability.Equals("extendedExecutionUnconstrained", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityExtendedExecutionUnconstrained"));
-                    }
-                    else if (capability.Equals("firstSignInSettings", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityFirstSignInSettings"));
-                    }
-                    else if (capability.Equals("gameBarServices", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGameBarServices"));
-                    }
-                    else if (capability.Equals("gameList", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGameList"));
-                    }
-                    else if (capability.Equals("gameMonitor", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGameMonitor"));
-                    }
-                    else if (capability.Equals("gazeInput", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGazeInput"));
-                    }
-                    else if (capability.Equals("globalMediaControl", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGlobalMediaControl"));
-                    }
-                    else if (capability.Equals("graphicsCapture", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGraphicsCapture"));
-                    }
-                    else if (capability.Equals("graphicsCaptureProgrammatic", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGraphicsCaptureProgrammatic"));
-                    }
-                    else if (capability.Equals("graphicsCaptureWithoutBorder", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityGraphicsCaptureWithoutBorder"));
-                    }
-                    else if (capability.Equals("humaninterfacedevice", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityHumanInterfaceDevice"));
-                    }
-                    else if (capability.Equals("humanPresence", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityHumanPresense"));
-                    }
-                    else if (capability.Equals("inputForegroundObservation", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInputForegroundObservation"));
-                    }
-                    else if (capability.Equals("inputInjectionBrokered", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInputInjectionBrokered"));
-                    }
-                    else if (capability.Equals("inputObservation", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInputObservation"));
-                    }
-                    else if (capability.Equals("inputSuppression", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInputSuppression"));
-                    }
-                    else if (capability.Equals("internetClient", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInternetClient"));
-                    }
-                    else if (capability.Equals("internetClientServer", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInternetClientServer"));
-                    }
-                    else if (capability.Equals("interopServices", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityInteropServices"));
-                    }
-                    else if (capability.Equals("localSystemServices", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocalSystemServices"));
-                    }
-                    else if (capability.Equals("location", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocation"));
-                    }
-                    else if (capability.Equals("locationHistory", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocationHistory"));
-                    }
-                    else if (capability.Equals("locationSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLocationSystem"));
-                    }
-                    else if (capability.Equals("lowLevel", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLowLevel"));
-                    }
-                    else if (capability.Equals("lowLevelDevices", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityLowLevelDevices"));
-                    }
-                    else if (capability.Equals("microphone", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrophone"));
-                    }
-                    else if (capability.Equals("Microsoft.cellularSARConfiguration_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftCellularSARConfiguration"));
-                    }
-                    else if (capability.Equals("Microsoft.classicAppCompat_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppCompat"));
-                    }
-                    else if (capability.Equals("Microsoft.classicAppCompatElevated_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppCompatElevated"));
-                    }
-                    else if (capability.Equals("Microsoft.classicAppInstaller_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftClassicAppInstaller"));
-                    }
-                    else if (capability.Equals("Microsoft.coreAppActivation_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftCoreAppActivation"));
-                    }
-                    else if (capability.Equals("Microsoft.delegatedWebFeatures_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftDelegatedWebFeatures"));
-                    }
-                    else if (capability.Equals("Microsoft.deployFullTrustOnHost_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftDeployFullTrustOnHost"));
-                    }
-                    else if (capability.Equals("Microsoft.eSIMManagement_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftESIMManagement"));
-                    }
-                    else if (capability.Equals("Microsoft.nonUserConfigurableStartupTasks_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftNonUserConfigurableStartupTasks"));
-                    }
-                    else if (capability.Equals("Microsoft.notSupportedInCoreV1_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftNotSupportedInCoreV1"));
-                    }
-                    else if (capability.Equals("Microsoft.onDemandHotspotControl_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftOnDemandHotspotControl"));
-                    }
-                    else if (capability.Equals("Microsoft.requiresNonSMode_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftRequiresNonSMode"));
-                    }
-                    else if (capability.Equals("Microsoft.secondaryAuthenticationFactorForLogon_8wekyb3d8bbwe", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMicrosoftSecondaryAuthenticationFactorForLogon"));
-                    }
-                    else if (capability.Equals("modifiableApp", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityModifiableApp"));
-                    }
-                    else if (capability.Equals("musicLibrary", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityMusicLibrary"));
-                    }
-                    else if (capability.Equals("networkConnectionManagerProvisioning", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityNetworkConnectionManagerProvisioning"));
-                    }
-                    else if (capability.Equals("networkDataPlanProvisioning", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityNetworkDataPlanProvisioning"));
-                    }
-                    else if (capability.Equals("networkDataUsageManagement", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityNetworkDataUsageManagement"));
-                    }
-                    else if (capability.Equals("networkingVpnProvider", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityNetworkingVpnProvider"));
-                    }
-                    else if (capability.Equals("objects3D", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityObjects3D"));
-                    }
-                    else if (capability.Equals("oemDeployment", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityOemDeployment"));
-                    }
-                    else if (capability.Equals("oemPublicDirectory", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityOemPublicDirectory"));
-                    }
-                    else if (capability.Equals("oneProcessVoIP", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityOneProcessVoIP"));
-                    }
-                    else if (capability.Equals("optional", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityOptional"));
-                    }
-                    else if (capability.Equals("packagedServices", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackagedServices"));
-                    }
-                    else if (capability.Equals("packageManagement", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackageManagement"));
-                    }
-                    else if (capability.Equals("packagePolicySystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackagePolicySystem"));
-                    }
-                    else if (capability.Equals("packageWriteRedirectionCompatibilityShim", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPackageWriteRedirectionCompatibilityShim"));
-                    }
-                    else if (capability.Equals("phoneCall", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPhoneCall"));
-                    }
-                    else if (capability.Equals("phoneCallHistory", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPhoneCallHistory"));
-                    }
-                    else if (capability.Equals("phoneCallHistorySystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPhoneCallHistorySystem"));
-                    }
-                    else if (capability.Equals("phoneLineTransportManagement", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPhoneLineTransportManagement"));
-                    }
-                    else if (capability.Equals("picturesLibrary", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPicturesLibrary"));
-                    }
-                    else if (capability.Equals("pointOfService", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPointOfService"));
-                    }
-                    else if (capability.Equals("previewInkWorkspace", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPreviewInkWorkspace"));
-                    }
-                    else if (capability.Equals("previewPenWorkspace", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPreviewPenWorkspace"));
-                    }
-                    else if (capability.Equals("previewStore", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPreviewStore"));
-                    }
-                    else if (capability.Equals("previewUiComposition", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPreviewUiComposition"));
-                    }
-                    else if (capability.Equals("privateNetworkClientServer", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityPrivateNetworkClientServer"));
-                    }
-                    else if (capability.Equals("protectedApp", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityProtectedApp"));
-                    }
-                    else if (capability.Equals("proximity", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityProximity"));
-                    }
-                    else if (capability.Equals("radios", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRadios"));
-                    }
-                    else if (capability.Equals("recordedCallsFolder", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRecordedCallsFolder"));
-                    }
-                    else if (capability.Equals("remotePassportAuthentication", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRemotePassportAuthentication"));
-                    }
-                    else if (capability.Equals("remoteSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRemoteSystem"));
-                    }
-                    else if (capability.Equals("removableStorage", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRemoveStorage"));
-                    }
-                    else if (capability.Equals("runFullTrust", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityRunFullTrust"));
-                    }
-                    else if (capability.Equals("screenDuplication", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityScreenDuplication"));
-                    }
-                    else if (capability.Equals("secondaryAuthenticationFactor", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySecondaryAuthenticationFactor"));
-                    }
-                    else if (capability.Equals("secureAssessment", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySecureAssessment"));
-                    }
-                    else if (capability.Equals("serialcommunication", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySerialCommunication"));
-                    }
-                    else if (capability.Equals("sharedUserCertificates", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySharedUserCertificates"));
-                    }
-                    else if (capability.Equals("slapiQueryLicenseValue", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySlapiQueryLicenseValue"));
-                    }
-                    else if (capability.Equals("smbios", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySmbios"));
-                    }
-                    else if (capability.Equals("smsSend", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySmsSend"));
-                    }
-                    else if (capability.Equals("spatialPerception", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySpatialPerception"));
-                    }
-                    else if (capability.Equals("startScreenManagement", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityStartScreenManagement"));
-                    }
-                    else if (capability.Equals("storeLicenseManagement", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityStoreLicenseManagement"));
-                    }
-                    else if (capability.Equals("systemManagement", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilitySystemManagement"));
-                    }
-                    else if (capability.Equals("targetedContent", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTargetedContent"));
-                    }
-                    else if (capability.Equals("teamEditionDeviceCredential", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTeamEditionDeviceCredential"));
-                    }
-                    else if (capability.Equals("teamEditionExperience", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTeamEditionExperience"));
-                    }
-                    else if (capability.Equals("teamEditionView", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityTeamEditionView"));
-                    }
-                    else if (capability.Equals("uiAccess", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUiAccess"));
-                    }
-                    else if (capability.Equals("uiAutomation", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUiAutomation"));
-                    }
-                    else if (capability.Equals("unvirtualizedResources", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUnvirtualizedResources"));
-                    }
-                    else if (capability.Equals("usb", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUSB"));
-                    }
-                    else if (capability.Equals("userAccountInformation", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserAccountInformation"));
-                    }
-                    else if (capability.Equals("userDataAccountsProvider", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserDataAccountsProvider"));
-                    }
-                    else if (capability.Equals("userDataTasks", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserDataTasks"));
-                    }
-                    else if (capability.Equals("userDataSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserDataSystem"));
-                    }
-                    else if (capability.Equals("userNotificationListener", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserNotificationListener"));
-                    }
-                    else if (capability.Equals("userPrincipalName", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserPrincipalName"));
-                    }
-                    else if (capability.Equals("userSystemId", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityUserSystemId"));
-                    }
-                    else if (capability.Equals("videosLibrary", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityVideosLibrary"));
-                    }
-                    else if (capability.Equals("voipCall", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityVoipCall"));
-                    }
-                    else if (capability.Equals("walletSystem", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityWalletSystem"));
-                    }
-                    else if (capability.Equals("webcam", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityWebCam"));
-                    }
-                    else if (capability.Equals("wiFiControl", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityWifiControl"));
-                    }
-                    else if (capability.Equals("xboxAccessoryManagement", StringComparison.OrdinalIgnoreCase))
-                    {
-                        CapabilitiesCollection.Add(ResourceService.GetLocalized("Installer/CapabilityXboxAccessoryManagement"));
+                        CapabilitiesCollection.Add(capabilityValue);
                     }
                     else
                     {
