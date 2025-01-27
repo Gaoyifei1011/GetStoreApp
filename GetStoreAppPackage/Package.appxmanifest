@@ -39,13 +39,13 @@
 		  EntryPoint="Windows.FullTrustApplication">
 
       <uap:VisualElements
-			  DisplayName="ms-resource:AppDisplayName"
-			  Description="ms-resource:AppDescription"
+			  DisplayName="ms-resource:MainAppDisplayName"
+			  Description="ms-resource:MainAppDescription"
 			  BackgroundColor="transparent"
 			  Square150x150Logo="Assets\MainApp\Square150x150Logo.png"
 			  Square44x44Logo="Assets\MainApp\Square44x44Logo.png">
 
-        <uap:DefaultTile ShortName="ms-resource:AppShortDisplayName" Wide310x150Logo="Assets\MainApp\Wide310x150Logo.png" Square71x71Logo="Assets\MainApp\SmallTile.png" Square310x310Logo="Assets\MainApp\LargeTile.png">
+        <uap:DefaultTile ShortName="ms-resource:MainAppShortDisplayName" Wide310x150Logo="Assets\MainApp\Wide310x150Logo.png" Square71x71Logo="Assets\MainApp\SmallTile.png" Square310x310Logo="Assets\MainApp\LargeTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
@@ -93,6 +93,70 @@
         <uap3:Extension Category="windows.appExecutionAlias" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
           <uap3:AppExecutionAlias>
             <desktop:ExecutionAlias Alias="GetStoreApp.exe" />
+          </uap3:AppExecutionAlias>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+
+    <Application Id="GetStoreAppInstaller"
+      Executable="GetStoreAppInstaller.exe"
+      EntryPoint="Windows.FullTrustApplication">
+
+      <uap:VisualElements
+        AppListEntry="none"
+        DisplayName="ms-resource:InstallerAppDisplayName"
+        Description="ms-resource:InstallerAppDescription"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Installer\Square150x150Logo.png"
+        Square44x44Logo="Assets\Installer\Square44x44Logo.png">
+
+        <uap:DefaultTile ShortName="ms-resource:InstallerAppShortDisplayName" Wide310x150Logo="Assets\Installer\Wide310x150Logo.png" Square71x71Logo="Assets\Installer\SmallTile.png" Square310x310Logo="Assets\Installer\LargeTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+            <uap:ShowOn Tile="square150x150Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\Installer\SplashScreen.png" />
+      </uap:VisualElements>
+
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="packageinstaller">
+            <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.appx</uap:FileType>
+              <uap:FileType>.msix</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:InfoTip>ms-resource:InstallPackage</uap:InfoTip>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="bundleinstaller">
+            <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.appxbundle</uap:FileType>
+              <uap:FileType>.msixbundle</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:InfoTip>ms-resource:InstallPackageBundle</uap:InfoTip>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+
+        <uap:Extension Category="windows.shareTarget" Executable="GetStoreAppInstaller.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap:ShareTarget>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.appx</uap:FileType>
+              <uap:FileType>.msix</uap:FileType>
+              <uap:FileType>.appxbundle</uap:FileType>
+              <uap:FileType>.msixbundle</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:ShareTarget>
+        </uap:Extension>
+
+        <uap3:Extension Category="windows.appExecutionAlias" Executable="GetStoreAppInstaller.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap3:AppExecutionAlias>
+            <desktop:ExecutionAlias Alias="GetStoreAppInstaller.exe" />
           </uap3:AppExecutionAlias>
         </uap3:Extension>
       </Extensions>
