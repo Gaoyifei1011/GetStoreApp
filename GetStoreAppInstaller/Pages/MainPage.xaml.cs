@@ -715,14 +715,14 @@ namespace GetStoreAppInstaller.Pages
                         args.DragUIOverride.IsGlyphVisible = true;
                         args.DragUIOverride.Caption = ResourceService.GetLocalized("Installer/OpenPackage");
                     }
-                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
-                    {
-                        args.AcceptedOperation = DataPackageOperation.Copy;
-                        args.DragUIOverride.IsCaptionVisible = true;
-                        args.DragUIOverride.IsContentVisible = false;
-                        args.DragUIOverride.IsGlyphVisible = true;
-                        args.DragUIOverride.Caption = ResourceService.GetLocalized("Installer/OpenInstallerFile");
-                    }
+                    //else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    //{
+                    //    args.AcceptedOperation = DataPackageOperation.Copy;
+                    //    args.DragUIOverride.IsCaptionVisible = true;
+                    //    args.DragUIOverride.IsContentVisible = false;
+                    //    args.DragUIOverride.IsGlyphVisible = true;
+                    //    args.DragUIOverride.Caption = ResourceService.GetLocalized("Installer/OpenInstallerFile");
+                    //}
                     else
                     {
                         args.AcceptedOperation = DataPackageOperation.None;
@@ -1043,7 +1043,7 @@ namespace GetStoreAppInstaller.Pages
                 fileOpenPicker.FileTypeFilter.Add(".msix");
                 fileOpenPicker.FileTypeFilter.Add(".appxbundle");
                 fileOpenPicker.FileTypeFilter.Add(".msixbundle");
-                fileOpenPicker.FileTypeFilter.Add(".appinstaller");
+                //fileOpenPicker.FileTypeFilter.Add(".appinstaller");
 
                 if (await fileOpenPicker.PickSingleFileAsync() is StorageFile storageFile)
                 {
@@ -1073,7 +1073,7 @@ namespace GetStoreAppInstaller.Pages
                     openFileDialog.FileTypeFilter.Add("*.msix");
                     openFileDialog.FileTypeFilter.Add("*.appxbundle");
                     openFileDialog.FileTypeFilter.Add("*.msixbundle");
-                    openFileDialog.FileTypeFilter.Add("*.appinstaller");
+                    //openFileDialog.FileTypeFilter.Add("*.appinstaller");
 
                     if (openFileDialog.ShowDialog())
                     {
@@ -1124,7 +1124,7 @@ namespace GetStoreAppInstaller.Pages
                 fileOpenPicker.FileTypeFilter.Add(".msix");
                 fileOpenPicker.FileTypeFilter.Add(".appxbundle");
                 fileOpenPicker.FileTypeFilter.Add(".msixbundle");
-                fileOpenPicker.FileTypeFilter.Add(".appinstaller");
+                //fileOpenPicker.FileTypeFilter.Add(".appinstaller");
 
                 if (await fileOpenPicker.PickSingleFileAsync() is StorageFile storageFile)
                 {
@@ -1154,7 +1154,7 @@ namespace GetStoreAppInstaller.Pages
                     openFileDialog.FileTypeFilter.Add("*.msix");
                     openFileDialog.FileTypeFilter.Add("*.appxbundle");
                     openFileDialog.FileTypeFilter.Add("*.msixbundle");
-                    openFileDialog.FileTypeFilter.Add("*.appinstaller");
+                    //openFileDialog.FileTypeFilter.Add("*.appinstaller");
 
                     if (openFileDialog.ShowDialog())
                     {
@@ -1303,7 +1303,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(InstallFailedInformation);
 
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(copyResult, false));
+                await TeachingTipHelper.ShowAsync(new InstallerDataCopyTip(copyResult, false));
             }
         }
 
@@ -1368,25 +1368,25 @@ namespace GetStoreAppInstaller.Pages
                             LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
                         }
                     }
-                    else if (extensionName.Equals(".appinstaller"))
-                    {
-                        try
-                        {
-                            // 安装目标应用，并获取安装进度
-                            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByAppInstallerFileAsync(new Uri(fileName), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, null);
+                    //else if (extensionName.Equals(".appinstaller"))
+                    //{
+                    //    try
+                    //    {
+                    //        // 安装目标应用，并获取安装进度
+                    //        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByAppInstallerFileAsync(new Uri(fileName), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, null);
 
-                            // 更新安装进度
-                            installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);
+                    //        // 更新安装进度
+                    //        installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);
 
-                            // 应用安装过程已结束
-                            installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status);
-                        }
-                        // 安装失败显示失败信息
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
-                        }
-                    }
+                    //        // 应用安装过程已结束
+                    //        installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status);
+                    //    }
+                    //    // 安装失败显示失败信息
+                    //    catch (Exception e)
+                    //    {
+                    //        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                    //    }
+                    //}
                 });
             }
         }
@@ -1847,31 +1847,31 @@ namespace GetStoreAppInstaller.Pages
                     }
                     // TODO:未完成
                     // 解析以 appinstaller 格式结尾的应用安装文件
-                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
-                    {
-                        // 解析应用安装文件
-                        XmlLoadSettings xmlLoadSettings = new()
-                        {
-                            ElementContentWhiteSpace = true
-                        };
+                    //else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    //{
+                    //    // 解析应用安装文件
+                    //    XmlLoadSettings xmlLoadSettings = new()
+                    //    {
+                    //        ElementContentWhiteSpace = true
+                    //    };
 
-                        XmlDocument xmlDocument = await XmlDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filePath), xmlLoadSettings);
+                    //    XmlDocument xmlDocument = await XmlDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filePath), xmlLoadSettings);
 
-                        if (xmlDocument is not null)
-                        {
-                            XmlNodeList mainPackageNodeList = xmlDocument.GetElementsByTagName("MainPackage");
-                            XmlNodeList mainBundleNodeList = xmlDocument.GetElementsByTagName("MainBundle");
+                    //    if (xmlDocument is not null)
+                    //    {
+                    //        XmlNodeList mainPackageNodeList = xmlDocument.GetElementsByTagName("MainPackage");
+                    //        XmlNodeList mainBundleNodeList = xmlDocument.GetElementsByTagName("MainBundle");
 
-                            // 应用安装包
-                            if (mainPackageNodeList.Count > 0)
-                            {
-                            }
-                            // 应用捆绑包
-                            else if (mainBundleNodeList.Count > 0)
-                            {
-                            }
-                        }
-                    }
+                    //        // 应用安装包
+                    //        if (mainPackageNodeList.Count > 0)
+                    //        {
+                    //        }
+                    //        // 应用捆绑包
+                    //        else if (mainBundleNodeList.Count > 0)
+                    //        {
+                    //        }
+                    //    }
+                    //}
                 }
             }
             catch (Exception e)
@@ -1967,6 +1967,7 @@ namespace GetStoreAppInstaller.Pages
                     appxManifestApplication.GetStringValue("EntryPoint", out string entryPoint);
                     appxManifestApplication.GetStringValue("Executable", out string executable);
                     appxManifestApplication.GetStringValue("ID", out string id);
+                    appxManifestApplication.GetAppUserModelId(out string appUserModelId);
 
                     description = GetLocalizedString(description, specifiedLanguageResourceDict);
 
@@ -1975,7 +1976,8 @@ namespace GetStoreAppInstaller.Pages
                         AppDescription = description,
                         EntryPoint = entryPoint,
                         Executable = executable,
-                        AppID = id
+                        AppID = id,
+                        AppUserModelId = appUserModelId
                     };
 
                     applicationList.Add(applicationItem);

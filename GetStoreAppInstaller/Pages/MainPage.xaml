@@ -1501,10 +1501,11 @@
                                             BorderThickness="0">
 
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="2*" />
+                                                <ColumnDefinition Width="3*" />
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock
@@ -1578,6 +1579,24 @@
                                                         Visibility="{x:Bind EntryPointHeaderText.IsTextTrimmed, Mode=OneWay}" />
                                                 </ToolTipService.ToolTip>
                                             </TextBlock>
+
+                                            <TextBlock
+                                                x:Name="AppUserModelIdHeaderText"
+                                                Grid.Column="4"
+                                                Margin="6,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppUserModelId')}"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip
+                                                        MaxWidth="9999"
+                                                        Content="{x:Bind root:ResourceService.GetLocalized('Installer/AppUserModelId')}"
+                                                        Visibility="{x:Bind AppUserModelIdHeaderText.IsTextTrimmed, Mode=OneWay}" />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
                                         </Grid>
 
                                         <ListView
@@ -1607,10 +1626,11 @@
                                                         BorderThickness="0,1,0,0">
 
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="3*" />
                                                         </Grid.ColumnDefinitions>
 
                                                         <TextBlock
@@ -1682,6 +1702,24 @@
                                                                     MaxWidth="9999"
                                                                     Content="{x:Bind EntryPoint}"
                                                                     Visibility="{Binding ElementName=EntryPointText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                            </ToolTipService.ToolTip>
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            x:Name="AppUserModelIdText"
+                                                            Grid.Column="4"
+                                                            Margin="6,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            Text="{x:Bind AppUserModelId}"
+                                                            TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="NoWrap">
+
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip
+                                                                    MaxWidth="9999"
+                                                                    Content="{x:Bind AppUserModelId}"
+                                                                    Visibility="{Binding ElementName=AppUserModelIdText, Path=IsTextTrimmed, Mode=OneWay}" />
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>
