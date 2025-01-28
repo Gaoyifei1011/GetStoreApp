@@ -172,6 +172,22 @@ namespace GetStoreAppInstaller.Pages
             }
         }
 
+        private PackageFileType _packageFileType;
+
+        public PackageFileType PackageFileType
+        {
+            get { return _packageFileType; }
+
+            set
+            {
+                if (!Equals(_packageFileType, value))
+                {
+                    _packageFileType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFileType)));
+                }
+            }
+        }
+
         private BitmapImage _packageIconImage;
 
         public BitmapImage PackageIconImage
@@ -328,6 +344,86 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _appInstalledState = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstalledState)));
+                }
+            }
+        }
+
+        private string _appInstallerSourceLink;
+
+        public string AppInstallerSourceLink
+        {
+            get { return _appInstallerSourceLink; }
+
+            set
+            {
+                if (!Equals(_appInstallerSourceLink, value))
+                {
+                    _appInstallerSourceLink = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppInstallerSourceLink)));
+                }
+            }
+        }
+
+        private bool _isAppInstallerSourceLinkExisted;
+
+        public bool IsAppInstallerSourceLinkExisted
+        {
+            get { return _isAppInstallerSourceLinkExisted; }
+
+            set
+            {
+                if (!Equals(_isAppInstallerSourceLinkExisted, value))
+                {
+                    _isAppInstallerSourceLinkExisted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInstallerSourceLinkExisted)));
+                }
+            }
+        }
+
+        private string _packageSourceLink;
+
+        public string PackageSourceLink
+        {
+            get { return _packageSourceLink; }
+
+            set
+            {
+                if (!Equals(_packageSourceLink, value))
+                {
+                    _packageSourceLink = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageSourceLink)));
+                }
+            }
+        }
+
+        private bool _isPackageSourceLinkExisted;
+
+        public bool IsPackageSourceLinkExisted
+        {
+            get { return _isPackageSourceLinkExisted; }
+
+            set
+            {
+                if (!Equals(_isPackageSourceLinkExisted, value))
+                {
+                    _isPackageSourceLinkExisted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsPackageSourceLinkExisted)));
+                }
+            }
+        }
+
+        private string _packageType;
+
+        public string PackageType
+        {
+            get { return _packageType; }
+
+            set
+            {
+                if (!Equals(_packageType, value))
+                {
+                    _packageType = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageType)));
                 }
             }
         }
@@ -715,14 +811,14 @@ namespace GetStoreAppInstaller.Pages
                         args.DragUIOverride.IsGlyphVisible = true;
                         args.DragUIOverride.Caption = ResourceService.GetLocalized("Installer/OpenPackage");
                     }
-                    //else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
-                    //{
-                    //    args.AcceptedOperation = DataPackageOperation.Copy;
-                    //    args.DragUIOverride.IsCaptionVisible = true;
-                    //    args.DragUIOverride.IsContentVisible = false;
-                    //    args.DragUIOverride.IsGlyphVisible = true;
-                    //    args.DragUIOverride.Caption = ResourceService.GetLocalized("Installer/OpenInstallerFile");
-                    //}
+                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    {
+                        args.AcceptedOperation = DataPackageOperation.Copy;
+                        args.DragUIOverride.IsCaptionVisible = true;
+                        args.DragUIOverride.IsContentVisible = false;
+                        args.DragUIOverride.IsGlyphVisible = true;
+                        args.DragUIOverride.Caption = ResourceService.GetLocalized("Installer/OpenInstallerFile");
+                    }
                     else
                     {
                         args.AcceptedOperation = DataPackageOperation.None;
@@ -1043,7 +1139,7 @@ namespace GetStoreAppInstaller.Pages
                 fileOpenPicker.FileTypeFilter.Add(".msix");
                 fileOpenPicker.FileTypeFilter.Add(".appxbundle");
                 fileOpenPicker.FileTypeFilter.Add(".msixbundle");
-                //fileOpenPicker.FileTypeFilter.Add(".appinstaller");
+                fileOpenPicker.FileTypeFilter.Add(".appinstaller");
 
                 if (await fileOpenPicker.PickSingleFileAsync() is StorageFile storageFile)
                 {
@@ -1073,7 +1169,7 @@ namespace GetStoreAppInstaller.Pages
                     openFileDialog.FileTypeFilter.Add("*.msix");
                     openFileDialog.FileTypeFilter.Add("*.appxbundle");
                     openFileDialog.FileTypeFilter.Add("*.msixbundle");
-                    //openFileDialog.FileTypeFilter.Add("*.appinstaller");
+                    openFileDialog.FileTypeFilter.Add("*.appinstaller");
 
                     if (openFileDialog.ShowDialog())
                     {
@@ -1124,7 +1220,7 @@ namespace GetStoreAppInstaller.Pages
                 fileOpenPicker.FileTypeFilter.Add(".msix");
                 fileOpenPicker.FileTypeFilter.Add(".appxbundle");
                 fileOpenPicker.FileTypeFilter.Add(".msixbundle");
-                //fileOpenPicker.FileTypeFilter.Add(".appinstaller");
+                fileOpenPicker.FileTypeFilter.Add(".appinstaller");
 
                 if (await fileOpenPicker.PickSingleFileAsync() is StorageFile storageFile)
                 {
@@ -1154,7 +1250,7 @@ namespace GetStoreAppInstaller.Pages
                     openFileDialog.FileTypeFilter.Add("*.msix");
                     openFileDialog.FileTypeFilter.Add("*.appxbundle");
                     openFileDialog.FileTypeFilter.Add("*.msixbundle");
-                    //openFileDialog.FileTypeFilter.Add("*.appinstaller");
+                    openFileDialog.FileTypeFilter.Add("*.appinstaller");
 
                     if (openFileDialog.ShowDialog())
                     {
@@ -1368,25 +1464,25 @@ namespace GetStoreAppInstaller.Pages
                             LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
                         }
                     }
-                    //else if (extensionName.Equals(".appinstaller"))
-                    //{
-                    //    try
-                    //    {
-                    //        // 安装目标应用，并获取安装进度
-                    //        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByAppInstallerFileAsync(new Uri(fileName), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, null);
+                    else if (extensionName.Equals(".appinstaller"))
+                    {
+                        try
+                        {
+                            // 安装目标应用，并获取安装进度
+                            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByAppInstallerFileAsync(new Uri(fileName), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, null);
 
-                    //        // 更新安装进度
-                    //        installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);
+                            // 更新安装进度
+                            installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);
 
-                    //        // 应用安装过程已结束
-                    //        installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status);
-                    //    }
-                    //    // 安装失败显示失败信息
-                    //    catch (Exception e)
-                    //    {
-                    //        LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
-                    //    }
-                    //}
+                            // 应用安装过程已结束
+                            installPackageWithProgress.Completed = (result, status) => OnInstallPackageCompleted(result, status);
+                        }
+                        // 安装失败显示失败信息
+                        catch (Exception e)
+                        {
+                            LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
+                        }
+                    }
                 });
             }
         }
@@ -1479,6 +1575,38 @@ namespace GetStoreAppInstaller.Pages
                     {
                         LogService.WriteLog(LoggingLevel.Information, "Open app cache folder failed.", e);
                     }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开应用安装程序文件链接
+        /// </summary>
+        private void OnOpenAppInstallerSourceLinkClicked(object sender, RoutedEventArgs args)
+        {
+            string appInstallerSourceLink = (sender as HyperlinkButton).Tag as string;
+
+            Task.Run(async () =>
+            {
+                if (!string.IsNullOrEmpty(appInstallerSourceLink))
+                {
+                    await Launcher.LaunchUriAsync(new Uri(appInstallerSourceLink));
+                }
+            });
+        }
+
+        /// <summary>
+        /// 打开应用包链接
+        /// </summary>
+        private void OnOpenPackageSourceLinkClicked(object sender, RoutedEventArgs args)
+        {
+            string packageSourceLink = (sender as HyperlinkButton).Tag as string;
+
+            Task.Run(async () =>
+            {
+                if (!string.IsNullOrEmpty(packageSourceLink))
+                {
+                    await Launcher.LaunchUriAsync(new Uri(packageSourceLink));
                 }
             });
         }
@@ -1650,6 +1778,7 @@ namespace GetStoreAppInstaller.Pages
                                 // 解析资源包清单文件
                                 ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, false, specifiedLanguageResourceDict);
 
+                                packageInformation.PackageFileType = PackageFileType.Package;
                                 packageInformation.CapabilitiesList = manifestInformation.CapabilitiesList;
                                 packageInformation.ProcessorArchitecture = manifestInformation.ProcessorArchitecture;
                                 packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
@@ -1786,6 +1915,7 @@ namespace GetStoreAppInstaller.Pages
                                             Dictionary<string, IAppxFile> appxFileDict = ParsePackagePayloadFiles(appxPackageReader);
                                             ManifestInformation manifestInformation = ParsePackageManifest(appxPackageReader, true, specifiedLanguageResourceDict);
 
+                                            packageInformation.PackageFileType = PackageFileType.Package;
                                             packageInformation.CapabilitiesList = manifestInformation.CapabilitiesList;
                                             packageInformation.PackageFamilyName = manifestInformation.PackageFamilyName;
                                             packageInformation.PackageFullName = manifestInformation.PackageFullName;
@@ -1845,33 +1975,127 @@ namespace GetStoreAppInstaller.Pages
                             packageInformation.AppInstalledState = ResourceService.GetLocalized("Installer/Unknown");
                         }
                     }
-                    // TODO:未完成
+
                     // 解析以 appinstaller 格式结尾的应用安装文件
-                    //else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
-                    //{
-                    //    // 解析应用安装文件
-                    //    XmlLoadSettings xmlLoadSettings = new()
-                    //    {
-                    //        ElementContentWhiteSpace = true
-                    //    };
+                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // 解析应用安装文件
+                        XmlLoadSettings xmlLoadSettings = new()
+                        {
+                            ElementContentWhiteSpace = true
+                        };
 
-                    //    XmlDocument xmlDocument = await XmlDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filePath), xmlLoadSettings);
+                        XmlDocument xmlDocument = await XmlDocument.LoadFromFileAsync(await StorageFile.GetFileFromPathAsync(filePath), xmlLoadSettings);
 
-                    //    if (xmlDocument is not null)
-                    //    {
-                    //        XmlNodeList mainPackageNodeList = xmlDocument.GetElementsByTagName("MainPackage");
-                    //        XmlNodeList mainBundleNodeList = xmlDocument.GetElementsByTagName("MainBundle");
+                        if (xmlDocument is not null)
+                        {
+                            parseResult = true;
+                            packageInformation.PackageFileType = PackageFileType.AppInstaller;
 
-                    //        // 应用安装包
-                    //        if (mainPackageNodeList.Count > 0)
-                    //        {
-                    //        }
-                    //        // 应用捆绑包
-                    //        else if (mainBundleNodeList.Count > 0)
-                    //        {
-                    //        }
-                    //    }
-                    //}
+                            XmlNodeList appInstallerNodeList = xmlDocument.GetElementsByTagName("AppInstaller");
+
+                            if (appInstallerNodeList.Count > 0 && appInstallerNodeList[0].Attributes.GetNamedItem("Uri") is IXmlNode appInstallerUriNode)
+                            {
+                                packageInformation.AppInstallerSourceLink = appInstallerUriNode.InnerText;
+                                packageInformation.IsAppInstallerSourceLinkExisted = true;
+                            }
+
+                            XmlNodeList mainPackageNodeList = xmlDocument.GetElementsByTagName("MainPackage");
+                            XmlNodeList mainBundleNodeList = xmlDocument.GetElementsByTagName("MainBundle");
+
+                            // 应用安装包
+                            if (mainPackageNodeList.Count > 0)
+                            {
+                                packageInformation.PackageType = ResourceService.GetLocalized("Installer/Package");
+
+                                if (mainPackageNodeList[0].Attributes.GetNamedItem("Name") is IXmlNode nameNode)
+                                {
+                                    packageInformation.DisplayName = nameNode.InnerText;
+                                }
+
+                                if (mainPackageNodeList[0].Attributes.GetNamedItem("Publisher") is IXmlNode publisherNode)
+                                {
+                                    packageInformation.PublisherDisplayName = publisherNode.InnerText;
+                                }
+
+                                if (mainPackageNodeList[0].Attributes.GetNamedItem("Version") is IXmlNode versionNode)
+                                {
+                                    packageInformation.Version = new Version(versionNode.InnerText);
+                                }
+
+                                if (mainPackageNodeList[0].Attributes.GetNamedItem("Uri") is IXmlNode packageUriNode)
+                                {
+                                    packageInformation.PackageSourceLink = packageUriNode.InnerText;
+                                    packageInformation.IsPackageSourceLinkExisted = true;
+                                }
+                            }
+                            // 应用捆绑包
+                            else if (mainBundleNodeList.Count > 0)
+                            {
+                                packageInformation.PackageType = ResourceService.GetLocalized("Installer/PackageBundle");
+
+                                if (mainBundleNodeList[0].Attributes.GetNamedItem("Name") is IXmlNode nameNode)
+                                {
+                                    packageInformation.DisplayName = nameNode.InnerText;
+                                }
+
+                                if (mainBundleNodeList[0].Attributes.GetNamedItem("Publisher") is IXmlNode publisherNode)
+                                {
+                                    packageInformation.PublisherDisplayName = publisherNode.InnerText;
+                                }
+
+                                if (mainBundleNodeList[0].Attributes.GetNamedItem("Version") is IXmlNode versionNode)
+                                {
+                                    packageInformation.Version = new Version(versionNode.InnerText);
+                                }
+
+                                if (mainBundleNodeList[0].Attributes.GetNamedItem("Uri") is IXmlNode packageUriNode)
+                                {
+                                    packageInformation.PackageSourceLink = packageUriNode.InnerText;
+                                    packageInformation.IsPackageSourceLinkExisted = true;
+                                }
+                            }
+
+                            XmlNodeList packageNodeList = xmlDocument.GetElementsByTagName("Package");
+                            packageInformation.DependencyList = [];
+
+                            foreach (IXmlNode packageNode in packageNodeList)
+                            {
+                                DependencyInformation dependencyInformation = new();
+
+                                if (packageNode.Attributes.GetNamedItem("Name") is IXmlNode nameNode)
+                                {
+                                    dependencyInformation.DependencyName = nameNode.InnerText;
+                                }
+
+                                if (packageNode.Attributes.GetNamedItem("Publisher") is IXmlNode publisherNode)
+                                {
+                                    dependencyInformation.DependencyPublisher = publisherNode.InnerText;
+                                }
+
+                                if (packageNode.Attributes.GetNamedItem("Version") is IXmlNode versionNode)
+                                {
+                                    dependencyInformation.DependencyVersion = new Version(versionNode.InnerText);
+                                }
+
+                                if (packageNode.Attributes.GetNamedItem("ProcessorArchitecture") is IXmlNode processorArchitectureNode)
+                                {
+                                    dependencyInformation.ProcessorArchitecture = processorArchitectureNode.InnerText;
+                                }
+                                else
+                                {
+                                    dependencyInformation.ProcessorArchitecture = ResourceService.GetLocalized("Installer/Unknown");
+                                }
+
+                                if (packageNode.Attributes.GetNamedItem("Uri") is IXmlNode uriNode)
+                                {
+                                    dependencyInformation.Uri = new Uri(uriNode.InnerText);
+                                }
+
+                                packageInformation.DependencyList.Add(dependencyInformation);
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -3150,6 +3374,7 @@ namespace GetStoreAppInstaller.Pages
             PackageDescription = string.Empty;
             IsLoadCompleted = false;
             IsParseSuccessfully = false;
+            PackageFileType = PackageFileType.None;
             IsInstalling = false;
             InstallProgressValue = 0;
             IsInstallWaiting = false;
@@ -3166,6 +3391,11 @@ namespace GetStoreAppInstaller.Pages
             SupportedArchitecture = string.Empty;
             IsFramework = string.Empty;
             AppInstalledState = string.Empty;
+            AppInstallerSourceLink = string.Empty;
+            IsAppInstallerSourceLinkExisted = false;
+            PackageSourceLink = string.Empty;
+            IsPackageSourceLinkExisted = false;
+            PackageType = string.Empty;
             IsAppInstalled = false;
             DependencyCollection.Clear();
             CapabilitiesCollection.Clear();
@@ -3186,15 +3416,18 @@ namespace GetStoreAppInstaller.Pages
             {
                 PackageInformation packageInformation = resultDict.Item2;
 
-                foreach (string capability in packageInformation.CapabilitiesList)
+                if (packageInformation.CapabilitiesList is not null)
                 {
-                    if (CapabilityDict.TryGetValue(capability.ToLower(), out string capabilityValue))
+                    foreach (string capability in packageInformation.CapabilitiesList)
                     {
-                        CapabilitiesCollection.Add(capabilityValue);
-                    }
-                    else
-                    {
-                        CapabilitiesCollection.Add(capability);
+                        if (CapabilityDict.TryGetValue(capability.ToLower(), out string capabilityValue))
+                        {
+                            CapabilitiesCollection.Add(capabilityValue);
+                        }
+                        else
+                        {
+                            CapabilitiesCollection.Add(capability);
+                        }
                     }
                 }
 
@@ -3207,6 +3440,9 @@ namespace GetStoreAppInstaller.Pages
                             DependencyName = dependencyItem.DependencyName,
                             DependencyPublisher = dependencyItem.DependencyPublisher,
                             DependencyMinVersion = dependencyItem.DependencyMinVersion,
+                            DependencyVersion = dependencyItem.DependencyVersion,
+                            ProcessorArchitecture = dependencyItem.ProcessorArchitecture,
+                            Uri = dependencyItem.Uri
                         });
                     }
                 }
@@ -3227,13 +3463,19 @@ namespace GetStoreAppInstaller.Pages
                     }
                 }
 
+                PackageFileType = packageInformation.PackageFileType;
                 SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.ProcessorArchitecture;
                 PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.DisplayName;
                 PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFamilyName;
                 PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFullName;
                 PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PublisherDisplayName;
                 IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                AppInstalledState = packageInformation.AppInstalledState;
+                AppInstalledState = string.IsNullOrEmpty(packageInformation.AppInstalledState) ? string.Empty : packageInformation.AppInstalledState;
+                AppInstallerSourceLink = string.IsNullOrEmpty(packageInformation.AppInstallerSourceLink) ? string.Empty : packageInformation.AppInstallerSourceLink;
+                IsAppInstallerSourceLinkExisted = packageInformation.IsAppInstallerSourceLinkExisted;
+                PackageSourceLink = string.IsNullOrEmpty(packageInformation.PackageSourceLink) ? string.Empty : packageInformation.PackageSourceLink;
+                IsPackageSourceLinkExisted = packageInformation.IsPackageSourceLinkExisted;
+                PackageType = packageInformation.PackageType;
                 IsAppInstalled = packageInformation.IsAppInstalled;
                 Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
                 PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? ResourceService.GetLocalized("Installer/None") : packageInformation.Description;

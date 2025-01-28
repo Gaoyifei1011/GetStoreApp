@@ -122,24 +122,34 @@
 
       <Extensions>
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="packageinstaller">
+          <uap:FileTypeAssociation Name="appinstaller">
+            <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.appinstaller</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:InfoTip>ms-resource:AppInstaller</uap:InfoTip>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="package">
             <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.appx</uap:FileType>
               <uap:FileType>.msix</uap:FileType>
             </uap:SupportedFileTypes>
-            <uap:InfoTip>ms-resource:InstallPackage</uap:InfoTip>
+            <uap:InfoTip>ms-resource:Package</uap:InfoTip>
           </uap:FileTypeAssociation>
         </uap:Extension>
 
         <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="bundleinstaller">
+          <uap:FileTypeAssociation Name="packagebundle">
             <uap:Logo>Assets\Icon\Installer\Package.png</uap:Logo>
             <uap:SupportedFileTypes>
               <uap:FileType>.appxbundle</uap:FileType>
               <uap:FileType>.msixbundle</uap:FileType>
             </uap:SupportedFileTypes>
-            <uap:InfoTip>ms-resource:InstallPackageBundle</uap:InfoTip>
+            <uap:InfoTip>ms-resource:PackageBundle</uap:InfoTip>
           </uap:FileTypeAssociation>
         </uap:Extension>
 
