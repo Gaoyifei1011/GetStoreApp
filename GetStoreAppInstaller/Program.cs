@@ -139,6 +139,7 @@ namespace GetStoreAppInstaller
             frameworkView.SetWindow(coreWindow);
 
             XamlControlsResources xamlControlsResources = [];
+            xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/HyperlinkButton.xaml") });
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/MenuFlyout.xaml") });
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/TeachingTip.xaml") });
             Application.Current.Resources = xamlControlsResources;
