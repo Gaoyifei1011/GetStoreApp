@@ -21,5 +21,20 @@ namespace GetStoreAppInstaller.Models
         /// 依赖项最低版本
         /// </summary>
         public Version DependencyMinVersion { get; set; }
+
+        /// <summary>
+        /// 依赖项对应的版本
+        /// </summary>
+        public Version DependencyVersion { get; set; }
+
+        /// <summary>
+        /// 依赖项对应的架构
+        /// </summary>
+        public string ProcessorArchitecture { get; set; }
+
+        /// <summary>
+        /// 依赖项对应的 URL
+        /// </summary>
+        public Uri Uri { get; set; }
     }
 }

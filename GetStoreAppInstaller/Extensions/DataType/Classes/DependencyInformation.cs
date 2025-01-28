@@ -26,5 +26,20 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         /// 依赖项最大测试版本
         /// </summary>
         public Version DependencyMaxMajorVersionTested { get; set; }
+
+        /// <summary>
+        /// 依赖项对应的版本
+        /// </summary>
+        public Version DependencyVersion { get; set; }
+
+        /// <summary>
+        /// 依赖项对应的架构
+        /// </summary>
+        public string ProcessorArchitecture { get; set; }
+
+        /// <summary>
+        /// 依赖项对应的 URL
+        /// </summary>
+        public Uri Uri { get; set; }
     }
 }

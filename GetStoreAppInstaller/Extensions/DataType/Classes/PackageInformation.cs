@@ -2,6 +2,7 @@
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using System.Collections.Generic;
 using System;
+using GetStoreAppInstaller.Extensions.DataType.Enums;
 
 namespace GetStoreAppInstaller.Extensions.DataType.Classes
 {
@@ -10,6 +11,11 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
     /// </summary>
     public class PackageInformation
     {
+        /// <summary>
+        /// 解析的应用类型
+        /// </summary>
+        public PackageFileType PackageFileType { get; set; }
+
         /// <summary>
         /// 应用包架构
         /// </summary>
@@ -69,6 +75,31 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         /// 应用包图标资源
         /// </summary>
         public IStream ImageLogo { get; set; }
+
+        /// <summary>
+        /// 应用安装程序源链接
+        /// </summary>
+        public string AppInstallerSourceLink { get; set; }
+
+        /// <summary>
+        /// 应用安装程序源链接是否存在
+        /// </summary>
+        public bool IsAppInstallerSourceLinkExisted { get; set; }
+
+        /// <summary>
+        /// 应用包源链接
+        /// </summary>
+        public string PackageSourceLink { get; set; }
+
+        /// <summary>
+        /// 应用包源链接是否存在
+        /// </summary>
+        public bool IsPackageSourceLinkExisted { get; set; }
+
+        /// <summary>
+        /// 应用包类型
+        /// </summary>
+        public string PackageType { get; set; }
 
         /// <summary>
         /// 应用功能列表
