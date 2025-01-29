@@ -98,7 +98,7 @@ namespace GetStoreAppShellExtension.Commands
         /// </summary>
         public int EnumSubCommands(out IEnumExplorerCommand ppEnum)
         {
-            IExplorerCommand[] subExplorerCommandArray = [new PSInstallCommand(), new PSInstallAdminCommand(), new PSRegisterCommand()];
+            IExplorerCommand[] subExplorerCommandArray = [new AppInstallCommand(), new AppInstallAdminCommand(), new PSInstallCommand(), new PSInstallAdminCommand(), new PSRegisterCommand()];
             ppEnum = new EnumExplorerCommand(subExplorerCommandArray);
             return 0;
         }

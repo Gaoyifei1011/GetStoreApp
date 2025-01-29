@@ -47,7 +47,7 @@ namespace GetStoreAppShellExtension.Commands
         /// </summary>
         public int GetCanonicalName(out Guid pguidCommandName)
         {
-            pguidCommandName = typeof(AppInstallCommand).GUID;
+            pguidCommandName = typeof(AppInstallAdminCommand).GUID;
             return 0;
         }
 
@@ -77,7 +77,7 @@ namespace GetStoreAppShellExtension.Commands
             if (psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
-                Shell32Library.ShellExecute(IntPtr.Zero, "runas", Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppInstaller.exe"), filePath, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(IntPtr.Zero, "runas", "GetStoreAppInstaller.exe", filePath, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
             }
             return 0;
         }

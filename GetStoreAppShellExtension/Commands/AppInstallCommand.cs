@@ -77,7 +77,7 @@ namespace GetStoreAppShellExtension.Commands
             if (psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
-                Shell32Library.ShellExecute(IntPtr.Zero, "open", Path.Combine(InfoHelper.AppInstalledLocation, "GetStoreAppInstaller.exe"), filePath, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
+                Shell32Library.ShellExecute(IntPtr.Zero, "open", "GetStoreAppInstaller.exe", filePath, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
             }
             return 0;
         }
