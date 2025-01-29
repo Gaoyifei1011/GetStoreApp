@@ -1012,7 +1012,7 @@
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip MaxWidth="9999">
-                                                        <StackPanel Orientation="Vertical">
+                                                        <StackPanel>
                                                             <TextBlock Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}" />
                                                             <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenLink')}" />
                                                         </StackPanel>
@@ -1082,6 +1082,159 @@
                                                 Text="{x:Bind PackageType, Mode=OneWay}" />
                                         </Grid>
                                     </StackPanel>
+                                </muxc:Expander.Content>
+                            </muxc:Expander>
+
+                            <!--  更新设置  -->
+                            <muxc:Expander
+                                x:Name="UpdateSettingsExpander"
+                                Margin="0,0,0,2"
+                                Padding="0,6,0,6"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                x:Load="{x:Bind IsUpdateSettingsExisted, Mode=OneWay}"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                IsExpanded="True">
+
+                                <muxc:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE895;" />
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/UpdateSettings')}" />
+
+                                        <HyperlinkButton
+                                            Grid.Column="2"
+                                            Margin="0,0,-15,0"
+                                            Click="{x:Bind OnLearnUpdateSettingsClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Installer/LearnUpdateSettings')}" />
+                                    </Grid>
+                                </muxc:Expander.Header>
+
+                                <muxc:Expander.Content>
+                                    <Grid Margin="16,0,10,0" RowSpacing="3">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <FontIcon
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Margin="0,0,16,0"
+                                            FontSize="12"
+                                            Glyph="&#xE915;" />
+
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            Margin="0,0,3,0"
+                                            FontSize="14"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/HoursBetweenUpdateChecks')}" />
+
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            Text="{x:Bind HoursBetweenUpdateChecks, Mode=OneWay}" />
+
+                                        <FontIcon
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Margin="0,0,16,0"
+                                            FontSize="12"
+                                            Glyph="&#xE915;" />
+
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="0,0,3,0"
+                                            FontSize="14"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/UpdateBlocksActivation')}" />
+
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            Text="{x:Bind UpdateBlocksActivation, Mode=OneWay}" />
+
+                                        <FontIcon
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            Margin="0,0,16,0"
+                                            FontSize="12"
+                                            Glyph="&#xE915;" />
+
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Margin="0,0,3,0"
+                                            FontSize="14"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/ShowPrompt')}" />
+
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="2"
+                                            Text="{x:Bind ShowPrompt, Mode=OneWay}" />
+
+                                        <FontIcon
+                                            Grid.Row="3"
+                                            Grid.Column="0"
+                                            Margin="0,0,16,0"
+                                            FontSize="12"
+                                            Glyph="&#xE915;" />
+
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            Margin="0,0,3,0"
+                                            FontSize="14"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/ForceUpdateFromAnyVersion')}" />
+
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Grid.Column="2"
+                                            Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}" />
+
+                                        <FontIcon
+                                            Grid.Row="4"
+                                            Grid.Column="0"
+                                            Margin="0,0,16,0"
+                                            FontSize="12"
+                                            Glyph="&#xE915;" />
+
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Grid.Column="1"
+                                            Margin="0,0,3,0"
+                                            FontSize="14"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('Installer/AutomaticBackgroundTask')}" />
+
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Grid.Column="2"
+                                            Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}" />
+                                    </Grid>
                                 </muxc:Expander.Content>
                             </muxc:Expander>
 
@@ -1782,7 +1935,7 @@
                                         </GridView.ItemContainerStyle>
 
                                         <GridView.ItemTemplate>
-                                            <DataTemplate x:DataType="x:String">
+                                            <DataTemplate x:DataType="model:CapabilityModel">
                                                 <GridViewItem
                                                     Width="230"
                                                     Height="30"
@@ -1800,19 +1953,20 @@
                                                             Glyph="&#xE915;" />
 
                                                         <TextBlock
-                                                            x:Name="CapabilityText"
                                                             Grid.Column="1"
                                                             VerticalAlignment="Center"
-                                                            Text="{x:Bind}"
+                                                            Text="{x:Bind CapabilityLocalizedName}"
                                                             TextAlignment="Left"
                                                             TextTrimming="CharacterEllipsis"
                                                             TextWrapping="NoWrap">
 
                                                             <ToolTipService.ToolTip>
-                                                                <ToolTip
-                                                                    MaxWidth="9999"
-                                                                    Content="{x:Bind}"
-                                                                    Visibility="{Binding ElementName=CapabilityText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                                                <ToolTip MaxWidth="9999">
+                                                                    <StackPanel>
+                                                                        <TextBlock Text="{x:Bind CapabilityLocalizedName}" />
+                                                                        <TextBlock Text="{x:Bind CapabilityName}" />
+                                                                    </StackPanel>
+                                                                </ToolTip>
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
                                                     </Grid>

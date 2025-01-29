@@ -108,6 +108,22 @@ namespace GetStoreAppInstaller.Pages
             }
         }
 
+        private bool _isParseEmpty;
+
+        public bool IsParseEmpty
+        {
+            get { return _isParseEmpty; }
+
+            set
+            {
+                if (!Equals(_isParseEmpty, value))
+                {
+                    _isParseEmpty = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsParseEmpty)));
+                }
+            }
+        }
+
         private bool _isLoadCompleted;
 
         public bool IsLoadCompleted
@@ -136,22 +152,6 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _canDragFile = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CanDragFile)));
-                }
-            }
-        }
-
-        private bool _isParseEmpty;
-
-        public bool IsParseEmpty
-        {
-            get { return _isParseEmpty; }
-
-            set
-            {
-                if (!Equals(_isParseEmpty, value))
-                {
-                    _isParseEmpty = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsParseEmpty)));
                 }
             }
         }
@@ -428,6 +428,86 @@ namespace GetStoreAppInstaller.Pages
             }
         }
 
+        private string _hoursBetweenUpdateChecks;
+
+        public string HoursBetweenUpdateChecks
+        {
+            get { return _hoursBetweenUpdateChecks; }
+
+            set
+            {
+                if (!Equals(_hoursBetweenUpdateChecks, value))
+                {
+                    _hoursBetweenUpdateChecks = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HoursBetweenUpdateChecks)));
+                }
+            }
+        }
+
+        private string _updateBlocksActivation;
+
+        public string UpdateBlocksActivation
+        {
+            get { return _updateBlocksActivation; }
+
+            set
+            {
+                if (!Equals(_updateBlocksActivation, value))
+                {
+                    _updateBlocksActivation = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpdateBlocksActivation)));
+                }
+            }
+        }
+
+        private string _showPrompt;
+
+        public string ShowPrompt
+        {
+            get { return _showPrompt; }
+
+            set
+            {
+                if (!Equals(_showPrompt, value))
+                {
+                    _showPrompt = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowPrompt)));
+                }
+            }
+        }
+
+        private string _forceUpdateFromAnyVersion;
+
+        public string ForceUpdateFromAnyVersion
+        {
+            get { return _forceUpdateFromAnyVersion; }
+
+            set
+            {
+                if (!Equals(_forceUpdateFromAnyVersion, value))
+                {
+                    _forceUpdateFromAnyVersion = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceUpdateFromAnyVersion)));
+                }
+            }
+        }
+
+        private string _automaticBackgroundTask;
+
+        public string AutomaticBackgroundTask
+        {
+            get { return _automaticBackgroundTask; }
+
+            set
+            {
+                if (!Equals(_automaticBackgroundTask, value))
+                {
+                    _automaticBackgroundTask = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AutomaticBackgroundTask)));
+                }
+            }
+        }
+
         private bool _isAppInstalled;
 
         public bool IsAppInstalled
@@ -440,6 +520,22 @@ namespace GetStoreAppInstaller.Pages
                 {
                     _isAppInstalled = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAppInstalled)));
+                }
+            }
+        }
+
+        private bool _isUpdateSettingsExisted;
+
+        public bool IsUpdateSettingsExisted
+        {
+            get { return _isUpdateSettingsExisted; }
+
+            set
+            {
+                if (!Equals(_isUpdateSettingsExisted, value))
+                {
+                    _isUpdateSettingsExisted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdateSettingsExisted)));
                 }
             }
         }
@@ -560,7 +656,7 @@ namespace GetStoreAppInstaller.Pages
 
         private ObservableCollection<DependencyModel> DependencyCollection { get; } = [];
 
-        private ObservableCollection<string> CapabilitiesCollection { get; } = [];
+        private ObservableCollection<CapabilityModel> CapabilitiesCollection { get; } = [];
 
         private ObservableCollection<ApplicationModel> ApplicationCollection { get; } = [];
 
@@ -1620,6 +1716,14 @@ namespace GetStoreAppInstaller.Pages
         }
 
         /// <summary>
+        /// 了解更新设置
+        /// </summary>
+        private async void OnLearnUpdateSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/msix/app-installer/how-to-create-appinstaller-file"));
+        }
+
+        /// <summary>
         /// 了解应用包依赖
         /// </summary>
         private async void OnLearnPackageDependencyClicked(object sender, RoutedEventArgs args)
@@ -2054,6 +2158,46 @@ namespace GetStoreAppInstaller.Pages
                                     packageInformation.PackageSourceLink = packageUriNode.InnerText;
                                     packageInformation.IsPackageSourceLinkExisted = true;
                                 }
+                            }
+
+                            XmlNodeList updateSettingsNodeList = xmlDocument.GetElementsByTagName("UpdateSettings");
+
+                            if (updateSettingsNodeList.Count > 0)
+                            {
+                                packageInformation.IsUpdateSettingsExisted = true;
+
+                                foreach (IXmlNode updateSettingsNode in updateSettingsNodeList[0].ChildNodes)
+                                {
+                                    if (updateSettingsNode.NodeName is "OnLaunch")
+                                    {
+                                        if (updateSettingsNode.Attributes.GetNamedItem("HoursBetweenUpdateChecks") is IXmlNode hoursBetweenUpdateChecksNode)
+                                        {
+                                            packageInformation.HoursBetweenUpdateChecks = Convert.ToInt32(hoursBetweenUpdateChecksNode.InnerText);
+                                        }
+
+                                        if (updateSettingsNode.Attributes.GetNamedItem("UpdateBlocksActivation") is IXmlNode updateBlocksActivationNode)
+                                        {
+                                            packageInformation.UpdateBlocksActivation = Convert.ToBoolean(updateBlocksActivationNode.InnerText);
+                                        }
+
+                                        if (updateSettingsNode.Attributes.GetNamedItem("ShowPrompt") is IXmlNode showPromptNode)
+                                        {
+                                            packageInformation.ShowPrompt = Convert.ToBoolean(showPromptNode.InnerText);
+                                        }
+                                    }
+                                    else if (updateSettingsNode.NodeName is "ForceUpdateFromAnyVersion")
+                                    {
+                                        packageInformation.ForceUpdateFromAnyVersion = Convert.ToBoolean(updateSettingsNode.InnerText);
+                                    }
+                                    else if (updateSettingsNode.NodeName is "AutomaticBackgroundTask")
+                                    {
+                                        packageInformation.AutomaticBackgroundTask = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                packageInformation.IsUpdateSettingsExisted = false;
                             }
 
                             XmlNodeList packageNodeList = xmlDocument.GetElementsByTagName("Package");
@@ -3370,22 +3514,15 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void ResetResult()
         {
-            CanDragFile = false;
-            PackageDescription = string.Empty;
             IsLoadCompleted = false;
+            CanDragFile = false;
             IsParseSuccessfully = false;
             PackageFileType = PackageFileType.None;
-            IsInstalling = false;
-            InstallProgressValue = 0;
-            IsInstallWaiting = false;
-            IsInstallFailed = false;
-            InstallStateString = string.Empty;
-            InstallFailedInformation = string.Empty;
-            IsCancelInstall = true;
             PackageIconImage = null;
             PackageName = string.Empty;
             PublisherDisplayName = string.Empty;
             Version = new Version();
+            PackageDescription = string.Empty;
             PackageFamilyName = string.Empty;
             PackageFullName = string.Empty;
             SupportedArchitecture = string.Empty;
@@ -3396,11 +3533,24 @@ namespace GetStoreAppInstaller.Pages
             PackageSourceLink = string.Empty;
             IsPackageSourceLinkExisted = false;
             PackageType = string.Empty;
+            HoursBetweenUpdateChecks = string.Empty;
+            UpdateBlocksActivation = string.Empty;
+            ShowPrompt = string.Empty;
+            ForceUpdateFromAnyVersion = string.Empty;
+            AutomaticBackgroundTask = string.Empty;
             IsAppInstalled = false;
+            IsUpdateSettingsExisted = false;
+            IsInstalling = false;
+            InstallProgressValue = 0;
+            IsInstallWaiting = false;
+            IsInstallFailed = false;
+            IsCancelInstall = true;
+            InstallStateString = string.Empty;
+            InstallFailedInformation = string.Empty;
+            TargetDeviceFamilyCollection.Clear();
             DependencyCollection.Clear();
             CapabilitiesCollection.Clear();
             ApplicationCollection.Clear();
-            TargetDeviceFamilyCollection.Clear();
             LanguageCollection.Clear();
             InstallDependencyCollection.Clear();
         }
@@ -3416,18 +3566,34 @@ namespace GetStoreAppInstaller.Pages
             {
                 PackageInformation packageInformation = resultDict.Item2;
 
-                if (packageInformation.CapabilitiesList is not null)
+                PackageFileType = packageInformation.PackageFileType;
+                PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.DisplayName;
+                PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PublisherDisplayName;
+                Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
+                PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? ResourceService.GetLocalized("Installer/None") : packageInformation.Description;
+                PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFamilyName;
+                PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFullName;
+                SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.ProcessorArchitecture;
+                IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                AppInstalledState = string.IsNullOrEmpty(packageInformation.AppInstalledState) ? string.Empty : packageInformation.AppInstalledState;
+                AppInstallerSourceLink = string.IsNullOrEmpty(packageInformation.AppInstallerSourceLink) ? string.Empty : packageInformation.AppInstallerSourceLink;
+                IsAppInstallerSourceLinkExisted = packageInformation.IsAppInstallerSourceLinkExisted;
+                PackageSourceLink = string.IsNullOrEmpty(packageInformation.PackageSourceLink) ? string.Empty : packageInformation.PackageSourceLink;
+                IsPackageSourceLinkExisted = packageInformation.IsPackageSourceLinkExisted;
+                PackageType = packageInformation.PackageType;
+                HoursBetweenUpdateChecks = string.Format(ResourceService.GetLocalized("Installer/Hours"), packageInformation.HoursBetweenUpdateChecks);
+                UpdateBlocksActivation = packageInformation.UpdateBlocksActivation ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
+                ShowPrompt = packageInformation.ShowPrompt ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
+                ForceUpdateFromAnyVersion = packageInformation.ForceUpdateFromAnyVersion ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
+                AutomaticBackgroundTask = packageInformation.AutomaticBackgroundTask ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
+                IsAppInstalled = packageInformation.IsAppInstalled;
+                IsUpdateSettingsExisted = packageInformation.IsUpdateSettingsExisted;
+
+                if (packageInformation.TargetDeviceFamilyList is not null)
                 {
-                    foreach (string capability in packageInformation.CapabilitiesList)
+                    foreach (TargetDeviceFamilyModel targetDeviceFamilyItem in packageInformation.TargetDeviceFamilyList)
                     {
-                        if (CapabilityDict.TryGetValue(capability.ToLower(), out string capabilityValue))
-                        {
-                            CapabilitiesCollection.Add(capabilityValue);
-                        }
-                        else
-                        {
-                            CapabilitiesCollection.Add(capability);
-                        }
+                        TargetDeviceFamilyCollection.Add(targetDeviceFamilyItem);
                     }
                 }
 
@@ -3447,11 +3613,26 @@ namespace GetStoreAppInstaller.Pages
                     }
                 }
 
-                if (packageInformation.TargetDeviceFamilyList is not null)
+                if (packageInformation.CapabilitiesList is not null)
                 {
-                    foreach (TargetDeviceFamilyModel targetDeviceFamilyItem in packageInformation.TargetDeviceFamilyList)
+                    foreach (string capability in packageInformation.CapabilitiesList)
                     {
-                        TargetDeviceFamilyCollection.Add(targetDeviceFamilyItem);
+                        if (CapabilityDict.TryGetValue(capability.ToLower(), out string capabilityValue))
+                        {
+                            CapabilitiesCollection.Add(new CapabilityModel()
+                            {
+                                CapabilityLocalizedName = capabilityValue,
+                                CapabilityName = capability
+                            });
+                        }
+                        else
+                        {
+                            CapabilitiesCollection.Add(new CapabilityModel()
+                            {
+                                CapabilityLocalizedName = capability,
+                                CapabilityName = capability
+                            });
+                        }
                     }
                 }
 
@@ -3462,23 +3643,6 @@ namespace GetStoreAppInstaller.Pages
                         ApplicationCollection.Add(applicationItem);
                     }
                 }
-
-                PackageFileType = packageInformation.PackageFileType;
-                SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.ProcessorArchitecture;
-                PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.DisplayName;
-                PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFamilyName;
-                PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFullName;
-                PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PublisherDisplayName;
-                IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
-                AppInstalledState = string.IsNullOrEmpty(packageInformation.AppInstalledState) ? string.Empty : packageInformation.AppInstalledState;
-                AppInstallerSourceLink = string.IsNullOrEmpty(packageInformation.AppInstallerSourceLink) ? string.Empty : packageInformation.AppInstallerSourceLink;
-                IsAppInstallerSourceLinkExisted = packageInformation.IsAppInstallerSourceLinkExisted;
-                PackageSourceLink = string.IsNullOrEmpty(packageInformation.PackageSourceLink) ? string.Empty : packageInformation.PackageSourceLink;
-                IsPackageSourceLinkExisted = packageInformation.IsPackageSourceLinkExisted;
-                PackageType = packageInformation.PackageType;
-                IsAppInstalled = packageInformation.IsAppInstalled;
-                Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
-                PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? ResourceService.GetLocalized("Installer/None") : packageInformation.Description;
 
                 if (packageInformation.LanguageList is not null)
                 {
@@ -3525,7 +3689,7 @@ namespace GetStoreAppInstaller.Pages
         {
             string extensionName = Path.GetExtension(filePath);
 
-            if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+            if (CanDragFile && extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
             {
                 fileName = filePath;
 

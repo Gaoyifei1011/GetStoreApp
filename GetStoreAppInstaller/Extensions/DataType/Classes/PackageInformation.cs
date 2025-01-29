@@ -72,6 +72,36 @@ namespace GetStoreAppInstaller.Extensions.DataType.Classes
         public bool IsAppInstalled { get; set; }
 
         /// <summary>
+        /// 更新设置是否存在
+        /// </summary>
+        public bool IsUpdateSettingsExisted { get; set; }
+
+        /// <summary>
+        /// 更新检查最小间隔
+        /// </summary>
+        public int HoursBetweenUpdateChecks { get; set; }
+
+        /// <summary>
+        /// 更新时禁止启动
+        /// </summary>
+        public bool UpdateBlocksActivation { get; set; }
+
+        /// <summary>
+        /// 启用自动更新
+        /// </summary>
+        public bool AutomaticBackgroundTask { get; set; }
+
+        /// <summary>
+        /// 安装更新时显示窗口
+        /// </summary>
+        public bool ShowPrompt { get; set; }
+
+        /// <summary>
+        /// 从任何版本更新应用
+        /// </summary>
+        public bool ForceUpdateFromAnyVersion { get; set; }
+
+        /// <summary>
         /// 应用包图标资源
         /// </summary>
         public IStream ImageLogo { get; set; }
