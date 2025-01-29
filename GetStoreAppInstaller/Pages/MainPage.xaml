@@ -1923,7 +1923,7 @@
 
                                 <muxc:Expander.Content>
                                     <GridView
-                                        Margin="16,4,16,-4"
+                                        Margin="10,4,10,-4"
                                         ItemsSource="{x:Bind CapabilitiesCollection, Mode=OneWay}"
                                         SelectionMode="None">
 
@@ -1940,7 +1940,8 @@
                                                     Width="230"
                                                     Height="30"
                                                     HorizontalContentAlignment="Left">
-                                                    <Grid HorizontalAlignment="Left">
+
+                                                    <Grid Margin="6,0,0,0" HorizontalAlignment="Left">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto" />
                                                             <ColumnDefinition Width="*" />

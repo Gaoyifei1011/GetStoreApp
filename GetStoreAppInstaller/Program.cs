@@ -96,6 +96,7 @@ namespace GetStoreAppInstaller
             CoreAppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             CoreAppWindow.Changed += OnAppWindowChanged;
             CoreAppWindow.Closing += OnAppWindowClosing;
+            CoreAppWindow.Resize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
             SetAppIcon(CoreAppWindow);
 
             SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
@@ -215,15 +216,9 @@ namespace GetStoreAppInstaller
                 // 处理窗口非客户区域消息
                 case WindowMessage.WM_NCHITTEST:
                     {
-                        if (Window.Current is not null && Window.Current.CoreWindow is not null)
+                        if (DisplayInformation is not null)
                         {
-                            Point currentPoint = Window.Current.CoreWindow.PointerPosition;
-                            PointInt32 screenPoint = new()
-                            {
-                                X = Convert.ToInt32(currentPoint.X),
-                                Y = Convert.ToInt32(currentPoint.Y),
-                            };
-
+                            User32Library.GetCursorPos(out PointInt32 screenPoint);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
 
                             if (CoreAppWindow.Presenter is OverlappedPresenter overlappedPresenter)
@@ -339,15 +334,9 @@ namespace GetStoreAppInstaller
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (wParam is 2 && Window.Current is not null && Window.Current.CoreWindow is not null && Window.Current.Content is MainPage mainPage && DisplayInformation is not null)
+                        if (wParam is 2 && Window.Current is not null && Window.Current.Content is MainPage mainPage && DisplayInformation is not null)
                         {
-                            Point currentPoint = Window.Current.CoreWindow.PointerPosition;
-                            PointInt32 screenPoint = new()
-                            {
-                                X = Convert.ToInt32(currentPoint.X),
-                                Y = Convert.ToInt32(currentPoint.Y),
-                            };
-
+                            User32Library.GetCursorPos(out PointInt32 screenPoint);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
 
                             FlyoutShowOptions options = new()

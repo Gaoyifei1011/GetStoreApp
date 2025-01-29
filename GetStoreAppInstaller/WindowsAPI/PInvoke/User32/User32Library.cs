@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Windows.Graphics;
 
 // 抑制 CA1401 警告
 #pragma warning disable CA1401
@@ -44,6 +45,15 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值 NULL。</returns>
         [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
         public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, [MarshalAs(UnmanagedType.LPWStr)] string lpszClass, [MarshalAs(UnmanagedType.LPWStr)] string lpszWindow);
+
+        /// <summary>
+        /// 检索鼠标光标的位置（以屏幕坐标为单位）。
+        /// </summary>
+        /// <param name="lpPoint">指向接收光标屏幕坐标的 POINT 结构的指针。</param>
+        /// <returns>如果成功，则返回非零值，否则返回零。 要获得更多的错误信息，请调用 GetLastError。</returns>
+        [LibraryImport(User32, EntryPoint = "GetCursorPos", SetLastError = false), PreserveSig]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool GetCursorPos(out PointInt32 lpPoint);
 
         /// <summary>
         /// 检索有关指定窗口的信息。 该函数还会检索 32 位 (DWORD) 值，该值位于指定偏移量处，并进入额外的窗口内存。
