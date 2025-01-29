@@ -73,7 +73,6 @@
     <Content Include="Assets\Icon\Control\Web.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\WinGet.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Installer\Package.png" CopyToOutputDirectory="Always" />
-    <Content Include="Assets\Icon\ShellMenu\AppInformation.ico" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\ShellMenu\PowerShell.ico" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Installer\LargeTile.scale-100.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Installer\LargeTile.scale-125.png" CopyToOutputDirectory="Always" />
