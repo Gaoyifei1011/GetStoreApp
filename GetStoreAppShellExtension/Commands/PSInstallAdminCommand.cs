@@ -1,4 +1,5 @@
 ﻿using GetStoreAppShellExtension.Helpers.Root;
+using GetStoreAppShellExtension.Services.Controls.Settings;
 using GetStoreAppShellExtension.Services.Root;
 using GetStoreAppShellExtension.WindowsAPI.ComTypes;
 using GetStoreAppShellExtension.WindowsAPI.PInvoke.Shell32;
@@ -77,7 +78,24 @@ namespace GetStoreAppShellExtension.Commands
             if (psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
-                Shell32Library.ShellExecute(IntPtr.Zero, "runas", "PowerShell.exe", string.Format("Add-AppxPackage {0}", filePath), Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
+                string arguments = "Add-AppxPackage " + filePath;
+
+                if (AppInstallService.AllowUnsignedPackageValue)
+                {
+                    arguments += " -AllowUnsigned";
+                }
+
+                if (AppInstallService.ForceAppShutdownValue)
+                {
+                    arguments += " -ForceApplicationShutdown";
+                }
+
+                if (AppInstallService.ForceTargetAppShutdownValue)
+                {
+                    arguments += " -ForceTargetApplicationShutdown";
+                }
+
+                Shell32Library.ShellExecute(IntPtr.Zero, "runas", "PowerShell.exe", arguments, Path.GetDirectoryName(filePath), WindowShowStyle.SW_SHOWNORMAL);
             }
             return 0;
         }
