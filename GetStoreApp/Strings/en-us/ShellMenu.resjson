@@ -1,8 +1,8 @@
 {
-  "RootMenu": "GetStoreApp",
+  "AppInstall": "Use app installer to install",
+  "AppInstallAdmin": "Use app installer to install (Admin)",
   "PSInstall": "Use PowerShell to install",
   "PSInstallAdmin": "Use PowerShell to install (Admin)",
   "PSRegister": "Use PowerShell to register app",
-  "AppInstallAdmin": "Use app installer to install (Admin)",
-  "AppInstall": "Use app installer to install"
+  "RootMenu": "GetStoreApp"
 }

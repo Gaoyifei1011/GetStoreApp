@@ -63,6 +63,9 @@
   "PrivacyandSecurity": "Privacy and Security",
   "PrivacyandSecurityDescription": "All of the app's code is open source on Github, and all code can be read on its own. The history involved in the app is stored in the app's cache folder and is not uploaded over the network. All content is also deleted when the app is uninstalled or reset. When downloading an app, make sure that you get the app from a reliable source, and the only address you currently specify is the Release page of the Github repository.",
   "ProjectHomePage": "Project home page",
+  "QueryLinksCountryOrRegion": "When you use the official interface to search for apps from the store or to search for links to apps from the store, search according to the country or region of the store that you set in the settings.",
+  "QueryLinksMode": "Query links mode instruction",
+  "QueryLinksModeDescription": "Official and third-party interfaces can support both packaged and unpackaged applications (traditional applications) of the store.",
   "Reference": "Project references (Sort by alphabetical order)",
   "ReferenceToolTip": "Click to learn about the referenced open source project",
   "RequestFailed": "Request failed",
@@ -90,8 +93,5 @@
   "WinGetConfigDescription": "The Windows package Manager client experience can be customized by customizing WinGet's configuration file. You can change the default values and experiment with the experimental features already implemented in the client.",
   "WinGetPackage": "2. WinGet package",
   "WinGetPackageDescription1": "Windows Package Manager is a comprehensive package manager solution that consists of a command line tool and set of services for installing applications on Windows 10 and Windows 11.",
-  "WinGetPackageDescription2": "The WinGet application provides a package-friendly graphical interface that includes searching and installing required applications, managing installed and upgradeable applications on the device. It is easy to operate and manage traditional applications (i.e. non-store applications) on the device.",
-  "QueryLinksMode": "Query links mode instruction",
-  "QueryLinksModeDescription": "Official and third-party interfaces can support both packaged and unpackaged applications (traditional applications) of the store.",
-  "QueryLinksCountryOrRegion": "When you use the official interface to search for apps from the store or to search for links to apps from the store, search according to the country or region of the store that you set in the settings."
+  "WinGetPackageDescription2": "The WinGet application provides a package-friendly graphical interface that includes searching and installing required applications, managing installed and upgradeable applications on the device. It is easy to operate and manage traditional applications (i.e. non-store applications) on the device."
 }
