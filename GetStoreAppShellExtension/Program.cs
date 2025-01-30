@@ -18,6 +18,7 @@ namespace GetStoreAppShellExtension
         static Program()
         {
             ComWrappersSupport.InitializeComWrappers();
+            AppInstallService.InitializeAppInstall();
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
         }

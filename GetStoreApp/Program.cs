@@ -190,6 +190,7 @@ namespace GetStoreApp
             QueryLinksModeService.InitializeQueryLinksMode();
             await DownloadOptionsService.InitializeDownloadAsync();
             DownloadStorageService.Initialize();
+            AppInstallService.InitializeAppInstall();
 
             // 初始化其他设置信息（桌面应用程序）
             if (isDesktopProgram)

@@ -413,6 +413,7 @@ namespace GetStoreAppInstaller
             ResourceService.LocalizeReosurce();
 
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
+            AppInstallService.InitializeAppInstall();
             BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
         }

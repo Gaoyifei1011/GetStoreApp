@@ -385,6 +385,54 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private bool _allowUnsignedPackageValue = AppInstallService.AllowUnsignedPackageValue;
+
+        public bool AllowUnsignedPackageValue
+        {
+            get { return _allowUnsignedPackageValue; }
+
+            set
+            {
+                if (!Equals(_allowUnsignedPackageValue, value))
+                {
+                    _allowUnsignedPackageValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AllowUnsignedPackageValue)));
+                }
+            }
+        }
+
+        private bool _forceAppShutdownValue = AppInstallService.ForceAppShutdownValue;
+
+        public bool ForceAppShutdownValue
+        {
+            get { return _forceAppShutdownValue; }
+
+            set
+            {
+                if (!Equals(_forceAppShutdownValue, value))
+                {
+                    _forceAppShutdownValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceAppShutdownValue)));
+                }
+            }
+        }
+
+        private bool _forceTargetAppShutdownValue = AppInstallService.ForceTargetAppShutdownValue;
+
+        public bool ForceTargetAppShutdownValue
+        {
+            get { return _forceTargetAppShutdownValue; }
+
+            set
+            {
+                if (!Equals(_forceTargetAppShutdownValue, value))
+                {
+                    _forceTargetAppShutdownValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ForceTargetAppShutdownValue)));
+                }
+            }
+        }
+
         private KeyValuePair<string, string> _installMode = InstallModeService.InstallMode;
 
         public KeyValuePair<string, string> InstallMode
@@ -616,7 +664,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (Backdrop.Equals(BackdropList[0]))
                 {
-                    AlwaysShowBackdropService.SetAlwaysShowBackdrop(false);
+                    AlwaysShowBackdropService.SetAlwaysShowBackdropValue(false);
                     AlwaysShowBackdropValue = false;
                 }
             }
@@ -745,7 +793,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (sender is ToggleSwitch toggleSwitch)
             {
-                ShellMenuService.SetShellMenu(toggleSwitch.IsOn);
+                ShellMenuService.SetShellMenuValue(toggleSwitch.IsOn);
                 ShellMenuValue = toggleSwitch.IsOn;
             }
         }
@@ -912,6 +960,50 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 打开开发者选项
+        /// </summary>
+        private async void OnOpenDevelopersClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:developers"));
+        }
+
+        /// <summary>
+        /// 是否允许安装未签名的安装包
+        /// </summary>
+        private void OnAllowUnsignedPackageToggled(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                AppInstallService.SetAllowUnsignedPackageValue(toggleSwitch.IsOn);
+                AllowUnsignedPackageValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 是否在安装应用时强制关闭与包关联的进程
+        /// </summary>
+        private void OnForceAppShutdownToggled(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                AppInstallService.SetForceAppShutdownValue(toggleSwitch.IsOn);
+                ForceAppShutdownValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 是否在安装应用时强制关闭与包关联的进程
+        /// </summary>
+        private void OnForceTargetAppShutdownToggled(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                AppInstallService.SetForceTargetAppShutdownValue(toggleSwitch.IsOn);
+                ForceTargetAppShutdownValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
         /// 应用安装方式设置
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
@@ -955,7 +1047,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (sender is ToggleSwitch toggleSwitch)
             {
-                AlwaysShowBackdropService.SetAlwaysShowBackdrop(toggleSwitch.IsOn);
+                AlwaysShowBackdropService.SetAlwaysShowBackdropValue(toggleSwitch.IsOn);
                 AlwaysShowBackdropValue = toggleSwitch.IsOn;
             }
         }
@@ -1014,7 +1106,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (sender is ToggleSwitch toggleSwitch)
             {
-                StoreRegionService.SetUseSystemRegion(toggleSwitch.IsOn);
+                StoreRegionService.SetUseSystemRegionValue(toggleSwitch.IsOn);
                 UseSystemRegionValue = toggleSwitch.IsOn;
 
                 if (UseSystemRegionValue)

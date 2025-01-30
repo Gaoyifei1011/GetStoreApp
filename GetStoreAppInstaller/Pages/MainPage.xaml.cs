@@ -771,6 +771,7 @@ namespace GetStoreAppInstaller.Pages
             { "packagedservices", ResourceService.GetLocalized("Installer/CapabilityPackagedServices") },
             { "packagemanagement", ResourceService.GetLocalized("Installer/CapabilityPackageManagement") },
             { "packagepolicysystem", ResourceService.GetLocalized("Installer/CapabilityPackagePolicySystem") },
+            { "packagequery", ResourceService.GetLocalized("Installer/CapabilityPackageQuery") },
             { "packagewriteredirectioncompatibilityshim", ResourceService.GetLocalized("Installer/CapabilityPackageWriteRedirectionCompatibilityShim") },
             { "phonecall", ResourceService.GetLocalized("Installer/CapabilityPhoneCall") },
             { "phonecallhistory", ResourceService.GetLocalized("Installer/CapabilityPhoneCallHistory") },
@@ -1538,15 +1539,29 @@ namespace GetStoreAppInstaller.Pages
                     {
                         try
                         {
-                            List<Uri> dependencyUriList = [];
+                            // todo : 添加更新自身提示
+                            if (PackageFamilyName.Equals(Windows.ApplicationModel.Package.Current.Id.FamilyName, StringComparison.OrdinalIgnoreCase))
+                            {
+                                AppNotificationBuilder appNotificationBuilder = new();
+                                appNotificationBuilder.AddArgument("action", "OpenApp");
+                                appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppInstallSelf"), PackageName));
+                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            }
+
+                            AddPackageOptions addPackageOptions = new()
+                            {
+                                AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
+                                ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
+                                ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue
+                            };
 
                             foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
                             {
-                                dependencyUriList.Add(new Uri(installDependencyItem.DependencyPath));
+                                addPackageOptions.DependencyPackageUris.Add(new Uri(installDependencyItem.DependencyPath));
                             }
 
                             // 安装目标应用，并获取安装进度
-                            installPackageWithProgress = packageManager.AddPackageAsync(new Uri(fileName), dependencyUriList, DeploymentOptions.ForceUpdateFromAnyVersion | DeploymentOptions.ForceTargetApplicationShutdown);
+                            installPackageWithProgress = packageManager.AddPackageByUriAsync(new Uri(fileName), addPackageOptions);
 
                             // 更新安装进度
                             installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);
@@ -1565,7 +1580,7 @@ namespace GetStoreAppInstaller.Pages
                         try
                         {
                             // 安装目标应用，并获取安装进度
-                            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByAppInstallerFileAsync(new Uri(fileName), AddPackageByAppInstallerOptions.ForceTargetAppShutdown, null);
+                            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByAppInstallerFileAsync(new Uri(fileName), AppInstallService.ForceTargetAppShutdownValue ? AddPackageByAppInstallerOptions.ForceTargetAppShutdown : AddPackageByAppInstallerOptions.None, null);
 
                             // 更新安装进度
                             installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress);

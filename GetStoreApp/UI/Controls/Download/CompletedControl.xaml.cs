@@ -217,8 +217,15 @@ namespace GetStoreApp.UI.Controls.Download
                                 {
                                     try
                                     {
+                                        AddPackageOptions addPackageOptions = new()
+                                        {
+                                            AllowUnsigned = AppInstallService.AllowUnsignedPackageValue,
+                                            ForceAppShutdown = AppInstallService.ForceAppShutdownValue,
+                                            ForceTargetAppShutdown = AppInstallService.ForceTargetAppShutdownValue
+                                        };
+
                                         // 安装目标应用，并获取安装进度
-                                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageAsync(new Uri(completedItem.FilePath), null, DeploymentOptions.ForceUpdateFromAnyVersion | DeploymentOptions.ForceTargetApplicationShutdown);
+                                        IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress = packageManager.AddPackageByUriAsync(new Uri(completedItem.FilePath), addPackageOptions);
 
                                         // 更新安装进度
                                         installPackageWithProgress.Progress = (result, progress) => OnInstallPackageProgressing(result, progress, completedItem);
