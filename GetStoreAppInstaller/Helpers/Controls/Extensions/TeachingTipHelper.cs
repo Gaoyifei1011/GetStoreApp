@@ -1,9 +1,9 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
-using Microsoft.UI.Xaml.Controls;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace GetStoreAppInstaller.Helpers.Controls.Extensions
 {

@@ -1,9 +1,9 @@
 ﻿using GetStoreAppInstaller.Extensions.DataType.Constant;
 using GetStoreAppInstaller.Services.Root;
-using Windows.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Windows.UI.Xaml;
 
 namespace GetStoreAppInstaller.Services.Controls.Settings
 {

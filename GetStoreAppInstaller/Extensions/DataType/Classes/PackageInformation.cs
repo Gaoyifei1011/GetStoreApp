@@ -1,8 +1,8 @@
-﻿using GetStoreAppInstaller.Models;
+﻿using GetStoreAppInstaller.Extensions.DataType.Enums;
+using GetStoreAppInstaller.Models;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
-using System.Collections.Generic;
 using System;
-using GetStoreAppInstaller.Extensions.DataType.Enums;
+using System.Collections.Generic;
 
 namespace GetStoreAppInstaller.Extensions.DataType.Classes
 {
