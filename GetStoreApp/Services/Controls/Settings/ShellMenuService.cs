@@ -31,7 +31,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!shellMenuValue.HasValue)
             {
-                SetShellMenu(defaultShellMenuValue);
+                SetShellMenuValue(defaultShellMenuValue);
                 return defaultShellMenuValue;
             }
 
@@ -41,7 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 文件右键菜单显示值发生修改时修改设置存储的文件右键菜单显示值
         /// </summary>
-        public static void SetShellMenu(bool shellMenuValue)
+        public static void SetShellMenuValue(bool shellMenuValue)
         {
             ShellMenuValue = shellMenuValue;
 

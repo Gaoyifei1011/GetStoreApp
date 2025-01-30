@@ -82,7 +82,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!useSystemRegionValue.HasValue)
             {
-                SetUseSystemRegion(defaultUseSystemRegionValue);
+                SetUseSystemRegionValue(defaultUseSystemRegionValue);
                 return defaultUseSystemRegionValue;
             }
 
@@ -118,7 +118,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 使用系统区域值发生修改时修改设置存储的始终显示背景色值
         /// </summary>
-        public static void SetUseSystemRegion(bool useSystemRegionValue)
+        public static void SetUseSystemRegionValue(bool useSystemRegionValue)
         {
             UseSystemRegionValue = useSystemRegionValue;
 
