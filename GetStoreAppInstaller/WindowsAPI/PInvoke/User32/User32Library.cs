@@ -25,28 +25,6 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         public static partial bool ChangeWindowMessageFilter(WindowMessage message, ChangeFilterFlags dwFlag);
 
         /// <summary>
-        /// 检索其类名称和窗口名称与指定字符串匹配的窗口的句柄。 该函数搜索子窗口，从指定子窗口后面的子窗口开始。 此函数不执行区分大小写的搜索。
-        /// </summary>
-        /// <param name="hWndParent">
-        /// 要搜索其子窗口的父窗口的句柄。
-        /// 如果 hwndParent为 NULL，则该函数使用桌面窗口作为父窗口。 该函数在桌面的子窗口之间搜索。
-        /// 如果 hwndParentHWND_MESSAGE，则函数将搜索所有 仅消息窗口。
-        /// </param>
-        /// <param name="hWndChildAfter">
-        /// 子窗口的句柄。 搜索从 Z 顺序中的下一个子窗口开始。 子窗口必须是 hwndParent的直接子窗口，而不仅仅是子窗口。
-        /// 如果 hwndChildAfterNULL，则搜索从 hwndParent的第一个子窗口开始。
-        /// 请注意，如果 hwndParent 和 hwndChildAfter 都 NULL，则该函数将搜索所有顶级窗口和仅消息窗口。
-        /// </param>
-        /// <param name="lpszClass">
-        /// 上一次调用 RegisterClass 或 RegisterClassEx 函数创建的类名或类原子。 原子必须置于 lpszClass的低序单词中;高序单词必须为零。
-        /// 如果 lpszClass 是字符串，则指定窗口类名。 类名称可以是注册到 RegisterClass 或 RegisterClassEx的任何名称，也可以是预定义的控件类名称，也可以 MAKEINTATOM(0x8000)。 在此后一种情况下，0x8000是菜单类的原子。
-        /// </param>
-        /// <param name="lpszWindow">窗口名称（窗口的标题）。 如果此参数 NULL，则所有窗口名称都匹配。</param>
-        /// <returns>如果函数成功，则返回值是具有指定类和窗口名称的窗口的句柄。如果函数失败，则返回值 NULL。</returns>
-        [LibraryImport(User32, EntryPoint = "FindWindowExW", SetLastError = false, StringMarshalling = StringMarshalling.Utf16), PreserveSig]
-        public static partial IntPtr FindWindowEx(IntPtr hWndParent, IntPtr hWndChildAfter, [MarshalAs(UnmanagedType.LPWStr)] string lpszClass, [MarshalAs(UnmanagedType.LPWStr)] string lpszWindow);
-
-        /// <summary>
         /// 检索鼠标光标的位置（以屏幕坐标为单位）。
         /// </summary>
         /// <param name="lpPoint">指向接收光标屏幕坐标的 POINT 结构的指针。</param>
@@ -108,6 +86,15 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <returns>返回值指定消息处理的结果;这取决于发送的消息。</returns>
         [LibraryImport(User32, EntryPoint = "SendMessageW", SetLastError = false), PreserveSig]
         public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage wMsg, UIntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// 更改指定子窗口的父窗口。
+        /// </summary>
+        /// <param name="hWndChild">子窗口的句柄。</param>
+        /// <param name="hWndNewParent">新父窗口的句柄。 如果此参数为 NULL，桌面窗口将成为新的父窗口。 如果此参数 HWND_MESSAGE，则子窗口将成为仅消息窗口。</param>
+        /// <returns>如果函数成功，则返回值是上一个父窗口的句柄。如果函数失败，则返回值为 NULL。</returns>
+        [LibraryImport(User32, EntryPoint = "SetParent", SetLastError = false), PreserveSig]
+        public static partial uint SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
 
         /// <summary>
         /// 更改指定窗口的属性。 该函数还将指定偏移量处的32位（long类型）值设置到额外的窗口内存中。

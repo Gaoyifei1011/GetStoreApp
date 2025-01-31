@@ -998,7 +998,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnRestoreClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_RESTORE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_RESTORE, 0);
         }
 
         /// <summary>
@@ -1009,7 +1009,7 @@ namespace GetStoreAppInstaller.Pages
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MOVE, 0);
             }
         }
 
@@ -1021,7 +1021,7 @@ namespace GetStoreAppInstaller.Pages
             if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
                 ((MenuFlyout)menuFlyoutItem.Tag).Hide();
-                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_SIZE, 0);
             }
         }
 
@@ -1030,7 +1030,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnMinimizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MINIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MINIMIZE, 0);
         }
 
         /// <summary>
@@ -1038,7 +1038,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnMaximizeClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_MAXIMIZE, 0);
         }
 
         /// <summary>
@@ -1046,7 +1046,7 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_CLOSE, 0);
+            User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id), WindowMessage.WM_SYSCOMMAND, (UIntPtr)SYSTEMCOMMAND.SC_CLOSE, 0);
         }
 
         #endregion 第二部分：窗口右键菜单事件
@@ -1229,7 +1229,7 @@ namespace GetStoreAppInstaller.Pages
             try
             {
                 FileOpenPicker fileOpenPicker = new();
-                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id));
+                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id));
                 fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
@@ -1255,7 +1255,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 try
                 {
-                    OpenFileDialog openFileDialog = new(Program.CoreAppWindow.Id)
+                    OpenFileDialog openFileDialog = new(Program.MainAppWindow.Id)
                     {
                         Description = ResourceService.GetLocalized("Installer/SelectPackage"),
                         UseCustomFilterTypes = true
@@ -1310,7 +1310,7 @@ namespace GetStoreAppInstaller.Pages
             try
             {
                 FileOpenPicker fileOpenPicker = new();
-                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id));
+                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id));
                 fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
@@ -1336,7 +1336,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 try
                 {
-                    OpenFileDialog openFileDialog = new(Program.CoreAppWindow.Id)
+                    OpenFileDialog openFileDialog = new(Program.MainAppWindow.Id)
                     {
                         Description = ResourceService.GetLocalized("Installer/SelectPackage"),
                         UseCustomFilterTypes = true
@@ -1389,7 +1389,7 @@ namespace GetStoreAppInstaller.Pages
             try
             {
                 FileOpenPicker fileOpenPicker = new();
-                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.CoreAppWindow.Id));
+                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id));
                 fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
@@ -1436,7 +1436,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 try
                 {
-                    OpenFileDialog openFileDialog = new(Program.CoreAppWindow.Id)
+                    OpenFileDialog openFileDialog = new(Program.MainAppWindow.Id)
                     {
                         Description = ResourceService.GetLocalized("Installer/SelectDependencyPackage"),
                         AllowMultiSelect = true,

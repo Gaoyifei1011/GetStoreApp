@@ -49,7 +49,6 @@ namespace GetStoreAppWebView
                 {
                     if (appWindowList.Count is 0)
                     {
-                        Window.Current.CoreWindow.FlowDirection = LanguageService.FlowDirection is FlowDirection.LeftToRight ? CoreWindowFlowDirection.LeftToRight : CoreWindowFlowDirection.RightToLeft;
                         Window.Current.Content = new WebViewPage();
                         Window.Current.Activate();
                     }

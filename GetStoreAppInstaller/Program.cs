@@ -10,6 +10,8 @@ using GetStoreAppInstaller.WindowsAPI.PInvoke.Uxtheme;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.WindowsUI;
 using Microsoft.UI;
 using Microsoft.UI.Content;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
@@ -24,7 +26,6 @@ using Windows.Foundation;
 using Windows.Graphics;
 using Windows.Graphics.Display;
 using Windows.Management.Deployment;
-using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -42,8 +43,12 @@ namespace GetStoreAppInstaller
     public class Program
     {
         private static SUBCLASSPROC mainWindowSubClassProc;
+        private static InputNonClientPointerSource inputNonClientPointerSource;
+        private static InputActivationListener inputActivationListener;
 
         public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
+
+        public static AppWindow MainAppWindow { get; private set; }
 
         public static AppWindow CoreAppWindow { get; set; }
 
@@ -87,46 +92,52 @@ namespace GetStoreAppInstaller
 
             InitializeResources();
 
+            // 应用主窗口
+            MainAppWindow = AppWindow.Create();
+            MainAppWindow.Title = ResourceService.GetLocalized("Installer/AppTitle");
+            MainAppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+            MainAppWindow.Changed += OnAppWindowChanged;
+            MainAppWindow.Closing += OnAppWindowClosing;
+
             // 创建 CoreWindow
-            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.NOT_IMMERSIVE, ResourceService.GetLocalized("Installer/AppTitle"), 200, 200, 800, 560, 0, IntPtr.Zero, typeof(ICoreWindow).GUID, out IntPtr coreWindowPtr);
+            WindowsUILibrary.PrivateCreateCoreWindow(WINDOW_TYPE.IMMERSIVE_HOSTED, "XamlContentCoreWindow", 0, 0, 0, 0, 0, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), typeof(ICoreWindow).GUID, out IntPtr coreWindowPtr);
             CoreWindow coreWindow = CoreWindow.FromAbi(coreWindowPtr);
             coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
-            CoreAppWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(coreWindowHandle));
             DisplayInformation = DisplayInformation.GetForCurrentView();
+            MainAppWindow.Resize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
+            CoreAppWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(coreWindowHandle));
+            CoreAppWindow.Move(new PointInt32());
+            CoreAppWindow.Resize(MainAppWindow.ClientSize);
+            User32Library.SetParent(coreWindowHandle, Win32Interop.GetWindowFromWindowId(MainAppWindow.Id));
+            DispatcherQueueController dispatcherQueueController = DispatcherQueueController.CreateOnCurrentThread();
+            MainAppWindow.AssociateWithDispatcherQueue(dispatcherQueueController.DispatcherQueue);
+            SynchronizationContext.SetSynchronizationContext(new Windows.System.DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
+            SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(MainAppWindow.DispatcherQueue));
+            inputNonClientPointerSource = InputNonClientPointerSource.GetForWindowId(MainAppWindow.Id);
+            inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, (int)(2 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel)), new RectInt32((int)(42 * DisplayInformation.RawPixelsPerViewPixel), 0, MainAppWindow.Size.Width - (int)(42 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel))]);
+            inputActivationListener = InputActivationListener.GetForWindowId(MainAppWindow.Id);
+            inputActivationListener.InputActivationChanged += OnInputActivationChanged;
+            contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(MainAppWindow.Id);
             CoreAppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            CoreAppWindow.Changed += OnAppWindowChanged;
-            CoreAppWindow.Closing += OnAppWindowClosing;
-            CoreAppWindow.Resize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
-            SetAppIcon(CoreAppWindow);
 
-            SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
+            if (LanguageService.FlowDirection is FlowDirection.RightToLeft)
+            {
+                SetWindowLongAuto(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowExStyle.WS_EX_LAYOUTRTL);
+            }
+
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(CoreAppWindow.Id);
             new XamlIslandsApp();
 
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
-            Comctl32Library.SetWindowSubclass(coreWindowHandle, mainWindowSubClassProc, 0, IntPtr.Zero);
+            Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0, IntPtr.Zero);
 
             int style = GetWindowLongAuto(coreWindowHandle, WindowLongIndexFlags.GWL_STYLE);
+            style |= (int)WindowStyle.WS_CHILD;
             style &= ~unchecked((int)WindowStyle.WS_POPUP);
-            style |= (int)WindowStyle.WS_OVERLAPPEDWINDOW;
             SetWindowLongAuto(coreWindowHandle, WindowLongIndexFlags.GWL_STYLE, style);
 
             CoreApplication.As<ICoreApplicationPrivate2>().CreateNonImmersiveView(out IntPtr coreApplicationViewPtr);
             CoreApplicationView coreApplicationView = CoreApplicationView.FromAbi(coreApplicationViewPtr);
-
-            IntPtr inputNonClientPointerSourceHandle = User32Library.FindWindowEx(coreWindowHandle, IntPtr.Zero, "InputNonClientPointerSource", null);
-
-            if (inputNonClientPointerSourceHandle != IntPtr.Zero)
-            {
-                SetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(inputNonClientPointerSourceHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowExStyle.WS_EX_TRANSPARENT);
-            }
-
-            IntPtr reunionWindowingCaptionControlsHandle = User32Library.FindWindowEx(coreWindowHandle, IntPtr.Zero, "ReunionWindowingCaptionControls", null);
-
-            if (reunionWindowingCaptionControlsHandle != IntPtr.Zero)
-            {
-                SetWindowLongAuto(reunionWindowingCaptionControlsHandle, WindowLongIndexFlags.GWL_EXSTYLE, GetWindowLongAuto(reunionWindowingCaptionControlsHandle, WindowLongIndexFlags.GWL_EXSTYLE) | (int)WindowExStyle.WS_EX_TRANSPARENT);
-            }
 
             if (RuntimeHelper.IsElevated)
             {
@@ -139,13 +150,16 @@ namespace GetStoreAppInstaller
             frameworkView.Initialize(coreApplicationView);
             frameworkView.SetWindow(coreWindow);
 
+            SetAppIcon(MainAppWindow);
+            MainAppWindow.Show();
+
             XamlControlsResources xamlControlsResources = [];
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/HyperlinkButton.xaml") });
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/MenuFlyout.xaml") });
             xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/TeachingTip.xaml") });
             Application.Current.Resources = xamlControlsResources;
             Window.Current.Content = new MainPage(appActivationArguments);
-            (Window.Current.Content as MainPage).IsWindowMaximized = (CoreAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
+            (Window.Current.Content as MainPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
             Window.Current.Activate();
             frameworkView.Run();
         }
@@ -159,8 +173,18 @@ namespace GetStoreAppInstaller
             {
                 if (Window.Current is not null && Window.Current.Content is MainPage mainPage)
                 {
-                    mainPage.IsWindowMaximized = (CoreAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
+                    CoreAppWindow.Resize(MainAppWindow.ClientSize);
+                    mainPage.IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
                 }
+
+                if (DisplayInformation is not null)
+                {
+                    inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, (int)(2 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel)), new RectInt32((int)(42 * DisplayInformation.RawPixelsPerViewPixel), 0, MainAppWindow.Size.Width - (int)(42 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel))]);
+                }
+            }
+            else if (args.DidPositionChange)
+            {
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_MOVE, UIntPtr.Zero, IntPtr.Zero);
             }
         }
 
@@ -169,8 +193,9 @@ namespace GetStoreAppInstaller
         /// </summary>
         private static void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            CoreAppWindow.Changed -= OnAppWindowChanged;
-            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), mainWindowSubClassProc, 0);
+            MainAppWindow.Changed -= OnAppWindowChanged;
+            inputActivationListener.InputActivationChanged -= OnInputActivationChanged;
+            Comctl32Library.RemoveWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0);
 
             if (RuntimeHelper.IsElevated)
             {
@@ -181,6 +206,21 @@ namespace GetStoreAppInstaller
             if (Window.Current is not null && Window.Current.CoreWindow is not null)
             {
                 Window.Current.CoreWindow.Close();
+            }
+        }
+
+        /// <summary>
+        /// 窗口焦点状态发生变化时触发的事件
+        /// </summary>
+        private static void OnInputActivationChanged(InputActivationListener sender, InputActivationListenerActivationChangedEventArgs args)
+        {
+            if (sender.State is InputActivationState.Activated)
+            {
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_ACTIVATE, 1, 0);
+            }
+            else
+            {
+                User32Library.SendMessage(Win32Interop.GetWindowFromWindowId(CoreAppWindow.Id), WindowMessage.WM_ACTIVATE, 0, 0);
             }
         }
 
@@ -213,115 +253,6 @@ namespace GetStoreAppInstaller
 
                         break;
                     }
-                // 处理窗口非客户区域消息
-                case WindowMessage.WM_NCHITTEST:
-                    {
-                        if (DisplayInformation is not null)
-                        {
-                            User32Library.GetCursorPos(out PointInt32 screenPoint);
-                            Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
-
-                            if (CoreAppWindow.Presenter is OverlappedPresenter overlappedPresenter)
-                            {
-                                if (overlappedPresenter.State is OverlappedPresenterState.Maximized)
-                                {
-                                    if (localPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
-                                    {
-                                        if (localPoint.X < 0)
-                                        {
-                                            return (IntPtr)HITTEST.HTLEFT;
-                                        }
-                                        else if (localPoint.X < 2 * DisplayInformation.RawPixelsPerViewPixel)
-                                        {
-                                            return (IntPtr)HITTEST.HTCAPTION;
-                                        }
-                                        else if (localPoint.X < 42 * DisplayInformation.RawPixelsPerViewPixel)
-                                        {
-                                            return (IntPtr)HITTEST.HTCLIENT;
-                                        }
-                                        else
-                                        {
-                                            if (CoreAppWindow.Size.Width - localPoint.X <= 16)
-                                            {
-                                                return (IntPtr)HITTEST.HTRIGHT;
-                                            }
-                                            else if (CoreAppWindow.Size.Width - localPoint.X <= 16 + 46)
-                                            {
-                                                return (IntPtr)HITTEST.HTCLOSE;
-                                            }
-                                            else if (CoreAppWindow.Size.Width - localPoint.X <= 16 + 46 * 2)
-                                            {
-                                                return (IntPtr)HITTEST.HTMAXBUTTON;
-                                            }
-                                            else if (CoreAppWindow.Size.Width - localPoint.X <= 16 + 46 * 3)
-                                            {
-                                                return (IntPtr)HITTEST.HTMINBUTTON;
-                                            }
-                                            else
-                                            {
-                                                return (IntPtr)HITTEST.HTCAPTION;
-                                            }
-                                        }
-                                    }
-                                    else if (localPoint.Y < 45 * DisplayInformation.RawPixelsPerViewPixel)
-                                    {
-                                        return localPoint.X < 0 ? (IntPtr)HITTEST.HTLEFT : CoreAppWindow.Size.Width - localPoint.X <= 16 ? (IntPtr)HITTEST.HTRIGHT : (IntPtr)HITTEST.HTCAPTION;
-                                    }
-                                }
-                                else
-                                {
-                                    if (localPoint.Y < 4)
-                                    {
-                                        return localPoint.X < 0 ? (IntPtr)HITTEST.HTTOPRIGHT : CoreAppWindow.Size.Width - localPoint.X <= 20 ? (IntPtr)HITTEST.HTTOPRIGHT : (IntPtr)HITTEST.HTTOP;
-                                    }
-                                    else if (localPoint.Y < 30 * DisplayInformation.RawPixelsPerViewPixel)
-                                    {
-                                        if (localPoint.X < 0)
-                                        {
-                                            return (IntPtr)HITTEST.HTLEFT;
-                                        }
-                                        else if (localPoint.X < 2 * DisplayInformation.RawPixelsPerViewPixel)
-                                        {
-                                            return (IntPtr)HITTEST.HTCAPTION;
-                                        }
-                                        else if (localPoint.X < 42 * DisplayInformation.RawPixelsPerViewPixel)
-                                        {
-                                            return (IntPtr)HITTEST.HTCLIENT;
-                                        }
-                                        else
-                                        {
-                                            if (CoreAppWindow.Size.Width - localPoint.X <= 20)
-                                            {
-                                                return (IntPtr)HITTEST.HTRIGHT;
-                                            }
-                                            else if (CoreAppWindow.Size.Width - localPoint.X <= 16 + 46)
-                                            {
-                                                return (IntPtr)HITTEST.HTCLOSE;
-                                            }
-                                            else if (CoreAppWindow.Size.Width - localPoint.X <= 16 + 46 * 2)
-                                            {
-                                                return (IntPtr)HITTEST.HTMAXBUTTON;
-                                            }
-                                            else if (CoreAppWindow.Size.Width - localPoint.X <= 16 + 46 * 3)
-                                            {
-                                                return (IntPtr)HITTEST.HTMINBUTTON;
-                                            }
-                                            else
-                                            {
-                                                return (IntPtr)HITTEST.HTCAPTION;
-                                            }
-                                        }
-                                    }
-                                    else if (localPoint.Y < 45 * DisplayInformation.RawPixelsPerViewPixel)
-                                    {
-                                        return localPoint.X < 0 ? (IntPtr)HITTEST.HTLEFT : CoreAppWindow.Size.Width - localPoint.X <= 16 ? (IntPtr)HITTEST.HTRIGHT : (IntPtr)HITTEST.HTCAPTION;
-                                    }
-                                }
-                            }
-                        }
-
-                        break;
-                    }
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
@@ -349,10 +280,21 @@ namespace GetStoreAppInstaller
                         }
                         return 0;
                     }
+                // 选择窗口右键菜单的条目时接收到的消息
+                case WindowMessage.WM_SYSCOMMAND:
+                    {
+                        SYSTEMCOMMAND sysCommand = (SYSTEMCOMMAND)(wParam & 0xFFF0);
+
+                        if (sysCommand is SYSTEMCOMMAND.SC_KEYMENU && lParam is (IntPtr)Windows.System.VirtualKey.Space)
+                        {
+                            return 0;
+                        }
+                        break;
+                    }
                 // 处理 Alt + space 按键弹出窗口右键菜单的消息
                 case WindowMessage.WM_SYSKEYDOWN:
                     {
-                        if ((wParam == (UIntPtr)VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is MainPage mainPage)
+                        if ((wParam == (UIntPtr)Windows.System.VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is MainPage mainPage)
                         {
                             FlyoutShowOptions options = new()
                             {
@@ -447,7 +389,7 @@ namespace GetStoreAppInstaller
         /// </summary>
         public static void SetTitleBarTheme(ElementTheme theme)
         {
-            AppWindowTitleBar titleBar = CoreAppWindow.TitleBar;
+            AppWindowTitleBar titleBar = MainAppWindow.TitleBar;
 
             titleBar.BackgroundColor = Windows.UI.Colors.Transparent;
             titleBar.ForegroundColor = Windows.UI.Colors.Transparent;

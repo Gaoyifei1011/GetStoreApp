@@ -11,10 +11,12 @@
     xmlns:model="using:GetStoreAppInstaller.Models"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:root="using:GetStoreAppInstaller.Services.Root"
+    xmlns:service="using:GetStoreAppInstaller.Services.Controls.Settings"
     xmlns:sys="using:System"
     x:Name="MainPageRoot"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     AllowDrop="{x:Bind CanDragFile, Mode=OneWay}"
+    FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
