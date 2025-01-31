@@ -60,7 +60,11 @@ namespace GetStoreAppInstaller.Pages
     /// </summary>
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
+        private readonly string unknown = string.Format("[{0}]", ResourceService.GetLocalized("Installer/unknown"));
+        private readonly string yes = ResourceService.GetLocalized("Installer/Yes");
+        private readonly string no = ResourceService.GetLocalized("Installer/No");
         private readonly Guid CLSID_ApplicationActivationManager = new("45BA127D-10A8-46EA-8AB7-56EA9078943C");
+
         private readonly Guid CLSID_AppxFactory = new("5842A140-FF9F-4166-8F5C-62F5B7B0C781");
         private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
         private readonly PackageManager packageManager = new();
@@ -1416,7 +1420,7 @@ namespace GetStoreAppInstaller.Pages
                             {
                                 DependencyName = file.Name,
                                 DependencyVersion = dependencyAppInformation.Version is not null ? dependencyAppInformation.Version : new Version(),
-                                DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : dependencyAppInformation.PublisherDisplayName,
+                                DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? unknown : dependencyAppInformation.PublisherDisplayName,
                                 DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? Guid.NewGuid().ToString() : dependencyAppInformation.PackageFullName,
                                 DependencyPath = file.Path
                             });
@@ -1947,7 +1951,7 @@ namespace GetStoreAppInstaller.Pages
                         }
                         else
                         {
-                            packageInformation.AppInstalledState = ResourceService.GetLocalized("Installer/Unknown");
+                            packageInformation.AppInstalledState = unknown;
                         }
                     }
 
@@ -2091,7 +2095,7 @@ namespace GetStoreAppInstaller.Pages
                         }
                         else
                         {
-                            packageInformation.AppInstalledState = ResourceService.GetLocalized("Installer/Unknown");
+                            packageInformation.AppInstalledState = unknown;
                         }
                     }
 
@@ -2243,7 +2247,7 @@ namespace GetStoreAppInstaller.Pages
                                 }
                                 else
                                 {
-                                    dependencyInformation.ProcessorArchitecture = ResourceService.GetLocalized("Installer/Unknown");
+                                    dependencyInformation.ProcessorArchitecture = unknown;
                                 }
 
                                 if (packageNode.Attributes.GetNamedItem("Uri") is IXmlNode uriNode)
@@ -2356,11 +2360,11 @@ namespace GetStoreAppInstaller.Pages
 
                     ApplicationModel applicationItem = new()
                     {
-                        AppDescription = description,
-                        EntryPoint = entryPoint,
-                        Executable = executable,
-                        AppID = id,
-                        AppUserModelId = appUserModelId
+                        AppDescription = string.IsNullOrEmpty(description) ? unknown : description,
+                        EntryPoint = string.IsNullOrEmpty(entryPoint) ? unknown : entryPoint,
+                        Executable = string.IsNullOrEmpty(executable) ? unknown : executable,
+                        AppID = string.IsNullOrEmpty(id) ? unknown : id,
+                        AppUserModelId = string.IsNullOrEmpty(appUserModelId) ? unknown : appUserModelId
                     };
 
                     applicationList.Add(applicationItem);
@@ -2985,7 +2989,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (string.IsNullOrEmpty(architecture))
             {
-                architecture = ResourceService.GetLocalized("Installer/Unknown");
+                architecture = unknown;
             }
 
             return string.Format(ResourceService.GetLocalized("Installer/BundleHeader"), architecture);
@@ -3582,14 +3586,14 @@ namespace GetStoreAppInstaller.Pages
                 PackageInformation packageInformation = resultDict.Item2;
 
                 PackageFileType = packageInformation.PackageFileType;
-                PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.DisplayName;
-                PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PublisherDisplayName;
+                PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? unknown : packageInformation.DisplayName;
+                PublisherDisplayName = string.IsNullOrEmpty(packageInformation.PublisherDisplayName) ? unknown : packageInformation.PublisherDisplayName;
                 Version = packageInformation.Version is not null ? packageInformation.Version : new Version();
                 PackageDescription = string.IsNullOrEmpty(packageInformation.Description) ? ResourceService.GetLocalized("Installer/None") : packageInformation.Description;
-                PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFamilyName;
-                PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.PackageFullName;
-                SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown")) : packageInformation.ProcessorArchitecture;
-                IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No") : string.Format("[{0}]", ResourceService.GetLocalized("Installer/Unknown"));
+                PackageFamilyName = string.IsNullOrEmpty(packageInformation.PackageFamilyName) ? unknown : packageInformation.PackageFamilyName;
+                PackageFullName = string.IsNullOrEmpty(packageInformation.PackageFullName) ? unknown : packageInformation.PackageFullName;
+                SupportedArchitecture = string.IsNullOrEmpty(packageInformation.ProcessorArchitecture) ? unknown : packageInformation.ProcessorArchitecture;
+                IsFramework = packageInformation.IsFramework.HasValue ? packageInformation.IsFramework.Value ? yes : no : unknown;
                 AppInstalledState = string.IsNullOrEmpty(packageInformation.AppInstalledState) ? string.Empty : packageInformation.AppInstalledState;
                 AppInstallerSourceLink = string.IsNullOrEmpty(packageInformation.AppInstallerSourceLink) ? string.Empty : packageInformation.AppInstallerSourceLink;
                 IsAppInstallerSourceLinkExisted = packageInformation.IsAppInstallerSourceLinkExisted;
@@ -3597,10 +3601,10 @@ namespace GetStoreAppInstaller.Pages
                 IsPackageSourceLinkExisted = packageInformation.IsPackageSourceLinkExisted;
                 PackageType = packageInformation.PackageType;
                 HoursBetweenUpdateChecks = string.Format(ResourceService.GetLocalized("Installer/Hours"), packageInformation.HoursBetweenUpdateChecks);
-                UpdateBlocksActivation = packageInformation.UpdateBlocksActivation ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
-                ShowPrompt = packageInformation.ShowPrompt ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
-                ForceUpdateFromAnyVersion = packageInformation.ForceUpdateFromAnyVersion ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
-                AutomaticBackgroundTask = packageInformation.AutomaticBackgroundTask ? ResourceService.GetLocalized("Installer/Yes") : ResourceService.GetLocalized("Installer/No");
+                UpdateBlocksActivation = packageInformation.UpdateBlocksActivation ? yes : no;
+                ShowPrompt = packageInformation.ShowPrompt ? yes : no;
+                ForceUpdateFromAnyVersion = packageInformation.ForceUpdateFromAnyVersion ? yes : no;
+                AutomaticBackgroundTask = packageInformation.AutomaticBackgroundTask ? yes : no;
                 IsAppInstalled = packageInformation.IsAppInstalled;
                 IsUpdateSettingsExisted = packageInformation.IsUpdateSettingsExisted;
 

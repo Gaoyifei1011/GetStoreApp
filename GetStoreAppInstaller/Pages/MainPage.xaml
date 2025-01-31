@@ -1497,7 +1497,7 @@
                                             Grid.Row="0"
                                             Height="35"
                                             Padding="10,0,16,0"
-                                            x:Load="{x:Bind x:Object.Equals(PackageType, enum:PackageFileType.Package), Mode=OneWay}"
+                                            x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}"
                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                             BorderThickness="0">
 
