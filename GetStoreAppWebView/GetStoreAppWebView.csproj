@@ -67,7 +67,7 @@
     <None Remove="Pages\WebViewPage.xaml" />
     <None Remove="Styles\UWP\AppbarButton.xaml" />
     
-    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7-prerelease.241119001" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2957.106" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     
@@ -75,8 +75,6 @@
     <Page Update="Pages\WebViewPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\TaskbarPinPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\UWP\AppbarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    
-    <Reference Include="$(PkgMicrosoft_UI_Xaml)\lib\net8.0-windows10.0.22621.0\Microsoft.UI.Xaml.Projection.dll" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
