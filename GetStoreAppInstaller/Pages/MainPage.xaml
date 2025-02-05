@@ -799,19 +799,34 @@
                                                         Height="32"
                                                         Padding="11,0"
                                                         Click="{x:Bind OnStartAppClicked}"
-                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/StartApp')}" />
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/StartApp')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xEB3B;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
 
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
                                                         Click="{x:Bind OnOpenAppInstalledFolderClicked}"
-                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppInstalledFolder')}" />
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppInstalledFolder')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE8B7;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
 
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
                                                         Click="{x:Bind OnOpenAppCachedFolderClicked}"
-                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppCachedFolder')}" />
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Installer/OpenAppCachedFolder')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE8B7;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
                                                 </MenuFlyout>
                                             </FlyoutBase.AttachedFlyout>
                                         </HyperlinkButton>
@@ -824,8 +839,7 @@
                                         <Grid
                                             x:Name="PackageInformationGrid"
                                             Margin="16,0,10,0"
-                                            x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}"
-                                            RowSpacing="3">
+                                            x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}">
 
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -846,59 +860,68 @@
                                             <FontIcon
                                                 Grid.Row="0"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageDescription')}" />
 
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"
-                                                Text="{x:Bind PackageDescription, Mode=OneWay}" />
+                                                Margin="0,0,0,3"
+                                                Text="{x:Bind PackageDescription, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
 
                                             <FontIcon
                                                 Grid.Row="1"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFamilyName')}" />
 
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="2"
-                                                Text="{x:Bind PackageFamilyName, Mode=OneWay}" />
+                                                Margin="0,0,0,3"
+                                                Text="{x:Bind PackageFamilyName, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
 
                                             <FontIcon
                                                 Grid.Row="2"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="2"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageFullName')}" />
 
                                             <TextBlock
                                                 Grid.Row="2"
                                                 Grid.Column="2"
-                                                Text="{x:Bind PackageFullName, Mode=OneWay}" />
+                                                Margin="0,0,0,3"
+                                                Text="{x:Bind PackageFullName, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
 
                                             <MenuFlyoutSeparator
                                                 Grid.Row="3"
@@ -909,67 +932,75 @@
                                             <FontIcon
                                                 Grid.Row="4"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="4"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/SupportedArchitecture')}" />
 
                                             <TextBlock
                                                 Grid.Row="4"
                                                 Grid.Column="2"
-                                                Text="{x:Bind SupportedArchitecture, Mode=OneWay}" />
+                                                Margin="0,0,0,3"
+                                                Text="{x:Bind SupportedArchitecture, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
 
                                             <FontIcon
                                                 Grid.Row="5"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="5"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/IsFramework')}" />
 
                                             <TextBlock
                                                 Grid.Row="5"
                                                 Grid.Column="2"
-                                                Text="{x:Bind IsFramework, Mode=OneWay}" />
+                                                Margin="0,0,0,3"
+                                                Text="{x:Bind IsFramework, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
 
                                             <FontIcon
                                                 Grid.Row="6"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="6"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppInstalledState')}" />
 
                                             <TextBlock
                                                 Grid.Row="6"
                                                 Grid.Column="2"
-                                                Text="{x:Bind AppInstalledState, Mode=OneWay}" />
+                                                Margin="0,0,0,3"
+                                                Text="{x:Bind AppInstalledState, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
                                         </Grid>
 
                                         <!--  应用安装程序文件信息  -->
                                         <Grid
                                             x:Name="AppInstallerInformationGrid"
                                             Margin="16,0,10,0"
-                                            x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}"
-                                            RowSpacing="3">
+                                            x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}">
 
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
@@ -986,26 +1017,29 @@
                                             <FontIcon
                                                 Grid.Row="0"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/AppInstallerSourceLink')}" />
 
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"
+                                                Margin="0,0,0,3"
                                                 Text="{x:Bind PackageSourceLink, Mode=OneWay}"
                                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsAppInstallerSourceLinkExisted), Mode=OneWay}" />
 
                                             <HyperlinkButton
                                                 Grid.Row="0"
                                                 Grid.Column="2"
+                                                Margin="0,0,0,3"
                                                 Click="{x:Bind OnOpenAppInstallerSourceLinkClicked}"
                                                 Style="{StaticResource HyperlinkButtonStyle}"
                                                 Tag="{x:Bind AppInstallerSourceLink, Mode=OneWay}"
@@ -1028,26 +1062,29 @@
                                             <FontIcon
                                                 Grid.Row="1"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageSourceLink')}" />
 
                                             <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="2"
+                                                Margin="0,0,0,3"
                                                 Text="{x:Bind PackageSourceLink, Mode=OneWay}"
                                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackageSourceLinkExisted), Mode=OneWay}" />
 
                                             <HyperlinkButton
                                                 Grid.Row="1"
                                                 Grid.Column="2"
+                                                Margin="0,0,0,3"
                                                 Click="{x:Bind OnOpenPackageSourceLinkClicked}"
                                                 Style="{StaticResource HyperlinkButtonStyle}"
                                                 Tag="{x:Bind PackageSourceLink, Mode=OneWay}"
@@ -1070,21 +1107,24 @@
                                             <FontIcon
                                                 Grid.Row="2"
                                                 Grid.Column="0"
-                                                Margin="0,0,16,0"
+                                                Margin="0,4,16,3"
+                                                VerticalAlignment="Top"
                                                 FontSize="12"
                                                 Glyph="&#xE915;" />
 
                                             <TextBlock
                                                 Grid.Row="2"
                                                 Grid.Column="1"
-                                                Margin="0,0,3,0"
+                                                Margin="0,0,3,3"
                                                 FontSize="14"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('Installer/PackageType')}" />
 
                                             <TextBlock
                                                 Grid.Row="2"
                                                 Grid.Column="2"
-                                                Text="{x:Bind PackageType, Mode=OneWay}" />
+                                                Margin="0,0,0,3"
+                                                Text="{x:Bind PackageType, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
                                         </Grid>
                                     </StackPanel>
                                 </muxc:Expander.Content>
@@ -1129,7 +1169,7 @@
                                 </muxc:Expander.Header>
 
                                 <muxc:Expander.Content>
-                                    <Grid Margin="16,0,10,0" RowSpacing="3">
+                                    <Grid Margin="16,0,10,0">
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -1148,97 +1188,112 @@
                                         <FontIcon
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Margin="0,0,16,0"
+                                            Margin="0,4,16,3"
+                                            VerticalAlignment="Top"
                                             FontSize="12"
                                             Glyph="&#xE915;" />
 
                                         <TextBlock
                                             Grid.Row="0"
                                             Grid.Column="1"
-                                            Margin="0,0,3,0"
+                                            Margin="0,0,3,3"
                                             FontSize="14"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Installer/HoursBetweenUpdateChecks')}" />
 
                                         <TextBlock
                                             Grid.Row="0"
                                             Grid.Column="2"
-                                            Text="{x:Bind HoursBetweenUpdateChecks, Mode=OneWay}" />
+                                            Margin="0,0,0,3"
+                                            Text="{x:Bind HoursBetweenUpdateChecks, Mode=OneWay}"
+                                            TextWrapping="Wrap" />
 
                                         <FontIcon
                                             Grid.Row="1"
                                             Grid.Column="0"
-                                            Margin="0,0,16,0"
+                                            Margin="0,4,16,3"
+                                            VerticalAlignment="Top"
                                             FontSize="12"
                                             Glyph="&#xE915;" />
 
                                         <TextBlock
                                             Grid.Row="1"
                                             Grid.Column="1"
-                                            Margin="0,0,3,0"
+                                            Margin="0,0,3,3"
                                             FontSize="14"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Installer/UpdateBlocksActivation')}" />
 
                                         <TextBlock
                                             Grid.Row="1"
                                             Grid.Column="2"
-                                            Text="{x:Bind UpdateBlocksActivation, Mode=OneWay}" />
+                                            Margin="0,0,0,3"
+                                            Text="{x:Bind UpdateBlocksActivation, Mode=OneWay}"
+                                            TextWrapping="Wrap" />
 
                                         <FontIcon
                                             Grid.Row="2"
                                             Grid.Column="0"
-                                            Margin="0,0,16,0"
+                                            Margin="0,4,16,3"
+                                            VerticalAlignment="Top"
                                             FontSize="12"
                                             Glyph="&#xE915;" />
 
                                         <TextBlock
                                             Grid.Row="2"
                                             Grid.Column="1"
-                                            Margin="0,0,3,0"
+                                            Margin="0,0,3,3"
                                             FontSize="14"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Installer/ShowPrompt')}" />
 
                                         <TextBlock
                                             Grid.Row="2"
                                             Grid.Column="2"
-                                            Text="{x:Bind ShowPrompt, Mode=OneWay}" />
+                                            Margin="0,0,0,3"
+                                            Text="{x:Bind ShowPrompt, Mode=OneWay}"
+                                            TextWrapping="Wrap" />
 
                                         <FontIcon
                                             Grid.Row="3"
                                             Grid.Column="0"
-                                            Margin="0,0,16,0"
+                                            Margin="0,4,16,3"
+                                            VerticalAlignment="Top"
                                             FontSize="12"
                                             Glyph="&#xE915;" />
 
                                         <TextBlock
                                             Grid.Row="3"
                                             Grid.Column="1"
-                                            Margin="0,0,3,0"
+                                            Margin="0,0,3,3"
                                             FontSize="14"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Installer/ForceUpdateFromAnyVersion')}" />
 
                                         <TextBlock
                                             Grid.Row="3"
                                             Grid.Column="2"
-                                            Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}" />
+                                            Margin="0,0,0,3"
+                                            Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}"
+                                            TextWrapping="Wrap" />
 
                                         <FontIcon
                                             Grid.Row="4"
                                             Grid.Column="0"
-                                            Margin="0,0,16,0"
+                                            Margin="0,4,16,3"
+                                            VerticalAlignment="Top"
                                             FontSize="12"
                                             Glyph="&#xE915;" />
 
                                         <TextBlock
                                             Grid.Row="4"
                                             Grid.Column="1"
-                                            Margin="0,0,3,0"
+                                            Margin="0,0,3,3"
                                             FontSize="14"
                                             Text="{x:Bind root:ResourceService.GetLocalized('Installer/AutomaticBackgroundTask')}" />
 
                                         <TextBlock
                                             Grid.Row="4"
                                             Grid.Column="2"
-                                            Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}" />
+                                            Margin="0,0,0,3"
+                                            Text="{x:Bind ForceUpdateFromAnyVersion, Mode=OneWay}"
+                                            TextWrapping="Wrap" />
                                     </Grid>
                                 </muxc:Expander.Content>
                             </muxc:Expander>
