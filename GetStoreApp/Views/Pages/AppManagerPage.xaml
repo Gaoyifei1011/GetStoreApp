@@ -597,7 +597,12 @@
                                                                 Command="{StaticResource OpenAppCommand}"
                                                                 CommandParameter="{x:Bind Package}"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenApp')}"
-                                                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCount)}" />
+                                                                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppListEntryCount)}">
+
+                                                                <MenuFlyoutItem.Icon>
+                                                                    <FontIcon Glyph="&#xEB3B;" />
+                                                                </MenuFlyoutItem.Icon>
+                                                            </MenuFlyoutItem>
 
                                                             <MenuFlyoutItem
                                                                 Height="32"
@@ -605,19 +610,33 @@
                                                                 Command="{StaticResource OpenStoreCommand}"
                                                                 CommandParameter="{x:Bind Package}"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenStore')}"
-                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStorePackage(SignatureKind)}" />
+                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsStorePackage(SignatureKind)}">
+
+                                                                <MenuFlyoutItem.Icon>
+                                                                    <FontIcon Glyph="&#xE719;" />
+                                                                </MenuFlyoutItem.Icon>
+                                                            </MenuFlyoutItem>
 
                                                             <MenuFlyoutItem
                                                                 Height="32"
                                                                 Padding="11,0"
                                                                 Command="{StaticResource OpenManifestCommand}"
                                                                 CommandParameter="{x:Bind Package}"
-                                                                Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenManifest')}" />
+                                                                Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenManifest')}">
+
+                                                                <MenuFlyoutItem.Icon>
+                                                                    <FontIcon Glyph="&#xE8A5;" />
+                                                                </MenuFlyoutItem.Icon>
+                                                            </MenuFlyoutItem>
 
                                                             <MenuFlyoutSubItem
                                                                 Height="32"
                                                                 Padding="11,0"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenFolder')}">
+
+                                                                <MenuFlyoutSubItem.Icon>
+                                                                    <FontIcon Glyph="&#xE8B7;" />
+                                                                </MenuFlyoutSubItem.Icon>
 
                                                                 <MenuFlyoutItem
                                                                     Height="32"
@@ -640,7 +659,12 @@
                                                                 Command="{StaticResource UnInstallCommand}"
                                                                 CommandParameter="{x:Bind Package}"
                                                                 Text="{x:Bind root:ResourceService.GetLocalized('AppManager/UnInstall')}"
-                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}" />
+                                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}">
+
+                                                                <MenuFlyoutItem.Icon>
+                                                                    <FontIcon Glyph="&#xE74D;" />
+                                                                </MenuFlyoutItem.Icon>
+                                                            </MenuFlyoutItem>
                                                         </MenuFlyout>
                                                     </Button.Flyout>
                                                 </Button>
@@ -1246,7 +1270,12 @@
                                                                     Padding="11,0"
                                                                     Command="{StaticResource CopyAUMIDCommand}"
                                                                     CommandParameter="{x:Bind AppUserModelId}"
-                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyAUMID')}" />
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyAUMID')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE8C8;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
 
                                                                 <MenuFlyoutSeparator />
 
@@ -1255,7 +1284,12 @@
                                                                     Padding="11,0"
                                                                     Command="{StaticResource PinToDesktopCommand}"
                                                                     Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToDesktop')}"
-                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToDesktopToolTip')}" />
+                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToDesktopToolTip')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE7F4;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
 
                                                                 <MenuFlyoutItem
                                                                     Height="32"
@@ -1263,7 +1297,12 @@
                                                                     Command="{StaticResource PinToStartScreenCommand}"
                                                                     CommandParameter="{x:Bind}"
                                                                     Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToStartScreen')}"
-                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToStartScreenToolTip')}" />
+                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToStartScreenToolTip')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE8FC;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
 
                                                                 <MenuFlyoutItem
                                                                     Height="32"
@@ -1271,7 +1310,12 @@
                                                                     Command="{StaticResource PinToTaskbarCommand}"
                                                                     CommandParameter="{x:Bind}"
                                                                     Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToTaskbar')}"
-                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToTaskbarToolTip')}" />
+                                                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/PinToTaskbarToolTip')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE770;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
                                                             </MenuFlyout>
                                                         </FlyoutBase.AttachedFlyout>
                                                     </HyperlinkButton>
@@ -1519,14 +1563,24 @@
                                                                     Padding="11,0"
                                                                     Command="{StaticResource OpenStoreCommand}"
                                                                     CommandParameter="{x:Bind Package}"
-                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenStore')}" />
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenStore')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE719;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
 
                                                                 <MenuFlyoutItem
                                                                     Height="32"
                                                                     Padding="11,0"
                                                                     Command="{StaticResource OpenFolderCommand}"
                                                                     CommandParameter="{x:Bind Package}"
-                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenFolder')}" />
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/OpenFolder')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE8B7;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
 
                                                                 <MenuFlyoutSeparator />
 
@@ -1535,14 +1589,24 @@
                                                                     Padding="11,0"
                                                                     Command="{StaticResource CopyDependencyNameCommand}"
                                                                     CommandParameter="{x:Bind DisplayName}"
-                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyDependencyName')}" />
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyDependencyName')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE8C8;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
 
                                                                 <MenuFlyoutItem
                                                                     Height="32"
                                                                     Padding="11,0"
                                                                     Command="{StaticResource CopyDependencyInformationCommand}"
                                                                     CommandParameter="{x:Bind Package}"
-                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyDependencyInformation')}" />
+                                                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/CopyDependencyInformation')}">
+
+                                                                    <MenuFlyoutItem.Icon>
+                                                                        <FontIcon Glyph="&#xE8C8;" />
+                                                                    </MenuFlyoutItem.Icon>
+                                                                </MenuFlyoutItem>
                                                             </MenuFlyout>
                                                         </FlyoutBase.AttachedFlyout>
                                                     </HyperlinkButton>

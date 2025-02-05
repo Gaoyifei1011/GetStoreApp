@@ -1483,21 +1483,36 @@
                                                 Padding="11,0"
                                                 Click="{x:Bind OnChangeFolderClicked}"
                                                 Tag="AppCache"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}" />
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xECAA;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
 
                                             <MenuFlyoutItem
                                                 Height="32"
                                                 Padding="11,0"
                                                 Click="{x:Bind OnChangeFolderClicked}"
                                                 Tag="Download"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}" />
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE896;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
 
                                             <MenuFlyoutItem
                                                 Height="32"
                                                 Padding="11,0"
                                                 Click="{x:Bind OnChangeFolderClicked}"
                                                 Tag="Desktop"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}" />
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE7F4;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
 
                                             <MenuFlyoutSeparator />
 

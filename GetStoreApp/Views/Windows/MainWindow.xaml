@@ -179,7 +179,12 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="Store"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -210,7 +215,12 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="AppUpdate"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -243,7 +253,12 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="WinGet"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -274,7 +289,12 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="AppManager"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -307,7 +327,12 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="Download"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
@@ -338,7 +363,12 @@
                                 <MenuFlyoutItem
                                     Click="{x:Bind OnPinToStartScreenClicked}"
                                     Tag="Web"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}" />
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Window/PinToStartScreen')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE8FC;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
                             </MenuFlyout>
                         </NavigationViewItem.ContextFlyout>
 
