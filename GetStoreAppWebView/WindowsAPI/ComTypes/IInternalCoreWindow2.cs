@@ -14,7 +14,7 @@ namespace GetStoreAppWebView.WindowsAPI.ComTypes
         /// 获取布局窗口的可见区域
         /// </summary>
         /// <param name="rect">布局窗口的可见区域</param>
-        /// <returns></returns>
+        /// <returns>此方法始终返回 S_OK。</returns>
         [PreserveSig]
         int GetLayoutBounds(out Rect rect);
 

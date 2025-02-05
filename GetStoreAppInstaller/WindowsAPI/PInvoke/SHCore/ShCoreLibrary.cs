@@ -25,7 +25,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.SHCore
         /// <param name="randomAccessStream">源 IRandomAccessStream。</param>
         /// <param name="riid">对要通过 ppv 检索的接口的 IID 的引用，通常IID_IStream。 此对象封装 randomAccessStream。</param>
         /// <param name="ppv">此方法成功返回时，包含 riid 中请求的接口指针，通常为 IStream。</param>
-        /// <returns></returns>
+        /// <returns>如果此函数成功，则返回 S_OK。 否则，将返回 HRESULT 错误代码。</returns>
         [LibraryImport(ShCore, EntryPoint = "CreateStreamOverRandomAccessStream", SetLastError = false), PreserveSig]
         public static partial int CreateStreamOverRandomAccessStream(IntPtr randomAccessStream, Guid riid, [MarshalAs(UnmanagedType.Interface)] out IStream ppv);
     }
