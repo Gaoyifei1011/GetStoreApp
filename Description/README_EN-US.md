@@ -89,6 +89,11 @@ Note: The app can't bypass the Microsoft Store's billing channels, and if the ap
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/73f536d3-3f7d-455a-9ca0-b542bb5ab2ce" />
 </div>
 
+#### <p align="center">应用包解析器</p>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/9b4e37f9-07cb-4827-9aaf-24dad184cccd" />
+</div>
+
 ------
 
 ### Project development progress

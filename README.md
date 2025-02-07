@@ -96,6 +96,11 @@
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/07927be5-9bac-4509-ba22-bec8540e4969" />
 </div>
 
+#### <p align="center">应用包解析器</p>
+<div align="center">
+<img src="https://github.com/user-attachments/assets/0b64a2d6-da20-4d8f-b1eb-5a955a02845b" />
+</div>
+
 ------
 
 ### 项目开发进展

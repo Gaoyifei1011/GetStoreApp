@@ -58,6 +58,7 @@ namespace GetStoreApp.Views.Windows
         private readonly ContentIsland contentIsland;
         private readonly DisplayInformation displayInformation;
         private readonly IDisplayInformation2 displayInformation2;
+        private readonly InputKeyboardSource inputKeyboardSource;
         private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
@@ -161,7 +162,7 @@ namespace GetStoreApp.Views.Windows
             displayInformation2 = displayInformation.As<IDisplayInformation2>();
             contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
             contentIsland.Environment.SettingChanged += OnSettingChanged;
-            InputKeyboardSource inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
 
             // 标题栏和右键菜单设置
@@ -294,6 +295,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
+                    inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
                     ApplicationData.Current.DataChanged -= OnDataChanged;
                     ThemeService.PropertyChanged -= OnServicePropertyChanged;
                     BackdropService.PropertyChanged -= OnServicePropertyChanged;
@@ -314,6 +316,7 @@ namespace GetStoreApp.Views.Windows
             {
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
+                inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
                 ApplicationData.Current.DataChanged -= OnDataChanged;
                 ThemeService.PropertyChanged -= OnServicePropertyChanged;
                 BackdropService.PropertyChanged -= OnServicePropertyChanged;
