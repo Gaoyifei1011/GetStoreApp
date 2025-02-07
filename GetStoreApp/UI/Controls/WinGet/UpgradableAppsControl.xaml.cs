@@ -608,7 +608,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         for (int index = 0; index < findResult.Matches.Count; index++)
                         {
                             MatchResult matchResultItem = findResult.Matches[index];
-                            if (matchResultItem.CatalogPackage.IsUpdateAvailable is true)
+                            if (matchResultItem.CatalogPackage.IsUpdateAvailable)
                             {
                                 MatchResultList.Add(matchResultItem);
                             }

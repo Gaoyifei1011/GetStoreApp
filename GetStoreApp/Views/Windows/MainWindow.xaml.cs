@@ -1034,7 +1034,7 @@ namespace GetStoreApp.Views.Windows
                 int? windowPositionXAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
                 int? windowPositionYAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
 
-                if (isWindowMaximized.HasValue && isWindowMaximized.Value is true)
+                if (isWindowMaximized.HasValue && isWindowMaximized.Value)
                 {
                     overlappedPresenter.Maximize();
                 }

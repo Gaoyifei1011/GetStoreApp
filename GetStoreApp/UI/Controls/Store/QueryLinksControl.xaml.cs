@@ -635,7 +635,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
-                        if (queryLinksItem.IsSelected is true)
+                        if (queryLinksItem.IsSelected)
                         {
                             selectedQueryLinksList.Add(queryLinksItem);
                         }
@@ -689,7 +689,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
-                        if (queryLinksItem.IsSelected is true)
+                        if (queryLinksItem.IsSelected)
                         {
                             selectedQueryLinksList.Add(queryLinksItem);
                         }
@@ -743,7 +743,7 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
                     {
-                        if (queryLinksItem.IsSelected is true)
+                        if (queryLinksItem.IsSelected)
                         {
                             selectedQueryLinksList.Add(queryLinksItem);
                         }

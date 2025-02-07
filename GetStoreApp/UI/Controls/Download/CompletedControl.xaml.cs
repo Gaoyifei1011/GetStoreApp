@@ -78,7 +78,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             if (args.Parameter is CompletedModel completedItem)
             {
-                if (completedItem.IsInstalling is true)
+                if (completedItem.IsInstalling)
                 {
                     await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                     return;
@@ -107,7 +107,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             if (args.Parameter is CompletedModel completedItem)
             {
-                if (completedItem.IsInstalling is true)
+                if (completedItem.IsInstalling)
                 {
                     await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                     return;
@@ -434,7 +434,7 @@ namespace GetStoreApp.UI.Controls.Download
 
             foreach (CompletedModel completedItem in CompletedCollection)
             {
-                if (completedItem.IsSelected is true)
+                if (completedItem.IsSelected)
                 {
                     selectedCompletedDataList.Add(completedItem);
                 }
@@ -448,7 +448,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 当前任务正在安装时，不进行其他任何操作
-            if (selectedCompletedDataList.Exists(item => item.IsInstalling is true))
+            if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
                 await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                 return;
@@ -487,7 +487,7 @@ namespace GetStoreApp.UI.Controls.Download
 
             foreach (CompletedModel completedItem in CompletedCollection)
             {
-                if (completedItem.IsSelected is true)
+                if (completedItem.IsSelected)
                 {
                     selectedCompletedDataList.Add(completedItem);
                 }
@@ -501,7 +501,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
 
             // 当前任务正在安装时，不进行其他任何操作
-            if (selectedCompletedDataList.Exists(item => item.IsInstalling is true))
+            if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
                 await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
                 return;
@@ -555,7 +555,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 foreach (CompletedModel completedItem in CompletedCollection)
                 {
-                    if (completedItem.IsSelected is true)
+                    if (completedItem.IsSelected)
                     {
                         selectedCompletedDataList.Add(completedItem);
                     }

@@ -2347,7 +2347,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxManifestReader.GetApplications(out IAppxManifestApplicationsEnumerator appxManifestApplicationsEnumerator) is 0)
             {
-                while (appxManifestApplicationsEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxManifestApplicationsEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     appxManifestApplicationsEnumerator.GetCurrent(out IAppxManifestApplication appxManifestApplication);
                     appxManifestApplication.GetStringValue("Description", out string description);
@@ -2385,7 +2385,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxManifestReader.GetCapabilitiesByCapabilityClass(APPX_CAPABILITY_CLASS_TYPE.APPX_CAPABILITY_CLASS_ALL, out IAppxManifestCapabilitiesEnumerator appxManifestCapabilitiesEnumerator) is 0)
             {
-                while (appxManifestCapabilitiesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxManifestCapabilitiesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     appxManifestCapabilitiesEnumerator.GetCurrent(out string capability);
                     capabilityList.Add(capability);
@@ -2407,7 +2407,7 @@ namespace GetStoreAppInstaller.Pages
             // 获取应用包定义的静态依赖项列表
             if (appxManifestReader.GetPackageDependencies(out IAppxManifestPackageDependenciesEnumerator dependenciesEnumerator) is 0)
             {
-                while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (dependenciesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     if (dependenciesEnumerator.GetCurrent(out IAppxManifestPackageDependency2 appxManifestPackageDependency) is 0)
                     {
@@ -2525,7 +2525,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxPackageReader.GetPayloadFiles(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
             {
-                while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
                     appxFile.GetName(out string packageFileName);
@@ -2547,7 +2547,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxManifestReader.GetQualifiedResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
-                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
                     {
@@ -2850,7 +2850,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxManifestReader.GetTargetDeviceFamilies(out IAppxManifestTargetDeviceFamiliesEnumerator appxManifestTargetDeviceFamiliesEnumerator) is 0)
             {
-                while (appxManifestTargetDeviceFamiliesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxManifestTargetDeviceFamiliesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     appxManifestTargetDeviceFamiliesEnumerator.GetCurrent(out IAppxManifestTargetDeviceFamily appxManifestTargetDeviceFamily);
                     TargetDeviceFamilyModel targetDeviceFamilyItem = new();
@@ -3043,7 +3043,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxBundleManifestReader.GetPackageInfoItems(out IAppxBundleManifestPackageInfoEnumerator appxBundleManifestPackageInfoEnumerator) is 0)
             {
-                while (appxBundleManifestPackageInfoEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxBundleManifestPackageInfoEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     appxBundleManifestPackageInfoEnumerator.GetCurrent(out IAppxBundleManifestPackageInfo appxBundleManifestPackageInfo);
 
@@ -3095,7 +3095,7 @@ namespace GetStoreAppInstaller.Pages
             // 读取捆绑包的二进制文件
             if (appxBundleReader.GetPayloadPackages(out IAppxFilesEnumerator appxFilesEnumerator) is 0)
             {
-                while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxFilesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     appxFilesEnumerator.GetCurrent(out IAppxFile appxFile);
                     appxFile.GetName(out string packageFileName);
@@ -3485,7 +3485,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
-                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetLanguage(out string language) is 0 && !string.IsNullOrEmpty(language))
                     {
@@ -3509,7 +3509,7 @@ namespace GetStoreAppInstaller.Pages
 
             if (appxBundleManifestPackageInfo.GetResources(out IAppxManifestQualifiedResourcesEnumerator appxManifestQualifiedResourcesEnumerator) is 0)
             {
-                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && (hasCurrent is true))
+                while (appxManifestQualifiedResourcesEnumerator.GetHasCurrent(out bool hasCurrent) is 0 && hasCurrent)
                 {
                     if (appxManifestQualifiedResourcesEnumerator.GetCurrent(out IAppxManifestQualifiedResource appxManifestQualifiedResource) is 0 && appxManifestQualifiedResource.GetScale(out uint scale) is 0 && scale is not 0)
                     {

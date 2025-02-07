@@ -269,7 +269,7 @@ namespace GetStoreApp.UI.Controls.Download
 
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                if (downloadingItem.IsSelected is true)
+                if (downloadingItem.IsSelected)
                 {
                     selectedDownloadingList.Add(downloadingItem);
                 }

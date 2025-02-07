@@ -37,7 +37,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static Visibility BooleanToVisibilityReverseConvert(bool value)
         {
-            return value is false ? Visibility.Visible : Visibility.Collapsed;
+            return value ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

@@ -92,7 +92,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
 
                 foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
                 {
-                    if (traceCleanupItem.IsSelected is true)
+                    if (traceCleanupItem.IsSelected)
                     {
                         selectedCleanList.Add(traceCleanupItem.InternalName);
                     }
