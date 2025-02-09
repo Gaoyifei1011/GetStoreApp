@@ -47,7 +47,7 @@
   "Queued": "Waiting",
   "Refresh": "Refresh",
   "RefreshToolTip": "Refresh installed application data",
-  "RestartPC": "The computer will restart in two minutes, please save your personal files before shutting down",
+  "RestartPC": "The computer will restart in two minutes, please save your personal files before restarting",
   "SearchApps": "Search apps",
   "SearchAppsEmptyDescription": "Unable to find a package that matches the entered criteria, please change the search criteria and try again",
   "SearchAppsPlaceHolderText": "Search apps",
