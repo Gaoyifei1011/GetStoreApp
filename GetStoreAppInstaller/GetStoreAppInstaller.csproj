@@ -79,7 +79,7 @@
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250108002" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250127003-experimental3" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
     
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.18362.0\Microsoft.InteractiveExperiences.Projection.dll" />
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.18362.0\Microsoft.Windows.AppLifecycle.Projection.dll" />
