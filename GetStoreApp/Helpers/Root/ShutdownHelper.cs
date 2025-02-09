@@ -12,7 +12,7 @@ namespace GetStoreApp.Helpers.Root
         /// <summary>
         /// 重启电脑
         /// </summary>
-        public static unsafe void Restart(string message, TimeSpan timeout)
+        public static void Restart(string message, TimeSpan timeout)
         {
             Advapi32Library.OpenProcessToken(Kernel32Library.GetCurrentProcess(), 0x00000020, out IntPtr tokenHandle);
             TOKEN_PRIVILEGES tokenPrivileges = new()
