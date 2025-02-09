@@ -186,6 +186,11 @@ namespace GetStoreApp.Views.Windows
             SetSystemBackdrop();
             SetTopMost();
             CheckNetwork();
+
+            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
+            {
+                overlappedPresenter.PreferredMinimumSize = new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel));
+            }
         }
 
         #region 第一部分：窗口类事件
@@ -227,6 +232,8 @@ namespace GetStoreApp.Views.Windows
 
             if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
             {
+                overlappedPresenter.PreferredMinimumSize = new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel));
+
                 inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
                     [new RectInt32(
                         (int)(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
@@ -1091,28 +1098,6 @@ namespace GetStoreApp.Views.Windows
         {
             switch (Msg)
             {
-                // 窗口大小发生更改时的消息
-                case WindowMessage.WM_GETMINMAXINFO:
-                    {
-                        if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
-                        {
-                            MINMAXINFO minMaxInfo;
-
-                            unsafe
-                            {
-                                minMaxInfo = *(MINMAXINFO*)lParam;
-                            }
-                            minMaxInfo.ptMinTrackSize.X = (int)(960 * rawPixelsPerViewPixel);
-                            minMaxInfo.ptMinTrackSize.Y = (int)(600 * rawPixelsPerViewPixel);
-
-                            unsafe
-                            {
-                                *(MINMAXINFO*)lParam = minMaxInfo;
-                            }
-                        }
-
-                        break;
-                    }
                 // 当用户按下鼠标左键时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCLBUTTONDOWN:
                     {
