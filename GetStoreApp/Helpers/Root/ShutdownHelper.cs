@@ -22,7 +22,7 @@ namespace GetStoreApp.Helpers.Root
             };
             Advapi32Library.LookupPrivilegeValue(string.Empty, "SeShutdownPrivilege", out tokenPrivileges.Luid);
             Advapi32Library.AdjustTokenPrivileges(tokenHandle, false, ref tokenPrivileges, 0, IntPtr.Zero, IntPtr.Zero);
-            Advapi32Library.InitiateSystemShutdownEx(null, message, Convert.ToUInt32(timeout.TotalSeconds), false, true, 0);
+            Advapi32Library.InitiateSystemShutdownEx(null, message, Convert.ToUInt32(timeout.TotalSeconds), false, true, SHTDN_REASON.SHTDN_REASON_MAJOR_OTHER);
 
             tokenPrivileges.Attributes = 0;
             Advapi32Library.AdjustTokenPrivileges(tokenHandle, false, ref tokenPrivileges, 0, IntPtr.Zero, IntPtr.Zero);
