@@ -11,13 +11,13 @@ namespace GetStoreApp.Helpers.Controls.Store
     {
         private static string parseContent = string.Empty;
 
-        [GeneratedRegex(@"<i>(.*?)<\/i>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        [GeneratedRegex("""<i>(.*?)<\/i>""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex CIDRegex { get; }
 
-        [GeneratedRegex(@"<tr\sstyle=\\?""background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?"">\s{0,}<td>\s{0,}<a\shref=\\?""(.*?)\\?""\srel=\\?""noreferrer\\?"">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?GMT)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<td\salign=\\?""center\\?"">(.*?)<\/td>\s{0,}<\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        [GeneratedRegex("""<tr\sstyle=\\?"background-color:rgba\(\d{3},\s\d{3},\s\d{3},\s0.8\)\\?">\s{0,}<td>\s{0,}<a\shref=\\?"(.*?)\\?"\srel=\\?"noreferrer\\?">(.*?)<\/a>\s{0,}<\/td>\s{0,}<td\salign=\\?"center\\?">(.*?GMT)<\/td>\s{0,}<td\salign=\\?"center\\?">(.*?)<\/td>\s{0,}<td\salign=\\?"center\\?">(.*?)<\/td>\s{0,}<\/tr>""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex PackagedAppRegex { get; }
 
-        [GeneratedRegex(@"<a href=""([\s\S]*?)"" rel=""noreferrer"">([\s\S]*?)<\/a><\/td><td align=""center"">([\s\S]*?)<\/td><\/tr>", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        [GeneratedRegex("""<a href="([\s\S]*?)" rel="noreferrer">([\s\S]*?)<\/a><\/td><td align="center">([\s\S]*?)<\/td><\/tr>""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex NonPackagedAppRegex { get; }
 
         /// <summary>

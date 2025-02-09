@@ -74,7 +74,7 @@ namespace GetStoreAppInstaller.Pages
         private readonly IAppxFactory3 appxFactory;
         private readonly IAppxBundleFactory2 appxBundleFactory;
 
-        [GeneratedRegex(@"scale-(\d{3})", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
+        [GeneratedRegex("""scale-(\d{3})""", RegexOptions.IgnoreCase | RegexOptions.Compiled, "en-US")]
         private static partial Regex ScaleRegex { get; }
 
         private string fileName = string.Empty;
@@ -3169,7 +3169,7 @@ namespace GetStoreAppInstaller.Pages
             string logoExtensionName = Path.GetExtension(logo);
             string logoFileName = logo[..^logoExtensionName.Length];
 
-            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName.Replace(@"\", @"\\"), logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Regex logoRegex = new(string.Format("""{0}(.scale-\d{{3}}){{0,1}}{1}""", logoFileName.Replace(@"\", @"\\"), logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             // 读取应用包图标
             foreach (KeyValuePair<string, IAppxFile> appxFileItem in appxFileDict)
@@ -3193,7 +3193,7 @@ namespace GetStoreAppInstaller.Pages
             string logoExtensionName = Path.GetExtension(logo);
             string logoFileName = logo[..^logoExtensionName.Length];
 
-            Regex logoRegex = new(string.Format(@"{0}(.scale-\d{{3}}){{0,1}}{1}", logoFileName.Replace(@"\", @"\\"), logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Regex logoRegex = new(string.Format("""{0}(.scale-\d{{3}}){{0,1}}{1}""", logoFileName.Replace(@"\", @"\\"), logoExtensionName), RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             // 读取应用包图标
             foreach (KeyValuePair<string, IAppxFile> scaleBundleItem in scaleBundleFileDict)
