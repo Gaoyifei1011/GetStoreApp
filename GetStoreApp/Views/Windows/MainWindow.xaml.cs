@@ -55,13 +55,13 @@ namespace GetStoreApp.Views.Windows
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly ContentCoordinateConverter contentCoordinateConverter;
-        private readonly ContentIsland contentIsland;
         private readonly DisplayInformation displayInformation;
         private readonly IDisplayInformation2 displayInformation2;
-        private readonly InputKeyboardSource inputKeyboardSource;
         private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
+        private ContentIsland contentIsland;
+        private InputKeyboardSource inputKeyboardSource;
 
         public new static MainWindow Current { get; private set; }
 
@@ -160,10 +160,6 @@ namespace GetStoreApp.Views.Windows
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
             displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
             displayInformation2 = displayInformation.As<IDisplayInformation2>();
-            contentIsland = ContentIsland.FindAllForCompositor(Compositor)[0];
-            contentIsland.Environment.SettingChanged += OnSettingChanged;
-            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
-            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
@@ -189,7 +185,7 @@ namespace GetStoreApp.Views.Windows
 
             if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
             {
-                overlappedPresenter.PreferredMinimumSize = new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel));
+                overlappedPresenter.As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel)));
             }
         }
 
@@ -232,7 +228,7 @@ namespace GetStoreApp.Views.Windows
 
             if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
             {
-                overlappedPresenter.PreferredMinimumSize = new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel));
+                overlappedPresenter.As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel)));
 
                 inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
                     [new RectInt32(
@@ -519,6 +515,11 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
+            contentIsland = Content.XamlRoot.ContentIsland;
+            contentIsland.Environment.SettingChanged += OnSettingChanged;
+            inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
+            inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
+
             // 设置标题栏主题
             SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
 

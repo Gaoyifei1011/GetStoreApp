@@ -105,7 +105,7 @@ namespace GetStoreAppInstaller
             coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
             DisplayInformation = DisplayInformation.GetForCurrentView();
             MainAppWindow.Resize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
-            (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumSize = new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel));
+            (MainAppWindow.Presenter as OverlappedPresenter).As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
             CoreAppWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(coreWindowHandle));
             CoreAppWindow.Move(new PointInt32());
             CoreAppWindow.Resize(MainAppWindow.ClientSize);
@@ -174,7 +174,7 @@ namespace GetStoreAppInstaller
             {
                 if (DisplayInformation is not null)
                 {
-                    (sender.Presenter as OverlappedPresenter).PreferredMinimumSize = new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel));
+                    (MainAppWindow.Presenter as OverlappedPresenter).As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
                 }
 
                 if (Window.Current is not null && Window.Current.Content is MainPage mainPage)
