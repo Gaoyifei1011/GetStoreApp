@@ -5,6 +5,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -51,17 +52,17 @@ namespace GetStoreApp.UI.Dialogs.About
                 {
                     IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
 
+                    // Windows 应用 SDK 版本信息
+                    dependencyInformationList.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion"),
+                        SecondaryText = RuntimeInfo.AsString
+                    });
+
                     foreach (Package dependencyPackage in dependencyPackageList)
                     {
                         if (dependencyPackage.DisplayName.Contains("WindowsAppRuntime"))
                         {
-                            // Windows 应用 SDK 版本信息
-                            dependencyInformationList.Add(new ContentLinkInfo()
-                            {
-                                DisplayText = ResourceService.GetLocalized("Dialog/WindowsAppSDKVersion"),
-                                SecondaryText = new Version(dependencyPackage.Id.Version.Major, dependencyPackage.Id.Version.Minor, dependencyPackage.Id.Version.Build, dependencyPackage.Id.Version.Revision).ToString()
-                            });
-
                             // WinUI 3 版本信息
                             try
                             {
