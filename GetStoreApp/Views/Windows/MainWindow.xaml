@@ -6,9 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:service="using:GetStoreApp.Services.Controls.Settings"
-    Title="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
+    Title="{x:Bind WindowTitle, Mode=OneWay}"
     Activated="{x:Bind OnActivated}"
     SizeChanged="{x:Bind OnSizeChanged}"
+    SystemBackdrop="{x:Bind WindowSystemBackdrop, Mode=OneWay}"
     mc:Ignorable="d">
 
     <Page
@@ -113,7 +114,7 @@
             <!--  应用标题栏内容  -->
             <TitleBar
                 x:Name="AppTitlebar"
-                Title="{x:Bind root:ResourceService.GetLocalized('Window/AppTitle')}"
+                Title="{x:Bind AppTitle, Mode=OneWay}"
                 Height="48"
                 Margin="35,0,0,0"
                 VerticalAlignment="Top">

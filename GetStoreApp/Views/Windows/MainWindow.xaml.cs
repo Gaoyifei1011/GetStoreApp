@@ -2,6 +2,7 @@
 using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Controls.Extensions;
+using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
@@ -25,6 +26,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
@@ -65,6 +67,54 @@ namespace GetStoreApp.Views.Windows
 
         public new static MainWindow Current { get; private set; }
 
+        private string _windowTitle;
+
+        public string WindowTitle
+        {
+            get { return _windowTitle; }
+
+            set
+            {
+                if (!Equals(_windowTitle, value))
+                {
+                    _windowTitle = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTitle)));
+                }
+            }
+        }
+
+        private SystemBackdrop _windowSystemBackdrop;
+
+        public SystemBackdrop WindowSystemBackdrop
+        {
+            get { return _windowSystemBackdrop; }
+
+            set
+            {
+                if (!Equals(_windowSystemBackdrop, value))
+                {
+                    _windowSystemBackdrop = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowSystemBackdrop)));
+                }
+            }
+        }
+
+        private ElementTheme _windowTheme;
+
+        public ElementTheme WindowTheme
+        {
+            get { return _windowTheme; }
+
+            set
+            {
+                if (!Equals(_windowTheme, value))
+                {
+                    _windowTheme = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                }
+            }
+        }
+
         private bool _isWindowMaximized;
 
         public bool IsWindowMaximized
@@ -93,22 +143,6 @@ namespace GetStoreApp.Views.Windows
                 {
                     _isBackEnabled = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBackEnabled)));
-                }
-            }
-        }
-
-        private ElementTheme _windowTheme;
-
-        public ElementTheme WindowTheme
-        {
-            get { return _windowTheme; }
-
-            set
-            {
-                if (!Equals(_windowTheme, value))
-                {
-                    _windowTheme = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
                 }
             }
         }
@@ -151,6 +185,7 @@ namespace GetStoreApp.Views.Windows
             InitializeComponent();
 
             // 窗口部分初始化
+            WindowTitle = RuntimeHelper.IsElevated ? ResourceService.GetLocalized("Window/WindowTitle") + ResourceService.GetLocalized("Window/RunningAdministrator") : ResourceService.GetLocalized("Window/WindowTitle");
             overlappedPresenter = AppWindow.Presenter as OverlappedPresenter;
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -198,7 +233,7 @@ namespace GetStoreApp.Views.Windows
         {
             try
             {
-                if (AppWindow.IsVisible && SystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
+                if (AppWindow.IsVisible && WindowSystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
                     materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
 
@@ -946,38 +981,33 @@ namespace GetStoreApp.Views.Windows
         {
             if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[1]))
             {
-                SystemBackdrop = new MaterialBackdrop(MicaKind.Base);
+                WindowSystemBackdrop = new MaterialBackdrop(MicaKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[2]))
             {
-                SystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
+                WindowSystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[3]))
             {
-                SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
+                WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[4]))
             {
-                SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
+                WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[5]))
             {
-                SystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
+                WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
             else
             {
-                SystemBackdrop = null;
+                WindowSystemBackdrop = null;
                 VisualStateManager.GoToState(MainPage, "BackgroundDefault", false);
-            }
-
-            if (SystemBackdrop is not null && AlwaysShowBackdropService.AlwaysShowBackdropValue)
-            {
-                (SystemBackdrop as MaterialBackdrop).BackdropConfiguration.IsInputActive = true;
             }
         }
 

@@ -241,9 +241,9 @@ namespace GetStoreApp.Services.Controls.Download
                     AppNotification appNotification = appNotificationBuilder.BuildNotification();
 
                     MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
-                        {
-                            ToastNotificationService.Show(appNotification);
-                        });
+                    {
+                        ToastNotificationService.Show(appNotification);
+                    });
                 }
             }
             catch (Exception e)
