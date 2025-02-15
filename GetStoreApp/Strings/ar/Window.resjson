@@ -1,7 +1,6 @@
 {
   "About": "حول",
   "AppManager": "مدير التطبيقات",
-  "AppTitle": "GetStoreApp",
   "AppUpdate": "تحديث التطبيق",
   "Close": "إغلاق",
   "Download": "إدارة التنزيلات",
@@ -16,5 +15,6 @@
   "Size": "الحجم",
   "Store": "متجر Microsoft",
   "Web": "فتح المتصفح",
+  "WindowTitle": "GetStoreApp",
   "WinGet": "حزمة WinGet"
 }

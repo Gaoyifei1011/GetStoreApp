@@ -1,7 +1,6 @@
 {
   "About": "关于",
   "AppManager": "应用管理",
-  "AppTitle": "获取商店应用",
   "AppUpdate": "应用更新",
   "Close": "关闭",
   "Download": "下载管理",
@@ -16,5 +15,6 @@
   "Size": "大小",
   "Store": "微软商店",
   "Web": "打开网页",
+  "WindowTitle": "获取商店应用",
   "WinGet": "WinGet 程序包"
 }

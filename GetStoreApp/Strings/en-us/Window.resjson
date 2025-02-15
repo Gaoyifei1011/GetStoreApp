@@ -1,7 +1,6 @@
 {
   "About": "About",
   "AppManager": "App Manager",
-  "AppTitle": "GetStoreApp",
   "AppUpdate": "App Update",
   "Close": "Close",
   "Download": "Download Management",
@@ -16,5 +15,6 @@
   "Size": "Size",
   "Store": "Microsoft Store",
   "Web": "Open Browser",
+  "WindowTitle": "GetStoreApp",
   "WinGet": "WinGet Package"
 }

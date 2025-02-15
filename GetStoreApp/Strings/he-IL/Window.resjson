@@ -1,7 +1,6 @@
 {
   "About": "אודות",
   "AppManager": "נהל אפליקציות",
-  "AppTitle": "GetStoreApp",
   "AppUpdate": "עדכן אפליקציות",
   "Close": "סגור",
   "Download": "נהל הורדות",
@@ -16,5 +15,6 @@
   "Size": "גודל",
   "Store": "Microsoft Store",
   "Web": "פתח דפדפן",
+  "WindowTitle": "GetStoreApp",
   "WinGet": "חבילת WinGet"
 }
