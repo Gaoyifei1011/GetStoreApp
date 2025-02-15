@@ -10,7 +10,6 @@
   "AppInstalledState": "应用安装状态：",
   "AppInstallerSourceLink": "安装文件源链接：",
   "AppNotInstall": "未安装",
-  "AppTitle": "应用安装器",
   "AppUserModelId": "应用程序用户模型 ID",
   "AutomaticBackgroundTask": "启用自动更新：",
   "BasicInformation": "基本信息",
@@ -227,6 +226,7 @@
   "ParsingApp": "正在解析应用中，请稍候...",
   "PrepareInstall": "准备安装",
   "Publisher": "发布者：",
+  "RunningAdministrator": "(Administrator)",
   "SelectDependencyPackage": "选择依赖包",
   "SelectPackage": "选择安装包",
   "Settings": "设置",
@@ -244,5 +244,6 @@
   "VersionInformation": "版本信息",
   "ViewErrorInformation": "查看错误信息",
   "WaitInstall": "等待安装中...",
+  "WindowTitle": "应用安装器",
   "Yes": "是"
 }

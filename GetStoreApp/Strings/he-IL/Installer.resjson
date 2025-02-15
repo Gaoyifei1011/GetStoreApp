@@ -10,7 +10,6 @@
   "AppInstalledState": "App installed state: ",
   "AppInstallerSourceLink": "Installer file source link: ",
   "AppNotInstall": "Not install",
-  "AppTitle": "Package installer",
   "AppUserModelId": "AUMID",
   "AutomaticBackgroundTask": "Enable automatic updates: ",
   "BasicInformation": "Basic information",
@@ -227,6 +226,7 @@
   "ParsingApp": "Parsing the app, please wait...",
   "PrepareInstall": "Prepare install",
   "Publisher": "Publisher: ",
+  "RunningAdministrator": "(Administrator)",
   "SelectDependencyPackage": "Selected dependency packages",
   "SelectPackage": "Select Installation package",
   "Settings": "Settings",
@@ -244,5 +244,6 @@
   "VersionInformation": "Version information",
   "ViewErrorInformation": "Viewing error information",
   "WaitInstall": "Waiting for installing",
+  "WindowTitle": "Package installer",
   "Yes": "Yes"
 }

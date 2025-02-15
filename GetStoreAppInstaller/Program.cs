@@ -94,7 +94,7 @@ namespace GetStoreAppInstaller
 
             // 应用主窗口
             MainAppWindow = AppWindow.Create();
-            MainAppWindow.Title = ResourceService.GetLocalized("Installer/AppTitle");
+            MainAppWindow.Title = RuntimeHelper.IsElevated ? ResourceService.GetLocalized("Installer/WindowTitle") + ResourceService.GetLocalized("Installer/RunningAdministrator") : ResourceService.GetLocalized("Installer/WindowTitle");
             MainAppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
             MainAppWindow.Changed += OnAppWindowChanged;
             MainAppWindow.Closing += OnAppWindowClosing;

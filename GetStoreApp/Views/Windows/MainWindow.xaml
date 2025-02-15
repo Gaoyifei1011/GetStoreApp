@@ -114,7 +114,7 @@
             <!--  应用标题栏内容  -->
             <TitleBar
                 x:Name="AppTitlebar"
-                Title="{x:Bind AppTitle, Mode=OneWay}"
+                Title="{x:Bind WindowTitle, Mode=OneWay}"
                 Height="48"
                 Margin="35,0,0,0"
                 VerticalAlignment="Top">
