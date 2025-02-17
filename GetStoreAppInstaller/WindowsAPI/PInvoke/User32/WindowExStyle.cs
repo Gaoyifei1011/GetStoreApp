@@ -69,7 +69,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 窗口文本使用从左到右的阅读顺序属性显示。 这是默认值。
         /// </summary>
-        WS_EX_LTRREADING = 0x00000000,
+        WS_EX_LTRREADING = WS_EX_LEFT,
 
         /// <summary>
         /// 窗口是 MDI 子窗口。
@@ -118,7 +118,7 @@ namespace GetStoreAppInstaller.WindowsAPI.PInvoke.User32
         /// <summary>
         /// 如果存在) 位于工作区右侧，则垂直滚动条 (。 这是默认值。
         /// </summary>
-        WS_EX_RIGHTSCROLLBAR = 0x00000000,
+        WS_EX_RIGHTSCROLLBAR = WS_EX_LEFT,
 
         /// <summary>
         /// 如果 shell 语言是希伯来语、阿拉伯语或支持阅读顺序对齐的另一种语言，则使用从右到左的阅读顺序属性显示窗口文本。 对于其他语言，将忽略该样式。
