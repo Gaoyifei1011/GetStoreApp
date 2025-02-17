@@ -1,6 +1,5 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Enums;
 using GetStoreAppWebView.Pages;
-using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Shell;
 using Windows.UI.ViewManagement;
 using Windows.UI.WindowManagement;
