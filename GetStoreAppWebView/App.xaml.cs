@@ -60,7 +60,7 @@ namespace GetStoreAppWebView
                     AppWindow appWindow = await AppWindow.TryCreateAsync();
                     appWindowList.Add(appWindow.UIContext, appWindow);
                     appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-                    ElementCompositionPreview.SetAppWindowContent(appWindow, new TaskbarPinPage());
+                    ElementCompositionPreview.SetAppWindowContent(appWindow, new TaskbarPinPage(appWindow));
                     appWindow.Title = ResourceService.GetLocalized("WebView/PinAppToTaskbar");
                     await appWindow.TryShowAsync();
 

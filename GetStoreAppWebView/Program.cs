@@ -53,7 +53,10 @@ namespace GetStoreAppWebView
         {
             LanguageService.InitializeLanguage();
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
+            ResourceService.LocalizeReosurce();
+
             ResultService.Initialize();
+            ThemeService.InitializeTheme();
             WebKernelService.InitializeWebKernel();
         }
     }

@@ -854,24 +854,10 @@ namespace GetStoreAppInstaller.Pages
         {
             InitializeComponent();
             appActivationArguments = activationArguments;
-
-            WindowTheme = ThemeService.AppTheme.Equals(ThemeService.ThemeList[0])
-                ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark
-                : Enum.TryParse(ThemeService.AppTheme.Key, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
+            WindowTheme = Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
 
             Program.SetTitleBarTheme(ActualTheme);
             Program.SetClassicMenuTheme(ActualTheme);
-
-            if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
-            {
-                EnableBackdropMaterial = true;
-                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
-            }
-            else
-            {
-                EnableBackdropMaterial = false;
-                VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
-            }
 
             if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
             {
@@ -1100,6 +1086,17 @@ namespace GetStoreAppInstaller.Pages
             CanDragFile = true;
             fileName = string.Empty;
 
+            if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
+            {
+                EnableBackdropMaterial = true;
+                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
+            }
+            else
+            {
+                EnableBackdropMaterial = false;
+                VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
+            }
+
             // 正常启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
@@ -1109,10 +1106,6 @@ namespace GetStoreAppInstaller.Pages
                 if (argumentsArray.Length >= 2 && argumentsArray[0].Contains(executableFileName))
                 {
                     fileName = argumentsArray[1];
-                }
-                else if (argumentsArray.Length >= 1)
-                {
-                    fileName = argumentsArray[0];
                 }
 
                 if (!string.IsNullOrEmpty(fileName))

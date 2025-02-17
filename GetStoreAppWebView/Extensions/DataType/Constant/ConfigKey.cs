@@ -8,5 +8,7 @@
         public const string LanguageKey = "AppLanguage";
 
         public const string WebKernelKey = "WebKernel";
+
+        public const string ThemeKey = "AppTheme";
     }
 }

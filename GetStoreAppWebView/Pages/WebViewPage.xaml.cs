@@ -54,6 +54,22 @@ namespace GetStoreAppWebView.Pages
             }
         }
 
+        private ElementTheme _windowTheme;
+
+        public ElementTheme WindowTheme
+        {
+            get { return _windowTheme; }
+
+            set
+            {
+                if (!Equals(_windowTheme, value))
+                {
+                    _windowTheme = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowTheme)));
+                }
+            }
+        }
+
         private bool _canGoBack;
 
         public bool CanGoBack
@@ -145,10 +161,11 @@ namespace GetStoreAppWebView.Pages
             applicationView.TryResizeView(new Size(1000, 700));
             applicationView.TitleBar.ButtonBackgroundColor = Colors.Transparent;
             applicationView.TitleBar.InactiveBackgroundColor = Colors.Transparent;
+            WindowTheme = Enum.TryParse(ThemeService.AppTheme, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
 
             // 标题栏设置
             Window.Current.SetTitleBar(AppTitlebar);
-            SetTitleBarTheme((Content as FrameworkElement).ActualTheme);
+            SetTitleBarTheme(ActualTheme);
 
             // 设置网页
             Source = new Uri("https://store.rg-adguard.net");

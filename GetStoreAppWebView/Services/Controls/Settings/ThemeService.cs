@@ -1,11 +1,11 @@
-﻿using GetStoreAppInstaller.Extensions.DataType.Constant;
-using GetStoreAppInstaller.Services.Root;
+﻿using GetStoreAppWebView.Extensions.DataType.Constant;
+using GetStoreAppWebView.Services.Root;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Windows.UI.Xaml;
 
-namespace GetStoreAppInstaller.Services.Controls.Settings
+namespace GetStoreAppWebView.Services.Controls.Settings
 {
     /// <summary>
     /// 应用主题设置服务

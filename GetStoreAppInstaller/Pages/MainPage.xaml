@@ -19,6 +19,7 @@
     AllowDrop="{x:Bind CanDragFile, Mode=OneWay}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     Loaded="{x:Bind OnLoaded}"
+    RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
     mc:Ignorable="d">
 
     <Page.Resources>

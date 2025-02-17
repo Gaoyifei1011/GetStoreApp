@@ -9,10 +9,12 @@
     xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
     x:Name="WebViewPageRoot"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
+    ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
+    RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
     mc:Ignorable="d">
 
-    <Grid ActualThemeChanged="{x:Bind OnActualThemeChanged}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />

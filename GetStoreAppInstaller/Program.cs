@@ -367,7 +367,6 @@ namespace GetStoreAppInstaller
             ResourceService.InitializeResource(LanguageService.DefaultAppLanguage, LanguageService.AppLanguage);
             ResourceService.LocalizeReosurce();
 
-            AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             AppInstallService.InitializeAppInstall();
             ThemeService.InitializeTheme();
         }

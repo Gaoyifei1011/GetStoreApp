@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
+using Windows.UI.Xaml;
 
 namespace GetStoreAppWebView.Services.Root
 {
@@ -18,6 +20,8 @@ namespace GetStoreAppWebView.Services.Root
         private static readonly ResourceContext currentResourceContext = new();
         private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
 
+        public static List<string> ThemeList { get; } = [];
+
         /// <summary>
         /// 初始化应用本地化资源
         /// </summary>
@@ -32,6 +36,24 @@ namespace GetStoreAppWebView.Services.Root
             currentResourceContext.QualifierValues["Language"] = _currentAppLanguage;
 
             isInitialized = true;
+        }
+
+        /// <summary>
+        /// 初始化应用本地化信息
+        /// </summary>
+        public static void LocalizeReosurce()
+        {
+            InitializeThemeList();
+        }
+
+        /// <summary>
+        /// 初始化应用主题信息列表
+        /// </summary>
+        private static void InitializeThemeList()
+        {
+            ThemeList.Add(nameof(ElementTheme.Default));
+            ThemeList.Add(nameof(ElementTheme.Light));
+            ThemeList.Add(nameof(ElementTheme.Dark));
         }
 
         /// <summary>

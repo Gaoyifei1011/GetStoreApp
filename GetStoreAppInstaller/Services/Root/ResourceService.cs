@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Composition.SystemBackdrops;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation.Diagnostics;
@@ -21,9 +20,7 @@ namespace GetStoreAppInstaller.Services.Root
         private static readonly ResourceContext currentResourceContext = new();
         private static readonly ResourceMap resourceMap = ResourceManager.Current.MainResourceMap;
 
-        public static List<KeyValuePair<string, string>> BackdropList { get; } = [];
-
-        public static List<KeyValuePair<string, string>> ThemeList { get; } = [];
+        public static List<string> ThemeList { get; } = [];
 
         /// <summary>
         /// 初始化应用本地化资源
@@ -46,21 +43,7 @@ namespace GetStoreAppInstaller.Services.Root
         /// </summary>
         public static void LocalizeReosurce()
         {
-            InitializeBackdropList();
             InitializeThemeList();
-        }
-
-        /// <summary>
-        /// 初始化应用背景色信息列表
-        /// </summary>
-        private static void InitializeBackdropList()
-        {
-            BackdropList.Add(KeyValuePair.Create(nameof(SystemBackdropTheme.Default), GetLocalized("Settings/BackdropDefault")));
-            BackdropList.Add(KeyValuePair.Create(nameof(MicaKind) + nameof(MicaKind.Base), GetLocalized("Settings/BackdropMica")));
-            BackdropList.Add(KeyValuePair.Create(nameof(MicaKind) + nameof(MicaKind.BaseAlt), GetLocalized("Settings/BackdropMicaAlt")));
-            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Default), GetLocalized("Settings/BackdropAcrylic")));
-            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Base), GetLocalized("Settings/BackdropAcrylicBase")));
-            BackdropList.Add(KeyValuePair.Create(nameof(DesktopAcrylicKind) + nameof(DesktopAcrylicKind.Thin), GetLocalized("Settings/BackdropAcrylicThin")));
         }
 
         /// <summary>
@@ -68,9 +51,9 @@ namespace GetStoreAppInstaller.Services.Root
         /// </summary>
         private static void InitializeThemeList()
         {
-            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Default), GetLocalized("Settings/ThemeDefault")));
-            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Light), GetLocalized("Settings/ThemeLight")));
-            ThemeList.Add(KeyValuePair.Create(nameof(ElementTheme.Dark), GetLocalized("Settings/ThemeDark")));
+            ThemeList.Add(nameof(ElementTheme.Default));
+            ThemeList.Add(nameof(ElementTheme.Light));
+            ThemeList.Add(nameof(ElementTheme.Dark));
         }
 
         /// <summary>

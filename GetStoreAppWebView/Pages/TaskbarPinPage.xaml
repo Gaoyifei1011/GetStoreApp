@@ -10,8 +10,10 @@
     xmlns:wux="using:Windows.UI.Xaml"
     xmlns:wuxc="using:Windows.UI.Xaml.Controls"
     x:Name="TaskbarPinPageRoot"
+    ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
+    RequestedTheme="{x:Bind WindowTheme, Mode=OneWay}"
     mc:Ignorable="d">
 
     <StackPanel
