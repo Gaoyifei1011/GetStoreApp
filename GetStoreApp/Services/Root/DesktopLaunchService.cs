@@ -10,7 +10,6 @@ using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
-using WinRT;
 
 namespace GetStoreApp.Services.Root
 {
@@ -33,10 +32,10 @@ namespace GetStoreApp.Services.Root
             // 正常参数启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
-                LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data as LaunchActivatedEventArgs;
                 List<string> argumentsList = [];
-                string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
                 string sendData = string.Empty;
+
+                string[] argumentsArray = Environment.GetCommandLineArgs();
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
 
                 foreach (string arguments in argumentsArray)

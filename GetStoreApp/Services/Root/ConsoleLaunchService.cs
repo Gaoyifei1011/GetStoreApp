@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
-using WinRT;
 
 namespace GetStoreApp.Services.Root
 {
@@ -26,56 +25,49 @@ namespace GetStoreApp.Services.Root
 
         public static bool IsAppRunning { get; private set; } = true;
 
-        private static readonly List<string> consoleLaunchArgs = [];
-
-        /// <summary>
-        /// 应用启动时使用的参数
-        /// </summary>
-        public static Dictionary<string, object> LaunchArgs { get; set; } = new Dictionary<string, object>()
-        {
-            {"TypeName",-1 },
-            {"ChannelName",-1 },
-            {"Link",null},
-        };
+        private static readonly List<string> consoleLaunchArgsList = [];
 
         /// <summary>
         /// 处理控制台应用启动的方式
         /// </summary>
         public static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments)
         {
-            Windows.ApplicationModel.Activation.LaunchActivatedEventArgs launchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs.FromAbi((appActivationArguments.Data as IInspectable).ThisPtr);
-            string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
-            string executableFileName = Path.GetFileName(Environment.ProcessPath);
-
-            foreach (string arguments in argumentsArray)
+            // 正常参数启动
+            if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
-                if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
+                string[] argumentsArray = Environment.GetCommandLineArgs();
+                string executableFileName = Path.GetFileName(Environment.ProcessPath);
+
+                foreach (string arguments in argumentsArray)
                 {
-                    continue;
+                    if (arguments.Contains(executableFileName) || string.IsNullOrEmpty(arguments))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        consoleLaunchArgsList.Add(arguments);
+                    }
                 }
-                else
-                {
-                    consoleLaunchArgs.Add(arguments);
-                }
+
+                ConsoleEventDelegate ctrlDelegate = new(OnConsoleCtrlHandler);
+                Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
+                DownloadSchedulerService.InitializeDownloadScheduler(false);
+                DownloadSchedulerService.DownloadCreated += DownloadService.OnDownloadCreated;
+                DownloadSchedulerService.DownloadProgressing += DownloadService.OnDownloadProgressing;
+                DownloadSchedulerService.DownloadCompleted += DownloadService.OnDownloadCompleted;
+
+                InitializeIntroduction();
+                InitializeRequestContent();
+                CharExtension.Initialize();
+                await RequestService.GetLinksAsync();
+
+                DownloadSchedulerService.CloseDownloadScheduler(false);
+                DownloadSchedulerService.DownloadCreated -= DownloadService.OnDownloadCreated;
+                DownloadSchedulerService.DownloadProgressing -= DownloadService.OnDownloadProgressing;
+                DownloadSchedulerService.DownloadCompleted -= DownloadService.OnDownloadCompleted;
+                ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
             }
-
-            ConsoleEventDelegate ctrlDelegate = new(OnConsoleCtrlHandler);
-            Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
-            DownloadSchedulerService.InitializeDownloadScheduler(false);
-            DownloadSchedulerService.DownloadCreated += DownloadService.OnDownloadCreated;
-            DownloadSchedulerService.DownloadProgressing += DownloadService.OnDownloadProgressing;
-            DownloadSchedulerService.DownloadCompleted += DownloadService.OnDownloadCompleted;
-
-            InitializeIntroduction();
-            InitializeRequestContent();
-            CharExtension.Initialize();
-            await RequestService.GetLinksAsync();
-
-            DownloadSchedulerService.CloseDownloadScheduler(false);
-            DownloadSchedulerService.DownloadCreated -= DownloadService.OnDownloadCreated;
-            DownloadSchedulerService.DownloadProgressing -= DownloadService.OnDownloadProgressing;
-            DownloadSchedulerService.DownloadCompleted -= DownloadService.OnDownloadCompleted;
-            ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
         }
 
         /// <summary>
@@ -125,7 +117,7 @@ namespace GetStoreApp.Services.Root
             string link = string.Empty;
 
             // 手动输入参数
-            if (consoleLaunchArgs.Count is 1)
+            if (consoleLaunchArgsList.Count is 1)
             {
                 // 选择类型
                 ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
@@ -168,20 +160,20 @@ namespace GetStoreApp.Services.Root
                 link = ConsoleHelper.ReadLine();
             }
             // 只有两个参数：链接
-            else if (consoleLaunchArgs.Count is 2)
+            else if (consoleLaunchArgsList.Count is 2)
             {
-                link = consoleLaunchArgs[1];
+                link = consoleLaunchArgsList[1];
             }
             // 多个参数
-            else if (consoleLaunchArgs.Count % 2 is 1)
+            else if (consoleLaunchArgsList.Count % 2 is 1)
             {
-                int typeNameParameterIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                int channelNameParameterIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                int linkParameterIndex = consoleLaunchArgs.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                int typeNameParameterIndex = consoleLaunchArgsList.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
+                int channelNameParameterIndex = consoleLaunchArgsList.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
+                int linkParameterIndex = consoleLaunchArgsList.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
 
-                typeNameIndex = typeNameParameterIndex is -1 ? 1 : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
-                channelNameIndex = channelNameParameterIndex is -1 ? 4 : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgs[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
-                link = linkParameterIndex is -1 ? string.Empty : consoleLaunchArgs[linkParameterIndex + 1];
+                typeNameIndex = typeNameParameterIndex is -1 ? 1 : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgsList[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                channelNameIndex = channelNameParameterIndex is -1 ? 4 : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(consoleLaunchArgsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                link = linkParameterIndex is -1 ? string.Empty : consoleLaunchArgsList[linkParameterIndex + 1];
             }
             // 非法参数
             else

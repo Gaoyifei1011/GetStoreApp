@@ -606,8 +606,9 @@ namespace GetStoreApp.Views.Windows
                 string[] startupArgs = dataContent.Split(' ');
 
                 // 正常启动重定向获得的内容
-                if (startupArgs.Length >= 1)
+                if (startupArgs.Length is 1 || startupArgs.Length is 2)
                 {
+                    // 正常启动
                     if (startupArgs[0] is "Launch")
                     {
                         Show();
@@ -618,6 +619,7 @@ namespace GetStoreApp.Views.Windows
                             await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
                         }
                     }
+                    // 打开设置
                     else if (startupArgs[0] is "Settings")
                     {
                         if (GetCurrentPageType() != typeof(SettingsPage))
@@ -625,9 +627,33 @@ namespace GetStoreApp.Views.Windows
                             NavigateTo(typeof(SettingsPage));
                         }
                     }
+                    // 跳转列表或辅助磁贴启动重定向获得的内容
+                    else if (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile")
+                    {
+                        if (startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
+                        {
+                            NavigateTo(typeof(StorePage));
+                        }
+                        else if (startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
+                        {
+                            NavigateTo(typeof(AppUpdatePage));
+                        }
+                        else if (startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
+                        {
+                            NavigateTo(typeof(WinGetPage));
+                        }
+                        else if (startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
+                        {
+                            NavigateTo(typeof(AppManagerPage));
+                        }
+                        else if (startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
+                        {
+                            NavigateTo(typeof(DownloadPage));
+                        }
+                    }
                 }
                 // 带有命令参数启动重定向获得的内容
-                else if (startupArgs.Length >= 2 && startupArgs[0] is "Console")
+                else if (startupArgs.Length > 2 && startupArgs[0] is "Console")
                 {
                     if (GetCurrentPageType() != typeof(StorePage))
                     {
@@ -640,30 +666,6 @@ namespace GetStoreApp.Views.Windows
                         storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[2]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[2])];
                         storePage.QueryLinks.LinkText = startupArgs[3] is "PlaceHolderText" ? string.Empty : startupArgs[3];
                         storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
-                    }
-                }
-                // 跳转列表或辅助磁贴启动重定向获得的内容
-                else if (startupArgs.Length >= 1 && (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile"))
-                {
-                    if (startupArgs.Length is 2 && startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
-                    {
-                        NavigateTo(typeof(StorePage));
-                    }
-                    else if (startupArgs.Length is 2 && startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
-                    {
-                        NavigateTo(typeof(AppUpdatePage));
-                    }
-                    else if (startupArgs.Length is 2 && startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
-                    {
-                        NavigateTo(typeof(WinGetPage));
-                    }
-                    else if (startupArgs.Length is 2 && startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
-                    {
-                        NavigateTo(typeof(AppManagerPage));
-                    }
-                    else if (startupArgs.Length is 2 && startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
-                    {
-                        NavigateTo(typeof(DownloadPage));
                     }
                 }
             }
@@ -807,21 +809,23 @@ namespace GetStoreApp.Views.Windows
                 string[] startupArgs = dataContent.Split(' ');
 
                 // 正常启动重定向获得的内容
-                if (startupArgs.Length >= 1)
+                if (startupArgs.Length is 1 || startupArgs.Length is 2)
                 {
+                    // 正常启动
                     if (startupArgs[0] is "Launch")
                     {
-                        DispatcherQueue.TryEnqueue(async () =>
-                        {
-                            Show();
+                        Show();
 
-                            // 应用已经启动
-                            if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                        // 应用已经启动
+                        if (startupArgs.Length is 2 && startupArgs[1] is "IsRunning")
+                        {
+                            DispatcherQueue.TryEnqueue(async () =>
                             {
                                 await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
-                            }
-                        });
+                            });
+                        }
                     }
+                    // 打开设置
                     else if (startupArgs[0] is "Settings")
                     {
                         DispatcherQueue.TryEnqueue(() =>
@@ -832,9 +836,36 @@ namespace GetStoreApp.Views.Windows
                             }
                         });
                     }
+                    // 跳转列表或辅助磁贴启动重定向获得的内容
+                    else if (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile")
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            if (startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
+                            {
+                                NavigateTo(typeof(StorePage));
+                            }
+                            else if (startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
+                            {
+                                NavigateTo(typeof(AppUpdatePage));
+                            }
+                            else if (startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
+                            {
+                                NavigateTo(typeof(WinGetPage));
+                            }
+                            else if (startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
+                            {
+                                NavigateTo(typeof(AppManagerPage));
+                            }
+                            else if (startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
+                            {
+                                NavigateTo(typeof(DownloadPage));
+                            }
+                        });
+                    }
                 }
                 // 带有命令参数启动重定向获得的内容
-                else if (startupArgs.Length >= 2 && startupArgs[0] is "Console")
+                else if (startupArgs.Length > 2 && startupArgs[0] is "Console")
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -849,33 +880,6 @@ namespace GetStoreApp.Views.Windows
                             storePage.QueryLinks.SelectedChannel = Convert.ToInt32(startupArgs[2]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(startupArgs[2])];
                             storePage.QueryLinks.LinkText = startupArgs[3] is "PlaceHolderText" ? string.Empty : startupArgs[3];
                             storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
-                        }
-                    });
-                }
-                // 跳转列表或辅助磁贴启动重定向获得的内容
-                else if (startupArgs.Length >= 1 && (startupArgs[0] is "JumpList" || startupArgs[0] is "SecondaryTile"))
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        if (startupArgs.Length is 2 && startupArgs[1] is "Store" && GetCurrentPageType() != typeof(StorePage))
-                        {
-                            NavigateTo(typeof(StorePage));
-                        }
-                        else if (startupArgs.Length is 2 && startupArgs[1] is "AppUpdate" && GetCurrentPageType() != typeof(AppUpdatePage))
-                        {
-                            NavigateTo(typeof(AppUpdatePage));
-                        }
-                        else if (startupArgs.Length is 2 && startupArgs[1] is "WinGet" && GetCurrentPageType() != typeof(WinGetPage))
-                        {
-                            NavigateTo(typeof(WinGetPage));
-                        }
-                        else if (startupArgs.Length is 2 && startupArgs[1] is "AppManager" && GetCurrentPageType() != typeof(AppManagerPage))
-                        {
-                            NavigateTo(typeof(AppManagerPage));
-                        }
-                        else if (startupArgs.Length is 2 && startupArgs[1] is "Download" && GetCurrentPageType() != typeof(DownloadPage))
-                        {
-                            NavigateTo(typeof(DownloadPage));
                         }
                     });
                 }
