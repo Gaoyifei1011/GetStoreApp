@@ -156,12 +156,12 @@ namespace GetStoreAppWebView.Pages
             if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
                 EnableBackdropMaterial = true;
-                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
+                VisualStateManager.GoToState(WebViewPageRoot, "MicaBackdrop", false);
             }
             else
             {
                 EnableBackdropMaterial = false;
-                VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
+                VisualStateManager.GoToState(WebViewPageRoot, "DesktopAcrylicBackdrop", false);
             }
 
             windowPositionChangedEventHandler = new EventHandler(OnWindowPositionChanged);

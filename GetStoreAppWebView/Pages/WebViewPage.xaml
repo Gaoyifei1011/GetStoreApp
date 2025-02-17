@@ -7,7 +7,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:root="using:GetStoreAppWebView.Services.Root"
     xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
-    x:Name="MainPageRoot"
+    x:Name="WebViewPageRoot"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     mc:Ignorable="d">
@@ -206,16 +206,12 @@
             <VisualStateGroup>
                 <VisualState x:Name="MicaBackdrop">
                     <VisualState.Setters>
-                        <Setter Target="MainPageRoot.Background">
-                            <Setter.Value>
-                                <Setter Target="MainPageRoot.Background" Value="Transparent" />
-                            </Setter.Value>
-                        </Setter>
+                        <Setter Target="WebViewPageRoot.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DesktopAcrylicBackdrop">
                     <VisualState.Setters>
-                        <Setter Target="MainPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                        <Setter Target="WebViewPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
