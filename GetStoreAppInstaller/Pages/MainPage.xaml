@@ -14,6 +14,7 @@
     xmlns:service="using:GetStoreAppInstaller.Services.Controls.Settings"
     xmlns:sys="using:System"
     x:Name="MainPageRoot"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="{x:Bind EnableBackdropMaterial, Mode=OneWay}"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     AllowDrop="{x:Bind CanDragFile, Mode=OneWay}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
@@ -926,7 +927,7 @@
                                             <MenuFlyoutSeparator
                                                 Grid.Row="3"
                                                 Grid.ColumnSpan="3"
-                                                Margin="6,0,0,0"
+                                                Margin="6,0,0,3"
                                                 Background="{ThemeResource CardStrokeColorDefaultBrush}" />
 
                                             <FontIcon
@@ -2430,14 +2431,14 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="BackgroundDefault">
-                    <VisualState.Setters>
-                        <Setter Target="MainPageRoot.Background" Value="{ThemeResource DefaultBackgroundColorBrush}" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="BackgroundTransparent">
+                <VisualState x:Name="MicaBackdrop">
                     <VisualState.Setters>
                         <Setter Target="MainPageRoot.Background" Value="Transparent" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DesktopAcrylicBackdrop">
+                    <VisualState.Setters>
+                        <Setter Target="MainPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
