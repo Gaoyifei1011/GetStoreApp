@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
-using GetStoreApp.WindowsAPI.PInvoke.User32;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.IO;

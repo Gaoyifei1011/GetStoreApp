@@ -1,4 +1,4 @@
-﻿namespace GetStoreAppShellExtension.WindowsAPI.PInvoke.User32
+﻿namespace GetStoreAppShellExtension.WindowsAPI.PInvoke.Shell32
 {
     /// <summary>
     /// 使用 ShowWindow 显示窗口的不同方式的枚举。

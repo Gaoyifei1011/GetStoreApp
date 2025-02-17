@@ -1103,42 +1103,16 @@ namespace GetStoreAppInstaller.Pages
             // 正常启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
-                if (appActivationArguments.Data is WinRT.IInspectable inspectable)
-                {
-                    string executableFileName = Path.GetFileName(Environment.ProcessPath);
-                    string[] argumentsArray = Environment.GetCommandLineArgs();
+                string executableFileName = Path.GetFileName(Environment.ProcessPath);
+                string[] argumentsArray = Environment.GetCommandLineArgs();
 
-                    if (argumentsArray.Length >= 2 && argumentsArray[0].Contains(executableFileName))
-                    {
-                        fileName = argumentsArray[1];
-                    }
-                    else if (argumentsArray.Length >= 1)
-                    {
-                        fileName = argumentsArray[0];
-                    }
+                if (argumentsArray.Length >= 2 && argumentsArray[0].Contains(executableFileName))
+                {
+                    fileName = argumentsArray[1];
                 }
-                else if (appActivationArguments.Data is LaunchActivatedEventArgs launchActivatedEventArgs)
+                else if (argumentsArray.Length >= 1)
                 {
-                    if (!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
-                    {
-                        string executableFileName = Path.GetFileName(Environment.ProcessPath);
-                        string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
-
-                        if (launchActivatedEventArgs.Arguments.Contains(executableFileName))
-                        {
-                            if (argumentsArray.Length >= 2)
-                            {
-                                fileName = argumentsArray[1];
-                            }
-                        }
-                        else
-                        {
-                            if (argumentsArray.Length >= 1)
-                            {
-                                fileName = argumentsArray[0];
-                            }
-                        }
-                    }
+                    fileName = argumentsArray[0];
                 }
 
                 if (!string.IsNullOrEmpty(fileName))

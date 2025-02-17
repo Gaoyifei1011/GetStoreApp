@@ -2,7 +2,6 @@
 using GetStoreAppShellExtension.Services.Root;
 using GetStoreAppShellExtension.WindowsAPI.ComTypes;
 using GetStoreAppShellExtension.WindowsAPI.PInvoke.Shell32;
-using GetStoreAppShellExtension.WindowsAPI.PInvoke.User32;
 using System;
 using System.IO;
 using System.Runtime.InteropServices.Marshalling;

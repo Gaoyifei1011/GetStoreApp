@@ -1,5 +1,4 @@
-﻿using GetStoreApp.WindowsAPI.PInvoke.User32;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace GetStoreApp.WindowsAPI.PInvoke.Shell32
