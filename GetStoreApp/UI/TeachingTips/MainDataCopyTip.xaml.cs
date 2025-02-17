@@ -8,9 +8,9 @@ namespace GetStoreApp.UI.TeachingTips
     /// <summary>
     /// 数据复制应用内通知
     /// </summary>
-    public sealed partial class DataCopyTip : TeachingTip
+    public sealed partial class MainDataCopyTip : TeachingTip
     {
-        public DataCopyTip(DataCopyKind dataCopyKind, bool isSuccessfully = false, bool isMultiSelected = false, int count = 0)
+        public MainDataCopyTip(DataCopyKind dataCopyKind, bool isSuccessfully = false, bool isMultiSelected = false, int count = 0)
         {
             InitializeComponent();
             InitializeContent(dataCopyKind, isSuccessfully, isMultiSelected, count);

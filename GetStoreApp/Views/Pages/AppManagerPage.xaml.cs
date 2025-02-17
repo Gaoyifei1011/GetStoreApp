@@ -566,7 +566,7 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is string aumid && !string.IsNullOrEmpty(aumid))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(aumid);
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppUserModelId, copyResult));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.AppUserModelId, copyResult));
             }
         }
 
@@ -594,7 +594,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyDependencyInformationCopyStringList));
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyInformation, copyResult));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.DependencyInformation, copyResult));
             }
         }
 
@@ -606,7 +606,7 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is string displayName && !string.IsNullOrEmpty(displayName))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(displayName);
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.DependencyName, copyResult));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.DependencyName, copyResult));
             }
         }
 
@@ -1276,7 +1276,7 @@ namespace GetStoreApp.Views.Pages
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyStringList));
-            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.PackageInformation, copyResult));
+            await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.PackageInformation, copyResult));
         }
 
         #endregion 第二部分：应用管理页面——挂载的事件

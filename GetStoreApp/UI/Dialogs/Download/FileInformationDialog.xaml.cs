@@ -108,7 +108,7 @@ namespace GetStoreApp.UI.Dialogs.Download
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
             sender.Hide();
-            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.FileInformation, copyResult));
+            await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.FileInformation, copyResult));
         }
     }
 }

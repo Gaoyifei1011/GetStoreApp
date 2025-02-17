@@ -190,7 +190,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
             sender.Hide();
-            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
+            await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.AppInformation, copyResult));
         }
     }
 }

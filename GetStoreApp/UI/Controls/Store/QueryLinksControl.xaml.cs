@@ -289,7 +289,7 @@ namespace GetStoreApp.UI.Controls.Store
                 string copyContent = string.Join('\t', new object[] { historyItem.HistoryAppName, historyItem.HistoryType.Value, historyItem.HistoryChannel.Value, historyItem.HistoryLink });
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.History, copyResult, false));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.History, copyResult, false));
             }
         }
 
@@ -416,7 +416,7 @@ namespace GetStoreApp.UI.Controls.Store
             if (args.Parameter is string fileLink && !string.IsNullOrEmpty(fileLink))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileLink);
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, false));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.ResultLink, copyResult, false));
             }
         }
 
@@ -434,7 +434,7 @@ namespace GetStoreApp.UI.Controls.Store
                     );
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, false));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.ResultInformation, copyResult, false));
             }
         }
 
@@ -534,7 +534,7 @@ namespace GetStoreApp.UI.Controls.Store
             appInformationCopyStringList.Add(AppInfo.Description);
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
-            await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.AppInformation, copyResult));
+            await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.AppInformation, copyResult));
         }
 
         /// <summary>
@@ -670,7 +670,7 @@ namespace GetStoreApp.UI.Controls.Store
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
             }
         }
 
@@ -724,7 +724,7 @@ namespace GetStoreApp.UI.Controls.Store
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
-                await TeachingTipHelper.ShowAsync(new DataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
+                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
             }
         }
 
