@@ -226,7 +226,7 @@
   "ParsingApp": "正在解析应用中，请稍候...",
   "PrepareInstall": "准备安装",
   "Publisher": "发布者：",
-  "RunningAdministrator": "(Administrator)",
+  "RunningAdministrator": "（管理员）",
   "SelectDependencyPackage": "选择依赖包",
   "SelectPackage": "选择安装包",
   "Settings": "设置",
