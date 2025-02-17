@@ -4,6 +4,7 @@ using GetStoreAppInstaller.Services.Controls.Settings;
 using GetStoreAppInstaller.Services.Root;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32;
+using GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Shell32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.User32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Uxtheme;
@@ -17,6 +18,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,9 +44,12 @@ namespace GetStoreAppInstaller
     /// </summary>
     public class Program
     {
+        private static readonly Guid CLSID_ApplicationActivationManager = new("45BA127D-10A8-46EA-8AB7-56EA9078943C");
         private static SUBCLASSPROC mainWindowSubClassProc;
         private static InputNonClientPointerSource inputNonClientPointerSource;
         private static InputActivationListener inputActivationListener;
+        private static readonly PackageManager packageManager = new();
+        private static IApplicationActivationManager applicationActivationManager;
 
         public static StrategyBasedComWrappers StrategyBasedComWrappers { get; } = new();
 
@@ -85,7 +90,31 @@ namespace GetStoreAppInstaller
             // 初始化应用启动参数
             AppActivationArguments appActivationArguments = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
 
-            if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
+            if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
+            {
+                if (RuntimeHelper.IsElevated)
+                {
+                    string[] argumentsArray = Environment.GetCommandLineArgs();
+
+                    if (argumentsArray.Length is 3 && argumentsArray[2] is "--elevated")
+                    {
+                        if (Ole32Library.CoCreateInstance(CLSID_ApplicationActivationManager, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IApplicationActivationManager).GUID, out IntPtr applicationActivationManagerPtr) is 0)
+                        {
+                            applicationActivationManager = (IApplicationActivationManager)StrategyBasedComWrappers.GetOrCreateObjectForComInstance(applicationActivationManagerPtr, CreateObjectFlags.Unwrap);
+                        }
+
+                        foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
+                        {
+                            if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
+                            {
+                                applicationActivationManager.ActivateApplication("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreAppInstaller", Environment.GetCommandLineArgs()[1], ACTIVATEOPTIONS.AO_NONE, out _);
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
+            else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)
             {
                 return;
             }
@@ -340,7 +369,6 @@ namespace GetStoreAppInstaller
 
             AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
             AppInstallService.InitializeAppInstall();
-            BackdropService.InitializeBackdrop();
             ThemeService.InitializeTheme();
         }
 

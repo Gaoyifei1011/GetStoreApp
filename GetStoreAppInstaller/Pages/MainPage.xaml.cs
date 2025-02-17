@@ -7,7 +7,6 @@ using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Models;
 using GetStoreAppInstaller.Services.Controls.Settings;
 using GetStoreAppInstaller.Services.Root;
-using GetStoreAppInstaller.UI.Backdrop;
 using GetStoreAppInstaller.UI.TeachingTips;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32;
@@ -34,6 +33,7 @@ using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
+using Windows.Foundation.Metadata;
 using Windows.Globalization;
 using Windows.Management.Core;
 using Windows.Management.Deployment;
@@ -41,6 +41,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.System;
+using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -79,6 +80,22 @@ namespace GetStoreAppInstaller.Pages
 
         private string fileName = string.Empty;
         private IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> installPackageWithProgress;
+
+        private bool _enableBackdropMaterial;
+
+        public bool EnableBackdropMaterial
+        {
+            get { return _enableBackdropMaterial; }
+
+            set
+            {
+                if (!Equals(_enableBackdropMaterial, value))
+                {
+                    _enableBackdropMaterial = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EnableBackdropMaterial)));
+                }
+            }
+        }
 
         private bool _isWindowMaximized;
 
@@ -845,29 +862,15 @@ namespace GetStoreAppInstaller.Pages
             Program.SetTitleBarTheme(ActualTheme);
             Program.SetClassicMenuTheme(ActualTheme);
 
-            if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[1]))
+            if (ApiInformation.IsMethodPresent(typeof(Compositor).FullName, nameof(Compositor.TryCreateBlurredWallpaperBackdropBrush)))
             {
-                Background = new MicaBrush(MicaKind.Base, AlwaysShowBackdropService.AlwaysShowBackdropValue);
-            }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[2]))
-            {
-                Background = new MicaBrush(MicaKind.BaseAlt, AlwaysShowBackdropService.AlwaysShowBackdropValue);
-            }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[3]))
-            {
-                Background = new DesktopAcrylicBrush(DesktopAcrylicKind.Default, AlwaysShowBackdropService.AlwaysShowBackdropValue, true);
-            }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[4]))
-            {
-                Background = new DesktopAcrylicBrush(DesktopAcrylicKind.Base, AlwaysShowBackdropService.AlwaysShowBackdropValue, true);
-            }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[5]))
-            {
-                Background = new DesktopAcrylicBrush(DesktopAcrylicKind.Thin, AlwaysShowBackdropService.AlwaysShowBackdropValue, true);
+                EnableBackdropMaterial = true;
+                VisualStateManager.GoToState(MainPageRoot, "MicaBackdrop", false);
             }
             else
             {
-                VisualStateManager.GoToState(this, "BackgroundDefault", false);
+                EnableBackdropMaterial = false;
+                VisualStateManager.GoToState(MainPageRoot, "DesktopAcrylicBackdrop", false);
             }
 
             if (Ole32Library.CoCreateInstance(CLSID_AppxFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxFactory3).GUID, out IntPtr appxFactoryPtr) is 0)
@@ -1100,40 +1103,55 @@ namespace GetStoreAppInstaller.Pages
             // 正常启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
-                LaunchActivatedEventArgs launchActivatedEventArgs = appActivationArguments.Data is WinRT.IInspectable inspectable ? LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr) : appActivationArguments.Data as LaunchActivatedEventArgs;
-
-                if (!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
+                if (appActivationArguments.Data is WinRT.IInspectable inspectable)
                 {
                     string executableFileName = Path.GetFileName(Environment.ProcessPath);
-                    string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
+                    string[] argumentsArray = Environment.GetCommandLineArgs();
 
-                    if (launchActivatedEventArgs.Arguments.Contains(executableFileName))
+                    if (argumentsArray.Length >= 2 && argumentsArray[0].Contains(executableFileName))
                     {
-                        if (argumentsArray.Length >= 2)
+                        fileName = argumentsArray[1];
+                    }
+                    else if (argumentsArray.Length >= 1)
+                    {
+                        fileName = argumentsArray[0];
+                    }
+                }
+                else if (appActivationArguments.Data is LaunchActivatedEventArgs launchActivatedEventArgs)
+                {
+                    if (!string.IsNullOrEmpty(launchActivatedEventArgs.Arguments))
+                    {
+                        string executableFileName = Path.GetFileName(Environment.ProcessPath);
+                        string[] argumentsArray = launchActivatedEventArgs.Arguments.Split(' ');
+
+                        if (launchActivatedEventArgs.Arguments.Contains(executableFileName))
                         {
-                            fileName = argumentsArray[1];
+                            if (argumentsArray.Length >= 2)
+                            {
+                                fileName = argumentsArray[1];
+                            }
+                        }
+                        else
+                        {
+                            if (argumentsArray.Length >= 1)
+                            {
+                                fileName = argumentsArray[0];
+                            }
                         }
                     }
-                    else
+                }
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    IsParseEmpty = false;
+                    ResetResult();
+
+                    Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                     {
-                        if (argumentsArray.Length >= 1)
-                        {
-                            fileName = argumentsArray[0];
-                        }
-                    }
+                        return await ParsePackagedAppAsync(fileName);
+                    });
 
-                    if (!string.IsNullOrEmpty(fileName))
-                    {
-                        IsParseEmpty = false;
-                        ResetResult();
-
-                        Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
-                        {
-                            return await ParsePackagedAppAsync(fileName);
-                        });
-
-                        await UpdateResultAsync(parseResult);
-                    }
+                    await UpdateResultAsync(parseResult);
                 }
             }
             // 从文件处启动
@@ -1500,7 +1518,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(InstallFailedInformation);
 
-                await TeachingTipHelper.ShowAsync(new InstallerDataCopyTip(copyResult, false));
+                await TeachingTipHelper.ShowAsync(new InstallerDataCopyTip(copyResult));
             }
         }
 
