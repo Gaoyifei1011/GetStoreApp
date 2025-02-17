@@ -9,27 +9,22 @@ namespace GetStoreAppInstaller.UI.TeachingTips
     /// </summary>
     public sealed partial class InstallerDataCopyTip : TeachingTip
     {
-        public InstallerDataCopyTip(bool isSuccessfully = false, bool isMultiSelected = false, int count = 0)
+        public InstallerDataCopyTip(bool isSuccessfully = false)
         {
             InitializeComponent();
-            InitializeContent(isSuccessfully, isMultiSelected, count);
+            InitializeContent(isSuccessfully);
         }
 
         /// <summary>
         /// 初始化内容
         /// </summary>
-        private void InitializeContent(bool isSuccessfully, bool isMultiSelected, int count)
+        private void InitializeContent(bool isSuccessfully)
         {
             if (isSuccessfully)
             {
                 CopySuccess.Visibility = Visibility.Visible;
                 CopyFailed.Visibility = Visibility.Collapsed;
                 CopySuccess.Text = ResourceService.GetLocalized("Notification/ErrorInformationSuccessfully");
-            }
-            else
-            {
-                CopySuccess.Visibility = Visibility.Collapsed;
-                CopyFailed.Visibility = Visibility.Visible;
             }
         }
     }
