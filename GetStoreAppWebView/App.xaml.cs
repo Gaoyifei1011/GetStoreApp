@@ -100,7 +100,9 @@ namespace GetStoreAppWebView
                     }
                     finally
                     {
-                        ResultService.SaveResult(StorageDataKind.TaskbarPinnedResult, pinResult.ToString());
+                        List<string> dataList = [];
+                        dataList.Add(Convert.ToString(pinResult));
+                        ResultService.SaveResult(StorageDataKind.TaskbarPinnedResult, dataList);
                         ApplicationData.Current.SignalDataChanged();
                         await appWindow.CloseAsync();
                         appWindowList.Remove(appWindow.UIContext);

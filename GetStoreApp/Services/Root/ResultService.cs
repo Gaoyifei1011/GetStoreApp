@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using System;
+using System.Collections.Generic;
 using Windows.Storage;
 
 namespace GetStoreApp.Services.Root
@@ -10,6 +11,7 @@ namespace GetStoreApp.Services.Root
     public static class ResultService
     {
         private const string result = "Result";
+        private const string parameter = "Parameter";
 
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer resultContainer;
@@ -33,18 +35,50 @@ namespace GetStoreApp.Services.Root
         /// <summary>
         /// 读取结果存储信息
         /// </summary>
-        public static string ReadResult(StorageDataKind dataKind)
+        public static List<string> ReadResult(StorageDataKind dataKind)
         {
-            return resultContainer.Values[dataKind.ToString()] is not null ? resultContainer.Values[dataKind.ToString()].ToString() : string.Empty;
+            List<string> resultList = [];
+
+            if (resultContainer.Values[nameof(StorageDataKind)].Equals(dataKind.ToString()) && resultContainer.Containers.TryGetValue(parameter, out ApplicationDataContainer parameterContainer))
+            {
+                for (int index = 0; index < parameterContainer.Values.Count; index++)
+                {
+                    if (parameterContainer.Values.TryGetValue(string.Format("Data{0}", index + 1), out object value))
+                    {
+                        resultList.Add(Convert.ToString(value));
+                    }
+                }
+            }
+
+            return resultList;
         }
 
         /// <summary>
         /// 保存结果存储信息
         /// </summary>
-        public static void SaveResult(StorageDataKind dataKind, string value)
+        public static void SaveResult(StorageDataKind dataKind, List<string> dataList)
         {
             resultContainer.Values[nameof(StorageDataKind)] = dataKind.ToString();
-            resultContainer.Values[dataKind.ToString()] = value;
+
+            if (dataKind is StorageDataKind.None)
+            {
+                if (resultContainer.Containers.ContainsKey(parameter))
+                {
+                    resultContainer.DeleteContainer(parameter);
+                }
+            }
+            else
+            {
+                if (dataList is not null)
+                {
+                    ApplicationDataContainer parameterContainer = resultContainer.CreateContainer(parameter, ApplicationDataCreateDisposition.Always);
+
+                    for (int index = 0; index < dataList.Count; index++)
+                    {
+                        parameterContainer.Values[string.Format("Data{0}", index + 1)] = dataList[index];
+                    }
+                }
+            }
         }
     }
 }

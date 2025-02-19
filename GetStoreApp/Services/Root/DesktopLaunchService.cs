@@ -33,7 +33,7 @@ namespace GetStoreApp.Services.Root
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
                 List<string> argumentsList = [];
-                string sendData = string.Empty;
+                List<string> dataList = [];
 
                 string[] argumentsArray = Environment.GetCommandLineArgs();
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
@@ -53,7 +53,12 @@ namespace GetStoreApp.Services.Root
                 // 正常启动
                 if (argumentsList.Count is 0)
                 {
-                    sendData = isLaunched ? string.Join(' ', "Launch", "IsRunning") : "Launch";
+                    dataList.Add("Launch");
+
+                    if (isLaunched)
+                    {
+                        dataList.Add("IsRunning");
+                    }
                 }
                 else if (argumentsList.Count is 1)
                 {
@@ -62,14 +67,13 @@ namespace GetStoreApp.Services.Root
                     {
                         return;
                     }
-                    else if (argumentsList[0] is "Settings")
-                    {
-                        sendData = argumentsList[0];
-                    }
                     // 带参数启动：只有一个参数，直接输入链接
                     else
                     {
-                        sendData = string.Join(' ', "Console", -1, -1, argumentsList[0]);
+                        dataList.Add("Console");
+                        dataList.Add("-1");
+                        dataList.Add("-1");
+                        dataList.Add(argumentsList[0]);
                     }
                 }
                 else if (argumentsList.Count is 2)
@@ -84,7 +88,10 @@ namespace GetStoreApp.Services.Root
                         }
                         else
                         {
-                            sendData = string.Join(' ', argumentsList);
+                            foreach (string argument in argumentsList)
+                            {
+                                dataList.Add(argument);
+                            }
                         }
                     }
                     else
@@ -105,7 +112,10 @@ namespace GetStoreApp.Services.Root
                         int channelNameIndex = channelNameParameterIndex is -1 ? -1 : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(argumentsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
                         string link = linkParameterIndex is -1 ? null : argumentsList[linkParameterIndex + 1];
 
-                        sendData = string.Join(' ', "Console", typeNameIndex, channelNameIndex, string.IsNullOrEmpty(link) ? "PlaceHolderText" : argumentsList[5]);
+                        dataList.Add("Console");
+                        dataList.Add(Convert.ToString(typeNameIndex));
+                        dataList.Add(Convert.ToString(channelNameIndex));
+                        dataList.Add(string.IsNullOrEmpty(link) ? "PlaceHolderText" : argumentsList[5]);
                     }
                     else
                     {
@@ -113,7 +123,7 @@ namespace GetStoreApp.Services.Root
                     }
                 }
 
-                ResultService.SaveResult(StorageDataKind.Launch, sendData);
+                ResultService.SaveResult(StorageDataKind.Launch, dataList);
             }
             // 通过共享目标启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ShareTarget)
@@ -124,13 +134,38 @@ namespace GetStoreApp.Services.Root
 
                 if (shareOperation.Data.Contains(StandardDataFormats.Uri))
                 {
-                    string sendData = string.Join(' ', -1, -1, Convert.ToString(await shareOperation.Data.GetUriAsync()));
-                    ResultService.SaveResult(StorageDataKind.ShareTarget, sendData);
+                    List<string> dataList = [];
+                    dataList.Add("-1");
+                    dataList.Add("-1");
+                    dataList.Add(Convert.ToString(await shareOperation.Data.GetUriAsync()));
+                    ResultService.SaveResult(StorageDataKind.ShareTarget, dataList);
                 }
                 else
                 {
                     Environment.Exit(0);
                 }
+            }
+            // 通过协议启动
+            else if (appActivationArguments.Kind is ExtendedActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs protocolActivatedEventArgs = appActivationArguments.Data as ProtocolActivatedEventArgs;
+                List<string> dataList = [];
+
+                if (protocolActivatedEventArgs.Data is not null && protocolActivatedEventArgs.Data.TryGetValue("Parameter", out object parameterobj))
+                {
+                    dataList.Add(Convert.ToString(parameterobj));
+                }
+                else
+                {
+                    dataList.Add("Launch");
+
+                    if (isLaunched)
+                    {
+                        dataList.Add("IsRunning");
+                    }
+                }
+
+                ResultService.SaveResult(StorageDataKind.Protocol, dataList);
             }
             // 应用通知启动
             else if (appActivationArguments.Kind is ExtendedActivationKind.ToastNotification)

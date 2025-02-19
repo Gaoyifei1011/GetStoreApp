@@ -2,6 +2,7 @@
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Windows.AppNotifications;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Data.Xml.Dom;
@@ -62,13 +63,15 @@ namespace GetStoreApp.Services.Root
             }
             else if (notificationArgs.Contains("OpenApp"))
             {
-                string sendData = string.Join(' ', "ToastNotification", "OpenApp");
-                ResultService.SaveResult(StorageDataKind.ToastNotification, sendData);
+                List<string> dataList = [];
+                dataList.Add("OpenApp");
+                ResultService.SaveResult(StorageDataKind.ToastNotification, dataList);
             }
             else if (notificationArgs.Contains("ViewDownloadPage"))
             {
-                string sendData = string.Join(' ', "ToastNotification", "ViewDownloadPage");
-                ResultService.SaveResult(StorageDataKind.ToastNotification, sendData);
+                List<string> dataList = [];
+                dataList.Add("ViewDownloadPage");
+                ResultService.SaveResult(StorageDataKind.ToastNotification, dataList);
             }
         }
 

@@ -8,7 +8,8 @@
         None = 0,
         Launch = 1,
         ShareTarget = 2,
-        ToastNotification = 3,
-        TaskbarPinnedResult = 4,
+        Protocol = 3,
+        ToastNotification = 4,
+        TaskbarPinnedResult = 5,
     }
 }
