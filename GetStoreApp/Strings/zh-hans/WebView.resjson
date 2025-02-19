@@ -10,6 +10,7 @@
   "OpenWithBrowser": "使用浏览器打开",
   "PinAppToTaskbar": "固定应用到任务栏提示",
   "Refresh": "刷新",
+  "Settings": "设置",
   "TaskbarPinTip": "请根据系统的提示进行操作",
   "Title": "网页浏览器",
   "WarningSuitableWebView2NotFound": "未检测到合适版本的 Microsoft Edge WebView2 运行时。",

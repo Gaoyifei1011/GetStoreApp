@@ -32,6 +32,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Foundation.Metadata;
 using Windows.Globalization;
@@ -64,14 +65,12 @@ namespace GetStoreAppInstaller.Pages
         private readonly string unknown = string.Format("[{0}]", ResourceService.GetLocalized("Installer/unknown"));
         private readonly string yes = ResourceService.GetLocalized("Installer/Yes");
         private readonly string no = ResourceService.GetLocalized("Installer/No");
-        private readonly Guid CLSID_ApplicationActivationManager = new("45BA127D-10A8-46EA-8AB7-56EA9078943C");
 
         private readonly Guid CLSID_AppxFactory = new("5842A140-FF9F-4166-8F5C-62F5B7B0C781");
         private readonly Guid CLSID_AppxBundleFactory = new("378E0446-5384-43B7-8877-E7DBDD883446");
         private readonly PackageManager packageManager = new();
         private readonly AppActivationArguments appActivationArguments;
 
-        private readonly IApplicationActivationManager applicationActivationManager;
         private readonly IAppxFactory3 appxFactory;
         private readonly IAppxBundleFactory2 appxBundleFactory;
 
@@ -868,11 +867,6 @@ namespace GetStoreAppInstaller.Pages
             {
                 appxBundleFactory = (IAppxBundleFactory2)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(appxBundleFactoryPtr, CreateObjectFlags.Unwrap);
             }
-
-            if (Ole32Library.CoCreateInstance(CLSID_ApplicationActivationManager, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IApplicationActivationManager).GUID, out IntPtr applicationActivationManagerPtr) is 0)
-            {
-                applicationActivationManager = (IApplicationActivationManager)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(applicationActivationManagerPtr, CreateObjectFlags.Unwrap);
-            }
         }
 
         #region 第一部分：重写父类事件
@@ -1180,29 +1174,12 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 打开设置
         /// </summary>
-        private void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
         {
-            if (applicationActivationManager is not null)
+            await Launcher.LaunchUriAsync(new Uri("getstoreapp:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Windows.ApplicationModel.Package.Current.Id.FamilyName }, new ValueSet()
             {
-                Task.Run(() =>
-                {
-                    foreach (Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
-                    {
-                        if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
-                        {
-                            IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
-                            foreach (AppListEntry appListEntry in appListEntryList)
-                            {
-                                if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
-                                {
-                                    applicationActivationManager.ActivateApplication(appListEntry.AppUserModelId, "Settings", ACTIVATEOPTIONS.AO_NONE, out _);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                });
-            }
+                { "Parameter", "Settings" }
+            });
         }
 
         /// <summary>

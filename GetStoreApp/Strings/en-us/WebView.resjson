@@ -10,6 +10,7 @@
   "OpenWithBrowser": "Open With Browser",
   "PinAppToTaskbar": "Pin app to taskbar tip",
   "Refresh": "Refresh",
+  "Settings": "Settings",
   "TaskbarPinTip": "Please follow the instructions of the system",
   "Title": "WebBrowser",
   "WarningSuitableWebView2NotFound": "A suitable version of Microsoft Edge WebView2 Runtime was not detected.",

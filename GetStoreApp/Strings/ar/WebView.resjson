@@ -10,6 +10,7 @@
   "OpenWithBrowser": "فتح باستخدام المتصفح",
   "PinAppToTaskbar": "تثبيت التطبيق على شريط المهام",
   "Refresh": "تحديث",
+  "Settings": "Settings",
   "TaskbarPinTip": "يرجى اتباع تعليمات النظام",
   "Title": "متصفح الويب",
   "WarningSuitableWebView2NotFound": "لم يتم الكشف عن إصدار مناسب من Microsoft Edge WebView2 Runtime.",

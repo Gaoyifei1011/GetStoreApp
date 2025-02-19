@@ -10,8 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Foundation.Metadata;
 using Windows.Storage;
@@ -327,6 +329,17 @@ namespace GetStoreAppWebView.Pages
                     await WebView2Browser.CoreWebView2.ClearServerCertificateErrorActionsAsync();
                 }
             }
+        }
+
+        /// <summary>
+        /// 打开设置
+        /// </summary>
+        private async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("getstoreapp:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+            {
+                { "Parameter", "Settings" }
+            });
         }
 
         #endregion 第二部分：浏览器窗口挂载的事件
