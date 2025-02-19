@@ -66,6 +66,11 @@ namespace GetStoreAppInstaller
         {
             ComWrappersSupport.InitializeComWrappers();
 
+            if (Ole32Library.CoCreateInstance(CLSID_ApplicationActivationManager, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IApplicationActivationManager).GUID, out IntPtr applicationActivationManagerPtr) is 0)
+            {
+                applicationActivationManager = (IApplicationActivationManager)StrategyBasedComWrappers.GetOrCreateObjectForComInstance(applicationActivationManagerPtr, CreateObjectFlags.Unwrap);
+            }
+
             if (!RuntimeHelper.IsMSIX)
             {
                 PackageManager packageManager = new();
@@ -73,15 +78,8 @@ namespace GetStoreAppInstaller
                 {
                     if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
                     {
-                        IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
-                        foreach (AppListEntry appListEntry in appListEntryList)
-                        {
-                            if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreAppInstaller"))
-                            {
-                                appListEntry.LaunchAsync().GetResults();
-                                break;
-                            }
-                        }
+                        applicationActivationManager.ActivateApplication("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreAppInstaller", null, ACTIVATEOPTIONS.AO_NONE, out _);
+                        break;
                     }
                 }
                 return;
@@ -98,16 +96,12 @@ namespace GetStoreAppInstaller
 
                     if (argumentsArray.Length is 3 && argumentsArray[2] is "--elevated")
                     {
-                        if (Ole32Library.CoCreateInstance(CLSID_ApplicationActivationManager, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IApplicationActivationManager).GUID, out IntPtr applicationActivationManagerPtr) is 0)
-                        {
-                            applicationActivationManager = (IApplicationActivationManager)StrategyBasedComWrappers.GetOrCreateObjectForComInstance(applicationActivationManagerPtr, CreateObjectFlags.Unwrap);
-                        }
-
                         foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
                         {
                             if (package.Id.FullName.Contains("Gaoyifei1011.GetStoreApp"))
                             {
-                                applicationActivationManager.ActivateApplication("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreAppInstaller", Environment.GetCommandLineArgs()[1], ACTIVATEOPTIONS.AO_NONE, out _);
+                                applicationActivationManager.ActivateApplication("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreAppInstaller", argumentsArray[1], ACTIVATEOPTIONS.AO_NONE, out _);
+                                break;
                             }
                         }
                         return;
