@@ -41,7 +41,7 @@ namespace GetStoreApp
         public static void Main()
         {
             ComWrappersSupport.InitializeComWrappers();
-            Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 0x20, 0);
+            Ole32Library.CoInitializeSecurity(0, -1, 0, 0, 0, 3, 0, 32, 0);
 
             if (!RuntimeHelper.IsMSIX)
             {
