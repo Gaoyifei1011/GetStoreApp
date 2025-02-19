@@ -7,6 +7,7 @@
   "MainAppDescription": "GetStoreApp",
   "MainAppDisplayName": "GetStoreApp",
   "MainAppShortDisplayName": "GetStoreApp",
+  "MainProtocolName": "GetStoreApp",
   "Package": "Windows app package",
   "PackageBundle": "Windows app package bundle",
   "PackageDisplayName": "GetStoreApp",

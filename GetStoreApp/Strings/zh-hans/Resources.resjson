@@ -7,6 +7,7 @@
   "MainAppDescription": "获取商店应用",
   "MainAppDisplayName": "获取商店应用",
   "MainAppShortDisplayName": "获取商店应用",
+  "MainProtocolName": "获取商店应用",
   "Package": "Windows 应用包",
   "PackageBundle": "Windows 应用捆绑包",
   "PackageDisplayName": "获取商店应用",
