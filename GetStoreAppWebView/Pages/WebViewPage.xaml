@@ -30,10 +30,26 @@
             x:FieldModifier="public"
             Background="Transparent">
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="22" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!--  标题栏图标  -->
+            <Image
+                x:Name="TitleBarIcon"
+                Grid.Column="0"
+                Width="18"
+                Height="18"
+                Margin="2,3,0,0"
+                HorizontalAlignment="Left"
+                Source="ms-appx:///Assets/Icon/Control/Web.png" />
+
             <!--  标题栏应用名称  -->
             <TextBlock
+                x:Name="TitleBarTextBlock"
                 Grid.Column="1"
-                Margin="0,2,0,0"
+                Margin="12,2,0,0"
                 VerticalAlignment="Center"
                 Style="{StaticResource CaptionTextBlockStyle}"
                 Text="{x:Bind root:ResourceService.GetLocalized('WebView/Title')}"
@@ -223,6 +239,21 @@
                 <VisualState x:Name="DesktopAcrylicBackdrop">
                     <VisualState.Setters>
                         <Setter Target="WebViewPageRoot.Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState x:Name="TitleBarActivated">
+                    <VisualState.Setters>
+                        <Setter Target="TitleBarIcon.Opacity" Value="1" />
+                        <Setter Target="TitleBarTextBlock.Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="TitleBarDeactivated">
+                    <VisualState.Setters>
+                        <Setter Target="TitleBarIcon.Opacity" Value="0.5" />
+                        <Setter Target="TitleBarTextBlock.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

@@ -20,6 +20,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Composition;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -183,11 +184,36 @@ namespace GetStoreAppWebView.Pages
                 VisualStateManager.GoToState(WebViewPageRoot, "DesktopAcrylicBackdrop", false);
             }
 
+            if (Window.Current.CoreWindow.ActivationMode is CoreWindowActivationMode.ActivatedInForeground)
+            {
+                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarActivated", false);
+            }
+            else if (Window.Current.CoreWindow.ActivationMode is CoreWindowActivationMode.Deactivated)
+            {
+                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarDeactivated", false);
+            }
+
             windowPositionChangedEventHandler = new EventHandler(OnWindowPositionChanged);
             internalCoreWindow2.AddWindowPositionChanged(MarshalInterface<EventHandler>.CreateMarshaler(windowPositionChangedEventHandler).ThisPtr, out EventRegistrationToken token);
+            Window.Current.Activated += OnActivated;
         }
 
         #region 第一部分：窗口内容挂载的事件
+
+        /// <summary>
+        /// 窗口激活状态发生变化的事件
+        /// </summary>
+        private void OnActivated(object sender, WindowActivatedEventArgs args)
+        {
+            if (args.WindowActivationState is CoreWindowActivationState.PointerActivated || args.WindowActivationState is CoreWindowActivationState.CodeActivated)
+            {
+                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarActivated", false);
+            }
+            else if (args.WindowActivationState is CoreWindowActivationState.Deactivated)
+            {
+                VisualStateManager.GoToState(WebViewPageRoot, "TitleBarDeactivated", false);
+            }
+        }
 
         /// <summary>
         /// 应用主题发生变化时修改应用的背景色
