@@ -72,6 +72,12 @@
           </desktop4:FileExplorerContextMenus>
         </desktop4:Extension>
 
+        <uap:Extension Category="windows.protocol" Executable="GetStoreApp.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap:Protocol Name="getstoreapp">
+            <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+
         <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
           <uap:Protocol Name="taskbarpinner">
             <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
