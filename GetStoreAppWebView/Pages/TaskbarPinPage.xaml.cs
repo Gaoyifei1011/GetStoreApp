@@ -6,6 +6,9 @@ using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
+// 抑制 IDE0060 警告
+#pragma warning disable IDE0060
+
 namespace GetStoreAppWebView.Pages
 {
     /// <summary>

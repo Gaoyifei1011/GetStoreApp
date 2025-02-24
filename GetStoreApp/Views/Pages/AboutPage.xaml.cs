@@ -305,7 +305,7 @@ namespace GetStoreApp.Views.Pages
 
                             if (!string.IsNullOrEmpty(responseString))
                             {
-                                if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name").Remove(0, 1)) is Version tagVersion)
+                                if (JsonObject.TryParse(responseString, out JsonObject responseStringObject) && new Version(responseStringObject.GetNamedString("tag_name")[1..]) is Version tagVersion)
                                 {
                                     return InfoHelper.AppVersion >= tagVersion;
                                 }

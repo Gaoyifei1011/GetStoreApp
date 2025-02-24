@@ -32,11 +32,11 @@ namespace GetStoreApp.Helpers.Controls.Store
         {
             if (requestContent.Contains('/'))
             {
-                requestContent = requestContent.Remove(0, requestContent.LastIndexOf('/') + 1);
+                requestContent = requestContent[(requestContent.LastIndexOf('/') + 1)..];
             }
             if (requestContent.Contains('?'))
             {
-                requestContent = requestContent.Remove(requestContent.IndexOf('?'));
+                requestContent = requestContent[..requestContent.IndexOf('?')];
             }
             return requestContent;
         }
@@ -269,7 +269,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     if (fileNode.Attributes.GetNamedItem("InstallerSpecificIdentifier") is not null)
                     {
                         string name = fileNode.Attributes.GetNamedItem("InstallerSpecificIdentifier").InnerText;
-                        string extension = fileNode.Attributes.GetNamedItem("FileName").InnerText.Remove(0, fileNode.Attributes.GetNamedItem("FileName").InnerText.LastIndexOf('.'));
+                        string extension = fileNode.Attributes.GetNamedItem("FileName").InnerText[fileNode.Attributes.GetNamedItem("FileName").InnerText.LastIndexOf('.')..];
                         string size = fileNode.Attributes.GetNamedItem("Size").InnerText;
                         string digest = fileNode.Attributes.GetNamedItem("Digest").InnerText;
 
@@ -474,7 +474,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                                     {
                                         nonAppxPackagesList.Add(new QueryLinksModel()
                                         {
-                                            FileName = installerUrl.Remove(installerUrl.LastIndexOf('.')).Remove(0, installerUrl.LastIndexOf('/') + 1),
+                                            FileName = installerUrl[..installerUrl.LastIndexOf('.')][(installerUrl.LastIndexOf('/') + 1)..],
                                             FileLink = installerUrl,
                                             FileSize = fileSizeString,
                                             IsSelected = false,
