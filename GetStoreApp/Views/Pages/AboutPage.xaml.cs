@@ -11,7 +11,6 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
@@ -37,6 +36,7 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page, INotifyPropertyChanged
     {
+        private readonly Guid IID_ITaskbarManagerDesktopAppSupportStatics = new("CDFEFD63-E879-4134-B9A7-8283F05F9480");
         private AppNaviagtionArgs aboutNavigationArgs = AppNaviagtionArgs.None;
 
         private bool _isChecking;
@@ -54,8 +54,6 @@ namespace GetStoreApp.Views.Pages
                 }
             }
         }
-
-        private readonly Guid IID_ITaskbarManagerDesktopAppSupportStatics = new("CDFEFD63-E879-4134-B9A7-8283F05F9480");
 
         //项目引用信息
         private List<ContentLinkInfo> ReferenceList { get; } =
@@ -201,7 +199,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    if (Marshal.QueryInterface(TaskbarManager.As<IWinRTObject>().NativeObject.ThisPtr, IID_ITaskbarManagerDesktopAppSupportStatics, out _) is 0)
+                    if (ActivationFactory.Get("Windows.UI.Shell.TaskbarManager", IID_ITaskbarManagerDesktopAppSupportStatics) is not null)
                     {
                         bool isPinnedSuccessfully = false;
                         string featureId = "com.microsoft.windows.taskbar.pin";
