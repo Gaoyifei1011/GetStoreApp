@@ -2,9 +2,14 @@
     x:Class="GetStoreAppInstaller.XamlIslandsApp"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-    xmlns:xaml="using:Windows.UI.Xaml">
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
     <Application.Resources>
-        <controls:XamlControlsResources />
+        <controls:XamlControlsResources>
+            <controls:XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///Styles/XamlIslands/HyperlinkButton.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/XamlIslands/MenuFlyout.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/XamlIslands/TeachingTip.xaml" />
+            </controls:XamlControlsResources.MergedDictionaries>
+        </controls:XamlControlsResources>
     </Application.Resources>
 </Application>

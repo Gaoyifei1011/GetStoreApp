@@ -14,7 +14,6 @@ using Microsoft.UI.Content;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
@@ -150,7 +149,7 @@ namespace GetStoreAppInstaller
             }
 
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(CoreAppWindow.Id);
-            new XamlIslandsApp();
+            XamlIslandsApp app = new();
 
             mainWindowSubClassProc = new SUBCLASSPROC(MainWindowSubClassProc);
             Comctl32Library.SetWindowSubclass(Win32Interop.GetWindowFromWindowId(MainAppWindow.Id), mainWindowSubClassProc, 0, IntPtr.Zero);
@@ -177,11 +176,7 @@ namespace GetStoreAppInstaller
             SetAppIcon(MainAppWindow);
             MainAppWindow.Show();
 
-            XamlControlsResources xamlControlsResources = [];
-            xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/HyperlinkButton.xaml") });
-            xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/MenuFlyout.xaml") });
-            xamlControlsResources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Styles/XamlIslands/TeachingTip.xaml") });
-            Application.Current.Resources = xamlControlsResources;
+            Application.LoadComponent(app, new Uri("ms-appx:///XamlIslandsApp.xaml"), ComponentResourceLocation.Application);
             Window.Current.Content = new MainPage(appActivationArguments);
             (Window.Current.Content as MainPage).IsWindowMaximized = (MainAppWindow.Presenter as OverlappedPresenter).State is OverlappedPresenterState.Maximized;
             Window.Current.Activate();
