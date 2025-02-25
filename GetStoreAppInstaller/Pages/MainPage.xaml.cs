@@ -3114,12 +3114,8 @@ namespace GetStoreAppInstaller.Pages
                     }
                 }
             }
-            else
-            {
-                resource = string.Empty;
-            }
 
-            return resource;
+            return string.IsNullOrEmpty(resource) ? string.Empty : resource;
         }
 
         /// <summary>
