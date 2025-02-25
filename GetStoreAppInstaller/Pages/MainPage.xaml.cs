@@ -62,6 +62,7 @@ namespace GetStoreAppInstaller.Pages
     /// </summary>
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
+        private readonly string msresource = "ms-resource:";
         private readonly string unknown = string.Format("[{0}]", ResourceService.GetLocalized("Installer/unknown"));
         private readonly string yes = ResourceService.GetLocalized("Installer/Yes");
         private readonly string no = ResourceService.GetLocalized("Installer/No");
@@ -3085,10 +3086,9 @@ namespace GetStoreAppInstaller.Pages
         {
             if (!string.IsNullOrEmpty(resource) && resourceDict is not null)
             {
-                string msResource = "ms-resource:";
-                if (resource.StartsWith("ms-resource:"))
+                if (resource.StartsWith(msresource))
                 {
-                    string splitedResource = resource[msResource.Length..];
+                    string splitedResource = resource[msresource.Length..];
 
                     string resourceKey;
                     if (splitedResource.Contains('\\'))
