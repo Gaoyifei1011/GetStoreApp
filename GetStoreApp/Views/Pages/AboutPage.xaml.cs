@@ -197,41 +197,46 @@ namespace GetStoreApp.Views.Pages
         {
             Tuple<LimitedAccessFeatureStatus, bool> pinnedRsult = await Task.Run(async () =>
             {
-                try
+                LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
+                bool isPinnedSuccessfully = false;
+
+                if (!RuntimeHelper.IsElevated)
                 {
-                    if (ActivationFactory.Get("Windows.UI.Shell.TaskbarManager", IID_ITaskbarManagerDesktopAppSupportStatics) is not null)
+                    try
                     {
-                        bool isPinnedSuccessfully = false;
-                        string featureId = "com.microsoft.windows.taskbar.pin";
-                        string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
-                        string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
-                        LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+                        if (ActivationFactory.Get("Windows.UI.Shell.TaskbarManager", IID_ITaskbarManagerDesktopAppSupportStatics) is not null)
+                        {
+                            string featureId = "com.microsoft.windows.taskbar.pin";
+                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
+                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+                            limitedAccessFeatureStatus = accessResult.Status;
 
-                        if (accessResult.Status is LimitedAccessFeatureStatus.Available)
-                        {
-                            isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
-                        }
-                        else
-                        {
-                            await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                            if (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available)
                             {
-                                { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
-                                { "PackageFullName", Package.Current.Id.FullName },
-                            });
+                                isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                            }
                         }
-
-                        return Tuple.Create(accessResult.Status, isPinnedSuccessfully);
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Use TaskbarManager api to pin app to taskbar failed.", e);
                     }
                 }
-                catch (Exception e)
+
+                if ((limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
                 {
-                    LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
+                    await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        {
+                            { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
+                            { "PackageFullName", Package.Current.Id.FullName },
+                        });
                 }
 
-                return Tuple.Create(LimitedAccessFeatureStatus.Unknown, false);
+                return Tuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
             });
 
-            if (pinnedRsult.Item1 is LimitedAccessFeatureStatus.Available)
+            if (pinnedRsult.Item1 is LimitedAccessFeatureStatus.Available || pinnedRsult.Item1 is LimitedAccessFeatureStatus.AvailableWithoutToken)
             {
                 await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, pinnedRsult.Item2));
             }
