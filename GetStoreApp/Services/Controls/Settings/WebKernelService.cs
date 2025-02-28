@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using System;
 using System.Collections.Generic;
 
 namespace GetStoreApp.Services.Controls.Settings
@@ -34,17 +35,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetWebKernel()
         {
-            object webKernelValue = LocalSettingsService.ReadSetting<object>(webKernelSettingsKey);
+            string webKernel = LocalSettingsService.ReadSetting<string>(webKernelSettingsKey);
 
-            if (webKernelValue is null)
+            if (string.IsNullOrEmpty(webKernel))
             {
                 SetWebKernel(defaultWebKernel);
                 return defaultWebKernel;
             }
 
-            KeyValuePair<string, string> selectedWebKernel = WebKernelList.Find(item => item.Key.Equals(webKernelValue));
+            KeyValuePair<string, string> selectedWebKernel = WebKernelList.Find(item => item.Key.Equals(webKernel, StringComparison.OrdinalIgnoreCase));
 
-            return selectedWebKernel.Key is null ? defaultWebKernel : selectedWebKernel;
+            return string.IsNullOrEmpty(selectedWebKernel.Key) ? defaultWebKernel : selectedWebKernel;
         }
 
         /// <summary>

@@ -23,7 +23,6 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void InitializeLinkFilter()
         {
             EncryptedPackageFilterValue = GetEncryptedPackageFilterValue();
-
             BlockMapFilterValue = GetBlockMapFilterValue();
         }
 

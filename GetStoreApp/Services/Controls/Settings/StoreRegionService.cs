@@ -36,7 +36,9 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void InitializeStoreRegion()
         {
             InitializeStoreRegionList();
+
             GeographicRegion systemRegion = new();
+
             DefaultStoreRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
 
             UseSystemRegionValue = GetUseSystemRegionValue();
@@ -94,15 +96,15 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static GeographicRegion GetRegion()
         {
-            object storeRegion = LocalSettingsService.ReadSetting<object>(storeRegionKey);
+            string storeRegion = LocalSettingsService.ReadSetting<string>(storeRegionKey);
 
-            if (storeRegion is null)
+            if (string.IsNullOrEmpty(storeRegion))
             {
                 SetRegion(DefaultStoreRegion);
                 return DefaultStoreRegion;
             }
 
-            GeographicRegion selectedRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(storeRegion));
+            GeographicRegion selectedRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(storeRegion, StringComparison.OrdinalIgnoreCase));
 
             if (UseSystemRegionValue)
             {

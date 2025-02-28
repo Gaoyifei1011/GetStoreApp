@@ -27,17 +27,15 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static void InitializeAppInstall()
         {
-            AllowUnsignedPackageValue = GetAllowUnsignedPackage();
-
+            AllowUnsignedPackageValue = GetAllowUnsignedPackageValue();
             ForceAppShutdownValue = GetForceAppShutdownValue();
-
             ForceTargetAppShutdownValue = GetForceTargetAppShutdownValue();
         }
 
         /// <summary>
         /// 获取设置存储的允许安装未签名的安装包值，如果设置没有存储，使用默认值
         /// </summary>
-        private static bool GetAllowUnsignedPackage()
+        private static bool GetAllowUnsignedPackageValue()
         {
             bool? allowUnsignedPackageValue = LocalSettingsService.ReadSetting<bool?>(allowUnsignedPackageKey);
 

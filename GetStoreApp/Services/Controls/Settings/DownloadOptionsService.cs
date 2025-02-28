@@ -39,7 +39,6 @@ namespace GetStoreApp.Services.Controls.Settings
             defaultDoEngineMode = InfoHelper.IsDeliveryOptimizationEnabled ? DoEngineModeList[0] : DoEngineModeList[1];
 
             DownloadFolder = await GetFolderAsync();
-
             DoEngineMode = GetDoEngineMode();
         }
 
@@ -75,17 +74,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetDoEngineMode()
         {
-            object doEngineMode = LocalSettingsService.ReadSetting<object>(doEngineModeKey);
+            string doEngineMode = LocalSettingsService.ReadSetting<string>(doEngineModeKey);
 
-            if (doEngineMode is null)
+            if (string.IsNullOrEmpty(doEngineMode))
             {
                 SetDoEngineMode(defaultDoEngineMode);
                 return DoEngineModeList.Find(item => item.Key.Equals(defaultDoEngineMode.Key));
             }
 
-            KeyValuePair<string, string> selectedDoEngine = DoEngineModeList.Find(item => item.Key.Equals(doEngineMode));
+            KeyValuePair<string, string> selectedDoEngine = DoEngineModeList.Find(item => item.Key.Equals(doEngineMode, StringComparison.OrdinalIgnoreCase));
 
-            return selectedDoEngine.Key is null ? defaultDoEngineMode : selectedDoEngine;
+            return string.IsNullOrEmpty(selectedDoEngine.Key) ? defaultDoEngineMode : selectedDoEngine;
         }
 
         /// <summary>

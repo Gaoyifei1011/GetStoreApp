@@ -35,17 +35,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetInstallMode()
         {
-            object installMode = LocalSettingsService.ReadSetting<object>(settingsKey);
+            string installMode = LocalSettingsService.ReadSetting<string>(settingsKey);
 
-            if (installMode is null)
+            if (string.IsNullOrEmpty(installMode))
             {
                 SetInstallMode(defaultInstallMode);
-                return InstallModeList.Find(item => item.Key.Equals(defaultInstallMode.Key));
+                return InstallModeList.Find(item => item.Key.Equals(defaultInstallMode.Key, StringComparison.OrdinalIgnoreCase));
             }
 
-            KeyValuePair<string, string> selectedInstallMode = InstallModeList.Find(item => item.Key.Equals(installMode));
+            KeyValuePair<string, string> selectedInstallMode = InstallModeList.Find(item => item.Key.Equals(installMode, StringComparison.OrdinalIgnoreCase));
 
-            return selectedInstallMode.Key is null ? defaultInstallMode : selectedInstallMode;
+            return string.IsNullOrEmpty(selectedInstallMode.Key) ? defaultInstallMode : selectedInstallMode;
         }
 
         /// <summary>

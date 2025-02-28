@@ -74,14 +74,14 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetLanguage()
         {
-            object language = LocalSettingsService.ReadSetting<object>(settingsKey);
+            string language = LocalSettingsService.ReadSetting<string>(settingsKey);
 
             // 当前系统语言和当前系统语言的父区域性的语言
             CultureInfo currentCultureInfo = CultureInfo.CurrentCulture;
             CultureInfo currentParentCultureInfo = CultureInfo.CurrentCulture.Parent;
             bool existResult = false;
 
-            if (language is null)
+            if (string.IsNullOrEmpty(language))
             {
                 // 判断当前系统语言是否存在应用默认添加的语言列表中
                 existResult = IsExistsInLanguageList(currentCultureInfo, out KeyValuePair<string, string> currentLanguage);

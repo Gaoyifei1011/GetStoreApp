@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Services.Root;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -51,15 +52,15 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetQueryLinksMode()
         {
-            object queryLinksModeValue = LocalSettingsService.ReadSetting<object>(queryLinksModeSettingsKey);
+            string queryLinksModeValue = LocalSettingsService.ReadSetting<string>(queryLinksModeSettingsKey);
 
-            if (queryLinksModeValue is null)
+            if (string.IsNullOrEmpty(queryLinksModeValue))
             {
                 SetQueryLinksMode(defaultQueryLinksMode);
                 return defaultQueryLinksMode;
             }
 
-            KeyValuePair<string, string> selectedQueryLinksMode = QueryLinksModeList.Find(item => item.Key.Equals(queryLinksModeValue));
+            KeyValuePair<string, string> selectedQueryLinksMode = QueryLinksModeList.Find(item => item.Key.Equals(queryLinksModeValue, StringComparison.OrdinalIgnoreCase));
 
             return selectedQueryLinksMode.Key is null ? defaultQueryLinksMode : selectedQueryLinksMode;
         }

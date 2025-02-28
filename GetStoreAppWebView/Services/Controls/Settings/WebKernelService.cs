@@ -1,6 +1,7 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Constant;
 using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Root;
+using System;
 using System.Collections.Generic;
 
 namespace GetStoreAppWebView.Services.Controls.Settings
@@ -12,11 +13,11 @@ namespace GetStoreAppWebView.Services.Controls.Settings
     {
         private static readonly string settingsKey = ConfigKey.WebKernelKey;
 
-        private static object defaultWebKernel;
+        private static string defaultWebKernel;
 
-        public static object WebKernel { get; set; }
+        public static string WebKernel { get; set; }
 
-        public static List<object> WebKernelList { get; } = ["WebView", "WebView2"];
+        public static List<string> WebKernelList { get; } = ["WebView", "WebView2"];
 
         /// <summary>
         /// 应用在初始化前获取设置存储的网页浏览器内核选择值
@@ -31,20 +32,20 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         /// <summary>
         /// 获取设置存储的网页浏览器内核选择值，如果设置没有存储，使用默认值
         /// </summary>
-        private static object GetWebKernel()
+        private static string GetWebKernel()
         {
             if (RuntimeHelper.IsWebView2Installed)
             {
-                object webKernelValue = LocalSettingsService.ReadSetting<object>(settingsKey);
+                string webKernel = LocalSettingsService.ReadSetting<string>(settingsKey);
 
-                if (webKernelValue is null)
+                if (string.IsNullOrEmpty(webKernel))
                 {
                     return defaultWebKernel;
                 }
 
-                object selectedWebKernel = WebKernelList.Find(item => item.Equals(webKernelValue));
+                string selectedWebKernel = WebKernelList.Find(item => item.Equals(webKernel, StringComparison.OrdinalIgnoreCase));
 
-                return selectedWebKernel is null ? defaultWebKernel : selectedWebKernel;
+                return string.IsNullOrEmpty(selectedWebKernel) ? defaultWebKernel : selectedWebKernel;
             }
             else
             {

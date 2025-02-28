@@ -33,7 +33,6 @@ namespace GetStoreApp.Services.Controls.Settings
             DefaultWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(PackageInstallMode.Interactive.ToString(), StringComparison.OrdinalIgnoreCase));
 
             WinGetInstallMode = GetWinGetInstallMode();
-
             IsWinGetInstalled = GetWinGetInstalledState();
         }
 
@@ -42,17 +41,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetWinGetInstallMode()
         {
-            object winGetInstallMode = LocalSettingsService.ReadSetting<object>(winGetInstallModeSettingsKey);
+            string winGetInstallMode = LocalSettingsService.ReadSetting<string>(winGetInstallModeSettingsKey);
 
-            if (winGetInstallMode is null)
+            if (string.IsNullOrEmpty(winGetInstallMode))
             {
                 SetWinGetInstallMode(DefaultWinGetInstallMode);
                 return WinGetInstallModeList.Find(item => item.Key.Equals(DefaultWinGetInstallMode.Key));
             }
 
-            KeyValuePair<string, string> selectedWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(winGetInstallMode));
+            KeyValuePair<string, string> selectedWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(winGetInstallMode, StringComparison.OrdinalIgnoreCase));
 
-            return selectedWinGetInstallMode.Key is null ? DefaultWinGetInstallMode : selectedWinGetInstallMode;
+            return string.IsNullOrEmpty(selectedWinGetInstallMode.Key) ? DefaultWinGetInstallMode : selectedWinGetInstallMode;
         }
 
         /// <summary>

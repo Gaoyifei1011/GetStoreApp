@@ -12,7 +12,7 @@ namespace GetStoreApp.Services.Controls.Settings
     /// </summary>
     public static class ThemeService
     {
-        private static readonly string themeSettingsKey = ConfigKey.ThemeKey;
+        private static readonly string settingsKey = ConfigKey.ThemeKey;
 
         private static KeyValuePair<string, string> defaultAppTheme;
 
@@ -53,17 +53,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetTheme()
         {
-            object theme = LocalSettingsService.ReadSetting<object>(themeSettingsKey);
+            string theme = LocalSettingsService.ReadSetting<string>(settingsKey);
 
-            if (theme is null)
+            if (string.IsNullOrEmpty(theme))
             {
                 SetTheme(defaultAppTheme);
                 return defaultAppTheme;
             }
 
-            KeyValuePair<string, string> selectedTheme = ThemeList.Find(item => item.Key.Equals(theme));
+            KeyValuePair<string, string> selectedTheme = ThemeList.Find(item => item.Key.Equals(theme, StringComparison.OrdinalIgnoreCase));
 
-            return selectedTheme.Key is null ? defaultAppTheme : selectedTheme;
+            return string.IsNullOrEmpty(selectedTheme.Key) ? defaultAppTheme : selectedTheme;
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace GetStoreApp.Services.Controls.Settings
         {
             AppTheme = theme;
 
-            LocalSettingsService.SaveSetting(themeSettingsKey, theme.Key);
+            LocalSettingsService.SaveSetting(settingsKey, theme.Key);
         }
     }
 }

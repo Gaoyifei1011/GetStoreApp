@@ -52,17 +52,17 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         private static KeyValuePair<string, string> GetBackdrop()
         {
-            object backdrop = LocalSettingsService.ReadSetting<object>(settingsKey);
+            string backdrop = LocalSettingsService.ReadSetting<string>(settingsKey);
 
-            if (backdrop is null)
+            if (string.IsNullOrEmpty(backdrop))
             {
                 SetBackdrop(defaultAppBackdrop);
                 return defaultAppBackdrop;
             }
 
-            KeyValuePair<string, string> selectedBackdrop = BackdropList.Find(item => item.Key.Equals(backdrop));
+            KeyValuePair<string, string> selectedBackdrop = BackdropList.Find(item => item.Key.Equals(backdrop, StringComparison.OrdinalIgnoreCase));
 
-            return selectedBackdrop.Key is null ? defaultAppBackdrop : selectedBackdrop;
+            return string.IsNullOrEmpty(selectedBackdrop.Key) ? defaultAppBackdrop : selectedBackdrop;
         }
 
         /// <summary>

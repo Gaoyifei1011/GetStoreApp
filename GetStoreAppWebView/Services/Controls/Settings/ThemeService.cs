@@ -53,14 +53,14 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         /// </summary>
         private static string GetTheme()
         {
-            object theme = LocalSettingsService.ReadSetting<object>(themeSettingsKey);
+            string theme = LocalSettingsService.ReadSetting<string>(themeSettingsKey);
 
-            if (theme is null)
+            if (string.IsNullOrEmpty(theme))
             {
                 return defaultAppTheme;
             }
 
-            string selectedTheme = ThemeList.Find(item => item.Equals(theme));
+            string selectedTheme = ThemeList.Find(item => item.Equals(theme, StringComparison.OrdinalIgnoreCase));
             return string.IsNullOrEmpty(selectedTheme) ? defaultAppTheme : selectedTheme;
         }
     }
