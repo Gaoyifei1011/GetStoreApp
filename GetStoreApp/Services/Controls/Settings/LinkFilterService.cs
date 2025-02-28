@@ -20,7 +20,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 应用在初始化前获取设置存储的链接过滤值
         /// </summary>
-        public static void InitializeLinkFilterValue()
+        public static void InitializeLinkFilter()
         {
             EncryptedPackageFilterValue = GetEncryptedPackageFilterValue();
 

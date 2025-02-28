@@ -32,7 +32,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 应用在初始化前获取设置存储的下载相关内容设置值，并创建默认下载目录
         /// </summary>
-        public static async Task InitializeDownloadAsync()
+        public static async Task InitializeDownloadOptionsAsync()
         {
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
 

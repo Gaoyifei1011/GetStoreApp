@@ -35,7 +35,7 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 应用在初始化前获取设置存储的窗口置顶值
         /// </summary>
-        public static void InitializeTopMostValue()
+        public static void InitializeTopMost()
         {
             TopMostValue = GetTopMostValue();
         }

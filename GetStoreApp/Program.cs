@@ -186,9 +186,9 @@ namespace GetStoreApp
             ResultService.Initialize();
             ResourceService.LocalizeReosurce();
             StoreRegionService.InitializeStoreRegion();
-            LinkFilterService.InitializeLinkFilterValue();
+            LinkFilterService.InitializeLinkFilter();
             QueryLinksModeService.InitializeQueryLinksMode();
-            await DownloadOptionsService.InitializeDownloadAsync();
+            await DownloadOptionsService.InitializeDownloadOptionsAsync();
             DownloadStorageService.Initialize();
             AppInstallService.InitializeAppInstall();
 
@@ -204,7 +204,7 @@ namespace GetStoreApp
                 AlwaysShowBackdropService.InitializeAlwaysShowBackdrop();
                 BackdropService.InitializeBackdrop();
                 ThemeService.InitializeTheme();
-                TopMostService.InitializeTopMostValue();
+                TopMostService.InitializeTopMost();
 
                 WebKernelService.InitializeWebKernel();
                 ShellMenuService.InitializeShellMenu();
