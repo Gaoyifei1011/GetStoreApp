@@ -46,39 +46,39 @@ namespace GetStoreApp
             {
                 Task.Run(async () =>
                 {
-                    JumpList taskbarJumpList = await JumpList.LoadCurrentAsync();
-                    taskbarJumpList.Items.Clear();
-                    taskbarJumpList.SystemGroupKind = JumpListSystemGroupKind.None;
+                    JumpList jumpList = await JumpList.LoadCurrentAsync();
+                    jumpList.Items.Clear();
+                    jumpList.SystemGroupKind = JumpListSystemGroupKind.None;
 
                     JumpListItem storeItem = JumpListItem.CreateWithArguments("JumpList Store", ResourceService.GetLocalized("Window/Store"));
                     storeItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/Store.png");
-                    taskbarJumpList.Items.Add(storeItem);
+                    jumpList.Items.Add(storeItem);
 
                     JumpListItem appUpdateItem = JumpListItem.CreateWithArguments("JumpList AppUpdate", ResourceService.GetLocalized("Window/AppUpdate"));
                     appUpdateItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/AppUpdate.png");
-                    taskbarJumpList.Items.Add(appUpdateItem);
+                    jumpList.Items.Add(appUpdateItem);
 
-                    taskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
+                    jumpList.Items.Add(JumpListItem.CreateSeparator());
 
                     JumpListItem wingetItem = JumpListItem.CreateWithArguments("JumpList WinGet", ResourceService.GetLocalized("Window/WinGet"));
                     wingetItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/WinGet.png");
-                    taskbarJumpList.Items.Add(wingetItem);
+                    jumpList.Items.Add(wingetItem);
 
                     JumpListItem appManagerItem = JumpListItem.CreateWithArguments("JumpList AppManager", ResourceService.GetLocalized("Window/AppManager"));
                     appManagerItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/AppManager.png");
-                    taskbarJumpList.Items.Add(appManagerItem);
+                    jumpList.Items.Add(appManagerItem);
 
-                    taskbarJumpList.Items.Add(JumpListItem.CreateSeparator());
+                    jumpList.Items.Add(JumpListItem.CreateSeparator());
 
                     JumpListItem downloadItem = JumpListItem.CreateWithArguments("JumpList Download", ResourceService.GetLocalized("Window/Download"));
                     downloadItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/Download.png");
-                    taskbarJumpList.Items.Add(downloadItem);
+                    jumpList.Items.Add(downloadItem);
 
                     JumpListItem webItem = JumpListItem.CreateWithArguments("JumpList Web", ResourceService.GetLocalized("Window/Web"));
                     webItem.Logo = new Uri("ms-appx:///Assets/Icon/Control/Web.png");
-                    taskbarJumpList.Items.Add(webItem);
+                    jumpList.Items.Add(webItem);
 
-                    await taskbarJumpList.SaveAsync();
+                    await jumpList.SaveAsync();
                 });
             }
         }

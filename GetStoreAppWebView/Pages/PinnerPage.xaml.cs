@@ -12,9 +12,9 @@ using Windows.UI.Xaml.Controls;
 namespace GetStoreAppWebView.Pages
 {
     /// <summary>
-    /// 固定应用到任务栏提示页面
+    /// 固定应用提示页面
     /// </summary>
-    public sealed partial class TaskbarPinPage : Page, INotifyPropertyChanged
+    public sealed partial class PinnerPage : Page, INotifyPropertyChanged
     {
         private AppWindow AppWindow { get; }
 
@@ -36,7 +36,7 @@ namespace GetStoreAppWebView.Pages
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public TaskbarPinPage(AppWindow appWindow)
+        public PinnerPage(AppWindow appWindow)
         {
             InitializeComponent();
             AppWindow = appWindow;

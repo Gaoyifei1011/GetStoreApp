@@ -12,6 +12,7 @@ using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Shell;
+using Windows.UI.StartScreen;
 using Windows.UI.ViewManagement;
 using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
@@ -43,28 +44,35 @@ namespace GetStoreAppWebView
 
             if (args.Kind is ActivationKind.Protocol && args is ProtocolActivatedEventArgs protocolActivatedEventArgs)
             {
-                if (protocolActivatedEventArgs.Uri.AbsoluteUri is "webbrowser:")
+                if (protocolActivatedEventArgs.Uri.AbsoluteUri is "getstoreappwebbrowser:")
                 {
                     if (appWindowList.Count is 0)
                     {
-                        Window.Current.Content = new WebViewPage();
-                        Window.Current.Activate();
+                        if (Window.Current.Content is not Page)
+                        {
+                            Window.Current.Content = new WebViewPage();
+                            Window.Current.Activate();
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                     else
                     {
                         return;
                     }
                 }
-                else if (protocolActivatedEventArgs.Uri.AbsoluteUri is "taskbarpinner:")
+                else if (protocolActivatedEventArgs.Uri.AbsoluteUri is "getstoreapppinner:")
                 {
                     AppWindow appWindow = await AppWindow.TryCreateAsync();
                     appWindowList.Add(appWindow.UIContext, appWindow);
                     appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-                    ElementCompositionPreview.SetAppWindowContent(appWindow, new TaskbarPinPage(appWindow));
-                    appWindow.Title = ResourceService.GetLocalized("WebView/PinAppToTaskbar");
+                    ElementCompositionPreview.SetAppWindowContent(appWindow, new PinnerPage(appWindow));
+                    appWindow.Title = ResourceService.GetLocalized("WebView/PinningApp");
                     await appWindow.TryShowAsync();
 
-                    if (Window.Current.Content is Grid)
+                    if (Window.Current.Content is not Page)
                     {
                         await ApplicationView.GetForCurrentView().TryConsolidateAsync();
                     }
@@ -72,41 +80,103 @@ namespace GetStoreAppWebView
                     appWindow.Presenter.RequestPresentation(AppWindowPresentationKind.CompactOverlay);
                     appWindow.RequestSize(new Size(400, 200));
 
-                    bool pinResult = false;
+                    bool isPinnedSuccessfully = false;
 
-                    try
+                    if (protocolActivatedEventArgs.Data.Count is 3)
                     {
-                        if (protocolActivatedEventArgs.Data.Count is 2)
+                        if (protocolActivatedEventArgs.Data["Type"] is nameof(SecondaryTile))
                         {
-                            PackageManager packageManager = new();
-                            Package package = packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string);
+                            string tag = Convert.ToString(protocolActivatedEventArgs.Data["Tag"]);
+                            string displayName = Convert.ToString(protocolActivatedEventArgs.Data["DisplayName"]);
 
-                            if (package is not null)
+                            try
                             {
-                                foreach (AppListEntry applistItem in package.GetAppListEntries())
+                                SecondaryTile secondaryTile = new("GetStoreApp" + tag)
                                 {
-                                    if (applistItem.AppUserModelId.Equals(protocolActivatedEventArgs.Data["AppUserModelId"]))
+                                    DisplayName = displayName,
+                                    Arguments = "SecondaryTile " + tag
+                                };
+
+                                secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
+                                secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                                secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                                secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+
+                                secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+                                isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, "Use SecondaryTile api to pin app to taskbar failed.", e);
+                            }
+                            finally
+                            {
+                                List<string> dataList = [];
+                                dataList.Add(Convert.ToString(isPinnedSuccessfully));
+                                ResultService.SaveResult(StorageDataKind.SecondaryTile, dataList);
+                                ApplicationData.Current.SignalDataChanged();
+                                await appWindow.CloseAsync();
+                                appWindowList.Remove(appWindow.UIContext);
+                            }
+                        }
+                        else if (protocolActivatedEventArgs.Data["Type"] is nameof(TaskbarManager))
+                        {
+                            try
+                            {
+                                PackageManager packageManager = new();
+                                Package package = packageManager.FindPackageForUser(string.Empty, protocolActivatedEventArgs.Data["PackageFullName"] as string);
+
+                                if (package is not null)
+                                {
+                                    foreach (AppListEntry applistItem in package.GetAppListEntries())
                                     {
-                                        pinResult = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
-                                        break;
+                                        if (applistItem.AppUserModelId.Equals(protocolActivatedEventArgs.Data["AppUserModelId"]))
+                                        {
+                                            isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
+                                            break;
+                                        }
                                     }
                                 }
                             }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, "Use TaskbarManager api to pin app to taskbar failed.", e);
+                            }
+                            finally
+                            {
+                                List<string> dataList = [];
+                                dataList.Add(Convert.ToString(isPinnedSuccessfully));
+                                ResultService.SaveResult(StorageDataKind.TaskbarManager, dataList);
+                                ApplicationData.Current.SignalDataChanged();
+                                await appWindow.CloseAsync();
+                                appWindowList.Remove(appWindow.UIContext);
+                            }
+                        }
+                        else
+                        {
+                            await appWindow.CloseAsync();
+                            appWindowList.Remove(appWindow.UIContext);
                         }
                     }
-                    catch (Exception e)
+                    else
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed", e);
-                    }
-                    finally
-                    {
-                        List<string> dataList = [];
-                        dataList.Add(Convert.ToString(pinResult));
-                        ResultService.SaveResult(StorageDataKind.TaskbarPinnedResult, dataList);
-                        ApplicationData.Current.SignalDataChanged();
                         await appWindow.CloseAsync();
                         appWindowList.Remove(appWindow.UIContext);
                     }
+                }
+                else
+                {
+                    if (Window.Current.Content is not Page)
+                    {
+                        await ApplicationView.GetForCurrentView().TryConsolidateAsync();
+                    }
+                }
+            }
+            else
+            {
+                if (Window.Current.Content is not Page)
+                {
+                    await ApplicationView.GetForCurrentView().TryConsolidateAsync();
                 }
             }
         }

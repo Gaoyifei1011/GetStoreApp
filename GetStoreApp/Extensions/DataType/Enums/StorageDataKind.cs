@@ -10,6 +10,7 @@
         ShareTarget = 2,
         Protocol = 3,
         ToastNotification = 4,
-        TaskbarPinnedResult = 5,
+        SecondaryTile = 5,
+        TaskbarManager = 6
     }
 }

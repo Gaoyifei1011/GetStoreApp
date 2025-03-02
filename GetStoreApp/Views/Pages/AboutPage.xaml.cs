@@ -226,8 +226,9 @@ namespace GetStoreApp.Views.Pages
 
                 if ((limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
                 {
-                    await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
                         {
+                            {"Type", nameof(TaskbarManager) },
                             { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
                             { "PackageFullName", Package.Current.Id.FullName },
                         });

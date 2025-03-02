@@ -37,8 +37,6 @@
 
         public const string ShellMenuKey = "ShellMenu";
 
-        public const string TaskbarPinInfoKey = "TaskbarPinInfo";
-
         public const string ThemeKey = "AppTheme";
 
         public const string TopMostKey = "TopMostValue";

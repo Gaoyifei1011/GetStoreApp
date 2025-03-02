@@ -79,13 +79,13 @@
         </uap:Extension>
 
         <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
-          <uap:Protocol Name="taskbarpinner">
-            <uap:DisplayName>ms-resource:TaskbarProtocolName</uap:DisplayName>
+          <uap:Protocol Name="getstoreapppinner">
+            <uap:DisplayName>ms-resource:PinnerProtocolName</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
 
         <uap:Extension Category="windows.protocol" Executable="GetStoreAppWebView.exe" EntryPoint="GetStoreAppWebView.App">
-          <uap:Protocol Name="webbrowser">
+          <uap:Protocol Name="getstoreappwebbrowser">
             <uap:DisplayName>ms-resource:WebBrowserProtocolName</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>

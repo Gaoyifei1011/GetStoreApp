@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="GetStoreAppWebView.Pages.TaskbarPinPage"
+    x:Class="GetStoreAppWebView.Pages.PinnerPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,6 @@
     xmlns:service="using:GetStoreAppWebView.Services.Controls.Settings"
     xmlns:wux="using:Windows.UI.Xaml"
     xmlns:wuxc="using:Windows.UI.Xaml.Controls"
-    x:Name="TaskbarPinPageRoot"
     ActualThemeChanged="{x:Bind OnActualThemeChanged}"
     Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
     FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
@@ -24,13 +23,13 @@
         <TextBlock
             HorizontalAlignment="Center"
             FontSize="20"
-            Text="{x:Bind root:ResourceService.GetLocalized('WebView/PinAppToTaskbar')}"
+            Text="{x:Bind root:ResourceService.GetLocalized('WebView/PinningApp')}"
             TextWrapping="Wrap" />
 
         <TextBlock
             HorizontalAlignment="Center"
             FontSize="16"
-            Text="{x:Bind root:ResourceService.GetLocalized('WebView/TaskbarPinTip')}"
+            Text="{x:Bind root:ResourceService.GetLocalized('WebView/PinningTip')}"
             TextWrapping="Wrap" />
     </StackPanel>
 </Page>

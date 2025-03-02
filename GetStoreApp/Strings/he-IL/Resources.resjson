@@ -11,13 +11,12 @@
   "Package": "Windows app package",
   "PackageBundle": "Windows app package bundle",
   "PackageDisplayName": "GetStoreApp",
+  "PinnerProtocolName": "הצמד לשורת המשימות",
   "ProductID": "מזהה מוצר",
   "Retail": "קמעונאי",
   "RP": "שחרור תצוגה מקדימה",
   "Slow": "איטי",
   "SystemBackdropControllerInitializeFailed": "אתחול הבקר האחראי על רקע הנושא של המערכת נכשל",
-  "TaskbarPinner": "הצמד לשורת המשימות",
-  "TaskbarProtocolName": "הצמד לשורת המשימות",
   "URL": "קישור",
   "WebBrowserProtocolName": "דפדפן אינטרנט"
 }

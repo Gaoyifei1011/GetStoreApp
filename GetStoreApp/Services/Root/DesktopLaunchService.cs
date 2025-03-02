@@ -26,8 +26,8 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         public static async Task InitializeLaunchAsync(AppActivationArguments appActivationArguments)
         {
-            isLaunched = AppInstance.GetInstances().Count > 1;
             currentInstance = AppInstance.FindOrRegisterForKey("GetStoreApp");
+            isLaunched = !currentInstance.IsCurrent;
 
             // 正常参数启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
@@ -83,7 +83,7 @@ namespace GetStoreApp.Services.Root
                     {
                         if (argumentsList[1] is "Web")
                         {
-                            await Launcher.LaunchUriAsync(new Uri("webbrowser:"));
+                            await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
                             Environment.Exit(Environment.ExitCode);
                         }
                         else

@@ -35,7 +35,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Graphics;
 using Windows.Networking.Connectivity;
@@ -493,51 +495,63 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
         {
-            bool isPinnedSuccessfully = false;
-
-            try
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
             {
-                if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
+                string tag = Convert.ToString(menuFlyoutItem.Tag);
+                string displayName = string.Empty;
+
+                switch (tag)
                 {
-                    string tag = Convert.ToString(menuFlyoutItem.Tag);
-                    string displayName = string.Empty;
-
-                    switch (tag)
-                    {
-                        case "Store": displayName = WindowStoreText.Text; break;
-                        case "AppUpdate": displayName = WindowAppUpdateText.Text; break;
-                        case "WinGet": displayName = WindowWinGetText.Text; break;
-                        case "AppManager": displayName = WindowAppManagerText.Text; break;
-                        case "Download": displayName = WindowDownloadText.Text; break;
-                        case "Web": displayName = WindowWebText.Text; break;
-                        case "About": displayName = WindowAboutText.Text; break;
-                        case "Settings": displayName = WindowSettingsText.Text; break;
-                    }
-
-                    SecondaryTile secondaryTile = new("GetStoreApp" + tag)
-                    {
-                        DisplayName = displayName,
-                        Arguments = "SecondaryTile " + tag
-                    };
-
-                    secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
-                    secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                    secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-                    secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
-
-                    secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
-
-                    InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
-                    isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
+                    case "Store": displayName = WindowStoreText.Text; break;
+                    case "AppUpdate": displayName = WindowAppUpdateText.Text; break;
+                    case "WinGet": displayName = WindowWinGetText.Text; break;
+                    case "AppManager": displayName = WindowAppManagerText.Text; break;
+                    case "Download": displayName = WindowDownloadText.Text; break;
+                    case "Web": displayName = WindowWebText.Text; break;
+                    case "About": displayName = WindowAboutText.Text; break;
+                    case "Settings": displayName = WindowSettingsText.Text; break;
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
-            }
-            finally
-            {
-                await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+
+                if (RuntimeHelper.IsElevated)
+                {
+                    await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                    {
+                        {"Type", nameof(SecondaryTile) },
+                        { "DisplayName", displayName },
+                        { "Tag", tag },
+                    });
+                }
+                else
+                {
+                    bool isPinnedSuccessfully = false;
+
+                    try
+                    {
+                        SecondaryTile secondaryTile = new("GetStoreApp" + tag)
+                        {
+                            DisplayName = displayName,
+                            Arguments = "SecondaryTile " + tag
+                        };
+
+                        secondaryTile.VisualElements.BackgroundColor = Colors.Transparent;
+                        secondaryTile.VisualElements.Square150x150Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square71x71Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+                        secondaryTile.VisualElements.Square44x44Logo = new Uri(string.Format("ms-appx:///Assets/Icon/Control/{0}.png", tag));
+
+                        secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+
+                        InitializeWithWindow.Initialize(secondaryTile, Win32Interop.GetWindowFromWindowId(AppWindow.Id));
+                        isPinnedSuccessfully = await secondaryTile.RequestCreateAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Use SecondaryTile api to pin app to startscreen failed.", e);
+                    }
+                    finally
+                    {
+                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+                    }
+                }
             }
         }
 
@@ -765,7 +779,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (PageList[Convert.ToInt32(navigationItem.NavigationItem.Tag)].Key is "Web")
                     {
-                        await Launcher.LaunchUriAsync(new Uri("webbrowser:"));
+                        await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
                         sender.SelectedItem = SelectedItem;
                     }
                     else
@@ -962,8 +976,19 @@ namespace GetStoreApp.Views.Windows
                     Show();
                 });
             }
+            // 开始屏幕“辅助磁贴”固定结果
+            else if (dataKind is StorageDataKind.SecondaryTile)
+            {
+                if (dataList.Count is 1)
+                {
+                    DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
+                    });
+                }
+            }
             // 任务栏应用固定结果
-            else if (dataKind is StorageDataKind.TaskbarPinnedResult)
+            else if (dataKind is StorageDataKind.TaskbarManager)
             {
                 if (dataList.Count is 1)
                 {

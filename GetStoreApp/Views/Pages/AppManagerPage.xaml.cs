@@ -27,6 +27,7 @@ using Windows.Management.Core;
 using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 using Windows.UI.Text;
 
@@ -827,15 +828,16 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        await Launcher.LaunchUriAsync(new Uri("taskbarpinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
                         {
+                            {"Type", nameof(TaskbarManager) },
                             { "AppUserModelId", appListEntryItem.AppUserModelId },
                             { "PackageFullName", appListEntryItem.PackageFullName },
                         });
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Pin app to taskbar failed.", e);
+                        LogService.WriteLog(LoggingLevel.Error, "Use TaskbarManager api to pin app to taskbar failed.", e);
                     }
                 });
             }

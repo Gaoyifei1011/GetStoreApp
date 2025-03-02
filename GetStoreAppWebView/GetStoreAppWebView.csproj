@@ -63,7 +63,7 @@
     <Manifest Include="$(ApplicationManifest)" />
 
     <None Remove="Dialogs\ProcessFailedDialog.xaml" />
-    <None Remove="Pages\TaskbarPinPage.xaml" />
+    <None Remove="Pages\PinnerPage.xaml" />
     <None Remove="Pages\WebViewPage.xaml" />
     <None Remove="Styles\UWP\AppbarButton.xaml" />
     
@@ -72,8 +72,8 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     
     <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\WebViewPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Pages\TaskbarPinPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\UWP\AppbarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
   </ItemGroup>
 

@@ -6,10 +6,11 @@
     public enum StorageDataKind
     {
         None = 0,
-        DesktopLaunch = 1,
-        CommandLineLaunch = 2,
-        ShareTarget = 3,
+        Launch = 1,
+        ShareTarget = 2,
+        Protocol = 3,
         ToastNotification = 4,
-        TaskbarPinnedResult = 5,
+        SecondaryTile = 5,
+        TaskbarManager = 6
     }
 }
