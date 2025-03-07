@@ -19,12 +19,12 @@ using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
+using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 using Windows.UI.Text;
 using Windows.Web.Http;
-using WinRT;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -36,7 +36,6 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AboutPage : Page, INotifyPropertyChanged
     {
-        private readonly Guid IID_ITaskbarManagerDesktopAppSupportStatics = new("CDFEFD63-E879-4134-B9A7-8283F05F9480");
         private AppNaviagtionArgs aboutNavigationArgs = AppNaviagtionArgs.None;
 
         private bool _isChecking;
@@ -204,7 +203,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     try
                     {
-                        if (ActivationFactory.Get("Windows.UI.Shell.TaskbarManager", IID_ITaskbarManagerDesktopAppSupportStatics) is not null)
+                        if (ApiInformation.IsTypePresent("Windows.UI.Shell.ITaskbarManagerDesktopAppSupportStatics"))
                         {
                             string featureId = "com.microsoft.windows.taskbar.pin";
                             string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
