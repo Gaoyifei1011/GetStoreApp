@@ -196,12 +196,11 @@
                                 FontSize="15"
                                 Text="{x:Bind root:ResourceService.GetLocalized('About/Developer')}" />
 
-                            <HyperlinkButton
-                                VerticalAlignment="Center"
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/DeveloperName')}"
-                                NavigateUri="https://github.com/Gaoyifei1011"
-                                Style="{StaticResource HyperlinkButtonStyle}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DeveloperNameToolTip')}" />
+                            <TextBlock VerticalAlignment="Center" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DeveloperNameToolTip')}">
+                                <Hyperlink NavigateUri="https://github.com/Gaoyifei1011" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('About/DeveloperName')}" />
+                                </Hyperlink>
+                            </TextBlock>
                         </StackPanel>
                     </StackPanel>
 
@@ -351,18 +350,16 @@
                             <ItemsView.ItemTemplate>
                                 <DataTemplate x:DataType="text:ContentLinkInfo">
                                     <ItemContainer>
-                                        <HyperlinkButton
+                                        <TextBlock
                                             Width="320"
                                             Padding="5,8"
-                                            HorizontalContentAlignment="Center"
-                                            NavigateUri="{x:Bind Uri}">
+                                            HorizontalAlignment="Center"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
 
-                                            <HyperlinkButton.Content>
-                                                <TextBlock
-                                                    Text="{x:Bind DisplayText}"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    TextWrapping="NoWrap" />
-                                            </HyperlinkButton.Content>
+                                            <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                                <Run Text="{x:Bind DisplayText}" />
+                                            </Hyperlink>
 
                                             <ToolTipService.ToolTip>
                                                 <ToolTip MaxWidth="9999">
@@ -375,7 +372,7 @@
                                                     </StackPanel>
                                                 </ToolTip>
                                             </ToolTipService.ToolTip>
-                                        </HyperlinkButton>
+                                        </TextBlock>
                                     </ItemContainer>
                                 </DataTemplate>
                             </ItemsView.ItemTemplate>
@@ -464,17 +461,17 @@
                                 Orientation="Horizontal"
                                 Spacing="15">
 
-                                <HyperlinkButton
-                                    Padding="0"
-                                    Click="{x:Bind OnDesktopLaunchClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnDesktopLaunchClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/DesktopLaunch')}" />
+                                    </Hyperlink>
+                                </TextBlock>
 
-                                <HyperlinkButton
-                                    Padding="0"
-                                    Click="{x:Bind OnConsoleLaunchClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnConsoleLaunchClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ConsoleLaunch')}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
 
                             <MenuFlyoutSeparator />
@@ -526,17 +523,17 @@
                                 Orientation="Horizontal"
                                 Spacing="15">
 
-                                <HyperlinkButton
-                                    Padding="0"
-                                    Click="{x:Bind OnCheckNetWorkClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}" />
+                                    </Hyperlink>
+                                </TextBlock>
 
-                                <HyperlinkButton
-                                    Padding="0"
-                                    Click="{x:Bind OnTroubleShootClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
 
                             <MenuFlyoutSeparator />
@@ -570,11 +567,11 @@
                                 TextWrapping="Wrap" />
 
                             <StackPanel Margin="30,0,16,10" Orientation="Horizontal">
-                                <HyperlinkButton
-                                    Padding="0"
-                                    Click="{x:Bind OnDownloadSettingsClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
                         </StackPanel>
                     </Expander.Content>
@@ -670,20 +667,23 @@
                                 Orientation="Horizontal"
                                 Spacing="15">
 
-                                <HyperlinkButton
-                                    Click="{x:Bind OnSystemInformationClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnSystemInformationClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/SystemInformation')}" />
+                                    </Hyperlink>
+                                </TextBlock>
 
-                                <HyperlinkButton
-                                    Click="{x:Bind OnAppInformationClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnAppInformationClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/AppInformation')}" />
+                                    </Hyperlink>
+                                </TextBlock>
 
-                                <HyperlinkButton
-                                    Click="{x:Bind OnAppSettingsClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnAppSettingsClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/AppSettings')}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
 
                             <MenuFlyoutSeparator />
@@ -737,15 +737,17 @@
                                 Orientation="Horizontal"
                                 Spacing="15">
 
-                                <HyperlinkButton
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/EncryptedPackageButton')}"
-                                    NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/EncryptedPackageButton')}" />
+                                    </Hyperlink>
+                                </TextBlock>
 
-                                <HyperlinkButton
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}"
-                                    NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/BlockMapButton')}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
 
                             <MenuFlyoutSeparator />
@@ -764,11 +766,13 @@
                                 TextAlignment="Justify"
                                 TextWrapping="Wrap" />
 
-                            <HyperlinkButton
-                                Margin="30,0,16,5"
-                                Content="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}"
-                                NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration"
-                                Style="{StaticResource HyperlinkButtonStyle}" />
+                            <StackPanel Margin="30,0,16,5" Orientation="Horizontal">
+                                <TextBlock>
+                                    <Hyperlink NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/LearnWinGetConfig')}" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
 
                             <MenuFlyoutSeparator />
 
@@ -805,20 +809,23 @@
                                 Orientation="Horizontal"
                                 Spacing="15">
 
-                                <HyperlinkButton
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/LearnDeliveryOptimization')}"
-                                    NavigateUri="https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink NavigateUri="https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/LearnDeliveryOptimization')}" />
+                                    </Hyperlink>
+                                </TextBlock>
 
-                                <HyperlinkButton
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/LearnBits')}"
-                                    NavigateUri="https://learn.microsoft.com/windows/win32/bits/background-intelligent-transfer-service-portal"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink NavigateUri="https://learn.microsoft.com/windows/win32/bits/background-intelligent-transfer-service-portal" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/LearnBits')}" />
+                                    </Hyperlink>
+                                </TextBlock>
 
-                                <HyperlinkButton
-                                    Click="{x:Bind OnTroubleShootClicked}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}"
-                                    Style="{StaticResource HyperlinkButtonStyle}" />
+                                <TextBlock>
+                                    <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
 
                             <MenuFlyoutSeparator />
@@ -912,18 +919,16 @@
                                 <ItemsView.ItemTemplate>
                                     <DataTemplate x:DataType="text:ContentLinkInfo">
                                         <ItemContainer>
-                                            <HyperlinkButton
+                                            <TextBlock
                                                 Width="150"
                                                 Padding="5,8"
-                                                HorizontalContentAlignment="Center"
-                                                NavigateUri="{x:Bind Uri}">
+                                                HorizontalAlignment="Center"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
 
-                                                <HyperlinkButton.Content>
-                                                    <TextBlock
-                                                        Text="{x:Bind DisplayText}"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        TextWrapping="NoWrap" />
-                                                </HyperlinkButton.Content>
+                                                <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                                    <Run Text="{x:Bind DisplayText}" />
+                                                </Hyperlink>
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip MaxWidth="9999">
@@ -936,7 +941,7 @@
                                                         </StackPanel>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
-                                            </HyperlinkButton>
+                                            </TextBlock>
                                         </ItemContainer>
                                     </DataTemplate>
                                 </ItemsView.ItemTemplate>

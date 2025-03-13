@@ -47,6 +47,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using WinRT;
@@ -1660,15 +1661,13 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 打开应用安装程序文件链接
         /// </summary>
-        private void OnOpenAppInstallerSourceLinkClicked(object sender, RoutedEventArgs args)
+        private void OnOpenAppInstallerSourceLinkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            string appInstallerSourceLink = (sender as HyperlinkButton).Tag as string;
-
             Task.Run(async () =>
             {
-                if (!string.IsNullOrEmpty(appInstallerSourceLink))
+                if (!string.IsNullOrEmpty(AppInstallerSourceLink))
                 {
-                    await Launcher.LaunchUriAsync(new Uri(appInstallerSourceLink));
+                    await Launcher.LaunchUriAsync(new Uri(AppInstallerSourceLink));
                 }
             });
         }
@@ -1676,15 +1675,13 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 打开应用包链接
         /// </summary>
-        private void OnOpenPackageSourceLinkClicked(object sender, RoutedEventArgs args)
+        private void OnOpenPackageSourceLinkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            string packageSourceLink = (sender as HyperlinkButton).Tag as string;
-
             Task.Run(async () =>
             {
-                if (!string.IsNullOrEmpty(packageSourceLink))
+                if (!string.IsNullOrEmpty(PackageSourceLink))
                 {
-                    await Launcher.LaunchUriAsync(new Uri(packageSourceLink));
+                    await Launcher.LaunchUriAsync(new Uri(PackageSourceLink));
                 }
             });
         }

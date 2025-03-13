@@ -7,6 +7,7 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -342,7 +343,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 桌面程序启动参数说明
         /// </summary>
-        private async void OnDesktopLaunchClicked(object sender, RoutedEventArgs args)
+        private async void OnDesktopLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new DesktopStartupArgsDialog(), this);
         }
@@ -350,7 +351,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 控制台程序启动参数说明
         /// </summary>
-        private async void OnConsoleLaunchClicked(object sender, RoutedEventArgs args)
+        private async void OnConsoleLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new ConsoleStartupArgsDialog(), this);
         }
@@ -358,7 +359,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 检查网络
         /// </summary>
-        private async void OnCheckNetWorkClicked(object sender, RoutedEventArgs args)
+        private async void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
         }
@@ -366,7 +367,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 疑难解答
         /// </summary>
-        private async void OnTroubleShootClicked(object sender, RoutedEventArgs args)
+        private async void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
         }
@@ -374,7 +375,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开下载设置
         /// </summary>
-        private void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
@@ -382,7 +383,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 系统信息
         /// </summary>
-        private async void OnSystemInformationClicked(object sender, RoutedEventArgs args)
+        private async void OnSystemInformationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
         }
@@ -390,7 +391,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用信息
         /// </summary>
-        private async void OnAppInformationClicked(object sender, RoutedEventArgs args)
+        private async void OnAppInformationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await ContentDialogHelper.ShowAsync(new AppInformationDialog(), this);
         }
@@ -398,7 +399,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 应用设置
         /// </summary>
-        private async void OnAppSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnAppSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         }

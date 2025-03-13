@@ -1042,18 +1042,16 @@
                                                 Text="{x:Bind PackageSourceLink, Mode=OneWay}"
                                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsAppInstallerSourceLinkExisted), Mode=OneWay}" />
 
-                                            <HyperlinkButton
+                                            <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"
                                                 Margin="0,0,0,3"
-                                                Click="{x:Bind OnOpenAppInstallerSourceLinkClicked}"
-                                                Style="{StaticResource HyperlinkButtonStyle}"
-                                                Tag="{x:Bind AppInstallerSourceLink, Mode=OneWay}"
+                                                TextTrimming="CharacterEllipsis"
                                                 Visibility="{x:Bind IsAppInstallerSourceLinkExisted, Mode=OneWay}">
 
-                                                <HyperlinkButton.Content>
-                                                    <TextBlock Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
-                                                </HyperlinkButton.Content>
+                                                <Hyperlink Click="{x:Bind OnOpenAppInstallerSourceLinkClicked}" UnderlineStyle="None">
+                                                    <Run Text="{x:Bind AppInstallerSourceLink, Mode=OneWay}" />
+                                                </Hyperlink>
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip MaxWidth="9999">
@@ -1063,7 +1061,7 @@
                                                         </StackPanel>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
-                                            </HyperlinkButton>
+                                            </TextBlock>
 
                                             <FontIcon
                                                 Grid.Row="1"
@@ -1087,18 +1085,16 @@
                                                 Text="{x:Bind PackageSourceLink, Mode=OneWay}"
                                                 Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsPackageSourceLinkExisted), Mode=OneWay}" />
 
-                                            <HyperlinkButton
+                                            <TextBlock
                                                 Grid.Row="1"
                                                 Grid.Column="2"
                                                 Margin="0,0,0,3"
-                                                Click="{x:Bind OnOpenPackageSourceLinkClicked}"
-                                                Style="{StaticResource HyperlinkButtonStyle}"
-                                                Tag="{x:Bind PackageSourceLink, Mode=OneWay}"
+                                                TextTrimming="CharacterEllipsis"
                                                 Visibility="{x:Bind IsPackageSourceLinkExisted, Mode=OneWay}">
 
-                                                <HyperlinkButton.Content>
-                                                    <TextBlock Text="{x:Bind PackageSourceLink, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
-                                                </HyperlinkButton.Content>
+                                                <Hyperlink Click="{x:Bind OnOpenPackageSourceLinkClicked}" UnderlineStyle="None">
+                                                    <Run Text="{x:Bind PackageSourceLink, Mode=OneWay}" />
+                                                </Hyperlink>
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip MaxWidth="9999">
@@ -1108,7 +1104,7 @@
                                                         </StackPanel>
                                                     </ToolTip>
                                                 </ToolTipService.ToolTip>
-                                            </HyperlinkButton>
+                                            </TextBlock>
 
                                             <FontIcon
                                                 Grid.Row="2"
@@ -1931,17 +1927,16 @@
                                                             </ToolTipService.ToolTip>
                                                         </TextBlock>
 
-                                                        <HyperlinkButton
+                                                        <TextBlock
                                                             Grid.Column="4"
                                                             Margin="6,0,0,0"
-                                                            NavigateUri="{x:Bind Uri}"
-                                                            Style="{StaticResource HyperlinkButtonStyle}"
+                                                            TextTrimming="CharacterEllipsis"
                                                             ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Installer/OpenLink')}">
 
-                                                            <HyperlinkButton.Content>
-                                                                <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Installer/Open')}" TextTrimming="CharacterEllipsis" />
-                                                            </HyperlinkButton.Content>
-                                                        </HyperlinkButton>
+                                                            <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Installer/Open')}" />
+                                                            </Hyperlink>
+                                                        </TextBlock>
                                                     </Grid>
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>

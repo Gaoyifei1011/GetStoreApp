@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace GetStoreAppInstaller.Extensions.DataType.Methods
@@ -41,13 +42,13 @@ namespace GetStoreAppInstaller.Extensions.DataType.Methods
         public static string ReadNullTerminatedString(this BinaryReader reader, Encoding encoding)
         {
             using BinaryReader binaryReader = new(reader.BaseStream, encoding, true);
-            StringBuilder result = new();
+            List<char> charList = [];
             char c;
             while ((c = binaryReader.ReadChar()) is not '\0')
             {
-                result.Append(c);
+                charList.Add(c);
             }
-            return result.ToString();
+            return new string([.. charList]);
         }
     }
 }

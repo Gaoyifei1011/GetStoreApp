@@ -14,6 +14,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -835,7 +836,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开文件存放目录
         /// </summary>
-        private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
+        private async void OnOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
         }
