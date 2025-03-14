@@ -99,21 +99,19 @@
                 Text="{x:Bind x:String.Format(AppUpdateCountInfo, AppUpdateCollection.Count), Mode=OneWay}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(AppUpdateCollection.Count), Mode=OneWay}" />
 
-            <ContentControl
+            <CommandBar
                 Grid.Column="4"
                 Margin="0,0,10,0"
+                DefaultLabelPosition="Right"
                 IsEnabled="{x:Bind IsLoadedCompleted.Equals(x:True), Mode=OneWay}">
 
-                <StackPanel
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    Orientation="Horizontal"
-                    Spacing="2">
+                <CommandBar.Resources>
+                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+                </CommandBar.Resources>
 
-                    <AppBarButton
-                        Click="{x:Bind OnCheckUpdateClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}"
-                        Style="{StaticResource AppBarButtonStyle}">
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Click="{x:Bind OnCheckUpdateClicked}" Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/CheckUpdate')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8CB;" />
@@ -123,15 +121,14 @@
                     <AppBarButton
                         Click="{x:Bind OnUpdateAllClicked}"
                         IsEnabled="{x:Bind sys:Convert.ToBoolean(AppUpdateCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/UpdateAll')}"
-                        Style="{StaticResource AppBarButtonStyle}">
+                        Label="{x:Bind root:ResourceService.GetLocalized('AppUpdate/UpdateAll')}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE74A;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                </StackPanel>
-            </ContentControl>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
         </Grid>
 
         <Grid

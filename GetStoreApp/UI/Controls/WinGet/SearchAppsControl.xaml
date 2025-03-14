@@ -86,37 +86,41 @@
             </AutoSuggestBox.QueryIcon>
         </AutoSuggestBox>
 
-        <StackPanel
+        <CommandBar
             Grid.Column="5"
             Margin="4,0,10,0"
             VerticalAlignment="Center"
             Background="Transparent"
-            Orientation="Horizontal"
-            Spacing="2">
+            DefaultLabelPosition="Right">
 
-            <AppBarButton
-                Click="{x:Bind OnOpenTempFolderClicked}"
-                Label="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
-                Style="{StaticResource AppBarButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
+            <CommandBar.Resources>
+                <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+            </CommandBar.Resources>
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8B7;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton
+                    Click="{x:Bind OnOpenTempFolderClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
 
-            <AppBarButton
-                Click="{x:Bind OnRefreshClicked}"
-                IsEnabled="{x:Bind IsSearchCompleted, Mode=OneWay}"
-                Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
-                Style="{StaticResource AppBarButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8B7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE72C;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </StackPanel>
+                <AppBarButton
+                    Click="{x:Bind OnRefreshClicked}"
+                    IsEnabled="{x:Bind IsSearchCompleted, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72C;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
     </Grid>
 
     <Grid

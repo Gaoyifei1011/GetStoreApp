@@ -67,48 +67,51 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel
+            <CommandBar
                 Grid.Column="0"
                 Margin="10,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                Orientation="Horizontal"
-                Spacing="2">
+                DefaultLabelPosition="Right">
 
-                <AppBarButton
-                    Click="{x:Bind OnBrowserBackClicked}"
-                    IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Back')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                <CommandBar.Resources>
+                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+                </CommandBar.Resources>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72B;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton
+                        Click="{x:Bind OnBrowserBackClicked}"
+                        IsEnabled="{x:Bind CanGoBack, Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('WebView/Back')}">
 
-                <AppBarButton
-                    Click="{x:Bind OnBrowserForwardClicked}"
-                    IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Forward')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE72B;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72A;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    <AppBarButton
+                        Click="{x:Bind OnBrowserForwardClicked}"
+                        IsEnabled="{x:Bind CanGoForward, Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('WebView/Forward')}">
 
-                <AppBarButton
-                    Click="{x:Bind OnRefreshClicked}"
-                    IsEnabled="{x:Bind IsLoading.Equals(x:False), Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Refresh')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE72A;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72C;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </StackPanel>
+                    <AppBarButton
+                        Click="{x:Bind OnRefreshClicked}"
+                        IsEnabled="{x:Bind IsLoading.Equals(x:False), Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('WebView/Refresh')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE72C;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
 
             <Grid
                 Grid.Column="1"
@@ -140,72 +143,67 @@
                     Visibility="{x:Bind IsLoading, Mode=OneWay}" />
             </Grid>
 
-            <StackPanel
+            <CommandBar
                 Grid.Column="2"
                 Margin="0,0,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Background="Transparent"
-                Orientation="Horizontal"
-                Spacing="2">
+                DefaultLabelPosition="Right">
 
-                <AppBarButton
-                    Click="{x:Bind OnDownloadClicked}"
-                    IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WebView/Download')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                <CommandBar.Resources>
+                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+                </CommandBar.Resources>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE896;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton
+                        Click="{x:Bind OnDownloadClicked}"
+                        IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('WebView/Download')}">
 
-                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WebView/More')}" Style="{StaticResource AppBarButtonStyle}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE896;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar.PrimaryCommands>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE712;" />
-                    </AppBarButton.Icon>
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton Click="{x:Bind OnOpenWithBrowserClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE774;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                    <AppBarButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem Click="{x:Bind OnOpenWithBrowserClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenWithBrowser')}">
+                    <AppBarSeparator />
 
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE774;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
+                    <AppBarButton Click="{x:Bind OnOpenCacheFolderClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
 
-                            <MenuFlyoutSeparator />
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8b7;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                            <MenuFlyoutItem Click="{x:Bind OnOpenCacheFolderClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/OpenCacheFolder')}">
+                    <AppBarButton
+                        Click="{x:Bind OnClearWebCacheClicked}"
+                        IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
 
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE8b7;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE74D;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnClearWebCacheClicked}"
-                                IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('WebView/ClearWebCache')}">
+                    <AppBarSeparator />
 
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE74D;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
+                    <AppBarButton Click="{x:Bind OnOpenSettingsClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WebView/Settings')}">
 
-                            <MenuFlyoutSeparator />
-
-                            <MenuFlyoutItem Click="{x:Bind OnOpenSettingsClicked}" Text="{x:Bind root:ResourceService.GetLocalized('WebView/Settings')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE713;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-            </StackPanel>
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE713;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
         </Grid>
 
         <WebView

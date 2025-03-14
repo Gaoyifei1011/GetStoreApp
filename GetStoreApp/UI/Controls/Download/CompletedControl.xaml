@@ -73,119 +73,115 @@
             Text="{x:Bind x:String.Format(CompletedCountInfo, CompletedCollection.Count), Mode=OneWay}"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}" />
 
-        <StackPanel
+        <CommandBar
             x:Name="NormalMode"
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
             x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
             Background="Transparent"
-            Orientation="Horizontal"
-            Spacing="2">
+            DefaultLabelPosition="Right">
 
-            <AppBarButton
-                Click="{x:Bind OnOpenFolderClicked}"
-                Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
-                Style="{StaticResource AppBarButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
+            <CommandBar.Resources>
+                <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+            </CommandBar.Resources>
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8B7;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton
+                    Click="{x:Bind OnOpenFolderClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
 
-            <AppBarButton
-                Click="{x:Bind OnSelectClicked}"
-                IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedCollection.Count), Mode=OneWay}"
-                Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
-                Style="{StaticResource AppBarButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8B7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE762;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </StackPanel>
+                <AppBarButton
+                    Click="{x:Bind OnSelectClicked}"
+                    IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedCollection.Count), Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
 
-        <StackPanel
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE762;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+
+        <CommandBar
             x:Name="SelectMode"
             Grid.Column="4"
             Margin="0,0,10,0"
             VerticalAlignment="Center"
             x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
             Background="Transparent"
-            Orientation="Horizontal"
-            Spacing="2">
+            DefaultLabelPosition="Right">
 
-            <AppBarButton
-                Click="{x:Bind OnSelectAllClicked}"
-                Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
-                Style="{StaticResource AppBarButtonStyle}">
+            <CommandBar.Resources>
+                <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+            </CommandBar.Resources>
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8B3;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Click="{x:Bind OnSelectAllClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
 
-            <AppBarButton
-                Click="{x:Bind OnSelectNoneClicked}"
-                Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
-                Style="{StaticResource AppBarButtonStyle}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8B3;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE8E6;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+                <AppBarButton Click="{x:Bind OnSelectNoneClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
 
-            <AppBarButton
-                Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}"
-                Style="{StaticResource AppBarButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptionsToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8E6;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE74D;" />
-                </AppBarButton.Icon>
+                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptionsToolTip')}">
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE74D;" />
+                    </AppBarButton.Icon>
 
-                <AppBarButton.Flyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem
-                            Height="32"
-                            Padding="11,0"
-                            Click="{x:Bind OnDeleteSelectedClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}" />
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnDeleteSelectedClicked}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelected')}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedToolTip')}" />
 
-                        <MenuFlyoutItem
-                            Height="32"
-                            Padding="11,0"
-                            Click="{x:Bind OnDeleteSelectedWithFileClicked}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}"
-                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}" />
-                    </MenuFlyout>
-                </AppBarButton.Flyout>
-            </AppBarButton>
+                            <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnDeleteSelectedWithFileClicked}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFile')}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteSelectedWithFileToolTip')}" />
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
 
-            <AppBarButton
-                Click="{x:Bind OnShareSelectedFileClicked}"
-                Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}"
-                Style="{StaticResource AppBarButtonStyle}">
+                <AppBarButton Click="{x:Bind OnShareSelectedFileClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE72D;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72D;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
 
-            <AppBarButton
-                Click="{x:Bind OnCancelClicked}"
-                Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
-                Style="{StaticResource AppBarButtonStyle}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
+                <AppBarButton
+                    Click="{x:Bind OnCancelClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
 
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE711;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </StackPanel>
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE711;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
     </Grid>
 
     <Grid

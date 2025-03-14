@@ -426,7 +426,6 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <FontIcon
@@ -441,29 +440,32 @@
                         VerticalAlignment="Center"
                         Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryedAppInfo')}" />
 
-                    <AppBarButton
+                    <CommandBar
                         Grid.Column="2"
-                        Margin="0,0,5,0"
-                        Click="{x:Bind OnCopyQueryedAppInfoClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyQueryedAppInfo')}"
-                        Style="{StaticResource AppBarButtonStyle}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8C8;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton
-                        Grid.Column="3"
                         Margin="0,0,-15,0"
-                        Click="{x:Bind OnLearnMoreClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Store/LearnMore')}"
-                        Style="{StaticResource AppBarButtonStyle}">
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        DefaultLabelPosition="Right">
 
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE890;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                        <CommandBar.Resources>
+                            <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                            <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+                        </CommandBar.Resources>
+
+                        <CommandBar.PrimaryCommands>
+                            <AppBarButton Click="{x:Bind OnCopyQueryedAppInfoClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyQueryedAppInfo')}">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE8C8;" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+
+                            <AppBarButton Click="{x:Bind OnLearnMoreClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Store/LearnMore')}">
+                                <AppBarButton.Icon>
+                                    <FontIcon Glyph="&#xE890;" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar.PrimaryCommands>
+                    </CommandBar>
                 </Grid>
             </Expander.Header>
 
@@ -550,7 +552,7 @@
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <StackPanel
-                Grid.Column="3"
+                Grid.Column="2"
                 VerticalAlignment="Center"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
 
@@ -582,107 +584,105 @@
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(QueryLinksCollection.Count), Mode=OneWay}" />
 
-            <StackPanel
+            <CommandBar
                 x:Name="NormalMode"
                 Grid.Column="4"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                 Background="Transparent"
-                Orientation="Horizontal"
-                Spacing="2">
+                DefaultLabelPosition="Right">
 
-                <AppBarButton
-                    Click="{x:Bind OnSelectClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
-                    Style="{StaticResource AppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/SelectToolTip')}">
+                <CommandBar.Resources>
+                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+                </CommandBar.Resources>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE762;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </StackPanel>
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton
+                        Click="{x:Bind OnSelectClicked}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/SelectToolTip')}">
 
-            <StackPanel
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE762;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
+
+            <CommandBar
                 x:Name="SelectMode"
                 Grid.Column="4"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
                 Background="Transparent"
-                Orientation="Horizontal"
-                Spacing="2">
+                DefaultLabelPosition="Right">
 
-                <AppBarButton
-                    Click="{x:Bind OnSelectAllClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                <CommandBar.Resources>
+                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+                </CommandBar.Resources>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8B3;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                <CommandBar.PrimaryCommands>
+                    <AppBarButton Click="{x:Bind OnSelectAllClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
 
-                <AppBarButton
-                    Click="{x:Bind OnSelectNoneClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8B3;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8E6;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    <AppBarButton Click="{x:Bind OnSelectNoneClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
 
-                <AppBarButton
-                    Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}"
-                    Style="{StaticResource AppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8E6;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8C8;" />
-                    </AppBarButton.Icon>
+                    <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}">
 
-                    <AppBarButton.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
-                                Click="{x:Bind OnCopySelectedLinkClicked}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}" />
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8C8;" />
+                        </AppBarButton.Icon>
 
-                            <MenuFlyoutItem
-                                Height="32"
-                                Padding="11,0"
-                                Click="{x:Bind OnCopySelectedClicked}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}" />
-                        </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
+                        <AppBarButton.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnCopySelectedLinkClicked}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLink')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedLinkToolTip')}" />
 
-                <AppBarButton
-                    Click="{x:Bind OnDownloadSelectedClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}"
-                    Style="{StaticResource AppBarButtonStyle}">
+                                <MenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnCopySelectedClicked}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContent')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopySelectedContentToolTip')}" />
+                            </MenuFlyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE74B;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                    <AppBarButton Click="{x:Bind OnDownloadSelectedClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSelected')}">
 
-                <AppBarButton
-                    Click="{x:Bind OnCancelClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('Store/Cancel')}"
-                    Style="{StaticResource AppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CancelToolTip')}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE74B;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE711;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </StackPanel>
+                    <AppBarButton
+                        Click="{x:Bind OnCancelClicked}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Store/Cancel')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CancelToolTip')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE711;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar.PrimaryCommands>
+            </CommandBar>
         </Grid>
 
         <Grid
