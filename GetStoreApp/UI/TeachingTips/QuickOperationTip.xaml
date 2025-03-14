@@ -4,12 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+    CloseButtonContent="TeachingTip"
     IsLightDismissEnabled="False"
     PlacementMargin="0,20,0,0"
     PreferredPlacement="Bottom"
-    Style="{StaticResource TeachingTipStyle}"
     mc:Ignorable="d">
+
+    <TeachingTip.CloseButtonStyle>
+        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Setter Property="Height" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Width" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+    </TeachingTip.CloseButtonStyle>
 
     <Grid>
         <TextBlock x:Name="QuickOperationSuccess" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />

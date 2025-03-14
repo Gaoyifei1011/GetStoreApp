@@ -64,14 +64,12 @@
     <None Remove="XamlIslandsApp.xaml" />
     <None Remove="Styles\XamlIslands\AppBarButton.xaml" />
     <None Remove="Styles\XamlIslands\MenuFlyout.xaml" />
-    <None Remove="Styles\XamlIslands\TeachingTip.xaml" />
     <None Remove="UI\TeachingTips\InstallerDataCopyTip.xaml" />
     <None Remove="Pages\MainPage.xaml" />
 
     <Page Remove="XamlIslandsApp.xaml" />
     <Page Update="Styles\XamlIslands\AppBarButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\XamlIslands\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\XamlIslands\TeachingTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\InstallerDataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     

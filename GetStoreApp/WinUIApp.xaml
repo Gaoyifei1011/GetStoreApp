@@ -5,15 +5,18 @@
     HighContrastAdjustment="None">
 
     <Application.Resources>
-        <XamlControlsResources>
-            <XamlControlsResources.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///Styles/WinUI/AppBarButton.xaml" />
+        <ResourceDictionary>
+            <x:Double x:Key="TeachingTipMinWidth">0</x:Double>
+            <x:Double x:Key="TeachingTipMaxWidth">9999</x:Double>
+            <Thickness x:Key="TeachingTipButtonPanelMargin">0,0,0,0</Thickness>
+
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/HyperlinkButton.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/MenuFlyout.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/WinUI/TeachingTip.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/ToggleSwitch.xaml" />
-            </XamlControlsResources.MergedDictionaries>
-        </XamlControlsResources>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
