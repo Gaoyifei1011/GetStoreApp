@@ -133,15 +133,38 @@
         IsClosable="False"
         IsOpen="True"
         Message="{x:Bind StateInfoText, Mode=OneWay}"
-        Severity="{x:Bind ResultSeverity, Mode=OneWay}"
-        Style="{StaticResource DefaultInfoBarStyle}">
+        Severity="{x:Bind ResultSeverity, Mode=OneWay}">
 
-        <InfoBar.Content>
-            <ProgressRing
-                IsActive="{x:Bind IsRingActive, Mode=OneWay}"
-                IsIndeterminate="True"
-                Visibility="{x:Bind IsRingActive, Mode=OneWay}" />
-        </InfoBar.Content>
+        <InfoBar.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.ThemeDictionaries>
+                    <ResourceDictionary x:Key="Default">
+                        <StaticResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                    </ResourceDictionary>
+                    <ResourceDictionary x:Key="HighConstract">
+                        <StaticResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="SystemColorWindowColorBrush" />
+                    </ResourceDictionary>
+                    <ResourceDictionary x:Key="Light">
+                        <StaticResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="CardBackgroundFillColorDefaultBrush" />
+                    </ResourceDictionary>
+                </ResourceDictionary.ThemeDictionaries>
+            </ResourceDictionary>
+        </InfoBar.Resources>
+
+        <InfoBar.ActionButton>
+            <Button
+                Margin="0"
+                Padding="0"
+                HorizontalAlignment="Right"
+                BorderBrush="Transparent"
+                IsHitTestVisible="False">
+
+                <ProgressRing
+                    IsActive="{x:Bind IsRingActive, Mode=OneWay}"
+                    IsIndeterminate="True"
+                    Visibility="{x:Bind IsRingActive, Mode=OneWay}" />
+            </Button>
+        </InfoBar.ActionButton>
     </InfoBar>
 
     <Expander

@@ -13,7 +13,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/HyperlinkButton.xaml" />
-                <ResourceDictionary Source="ms-appx:///Styles/WinUI/InfoBar.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/MenuFlyout.xaml" />
                 <ResourceDictionary Source="ms-appx:///Styles/WinUI/ToggleSwitch.xaml" />
             </ResourceDictionary.MergedDictionaries>

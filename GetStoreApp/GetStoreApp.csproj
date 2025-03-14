@@ -246,7 +246,6 @@
     <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Strings\zh-hans\WinGet.resjson" />
     <None Remove="Styles\WinUI\HyperlinkButton.xaml" />
-    <None Remove="Styles\WinUI\InfoBar.xaml" />
     <None Remove="Styles\WinUI\MenuFlyout.xaml" />
     <None Remove="Styles\WinUI\ToggleSwitch.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
@@ -287,7 +286,6 @@
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
     
     <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\WinUI\InfoBar.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\MenuFlyout.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Styles\WinUI\ToggleSwitch.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
