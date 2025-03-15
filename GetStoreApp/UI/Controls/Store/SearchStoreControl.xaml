@@ -52,6 +52,7 @@
     </Grid>
 
     <InfoBar
+        Height="50"
         IsClosable="False"
         IsOpen="True"
         Message="{x:Bind StateInfoText, Mode=OneWay}"
@@ -78,13 +79,12 @@
                 Margin="0"
                 Padding="0"
                 HorizontalAlignment="Right"
+                Background="Transparent"
                 BorderBrush="Transparent"
-                IsHitTestVisible="False">
+                IsHitTestVisible="False"
+                Visibility="{x:Bind IsRingActive, Mode=OneWay}">
 
-                <ProgressRing
-                    IsActive="{x:Bind IsRingActive, Mode=OneWay}"
-                    IsIndeterminate="True"
-                    Visibility="{x:Bind IsRingActive, Mode=OneWay}" />
+                <ProgressRing IsActive="{x:Bind IsRingActive, Mode=OneWay}" IsIndeterminate="True" />
             </Button>
         </InfoBar.ActionButton>
     </InfoBar>
