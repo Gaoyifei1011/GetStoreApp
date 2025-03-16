@@ -358,8 +358,7 @@
                     <StackPanel
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="10">
+                        Orientation="Horizontal">
 
                         <TextBlock
                             VerticalAlignment="Center"
@@ -373,7 +372,7 @@
 
                         <ToggleSwitch
                             MinWidth="0"
-                            Margin="0,-2,-10,0"
+                            Margin="10,-2,-10,0"
                             IsEnabled="{x:Bind AlwaysShowBackdropEnabled, Mode=OneWay}"
                             IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
                             OffContent=""
@@ -540,8 +539,7 @@
                     <StackPanel
                         Grid.Column="2"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="10">
+                        Orientation="Horizontal">
 
                         <TextBlock
                             VerticalAlignment="Center"
@@ -555,7 +553,7 @@
 
                         <ToggleSwitch
                             MinWidth="0"
-                            Margin="0,-2,-10,0"
+                            Margin="10,-2,-10,0"
                             IsOn="{x:Bind TopMostValue, Mode=OneWay}"
                             OffContent=""
                             OnContent=""
@@ -639,8 +637,7 @@
                     <StackPanel
                         Grid.Column="3"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="10">
+                        Orientation="Horizontal">
 
                         <TextBlock
                             VerticalAlignment="Center"
@@ -654,7 +651,7 @@
 
                         <ToggleSwitch
                             MinWidth="0"
-                            Margin="0,-2,-10,0"
+                            Margin="10,-2,-10,0"
                             IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
                             IsOn="{x:Bind NotificationValue, Mode=OneWay}"
                             OffContent=""
@@ -882,8 +879,7 @@
                     <StackPanel
                         Grid.Column="3"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="10">
+                        Orientation="Horizontal">
 
                         <TextBlock
                             VerticalAlignment="Center"
@@ -897,7 +893,7 @@
 
                         <ToggleSwitch
                             MinWidth="0"
-                            Margin="0,-2,-10,0"
+                            Margin="10,-2,-10,0"
                             IsOn="{x:Bind ShellMenuValue, Mode=OneWay}"
                             OffContent=""
                             OnContent=""
@@ -1008,8 +1004,7 @@
                                 <StackPanel
                                     Grid.Column="2"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="10">
+                                    Orientation="Horizontal">
 
                                     <TextBlock
                                         VerticalAlignment="Center"
@@ -1023,7 +1018,7 @@
 
                                     <ToggleSwitch
                                         MinWidth="0"
-                                        Margin="0,-2,-10,0"
+                                        Margin="10,-2,-2,0"
                                         IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
                                         OffContent=""
                                         OnContent=""
@@ -1220,8 +1215,7 @@
                                 <StackPanel
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="10">
+                                    Orientation="Horizontal">
 
                                     <TextBlock
                                         VerticalAlignment="Center"
@@ -1235,7 +1229,7 @@
 
                                     <ToggleSwitch
                                         MinWidth="0"
-                                        Margin="0,-2,-10,0"
+                                        Margin="10,-2,-2,0"
                                         IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
                                         OffContent=""
                                         OnContent=""
@@ -1284,8 +1278,7 @@
                                 <StackPanel
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="10">
+                                    Orientation="Horizontal">
 
                                     <TextBlock
                                         VerticalAlignment="Center"
@@ -1299,7 +1292,7 @@
 
                                     <ToggleSwitch
                                         MinWidth="0"
-                                        Margin="0,-2,-10,0"
+                                        Margin="10,-2,-2,0"
                                         IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
                                         OffContent=""
                                         OnContent=""
@@ -1851,8 +1844,7 @@
                                 <StackPanel
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="10">
+                                    Orientation="Horizontal">
 
                                     <TextBlock
                                         VerticalAlignment="Center"
@@ -1866,7 +1858,7 @@
 
                                     <ToggleSwitch
                                         MinWidth="0"
-                                        Margin="0,-2,-10,0"
+                                        Margin="10,-2,-2,0"
                                         IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
                                         OffContent=""
                                         OnContent=""
@@ -1916,8 +1908,7 @@
                                 <StackPanel
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="10">
+                                    Orientation="Horizontal">
 
                                     <TextBlock
                                         VerticalAlignment="Center"
@@ -1931,7 +1922,7 @@
 
                                     <ToggleSwitch
                                         MinWidth="0"
-                                        Margin="0,-2,-10,0"
+                                        Margin="10,-2,-2,0"
                                         IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
                                         OffContent=""
                                         OnContent=""
@@ -1981,8 +1972,7 @@
                                 <StackPanel
                                     Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal"
-                                    Spacing="10">
+                                    Orientation="Horizontal">
 
                                     <TextBlock
                                         VerticalAlignment="Center"
@@ -1996,7 +1986,7 @@
 
                                     <ToggleSwitch
                                         MinWidth="0"
-                                        Margin="0,-2,-10,0"
+                                        Margin="10,-2,-2,0"
                                         IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
                                         OffContent=""
                                         OnContent=""
