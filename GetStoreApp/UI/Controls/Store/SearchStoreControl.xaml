@@ -81,6 +81,7 @@
                 HorizontalAlignment="Right"
                 Background="Transparent"
                 BorderBrush="Transparent"
+                BorderThickness="0"
                 IsHitTestVisible="False"
                 Visibility="{x:Bind IsRingActive, Mode=OneWay}">
 
