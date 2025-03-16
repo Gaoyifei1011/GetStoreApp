@@ -161,18 +161,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private bool _notification = NotificationService.AppNotification;
+        private bool _notificationValue = NotificationService.AppNotification;
 
-        public bool Notification
+        public bool NotificationValue
         {
-            get { return _notification; }
+            get { return _notificationValue; }
 
             set
             {
-                if (!Equals(_notification, value))
+                if (!Equals(_notificationValue, value))
                 {
-                    _notification = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Notification)));
+                    _notificationValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationValue)));
                 }
             }
         }
@@ -1087,7 +1087,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is ToggleSwitch toggleSwitch)
             {
                 NotificationService.SetNotification(toggleSwitch.IsOn);
-                Notification = toggleSwitch.IsOn;
+                NotificationValue = toggleSwitch.IsOn;
             }
         }
 

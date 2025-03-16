@@ -355,16 +355,31 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <ToggleSwitch
+                    <StackPanel
                         Grid.Column="2"
-                        MinWidth="0"
-                        Margin="0,-2,0,0"
-                        IsEnabled="{x:Bind AlwaysShowBackdropEnabled, Mode=OneWay}"
-                        IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
-                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
-                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOnContent')}"
-                        Style="{StaticResource ToggleSwitchStyle}"
-                        Toggled="{x:Bind OnAlwaysShowBackdropToggled}" />
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="10">
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOffContent')}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AlwaysShowBackdropValue), Mode=OneWay}" />
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/AlwaysShowBackdropOnContent')}"
+                            Visibility="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}" />
+
+                        <ToggleSwitch
+                            MinWidth="0"
+                            Margin="0,-2,-10,0"
+                            IsEnabled="{x:Bind AlwaysShowBackdropEnabled, Mode=OneWay}"
+                            IsOn="{x:Bind AlwaysShowBackdropValue, Mode=OneWay}"
+                            OffContent=""
+                            OnContent=""
+                            Toggled="{x:Bind OnAlwaysShowBackdropToggled}" />
+                    </StackPanel>
                 </Grid>
 
                 <!--  界面语言设置  -->
@@ -522,15 +537,30 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <ToggleSwitch
+                    <StackPanel
                         Grid.Column="2"
-                        MinWidth="0"
-                        Margin="0,-2,0,0"
-                        IsOn="{x:Bind TopMostValue, Mode=OneWay}"
-                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOffContent')}"
-                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOnContent')}"
-                        Style="{StaticResource ToggleSwitchStyle}"
-                        Toggled="{x:Bind OnTopMostToggled}" />
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="10">
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOffContent')}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(TopMostValue), Mode=OneWay}" />
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/TopMostOnContent')}"
+                            Visibility="{x:Bind TopMostValue, Mode=OneWay}" />
+
+                        <ToggleSwitch
+                            MinWidth="0"
+                            Margin="0,-2,-10,0"
+                            IsOn="{x:Bind TopMostValue, Mode=OneWay}"
+                            OffContent=""
+                            OnContent=""
+                            Toggled="{x:Bind OnTopMostToggled}" />
+                    </StackPanel>
                 </Grid>
 
                 <StackPanel
@@ -606,16 +636,31 @@
                         Click="{x:Bind OnSystemNotificationSettingsClicked}"
                         Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemNotificationSettings')}" />
 
-                    <ToggleSwitch
+                    <StackPanel
                         Grid.Column="3"
-                        MinWidth="0"
-                        Margin="0,-2,0,0"
-                        IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
-                        IsOn="{x:Bind Notification, Mode=OneWay}"
-                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
-                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOnContent')}"
-                        Style="{StaticResource ToggleSwitchStyle}"
-                        Toggled="{x:Bind OnNotificationToggled}" />
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="10">
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOffContent')}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(NotificationValue), Mode=OneWay}" />
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/NotificationOnContent')}"
+                            Visibility="{x:Bind NotificationValue, Mode=OneWay}" />
+
+                        <ToggleSwitch
+                            MinWidth="0"
+                            Margin="0,-2,-10,0"
+                            IsEnabled="{x:Bind NotificationEnabled, Mode=OneWay}"
+                            IsOn="{x:Bind NotificationValue, Mode=OneWay}"
+                            OffContent=""
+                            OnContent=""
+                            Toggled="{x:Bind OnNotificationToggled}" />
+                    </StackPanel>
                 </Grid>
 
                 <!--  浏览器内核设置  -->
@@ -834,15 +879,30 @@
                         </HyperlinkButton.Content>
                     </HyperlinkButton>
 
-                    <ToggleSwitch
+                    <StackPanel
                         Grid.Column="3"
-                        MinWidth="0"
-                        Margin="0,-2,0,0"
-                        IsOn="{x:Bind ShellMenuValue, Mode=OneWay}"
-                        OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuOffContent')}"
-                        OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuOnContent')}"
-                        Style="{StaticResource ToggleSwitchStyle}"
-                        Toggled="{x:Bind OnShellMenuToggled}" />
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="10">
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuOffContent')}"
+                            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ShellMenuValue), Mode=OneWay}" />
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/ShellMenuOnContent')}"
+                            Visibility="{x:Bind ShellMenuValue, Mode=OneWay}" />
+
+                        <ToggleSwitch
+                            MinWidth="0"
+                            Margin="0,-2,-10,0"
+                            IsOn="{x:Bind ShellMenuValue, Mode=OneWay}"
+                            OffContent=""
+                            OnContent=""
+                            Toggled="{x:Bind OnShellMenuToggled}" />
+                    </StackPanel>
                 </Grid>
 
                 <!--  商店区域设置  -->
@@ -945,14 +1005,30 @@
                                     Click="{x:Bind OnSystemRegionSettingsClicked}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('Settings/SystemRegionSettings')}" />
 
-                                <ToggleSwitch
+                                <StackPanel
                                     Grid.Column="2"
-                                    MinWidth="0"
-                                    IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
-                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOffContent')}"
-                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOnContent')}"
-                                    Style="{StaticResource ToggleSwitchStyle}"
-                                    Toggled="{x:Bind OnUseSystemRegionToggled}" />
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOffContent')}"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(UseSystemRegionValue), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/UseSystemRegionOnContent')}"
+                                        Visibility="{x:Bind UseSystemRegionValue, Mode=OneWay}" />
+
+                                    <ToggleSwitch
+                                        MinWidth="0"
+                                        Margin="0,-2,-10,0"
+                                        IsOn="{x:Bind UseSystemRegionValue, Mode=OneWay}"
+                                        OffContent=""
+                                        OnContent=""
+                                        Toggled="{x:Bind OnUseSystemRegionToggled}" />
+                                </StackPanel>
                             </Grid>
 
                             <MenuFlyoutSeparator />
@@ -1141,14 +1217,30 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <ToggleSwitch
+                                <StackPanel
                                     Grid.Column="1"
-                                    MinWidth="0"
-                                    IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
-                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
-                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
-                                    Style="{StaticResource ToggleSwitchStyle}"
-                                    Toggled="{x:Bind OnEncryptedPackageToggled}" />
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOffContent')}"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(EncryptedPackageFilterValue), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageOnContent')}"
+                                        Visibility="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}" />
+
+                                    <ToggleSwitch
+                                        MinWidth="0"
+                                        Margin="0,-2,-10,0"
+                                        IsOn="{x:Bind EncryptedPackageFilterValue, Mode=OneWay}"
+                                        OffContent=""
+                                        OnContent=""
+                                        Toggled="{x:Bind OnEncryptedPackageToggled}" />
+                                </StackPanel>
                             </Grid>
 
                             <MenuFlyoutSeparator />
@@ -1189,14 +1281,30 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <ToggleSwitch
+                                <StackPanel
                                     Grid.Column="1"
-                                    MinWidth="0"
-                                    IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
-                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
-                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
-                                    Style="{StaticResource ToggleSwitchStyle}"
-                                    Toggled="{x:Bind OnBlockMapToggled}" />
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOffContent')}"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BlockMapFilterValue), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapOnContent')}"
+                                        Visibility="{x:Bind BlockMapFilterValue, Mode=OneWay}" />
+
+                                    <ToggleSwitch
+                                        MinWidth="0"
+                                        Margin="0,-2,-10,0"
+                                        IsOn="{x:Bind BlockMapFilterValue, Mode=OneWay}"
+                                        OffContent=""
+                                        OnContent=""
+                                        Toggled="{x:Bind OnBlockMapToggled}" />
+                                </StackPanel>
                             </Grid>
                         </StackPanel>
                     </Expander.Content>
@@ -1740,14 +1848,30 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <ToggleSwitch
+                                <StackPanel
                                     Grid.Column="1"
-                                    MinWidth="0"
-                                    IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
-                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOffContent')}"
-                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOnContent')}"
-                                    Style="{StaticResource ToggleSwitchStyle}"
-                                    Toggled="{x:Bind OnAllowUnsignedPackageToggled}" />
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOffContent')}"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUnsignedPackageValue), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOnContent')}"
+                                        Visibility="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}" />
+
+                                    <ToggleSwitch
+                                        MinWidth="0"
+                                        Margin="0,-2,-10,0"
+                                        IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
+                                        OffContent=""
+                                        OnContent=""
+                                        Toggled="{x:Bind OnAllowUnsignedPackageToggled}" />
+                                </StackPanel>
                             </Grid>
 
                             <MenuFlyoutSeparator />
@@ -1789,14 +1913,30 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <ToggleSwitch
+                                <StackPanel
                                     Grid.Column="1"
-                                    MinWidth="0"
-                                    IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
-                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/ForceAppShutdownOffContent')}"
-                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/ForceAppShutdownOnContent')}"
-                                    Style="{StaticResource ToggleSwitchStyle}"
-                                    Toggled="{x:Bind OnForceAppShutdownToggled}" />
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceAppShutdownOffContent')}"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceAppShutdownValue), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceAppShutdownOnContent')}"
+                                        Visibility="{x:Bind ForceAppShutdownValue, Mode=OneWay}" />
+
+                                    <ToggleSwitch
+                                        MinWidth="0"
+                                        Margin="0,-2,-10,0"
+                                        IsOn="{x:Bind ForceAppShutdownValue, Mode=OneWay}"
+                                        OffContent=""
+                                        OnContent=""
+                                        Toggled="{x:Bind OnForceAppShutdownToggled}" />
+                                </StackPanel>
                             </Grid>
 
                             <MenuFlyoutSeparator />
@@ -1838,14 +1978,30 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <ToggleSwitch
+                                <StackPanel
                                     Grid.Column="1"
-                                    MinWidth="0"
-                                    IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
-                                    OffContent="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOffContent')}"
-                                    OnContent="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOnContent')}"
-                                    Style="{StaticResource ToggleSwitchStyle}"
-                                    Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOffContent')}"
+                                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceTargetAppShutdownValue), Mode=OneWay}" />
+
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOnContent')}"
+                                        Visibility="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}" />
+
+                                    <ToggleSwitch
+                                        MinWidth="0"
+                                        Margin="0,-2,-10,0"
+                                        IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
+                                        OffContent=""
+                                        OnContent=""
+                                        Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
+                                </StackPanel>
                             </Grid>
                         </StackPanel>
                     </Expander.Content>
