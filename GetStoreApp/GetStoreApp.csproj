@@ -245,8 +245,6 @@
     <None Remove="Strings\zh-hans\WebView.resjson" />
     <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Strings\zh-hans\WinGet.resjson" />
-    <None Remove="Styles\WinUI\HyperlinkButton.xaml" />
-    <None Remove="Styles\WinUI\ToggleSwitch.xaml" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
     <None Remove="UI\Controls\Store\SearchStoreControl.xaml" />
@@ -283,9 +281,6 @@
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250208002-preview1" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
-    
-    <Page Update="Styles\WinUI\HyperlinkButton.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Styles\WinUI\ToggleSwitch.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

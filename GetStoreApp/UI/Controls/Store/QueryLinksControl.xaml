@@ -17,6 +17,8 @@
         <SolidColorBrush x:Key="ExpanderChevronBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
 
@@ -404,18 +406,18 @@
                                     <HyperlinkButton
                                         Grid.Column="4"
                                         Margin="10,0,0,0"
+                                        Padding="0"
                                         Command="{StaticResource FillinCommand}"
                                         CommandParameter="{x:Bind}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
-                                        IsEnabled="{Binding ElementName=QueryLinksRoot, Path=IsNotQueryingLinks}"
-                                        Style="{StaticResource HyperlinkButtonStyle}" />
+                                        IsEnabled="{Binding ElementName=QueryLinksRoot, Path=IsNotQueryingLinks}" />
 
                                     <HyperlinkButton
                                         Grid.Column="5"
+                                        Padding="0"
                                         Command="{StaticResource CopyCommand}"
                                         CommandParameter="{x:Bind}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Copy')}"
-                                        Style="{StaticResource HyperlinkButtonStyle}"
                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyToolTip')}" />
                                 </Grid>
                             </ItemContainer>
@@ -845,11 +847,11 @@
                             <HyperlinkButton
                                 Grid.Column="1"
                                 Margin="10,0,0,0"
+                                Padding="0"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource DownloadCommand}"
                                 CommandParameter="{x:Bind}"
-                                IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource HyperlinkButtonStyle}">
+                                IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}">
 
                                 <HyperlinkButton.Content>
                                     <TextBlock
@@ -891,33 +893,33 @@
                             <HyperlinkButton
                                 Grid.Column="3"
                                 Margin="0,0,5,0"
+                                Padding="0"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource OpenLinkCommand}"
                                 CommandParameter="{x:Bind FileLink}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/OpenLink')}"
                                 IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OpenLinkToolTip')}" />
 
                             <HyperlinkButton
                                 Grid.Column="4"
                                 Margin="0,0,5,0"
+                                Padding="0"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource CopyLinkCommand}"
                                 CommandParameter="{x:Bind FileLink}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyLink')}"
                                 IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyLinkToolTip')}" />
 
                             <HyperlinkButton
                                 Grid.Column="5"
+                                Padding="0"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource CopyInformationCommand}"
                                 CommandParameter="{x:Bind}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/CopyInformation')}"
                                 IsEnabled="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
-                                Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyInformationToolTip')}" />
                         </Grid>
                     </ItemContainer>

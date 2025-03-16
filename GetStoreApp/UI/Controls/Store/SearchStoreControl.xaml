@@ -20,6 +20,8 @@
         <SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
 
         <XamlUICommand x:Name="FillinCommand" ExecuteRequested="{x:Bind OnFillinExecuteRequested}" />
         <XamlUICommand x:Name="OpenLinkCommand" ExecuteRequested="{x:Bind OnOpenLinkExecuteRequested}" />
@@ -209,11 +211,11 @@
                                     <HyperlinkButton
                                         Grid.Column="1"
                                         Margin="10,0,0,0"
+                                        Padding="0"
                                         Command="{StaticResource FillinCommand}"
                                         CommandParameter="{x:Bind HistoryContent}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
-                                        IsEnabled="{Binding ElementName=SearchStoreRoot, Path=IsNotSeachingStore}"
-                                        Style="{StaticResource HyperlinkButtonStyle}" />
+                                        IsEnabled="{Binding ElementName=SearchStoreRoot, Path=IsNotSeachingStore}" />
                                 </Grid>
                             </ItemContainer>
                         </DataTemplate>
@@ -419,10 +421,10 @@
                             <HyperlinkButton
                                 Grid.Column="2"
                                 Margin="10,0"
+                                Padding="0"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource OpenLinkCommand}"
-                                CommandParameter="{x:Bind StoreAppLink}"
-                                Style="{StaticResource HyperlinkButtonStyle}">
+                                CommandParameter="{x:Bind StoreAppLink}">
 
                                 <HyperlinkButton.Content>
                                     <TextBlock
@@ -443,11 +445,11 @@
                             <HyperlinkButton
                                 Grid.Column="3"
                                 Margin="0,0,5,0"
+                                Padding="0"
                                 VerticalAlignment="Center"
                                 Command="{StaticResource QueryLinksCommand}"
                                 CommandParameter="{x:Bind StoreAppLink}"
                                 Content="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}"
-                                Style="{StaticResource HyperlinkButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksToolTip')}" />
                         </Grid>
                     </ItemContainer>

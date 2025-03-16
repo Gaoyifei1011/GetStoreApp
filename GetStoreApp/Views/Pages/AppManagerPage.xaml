@@ -22,6 +22,8 @@
 
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="Transparent" />
+        <SolidColorBrush x:Key="HyperlinkButtonBackgroundPressed" Color="Transparent" />
 
         <XamlUICommand x:Name="CopyAUMIDCommand" ExecuteRequested="{x:Bind OnCopyAUMIDExecuteRequested}" />
         <XamlUICommand x:Name="CopyDependencyInformationCommand" ExecuteRequested="{x:Bind OnCopyDependencyInformationExecuteRequested}" />
@@ -1206,9 +1208,9 @@
                                                     <HyperlinkButton
                                                         Grid.Column="3"
                                                         Margin="10,0,0,0"
+                                                        Padding="0"
                                                         Command="{StaticResource LaunchCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        Style="{StaticResource HyperlinkButtonStyle}">
+                                                        CommandParameter="{x:Bind}">
 
                                                         <HyperlinkButton.Content>
                                                             <TextBlock
@@ -1230,11 +1232,11 @@
                                                     <HyperlinkButton
                                                         Grid.Column="4"
                                                         Margin="10,0,0,0"
+                                                        Padding="0"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         Command="{StaticResource ShowMoreCommand}"
                                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                                        Style="{StaticResource HyperlinkButtonStyle}"
                                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}">
 
                                                         <HyperlinkButton.Content>
@@ -1523,11 +1525,11 @@
                                                     <HyperlinkButton
                                                         Grid.Column="4"
                                                         Margin="10,0,0,0"
+                                                        Padding="0"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
                                                         Command="{StaticResource ShowMoreCommand}"
                                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"
-                                                        Style="{StaticResource HyperlinkButtonStyle}"
                                                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/More')}">
 
                                                         <HyperlinkButton.Content>

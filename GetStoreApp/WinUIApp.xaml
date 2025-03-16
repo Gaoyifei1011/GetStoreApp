@@ -12,7 +12,6 @@
 
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources />
-                <ResourceDictionary Source="ms-appx:///Styles/WinUI/HyperlinkButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
