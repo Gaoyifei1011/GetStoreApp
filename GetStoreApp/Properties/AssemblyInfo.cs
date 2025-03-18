@@ -5,7 +5,7 @@ using System.Runtime.Versioning;
 
 // 程序集信息设置
 [assembly: AssemblyCompany("高怡飞")]
-[assembly: AssemblyCopyright("Copyright ©2022-2024 高怡飞, All Rights Reserved.")]
+[assembly: AssemblyCopyright("Copyright 2022-2025 高怡飞 版权所有")]
 [assembly: AssemblyDescription("获取商店应用")]
 [assembly: AssemblyFileVersion("5.5.225.0")]
 [assembly: AssemblyInformationalVersion("5.5.225.0")]
