@@ -321,6 +321,7 @@ namespace GetStoreAppInstaller
 
                                 for (uint index = 0; index < filesCount; index++)
                                 {
+                                    Array.Clear(dragFileCharArray, 0, dragFileCharArray.Length);
                                     if (Shell32Library.DragQueryFile(wParam, index, dragFileCharArray, (uint)dragFileCharArray.Length) > 0)
                                     {
                                         filesList.Add(new string(dragFileCharArray).Replace("\0", string.Empty));
