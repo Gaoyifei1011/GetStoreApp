@@ -7,6 +7,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
@@ -376,7 +377,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                         if (installResult.RebootRequired)
                         {
-                            ContentDialogResult contentDialogResult = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UpgradeInstall, upgradableApps.AppName), this);
+                            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOptionKind.UpgradeInstall, upgradableApps.AppName));
 
                             await Task.Run(() =>
                             {

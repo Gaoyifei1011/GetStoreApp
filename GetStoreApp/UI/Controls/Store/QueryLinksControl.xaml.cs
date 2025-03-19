@@ -654,7 +654,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksList.Count is 0)
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
                 return;
             }
             else
@@ -708,7 +708,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksList.Count is 0)
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
                 return;
             }
             else
@@ -762,7 +762,7 @@ namespace GetStoreApp.UI.Controls.Store
             // 内容为空时显示空提示对话框
             if (selectedQueryLinksList.Count is 0)
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
                 return;
             }
             else

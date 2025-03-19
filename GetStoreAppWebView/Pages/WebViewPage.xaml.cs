@@ -1,5 +1,4 @@
-﻿using GetStoreAppWebView.Helpers.Controls.Extensions;
-using GetStoreAppWebView.Helpers.Root;
+﻿using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Controls.Settings;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.UI.Dialogs;
@@ -10,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
@@ -40,6 +40,7 @@ namespace GetStoreAppWebView.Pages
         private readonly CoreApplicationView coreApplicationView = CoreApplication.GetCurrentView();
         private readonly IInternalCoreWindow2 internalCoreWindow2 = Window.Current.CoreWindow.As<IInternalCoreWindow2>();
         private readonly EventHandler windowPositionChangedEventHandler;
+        private bool isDialogOpening;
 
         private bool _enableBackdropMaterial;
 
@@ -443,7 +444,7 @@ namespace GetStoreAppWebView.Pages
 
             LogService.WriteLog(LoggingLevel.Error, "WebView2 process failed", logInformationDict);
 
-            await ContentDialogHelper.ShowAsync(new ProcessFailedDialog(), Content as FrameworkElement);
+            await ShowDialogAsync(new ProcessFailedDialog());
             (Application.Current as App).Dispose();
         }
 
@@ -539,5 +540,24 @@ namespace GetStoreAppWebView.Pages
         }
 
         #endregion 第五部分：窗口属性设置
+
+        #region 第六部分：显示内容对话框
+
+        /// <summary>
+        /// 显示对话框
+        /// </summary>
+        public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog dialog)
+        {
+            ContentDialogResult dialogResult = ContentDialogResult.None;
+            if (!isDialogOpening && dialog is not null)
+            {
+                isDialogOpening = true;
+                dialogResult = await dialog.ShowAsync();
+                isDialogOpening = false;
+            }
+            return dialogResult;
+        }
+
+        #endregion 第六部分：显示内容对话框
     }
 }

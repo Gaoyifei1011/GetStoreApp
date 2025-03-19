@@ -64,6 +64,7 @@ namespace GetStoreApp.Views.Windows
         private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
+        private bool isDialogOpening;
         private ContentIsland contentIsland;
         private InputKeyboardSource inputKeyboardSource;
 
@@ -145,6 +146,22 @@ namespace GetStoreApp.Views.Windows
                 {
                     _isBackEnabled = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsBackEnabled)));
+                }
+            }
+        }
+
+        private bool _isContentDialogBackgroundVisible;
+
+        public bool IsContentDialogBackgroundVisible
+        {
+            get { return _isContentDialogBackgroundVisible; }
+
+            set
+            {
+                if (!Equals(_isContentDialogBackgroundVisible, value))
+                {
+                    _isContentDialogBackgroundVisible = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsContentDialogBackgroundVisible)));
                 }
             }
         }
@@ -331,7 +348,7 @@ namespace GetStoreApp.Views.Windows
                 Show();
 
                 // 关闭窗口提示对话框是否已经处于打开状态，如果是，不再弹出
-                ContentDialogResult result = await ContentDialogHelper.ShowAsync(new ClosingWindowDialog(), Content as FrameworkElement);
+                ContentDialogResult result = await ShowDialogAsync(new ClosingWindowDialog());
 
                 if (result is ContentDialogResult.Primary)
                 {
@@ -630,7 +647,7 @@ namespace GetStoreApp.Views.Windows
                         // 应用已经启动
                         if (dataContentList.Count is 2 && dataContentList[1] is "IsRunning")
                         {
-                            await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                            await ShowDialogAsync(new AppRunningDialog());
                         }
                     }
                     // 跳转列表或辅助磁贴启动重定向获得的内容
@@ -689,7 +706,7 @@ namespace GetStoreApp.Views.Windows
                         // 应用已经启动
                         if (dataContentList.Count is 2 && dataContentList[1] is "IsRunning")
                         {
-                            await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                            await ShowDialogAsync(new AppRunningDialog());
                         }
                     }
                     // 打开设置
@@ -849,7 +866,7 @@ namespace GetStoreApp.Views.Windows
                             // 应用已经启动
                             if (dataList.Count is 2 && dataList[1] is "IsRunning")
                             {
-                                await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                                await ShowDialogAsync(new AppRunningDialog());
                             }
                         });
                     }
@@ -938,7 +955,7 @@ namespace GetStoreApp.Views.Windows
                             // 应用已经启动
                             if (dataList.Count is 2 && dataList[1] is "IsRunning")
                             {
-                                await ContentDialogHelper.ShowAsync(new AppRunningDialog(), Content as FrameworkElement);
+                                await ShowDialogAsync(new AppRunningDialog());
                             }
                         });
                     }
@@ -1293,6 +1310,39 @@ namespace GetStoreApp.Views.Windows
         }
 
         #endregion 第九部分：窗口导航方法
+
+        #region 第十部分：显示对话框和应用通知
+
+        /// <summary>
+        /// 显示对话框
+        /// </summary>
+        public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog dialog)
+        {
+            ContentDialogResult dialogResult = ContentDialogResult.None;
+            if (!isDialogOpening && dialog is not null)
+            {
+                isDialogOpening = true;
+
+                try
+                {
+                    (MainPage.Content as Grid).Children.Add(dialog);
+                    IsContentDialogBackgroundVisible = true;
+                    dialogResult = await dialog.ShowAsync(ContentDialogPlacement.InPlace);
+                    IsContentDialogBackgroundVisible = false;
+                    (MainPage.Content as Grid).Children.Remove(dialog);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+
+                isDialogOpening = false;
+            }
+
+            return dialogResult;
+        }
+
+        #endregion 第十部分：显示对话框和应用通知
 
         /// <summary>
         /// 检查网络状态

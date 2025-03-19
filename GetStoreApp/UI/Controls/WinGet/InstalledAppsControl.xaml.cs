@@ -5,6 +5,7 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -182,7 +183,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                                 if (unInstallResult.RebootRequired)
                                 {
-                                    ContentDialogResult contentDialogResult = await ContentDialogHelper.ShowAsync(new RebootDialog(WinGetOptionKind.UnInstall, installedApps.AppName), this);
+                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOptionKind.UnInstall, installedApps.AppName));
 
                                     await Task.Run(() =>
                                     {

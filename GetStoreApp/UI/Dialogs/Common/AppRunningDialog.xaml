@@ -7,9 +7,11 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/AppName')}"
+    HorizontalAlignment="Center"
+    VerticalAlignment="Center"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+    Canvas.ZIndex="9999"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
     Content="{x:Bind root:ResourceService.GetLocalized('Dialog/AppRunning')}"
-    FlowDirection="{x:Bind service:LanguageService.FlowDirection}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d" />

@@ -620,7 +620,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnRestartAppsClicked(object sender, RoutedEventArgs args)
         {
-            await ContentDialogHelper.ShowAsync(new RestartAppsDialog(), this);
+            await MainWindow.Current.ShowDialogAsync(new RestartAppsDialog());
         }
 
         /// <summary>
@@ -1020,7 +1020,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnTraceCleanupClicked(object sender, RoutedEventArgs args)
         {
-            await ContentDialogHelper.ShowAsync(new TraceCleanupPromptDialog(), this);
+            await MainWindow.Current.ShowDialogAsync(new TraceCleanupPromptDialog());
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -278,12 +279,12 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedDownloadingList.Count is 0)
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
                 return;
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteKind.Download), this);
+            ContentDialogResult result = await MainWindow.Current.ShowDialogAsync(new DeletePromptDialog(DeleteKind.Download));
 
             if (result is ContentDialogResult.Primary)
             {

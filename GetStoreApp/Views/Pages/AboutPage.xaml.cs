@@ -256,7 +256,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnShowLicenseClicked(object sender, RoutedEventArgs args)
         {
-            await ContentDialogHelper.ShowAsync(new LicenseDialog(), this);
+            await MainWindow.Current.ShowDialogAsync(new LicenseDialog());
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDesktopLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            await ContentDialogHelper.ShowAsync(new DesktopStartupArgsDialog(), this);
+            await MainWindow.Current.ShowDialogAsync(new DesktopStartupArgsDialog());
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnConsoleLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            await ContentDialogHelper.ShowAsync(new ConsoleStartupArgsDialog(), this);
+            await MainWindow.Current.ShowDialogAsync(new ConsoleStartupArgsDialog());
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnAppInformationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            await ContentDialogHelper.ShowAsync(new AppInformationDialog(), this);
+            await MainWindow.Current.ShowDialogAsync(new AppInformationDialog());
         }
 
         /// <summary>

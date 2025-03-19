@@ -79,7 +79,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 if (completedItem.IsInstalling)
                 {
-                    await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
+                    await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
                     return;
                 }
 
@@ -108,7 +108,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 if (completedItem.IsInstalling)
                 {
-                    await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
+                    await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
                     return;
                 }
 
@@ -148,7 +148,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             if (args.Parameter is CompletedModel completedItem && File.Exists(completedItem.FilePath))
             {
-                await ContentDialogHelper.ShowAsync(new FileInformationDialog(completedItem), this);
+                await MainWindow.Current.ShowDialogAsync(new FileInformationDialog(completedItem));
             }
             else
             {
@@ -442,19 +442,19 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
             if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
-                await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
                 return;
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteKind.Download), this);
+            ContentDialogResult result = await MainWindow.Current.ShowDialogAsync(new DeletePromptDialog(DeleteKind.Download));
 
             if (result is ContentDialogResult.Primary)
             {
@@ -495,19 +495,19 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
             if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
-                await ContentDialogHelper.ShowAsync(new InstallingNotifyDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
                 return;
             }
 
             // 删除时显示删除确认对话框
-            ContentDialogResult result = await ContentDialogHelper.ShowAsync(new DeletePromptDialog(DeleteKind.Download), this);
+            ContentDialogResult result = await MainWindow.Current.ShowDialogAsync(new DeletePromptDialog(DeleteKind.Download));
 
             if (result is ContentDialogResult.Primary)
             {
@@ -564,7 +564,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await ContentDialogHelper.ShowAsync(new SelectEmptyPromptDialog(), this);
+                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
                 return;
             }
             else
@@ -720,7 +720,8 @@ namespace GetStoreApp.UI.Controls.Download
                     {
                         CompletedCollection[index].InstallValue = progress.percentage;
                         break;
-                    };
+                    }
+                    ;
                 }
             });
         }
