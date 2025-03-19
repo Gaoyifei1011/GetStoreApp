@@ -279,8 +279,9 @@
     <None Remove="WinUIApp.xaml" />
     
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250208002-preview1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250310001" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
+    
     <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
