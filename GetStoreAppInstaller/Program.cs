@@ -126,8 +126,10 @@ namespace GetStoreAppInstaller
             CoreWindow coreWindow = CoreWindow.FromAbi(coreWindowPtr);
             coreWindow.As<ICoreWindowInterop>().GetWindowHandle(out IntPtr coreWindowHandle);
             DisplayInformation = DisplayInformation.GetForCurrentView();
-            MainAppWindow.Resize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
-            (MainAppWindow.Presenter as OverlappedPresenter).As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
+            MainAppWindow.Resize(new SizeInt32(Convert.ToInt32(800 * DisplayInformation.RawPixelsPerViewPixel), Convert.ToInt32(560 * DisplayInformation.RawPixelsPerViewPixel)));
+            (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumWidth = Convert.ToInt32(800 * DisplayInformation.RawPixelsPerViewPixel);
+            (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumHeight = Convert.ToInt32(560 * DisplayInformation.RawPixelsPerViewPixel);
+
             CoreAppWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(coreWindowHandle));
             CoreAppWindow.Move(new PointInt32());
             CoreAppWindow.Resize(MainAppWindow.ClientSize);
@@ -137,7 +139,7 @@ namespace GetStoreAppInstaller
             SynchronizationContext.SetSynchronizationContext(new Windows.System.DispatcherQueueSynchronizationContext(coreWindow.DispatcherQueue));
             SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(MainAppWindow.DispatcherQueue));
             inputNonClientPointerSource = InputNonClientPointerSource.GetForWindowId(MainAppWindow.Id);
-            inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, (int)(2 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel)), new RectInt32((int)(42 * DisplayInformation.RawPixelsPerViewPixel), 0, MainAppWindow.Size.Width - (int)(42 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel))]);
+            inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, Convert.ToInt32(2 * DisplayInformation.RawPixelsPerViewPixel), Convert.ToInt32(45 * DisplayInformation.RawPixelsPerViewPixel)), new RectInt32(Convert.ToInt32(42 * DisplayInformation.RawPixelsPerViewPixel), 0, MainAppWindow.Size.Width - Convert.ToInt32(42 * DisplayInformation.RawPixelsPerViewPixel), Convert.ToInt32(45 * DisplayInformation.RawPixelsPerViewPixel))]);
             inputActivationListener = InputActivationListener.GetForWindowId(MainAppWindow.Id);
             inputActivationListener.InputActivationChanged += OnInputActivationChanged;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(MainAppWindow.Id);
@@ -192,7 +194,8 @@ namespace GetStoreAppInstaller
             {
                 if (DisplayInformation is not null)
                 {
-                    (MainAppWindow.Presenter as OverlappedPresenter).As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(800 * DisplayInformation.RawPixelsPerViewPixel), (int)(560 * DisplayInformation.RawPixelsPerViewPixel)));
+                    (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumWidth = Convert.ToInt32(800 * DisplayInformation.RawPixelsPerViewPixel);
+                    (MainAppWindow.Presenter as OverlappedPresenter).PreferredMinimumHeight = Convert.ToInt32(560 * DisplayInformation.RawPixelsPerViewPixel);
                 }
 
                 if (Window.Current is not null && Window.Current.Content is MainPage mainPage)
@@ -203,7 +206,7 @@ namespace GetStoreAppInstaller
 
                 if (DisplayInformation is not null)
                 {
-                    inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, (int)(2 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel)), new RectInt32((int)(42 * DisplayInformation.RawPixelsPerViewPixel), 0, MainAppWindow.Size.Width - (int)(42 * DisplayInformation.RawPixelsPerViewPixel), (int)(45 * DisplayInformation.RawPixelsPerViewPixel))]);
+                    inputNonClientPointerSource?.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(0, 0, Convert.ToInt32(2 * DisplayInformation.RawPixelsPerViewPixel), Convert.ToInt32(45 * DisplayInformation.RawPixelsPerViewPixel)), new RectInt32(Convert.ToInt32(42 * DisplayInformation.RawPixelsPerViewPixel), 0, MainAppWindow.Size.Width - Convert.ToInt32(42 * DisplayInformation.RawPixelsPerViewPixel), Convert.ToInt32(45 * DisplayInformation.RawPixelsPerViewPixel))]);
                 }
             }
             else if (args.DidPositionChange)
@@ -424,13 +427,17 @@ namespace GetStoreAppInstaller
         /// </summary>
         public static void SetClassicMenuTheme(ElementTheme theme)
         {
+            AppWindowTitleBar titleBar = MainAppWindow.TitleBar;
+
             if (theme is ElementTheme.Light)
             {
                 UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+                titleBar.PreferredTheme = TitleBarTheme.Light;
             }
             else
             {
                 UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+                titleBar.PreferredTheme = TitleBarTheme.Dark;
             }
 
             UxthemeLibrary.FlushMenuThemes();

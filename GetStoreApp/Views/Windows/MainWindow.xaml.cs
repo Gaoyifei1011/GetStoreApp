@@ -222,7 +222,8 @@ namespace GetStoreApp.Views.Windows
 
             if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
             {
-                overlappedPresenter.As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel)));
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * rawPixelsPerViewPixel);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * rawPixelsPerViewPixel);
             }
         }
 
@@ -265,14 +266,15 @@ namespace GetStoreApp.Views.Windows
 
             if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
             {
-                overlappedPresenter.As<IOverlappedPresenter3>().SetPreferredMinimumSize(new SizeInt32((int)(960 * rawPixelsPerViewPixel), (int)(600 * rawPixelsPerViewPixel)));
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * rawPixelsPerViewPixel);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * rawPixelsPerViewPixel);
 
                 inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
                     [new RectInt32(
-                        (int)(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                        (int)AppTitlebar.Margin.Top,
-                        (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                        (int)(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
+                        Convert.ToInt32(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
+                        Convert.ToInt32(AppTitlebar.Margin.Top),
+                        Convert.ToInt32(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
+                        Convert.ToInt32(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
                     ]);
             }
         }
@@ -742,12 +744,12 @@ namespace GetStoreApp.Views.Windows
             if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
             {
                 inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
-                         [new RectInt32(
-                        (int)(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                        (int)AppTitlebar.Margin.Top,
-                        (int)(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                        (int)(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
-                         ]);
+                     [new RectInt32(
+                         Convert.ToInt32(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
+                         Convert.ToInt32(AppTitlebar.Margin.Top),
+                         Convert.ToInt32(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
+                         Convert.ToInt32(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
+                     ]);
             }
         }
 
@@ -1110,15 +1112,19 @@ namespace GetStoreApp.Views.Windows
         /// <summary>
         /// 设置传统菜单标题栏按钮的主题色
         /// </summary>
-        private static void SetClassicMenuTheme(ElementTheme theme)
+        private void SetClassicMenuTheme(ElementTheme theme)
         {
+            AppWindowTitleBar titleBar = AppWindow.TitleBar;
+
             if (theme is ElementTheme.Light)
             {
                 UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
+                titleBar.PreferredTheme = TitleBarTheme.Light;
             }
             else
             {
                 UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
+                titleBar.PreferredTheme = TitleBarTheme.Dark;
             }
 
             UxthemeLibrary.FlushMenuThemes();
