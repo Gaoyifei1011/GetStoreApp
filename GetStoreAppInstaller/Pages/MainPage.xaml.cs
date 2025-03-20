@@ -2,7 +2,6 @@
 using GetStoreAppInstaller.Extensions.DataType.Enums;
 using GetStoreAppInstaller.Extensions.DataType.Methods;
 using GetStoreAppInstaller.Extensions.PriExtract;
-using GetStoreAppInstaller.Helpers.Controls.Extensions;
 using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Models;
 using GetStoreAppInstaller.Services.Controls.Settings;
@@ -1464,7 +1463,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(InstallFailedInformation);
 
-                await TeachingTipHelper.ShowAsync(new InstallerDataCopyTip(copyResult));
+                await Program.ShowNotificationAsync(new InstallerDataCopyTip(copyResult));
             }
         }
 

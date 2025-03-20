@@ -1,5 +1,4 @@
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
@@ -136,7 +135,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 string copyContent = string.Format("winget uninstall {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.WinGetUnInstall, copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUnInstall, copyResult));
             }
         }
 

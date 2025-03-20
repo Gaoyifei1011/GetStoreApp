@@ -1,8 +1,8 @@
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
@@ -190,7 +190,7 @@ namespace GetStoreApp.UI.Dialogs.About
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
             sender.Hide();
-            await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.AppInformation, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.AppInformation, copyResult));
         }
     }
 }

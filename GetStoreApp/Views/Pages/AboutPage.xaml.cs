@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.About;
@@ -158,7 +157,7 @@ namespace GetStoreApp.Views.Pages
                  }
              });
 
-            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
+            await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
         }
 
         /// <summary>
@@ -187,7 +186,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
 
-            await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+            await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
         }
 
         /// <summary>
@@ -239,7 +238,7 @@ namespace GetStoreApp.Views.Pages
 
             if (pinnedRsult.Item1 is LimitedAccessFeatureStatus.Available || pinnedRsult.Item1 is LimitedAccessFeatureStatus.AvailableWithoutToken)
             {
-                await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, pinnedRsult.Item2));
+                await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Taskbar, pinnedRsult.Item2));
             }
         }
 
@@ -335,7 +334,7 @@ namespace GetStoreApp.Views.Pages
                 IsChecking = false;
                 if (isNewest.HasValue)
                 {
-                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest.Value));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.CheckUpdate, isNewest.Value));
                 }
             }
         }

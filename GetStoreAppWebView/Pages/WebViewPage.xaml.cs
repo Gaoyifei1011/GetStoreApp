@@ -544,7 +544,7 @@ namespace GetStoreAppWebView.Pages
         #region 第六部分：显示内容对话框
 
         /// <summary>
-        /// 显示对话框
+        /// 显示内容对话框
         /// </summary>
         public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog dialog)
         {

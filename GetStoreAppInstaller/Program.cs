@@ -14,6 +14,7 @@ using Microsoft.UI.Content;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ using Windows.Management.Deployment;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using WinRT;
 
@@ -431,16 +433,43 @@ namespace GetStoreAppInstaller
 
             if (theme is ElementTheme.Light)
             {
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
                 titleBar.PreferredTheme = TitleBarTheme.Light;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
             }
             else
             {
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
                 titleBar.PreferredTheme = TitleBarTheme.Dark;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
             }
 
             UxthemeLibrary.FlushMenuThemes();
+        }
+
+        /// <summary>
+        /// 使用教学提示显示应用内通知
+        /// </summary>
+        public static async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
+        {
+            if (teachingTip is not null && Window.Current.Content is Page page && page.Content is Grid grid)
+            {
+                try
+                {
+                    grid.Children.Add(teachingTip);
+
+                    teachingTip.IsOpen = true;
+
+                    await Task.Delay(duration);
+                    teachingTip.IsOpen = false;
+
+                    // 应用内通知关闭动画显示耗费 300 ms
+                    await Task.Delay(300);
+                    grid.Children.Remove(teachingTip);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            }
         }
 
         /// <summary>
@@ -448,14 +477,7 @@ namespace GetStoreAppInstaller
         /// </summary>
         private static int GetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex)
         {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.GetWindowLongPtr(hWnd, nIndex);
-            }
-            else
-            {
-                return User32Library.GetWindowLong(hWnd, nIndex);
-            }
+            return IntPtr.Size is 8 ? User32Library.GetWindowLongPtr(hWnd, nIndex) : User32Library.GetWindowLong(hWnd, nIndex);
         }
 
         /// <summary>
@@ -463,14 +485,7 @@ namespace GetStoreAppInstaller
         /// </summary>
         private static IntPtr SetWindowLongAuto(IntPtr hWnd, WindowLongIndexFlags nIndex, IntPtr dwNewLong)
         {
-            if (IntPtr.Size is 8)
-            {
-                return User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
-            }
-            else
-            {
-                return User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
-            }
+            return IntPtr.Size is 8 ? User32Library.SetWindowLongPtr(hWnd, nIndex, dwNewLong) : User32Library.SetWindowLong(hWnd, nIndex, dwNewLong);
         }
     }
 }

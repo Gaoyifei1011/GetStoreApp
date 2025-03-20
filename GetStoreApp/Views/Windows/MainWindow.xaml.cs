@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Window;
@@ -568,7 +567,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     finally
                     {
-                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+                        await ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
                     }
                 }
             }
@@ -1002,7 +1001,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
+                        await ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
                     });
                 }
             }
@@ -1013,7 +1012,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await TeachingTipHelper.ShowAsync(new QuickOperationTip(QuickOperationKind.Taskbar, Convert.ToBoolean(dataList[0])));
+                        await ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Taskbar, Convert.ToBoolean(dataList[0])));
                     });
                 }
             }
@@ -1135,13 +1134,13 @@ namespace GetStoreApp.Views.Windows
 
             if (theme is ElementTheme.Light)
             {
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
                 titleBar.PreferredTheme = TitleBarTheme.Light;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceLight);
             }
             else
             {
-                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
                 titleBar.PreferredTheme = TitleBarTheme.Dark;
+                UxthemeLibrary.SetPreferredAppMode(PreferredAppMode.ForceDark);
             }
 
             UxthemeLibrary.FlushMenuThemes();
@@ -1314,22 +1313,22 @@ namespace GetStoreApp.Views.Windows
         #region 第十部分：显示对话框和应用通知
 
         /// <summary>
-        /// 显示对话框
+        /// 显示内容对话框
         /// </summary>
-        public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog dialog)
+        public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog contentDialog)
         {
             ContentDialogResult dialogResult = ContentDialogResult.None;
-            if (!isDialogOpening && dialog is not null)
+            if (!isDialogOpening && contentDialog is not null)
             {
                 isDialogOpening = true;
 
                 try
                 {
-                    (MainPage.Content as Grid).Children.Add(dialog);
+                    (MainPage.Content as Grid).Children.Add(contentDialog);
                     IsContentDialogBackgroundVisible = true;
-                    dialogResult = await dialog.ShowAsync(ContentDialogPlacement.InPlace);
+                    dialogResult = await contentDialog.ShowAsync(ContentDialogPlacement.InPlace);
                     IsContentDialogBackgroundVisible = false;
-                    (MainPage.Content as Grid).Children.Remove(dialog);
+                    (MainPage.Content as Grid).Children.Remove(contentDialog);
                 }
                 catch (Exception e)
                 {
@@ -1340,6 +1339,32 @@ namespace GetStoreApp.Views.Windows
             }
 
             return dialogResult;
+        }
+
+        /// <summary>
+        /// 使用教学提示显示应用内通知
+        /// </summary>
+        public async Task ShowNotificationAsync(TeachingTip teachingTip, int duration = 2000)
+        {
+            if (teachingTip is not null && MainPage.Content is Grid grid)
+            {
+                try
+                {
+                    grid.Children.Add(teachingTip);
+
+                    teachingTip.IsOpen = true;
+                    await Task.Delay(duration);
+                    teachingTip.IsOpen = false;
+
+                    // 应用内通知关闭动画显示耗费 300 ms
+                    await Task.Delay(300);
+                    grid.Children.Remove(teachingTip);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            }
         }
 
         #endregion 第十部分：显示对话框和应用通知

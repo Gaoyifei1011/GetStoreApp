@@ -6,7 +6,6 @@
     xmlns:dialog="using:GetStoreApp.Models.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/DesktopStartupArgsTitle')}"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"

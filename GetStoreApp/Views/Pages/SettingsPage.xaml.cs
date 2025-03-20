@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings;
@@ -562,7 +561,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 LanguageService.SetLanguage(AppLanguage);
-                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.LanguageChange));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.LanguageChange));
             }
         }
 
@@ -921,7 +920,7 @@ namespace GetStoreApp.Views.Pages
                             // 选取文件夹失败，显示提示
                             if (!result)
                             {
-                                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FolderPicker));
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
                             }
 
                             break;
@@ -1037,7 +1036,7 @@ namespace GetStoreApp.Views.Pages
         private async void OnClearClicked(object sender, RoutedEventArgs args)
         {
             bool result = await LogService.ClearLogAsync();
-            await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.LogClean, result));
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.LogClean, result));
         }
 
         /// <summary>

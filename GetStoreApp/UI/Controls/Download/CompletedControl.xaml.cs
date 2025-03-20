@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Download;
@@ -152,7 +151,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             else
             {
-                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -251,7 +250,7 @@ namespace GetStoreApp.UI.Controls.Download
             }
             else
             {
-                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -320,13 +319,13 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.ShareFailed, false, 1));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, false, 1));
                     LogService.WriteLog(LoggingLevel.Warning, "Share file failed.", e);
                 }
             }
             else
             {
-                await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.FileLost));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FileLost));
             }
         }
 
@@ -603,7 +602,7 @@ namespace GetStoreApp.UI.Controls.Download
                 }
                 catch (Exception e)
                 {
-                    await TeachingTipHelper.ShowAsync(new OperationResultTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.ShareFailed, true, selectedCompletedDataList.Count));
                     LogService.WriteLog(LoggingLevel.Warning, "Share selected files failed.", e);
                 }
             }

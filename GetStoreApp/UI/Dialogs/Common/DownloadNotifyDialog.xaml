@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/DownloadNotifyTitle')}"
     HorizontalAlignment="Center"
     VerticalAlignment="Center"

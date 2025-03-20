@@ -1,5 +1,4 @@
 using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Controls.Extensions;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
@@ -113,7 +112,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 string copyContent = string.Format("winget install {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                await TeachingTipHelper.ShowAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
             }
         }
 
