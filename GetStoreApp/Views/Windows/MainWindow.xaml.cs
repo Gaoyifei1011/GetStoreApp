@@ -58,13 +58,13 @@ namespace GetStoreApp.Views.Windows
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly ContentCoordinateConverter contentCoordinateConverter;
-        private readonly DisplayInformation displayInformation;
-        private readonly IDisplayInformation2 displayInformation2;
         private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
         private bool isDialogOpening;
         private ContentIsland contentIsland;
+        private DisplayInformation displayInformation;
+        private IDisplayInformation2 displayInformation2;
         private InputKeyboardSource inputKeyboardSource;
 
         public new static MainWindow Current { get; private set; }
@@ -362,6 +362,9 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
+                    displayInformation.Dispose();
+                    displayInformation = null;
+                    displayInformation2 = null;
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -383,6 +386,9 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
+                displayInformation.Dispose();
+                displayInformation = null;
+                displayInformation2 = null;
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
