@@ -316,6 +316,17 @@ namespace GetStoreApp.Views.Windows
                 {
                     IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
                 }
+
+                if (Content is not null && Content.XamlRoot is not null)
+                {
+                    // 窗口移动时，校对并纠正弹出窗口位置错误的问题
+                    foreach (Popup popup in VisualTreeHelper.GetOpenPopupsForXamlRoot(Content.XamlRoot))
+                    {
+                        ElementCompositeMode compositeMode = popup.CompositeMode;
+                        popup.CompositeMode = compositeMode is ElementCompositeMode.SourceOver ? ElementCompositeMode.MinBlend : ElementCompositeMode.SourceOver;
+                        popup.CompositeMode = compositeMode;
+                    }
+                }
             }
         }
 
