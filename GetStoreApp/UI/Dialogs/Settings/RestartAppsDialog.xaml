@@ -5,15 +5,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/Restart')}"
-    HorizontalAlignment="Center"
-    VerticalAlignment="Center"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
-    Canvas.ZIndex="9999"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Cancel')}"
+    FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     PrimaryButtonClick="{x:Bind OnRestartAppsClicked}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
     PrimaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
+    RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 

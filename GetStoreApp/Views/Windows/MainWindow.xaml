@@ -123,13 +123,6 @@
         </Page.Resources>
 
         <Grid>
-            <Rectangle
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Canvas.ZIndex="9998"
-                Fill="{ThemeResource ContentDialogSmokeFill}"
-                Visibility="{x:Bind IsContentDialogBackgroundVisible, Mode=OneWay}" />
-
             <!--  应用标题栏内容  -->
             <TitleBar
                 x:Name="AppTitlebar"

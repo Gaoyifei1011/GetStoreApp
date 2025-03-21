@@ -149,22 +149,6 @@ namespace GetStoreApp.Views.Windows
             }
         }
 
-        private bool _isContentDialogBackgroundVisible;
-
-        public bool IsContentDialogBackgroundVisible
-        {
-            get { return _isContentDialogBackgroundVisible; }
-
-            set
-            {
-                if (!Equals(_isContentDialogBackgroundVisible, value))
-                {
-                    _isContentDialogBackgroundVisible = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsContentDialogBackgroundVisible)));
-                }
-            }
-        }
-
         private NavigationViewItem _selectedItem;
 
         public NavigationViewItem SelectedItem
@@ -1335,17 +1319,14 @@ namespace GetStoreApp.Views.Windows
         public async Task<ContentDialogResult> ShowDialogAsync(ContentDialog contentDialog)
         {
             ContentDialogResult dialogResult = ContentDialogResult.None;
-            if (!isDialogOpening && contentDialog is not null)
+            if (!isDialogOpening && contentDialog is not null && Content is not null)
             {
                 isDialogOpening = true;
 
                 try
                 {
-                    (MainPage.Content as Grid).Children.Add(contentDialog);
-                    IsContentDialogBackgroundVisible = true;
-                    dialogResult = await contentDialog.ShowAsync(ContentDialogPlacement.InPlace);
-                    IsContentDialogBackgroundVisible = false;
-                    (MainPage.Content as Grid).Children.Remove(contentDialog);
+                    contentDialog.XamlRoot = Content.XamlRoot;
+                    dialogResult = await contentDialog.ShowAsync();
                 }
                 catch (Exception e)
                 {
