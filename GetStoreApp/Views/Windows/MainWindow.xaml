@@ -150,7 +150,7 @@
                 SelectionChanged="{x:Bind OnSelectionChanged}">
 
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Tag="0">
+                    <NavigationViewItem Tag="Store">
 
                         <NavigationViewItem.Content>
                             <TextBlock
@@ -186,7 +186,7 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="1">
+                    <NavigationViewItem Tag="AppUpdate">
 
                         <NavigationViewItem.Content>
                             <TextBlock
@@ -224,7 +224,7 @@
 
                     <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                    <NavigationViewItem Tag="2">
+                    <NavigationViewItem Tag="WinGet">
 
                         <NavigationViewItem.Content>
                             <TextBlock
@@ -260,7 +260,7 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="3">
+                    <NavigationViewItem Tag="AppManager">
 
                         <NavigationViewItem.Content>
                             <TextBlock
@@ -298,7 +298,7 @@
 
                     <NavigationViewItemSeparator Margin="0,0,5,0" />
 
-                    <NavigationViewItem Tag="4">
+                    <NavigationViewItem Tag="Download">
 
                         <NavigationViewItem.Content>
                             <TextBlock
@@ -334,7 +334,7 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="5">
+                    <NavigationViewItem Tag="Web">
 
                         <NavigationViewItem.Content>
                             <TextBlock
@@ -372,7 +372,7 @@
                 </NavigationView.MenuItems>
 
                 <NavigationView.FooterMenuItems>
-                    <NavigationViewItem Tag="6">
+                    <NavigationViewItem Tag="About">
 
                         <NavigationViewItem.Content>
                             <TextBlock
@@ -394,7 +394,7 @@
                         </ToolTipService.ToolTip>
                     </NavigationViewItem>
 
-                    <NavigationViewItem Tag="7">
+                    <NavigationViewItem Tag="Settings">
 
                         <NavigationViewItem.Content>
                             <TextBlock

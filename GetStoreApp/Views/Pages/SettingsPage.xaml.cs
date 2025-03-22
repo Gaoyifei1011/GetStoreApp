@@ -32,7 +32,6 @@ using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
-using WindowsTools.WindowsAPI.PInvoke.Rstrtmgr;
 using WinRT.Interop;
 
 // 抑制 CA1822，IDE0060 警告

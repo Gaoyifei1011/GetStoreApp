@@ -69,7 +69,7 @@
 
             <CommandBar
                 Grid.Column="0"
-                Margin="10,0,0,0"
+                Margin="4,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Background="Transparent"
@@ -145,7 +145,7 @@
 
             <CommandBar
                 Grid.Column="2"
-                Margin="0,0,10,0"
+                Margin="0,0,4,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Background="Transparent"

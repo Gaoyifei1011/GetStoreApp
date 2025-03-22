@@ -598,13 +598,13 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (menuItem is NavigationViewItem navigationViewItem)
                     {
-                        int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
+                        int tagIndex = PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag));
 
                         NavigationItemList.Add(new NavigationModel()
                         {
-                            NavigationTag = PageList[TagIndex].Key,
+                            NavigationTag = PageList[tagIndex].Key,
                             NavigationItem = navigationViewItem,
-                            NavigationPage = PageList[TagIndex].Value,
+                            NavigationPage = PageList[tagIndex].Value,
                         });
                     }
                 }
@@ -613,13 +613,13 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (footerMenuItem is NavigationViewItem navigationViewItem)
                     {
-                        int TagIndex = Convert.ToInt32(navigationViewItem.Tag);
+                        int tagIndex = PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag));
 
                         NavigationItemList.Add(new NavigationModel()
                         {
-                            NavigationTag = PageList[TagIndex].Key,
+                            NavigationTag = PageList[tagIndex].Key,
                             NavigationItem = navigationViewItem,
-                            NavigationPage = PageList[TagIndex].Value,
+                            NavigationPage = PageList[tagIndex].Value,
                         });
                     }
                 }
@@ -792,11 +792,11 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is not null)
             {
-                NavigationModel navigationItem = NavigationItemList.Find(item => item.NavigationTag == PageList[Convert.ToInt32(navigationViewItem.Tag)].Key);
+                NavigationModel navigationItem = NavigationItemList.Find(item => item.NavigationTag == PageList[PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag))].Key);
 
                 if (SelectedItem != navigationItem.NavigationItem)
                 {
-                    if (PageList[Convert.ToInt32(navigationItem.NavigationItem.Tag)].Key is "Web")
+                    if (PageList[PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag))].Key is "Web")
                     {
                         await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
                         sender.SelectedItem = SelectedItem;
