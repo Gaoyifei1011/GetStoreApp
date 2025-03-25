@@ -10,11 +10,9 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
-using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
-using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Content;
@@ -44,7 +42,6 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.StartScreen;
-using WinRT;
 using WinRT.Interop;
 
 // 抑制 IDE0060 警告
@@ -58,13 +55,10 @@ namespace GetStoreApp.Views.Windows
     public sealed partial class MainWindow : Window, INotifyPropertyChanged
     {
         private readonly ContentCoordinateConverter contentCoordinateConverter;
-        private readonly InputNonClientPointerSource inputNonClientPointerSource;
         private readonly OverlappedPresenter overlappedPresenter;
         private readonly SUBCLASSPROC mainWindowSubClassProc;
         private bool isDialogOpening;
         private ContentIsland contentIsland;
-        private DisplayInformation displayInformation;
-        private IDisplayInformation2 displayInformation2;
         private InputKeyboardSource inputKeyboardSource;
 
         public new static MainWindow Current { get; private set; }
@@ -195,12 +189,9 @@ namespace GetStoreApp.Views.Windows
             AppWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
             IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             contentCoordinateConverter = ContentCoordinateConverter.CreateForWindowId(AppWindow.Id);
-            displayInformation = DisplayInformation.CreateForWindowId(AppWindow.Id);
-            displayInformation2 = displayInformation.As<IDisplayInformation2>();
 
             // 标题栏和右键菜单设置
             SetClassicMenuTheme((Content as FrameworkElement).ActualTheme);
-            inputNonClientPointerSource = InputNonClientPointerSource.GetForWindowId(AppWindow.Id);
 
             // 挂载相应的事件
             AppWindow.Changed += OnAppWindowChanged;
@@ -219,12 +210,6 @@ namespace GetStoreApp.Views.Windows
             SetSystemBackdrop();
             SetTopMost();
             CheckNetwork();
-
-            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
-            {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * rawPixelsPerViewPixel);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * rawPixelsPerViewPixel);
-            }
         }
 
         #region 第一部分：窗口类事件
@@ -236,7 +221,7 @@ namespace GetStoreApp.Views.Windows
         {
             try
             {
-                if (AppWindow.IsVisible && WindowSystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
+                if (contentIsland is not null && !contentIsland.IsClosed && WindowSystemBackdrop is MaterialBackdrop materialBackdrop && materialBackdrop.BackdropConfiguration is not null)
                 {
                     materialBackdrop.BackdropConfiguration.IsInputActive = AlwaysShowBackdropService.AlwaysShowBackdropValue || args.WindowActivationState is not WindowActivationState.Deactivated;
 
@@ -264,18 +249,10 @@ namespace GetStoreApp.Views.Windows
                 IsWindowMaximized = overlappedPresenter.State is OverlappedPresenterState.Maximized;
             }
 
-            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
+            if (Content is not null && Content.XamlRoot is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * rawPixelsPerViewPixel);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * rawPixelsPerViewPixel);
-
-                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
-                    [new RectInt32(
-                        Convert.ToInt32(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                        Convert.ToInt32(AppTitlebar.Margin.Top),
-                        Convert.ToInt32(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                        Convert.ToInt32(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
-                    ]);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * Content.XamlRoot.RasterizationScale);
             }
         }
 
@@ -346,9 +323,6 @@ namespace GetStoreApp.Views.Windows
 
                 if (result is ContentDialogResult.Primary)
                 {
-                    displayInformation.Dispose();
-                    displayInformation = null;
-                    displayInformation2 = null;
                     AppWindow.Changed -= OnAppWindowChanged;
                     contentIsland.Environment.SettingChanged -= OnSettingChanged;
                     inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -370,9 +344,6 @@ namespace GetStoreApp.Views.Windows
             }
             else
             {
-                displayInformation.Dispose();
-                displayInformation = null;
-                displayInformation2 = null;
                 AppWindow.Changed -= OnAppWindowChanged;
                 contentIsland.Environment.SettingChanged -= OnSettingChanged;
                 inputKeyboardSource.SystemKeyDown -= OnSystemKeyDown;
@@ -758,15 +729,10 @@ namespace GetStoreApp.Views.Windows
                 Show();
             }
 
-            if (displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0 && AppTitlebar.IsLoaded)
+            if (Content is not null && Content.XamlRoot is not null)
             {
-                inputNonClientPointerSource.SetRegionRects(NonClientRegionKind.Caption,
-                     [new RectInt32(
-                         Convert.ToInt32(AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                         Convert.ToInt32(AppTitlebar.Margin.Top),
-                         Convert.ToInt32(AppWindow.Size.Width - AppTitlebar.Margin.Left * rawPixelsPerViewPixel),
-                         Convert.ToInt32(AppTitlebar.ActualHeight * rawPixelsPerViewPixel))
-                     ]);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * Content.XamlRoot.RasterizationScale);
             }
         }
 
@@ -1226,7 +1192,7 @@ namespace GetStoreApp.Views.Windows
                 // 当用户按下鼠标右键并释放时，光标位于窗口的非工作区内的消息
                 case WindowMessage.WM_NCRBUTTONUP:
                     {
-                        if (wParam is 2 && displayInformation2 is not null && displayInformation2.GetRawPixelsPerViewPixel(out double rawPixelsPerViewPixel) is 0)
+                        if (wParam is 2 && Content is not null && Content.XamlRoot is not null)
                         {
                             PointInt32 screenPoint = new(lParam.ToInt32() & 0xFFFF, lParam.ToInt32() >> 16);
                             Point localPoint = contentCoordinateConverter.ConvertScreenToLocal(screenPoint);
@@ -1234,7 +1200,7 @@ namespace GetStoreApp.Views.Windows
                             FlyoutShowOptions options = new()
                             {
                                 ShowMode = FlyoutShowMode.Standard,
-                                Position = new Point(localPoint.X / rawPixelsPerViewPixel, localPoint.Y / rawPixelsPerViewPixel)
+                                Position = new Point(localPoint.X / Content.XamlRoot.RasterizationScale, localPoint.Y / Content.XamlRoot.RasterizationScale)
                             };
 
                             TitlebarMenuFlyout.ShowAt(Content, options);
