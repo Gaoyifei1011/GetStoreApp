@@ -75,7 +75,7 @@ namespace GetStoreApp.Services.Shell
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {
-                                List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, selectedChannel);
+                                List<QueryLinksModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, selectedChannel);
                                 foreach (QueryLinksModel appxPackage in appxPackagesList)
                                 {
                                     queryLinksList.Add(appxPackage);

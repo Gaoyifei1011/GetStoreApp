@@ -974,7 +974,7 @@ namespace GetStoreApp.UI.Controls.Store
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {
-                                List<QueryLinksModel> appxPackagesList = QueryLinksHelper.GetAppxPackages(fileListXml, ChannelList[channelIndex].InternalName);
+                                List<QueryLinksModel> appxPackagesList = await QueryLinksHelper.GetAppxPackagesAsync(fileListXml, ChannelList[channelIndex].InternalName);
                                 foreach (QueryLinksModel appxPackage in appxPackagesList)
                                 {
                                     bool isExisted = false;

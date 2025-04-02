@@ -252,7 +252,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <param name="fileListXml">文件信息的字符串</param>
         /// <param name="ring">通道</param>
         /// <returns>带解析后文件信息的列表</returns>
-        public static List<QueryLinksModel> GetAppxPackages(string fileListXml, string ring)
+        public static async Task<List<QueryLinksModel>> GetAppxPackagesAsync(string fileListXml, string ring)
         {
             List<QueryLinksModel> appxPackagesList = [];
 
@@ -331,7 +331,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                     }));
                 }
 
-                Task.WaitAll(taskList);
+                await Task.WhenAll(taskList);
             }
             catch (Exception e)
             {
@@ -519,7 +519,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                             }));
                         }
 
-                        Task.WaitAll(taskList);
+                        await Task.WhenAll(taskList);
                     }
                 }
                 // 请求失败
