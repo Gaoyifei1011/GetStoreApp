@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 {
@@ -6,16 +7,16 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
     /// 一般用于筛选元素。
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public unsafe struct COMDLG_FILTERSPEC
+    public struct COMDLG_FILTERSPEC
     {
         /// <summary>
         /// 指向包含筛选器友好名称的缓冲区的指针。
         /// </summary>
-        public char* pszName;
+        public IntPtr pszName;
 
         /// <summary>
         /// 指向包含筛选器模式的缓冲区的指针。
         /// </summary>
-        public char* pszSpec;
+        public IntPtr pszSpec;
     }
 }

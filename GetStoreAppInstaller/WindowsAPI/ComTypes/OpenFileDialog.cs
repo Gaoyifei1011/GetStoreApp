@@ -32,7 +32,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 
         public string RootFolder { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        public unsafe OpenFileDialog(WindowId windowId)
+        public OpenFileDialog(WindowId windowId)
         {
             if (windowId.Value is 0)
             {
@@ -50,7 +50,7 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
         /// <summary>
         /// 显示文件夹选取对话框
         /// </summary>
-        public unsafe bool ShowDialog()
+        public bool ShowDialog()
         {
             try
             {
@@ -83,19 +83,20 @@ namespace GetStoreAppInstaller.WindowsAPI.ComTypes
 
                             if (index == comdlgFilterSpecArray.Length - 1)
                             {
-                                comdlgFilterSpec.pszSpec = (char*)Marshal.StringToHGlobalUni(allFileTypesString);
-                                comdlgFilterSpec.pszName = (char*)Marshal.StringToHGlobalUni(ResourceService.GetLocalized("Installer/AllFiles"));
+                                comdlgFilterSpec.pszSpec = Marshal.StringToHGlobalUni(allFileTypesString);
+                                comdlgFilterSpec.pszName = Marshal.StringToHGlobalUni(ResourceService.GetLocalized("Installer/AllFiles"));
                             }
                             else
                             {
-                                comdlgFilterSpec.pszSpec = (char*)Marshal.StringToHGlobalUni(FileTypeFilter[index]);
-                                comdlgFilterSpec.pszName = (char*)Marshal.StringToHGlobalUni(FileTypeFilter[index]);
+                                comdlgFilterSpec.pszSpec = Marshal.StringToHGlobalUni(FileTypeFilter[index]);
+                                comdlgFilterSpec.pszName = Marshal.StringToHGlobalUni(FileTypeFilter[index]);
                             }
 
                             comdlgFilterSpecArray[index] = comdlgFilterSpec;
                         }
 
                         fileOpenDialog.SetFileTypes((uint)comdlgFilterSpecArray.Length, comdlgFilterSpecArray);
+                        fileOpenDialog.SetFileTypeIndex((uint)comdlgFilterSpecArray.Length);
                     }
 
                     Shell32Library.SHCreateItemFromParsingName(RootFolder, nint.Zero, typeof(IShellItem).GUID, out nint initialFolder);

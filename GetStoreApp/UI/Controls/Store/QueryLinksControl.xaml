@@ -560,6 +560,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -578,7 +579,7 @@
             <AppBarSeparator Grid.Column="2" Margin="10,0,10,0" />
 
             <StackPanel
-                Grid.Column="2"
+                Grid.Column="3"
                 VerticalAlignment="Center"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
 
@@ -605,14 +606,14 @@
             </StackPanel>
 
             <TextBlock
-                Grid.Column="3"
+                Grid.Column="4"
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinksEmpty')}"
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(QueryLinksCollection.Count), Mode=OneWay}" />
 
             <CommandBar
                 x:Name="NormalMode"
-                Grid.Column="4"
+                Grid.Column="5"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
@@ -639,7 +640,7 @@
 
             <CommandBar
                 x:Name="SelectMode"
-                Grid.Column="4"
+                Grid.Column="5"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
