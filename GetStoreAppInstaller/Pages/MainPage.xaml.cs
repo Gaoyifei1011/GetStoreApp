@@ -968,7 +968,7 @@ namespace GetStoreAppInstaller.Pages
                 IsParseEmpty = false;
                 ResetResult();
 
-                Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
                 {
                     return await ParsePackagedAppAsync(fileName);
                 });
@@ -1108,7 +1108,7 @@ namespace GetStoreAppInstaller.Pages
                     IsParseEmpty = false;
                     ResetResult();
 
-                    Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                    (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
                     {
                         return await ParsePackagedAppAsync(fileName);
                     });
@@ -1131,7 +1131,7 @@ namespace GetStoreAppInstaller.Pages
                         IsParseEmpty = false;
                         ResetResult();
 
-                        Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                        (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
                         {
                             return await ParsePackagedAppAsync(fileName);
                         });
@@ -1160,7 +1160,7 @@ namespace GetStoreAppInstaller.Pages
                             IsParseEmpty = false;
                             ResetResult();
 
-                            Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                            (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
                             {
                                 return await ParsePackagedAppAsync(fileName);
                             });
@@ -1255,7 +1255,7 @@ namespace GetStoreAppInstaller.Pages
                 IsParseEmpty = false;
                 ResetResult();
 
-                Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
                 {
                     return await ParsePackagedAppAsync(fileName);
                 });
@@ -1335,7 +1335,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 ResetResult();
 
-                Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                (bool parseResult, PackageInformation packageInformation) parseResult = await Task.Run(async () =>
                 {
                     return await ParsePackagedAppAsync(fileName);
                 });
@@ -1370,14 +1370,14 @@ namespace GetStoreAppInstaller.Pages
                 {
                     foreach (StorageFile file in filesList)
                     {
-                        Tuple<bool, DependencyAppInformation> parseResult = await Task.Run(async () =>
+                        (bool parseResult, DependencyAppInformation dependencyAppInformation) parseResult = await Task.Run(async () =>
                         {
                             return await ParseDependencyAppAsync(file.Path);
                         });
 
-                        if (parseResult.Item1)
+                        if (parseResult.parseResult)
                         {
-                            DependencyAppInformation dependencyAppInformation = parseResult.Item2;
+                            DependencyAppInformation dependencyAppInformation = parseResult.dependencyAppInformation;
 
                             InstallDependencyCollection.Add(new InstallDependencyModel()
                             {
@@ -1818,7 +1818,7 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 解析应用包
         /// </summary>
-        private async Task<Tuple<bool, PackageInformation>> ParsePackagedAppAsync(string filePath)
+        private async Task<(bool parseResult, PackageInformation packageInformation)> ParsePackagedAppAsync(string filePath)
         {
             bool parseResult = false;
             PackageInformation packageInformation = new();
@@ -1943,10 +1943,10 @@ namespace GetStoreAppInstaller.Pages
                                         // 获取特定语言的资源文件
                                         List<KeyValuePair<string, string>> specifiedLanguageResourceList = GetPackageBundleSpecifiedLanguageResource(packageManifestInformation.LanguageResourceDict);
 
-                                        foreach (KeyValuePair<string, string> specifiedLanguageResourceItem in specifiedLanguageResourceList)
+                                        foreach (KeyValuePair<string, string> specifiedLanguageResource in specifiedLanguageResourceList)
                                         {
                                             // 解析应用捆绑包对应符合的资源包
-                                            appxBundleReader.GetPayloadPackage(specifiedLanguageResourceItem.Value, out IAppxFile specifiedLanguageResourceFile);
+                                            appxBundleReader.GetPayloadPackage(specifiedLanguageResource.Value, out IAppxFile specifiedLanguageResourceFile);
 
                                             if (specifiedLanguageResourceFile.GetStream(out IStream specifiedLanguageResourceFileStream) is 0 && appxFactory.CreatePackageReader2(specifiedLanguageResourceFileStream, null, out IAppxPackageReader appxPackageReader) is 0)
                                             {
@@ -1965,9 +1965,9 @@ namespace GetStoreAppInstaller.Pages
 
                                                     foreach (KeyValuePair<string, Dictionary<string, string>> parseResourceItem in parseResourceDict)
                                                     {
-                                                        if (parseResourceItem.Key.Equals(specifiedLanguageResourceItem.Key, StringComparison.OrdinalIgnoreCase))
+                                                        if (parseResourceItem.Key.Equals(specifiedLanguageResource.Key, StringComparison.OrdinalIgnoreCase))
                                                         {
-                                                            resourceDict.TryAdd(specifiedLanguageResourceItem.Key, parseResourceItem.Value);
+                                                            resourceDict.TryAdd(specifiedLanguageResource.Key, parseResourceItem.Value);
                                                         }
                                                     }
                                                 }
@@ -2225,13 +2225,13 @@ namespace GetStoreAppInstaller.Pages
                 LogService.WriteLog(LoggingLevel.Error, string.Format("Parse package {0} failed", filePath), e);
             }
 
-            return Tuple.Create(parseResult, packageInformation);
+            return ValueTuple.Create(parseResult, packageInformation);
         }
 
         /// <summary>
         /// 解析依赖应用包
         /// </summary>
-        private async Task<Tuple<bool, DependencyAppInformation>> ParseDependencyAppAsync(string filePath)
+        private async Task<(bool parseResult, DependencyAppInformation dependencyAppInformation)> ParseDependencyAppAsync(string filePath)
         {
             bool parseResult = false;
             DependencyAppInformation dependencyAppInformation = null;
@@ -2294,7 +2294,7 @@ namespace GetStoreAppInstaller.Pages
                 LogService.WriteLog(LoggingLevel.Error, string.Format("Parse package {0} failed", filePath), e);
             }
 
-            return Tuple.Create(parseResult, dependencyAppInformation);
+            return ValueTuple.Create(parseResult, dependencyAppInformation);
         }
 
         /// <summary>
@@ -2677,7 +2677,7 @@ namespace GetStoreAppInstaller.Pages
 
                                         foreach (CandidateSet candidateSet in resourceMapSection.CandidateSetsDict.Values)
                                         {
-                                            if (sectionArray[candidateSet.ResourceMapSectionAndIndex.Item1] is HierarchicalSchemaSection hierarchicalSchemaSection)
+                                            if (sectionArray[candidateSet.ResourceMapSectionAndIndex.SchemaSectionIndex] is HierarchicalSchemaSection hierarchicalSchemaSection)
                                             {
                                                 ResourceMapScopeAndItem resourceMapScopeAndItem = hierarchicalSchemaSection.ItemsList[candidateSet.ResourceMapSectionAndIndex.Item2];
 
@@ -2705,9 +2705,9 @@ namespace GetStoreAppInstaller.Pages
                                                     {
                                                         ByteSpan byteSpan = null;
 
-                                                        if (candidate.DataItemSectionAndIndex is not null)
+                                                        if (candidate.DataItemSectionAndIndex != default)
                                                         {
-                                                            DataItemSection dataItemSection = sectionArray[candidate.DataItemSectionAndIndex.Item1] as DataItemSection;
+                                                            DataItemSection dataItemSection = sectionArray[candidate.DataItemSectionAndIndex.DataItemSection] as DataItemSection;
                                                             byteSpan = dataItemSection is not null ? dataItemSection.DataItemsList[candidate.DataItemSectionAndIndex.Item2] : candidate.Data;
                                                         }
 
@@ -3531,13 +3531,13 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 更新结果
         /// </summary>
-        private async Task UpdateResultAsync(Tuple<bool, PackageInformation> resultDict)
+        private async Task UpdateResultAsync((bool parseResult, PackageInformation packageInformation) resultDict)
         {
-            IsParseSuccessfully = resultDict.Item1;
+            IsParseSuccessfully = resultDict.parseResult;
 
             if (IsParseSuccessfully)
             {
-                PackageInformation packageInformation = resultDict.Item2;
+                PackageInformation packageInformation = resultDict.packageInformation;
 
                 PackageFileType = packageInformation.PackageFileType;
                 PackageName = string.IsNullOrEmpty(packageInformation.DisplayName) ? unknown : packageInformation.DisplayName;
@@ -3671,7 +3671,7 @@ namespace GetStoreAppInstaller.Pages
                     IsParseEmpty = false;
                     ResetResult();
 
-                    Tuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
+                    ValueTuple<bool, PackageInformation> parseResult = await Task.Run(async () =>
                     {
                         return await ParsePackagedAppAsync(fileName);
                     });

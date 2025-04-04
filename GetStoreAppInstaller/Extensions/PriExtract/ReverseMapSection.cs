@@ -68,7 +68,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
             uint unicodeDataLength = binaryReader.ReadUInt32();
             binaryReader.ReadUInt32();
 
-            List<Tuple<ushort, ushort, uint, uint, ushort>> scopeAndItemInfoList = [];
+            List<(ushort parent, ushort fullPathLength, uint hashCode, uint nameOffset, ushort index)> scopeAndItemInfoList = [];
 
             for (int i = 0; i < numScopes + numItems; i++)
             {
@@ -77,10 +77,10 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
                 uint hashCode = binaryReader.ReadUInt32();
                 uint nameOffset = binaryReader.ReadUInt16() | (((hashCode >> 24) & 0xF) << 16);
                 ushort index = binaryReader.ReadUInt16();
-                scopeAndItemInfoList.Add(Tuple.Create(parent, fullPathLength, hashCode, nameOffset, index));
+                scopeAndItemInfoList.Add(ValueTuple.Create(parent, fullPathLength, hashCode, nameOffset, index));
             }
 
-            List<Tuple<ushort, ushort, ushort>> scopeExInfo = [];
+            List<(ushort scopeIndex, ushort childCount, ushort firstChildIndex)> scopeExInfo = [];
 
             for (int i = 0; i < numScopes; i++)
             {
@@ -88,7 +88,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
                 ushort childCount = binaryReader.ReadUInt16();
                 ushort firstChildIndex = binaryReader.ReadUInt16();
                 binaryReader.ExpectUInt16(0);
-                scopeExInfo.Add(Tuple.Create(scopeIndex, childCount, firstChildIndex));
+                scopeExInfo.Add(ValueTuple.Create(scopeIndex, childCount, firstChildIndex));
             }
 
             ushort[] itemIndexPropertyToIndex = new ushort[numItems];
@@ -105,19 +105,19 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
 
             for (int i = 0; i < numScopes + numItems; i++)
             {
-                bool nameInAscii = (scopeAndItemInfoList[i].Item3 & 0x20000000) is not 0;
-                long pos = (nameInAscii ? asciiDataOffset : unicodeDataOffset) + (scopeAndItemInfoList[i].Item4 * (nameInAscii ? 1 : 2));
+                bool nameInAscii = (scopeAndItemInfoList[i].hashCode & 0x20000000) is not 0;
+                long pos = (nameInAscii ? asciiDataOffset : unicodeDataOffset) + (scopeAndItemInfoList[i].nameOffset * (nameInAscii ? 1 : 2));
                 binaryReader.BaseStream.Seek(pos, SeekOrigin.Begin);
 
                 string name = string.Empty;
 
-                if (scopeAndItemInfoList[i].Item2 is not 0)
+                if (scopeAndItemInfoList[i].fullPathLength is not 0)
                 {
                     name = binaryReader.ReadNullTerminatedString(nameInAscii ? Encoding.ASCII : Encoding.Unicode);
                 }
 
-                ushort index = scopeAndItemInfoList[i].Item5;
-                bool isScope = (scopeAndItemInfoList[i].Item3 & 0x10000000) is not 0;
+                ushort index = scopeAndItemInfoList[i].index;
+                bool isScope = (scopeAndItemInfoList[i].hashCode & 0x10000000) is not 0;
 
                 if (isScope)
                 {
@@ -151,10 +151,10 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
 
             for (int i = 0; i < numScopes + numItems; i++)
             {
-                ushort index = scopeAndItemInfoList[i].Item5;
-                bool isScope = (scopeAndItemInfoList[i].Item3 & 0x10000000) is not 0;
-                ushort parent = scopeAndItemInfoList[i].Item1;
-                parent = scopeAndItemInfoList[parent].Item5;
+                ushort index = scopeAndItemInfoList[i].index;
+                bool isScope = (scopeAndItemInfoList[i].hashCode & 0x10000000) is not 0;
+                ushort parent = scopeAndItemInfoList[i].parent;
+                parent = scopeAndItemInfoList[parent].index;
 
                 if (parent is not 0xFFFF)
                 {
@@ -174,15 +174,15 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
 
             for (int i = 0; i < numScopes; i++)
             {
-                ResourceMapScopeAndItem[] childrenArray = new ResourceMapScopeAndItem[scopeExInfo[i].Item2];
+                ResourceMapScopeAndItem[] childrenArray = new ResourceMapScopeAndItem[scopeExInfo[i].childCount];
 
                 for (int j = 0; j < childrenArray.Length; j++)
                 {
-                    Tuple<ushort, ushort, uint, uint, ushort> saiInfo = scopeAndItemInfoList[scopeExInfo[i].Item3 + j];
+                    (ushort parent, ushort fullPathLength, uint hashCode, uint nameOffset, ushort index) = scopeAndItemInfoList[scopeExInfo[i].Item3 + j];
 
-                    bool isScope = (saiInfo.Item3 & 0x10000000) is not 0;
+                    bool isScope = (hashCode & 0x10000000) is not 0;
 
-                    childrenArray[j] = isScope ? scopesArray[saiInfo.Item5] : itemsArray[saiInfo.Item5];
+                    childrenArray[j] = isScope ? scopesArray[index] : itemsArray[index];
                 }
 
                 scopesArray[i].Children = childrenArray;

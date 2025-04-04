@@ -307,7 +307,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
                                 QualifierSet = decision.QualifierSetsList[i].Index,
                                 Type = candidateInfo.ResourceValueType,
                                 SourceFileIndex = sourceFile,
-                                DataItemSectionAndIndex = Tuple.Create(candidateInfo.DataItemSection, candidateInfo.DataItemIndex),
+                                DataItemSectionAndIndex = ValueTuple.Create(candidateInfo.DataItemSection, candidateInfo.DataItemIndex),
                                 Data = null
                             });
                         }
@@ -324,7 +324,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
                                 QualifierSet = decision.QualifierSetsList[i].Index,
                                 Type = candidateInfo.ResourceValueType,
                                 SourceFileIndex = null,
-                                DataItemSectionAndIndex = null,
+                                DataItemSectionAndIndex = default,
                                 Data = data
                             });
                         }
@@ -334,7 +334,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
 
                     CandidateSet candidateSet = new()
                     {
-                        ResourceMapSectionAndIndex = Tuple.Create(SchemaSectionIndex, (int)resourceMapItemIndex),
+                        ResourceMapSectionAndIndex = ValueTuple.Create(SchemaSectionIndex, (int)resourceMapItemIndex),
                         DecisionIndex = decisionIndex,
                         CandidatesList = candidatesList
                     };

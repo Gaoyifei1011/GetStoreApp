@@ -253,7 +253,7 @@ namespace GetStoreApp.UI.Controls.Store
             IsNotSeachingStore = false;
             SetControlState(InfoBarSeverity.Informational);
 
-            Tuple<bool, List<SearchStoreModel>> searchStoreResult = await Task.Run(async () =>
+            (bool requestResult, List<SearchStoreModel> searchStoreList) searchStoreResult = await Task.Run(async () =>
             {
                 string searchText = SearchText;
                 string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
@@ -261,10 +261,10 @@ namespace GetStoreApp.UI.Controls.Store
             });
 
             // 获取成功
-            if (searchStoreResult.Item1)
+            if (searchStoreResult.requestResult)
             {
                 // 搜索成功，有数据
-                if (searchStoreResult.Item2.Count > 0)
+                if (searchStoreResult.searchStoreList.Count > 0)
                 {
                     IsNotSeachingStore = true;
                     SetControlState(InfoBarSeverity.Success);

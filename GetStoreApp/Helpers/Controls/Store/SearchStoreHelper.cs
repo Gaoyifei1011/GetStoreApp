@@ -67,7 +67,7 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// <summary>
         /// 搜索商店应用
         /// </summary>
-        public static async Task<Tuple<bool, List<SearchStoreModel>>> SerachStoreAppsAsync(string generatedContent)
+        public static async Task<(bool requestResult, List<SearchStoreModel> searchStoreList)> SerachStoreAppsAsync(string generatedContent)
         {
             bool requestResult = false;
             List<SearchStoreModel> searchStoreList = [];
@@ -131,7 +131,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 LogService.WriteLog(LoggingLevel.Warning, "Search store apps request unknown exception", e);
             }
 
-            return Tuple.Create(requestResult, searchStoreList);
+            return ValueTuple.Create(requestResult, searchStoreList);
         }
     }
 }

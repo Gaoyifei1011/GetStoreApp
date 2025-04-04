@@ -194,7 +194,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
         {
-            Tuple<LimitedAccessFeatureStatus, bool> pinnedRsult = await Task.Run(async () =>
+            (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedRsult = await Task.Run(async () =>
             {
                 LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
                 bool isPinnedSuccessfully = false;
@@ -233,12 +233,12 @@ namespace GetStoreApp.Views.Pages
                         });
                 }
 
-                return Tuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
+                return ValueTuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
             });
 
-            if (pinnedRsult.Item1 is LimitedAccessFeatureStatus.Available || pinnedRsult.Item1 is LimitedAccessFeatureStatus.AvailableWithoutToken)
+            if (pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
             {
-                await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Taskbar, pinnedRsult.Item2));
+                await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
             }
         }
 

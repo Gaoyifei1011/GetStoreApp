@@ -11,7 +11,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
 
         public int? SourceFileIndex { get; set; }
 
-        public Tuple<ushort, ushort> DataItemSectionAndIndex { get; set; }
+        public (ushort DataItemSection, ushort DataItemIndex) DataItemSectionAndIndex { get; set; }
 
         public ByteSpan Data { get; set; }
     }

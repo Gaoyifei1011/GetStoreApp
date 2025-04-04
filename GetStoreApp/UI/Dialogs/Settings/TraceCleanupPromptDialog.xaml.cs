@@ -84,7 +84,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
 
             IsCleaning = true;
-            List<Tuple<CleanKind, bool>> cleanSuccessfullyDict = [];
+            List<(CleanKind cleanKind, bool cleanResult)> cleanSuccessfullyDict = [];
 
             await Task.Run(async () =>
             {
@@ -102,19 +102,19 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 {
                     // 清理并反馈回结果，修改相应的状态信息
                     bool cleanReusult = TraceCleanupService.CleanAppTraceAsync(cleanArgs);
-                    cleanSuccessfullyDict.Add(Tuple.Create(cleanArgs, cleanReusult));
+                    cleanSuccessfullyDict.Add(ValueTuple.Create(cleanArgs, cleanReusult));
                 }
 
                 await Task.Delay(1000);
             });
 
-            foreach (Tuple<CleanKind, bool> cleanArgsTuple in cleanSuccessfullyDict)
+            foreach ((CleanKind cleanKind, bool cleanResult) in cleanSuccessfullyDict)
             {
                 foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
                 {
-                    if (traceCleanupItem.InternalName.Equals(cleanArgsTuple.Item1))
+                    if (traceCleanupItem.InternalName.Equals(cleanKind))
                     {
-                        traceCleanupItem.IsCleanFailed = !cleanArgsTuple.Item2;
+                        traceCleanupItem.IsCleanFailed = !cleanResult;
                         break;
                     }
                 }

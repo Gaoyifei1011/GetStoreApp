@@ -112,10 +112,10 @@ namespace GetStoreApp.Helpers.Controls.Store
         /// </summary>
         /// <param name="productId">应用的产品 ID</param>
         /// <returns>打包应用：有，非打包应用：无</returns>
-        public static async Task<Tuple<bool, AppInfoModel>> GetAppInformationAsync(string productId)
+        public static async Task<(bool requestResult, AppInfoModel appInfoModelItem)> GetAppInformationAsync(string productId)
         {
             bool requestResult = false;
-            AppInfoModel appInfoModel = new();
+            AppInfoModel appInfoModelItem = new();
 
             try
             {
@@ -145,24 +145,24 @@ namespace GetStoreApp.Helpers.Controls.Store
                     {
                         JsonObject payLoadObject = responseStringObject.GetNamedValue("Payload").GetObject();
 
-                        appInfoModel.Name = payLoadObject.GetNamedString("Title");
-                        appInfoModel.Publisher = payLoadObject.GetNamedString("PublisherName");
-                        appInfoModel.Description = payLoadObject.GetNamedString("Description");
-                        appInfoModel.CategoryID = string.Empty;
-                        appInfoModel.ProductID = productId;
+                        appInfoModelItem.Name = payLoadObject.GetNamedString("Title");
+                        appInfoModelItem.Publisher = payLoadObject.GetNamedString("PublisherName");
+                        appInfoModelItem.Description = payLoadObject.GetNamedString("Description");
+                        appInfoModelItem.CategoryID = string.Empty;
+                        appInfoModelItem.ProductID = productId;
 
                         JsonArray skusArray = payLoadObject.GetNamedArray("Skus");
 
                         if (skusArray.Count > 0)
                         {
-                            appInfoModel.CategoryID = string.Empty;
+                            appInfoModelItem.CategoryID = string.Empty;
                             JsonObject jsonObject = skusArray[0].GetObject();
                             if (jsonObject.TryGetValue("FulfillmentData", out IJsonValue jsonValue))
                             {
                                 string fulfillmentData = jsonValue.GetString();
                                 if (JsonObject.TryParse(fulfillmentData, out JsonObject fulfillmentDataObject))
                                 {
-                                    appInfoModel.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
+                                    appInfoModelItem.CategoryID = fulfillmentDataObject.GetNamedString("WuCategoryId");
                                 }
                             }
                         }
@@ -182,7 +182,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 LogService.WriteLog(LoggingLevel.Warning, "App Information request unknown exception", e);
             }
 
-            return Tuple.Create(requestResult, appInfoModel);
+            return ValueTuple.Create(requestResult, appInfoModelItem);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace GetStoreApp.Helpers.Controls.Store
                 XmlDocument fileListDocument = new();
                 fileListDocument.LoadXml(fileListXml);
 
-                Dictionary<string, Tuple<string, string, string>> appxPackagesInfoDict = [];
+                Dictionary<string, (string extension, string size, string digest)> appxPackagesInfoDict = [];
                 XmlNodeList fileList = fileListDocument.GetElementsByTagName("File");
 
                 foreach (IXmlNode fileNode in fileList)
@@ -275,7 +275,7 @@ namespace GetStoreApp.Helpers.Controls.Store
 
                         if (!appxPackagesInfoDict.ContainsKey(name))
                         {
-                            appxPackagesInfoDict.Add(name, Tuple.Create(extension, size, digest));
+                            appxPackagesInfoDict.Add(name, ValueTuple.Create(extension, size, digest));
                         }
                     }
                 }
@@ -295,11 +295,11 @@ namespace GetStoreApp.Helpers.Controls.Store
                         {
                             string name = xmlNode.GetElementsByName("ApplicabilityRules").GetElementsByName("Metadata").GetElementsByName("AppxPackageMetadata").GetElementsByName("AppxMetadata").Attributes.GetNamedItem("PackageMoniker").InnerText;
 
-                            if (appxPackagesInfoDict.TryGetValue(name, out Tuple<string, string, string> value))
+                            if (appxPackagesInfoDict.TryGetValue(name, out (string extension, string size, string digest) value))
                             {
-                                string fileName = name + value.Item1;
-                                string fileSize = value.Item2;
-                                string digest = value.Item3;
+                                string fileName = name + value.extension;
+                                string fileSize = value.size;
+                                string digest = value.digest;
                                 string revisionNumber = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("RevisionNumber").InnerText;
                                 string updateID = xmlNode.GetElementsByName("UpdateIdentity").Attributes.GetNamedItem("UpdateID").InnerText;
                                 string uri = await GetAppxUrlAsync(updateID, revisionNumber, ring, digest);

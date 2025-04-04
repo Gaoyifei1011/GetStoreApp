@@ -5,7 +5,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
 {
     public sealed class CandidateSet
     {
-        public Tuple<int, int> ResourceMapSectionAndIndex { get; set; }
+        public (int SchemaSectionIndex, int ResourceMapItemIndex) ResourceMapSectionAndIndex { get; set; }
 
         public ushort DecisionIndex { get; set; }
 

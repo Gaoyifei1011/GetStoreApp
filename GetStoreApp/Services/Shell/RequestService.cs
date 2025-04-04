@@ -54,12 +54,12 @@ namespace GetStoreApp.Services.Shell
                     AppInfoModel appInfo = null;
 
                     // 获取应用信息
-                    Tuple<bool, AppInfoModel> appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    (bool requestResult, AppInfoModel appInfoModelItem) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
 
-                    if (appInformationResult.Item1)
+                    if (appInformationResult.requestResult)
                     {
                         // 解析非商店应用数据
-                        if (string.IsNullOrEmpty(appInformationResult.Item2.CategoryID))
+                        if (string.IsNullOrEmpty(appInformationResult.appInfoModelItem.CategoryID))
                         {
                             List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
                             foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
