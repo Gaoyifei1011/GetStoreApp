@@ -1,6 +1,5 @@
 ﻿using GetStoreApp.Extensions.Console;
 using GetStoreApp.Helpers.Controls.Store;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
@@ -42,7 +41,7 @@ namespace GetStoreApp.Services.Shell
             string productId = selectedType.Equals(TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(linkText) : linkText;
             InfoBarSeverity state = InfoBarSeverity.Informational;
             bool requestState = true;
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
+            Console.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
 
             if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
             {
@@ -91,41 +90,41 @@ namespace GetStoreApp.Services.Shell
                         state = InfoBarSeverity.Error;
                     }
 
-                    ConsoleHelper.Write(Environment.NewLine);
-                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
+                    Console.Write(Environment.NewLine);
+                    Console.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
 
                     switch (state)
                     {
                         case InfoBarSeverity.Success:
                             {
-                                ConsoleHelper.SetTextColor(0x02);
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
-                                ConsoleHelper.Write(Environment.NewLine);
-                                ConsoleHelper.ResetTextColor();
+                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                Console.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
+                                Console.Write(Environment.NewLine);
+                                Console.ResetColor();
                                 requestState = false;
                                 await ParseService.ParseDataAsync(appInfo, queryLinksList);
                                 break;
                             }
                         case InfoBarSeverity.Warning:
                             {
-                                ConsoleHelper.SetTextColor(0x06);
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
-                                ConsoleHelper.Write(Environment.NewLine);
-                                ConsoleHelper.ResetTextColor();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
+                                Console.Write(Environment.NewLine);
+                                Console.ResetColor();
                                 PrintRequestFailedData();
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                                string regainString = ConsoleHelper.ReadLine();
+                                Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = Console.ReadLine();
                                 requestState = regainString is "Y" or "y";
                                 break;
                             }
                         case InfoBarSeverity.Error:
                             {
-                                ConsoleHelper.SetTextColor(0x04);
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
-                                ConsoleHelper.Write(Environment.NewLine);
-                                ConsoleHelper.ResetTextColor();
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                                string regainString = ConsoleHelper.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                Console.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
+                                Console.Write(Environment.NewLine);
+                                Console.ResetColor();
+                                Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = Console.ReadLine();
                                 requestState = regainString is "Y" or "y";
                                 break;
                             }
@@ -142,8 +141,8 @@ namespace GetStoreApp.Services.Shell
                     // 获取网页反馈回的原始数据
                     RequestModel httpRequestData = await HtmlRequestHelper.HttpRequestAsync(generateContent);
 
-                    ConsoleHelper.Write(Environment.NewLine);
-                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
+                    Console.Write(Environment.NewLine);
+                    Console.WriteLine(ResourceService.GetLocalized("Console/GetCompleted"));
 
                     state = HtmlRequestHelper.CheckRequestState(httpRequestData);
 
@@ -151,10 +150,10 @@ namespace GetStoreApp.Services.Shell
                     {
                         case InfoBarSeverity.Success:
                             {
-                                ConsoleHelper.SetTextColor(0x02);
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
-                                ConsoleHelper.Write(Environment.NewLine);
-                                ConsoleHelper.ResetTextColor();
+                                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                                Console.WriteLine(ResourceService.GetLocalized("Console/RequestSuccessfully"));
+                                Console.Write(Environment.NewLine);
+                                Console.ResetColor();
                                 requestState = false;
                                 HtmlParseHelper.InitializeParseData(httpRequestData);
                                 List<QueryLinksModel> queryLinksList = HtmlParseHelper.HtmlParsePackagedAppLinks();
@@ -163,24 +162,24 @@ namespace GetStoreApp.Services.Shell
                             }
                         case InfoBarSeverity.Warning:
                             {
-                                ConsoleHelper.SetTextColor(0x06);
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
-                                ConsoleHelper.Write(Environment.NewLine);
-                                ConsoleHelper.ResetTextColor();
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                Console.WriteLine(ResourceService.GetLocalized("Console/RequestFailed"));
+                                Console.Write(Environment.NewLine);
+                                Console.ResetColor();
                                 PrintRequestFailedData();
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                                string regainString = ConsoleHelper.ReadLine();
+                                Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = Console.ReadLine();
                                 requestState = regainString is "Y" or "y";
                                 break;
                             }
                         case InfoBarSeverity.Error:
                             {
-                                ConsoleHelper.SetTextColor(0x04);
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
-                                ConsoleHelper.Write(Environment.NewLine);
-                                ConsoleHelper.ResetTextColor();
-                                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
-                                string regainString = ConsoleHelper.ReadLine();
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
+                                Console.WriteLine(ResourceService.GetLocalized("Console/RequestError"));
+                                Console.Write(Environment.NewLine);
+                                Console.ResetColor();
+                                Console.WriteLine(ResourceService.GetLocalized("Console/AskContinue"));
+                                string regainString = Console.ReadLine();
                                 requestState = regainString is "Y" or "y";
                                 break;
                             }
@@ -207,23 +206,23 @@ namespace GetStoreApp.Services.Shell
             int SerialNumberColumnLength = (SerialNumberHeaderLength > "1".Length ? SerialNumberHeaderLength : "1".Length) + 3;
             int FileNameColumnLength = (FileNameHeaderLength > NoneLength ? FileNameHeaderLength : NoneLength) + 3;
 
-            ConsoleHelper.Write(Environment.NewLine);
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/FileInfoList"));
+            Console.Write(Environment.NewLine);
+            Console.WriteLine(ResourceService.GetLocalized("Console/FileInfoList"));
 
             // 打印标题
-            ConsoleHelper.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
-            ConsoleHelper.Write(FileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - FileNameHeaderLength));
-            ConsoleHelper.Write(FileSizeHeader + Environment.NewLine);
+            Console.Write(SerialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - SerialNumberHeaderLength));
+            Console.Write(FileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - FileNameHeaderLength));
+            Console.Write(FileSizeHeader + Environment.NewLine);
 
             // 打印标题与内容的分割线
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, SerialNumberHeaderLength).PadRight(SerialNumberColumnLength));
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileNameHeaderLength).PadRight(FileNameColumnLength));
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + Environment.NewLine);
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, SerialNumberHeaderLength).PadRight(SerialNumberColumnLength));
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileNameHeaderLength).PadRight(FileNameColumnLength));
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, FileSizeHeaderLength) + Environment.NewLine);
 
             // 输出内容
-            ConsoleHelper.Write("1" + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - 1));
-            ConsoleHelper.Write(None + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - NoneLength));
-            ConsoleHelper.Write(None + Environment.NewLine);
+            Console.Write("1" + new string(ConsoleLaunchService.RowSplitCharacter, SerialNumberColumnLength - 1));
+            Console.Write(None + new string(ConsoleLaunchService.RowSplitCharacter, FileNameColumnLength - NoneLength));
+            Console.Write(None + Environment.NewLine);
         }
     }
 }

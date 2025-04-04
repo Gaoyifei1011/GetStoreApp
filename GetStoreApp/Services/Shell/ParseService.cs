@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.Console;
-using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
@@ -49,10 +48,10 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static void PrintAppInformation(AppInfoModel appInfo)
         {
-            ConsoleHelper.Write(ResourceService.GetLocalized("Console/AppName") + appInfo.Name + Environment.NewLine);
-            ConsoleHelper.Write(ResourceService.GetLocalized("Console/AppPublisher") + appInfo.Publisher + Environment.NewLine);
-            ConsoleHelper.Write(ResourceService.GetLocalized("Console/AppDescription") + Environment.NewLine + appInfo.Description + Environment.NewLine);
-            ConsoleHelper.Write(Environment.NewLine);
+            Console.Write(ResourceService.GetLocalized("Console/AppName") + appInfo.Name + Environment.NewLine);
+            Console.Write(ResourceService.GetLocalized("Console/AppPublisher") + appInfo.Publisher + Environment.NewLine);
+            Console.Write(ResourceService.GetLocalized("Console/AppDescription") + Environment.NewLine + appInfo.Description + Environment.NewLine);
+            Console.Write(Environment.NewLine);
         }
 
         /// <summary>
@@ -80,28 +79,28 @@ namespace GetStoreApp.Services.Shell
             }
             int fileNameColumnLength = ((fileNameHeaderLength > fileNameContentMaxLength) ? fileNameHeaderLength : fileNameContentMaxLength) + 3;
 
-            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/QueryLinksCount"), queryLinksList.Count));
-            ConsoleHelper.Write(Environment.NewLine);
+            Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/QueryLinksCount"), queryLinksList.Count));
+            Console.Write(Environment.NewLine);
 
             // 打印标题
-            ConsoleHelper.Write(serialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, serialNumberColumnLength - serialNumberHeaderLength));
-            ConsoleHelper.Write(fileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, fileNameColumnLength - fileNameHeaderLength));
-            ConsoleHelper.Write(fileSizeHeader + Environment.NewLine);
+            Console.Write(serialNumberHeader + new string(ConsoleLaunchService.RowSplitCharacter, serialNumberColumnLength - serialNumberHeaderLength));
+            Console.Write(fileNameHeader + new string(ConsoleLaunchService.RowSplitCharacter, fileNameColumnLength - fileNameHeaderLength));
+            Console.Write(fileSizeHeader + Environment.NewLine);
 
             // 打印标题与内容的分割线
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, serialNumberHeaderLength).PadRight(serialNumberColumnLength));
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, fileNameHeaderLength).PadRight(fileNameColumnLength));
-            ConsoleHelper.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, fileSizeHeaderLength) + Environment.NewLine);
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, serialNumberHeaderLength).PadRight(serialNumberColumnLength));
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, fileNameHeaderLength).PadRight(fileNameColumnLength));
+            Console.Write(new string(ConsoleLaunchService.ColumnSplitCharacter, fileSizeHeaderLength) + Environment.NewLine);
 
             // 打印内容
             for (int resultDataIndex = 0; resultDataIndex < queryLinksList.Count; resultDataIndex++)
             {
-                ConsoleHelper.Write(Convert.ToString(resultDataIndex + 1) + new string(ConsoleLaunchService.RowSplitCharacter, serialNumberColumnLength - Convert.ToString(resultDataIndex + 1).Length));
-                ConsoleHelper.Write(queryLinksList[resultDataIndex].FileName + new string(ConsoleLaunchService.RowSplitCharacter, fileNameColumnLength - queryLinksList[resultDataIndex].FileName.Length));
-                ConsoleHelper.Write(queryLinksList[resultDataIndex].FileSize + Environment.NewLine);
+                Console.Write(Convert.ToString(resultDataIndex + 1) + new string(ConsoleLaunchService.RowSplitCharacter, serialNumberColumnLength - Convert.ToString(resultDataIndex + 1).Length));
+                Console.Write(queryLinksList[resultDataIndex].FileName + new string(ConsoleLaunchService.RowSplitCharacter, fileNameColumnLength - queryLinksList[resultDataIndex].FileName.Length));
+                Console.Write(queryLinksList[resultDataIndex].FileSize + Environment.NewLine);
             }
 
-            ConsoleHelper.Write(Environment.NewLine);
+            Console.Write(Environment.NewLine);
         }
     }
 }

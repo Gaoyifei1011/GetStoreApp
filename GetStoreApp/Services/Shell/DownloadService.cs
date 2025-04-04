@@ -29,9 +29,9 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         public static void OnDownloadCreated(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
         {
-            ConsoleHelper.SetTextColor(0x01);
-            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCreated"), downloadSchedulerItem.FileName));
-            ConsoleHelper.ResetTextColor();
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCreated"), downloadSchedulerItem.FileName));
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace GetStoreApp.Services.Shell
 
         public static void OnDownloadProgressing(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
         {
-            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadProgressing"), [FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.FinishedSize), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.TotalSize), SpeedHelper.ConvertSpeedToString(downloadSchedulerItem.CurrentSpeed), DownloadProgress(downloadSchedulerItem.FinishedSize, downloadSchedulerItem.TotalSize)]));
+            Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadProgressing"), [FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.FinishedSize), FileSizeHelper.ConvertFileSizeToString(downloadSchedulerItem.TotalSize), SpeedHelper.ConvertSpeedToString(downloadSchedulerItem.CurrentSpeed), DownloadProgress(downloadSchedulerItem.FinishedSize, downloadSchedulerItem.TotalSize)]));
         }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace GetStoreApp.Services.Shell
 
         public static void OnDownloadCompleted(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
         {
-            ConsoleHelper.SetTextColor(0x02);
-            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCompleted"), downloadSchedulerItem.FileName));
-            ConsoleHelper.ResetTextColor();
-            ConsoleHelper.Write(Environment.NewLine);
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadCompleted"), downloadSchedulerItem.FileName));
+            Console.ResetColor();
+            Console.Write(Environment.NewLine);
             semaphoreSlim?.Release();
         }
 
@@ -63,11 +63,11 @@ namespace GetStoreApp.Services.Shell
         {
             while (true)
             {
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadFile"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/DownloadFile"));
 
                 try
                 {
-                    List<string> indexList = [.. ConsoleHelper.ReadLine().Split(',')];
+                    List<string> indexList = [.. Console.ReadLine().Split(',')];
 
                     bool checkResult = true;
                     foreach (string indexItem in indexList)
@@ -87,27 +87,27 @@ namespace GetStoreApp.Services.Shell
                             string indexItem = indexList[index];
                             if (ConsoleLaunchService.IsAppRunning)
                             {
-                                ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, indexList.Count));
+                                Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/DownloadingInformation"), index + 1, indexList.Count));
                                 DownloadFile(queryLinksList[Convert.ToInt32(indexItem) - 1].FileName, queryLinksList[Convert.ToInt32(indexItem) - 1].FileLink);
                             }
                         }
-                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/DownloadCompletedAll"));
-                        string inputString = ConsoleHelper.ReadLine();
+                        Console.WriteLine(ResourceService.GetLocalized("Console/DownloadCompletedAll"));
+                        string inputString = Console.ReadLine();
                         if (inputString is "Y" or "y")
                         {
                             continue;
                         }
                         else
                         {
-                            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/OpenFolder"));
+                            Console.WriteLine(ResourceService.GetLocalized("Console/OpenFolder"));
                             await OpenDownloadFolderAsync();
                             break;
                         }
                     }
                     else
                     {
-                        ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
-                        string inputString = ConsoleHelper.ReadLine();
+                        Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberOutRange"));
+                        string inputString = Console.ReadLine();
                         if (inputString is "Y" or "y")
                         {
                             continue;
@@ -121,8 +121,8 @@ namespace GetStoreApp.Services.Shell
                 catch (Exception e)
                 {
                     ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
-                    string inputString = ConsoleHelper.ReadLine();
+                    Console.WriteLine(ResourceService.GetLocalized("Console/SerialNumberError"));
+                    string inputString = Console.ReadLine();
                     if (inputString is "Y" or "y")
                     {
                         continue;

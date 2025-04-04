@@ -2,7 +2,6 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Shell;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
@@ -50,8 +49,7 @@ namespace GetStoreApp.Services.Root
                     }
                 }
 
-                ConsoleEventDelegate ctrlDelegate = new(OnConsoleCtrlHandler);
-                Kernel32Library.SetConsoleCtrlHandler(ctrlDelegate, true);
+                Console.CancelKeyPress += OnCancelKeyPress;
                 DownloadSchedulerService.InitializeDownloadScheduler(false);
                 DownloadSchedulerService.DownloadCreated += DownloadService.OnDownloadCreated;
                 DownloadSchedulerService.DownloadProgressing += DownloadService.OnDownloadProgressing;
@@ -66,17 +64,16 @@ namespace GetStoreApp.Services.Root
                 DownloadSchedulerService.DownloadCreated -= DownloadService.OnDownloadCreated;
                 DownloadSchedulerService.DownloadProgressing -= DownloadService.OnDownloadProgressing;
                 DownloadSchedulerService.DownloadCompleted -= DownloadService.OnDownloadCompleted;
-                ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
+                Console.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
             }
         }
 
         /// <summary>
         /// 控制台程序捕捉键盘 Ctrl + C/Break 退出事件并询问用户是否退出
         /// </summary>
-        private static bool OnConsoleCtrlHandler(int dwCtrlType)
+        private static void OnCancelKeyPress(object sender, ConsoleCancelEventArgs args)
         {
-            ConsoleHelper.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
-            ConsoleHelper.IsExited = true;
+            Console.WriteLine(Environment.NewLine + ResourceService.GetLocalized("Console/ApplicationExit"));
             IsAppRunning = false;
 
             try
@@ -91,7 +88,6 @@ namespace GetStoreApp.Services.Root
             {
                 LogService.WriteLog(LoggingLevel.Error, "Unregister Download scheduler service event failed", e);
             }
-            return false;
         }
 
         /// <summary>
@@ -99,12 +95,11 @@ namespace GetStoreApp.Services.Root
         /// </summary>
         private static void InitializeIntroduction()
         {
-            ConsoleHelper.SetTitle(ResourceService.GetLocalized("Console/Title"));
-
-            ConsoleHelper.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"), InfoHelper.AppVersion.ToString()));
-            ConsoleHelper.Write(Environment.NewLine);
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
-            ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + Environment.NewLine);
+            Console.Title = ResourceService.GetLocalized("Console/Title");
+            Console.WriteLine(string.Format(ResourceService.GetLocalized("Console/HeaderDescription1"), InfoHelper.AppVersion.ToString()));
+            Console.Write(Environment.NewLine);
+            Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription2"));
+            Console.WriteLine(ResourceService.GetLocalized("Console/HeaderDescription3") + Environment.NewLine);
         }
 
         /// <summary>
@@ -120,14 +115,14 @@ namespace GetStoreApp.Services.Root
             if (consoleLaunchArgsList.Count is 1)
             {
                 // 选择类型
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/URLSample"));
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ProductIDSample"));
-                ConsoleHelper.Write(ResourceService.GetLocalized("Console/SelectType"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/TypeInformation"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/URLSample"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/ProductIDSample"));
+                Console.Write(ResourceService.GetLocalized("Console/SelectType"));
 
                 try
                 {
-                    if (int.TryParse(ConsoleHelper.ReadLine(), out typeNameIndex) && (typeNameIndex is < 1 or > 4))
+                    if (int.TryParse(Console.ReadLine(), out typeNameIndex) && (typeNameIndex is < 1 or > 4))
                     {
                         typeNameIndex = 1;
                     }
@@ -139,12 +134,12 @@ namespace GetStoreApp.Services.Root
                 }
 
                 // 选择通道
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ChannelInformation"));
-                ConsoleHelper.Write(ResourceService.GetLocalized("Console/SelectChannel"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/ChannelInformation"));
+                Console.Write(ResourceService.GetLocalized("Console/SelectChannel"));
 
                 try
                 {
-                    if (int.TryParse(ConsoleHelper.ReadLine(), out channelNameIndex) && (channelNameIndex is < 1 or > 4))
+                    if (int.TryParse(Console.ReadLine(), out channelNameIndex) && (channelNameIndex is < 1 or > 4))
                     {
                         channelNameIndex = 4;
                     }
@@ -156,8 +151,8 @@ namespace GetStoreApp.Services.Root
                 }
 
                 // 输入链接
-                ConsoleHelper.Write(ResourceService.GetLocalized("Console/InputLink"));
-                link = ConsoleHelper.ReadLine();
+                Console.Write(ResourceService.GetLocalized("Console/InputLink"));
+                link = Console.ReadLine();
             }
             // 只有两个参数：链接
             else if (consoleLaunchArgsList.Count is 2)
@@ -178,7 +173,7 @@ namespace GetStoreApp.Services.Root
             // 非法参数
             else
             {
-                ConsoleHelper.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
+                Console.WriteLine(ResourceService.GetLocalized("Console/ParameterError"));
                 Environment.Exit(Environment.ExitCode);
             }
 
