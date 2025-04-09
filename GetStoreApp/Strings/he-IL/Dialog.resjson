@@ -75,6 +75,8 @@
   "WebViewProcessFailedTitle": "Web process failed",
   "WindowsAppSDKVersion": "גרסת Windows App SDK: ",
   "WindowsUIVersion": "גרסת Windows UI:",
+  "WinGetDataSourceAdd": "Add WinGet data source",
+  "WinGetDataSourceEdit": "Edit WinGet data source",
   "WinUI2Version": "גרסת WinUI 2:",
   "WinUI3Version": "גרסת WinUI 3:",
   "Yes": "כן"

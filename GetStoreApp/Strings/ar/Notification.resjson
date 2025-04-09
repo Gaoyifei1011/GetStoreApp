@@ -33,6 +33,7 @@
   "NetworkError1": "الاتصال بالشبكة غير طبيعي",
   "NetworkError2": "الاتصال بالشبكة غير طبيعي، يرجى التحقق من اتصال الشبكة لديك.",
   "NewestVersion": "التطبيق هو أحدث إصدار",
+  "NotElevated": "Current operation needs to be executed in elevation mode",
   "NotNewestVersion": "التطبيق ليس أحدث إصدار، انقر على الصفحة الرئيسية للمشروع للحصول على تحديث",
   "OpenDownloadFolder": "فتح مجلد التنزيل",
   "OpenSettings": "فتح الإعدادات",

@@ -101,7 +101,7 @@
   "OpenWinGetSettings": "打开",
   "OpenWinGetSettingsToolTip": "打开配置文件",
   "Options": "选项",
-  "Origin": "源类型",
+  "Origin": "源类型：",
   "PackageCatalogBackgroundUpdateInterval": "数据源后台更新间隔：",
   "Predefined": "预定义",
   "QueryLinksMode": "查询链接方式",

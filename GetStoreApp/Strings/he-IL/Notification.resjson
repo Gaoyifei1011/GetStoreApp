@@ -33,6 +33,7 @@
   "NetworkError1": "חיבור הרשת אינו תקין",
   "NetworkError2": "חיבור הרשת אינו תקין, אנא בדוק את חיבור הרשת שלך.",
   "NewestVersion": "האפליקציה בגרסה העדכנית ביותר",
+  "NotElevated": "Current operation needs to be executed in elevation mode",
   "NotNewestVersion": "האפליקציה אינה בגרסה העדכנית ביותר, לחץ על דף הבית של הפרויקט כדי לקבל עדכון",
   "OpenDownloadFolder": "פתח תיקית הורדות",
   "OpenSettings": "פתח הגדרות",

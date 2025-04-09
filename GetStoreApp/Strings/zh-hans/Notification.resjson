@@ -33,6 +33,7 @@
   "NetworkError1": "应用处于离线模式",
   "NetworkError2": "网络连接异常，应用处于离线模式，请检查您的网络连接",
   "NewestVersion": "应用已是最新版本",
+  "NotElevated": "当前操作需要在提权模式下进行",
   "NotNewestVersion": "应用不是最新版本，点击项目主页以获取更新",
   "OpenDownloadFolder": "打开下载目录",
   "OpenSettings": "打开设置",

@@ -75,6 +75,8 @@
   "WebViewProcessFailedTitle": "浏览器进程异常",
   "WindowsAppSDKVersion": "Windows 应用 SDK 版本：",
   "WindowsUIVersion": "Windows UI 版本：",
+  "WinGetDataSourceAdd": "添加 WinGet 数据源",
+  "WinGetDataSourceEdit": "编辑 WinGet 数据源",
   "WinUI2Version": "WinUI 2 版本：",
   "WinUI3Version": "WinUI 3 版本：",
   "Yes": "是"

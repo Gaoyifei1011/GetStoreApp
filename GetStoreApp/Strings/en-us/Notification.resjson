@@ -33,6 +33,7 @@
   "NetworkError1": "The network connection is abnormal",
   "NetworkError2": "The network connection is abnormal, please check your network connection.",
   "NewestVersion": "The application is the latest version",
+  "NotElevated": "Current operation needs to be executed in elevation mode",
   "NotNewestVersion": "The app is not the latest version, click on the project home page to get an update",
   "OpenDownloadFolder": "Open download folder",
   "OpenSettings": "Open settings",

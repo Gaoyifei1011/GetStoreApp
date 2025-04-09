@@ -75,6 +75,8 @@
   "WebViewProcessFailedContent": "عملية المتصفح غير طبيعية والتطبيق على وشك الخروج",
   "WebViewProcessFailedTitle": "فشل عملية الويب",
   "WindowsAppSDKVersion": "إصدار Windows App SDK:",
+  "WinGetDataSourceAdd": "Add WinGet data source",
+  "WinGetDataSourceEdit": "Edit WinGet data source",
   "WinUI2Version": "WinUI 2 version:",
   "WinUI3Version": "إصدار WinUI 3:",
   "Yes": "نعم"
