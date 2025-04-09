@@ -24,6 +24,8 @@
     <ContentDialog.Resources>
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
+        <XamlUICommand x:Name="CheckBoxCommand" ExecuteRequested="{x:Bind OnCheckBoxExecuteRequested}" />
     </ContentDialog.Resources>
 
     <StackPanel>
@@ -45,6 +47,7 @@
                         <StackPanel Orientation="Horizontal">
                             <CheckBox
                                 Margin="0,0,10,0"
+                                Command="{StaticResource CheckBoxCommand}"
                                 Content="{x:Bind DisplayName}"
                                 IsChecked="{x:Bind IsSelected, Mode=TwoWay}" />
 

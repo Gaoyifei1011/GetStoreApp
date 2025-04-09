@@ -3,6 +3,7 @@ using GetStoreApp.Models.Dialogs;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,13 +63,10 @@ namespace GetStoreApp.UI.Dialogs.Settings
             {
                 traceCleanupItem.IsSelected = false;
                 traceCleanupItem.IsCleanFailed = false;
-                traceCleanupItem.PropertyChanged += (sender, args) =>
-                {
-                    IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
-                };
-
                 TraceCleanupList.Add(traceCleanupItem);
             }
+
+            IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }
 
         /// <summary>
@@ -121,6 +119,14 @@ namespace GetStoreApp.UI.Dialogs.Settings
             }
 
             IsCleaning = false;
+        }
+
+        /// <summary>
+        /// 复选框选中时的状态发生更改时触发的事件
+        /// </summary>
+        private void OnCheckBoxExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            IsSelected = TraceCleanupList.Exists(item => item.IsSelected);
         }
     }
 }
