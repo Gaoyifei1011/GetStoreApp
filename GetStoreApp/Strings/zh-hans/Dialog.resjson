@@ -64,8 +64,6 @@
   "Restart": "重启应用",
   "RestartContent": "应用即将重启，重启后应用的数据将会丢失，请确保您的工作内容已经全部保存。",
   "SearchNeedReboot": "{0}应用已安装完成，部分更改需要重启后生效，请问您是否需要重启设备？",
-  "SelectEmptyContent": "您没有选择任何内容，请选中后再进行操作",
-  "SelectEmptyTitle": "项目选择提示",
   "StartupArgsSample": "参考样例",
   "TraceCleanupContent": "痕迹清理包括历史记录、下载记录和应用下载时在本地创建的文件。请选择您要清理的项目。",
   "TraceCleanupTitle": "痕迹清理",

@@ -26,6 +26,12 @@ namespace GetStoreApp.UI.TeachingTips
                 OperationResultFailed.Visibility = Visibility.Visible;
                 OperationResultFailed.Text = ResourceService.GetLocalized("Notification/FolderPickerFailed");
             }
+            else if (operationKind is OperationKind.SelectEmpty)
+            {
+                OperationResultSuccess.Visibility = Visibility.Collapsed;
+                OperationResultFailed.Visibility = Visibility.Visible;
+                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SelectEmpty");
+            }
             else if (operationKind is OperationKind.LanguageChange)
             {
                 OperationResultSuccess.Visibility = Visibility.Visible;

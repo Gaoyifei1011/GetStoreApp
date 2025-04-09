@@ -440,7 +440,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
                 return;
             }
 
@@ -493,14 +493,14 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
                 return;
             }
 
             // 当前任务正在安装时，不进行其他任何操作
             if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
-                await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
                 return;
             }
 
@@ -562,7 +562,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
             {
-                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
                 return;
             }
             else

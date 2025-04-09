@@ -4,6 +4,7 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -278,7 +279,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 没有选中任何内容时显示空提示对话框
             if (selectedDownloadingList.Count is 0)
             {
-                await MainWindow.Current.ShowDialogAsync(new SelectEmptyPromptDialog());
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.SelectEmpty));
                 return;
             }
 

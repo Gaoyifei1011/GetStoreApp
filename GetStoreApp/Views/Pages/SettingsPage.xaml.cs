@@ -1405,11 +1405,11 @@ namespace GetStoreApp.Views.Pages
             }
             else if (index is 1 or 2)
             {
-                return ResourceService.GetLocalized("Settings/Mica") + " " + selectedBackdrop.Value;
+                return string.Join(' ', ResourceService.GetLocalized("Settings/Mica"), selectedBackdrop.Value);
             }
             else if (index is 3 or 4 or 5)
             {
-                return ResourceService.GetLocalized("Settings/DesktopAcrylic") + " " + selectedBackdrop.Value;
+                return string.Join(' ', ResourceService.GetLocalized("Settings/DesktopAcrylic"), selectedBackdrop.Value);
             }
             else
             {

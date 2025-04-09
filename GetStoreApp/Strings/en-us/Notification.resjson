@@ -43,6 +43,7 @@
   "ResultLinkCopy": "The download link was successfully copied to the clipboard",
   "ResultLinkSelectedCopy": "{0} download links has been successfully copied to the clipboard",
   "SearchInstallCopy": "Install command was successfully copied to the clipboard",
+  "SelectEmpty": "You have not selected anything, please select it before proceeding",
   "ShareFailed": "File sharing fails. Please check the access permission of the shared file",
   "ShareSelectedFailed": "{0} files sharing failed. Please check the access permission of the shared files",
   "StartScreenFailed": "App pinning to Start screen failed, please pin it manually",

@@ -43,6 +43,7 @@
   "ResultLinkCopy": "该条下载链接已成功复制到剪贴板",
   "ResultLinkSelectedCopy": "{0}条下载链接已经成功复制到剪贴板",
   "SearchInstallCopy": "安装命令已复制到剪贴板",
+  "SelectEmpty": "您没有选择任何内容，请选中后再进行操作",
   "ShareFailed": "文件分享失败，请检查被分享文件的访问权限",
   "ShareSelectedFailed": "{0}个文件分享失败，请检查被分享文件的访问权限",
   "StartScreenFailed": "应用固定到“开始”屏幕失败，请手动固定",

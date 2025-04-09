@@ -258,8 +258,6 @@
     <None Remove="UI\Dialogs\Common\AppRunningDialog.xaml" />
     <None Remove="UI\Dialogs\Common\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DeletePromptDialog.xaml" />
-    <None Remove="UI\Dialogs\Common\DownloadNotifyDialog.xaml" />
-    <None Remove="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" />
     <None Remove="UI\Dialogs\Download\FileInformationDialog.xaml" />
     <None Remove="UI\Dialogs\Download\InstallingNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
@@ -295,8 +293,6 @@
     <Page Update="UI\Dialogs\Common\AppRunningDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Dialogs\Common\DownloadNotifyDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Dialogs\Common\SelectEmptyPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

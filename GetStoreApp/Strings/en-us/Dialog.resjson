@@ -64,8 +64,6 @@
   "Restart": "Application restart",
   "RestartContent": "The app is about to restart, after the restart the app's data will be lost, make sure that your work has been saved in its entirety",
   "SearchNeedReboot": "{0} The application has been installed. Some changes need to be restarted to take effect. Do you need to restart the device?",
-  "SelectEmptyContent": "You have not selected anything, please select it before proceeding",
-  "SelectEmptyTitle": "Item selection prompts",
   "StartupArgsSample": "Reference example",
   "TraceCleanupContent": "Trace clearing includes history records, download records, and files created locally when an application is downloaded. Select the items you want to clean.",
   "TraceCleanupTitle": "File cleaning prompts",
