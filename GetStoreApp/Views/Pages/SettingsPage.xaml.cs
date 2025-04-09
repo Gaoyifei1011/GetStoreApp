@@ -53,6 +53,11 @@ namespace GetStoreApp.Views.Pages
         private readonly string No = ResourceService.GetLocalized("Settings/No");
         private readonly string Trusted = ResourceService.GetLocalized("Settings/Trusted");
         private readonly string Distrusted = ResourceService.GetLocalized("Settings/Distrusted");
+        private readonly string Predefined = ResourceService.GetLocalized("Settings/Predefined");
+        private readonly string User = ResourceService.GetLocalized("Settings/User");
+        private readonly string Unknown = ResourceService.GetLocalized("Settings/Unknown");
+        private readonly string MicrosoftEntraId = ResourceService.GetLocalized("Settings/MicrosoftEntraId");
+        private readonly string MicrosoftEntraIdForAzureBlobStorage = ResourceService.GetLocalized("Settings/MicrosoftEntraIdForAzureBlobStorage");
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
         private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
@@ -587,15 +592,30 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 编辑 WinGet 数据源
         /// </summary>
-        private void OnEditExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnEditExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSourceItem)
+            {
+                await MainWindow.Current.ShowDialogAsync(new WinGetSourceEditDialog(WinGetSourceEditKind.Edit, winGetSourceItem));
+            }
+            else
+            {
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+            }
         }
 
         /// <summary>
         /// 移除数据源
         /// </summary>
-        private void OnRemoveExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnRemoveExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
+            if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSourceItem)
+            {
+            }
+            else
+            {
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+            }
         }
 
         /// <summary>
@@ -1240,10 +1260,18 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 新建数据源
+        /// 添加数据源
         /// </summary>
-        private void OnCreateNewSourceClicked(object sender, RoutedEventArgs args)
+        private async void OnAddNewSourceClicked(object sender, RoutedEventArgs args)
         {
+            if (RuntimeHelper.IsElevated)
+            {
+                await MainWindow.Current.ShowDialogAsync(new WinGetSourceEditDialog(WinGetSourceEditKind.Add, null));
+            }
+            else
+            {
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+            }
         }
 
         /// <summary>
@@ -1372,14 +1400,21 @@ namespace GetStoreApp.Views.Pages
                         Explicit = packageCatalogInformation.Explicit ? Yes : No,
                         TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? Trusted : Distrusted,
                         Id = packageCatalogInformation.Id,
-                        LastUpdateTime = Convert.ToString(packageCatalogInformation.LastUpdateTime),
-                        Origin = Convert.ToString(packageCatalogInformation.Origin),
+                        LastUpdateTime = packageCatalogInformation.LastUpdateTime.ToString("yyyy/MM/dd HH:mm"),
+                        Origin = packageCatalogInformation.Origin is PackageCatalogOrigin.Predefined ? Predefined : User,
                         Type = packageCatalogInformation.Type,
-                        AcceptSourceAgreements = Convert.ToString(packageCatalogInformation.AcceptSourceAgreements),
-                        AdditionalPackageCatalogArguments = packageCatalogInformation.AdditionalPackageCatalogArguments,
-                        AuthenticationType = Convert.ToString(packageCatalogInformation.AuthenticationType),
-                        AuthenticationAccount = packageCatalogInformation.AuthenticationAccount,
-                        PackageCatalogBackgroundUpdateInterval = Convert.ToString(packageCatalogInformation.PackageCatalogBackgroundUpdateInterval)
+                        AcceptSourceAgreements = packageCatalogInformation.AcceptSourceAgreements ? Yes : No,
+                        AuthenticationType = packageCatalogInformation.AuthenticationType switch
+                        {
+                            AuthenticationType.None => None,
+                            AuthenticationType.Unknown => Unknown,
+                            AuthenticationType.MicrosoftEntraId => MicrosoftEntraId,
+                            AuthenticationType.MicrosoftEntraIdForAzureBlobStorage => MicrosoftEntraIdForAzureBlobStorage,
+                            _ => Unknown
+                        },
+                        AdditionalPackageCatalogArguments = string.IsNullOrEmpty(packageCatalogInformation.AdditionalPackageCatalogArguments) ? None : packageCatalogInformation.AdditionalPackageCatalogArguments,
+                        AuthenticationAccount = string.IsNullOrEmpty(packageCatalogInformation.AuthenticationAccount) ? None : packageCatalogInformation.AuthenticationAccount,
+                        PackageCatalogBackgroundUpdateInterval = packageCatalogInformation.PackageCatalogBackgroundUpdateInterval.ToString()
                     };
 
                     wingetSourceList.Add(winGetSourceItem);

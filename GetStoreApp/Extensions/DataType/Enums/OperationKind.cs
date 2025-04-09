@@ -9,7 +9,8 @@
         CheckUpdate = 4,
         DownloadCreate = 5,
         LogClean = 6,
-        SelectEmpty = 7,
-        ShareFailed = 8
+        NotElevated = 7,
+        SelectEmpty = 8,
+        ShareFailed = 9
     }
 }
