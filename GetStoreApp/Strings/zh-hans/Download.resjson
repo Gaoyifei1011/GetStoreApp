@@ -40,7 +40,7 @@
   "InstallError": "安装失败",
   "Installing": "正在安装中，请稍侯...",
   "InstallToolTip": "安装该应用",
-  "InstallValue": "已安装{0}%",
+  "InstalledValue": "已安装{0}%",
   "LearnMore": "了解更多",
   "OpenFolder": "打开文件夹",
   "OpenFolderToolTip": "打开默认下载的文件夹",

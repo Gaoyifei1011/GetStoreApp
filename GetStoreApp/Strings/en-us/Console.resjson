@@ -23,7 +23,7 @@
   "HeaderDescription2": "Get the Store app (console program) to quickly query and download the installation package for Microsoft Store apps.",
   "HeaderDescription3": "For more information, navigate to the \"About\" page of the application and learn about it in the \"Usage Instructions\" module.",
   "InputLink": "Please enter the corresponding link:",
-  "None": "None",
+  "None": "[None]",
   "OpenFolder": "Opening the downloaded folder, please wait...",
   "ParameterError": "The parameters you inputed are incorrect, please check the parameters you inputed",
   "ProductIDSample": "ProductID sample: 9WZDNCRFJBMP",

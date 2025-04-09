@@ -8,7 +8,7 @@ namespace GetStoreApp.Models.Controls.Download
     /// </summary>
     public sealed partial class CompletedModel : INotifyPropertyChanged
     {
-        public string InstalledValue = ResourceService.GetLocalized("Download/InstallValue");
+        public string InstalledValue = ResourceService.GetLocalized("Download/InstalledValue");
 
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志

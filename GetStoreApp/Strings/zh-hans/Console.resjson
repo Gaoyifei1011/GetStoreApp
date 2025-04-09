@@ -23,7 +23,7 @@
   "HeaderDescription2": "获取商店应用（控制台程序）可以快速查询并下载微软商店应用的安装包。",
   "HeaderDescription3": "具体的操作方法请导航到应用的“关于”页面，“使用说明”模块中进行了解。",
   "InputLink": "请输入对应的链接：",
-  "None": "无",
+  "None": "[无]",
   "OpenFolder": "正在打开已下载完成的目录，请稍候...",
   "ParameterError": "您输入的参数有误，请检查您输入的参数",
   "ProductIDSample": "产品 ID 例子：9WZDNCRFJBMP",

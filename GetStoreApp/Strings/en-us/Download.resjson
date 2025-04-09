@@ -40,7 +40,7 @@
   "InstallError": "Install failed",
   "Installing": "Installing, please wait......",
   "InstallToolTip": "Install the app",
-  "InstallValue": "{0}% Installed",
+  "InstalledValue": "{0}% Installed",
   "LearnMore": "Learn more",
   "OpenFolder": "Open folder",
   "OpenFolderToolTip": "Open the folder for default downloads",

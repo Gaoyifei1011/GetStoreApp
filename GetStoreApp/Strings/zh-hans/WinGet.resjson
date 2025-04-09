@@ -67,7 +67,7 @@
   "TaskManager": "任务管理",
   "TotalFileSizeToolTip": "总大小：",
   "UnInstall": "卸载",
-  "Unknown": "未知",
+  "Unknown": "[未知]",
   "Update": "升级",
   "UpgradableApps": "可升级应用",
   "UpgradableAppsCountEmpty": "没有可升级的应用",

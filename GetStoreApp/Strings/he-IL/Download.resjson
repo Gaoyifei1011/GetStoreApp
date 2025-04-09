@@ -40,7 +40,7 @@
   "InstallError": "התקנה נכשלה",
   "Installing": "מתקין, אנא המתן......",
   "InstallToolTip": "התקן את האפליקציה",
-  "InstallValue": "{0}% הותקן",
+  "InstalledValue": "{0}% הותקן",
   "LearnMore": "למד עוד",
   "OpenFolder": "פתח תיקיה",
   "OpenFolderToolTip": "פתח את תיקית ברירת המחדל להורדות",

@@ -86,7 +86,7 @@
   "SortToolTip": "按照规则进行排序",
   "SortWay": "排序方式",
   "UnInstall": "卸载",
-  "Unknown": "未知",
+  "Unknown": "[未知]",
   "Version": "应用版本",
   "VersionToolTip": "版本：",
   "VertifyIsOK": "是否完整",

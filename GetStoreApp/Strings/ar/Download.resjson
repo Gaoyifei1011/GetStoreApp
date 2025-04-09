@@ -40,7 +40,7 @@
   "InstallError": "فشل التثبيت",
   "Installing": "جارٍ التثبيت، يرجى الانتظار......",
   "InstallToolTip": "تثبيت التطبيق",
-  "InstallValue": "{0}% تم تثبيته",
+  "InstalledValue": "{0}% تم تثبيته",
   "LearnMore": "تعرف على المزيد",
   "OpenFolder": "فتح المجلد",
   "OpenFolderToolTip": "فتح المجلد الافتراضي للتنزيلات",

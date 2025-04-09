@@ -87,7 +87,7 @@
   "SortWay": "Sort way",
   "Title": "Package manager",
   "UnInstall": "Uninstall",
-  "Unknown": "Unknown",
+  "Unknown": "[Unknown]",
   "Version": "Package version",
   "VersionToolTip": "Version:",
   "VertifyIsOk": "Is intact",

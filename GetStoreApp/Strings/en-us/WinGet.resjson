@@ -67,7 +67,7 @@
   "TaskManager": "Task manager",
   "TotalFileSizeToolTip": "Total size:",
   "UnInstall": "Uninstall",
-  "Unknown": "Unknown",
+  "Unknown": "[Unknown]",
   "Update": "Update",
   "UpgradableApps": "Upgradable apps",
   "UpgradableAppsCountEmpty": "There is no upgradeable apps",
