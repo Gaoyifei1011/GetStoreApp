@@ -27,10 +27,10 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsControl : Grid, INotifyPropertyChanged
     {
+        private readonly string InstalledAppsCountInfo = ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo");
+        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
         private bool isInitialized;
         private PackageManager installedAppsManager;
-
-        private string InstalledAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo");
 
         private bool _isLoadedCompleted;
 
@@ -150,8 +150,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
+                        // TODO：添加修复操作 RepairOptions
+                        // TODO：添加 PackageManagerSettings
                         UninstallResult unInstallResult = await installedAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, new()
                         {
+                            // TODO：未完成
                             PackageUninstallMode = PackageUninstallMode.Interactive,
                             PackageUninstallScope = PackageUninstallScope.Any
                         });
@@ -345,12 +348,13 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 try
                 {
-                    PackageCatalogReference searchCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
+                    PackageCatalogReference packageCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
+                    ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
 
-                    if ((await searchCatalogReference.ConnectAsync()).PackageCatalog is PackageCatalog installedCatalog)
+                    if (connectResult.Status is ConnectResultStatus.Ok)
                     {
                         FindPackagesOptions findPackagesOptions = new();
-                        FindPackagesResult findResult = await installedCatalog.FindPackagesAsync(findPackagesOptions);
+                        FindPackagesResult findResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
 
                         IReadOnlyList<MatchResult> list = findResult.Matches;
 
@@ -394,9 +398,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     installedAppsList.Add(new InstalledAppsModel()
                                     {
                                         AppID = matchItem.CatalogPackage.InstalledVersion.Id,
-                                        AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.DisplayName,
-                                        AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
-                                        AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
+                                        AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? Unknown : matchItem.CatalogPackage.InstalledVersion.DisplayName,
+                                        AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? Unknown : matchItem.CatalogPackage.InstalledVersion.Publisher,
+                                        AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? Unknown : matchItem.CatalogPackage.InstalledVersion.Version,
                                     });
                                 }
                             }
@@ -408,9 +412,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                                 installedAppsList.Add(new InstalledAppsModel()
                                 {
                                     AppID = matchItem.CatalogPackage.InstalledVersion.Id,
-                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.DisplayName,
-                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
-                                    AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
+                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.DisplayName) ? Unknown : matchItem.CatalogPackage.InstalledVersion.DisplayName,
+                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? Unknown : matchItem.CatalogPackage.InstalledVersion.Publisher,
+                                    AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? Unknown : matchItem.CatalogPackage.InstalledVersion.Version,
                                 });
                             }
                         }

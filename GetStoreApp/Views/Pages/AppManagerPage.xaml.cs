@@ -41,17 +41,13 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppManagerPage : Page, INotifyPropertyChanged
     {
+        private readonly string Unknown = ResourceService.GetLocalized("AppManager/Unknown");
+        private readonly string Yes = ResourceService.GetLocalized("AppManager/Yes");
+        private readonly string No = ResourceService.GetLocalized("AppManager/No");
+        private readonly string PackageCountInfo = ResourceService.GetLocalized("AppManager/PackageCountInfo");
         private bool isInitialized;
         private bool needToRefreshData;
         private readonly PackageManager packageManager = new();
-
-        private string Unknown { get; } = ResourceService.GetLocalized("AppManager/Unknown");
-
-        private string Yes { get; } = ResourceService.GetLocalized("AppManager/Yes");
-
-        private string No { get; } = ResourceService.GetLocalized("AppManager/No");
-
-        private string PackageCountInfo { get; } = ResourceService.GetLocalized("AppManager/PackageCountInfo");
 
         private int _selectedIndex;
 

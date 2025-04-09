@@ -28,26 +28,26 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
-        private static readonly string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
-        private static readonly string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
-        private static readonly string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
-        private static readonly string Downloading = ResourceService.GetLocalized("AppUpdate/Downloading");
-        private static readonly string Error = ResourceService.GetLocalized("AppUpdate/Error");
-        private static readonly string Installing = ResourceService.GetLocalized("AppUpdate/Installing");
-        private static readonly string InstallingSubInformation = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
-        private static readonly string Paused = ResourceService.GetLocalized("AppUpdate/Paused");
-        private static readonly string Pending = ResourceService.GetLocalized("AppUpdate/Pending");
-        private static readonly string ReadyToDownload = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
-        private static readonly string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
-        private static readonly string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
+        private readonly string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
+        private readonly string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
+        private readonly string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
+        private readonly string Downloading = ResourceService.GetLocalized("AppUpdate/Downloading");
+        private readonly string Error = ResourceService.GetLocalized("AppUpdate/Error");
+        private readonly string Installing = ResourceService.GetLocalized("AppUpdate/Installing");
+        private readonly string InstallingSubInformation = ResourceService.GetLocalized("AppUpdate/InstallingSubInformation");
+        private readonly string Paused = ResourceService.GetLocalized("AppUpdate/Paused");
+        private readonly string Pending = ResourceService.GetLocalized("AppUpdate/Pending");
+        private readonly string ReadyToDownload = ResourceService.GetLocalized("AppUpdate/ReadyToDownload");
+        private readonly string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
+        private readonly string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
+        private readonly string AppUpdateCountInfo = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
+        private readonly string AppUpdateSuccessfully = ResourceService.GetLocalized("Notification/AppUpdateSuccessfully");
 
         private readonly AppInstallManager appInstallManager = new();
         private readonly PackageManager packageManager = new();
 
         private readonly Lock appinstallingLock = new();
         private readonly Dictionary<string, AppInstallItem> AppInstallingDict = [];
-
-        private string AppUpdateCountInfo { get; } = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
 
         private bool _isInitialized;
 
@@ -418,7 +418,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         AppNotificationBuilder appNotificationBuilder = new();
                         appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/AppUpdateSuccessfully"), appUpdateItem.DisplayName));
+                        appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfully, appUpdateItem.DisplayName));
                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                     }
 
@@ -502,7 +502,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取应用安装的描述信息
         /// </summary>
-        private static string GetInstallInformation(AppInstallState appInstallState, AppInstallStatus appInstallStatus)
+        private string GetInstallInformation(AppInstallState appInstallState, AppInstallStatus appInstallStatus)
         {
             return appInstallState switch
             {

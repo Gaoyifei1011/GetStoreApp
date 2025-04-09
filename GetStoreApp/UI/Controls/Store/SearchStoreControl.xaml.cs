@@ -27,7 +27,7 @@ namespace GetStoreApp.UI.Controls.Store
     [GeneratedBindableCustomProperty]
     public sealed partial class SearchStoreControl : StackPanel, INotifyPropertyChanged
     {
-        private string SearchStoreCountInfo { get; } = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
+        private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
 
         private bool _isNotSearchingStore = true;
 

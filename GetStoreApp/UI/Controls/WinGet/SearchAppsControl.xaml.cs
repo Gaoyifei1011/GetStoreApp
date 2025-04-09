@@ -34,12 +34,12 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class SearchAppsControl : Grid, INotifyPropertyChanged
     {
+        private readonly string SearchedAppsCountInfo = ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo");
+        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
         private bool isInitialized;
         private PackageManager searchAppsManager;
         private string cachedSearchText;
         private WinGetPage WinGetInstance;
-
-        private string SearchedAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo");
 
         private bool _notSearched = true;
 
@@ -592,6 +592,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 try
                 {
+                    // TODO：优化 WinGet 源设置
                     IReadOnlyList<PackageCatalogReference> packageCatalogsList = searchAppsManager.GetPackageCatalogs();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
 
@@ -600,24 +601,29 @@ namespace GetStoreApp.UI.Controls.WinGet
                         PackageCatalogReference catalogReference = packageCatalogsList[index];
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
-                    PackageCatalogReference catalogRef = searchAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
 
-                    if ((await catalogRef.ConnectAsync()).PackageCatalog is PackageCatalog searchCatalog)
+                    PackageCatalogReference packageCatalogReference = searchAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                    ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
+
+                    if (connectResult.Status is ConnectResultStatus.Ok)
                     {
                         FindPackagesOptions findPackagesOptions = new();
-                        // 根据应用的名称寻找符合条件的结果
-                        PackageMatchFilter nameMatchFilter = new()
+
+                        // TODO：添加搜索过滤选项设置
+                        PackageMatchFilter packageMatchFilter = new()
                         {
                             Field = PackageMatchField.Name,
                             Option = PackageFieldMatchOption.ContainsCaseInsensitive,
                             Value = cachedSearchText
                         };
-                        findPackagesOptions.Filters.Add(nameMatchFilter);
-                        FindPackagesResult findResult = await searchCatalog.FindPackagesAsync(findPackagesOptions);
 
-                        for (int index = 0; index < findResult.Matches.Count; index++)
+                        findPackagesOptions.Filters.Add(packageMatchFilter);
+
+                        FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
+
+                        for (int index = 0; index < findPackagesResult.Matches.Count; index++)
                         {
-                            MatchResultList.Add(findResult.Matches[index]);
+                            MatchResultList.Add(findPackagesResult.Matches[index]);
                         }
                     }
                 }
@@ -654,12 +660,13 @@ namespace GetStoreApp.UI.Controls.WinGet
                                         break;
                                     }
                                 }
+
                                 searchAppsList.Add(new SearchAppsModel()
                                 {
                                     AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) || matchItem.CatalogPackage.DefaultInstallVersion.DisplayName.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) || matchItem.CatalogPackage.DefaultInstallVersion.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
-                                    AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                    AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) || matchItem.CatalogPackage.DefaultInstallVersion.DisplayName.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                    AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) || matchItem.CatalogPackage.DefaultInstallVersion.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
+                                    AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.Version,
                                     IsInstalling = isInstalling,
                                 });
                             }

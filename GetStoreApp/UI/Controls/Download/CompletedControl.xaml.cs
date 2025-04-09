@@ -37,10 +37,9 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class CompletedControl : Grid, INotifyPropertyChanged
     {
+        private readonly string CompletedCountInfo = ResourceService.GetLocalized("Download/CompletedCountInfo");
         private bool isInitialized;
         private PackageManager packageManager;
-
-        private string CompletedCountInfo { get; } = ResourceService.GetLocalized("Download/CompletedCountInfo");
 
         private bool _isSelectMode;
 

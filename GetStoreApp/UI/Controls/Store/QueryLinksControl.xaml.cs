@@ -37,13 +37,12 @@ namespace GetStoreApp.UI.Controls.Store
     [GeneratedBindableCustomProperty]
     public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
     {
+        private readonly string QueryLinksCountInfo = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
+        private readonly string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
         private readonly Lock queryLinksLock = new();
 
         private bool isInitialized;
         private string sampleLink;
-        private readonly string sampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
-
-        private string QueryLinksCountInfo { get; } = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
 
         private TypeModel _selectedType;
 
@@ -450,7 +449,7 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 isInitialized = true;
                 sampleLink = SampleLinkList[0];
-                LinkPlaceHolderText = sampleTitle + sampleLink;
+                LinkPlaceHolderText = SampleTitle + sampleLink;
 
                 HistoryStorageService.QueryLinksCleared += () =>
                 {
@@ -496,7 +495,7 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 SelectedType = TypeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
-                LinkPlaceHolderText = sampleTitle + sampleLink;
+                LinkPlaceHolderText = SampleTitle + sampleLink;
 
                 LinkText = string.Empty;
             }

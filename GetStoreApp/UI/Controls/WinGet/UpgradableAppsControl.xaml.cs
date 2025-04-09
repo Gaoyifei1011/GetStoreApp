@@ -34,11 +34,11 @@ namespace GetStoreApp.UI.Controls.WinGet
     /// </summary>
     public sealed partial class UpgradableAppsControl : Grid, INotifyPropertyChanged
     {
+        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
+        private readonly string UpgradableAppsCountInfo = ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo");
         private bool isInitialized;
         private PackageManager upgradableAppsManager;
         private WinGetPage WinGetInstance;
-
-        private string UpgradableAppsCountInfo { get; } = ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo");
 
         private bool _isLoadedCompleted;
 
@@ -587,6 +587,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 try
                 {
+                    // TODO：优化 WinGet 源设置
                     IReadOnlyList<PackageCatalogReference> packageCatalogsList = upgradableAppsManager.GetPackageCatalogs();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
                     PackageCatalogReference searchCatalogReference = upgradableAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
@@ -650,10 +651,10 @@ namespace GetStoreApp.UI.Controls.WinGet
                             upgradableAppsList.Add(new UpgradableAppsModel()
                             {
                                 AppID = matchItem.CatalogPackage.DefaultInstallVersion.Id,
-                                AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
-                                AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Publisher,
-                                AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.InstalledVersion.Version,
-                                AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? ResourceService.GetLocalized("WinGet/Unknown") : matchItem.CatalogPackage.DefaultInstallVersion.Version,
+                                AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.DisplayName) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.DisplayName,
+                                AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher) ? Unknown : matchItem.CatalogPackage.InstalledVersion.Publisher,
+                                AppCurrentVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Version) ? Unknown : matchItem.CatalogPackage.InstalledVersion.Version,
+                                AppNewestVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.Version,
                                 IsUpgrading = isUpgrading
                             });
                         }
