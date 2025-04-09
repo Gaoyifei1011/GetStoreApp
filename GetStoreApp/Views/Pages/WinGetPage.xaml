@@ -22,7 +22,7 @@
         <XamlUICommand x:Name="CancelInstallCommand" ExecuteRequested="{x:Bind OnCancelInstallExecuteRequested}" />
     </Page.Resources>
 
-    <Grid Padding="0">
+    <Grid Margin="0,10,0,0" Padding="0">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

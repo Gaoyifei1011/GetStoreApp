@@ -18,7 +18,7 @@
 
         <Grid
             Grid.Row="0"
-            Margin="20,0,30,3"
+            Margin="20,10,30,3"
             ColumnSpacing="5">
 
             <Grid.ColumnDefinitions>
