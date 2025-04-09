@@ -262,6 +262,7 @@
     <None Remove="UI\Dialogs\Download\InstallingNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
+    <None Remove="UI\Dialogs\Settings\WinGetSourceEditDialog.xaml" />
     <None Remove="UI\Dialogs\WinGet\RebootDialog.xaml" />
     <None Remove="UI\TeachingTips\MainDataCopyTip.xaml" />
     <None Remove="UI\TeachingTips\OperationResultTip.xaml" />
@@ -297,6 +298,7 @@
     <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="UI\Dialogs\Settings\WinGetSourceEditDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\WinGet\RebootDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\MainDataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\OperationResultTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
