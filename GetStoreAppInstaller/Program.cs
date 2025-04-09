@@ -18,6 +18,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
@@ -94,6 +95,11 @@ namespace GetStoreAppInstaller
                 if (RuntimeHelper.IsElevated)
                 {
                     string[] argumentsArray = Environment.GetCommandLineArgs();
+
+                    if (argumentsArray.Length > 0 && Path.GetExtension(argumentsArray[0]).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+                    {
+                        argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
+                    }
 
                     if (argumentsArray.Length is 3 && argumentsArray[2] is "--elevated")
                     {

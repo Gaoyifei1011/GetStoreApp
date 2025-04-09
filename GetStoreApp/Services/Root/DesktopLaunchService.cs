@@ -34,9 +34,13 @@ namespace GetStoreApp.Services.Root
             {
                 List<string> argumentsList = [];
                 List<string> dataList = [];
-
                 string[] argumentsArray = Environment.GetCommandLineArgs();
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
+
+                if (argumentsArray.Length > 0 && Path.GetExtension(argumentsArray[0]).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+                {
+                    argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
+                }
 
                 foreach (string arguments in argumentsArray)
                 {

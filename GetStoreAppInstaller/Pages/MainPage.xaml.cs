@@ -1116,8 +1116,13 @@ namespace GetStoreAppInstaller.Pages
             // 正常启动
             if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
             {
-                string executableFileName = Path.GetFileName(Environment.ProcessPath);
                 string[] argumentsArray = Environment.GetCommandLineArgs();
+                string executableFileName = Path.GetFileName(Environment.ProcessPath);
+
+                if (argumentsArray.Length > 0 && Path.GetExtension(argumentsArray[0]).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+                {
+                    argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
+                }
 
                 if (argumentsArray.Length >= 2 && argumentsArray[0].Contains(executableFileName))
                 {
