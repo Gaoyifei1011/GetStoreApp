@@ -89,10 +89,12 @@
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Enabled">
 
-            <Grid Padding="30,0">
-                <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
-                <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
-            </Grid>
+            <Border>
+                <Grid Padding="30,0">
+                    <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
+                    <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
+                </Grid>
+            </Border>
         </ScrollView>
     </Grid>
 </Page>
