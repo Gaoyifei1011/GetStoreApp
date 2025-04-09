@@ -745,6 +745,10 @@ namespace GetStoreApp.Views.Windows
             {
                 appManagerPage.BackToAppList();
             }
+            else if (WindowFrame.Content is SettingsPage settingsPage && settingsPage.IsWinGetConfigMode)
+            {
+                settingsPage.IsWinGetConfigMode = false;
+            }
             else
             {
                 NavigationFrom();

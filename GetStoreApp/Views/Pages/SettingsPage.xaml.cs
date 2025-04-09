@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Controls.Settings;
@@ -10,6 +11,7 @@ using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
+using Microsoft.Management.Deployment;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -45,6 +47,12 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
         private readonly UISettings uiSettings = new();
+        private readonly PackageManager packageManager;
+        private readonly string None = ResourceService.GetLocalized("Settings/None");
+        private readonly string Yes = ResourceService.GetLocalized("Settings/Yes");
+        private readonly string No = ResourceService.GetLocalized("Settings/No");
+        private readonly string Trusted = ResourceService.GetLocalized("Settings/Trusted");
+        private readonly string Distrusted = ResourceService.GetLocalized("Settings/Distrusted");
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
         private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
@@ -187,6 +195,38 @@ namespace GetStoreApp.Views.Pages
                 {
                     _notificationEnabled = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotificationEnabled)));
+                }
+            }
+        }
+
+        private bool _isWinGetConfigMode;
+
+        public bool IsWinGetConfigMode
+        {
+            get { return _isWinGetConfigMode; }
+
+            set
+            {
+                if (!Equals(_isWinGetConfigMode, value))
+                {
+                    _isWinGetConfigMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsWinGetConfigMode)));
+                }
+            }
+        }
+
+        private bool _isLoadedCompleted;
+
+        public bool IsLoadedCompleted
+        {
+            get { return _isLoadedCompleted; }
+
+            private set
+            {
+                if (!Equals(_isLoadedCompleted, value))
+                {
+                    _isLoadedCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
                 }
             }
         }
@@ -465,6 +505,8 @@ namespace GetStoreApp.Views.Pages
 
         private ObservableCollection<StoreRegionModel> StoreRegionCollection { get; } = [];
 
+        private ObservableCollection<WinGetSourceModel> WinGetSourceCollection { get; } = [];
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public SettingsPage()
@@ -520,6 +562,11 @@ namespace GetStoreApp.Views.Pages
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
             NotificationService.PropertyChanged += OnServicePropertyChanged;
             StoreRegionService.PropertyChanged += OnServicePropertyChanged;
+
+            if (WinGetConfigService.IsWinGetInstalled)
+            {
+                packageManager = new PackageManager();
+            }
         }
 
         #region 第一部分：重写父类事件
@@ -536,6 +583,20 @@ namespace GetStoreApp.Views.Pages
         #endregion 第一部分：重写父类事件
 
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
+
+        /// <summary>
+        /// 编辑 WinGet 数据源
+        /// </summary>
+        private void OnEditExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+        }
+
+        /// <summary>
+        /// 移除数据源
+        /// </summary>
+        private void OnRemoveExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+        }
 
         /// <summary>
         /// 修改应用语言
@@ -727,7 +788,7 @@ namespace GetStoreApp.Views.Pages
             {
                 try
                 {
-                    int dwRmStatus = RstrtmgrLibrary.RmStartSession(out uint dwSessionHandle, 0, Guid.Empty.ToString());
+                    int dwRmStatus = RstrtmgrLibrary.RmStartSession(out uint dwSessionHandle, 0, GuidHelper.Empty.ToString());
 
                     if (dwRmStatus is 0)
                     {
@@ -793,6 +854,20 @@ namespace GetStoreApp.Views.Pages
             {
                 ShellMenuService.SetShellMenuValue(toggleSwitch.IsOn);
                 ShellMenuValue = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 配置 WinGet 数据源
+        /// </summary>
+        private async void OnConfigurationClicked(object sender, RoutedEventArgs args)
+        {
+            if (!IsWinGetConfigMode && WinGetConfigService.IsWinGetInstalled && packageManager is not null)
+            {
+                IsWinGetConfigMode = true;
+                IsLoadedCompleted = false;
+                await InitializeWinGetSourceDataAsync();
+                IsLoadedCompleted = true;
             }
         }
 
@@ -1164,6 +1239,23 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        /// <summary>
+        /// 新建数据源
+        /// </summary>
+        private void OnCreateNewSourceClicked(object sender, RoutedEventArgs args)
+        {
+        }
+
+        /// <summary>
+        /// 刷新
+        /// </summary>
+        private async void OnRefreshClicked(object sender, RoutedEventArgs args)
+        {
+            IsLoadedCompleted = false;
+            await InitializeWinGetSourceDataAsync();
+            IsLoadedCompleted = true;
+        }
+
         #endregion 第三部分：设置页面——挂载的事件
 
         #region 第四部分：自定义事件
@@ -1238,6 +1330,70 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第四部分：自定义事件
+
+        /// <summary>
+        /// 初始化 WinGet 数据源信息
+        /// </summary>
+        private async Task InitializeWinGetSourceDataAsync()
+        {
+            WinGetSourceCollection.Clear();
+
+            List<WinGetSourceModel> wingetSourceList = await Task.Run(async () =>
+            {
+                List<WinGetSourceModel> wingetSourceList = [];
+                IReadOnlyList<PackageCatalogReference> packageCatalogReferenceList = packageManager.GetPackageCatalogs();
+
+                for (int index = 0; index < packageCatalogReferenceList.Count; index++)
+                {
+                    PackageCatalogReference packageCatalogReference = packageCatalogReferenceList[index];
+
+                    PackageCatalogInformation packageCatalogInformation = new()
+                    {
+                        Name = packageCatalogReference.Info.Name,
+                        Arguments = packageCatalogReference.Info.Argument,
+                        Explicit = packageCatalogReference.Info.Explicit,
+                        TrustLevel = packageCatalogReference.Info.TrustLevel,
+                        Id = packageCatalogReference.Info.Id,
+                        LastUpdateTime = packageCatalogReference.Info.LastUpdateTime,
+                        Origin = packageCatalogReference.Info.Origin,
+                        Type = packageCatalogReference.Info.Type,
+                        AcceptSourceAgreements = packageCatalogReference.AcceptSourceAgreements,
+                        AdditionalPackageCatalogArguments = packageCatalogReference.AdditionalPackageCatalogArguments,
+                        AuthenticationType = packageCatalogReference.AuthenticationInfo.AuthenticationType,
+                        AuthenticationAccount = packageCatalogReference.AuthenticationArguments is not null && !string.IsNullOrEmpty(packageCatalogReference.AuthenticationArguments.AuthenticationAccount) ? packageCatalogReference.AuthenticationArguments.AuthenticationAccount : string.Empty,
+                        PackageCatalogBackgroundUpdateInterval = packageCatalogReference.PackageCatalogBackgroundUpdateInterval,
+                    };
+
+                    WinGetSourceModel winGetSourceItem = new()
+                    {
+                        PackageCatalogInformation = packageCatalogInformation,
+                        Name = packageCatalogInformation.Name,
+                        Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? None : packageCatalogReference.Info.Argument,
+                        Explicit = packageCatalogInformation.Explicit ? Yes : No,
+                        TrustLevel = packageCatalogInformation.TrustLevel is PackageCatalogTrustLevel.Trusted ? Trusted : Distrusted,
+                        Id = packageCatalogInformation.Id,
+                        LastUpdateTime = Convert.ToString(packageCatalogInformation.LastUpdateTime),
+                        Origin = Convert.ToString(packageCatalogInformation.Origin),
+                        Type = packageCatalogInformation.Type,
+                        AcceptSourceAgreements = Convert.ToString(packageCatalogInformation.AcceptSourceAgreements),
+                        AdditionalPackageCatalogArguments = packageCatalogInformation.AdditionalPackageCatalogArguments,
+                        AuthenticationType = Convert.ToString(packageCatalogInformation.AuthenticationType),
+                        AuthenticationAccount = packageCatalogInformation.AuthenticationAccount,
+                        PackageCatalogBackgroundUpdateInterval = Convert.ToString(packageCatalogInformation.PackageCatalogBackgroundUpdateInterval)
+                    };
+
+                    wingetSourceList.Add(winGetSourceItem);
+                }
+
+                await Task.Delay(500);
+                return wingetSourceList;
+            });
+
+            foreach (WinGetSourceModel wingetSourceItem in wingetSourceList)
+            {
+                WinGetSourceCollection.Add(wingetSourceItem);
+            }
+        }
 
         private string LocalizeDisplayNumber(KeyValuePair<string, string> selectedBackdrop)
         {
