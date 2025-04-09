@@ -1384,7 +1384,7 @@ namespace GetStoreAppInstaller.Pages
                                 DependencyName = file.Name,
                                 DependencyVersion = dependencyAppInformation.Version is not null ? dependencyAppInformation.Version : new Version(),
                                 DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? unknown : dependencyAppInformation.PublisherDisplayName,
-                                DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? Guid.NewGuid().ToString() : dependencyAppInformation.PackageFullName,
+                                DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? GuidHelper.CreateNewGuid().ToString() : dependencyAppInformation.PackageFullName,
                                 DependencyPath = file.Path
                             });
                         }
@@ -1425,7 +1425,7 @@ namespace GetStoreAppInstaller.Pages
                                 DependencyName = Path.GetFileName(fileItem),
                                 DependencyVersion = new Version(),
                                 DependencyPublisher = string.Empty,
-                                DependencyFullName = Guid.NewGuid().ToString(),
+                                DependencyFullName = GuidHelper.CreateNewGuid().ToString(),
                                 DependencyPath = fileItem
                             });
                         }

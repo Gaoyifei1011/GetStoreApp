@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 
 // 抑制 IDE0060 警告
@@ -25,9 +26,8 @@ namespace GetStoreApp.UI.Controls.Download
     /// </summary>
     public sealed partial class DownloadingControl : Grid, INotifyPropertyChanged
     {
+        private readonly string DownloadingCountInfo = ResourceService.GetLocalized("Download/DownloadingCountInfo");
         private bool isInitialized;
-
-        private string DownloadingCountInfo { get; } = ResourceService.GetLocalized("Download/DownloadingCountInfo");
 
         private bool _isSelectMode;
 
@@ -63,7 +63,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             Guid downloadID = (Guid)args.Parameter;
 
-            if (downloadID != Guid.Empty)
+            if (downloadID != GuidHelper.Empty)
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
@@ -85,7 +85,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             Guid downloadID = (Guid)args.Parameter;
 
-            if (downloadID != Guid.Empty)
+            if (downloadID != GuidHelper.Empty)
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
@@ -107,7 +107,7 @@ namespace GetStoreApp.UI.Controls.Download
         {
             Guid downloadID = (Guid)args.Parameter;
 
-            if (downloadID != Guid.Empty)
+            if (downloadID != GuidHelper.Empty)
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {

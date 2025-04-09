@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 
@@ -38,7 +39,7 @@ namespace GetStoreAppWebView.Services.Root
                     LoggingSession exceptionSession = new("Exception log session");
                     LoggingChannel exceptionChannel = new("Exception log channel", channelOptions);
                     LoggingFields exceptionFields = new();
-                    Guid exceptionGuid = Guid.NewGuid();
+                    Guid exceptionGuid = GuidHelper.CreateNewGuid();
                     LoggingOptions exceptionOptions = new()
                     {
                         ActivityId = exceptionGuid,
@@ -88,7 +89,7 @@ namespace GetStoreAppWebView.Services.Root
                     LoggingSession exceptionSession = new("Exception log session");
                     LoggingChannel exceptionChannel = new("Exception log channel", channelOptions);
                     LoggingFields exceptionFields = new();
-                    Guid exceptionGuid = Guid.NewGuid();
+                    Guid exceptionGuid = GuidHelper.CreateNewGuid();
                     LoggingOptions exceptionOptions = new()
                     {
                         ActivityId = exceptionGuid,

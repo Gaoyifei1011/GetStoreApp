@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
@@ -40,7 +41,7 @@ namespace GetStoreApp.Services.Root
                     LoggingSession httpRequestSession = new("Http request log session");
                     LoggingChannel httpRequestChannel = new("Http request log channel", channelOptions);
                     LoggingFields httpRequestFields = new();
-                    Guid httpRequestGuid = Guid.NewGuid();
+                    Guid httpRequestGuid = GuidHelper.CreateNewGuid();
                     LoggingOptions httpRequestOptions = new()
                     {
                         ActivityId = httpRequestGuid,
@@ -89,7 +90,7 @@ namespace GetStoreApp.Services.Root
                     LoggingSession exceptionSession = new("Exception log session");
                     LoggingChannel exceptionChannel = new("Exception log channel", channelOptions);
                     LoggingFields exceptionFields = new();
-                    Guid exceptionGuid = Guid.NewGuid();
+                    Guid exceptionGuid = GuidHelper.CreateNewGuid();
                     LoggingOptions exceptionOptions = new()
                     {
                         ActivityId = exceptionGuid,
