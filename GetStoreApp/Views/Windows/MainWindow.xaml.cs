@@ -10,6 +10,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Common;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
+using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Comctl32;
 using GetStoreApp.WindowsAPI.PInvoke.User32;
 using GetStoreApp.WindowsAPI.PInvoke.Uxtheme;
@@ -42,6 +43,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.StartScreen;
+using WinRT;
 using WinRT.Interop;
 
 // 抑制 IDE0060 警告
@@ -59,6 +61,7 @@ namespace GetStoreApp.Views.Windows
         private readonly SUBCLASSPROC mainWindowSubClassProc;
         private bool isDialogOpening;
         private ContentIsland contentIsland;
+        private DesktopSiteBridge desktopSiteBridge;
         private InputKeyboardSource inputKeyboardSource;
 
         public new static MainWindow Current { get; private set; }
@@ -265,6 +268,11 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnAppWindowChanged(AppWindow sender, AppWindowChangedEventArgs args)
         {
+            if (desktopSiteBridge is not null && !desktopSiteBridge.IsClosed)
+            {
+                desktopSiteBridge.MoveAndResize(new RectInt32(0, 0, AppWindow.ClientSize.Width, AppWindow.ClientSize.Height));
+            }
+
             // 窗口位置发生变化
             if (args.DidPositionChange)
             {
@@ -555,6 +563,8 @@ namespace GetStoreApp.Views.Windows
         private async void OnLoaded(object sender, RoutedEventArgs args)
         {
             contentIsland = Content.XamlRoot.ContentIsland;
+            contentIsland.As<IContentIslandPartner>().Get_TEMP_DesktopSiteBridge(out IntPtr desktopSiteBridgePtr);
+            desktopSiteBridge = DesktopSiteBridge.FromAbi(desktopSiteBridgePtr);
             contentIsland.Environment.SettingChanged += OnSettingChanged;
             inputKeyboardSource = InputKeyboardSource.GetForIsland(contentIsland);
             inputKeyboardSource.SystemKeyDown += OnSystemKeyDown;
