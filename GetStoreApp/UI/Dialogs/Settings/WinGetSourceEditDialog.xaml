@@ -6,8 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+    Padding="0"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
@@ -18,4 +19,259 @@
     RequestedTheme="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).RequestedTheme, Mode=OneWay}"
     SecondaryButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/Cancel')}"
     Style="{StaticResource DefaultContentDialogStyle}"
-    mc:Ignorable="d" />
+    mc:Ignorable="d">
+
+    <ContentDialog.Resources>
+        <x:Double x:Key="ContentDialogMinWidth">600</x:Double>
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+    </ContentDialog.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollView
+            x:Name="SettingsScroll"
+            Grid.Row="1"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Enabled">
+
+            <Border>
+                <StackPanel Spacing="3">
+                    <Grid
+                        Height="61"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/SourceName')}" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Width="280"
+                            VerticalAlignment="Center"
+                            IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
+                            Tag="SourceName"
+                            Text="{x:Bind SourceName, Mode=OneWay}"
+                            TextChanged="{x:Bind OnTextChanged}" />
+                    </Grid>
+
+                    <Grid
+                        Height="61"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/SourceUri')}" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Width="280"
+                            VerticalAlignment="Center"
+                            IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
+                            Tag="SourceUri"
+                            Text="{x:Bind SourceUri, Mode=OneWay}"
+                            TextChanged="{x:Bind OnTextChanged}" />
+                    </Grid>
+
+                    <Grid
+                        Height="61"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CustomHeader')}" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Width="280"
+                            VerticalAlignment="Center"
+                            IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
+                            Tag="CustomHeader"
+                            Text="{x:Bind CustomHeader, Mode=OneWay}"
+                            TextChanged="{x:Bind OnTextChanged}" />
+                    </Grid>
+
+                    <Grid
+                        Height="61"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/SourceType')}" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Width="280"
+                            VerticalAlignment="Center"
+                            IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
+                            Tag="SourceType"
+                            Text="{x:Bind SourceType, Mode=OneWay}"
+                            TextChanged="{x:Bind OnTextChanged}" />
+                    </Grid>
+
+                    <Grid
+                        Height="61"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/Explicit')}" />
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExplicitOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Explicit), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/ExplicitOnContent')}"
+                                Visibility="{x:Bind Explicit, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-10,0"
+                                IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
+                                IsOn="{x:Bind Explicit, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnExplicitToggled}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid
+                        Height="61"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CatalogTrustLevel')}" />
+
+                        <DropDownButton
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind SelectedCatalogTrustLevel.Value, Mode=OneWay}"
+                            IsEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnCatalogTrustLevelClicked}"
+                                        GroupName="CatalogTrustLevel"
+                                        IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[0].Key), Mode=OneWay}"
+                                        Tag="0"
+                                        Text="{x:Bind CatalogTrustLevelList[0].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnCatalogTrustLevelClicked}"
+                                        GroupName="CatalogTrustLevel"
+                                        IsChecked="{x:Bind x:Object.Equals(SelectedCatalogTrustLevel.Key, CatalogTrustLevelList[1].Key), Mode=OneWay}"
+                                        Tag="1"
+                                        Text="{x:Bind CatalogTrustLevelList[1].Value}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <MenuFlyoutSeparator Visibility="{x:Bind HasSaved, Mode=OneWay}" />
+
+                    <StackPanel
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="10"
+                        Visibility="{x:Bind IsSaving, Mode=OneWay}">
+
+                        <ProgressRing IsActive="{x:Bind IsSaving, Mode=OneWay}" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinGetDataSourceSavingContent')}" />
+                    </StackPanel>
+
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                        Text="{x:Bind SaveFailedContent, Mode=OneWay}"
+                        Visibility="{x:Bind IsSaved, Mode=OneWay}" />
+                </StackPanel>
+            </Border>
+        </ScrollView>
+    </Grid>
+</ContentDialog>
