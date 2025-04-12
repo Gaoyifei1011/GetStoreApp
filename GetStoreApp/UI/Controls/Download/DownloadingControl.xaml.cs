@@ -62,9 +62,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Guid downloadID = (Guid)args.Parameter;
-
-            if (downloadID != GuidHelper.Empty)
+            if (args.Parameter is Guid downloadID && downloadID != GuidHelper.Empty)
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
@@ -84,9 +82,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Guid downloadID = (Guid)args.Parameter;
-
-            if (downloadID != GuidHelper.Empty)
+            if (args.Parameter is Guid downloadID && downloadID != GuidHelper.Empty)
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
@@ -106,9 +102,7 @@ namespace GetStoreApp.UI.Controls.Download
         /// </summary>
         private void OnPauseExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            Guid downloadID = (Guid)args.Parameter;
-
-            if (downloadID != GuidHelper.Empty)
+            if (args.Parameter is Guid downloadID && downloadID != GuidHelper.Empty)
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
