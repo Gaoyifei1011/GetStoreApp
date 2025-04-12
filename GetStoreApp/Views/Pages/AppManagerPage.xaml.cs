@@ -5,6 +5,7 @@ using GetStoreApp.Models.Controls.AppManager;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -1324,17 +1325,15 @@ namespace GetStoreApp.Views.Pages
 
                             appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
                             {
-                                                 ResourceService.GetLocalized("Notification/UWPUnInstallFailed3"),
-                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed4"), Convert.ToString(uninstallResult.ExtendedErrorCode.HResult)),
-                                                 string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed5"), uninstallResult.ErrorText)
+                                ResourceService.GetLocalized("Notification/UWPUnInstallFailed3"),
+                                string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed4"), uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown),
+                                string.Format(ResourceService.GetLocalized("Notification/UWPUnInstallFailed5"), uninstallResult.ErrorText)
                             }));
                             AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
                             openSettingsButton.Arguments.Add("action", "OpenSettings");
                             appNotificationBuilder.AddButton(openSettingsButton);
                             ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-
-                            LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode);
-
+                            LogService.WriteLog(LoggingLevel.Information, string.Format("UnInstall app {0} failed", pacakgeItem.Package.DisplayName), uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode : new Exception());
                             pacakgeItem.IsUnInstalling = false;
                             break;
                         }
