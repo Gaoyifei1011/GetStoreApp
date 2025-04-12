@@ -583,6 +583,11 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
             settingNavigationArgs = args.Parameter is not null && Enum.TryParse(Convert.ToString(args.Parameter), out AppNaviagtionArgs appNaviagtionArgs) ? appNaviagtionArgs : AppNaviagtionArgs.None;
+
+            if (IsWinGetConfigMode)
+            {
+                IsWinGetConfigMode = false;
+            }
         }
 
         #endregion 第一部分：重写父类事件

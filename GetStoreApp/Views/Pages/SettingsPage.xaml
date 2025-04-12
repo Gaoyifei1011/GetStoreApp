@@ -159,7 +159,7 @@
                                             GroupName="ThemeRadioGroup"
                                             IsChecked="{x:Bind Theme.Key.Equals(ThemeList[0].Key), Mode=OneWay}"
                                             Tag="0"
-                                            Text="{x:Bind sys:Convert.ToString(ThemeList[0].Value)}" />
+                                            Text="{x:Bind ThemeList[0].Value}" />
 
                                         <RadioMenuFlyoutItem
                                             Height="32"
@@ -168,7 +168,7 @@
                                             GroupName="ThemeRadioGroup"
                                             IsChecked="{x:Bind Theme.Key.Equals(ThemeList[1].Key), Mode=OneWay}"
                                             Tag="1"
-                                            Text="{x:Bind sys:Convert.ToString(ThemeList[1].Value)}" />
+                                            Text="{x:Bind ThemeList[1].Value}" />
 
                                         <RadioMenuFlyoutItem
                                             Height="32"
@@ -177,7 +177,7 @@
                                             GroupName="ThemeRadioGroup"
                                             IsChecked="{x:Bind Theme.Key.Equals(ThemeList[2].Key), Mode=OneWay}"
                                             Tag="2"
-                                            Text="{x:Bind sys:Convert.ToString(ThemeList[2].Value)}" />
+                                            Text="{x:Bind ThemeList[2].Value}" />
                                     </MenuFlyout>
                                 </DropDownButton.Flyout>
                             </DropDownButton>
@@ -251,7 +251,7 @@
                                             GroupName="BackdropRadioGroup"
                                             IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[0].Key), Mode=OneWay}"
                                             Tag="0"
-                                            Text="{x:Bind sys:Convert.ToString(BackdropList[0].Value)}" />
+                                            Text="{x:Bind BackdropList[0].Value}" />
 
                                         <MenuFlyoutSubItem
                                             x:Name="MicaFlyoutItem"
@@ -267,7 +267,7 @@
                                                 GroupName="BackdropRadioGroup"
                                                 IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[1].Key), Mode=OneWay}"
                                                 Tag="1"
-                                                Text="{x:Bind sys:Convert.ToString(BackdropList[1].Value)}" />
+                                                Text="{x:Bind BackdropList[1].Value}" />
 
                                             <RadioMenuFlyoutItem
                                                 Height="32"
@@ -276,7 +276,7 @@
                                                 GroupName="BackdropRadioGroup"
                                                 IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[2].Key), Mode=OneWay}"
                                                 Tag="2"
-                                                Text="{x:Bind sys:Convert.ToString(BackdropList[2].Value)}" />
+                                                Text="{x:Bind BackdropList[2].Value}" />
                                         </MenuFlyoutSubItem>
 
                                         <MenuFlyoutSubItem
@@ -293,7 +293,7 @@
                                                 GroupName="BackdropRadioGroup"
                                                 IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[3].Key), Mode=OneWay}"
                                                 Tag="3"
-                                                Text="{x:Bind sys:Convert.ToString(BackdropList[3].Value)}" />
+                                                Text="{x:Bind BackdropList[3].Value}" />
 
                                             <RadioMenuFlyoutItem
                                                 Height="32"
@@ -302,7 +302,7 @@
                                                 GroupName="BackdropRadioGroup"
                                                 IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[4].Key), Mode=OneWay}"
                                                 Tag="4"
-                                                Text="{x:Bind sys:Convert.ToString(BackdropList[4].Value)}" />
+                                                Text="{x:Bind BackdropList[4].Value}" />
 
                                             <RadioMenuFlyoutItem
                                                 Height="32"
@@ -311,7 +311,7 @@
                                                 GroupName="BackdropRadioGroup"
                                                 IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[5].Key), Mode=OneWay}"
                                                 Tag="5"
-                                                Text="{x:Bind sys:Convert.ToString(BackdropList[5].Value)}" />
+                                                Text="{x:Bind BackdropList[5].Value}" />
                                         </MenuFlyoutSubItem>
                                     </MenuFlyout>
                                 </DropDownButton.Flyout>
@@ -489,7 +489,7 @@
                                                             CommandParameter="{x:Bind}"
                                                             GroupName="LanguageRadioGroup"
                                                             IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                            Text="{x:Bind sys:Convert.ToString(LangaugeInfo.Value)}" />
+                                                            Text="{x:Bind LangaugeInfo.Value}" />
                                                     </ItemContainer>
                                                 </DataTemplate>
                                             </ItemsView.ItemTemplate>
@@ -734,7 +734,7 @@
                                             GroupName="WebKernelRadioGroup"
                                             IsChecked="{x:Bind WebKernelItem.Key.Equals(WebKernelList[0].Key), Mode=OneWay}"
                                             Tag="0"
-                                            Text="{x:Bind sys:Convert.ToString(WebKernelList[0].Value)}" />
+                                            Text="{x:Bind WebKernelList[0].Value}" />
 
                                         <RadioMenuFlyoutItem
                                             Height="32"
@@ -743,7 +743,7 @@
                                             GroupName="WebKernelRadioGroup"
                                             IsChecked="{x:Bind WebKernelItem.Key.Equals(WebKernelList[1].Key), Mode=OneWay}"
                                             Tag="1"
-                                            Text="{x:Bind sys:Convert.ToString(WebKernelList[1].Value)}" />
+                                            Text="{x:Bind WebKernelList[1].Value}" />
                                     </MenuFlyout>
                                 </DropDownButton.Flyout>
                             </DropDownButton>
@@ -807,7 +807,7 @@
                                             GroupName="QueryLinksModeRadioGroup"
                                             IsChecked="{x:Bind QueryLinksModeItem.Key.Equals(QueryLinksModeList[0].Key), Mode=OneWay}"
                                             Tag="0"
-                                            Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[0].Value)}" />
+                                            Text="{x:Bind QueryLinksModeList[0].Value}" />
 
                                         <RadioMenuFlyoutItem
                                             Height="32"
@@ -816,7 +816,7 @@
                                             GroupName="QueryLinksModeRadioGroup"
                                             IsChecked="{x:Bind QueryLinksModeItem.Key.Equals(QueryLinksModeList[1].Key), Mode=OneWay}"
                                             Tag="1"
-                                            Text="{x:Bind sys:Convert.ToString(QueryLinksModeList[1].Value)}" />
+                                            Text="{x:Bind QueryLinksModeList[1].Value}" />
                                     </MenuFlyout>
                                 </DropDownButton.Flyout>
                             </DropDownButton>
@@ -1457,7 +1457,7 @@
                                                         GroupName="WinGetInstallModeModeRadioGroup"
                                                         IsChecked="{x:Bind WinGetInstallMode.Key.Equals(WinGetInstallModeList[0].Key), Mode=OneWay}"
                                                         Tag="0"
-                                                        Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[0].Value)}" />
+                                                        Text="{x:Bind WinGetInstallModeList[0].Value}" />
 
                                                     <RadioMenuFlyoutItem
                                                         Height="32"
@@ -1466,7 +1466,7 @@
                                                         GroupName="WinGetInstallModeModeRadioGroup"
                                                         IsChecked="{x:Bind WinGetInstallMode.Key.Equals(WinGetInstallModeList[1].Key), Mode=OneWay}"
                                                         Tag="1"
-                                                        Text="{x:Bind sys:Convert.ToString(WinGetInstallModeList[1].Value)}" />
+                                                        Text="{x:Bind WinGetInstallModeList[1].Value}" />
                                                 </MenuFlyout>
                                             </DropDownButton.Flyout>
                                         </DropDownButton>
@@ -1786,7 +1786,7 @@
                                                         GroupName="DoEngineModeModeRadioGroup"
                                                         IsChecked="{x:Bind DoEngineMode.Key.Equals(DoEngineModeList[0].Key), Mode=OneWay}"
                                                         Tag="0"
-                                                        Text="{x:Bind sys:Convert.ToString(DoEngineModeList[0].Value)}" />
+                                                        Text="{x:Bind DoEngineModeList[0].Value}" />
 
                                                     <RadioMenuFlyoutItem
                                                         Height="32"
@@ -1795,7 +1795,7 @@
                                                         GroupName="DoEngineModeModeRadioGroup"
                                                         IsChecked="{x:Bind DoEngineMode.Key.Equals(DoEngineModeList[1].Key), Mode=OneWay}"
                                                         Tag="1"
-                                                        Text="{x:Bind sys:Convert.ToString(DoEngineModeList[1].Value)}" />
+                                                        Text="{x:Bind DoEngineModeList[1].Value}" />
                                                 </MenuFlyout>
                                             </DropDownButton.Flyout>
                                         </DropDownButton>
@@ -2134,7 +2134,7 @@
                                             GroupName="InstallModeModeRadioGroup"
                                             IsChecked="{x:Bind InstallMode.Key.Equals(InstallModeList[0].Key), Mode=OneWay}"
                                             Tag="0"
-                                            Text="{x:Bind sys:Convert.ToString(InstallModeList[0].Value)}" />
+                                            Text="{x:Bind InstallModeList[0].Value}" />
 
                                         <RadioMenuFlyoutItem
                                             Height="32"
@@ -2143,7 +2143,7 @@
                                             GroupName="InstallModeModeRadioGroup"
                                             IsChecked="{x:Bind InstallMode.Key.Equals(InstallModeList[1].Key), Mode=OneWay}"
                                             Tag="1"
-                                            Text="{x:Bind sys:Convert.ToString(InstallModeList[1].Value)}" />
+                                            Text="{x:Bind InstallModeList[1].Value}" />
                                     </MenuFlyout>
                                 </DropDownButton.Flyout>
                             </DropDownButton>
