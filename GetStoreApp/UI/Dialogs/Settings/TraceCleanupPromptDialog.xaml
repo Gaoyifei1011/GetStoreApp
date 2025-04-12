@@ -10,6 +10,7 @@
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/TraceCleanupTitle')}"
     BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
+    DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind converter:ValueCheckConverterHelper.IsTraceCleanupButtonEnabled(IsSelected, IsCleaning), Mode=OneWay}"
     IsSecondaryButtonEnabled="{x:Bind IsCleaning.Equals(x:False), Mode=OneWay}"
