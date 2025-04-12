@@ -26,6 +26,12 @@ namespace GetStoreApp.UI.TeachingTips
                 OperationResultFailed.Visibility = Visibility.Visible;
                 OperationResultFailed.Text = ResourceService.GetLocalized("Notification/FolderPickerFailed");
             }
+            else if (operationKind is OperationKind.InstallingNotify)
+            {
+                OperationResultSuccess.Visibility = Visibility.Collapsed;
+                OperationResultFailed.Visibility = Visibility.Visible;
+                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/InstallingNotify");
+            }
             else if (operationKind is OperationKind.LanguageChange)
             {
                 OperationResultSuccess.Visibility = Visibility.Visible;
@@ -38,17 +44,35 @@ namespace GetStoreApp.UI.TeachingTips
                 OperationResultFailed.Visibility = Visibility.Visible;
                 OperationResultFailed.Text = ResourceService.GetLocalized("Notification/NotElevated");
             }
-            else if (operationKind is OperationKind.InstallingNotify)
-            {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/InstallingNotify");
-            }
             else if (operationKind is OperationKind.SelectEmpty)
             {
                 OperationResultSuccess.Visibility = Visibility.Collapsed;
                 OperationResultFailed.Visibility = Visibility.Visible;
                 OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SelectEmpty");
+            }
+            else if (operationKind is OperationKind.SourceNameEmpty)
+            {
+                OperationResultSuccess.Visibility = Visibility.Collapsed;
+                OperationResultFailed.Visibility = Visibility.Visible;
+                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SourceNameEmpty");
+            }
+            else if (operationKind is OperationKind.SourceUriEmpty)
+            {
+                OperationResultSuccess.Visibility = Visibility.Collapsed;
+                OperationResultFailed.Visibility = Visibility.Visible;
+                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SourceUriEmpty");
+            }
+            else if (operationKind is OperationKind.WinGetSourceAdd)
+            {
+                OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/WinGetSourceAddSuccess");
+                OperationResultSuccess.Visibility = Visibility.Visible;
+                OperationResultFailed.Visibility = Visibility.Collapsed;
+            }
+            else if (operationKind is OperationKind.WinGetSourceEdit)
+            {
+                OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/WinGetSourceEditSuccess");
+                OperationResultSuccess.Visibility = Visibility.Visible;
+                OperationResultFailed.Visibility = Visibility.Collapsed;
             }
         }
 
