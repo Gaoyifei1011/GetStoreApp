@@ -25,6 +25,7 @@
   "HistorySelectedCopy": "تم نسخ {0} سجل تاريخ بنجاح إلى الحافظة",
   "InstallFailed1": "فشل تثبيت الملف {0}",
   "InstallFailed2": "رسالة الخطأ: {0}",
+  "InstallingNotify": "App is installing, please wait...",
   "InstallSuccessfully": "تم تثبيت الملف {0} بنجاح",
   "InstallWithCommand": "تثبيت باستخدام الأمر",
   "LanguageChange": "تم تعديل إعداد اللغة بنجاح وسيتم تفعيله بعد إعادة تشغيل التطبيق",

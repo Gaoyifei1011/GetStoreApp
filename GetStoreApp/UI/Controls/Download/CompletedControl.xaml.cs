@@ -77,7 +77,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 if (completedItem.IsInstalling)
                 {
-                    await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
                     return;
                 }
 
@@ -106,7 +106,7 @@ namespace GetStoreApp.UI.Controls.Download
             {
                 if (completedItem.IsInstalling)
                 {
-                    await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
+                    await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
                     return;
                 }
 
@@ -447,7 +447,7 @@ namespace GetStoreApp.UI.Controls.Download
             // 当前任务正在安装时，不进行其他任何操作
             if (selectedCompletedDataList.Exists(item => item.IsInstalling))
             {
-                await MainWindow.Current.ShowDialogAsync(new InstallingNotifyDialog());
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.InstallingNotify));
                 return;
             }
 

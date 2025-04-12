@@ -259,7 +259,6 @@
     <None Remove="UI\Dialogs\Common\ClosingWindowDialog.xaml" />
     <None Remove="UI\Dialogs\Common\DeletePromptDialog.xaml" />
     <None Remove="UI\Dialogs\Download\FileInformationDialog.xaml" />
-    <None Remove="UI\Dialogs\Download\InstallingNotifyDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\RestartAppsDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" />
     <None Remove="UI\Dialogs\Settings\WinGetSourceEditDialog.xaml" />
@@ -295,7 +294,6 @@
     <Page Update="UI\Dialogs\Common\ClosingWindowDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Common\DeletePromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Download\FileInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Dialogs\Download\InstallingNotifyDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Settings\RestartAppsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Settings\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\Settings\WinGetSourceEditDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

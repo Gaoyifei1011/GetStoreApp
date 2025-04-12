@@ -26,23 +26,29 @@ namespace GetStoreApp.UI.TeachingTips
                 OperationResultFailed.Visibility = Visibility.Visible;
                 OperationResultFailed.Text = ResourceService.GetLocalized("Notification/FolderPickerFailed");
             }
+            else if (operationKind is OperationKind.LanguageChange)
+            {
+                OperationResultSuccess.Visibility = Visibility.Visible;
+                OperationResultFailed.Visibility = Visibility.Collapsed;
+                OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/LanguageChange");
+            }
             else if (operationKind is OperationKind.NotElevated)
             {
                 OperationResultSuccess.Visibility = Visibility.Collapsed;
                 OperationResultFailed.Visibility = Visibility.Visible;
                 OperationResultFailed.Text = ResourceService.GetLocalized("Notification/NotElevated");
             }
+            else if (operationKind is OperationKind.InstallingNotify)
+            {
+                OperationResultSuccess.Visibility = Visibility.Collapsed;
+                OperationResultFailed.Visibility = Visibility.Visible;
+                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/InstallingNotify");
+            }
             else if (operationKind is OperationKind.SelectEmpty)
             {
                 OperationResultSuccess.Visibility = Visibility.Collapsed;
                 OperationResultFailed.Visibility = Visibility.Visible;
                 OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SelectEmpty");
-            }
-            else if (operationKind is OperationKind.LanguageChange)
-            {
-                OperationResultSuccess.Visibility = Visibility.Visible;
-                OperationResultFailed.Visibility = Visibility.Collapsed;
-                OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/LanguageChange");
             }
         }
 

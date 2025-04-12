@@ -10,7 +10,8 @@
         DownloadCreate = 5,
         LogClean = 6,
         NotElevated = 7,
-        SelectEmpty = 8,
-        ShareFailed = 9
+        InstallingNotify = 8,
+        SelectEmpty = 9,
+        ShareFailed = 10
     }
 }

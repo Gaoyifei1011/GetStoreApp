@@ -25,6 +25,7 @@
   "HistorySelectedCopy": "{0} history records has been successfully copied to the clipboard",
   "InstallFailed1": "File {0} installation failed",
   "InstallFailed2": "Error message: {0}",
+  "InstallingNotify": "App is installing, please wait...",
   "InstallSuccessfully": "File {0} was successfully installed",
   "InstallWithCommand": "Install with command",
   "LanguageChange": "The language setting is modified successfully and takes effect after restarting the application",

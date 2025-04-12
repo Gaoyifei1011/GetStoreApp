@@ -25,6 +25,7 @@
   "HistorySelectedCopy": "{0} רשומות היסטוריה הועתקו בהצלחה ללוח",
   "InstallFailed1": "התקנת הקובץ {0} נכשלה",
   "InstallFailed2": "הודעת שגיאה: {0}",
+  "InstallingNotify": "App is installing, please wait...",
   "InstallSuccessfully": "הקובץ {0} הותקן בהצלחה",
   "InstallWithCommand": "התקן עם פקודה",
   "LanguageChange": "הגדרת השפה השתנתה בהצלחה ותכנס לתוקף לאחר הפעלה מחדש של היישום",
