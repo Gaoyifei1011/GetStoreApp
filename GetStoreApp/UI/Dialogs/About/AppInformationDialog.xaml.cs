@@ -9,6 +9,7 @@ using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -24,14 +25,32 @@ namespace GetStoreApp.UI.Dialogs.About
     /// <summary>
     /// 应用信息对话框
     /// </summary>
-    public sealed partial class AppInformationDialog : ContentDialog
+    public sealed partial class AppInformationDialog : ContentDialog, INotifyPropertyChanged
     {
         private bool isInitialized;
         private readonly string fileVersionProperty = "System.FileVersion";
 
+        private bool _isLoadCompleted = false;
+
+        public bool IsLoadCompleted
+        {
+            get { return _isLoadCompleted; }
+
+            set
+            {
+                if (!Equals(_isLoadCompleted, value))
+                {
+                    _isLoadCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadCompleted)));
+                }
+            }
+        }
+
         private List<string> PropertyNamesList => [fileVersionProperty];
 
         private ObservableCollection<ContentLinkInfo> AppInformationCollection { get; } = [];
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public AppInformationDialog()
         {
@@ -47,9 +66,9 @@ namespace GetStoreApp.UI.Dialogs.About
             {
                 isInitialized = true;
 
-                List<ContentLinkInfo> dependencyInformationList = [];
-                await Task.Run(async () =>
+                List<ContentLinkInfo> dependencyInformationList = await Task.Run(async () =>
                 {
+                    List<ContentLinkInfo> dependencyInformationList = [];
                     IReadOnlyList<Package> dependencyPackageList = Package.Current.Dependencies;
 
                     // Windows 应用 SDK 版本信息
@@ -163,12 +182,27 @@ namespace GetStoreApp.UI.Dialogs.About
                         DisplayText = ResourceService.GetLocalized("Dialog/DoNetVersion"),
                         SecondaryText = Environment.Version.ToString()
                     });
+
+                    return dependencyInformationList;
                 });
 
                 foreach (ContentLinkInfo dependencyInformation in dependencyInformationList)
                 {
                     AppInformationCollection.Add(dependencyInformation);
                 }
+
+                IsLoadCompleted = true;
+            }
+        }
+
+        /// <summary>
+        /// 加载完成前禁用关闭对话框
+        /// </summary>
+        private void OnClosing(object sender, ContentDialogClosingEventArgs args)
+        {
+            if (!IsLoadCompleted)
+            {
+                args.Cancel = true;
             }
         }
 

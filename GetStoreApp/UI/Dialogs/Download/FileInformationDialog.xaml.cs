@@ -29,18 +29,18 @@ namespace GetStoreApp.UI.Dialogs.Download
 
         private string FileSize { get; set; }
 
-        private bool _fileCheckState;
+        private bool _isLoadCompleted = false;
 
-        public bool FileCheckState
+        public bool IsLoadCompleted
         {
-            get { return _fileCheckState; }
+            get { return _isLoadCompleted; }
 
             set
             {
-                if (!Equals(_fileCheckState, value))
+                if (!Equals(_isLoadCompleted, value))
                 {
-                    _fileCheckState = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FileCheckState)));
+                    _isLoadCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadCompleted)));
                 }
             }
         }
@@ -86,7 +86,18 @@ namespace GetStoreApp.UI.Dialogs.Download
                 });
 
                 FileSHA256 = fileShA256;
-                FileCheckState = true;
+                IsLoadCompleted = true;
+            }
+        }
+
+        /// <summary>
+        /// 加载完成前禁用关闭对话框
+        /// </summary>
+        private void OnClosing(object sender, ContentDialogClosingEventArgs args)
+        {
+            if (!IsLoadCompleted)
+            {
+                args.Cancel = true;
             }
         }
 
