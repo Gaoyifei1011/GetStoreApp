@@ -8,7 +8,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/FileInformationTitle')}"
-    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     Closing="{x:Bind OnClosing}"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"

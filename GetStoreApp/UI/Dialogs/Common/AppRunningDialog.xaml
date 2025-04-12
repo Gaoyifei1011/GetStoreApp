@@ -7,7 +7,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:window="using:GetStoreApp.Views.Windows"
     Title="{x:Bind root:ResourceService.GetLocalized('Dialog/AppName')}"
-    BorderBrush="{ThemeResource ContentDialogBorderThemeBrush}"
     CloseButtonText="{x:Bind root:ResourceService.GetLocalized('Dialog/OK')}"
     Content="{x:Bind root:ResourceService.GetLocalized('Dialog/AppRunning')}"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
