@@ -100,7 +100,7 @@ namespace GetStoreAppInstaller.Services.Root
                     exceptionFields.AddString("LogLevel", logLevel.ToString());
                     exceptionFields.AddString("HelpLink", string.IsNullOrEmpty(exception.HelpLink) ? unknown : exception.HelpLink.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("Message", string.IsNullOrEmpty(exception.Message) ? unknown : exception.Message.Replace('\r', ' ').Replace('\n', ' '));
-                    exceptionFields.AddString("HResult", exception.HResult.ToString());
+                    exceptionFields.AddString("HResult", Convert.ToString(exception.HResult));
                     exceptionFields.AddString("Source", string.IsNullOrEmpty(exception.Source) ? unknown : exception.Source.Replace('\r', ' ').Replace('\n', ' '));
                     exceptionFields.AddString("StackTrace", string.IsNullOrEmpty(exception.StackTrace) ? unknown : exception.StackTrace.Replace('\r', ' ').Replace('\n', ' '));
 
