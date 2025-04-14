@@ -69,8 +69,6 @@
   "WinGetInstallFailed2": "应用安装失败，请检查您是否有安装应用的权限",
   "WinGetInstallFailed3": "您或者可以尝试手动安装该应用",
   "WinGetInstallSuccessfully": "{0}应用安装成功",
-  "WinGetSourceAddSuccess": "WinGet 数据源添加成功",
-  "WinGetSourceEditSuccess": "WinGet 数据源修改成功",
   "WinGetUnInstallFailed1": "{0}应用卸载失败",
   "WinGetUnInstallFailed2": "应用卸载失败，请检查您是否有卸载应用的权限",
   "WinGetUnInstallFailed3": "您或者可以尝试在设置中卸载您的应用",

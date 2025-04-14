@@ -69,8 +69,6 @@
   "WinGetInstallFailed2": "فشل تثبيت التطبيق، يرجى التحقق مما إذا كان لديك إذن لتثبيت التطبيق",
   "WinGetInstallFailed3": "بدلاً من ذلك، يمكنك محاولة تثبيت التطبيق يدويًا",
   "WinGetInstallSuccessfully": "تم تثبيت التطبيق {0} بنجاح",
-  "WinGetSourceAddSuccess": "WinGet data source add successfully",
-  "WinGetSourceEditSuccess": "WinGet data source modify successfully",
   "WinGetUnInstallFailed1": "فشل إلغاء تثبيت التطبيق {0}",
   "WinGetUnInstallFailed2": "فشل إلغاء تثبيت التطبيق، يرجى التحقق مما إذا كان لديك إذن لإلغاء تثبيت التطبيق",
   "WinGetUnInstallFailed3": "بدلاً من ذلك، يمكنك محاولة إلغاء تثبيت التطبيق في الإعدادات",

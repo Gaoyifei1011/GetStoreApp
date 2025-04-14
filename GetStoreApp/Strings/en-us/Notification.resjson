@@ -69,8 +69,6 @@
   "WinGetInstallFailed2": "App install failed, please check if you have permission to install the app",
   "WinGetInstallFailed3": "Alternatively, you can try installing the app manually",
   "WinGetInstallSuccessfully": "{0} app install successfully",
-  "WinGetSourceAddSuccess": "WinGet data source add successfully",
-  "WinGetSourceEditSuccess": "WinGet data source modify successfully",
   "WinGetUnInstallFailed1": "{0} app uninstall failed",
   "WinGetUnInstallFailed2": "App uninstall failed, please check if you have permission to uninstall the app",
   "WinGetUnInstallFailed3": "Alternatively, you can try uninstalling your app in Settings",

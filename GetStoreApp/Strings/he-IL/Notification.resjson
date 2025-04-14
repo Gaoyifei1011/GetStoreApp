@@ -69,8 +69,6 @@
   "WinGetInstallFailed2": "התקנת האפליקציה נכשלה, אנא בדוק אם יש לך הרשאה להתקין את האפליקציה",
   "WinGetInstallFailed3": "לחלופין, אתה יכול לנסות להתקין את האפליקציה באופן ידני",
   "WinGetInstallSuccessfully": "התקנת האפליקציה {0} הצליחה",
-  "WinGetSourceAddSuccess": "WinGet data source add successfully",
-  "WinGetSourceEditSuccess": "WinGet data source modify successfully",
   "WinGetUnInstallFailed1": "הסרת האפליקציה {0} נכשלה",
   "WinGetUnInstallFailed2": "הסרת האפליקציה נכשלה, אנא בדוק אם יש לך הרשאה להסיר את התקנת האפליקציה",
   "WinGetUnInstallFailed3": "לחלופין, תוכל לנסות להסיר את ההתקנה של האפליקציה שלך בהגדרות",
