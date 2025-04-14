@@ -57,23 +57,20 @@ namespace GetStoreApp.Services.Controls.History
                 {
                     for (int index = 1; index <= 3; index++)
                     {
-                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value))
+                        if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value) && value is ApplicationDataCompositeValue compositeValue)
                         {
-                            if (value is ApplicationDataCompositeValue compositeValue)
-                            {
-                                TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
-                                ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
+                            ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
 
-                                queryLinksHistoryList.Add(new HistoryModel()
-                                {
-                                    CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
-                                    HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
-                                    HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
-                                    HistoryType = new KeyValuePair<string, string>(typeItem.InternalName, typeItem.DisplayName),
-                                    HistoryChannel = new KeyValuePair<string, string>(channelItem.InternalName, channelItem.DisplayName),
-                                    HistoryLink = Convert.ToString(compositeValue[HistoryLink])
-                                });
-                            }
+                            queryLinksHistoryList.Add(new HistoryModel()
+                            {
+                                CreateTimeStamp = Convert.ToInt64(compositeValue[CreateTimeStamp]),
+                                HistoryKey = Convert.ToString(compositeValue[HistoryKey]),
+                                HistoryAppName = Convert.ToString(compositeValue[HistoryAppName]),
+                                HistoryType = new KeyValuePair<string, string>(typeItem.InternalName, typeItem.DisplayName),
+                                HistoryChannel = new KeyValuePair<string, string>(channelItem.InternalName, channelItem.DisplayName),
+                                HistoryLink = Convert.ToString(compositeValue[HistoryLink])
+                            });
                         }
                     }
                 }
@@ -98,6 +95,7 @@ namespace GetStoreApp.Services.Controls.History
             List<HistoryModel> searchStoreHistoryList = [];
 
             historyStorageLock.Enter();
+
             try
             {
                 for (int index = 1; index <= 3; index++)
@@ -155,7 +153,7 @@ namespace GetStoreApp.Services.Controls.History
                     };
 
                     string queryLinksKey = QueryLinks + index.ToString();
-                    queryLinksContainer.Values[queryLinksKey] = compositeValue;
+                    queryLinksContainer.Values.TryAdd(queryLinksKey, compositeValue);
                 }
             }
             catch (Exception e)
@@ -189,7 +187,7 @@ namespace GetStoreApp.Services.Controls.History
                     };
 
                     string searchStoreKey = SearchStore + index.ToString();
-                    searchStoreContainer.Values[searchStoreKey] = compositeValue;
+                    searchStoreContainer.Values.TryAdd(searchStoreKey, compositeValue);
                 }
             }
             catch (Exception e)

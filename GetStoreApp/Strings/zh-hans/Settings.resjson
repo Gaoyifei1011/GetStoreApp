@@ -161,6 +161,10 @@
   "WebKernelWebView2": "WebView2",
   "WinGetConfig": "WinGet 配置选项",
   "WinGetConfigDescription": "对 WinGet 程序包的功能进行自定义",
+  "WinGetDataSourceCustom": "自定义数据源",
+  "WinGetDataSourceCustomEmpty": "自定义 WinGet 数据源为空",
+  "WinGetDataSourceInternal": "内置数据源",
+  "WinGetDataSourceInternalEmpty": "内置 WinGet 数据源为空",
   "WinGetDataSourceRemoveAccessDenied": "拒绝访问",
   "WinGetDataSourceRemoveCatalogError": "数据源错误",
   "WinGetDataSourceRemoveFailed": "WinGet 数据源删除失败，错误原因：{0}，错误代码：{1}",
@@ -175,7 +179,6 @@
   "WinGetSourceArguments": "参数：",
   "WinGetSourceConfiguration": "WinGet 数据源配置",
   "WinGetSourceConfigurationDescription": "配置 WinGet 数据获取源，需要管理员模式",
-  "WinGetSourceEmpty": "WinGet 数据源为空",
   "WinGetSourceExplicit": "显式",
   "WinGetSourceName": "名称：",
   "Yes": "是"

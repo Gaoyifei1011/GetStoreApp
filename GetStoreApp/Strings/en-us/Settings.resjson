@@ -161,6 +161,10 @@
   "WebKernelWebView2": "WebView2",
   "WinGetConfig": "WinGet config options",
   "WinGetConfigDescription": "Customize the WinGet package's function",
+  "WinGetDataSourceCustom": "Custom data source",
+  "WinGetDataSourceCustomEmpty": "Custom WinGet data source is empty",
+  "WinGetDataSourceInternal": "Internal data source",
+  "WinGetDataSourceInternalEmpty": "Internal WinGet data source is empty",
   "WinGetDataSourceRemoveAccessDenied": "Access denied",
   "WinGetDataSourceRemoveCatalogError": "Catalog error",
   "WinGetDataSourceRemoveFailed": "WinGet data source remove failed, error reason: {0}, error code: {1}",
@@ -175,7 +179,6 @@
   "WinGetSourceArguments": "Arguments: ",
   "WinGetSourceConfiguration": "WinGet data source configuration",
   "WinGetSourceConfigurationDescription": "Configure winget data source, administrator mode is required",
-  "WinGetSourceEmpty": "WinGet data source is empty",
   "WinGetSourceExplicit": "Explicit",
   "WinGetSourceName": "Name: ",
   "Yes": "Yes"

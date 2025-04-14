@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
+using Microsoft.Management.Deployment;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Settings
@@ -109,6 +110,16 @@ namespace GetStoreApp.Models.Controls.Settings
         /// 数据源后台更新间隔
         /// </summary>
         public string PackageCatalogBackgroundUpdateInterval { get; set; }
+
+        /// <summary>
+        /// 是否是内置源
+        /// </summary>
+        public bool IsInternal { get; set; }
+
+        /// <summary>
+        /// 预定义的数据源类型
+        /// </summary>
+        public PredefinedPackageCatalog? PredefinedPackageCatalog { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
