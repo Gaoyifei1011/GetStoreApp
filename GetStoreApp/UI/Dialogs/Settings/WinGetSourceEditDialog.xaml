@@ -8,7 +8,6 @@
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:sys="using:System"
     xmlns:window="using:GetStoreApp.Views.Windows"
-    Padding="0"
     DefaultButton="Primary"
     FlowDirection="{x:Bind ((FrameworkElement)window:MainWindow.Current.Content).FlowDirection, Mode=OneWay}"
     IsPrimaryButtonEnabled="{x:Bind IsSaving.Equals(x:False), Mode=OneWay}"
@@ -26,6 +25,37 @@
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </ContentDialog.Resources>
+
+    <ContentDialog.Title>
+        <Grid Width="550" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="{x:Bind EditTitle, Mode=OneWay}" />
+
+            <ProgressRing
+                Grid.Column="1"
+                Width="22"
+                Height="22"
+                IsActive="{x:Bind IsSaving, Mode=OneWay}"
+                Visibility="{x:Bind IsSaving, Mode=OneWay}" />
+
+            <TextBlock
+                Grid.Column="2"
+                Margin="6,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Normal"
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinGetDataSourceSavingContent')}"
+                Visibility="{x:Bind IsSaving, Mode=OneWay}" />
+        </Grid>
+    </ContentDialog.Title>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -251,25 +281,6 @@
                             </DropDownButton.Flyout>
                         </DropDownButton>
                     </Grid>
-
-                    <MenuFlyoutSeparator Visibility="{x:Bind HasSaved, Mode=OneWay}" />
-
-                    <StackPanel
-                        Margin="0,10,0,0"
-                        HorizontalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="10"
-                        Visibility="{x:Bind IsSaving, Mode=OneWay}">
-
-                        <ProgressRing IsActive="{x:Bind IsSaving, Mode=OneWay}" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Bind root:ResourceService.GetLocalized('Dialog/WinGetDataSourceSavingContent')}" />
-                    </StackPanel>
-
-                    <TextBlock
-                        Margin="0,10,0,0"
-                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                        Text="{x:Bind SaveFailedContent, Mode=OneWay}"
-                        Visibility="{x:Bind IsSaved, Mode=OneWay}" />
                 </StackPanel>
             </Border>
         </ScrollView>
