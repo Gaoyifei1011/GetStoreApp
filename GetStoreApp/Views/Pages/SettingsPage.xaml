@@ -24,6 +24,7 @@
         <XamlUICommand x:Name="EditCommand" ExecuteRequested="{x:Bind OnEditExecuteRequested}" />
         <XamlUICommand x:Name="LanguageCommand" ExecuteRequested="{x:Bind OnLanguageExecuteRequested}" />
         <XamlUICommand x:Name="RemoveCommand" ExecuteRequested="{x:Bind OnRemoveExecuteRequested}" />
+        <XamlUICommand x:Name="RemovePreserveDataCommand" ExecuteRequested="{x:Bind OnRemovePreserveDataExecuteRequested}" />
         <XamlUICommand x:Name="StoreRegionCommand" ExecuteRequested="{x:Bind OnStoreRegionExecuteRequested}" />
     </Page.Resources>
 
@@ -2467,6 +2468,7 @@
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
                                                 <CheckBox
@@ -2474,7 +2476,8 @@
                                                     MinWidth="0"
                                                     Margin="0,0,12,0"
                                                     Command="{StaticResource CheckBoxClickCommand}"
-                                                    IsChecked="{x:Bind IsSelected, Mode=TwoWay}">
+                                                    IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip MaxWidth="9999">
@@ -2526,66 +2529,88 @@
                                                     </TextBlock>
                                                 </StackPanel>
 
-                                                <StackPanel
+                                                <ProgressRing
+                                                    Grid.Column="2"
+                                                    IsActive="{x:Bind IsOperating, Mode=OneWay}"
+                                                    Visibility="{x:Bind IsOperating, Mode=OneWay}" />
+
+                                                <ContentControl
                                                     Grid.Column="3"
-                                                    Height="30"
-                                                    BorderBrush="{ThemeResource ButtonBorderBrush}"
-                                                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                                                    CornerRadius="{ThemeResource ControlCornerRadius}"
-                                                    Orientation="Horizontal">
+                                                    Margin="15,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}">
+                                                    <StackPanel
+                                                        Height="30"
+                                                        BorderBrush="{ThemeResource ButtonBorderBrush}"
+                                                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                                                        CornerRadius="{ThemeResource ControlCornerRadius}"
+                                                        Orientation="Horizontal">
 
-                                                    <Button
-                                                        VerticalAlignment="Stretch"
-                                                        VerticalContentAlignment="Center"
-                                                        BorderThickness="0,0,1,0"
-                                                        Command="{StaticResource EditCommand}"
-                                                        CommandParameter="{x:Bind}"
-                                                        Content="{x:Bind root:ResourceService.GetLocalized('Settings/Edit')}"
-                                                        CornerRadius="0"
-                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/EditToolTip')}" />
+                                                        <Button
+                                                            VerticalAlignment="Stretch"
+                                                            VerticalContentAlignment="Center"
+                                                            BorderThickness="0,0,1,0"
+                                                            Command="{StaticResource EditCommand}"
+                                                            CommandParameter="{x:Bind}"
+                                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/Edit')}"
+                                                            CornerRadius="0"
+                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/EditToolTip')}" />
 
-                                                    <Button
-                                                        Width="35"
-                                                        VerticalAlignment="Stretch"
-                                                        BorderThickness="0"
-                                                        CornerRadius="0"
-                                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ViewMoreOptions')}">
+                                                        <Button
+                                                            Width="35"
+                                                            VerticalAlignment="Stretch"
+                                                            BorderThickness="0"
+                                                            CornerRadius="0"
+                                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ViewMoreOptions')}">
 
-                                                        <Button.Content>
-                                                            <AnimatedIcon
-                                                                Width="12"
-                                                                Height="12"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                AutomationProperties.AccessibilityView="Raw">
-                                                                <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                                <AnimatedIcon.FallbackIconSource>
-                                                                    <FontIconSource
-                                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                        FontSize="8"
-                                                                        Glyph="&#xE96E;"
-                                                                        IsTextScaleFactorEnabled="False" />
-                                                                </AnimatedIcon.FallbackIconSource>
-                                                            </AnimatedIcon>
-                                                        </Button.Content>
+                                                            <Button.Content>
+                                                                <AnimatedIcon
+                                                                    Width="12"
+                                                                    Height="12"
+                                                                    HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Center"
+                                                                    AutomationProperties.AccessibilityView="Raw">
+                                                                    <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                                                    <AnimatedIcon.FallbackIconSource>
+                                                                        <FontIconSource
+                                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                                            FontSize="8"
+                                                                            Glyph="&#xE96E;"
+                                                                            IsTextScaleFactorEnabled="False" />
+                                                                    </AnimatedIcon.FallbackIconSource>
+                                                                </AnimatedIcon>
+                                                            </Button.Content>
 
-                                                        <Button.Flyout>
-                                                            <MenuFlyout Placement="Bottom">
-                                                                <MenuFlyoutItem
-                                                                    Height="32"
-                                                                    Padding="11,0"
-                                                                    Command="{StaticResource RemoveCommand}"
-                                                                    CommandParameter="{x:Bind}"
-                                                                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Remove')}">
+                                                            <Button.Flyout>
+                                                                <MenuFlyout Placement="Bottom">
+                                                                    <MenuFlyoutItem
+                                                                        Height="32"
+                                                                        Padding="11,0"
+                                                                        Command="{StaticResource RemoveCommand}"
+                                                                        CommandParameter="{x:Bind}"
+                                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/Remove')}">
 
-                                                                    <MenuFlyoutItem.Icon>
-                                                                        <FontIcon Glyph="&#xE74D;" />
-                                                                    </MenuFlyoutItem.Icon>
-                                                                </MenuFlyoutItem>
-                                                            </MenuFlyout>
-                                                        </Button.Flyout>
-                                                    </Button>
-                                                </StackPanel>
+                                                                        <MenuFlyoutItem.Icon>
+                                                                            <FontIcon Glyph="&#xE74D;" />
+                                                                        </MenuFlyoutItem.Icon>
+                                                                    </MenuFlyoutItem>
+
+                                                                    <MenuFlyoutItem
+                                                                        Height="32"
+                                                                        Padding="11,0"
+                                                                        Command="{StaticResource RemovePreserveDataCommand}"
+                                                                        CommandParameter="{x:Bind}"
+                                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/RemovePreserveData')}">
+
+                                                                        <MenuFlyoutItem.Icon>
+                                                                            <FontIcon Glyph="&#xE74D;" />
+                                                                        </MenuFlyoutItem.Icon>
+                                                                    </MenuFlyoutItem>
+                                                                </MenuFlyout>
+                                                            </Button.Flyout>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </ContentControl>
                                             </Grid>
                                         </Expander.Header>
 

@@ -58,6 +58,13 @@ namespace GetStoreApp.Views.Pages
         private readonly string Unknown = ResourceService.GetLocalized("Settings/Unknown");
         private readonly string MicrosoftEntraId = ResourceService.GetLocalized("Settings/MicrosoftEntraId");
         private readonly string MicrosoftEntraIdForAzureBlobStorage = ResourceService.GetLocalized("Settings/MicrosoftEntraIdForAzureBlobStorage");
+        private readonly string WinGetDataSourceRemoveFailed = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveFailed");
+        private readonly string WinGetDataSourceRemoveGroupPolicyError = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveGroupPolicyError");
+        private readonly string WinGetDataSourceRemoveCatalogError = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveCatalogError");
+        private readonly string WinGetDataSourceRemoveInternalError = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInternalError");
+        private readonly string WinGetDataSourceRemoveInvalidOptions = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInvalidOptions");
+        private readonly string WinGetDataSourceRemoveAccessDenied = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveAccessDenied");
+        private readonly string WinGetDataSourceRemoveSuccess = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveSuccess");
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
         private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
@@ -601,7 +608,15 @@ namespace GetStoreApp.Views.Pages
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSourceItem)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetSourceEditDialog(WinGetSourceEditKind.Edit, winGetSourceItem));
+                WinGetSourceEditDialog winGetSourceEditDialog = new(WinGetSourceEditKind.Edit, winGetSourceItem);
+                await MainWindow.Current.ShowDialogAsync(winGetSourceEditDialog);
+
+                if (winGetSourceEditDialog.AddPackageCatalogStatusResult.HasValue && winGetSourceEditDialog.AddPackageCatalogStatusResult is AddPackageCatalogStatus.Ok)
+                {
+                    IsLoadedCompleted = false;
+                    await InitializeWinGetSourceDataAsync();
+                    IsLoadedCompleted = true;
+                }
             }
             else
             {
@@ -616,6 +631,234 @@ namespace GetStoreApp.Views.Pages
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSourceItem)
             {
+                foreach (WinGetSourceModel item in WinGetSourceCollection)
+                {
+                    if (item.Name.Equals(winGetSourceItem.Name))
+                    {
+                        item.IsOperating = true;
+                        break;
+                    }
+                }
+
+                RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
+                {
+                    RemovePackageCatalogOptions removePackageCatalogOptions = new()
+                    {
+                        Name = winGetSourceItem.Name,
+                        PreserveData = false
+                    };
+
+                    return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
+                });
+
+                switch (removePackageCatalogResult.Status)
+                {
+                    case RemovePackageCatalogStatus.Ok:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    WinGetSourceCollection.Remove(item);
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccess));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.GroupPolicyError:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.CatalogError:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveCatalogError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.InternalError:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveInternalError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.InvalidOptions:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveInvalidOptions, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.AccessDenied:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveAccessDenied, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+            }
+        }
+
+        /// <summary>
+        /// 移除数据源
+        /// </summary>
+        private async void OnRemovePreserveDataExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSourceItem)
+            {
+                foreach (WinGetSourceModel item in WinGetSourceCollection)
+                {
+                    if (item.Name.Equals(winGetSourceItem.Name))
+                    {
+                        item.IsOperating = true;
+                        break;
+                    }
+                }
+
+                RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
+                {
+                    RemovePackageCatalogOptions removePackageCatalogOptions = new()
+                    {
+                        Name = winGetSourceItem.Name,
+                        PreserveData = true
+                    };
+
+                    return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
+                });
+
+                switch (removePackageCatalogResult.Status)
+                {
+                    case RemovePackageCatalogStatus.Ok:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    WinGetSourceCollection.Remove(item);
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, true, WinGetDataSourceRemoveSuccess));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.GroupPolicyError:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.CatalogError:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.InternalError:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.InvalidOptions:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                    case RemovePackageCatalogStatus.AccessDenied:
+                        {
+                            foreach (WinGetSourceModel item in WinGetSourceCollection)
+                            {
+                                if (item.Name.Equals(winGetSourceItem.Name))
+                                {
+                                    item.IsOperating = false;
+                                    break;
+                                }
+                            }
+
+                            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.WinGetSource, false, string.Format(WinGetDataSourceRemoveFailed, WinGetDataSourceRemoveGroupPolicyError, removePackageCatalogResult.ExtendedErrorCode is not null ? removePackageCatalogResult.ExtendedErrorCode.HResult : Unknown)));
+                            break;
+                        }
+                }
             }
             else
             {
@@ -1271,7 +1514,15 @@ namespace GetStoreApp.Views.Pages
         {
             if (RuntimeHelper.IsElevated)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetSourceEditDialog(WinGetSourceEditKind.Add, null));
+                WinGetSourceEditDialog winGetSourceEditDialog = new(WinGetSourceEditKind.Add, null);
+                await MainWindow.Current.ShowDialogAsync(winGetSourceEditDialog);
+
+                if (winGetSourceEditDialog.AddPackageCatalogStatusResult.HasValue && winGetSourceEditDialog.AddPackageCatalogStatusResult is AddPackageCatalogStatus.Ok)
+                {
+                    IsLoadedCompleted = false;
+                    await InitializeWinGetSourceDataAsync();
+                    IsLoadedCompleted = true;
+                }
             }
             else
             {
