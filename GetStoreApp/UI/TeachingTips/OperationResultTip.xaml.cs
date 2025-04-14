@@ -1,78 +1,92 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Services.Root;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.ComponentModel;
 
 namespace GetStoreApp.UI.TeachingTips
 {
     /// <summary>
     /// 操作完成后应用内通知
     /// </summary>
-    public sealed partial class OperationResultTip : TeachingTip
+    public sealed partial class OperationResultTip : TeachingTip, INotifyPropertyChanged
     {
+        private bool _isSuccessOperation;
+
+        public bool IsSuccessOperation
+        {
+            get { return _isSuccessOperation; }
+
+            set
+            {
+                if (!Equals(_isSuccessOperation, value))
+                {
+                    _isSuccessOperation = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSuccessOperation)));
+                }
+            }
+        }
+
+        private string _operationContent;
+
+        public string OperationContent
+        {
+            get { return _operationContent; }
+
+            set
+            {
+                if (!Equals(_operationContent, value))
+                {
+                    _operationContent = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OperationContent)));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public OperationResultTip(OperationKind operationKind)
         {
             InitializeComponent();
 
             if (operationKind is OperationKind.FileLost)
             {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/FileLost");
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("Notification/FileLost");
             }
             else if (operationKind is OperationKind.FolderPicker)
             {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/FolderPickerFailed");
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("Notification/FolderPickerFailed");
             }
             else if (operationKind is OperationKind.InstallingNotify)
             {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/InstallingNotify");
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("Notification/InstallingNotify");
             }
             else if (operationKind is OperationKind.LanguageChange)
             {
-                OperationResultSuccess.Visibility = Visibility.Visible;
-                OperationResultFailed.Visibility = Visibility.Collapsed;
-                OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/LanguageChange");
+                IsSuccessOperation = true;
+                OperationContent = ResourceService.GetLocalized("Notification/LanguageChange");
             }
             else if (operationKind is OperationKind.NotElevated)
             {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/NotElevated");
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("Notification/NotElevated");
             }
             else if (operationKind is OperationKind.SelectEmpty)
             {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SelectEmpty");
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("Notification/SelectEmpty");
             }
             else if (operationKind is OperationKind.SourceNameEmpty)
             {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SourceNameEmpty");
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("Notification/SourceNameEmpty");
             }
             else if (operationKind is OperationKind.SourceUriEmpty)
             {
-                OperationResultSuccess.Visibility = Visibility.Collapsed;
-                OperationResultFailed.Visibility = Visibility.Visible;
-                OperationResultFailed.Text = ResourceService.GetLocalized("Notification/SourceUriEmpty");
-            }
-            else if (operationKind is OperationKind.WinGetSourceAdd)
-            {
-                OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/WinGetSourceAddSuccess");
-                OperationResultSuccess.Visibility = Visibility.Visible;
-                OperationResultFailed.Visibility = Visibility.Collapsed;
-            }
-            else if (operationKind is OperationKind.WinGetSourceEdit)
-            {
-                OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/WinGetSourceEditSuccess");
-                OperationResultSuccess.Visibility = Visibility.Visible;
-                OperationResultFailed.Visibility = Visibility.Collapsed;
+                IsSuccessOperation = false;
+                OperationContent = ResourceService.GetLocalized("Notification/SourceUriEmpty");
             }
         }
 
@@ -84,60 +98,52 @@ namespace GetStoreApp.UI.TeachingTips
             {
                 if (operationResult)
                 {
-                    OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/NewestVersion");
-                    OperationResultSuccess.Visibility = Visibility.Visible;
-                    OperationResultFailed.Visibility = Visibility.Collapsed;
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("Notification/NewestVersion");
                 }
                 else
                 {
-                    OperationResultFailed.Text = ResourceService.GetLocalized("Notification/NotNewestVersion");
-                    OperationResultSuccess.Visibility = Visibility.Collapsed;
-                    OperationResultFailed.Visibility = Visibility.Visible;
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/NotNewestVersion");
                 }
             }
             else if (operationKind is OperationKind.DownloadCreate)
             {
                 if (operationResult)
                 {
-                    OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/DownloadCreateSuccessfully");
-                    OperationResultSuccess.Visibility = Visibility.Visible;
-                    OperationResultFailed.Visibility = Visibility.Collapsed;
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("Notification/DownloadCreateSuccessfully");
                 }
                 else
                 {
-                    OperationResultFailed.Text = ResourceService.GetLocalized("Notification/DownloadCreateFailed");
-                    OperationResultSuccess.Visibility = Visibility.Collapsed;
-                    OperationResultFailed.Visibility = Visibility.Visible;
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/DownloadCreateFailed");
                 }
             }
             else if (operationKind is OperationKind.LogClean)
             {
                 if (operationResult)
                 {
-                    OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/LogCleanSuccessfully");
-                    OperationResultSuccess.Visibility = Visibility.Visible;
-                    OperationResultFailed.Visibility = Visibility.Collapsed;
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("Notification/LogCleanSuccessfully");
                 }
                 else
                 {
-                    OperationResultFailed.Text = ResourceService.GetLocalized("Notification/LogCleanFailed");
-                    OperationResultSuccess.Visibility = Visibility.Collapsed;
-                    OperationResultFailed.Visibility = Visibility.Visible;
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/LogCleanFailed");
                 }
             }
             else if (operationKind is OperationKind.TerminateProcess)
             {
                 if (operationResult)
                 {
-                    OperationResultSuccess.Text = ResourceService.GetLocalized("Notification/TerminateSuccess");
-                    OperationResultSuccess.Visibility = Visibility.Visible;
-                    OperationResultFailed.Visibility = Visibility.Collapsed;
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("Notification/TerminateSuccess");
                 }
                 else
                 {
-                    OperationResultFailed.Text = ResourceService.GetLocalized("Notification/TerminateFailed");
-                    OperationResultSuccess.Visibility = Visibility.Collapsed;
-                    OperationResultFailed.Visibility = Visibility.Visible;
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/TerminateFailed");
                 }
             }
         }
@@ -150,15 +156,32 @@ namespace GetStoreApp.UI.TeachingTips
             {
                 if (isMultiSelected)
                 {
-                    OperationResultFailed.Text = string.Format(ResourceService.GetLocalized("Notification/ShareSelectedFailed"), count);
-                    OperationResultSuccess.Visibility = Visibility.Collapsed;
-                    OperationResultFailed.Visibility = Visibility.Visible;
+                    IsSuccessOperation = false;
+                    OperationContent = string.Format(ResourceService.GetLocalized("Notification/ShareSelectedFailed"), count);
                 }
                 else
                 {
-                    OperationResultFailed.Text = ResourceService.GetLocalized("Notification/ShareFailed");
-                    OperationResultSuccess.Visibility = Visibility.Collapsed;
-                    OperationResultFailed.Visibility = Visibility.Visible;
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/ShareFailed");
+                }
+            }
+        }
+
+        public OperationResultTip(OperationKind operationKind, bool operationResult, string reason)
+        {
+            InitializeComponent();
+
+            if (operationKind is OperationKind.WinGetSource)
+            {
+                if (operationResult)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = reason;
+                }
+                else
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = reason;
                 }
             }
         }

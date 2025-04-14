@@ -15,7 +15,6 @@
         SourceNameEmpty = 10,
         SourceUriEmpty = 11,
         TerminateProcess = 12,
-        WinGetSourceAdd = 13,
-        WinGetSourceEdit = 14,
+        WinGetSource = 13,
     }
 }

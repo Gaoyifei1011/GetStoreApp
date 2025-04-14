@@ -2,6 +2,7 @@
     x:Class="GetStoreApp.UI.TeachingTips.OperationResultTip"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     CloseButtonContent="TeachingTip"
@@ -21,7 +22,16 @@
     </TeachingTip.CloseButtonStyle>
 
     <Grid>
-        <TextBlock x:Name="OperationResultSuccess" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />
-        <TextBlock x:Name="OperationResultFailed" Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+        <TextBlock
+            x:Name="OperationResultSuccess"
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+            Text="{x:Bind OperationContent, Mode=OneWay}"
+            Visibility="{x:Bind IsSuccessOperation, Mode=OneWay}" />
+
+        <TextBlock
+            x:Name="OperationResultFailed"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+            Text="{x:Bind OperationContent, Mode=OneWay}"
+            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSuccessOperation), Mode=OneWay}" />
     </Grid>
 </TeachingTip>

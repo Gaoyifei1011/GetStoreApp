@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Classes;
-using Microsoft.Management.Deployment;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Settings
@@ -21,6 +20,22 @@ namespace GetStoreApp.Models.Controls.Settings
                 {
                     _isSelected = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
+                }
+            }
+        }
+
+        private bool _isOperating;
+
+        public bool IsOperating
+        {
+            get { return _isOperating; }
+
+            set
+            {
+                if (!Equals(_isOperating, value))
+                {
+                    _isOperating = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
                 }
             }
         }
