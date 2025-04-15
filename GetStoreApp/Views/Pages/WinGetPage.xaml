@@ -39,15 +39,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <SelectorBar
                 x:Name="WinGetSelectorBar"
                 Grid.Column="0"
                 Padding="0"
-                HorizontalAlignment="Left"
-                SelectionChanged="{x:Bind OnSelectionChanged}">
+                HorizontalAlignment="Left">
 
                 <SelectorBarItem
                     Padding="12,5"
@@ -65,14 +63,7 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
             </SelectorBar>
 
-            <Button
-                x:Name="ControlPanel"
-                Grid.Column="1"
-                Click="{x:Bind OnControlPanelClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanel')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}" />
-
-            <Button Grid.Column="2" VerticalAlignment="Center">
+            <Button Grid.Column="1" VerticalAlignment="Center">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" />
@@ -366,9 +357,9 @@
             Grid.Row="1"
             x:Load="{x:Bind service:WinGetConfigService.IsWinGetInstalled}">
 
-            <wc:SearchAppsControl x:Name="SearchApps" />
-            <wc:InstalledAppsControl x:Name="InstalledApps" />
-            <wc:UpgradableAppsControl x:Name="UpgradableApps" />
+            <wc:SearchAppsControl x:Name="SearchApps" Visibility="{x:Bind GetSelectedItem(WinGetSelectorBar.SelectedItem, 0), Mode=OneWay}" />
+            <wc:InstalledAppsControl x:Name="InstalledApps" Visibility="{x:Bind GetSelectedItem(WinGetSelectorBar.SelectedItem, 1), Mode=OneWay}" />
+            <wc:UpgradableAppsControl x:Name="UpgradableApps" Visibility="{x:Bind GetSelectedItem(WinGetSelectorBar.SelectedItem, 2), Mode=OneWay}" />
         </Grid>
 
         <!--  WinGet 程序包不存在提示内容  -->
