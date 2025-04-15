@@ -47,7 +47,6 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
         private readonly UISettings uiSettings = new();
-        private readonly PackageManager packageManager;
         private readonly string None = ResourceService.GetLocalized("Settings/None");
         private readonly string Yes = ResourceService.GetLocalized("Settings/Yes");
         private readonly string No = ResourceService.GetLocalized("Settings/No");
@@ -576,11 +575,6 @@ namespace GetStoreApp.Views.Pages
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
             NotificationService.PropertyChanged += OnServicePropertyChanged;
             StoreRegionService.PropertyChanged += OnServicePropertyChanged;
-
-            if (WinGetConfigService.IsWinGetInstalled)
-            {
-                packageManager = new PackageManager();
-            }
         }
 
         #region 第一部分：重写父类事件
@@ -588,12 +582,19 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 导航到该页面触发的事件
         /// </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs args)
+        protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
             base.OnNavigatedTo(args);
             settingNavigationArgs = args.Parameter is not null && Enum.TryParse(Convert.ToString(args.Parameter), out AppNaviagtionArgs appNaviagtionArgs) ? appNaviagtionArgs : AppNaviagtionArgs.None;
 
-            if (IsWinGetConfigMode)
+            if (settingNavigationArgs is AppNaviagtionArgs.WinGetDataSource)
+            {
+                IsWinGetConfigMode = true;
+                IsLoadedCompleted = false;
+                await InitializeWinGetSourceDataAsync();
+                IsLoadedCompleted = true;
+            }
+            else
             {
                 IsWinGetConfigMode = false;
             }
@@ -610,20 +611,34 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is WinGetSourceModel winGetSourceItem)
             {
+                foreach (WinGetSourceModel internalSourceItem in WinGetSourceInternalCollection)
+                {
+                    if (!internalSourceItem.Equals(winGetSourceItem))
+                    {
+                        internalSourceItem.IsSelected = false;
+                    }
+                }
+
+                foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
+                {
+                    if (!customSourceItem.Equals(winGetSourceItem))
+                    {
+                        customSourceItem.IsSelected = false;
+                    }
+                }
+
                 Task.Run(() =>
                 {
-                    List<KeyValuePair<string, bool>> winGetDataSourceNameList = WinGetConfigService.GetWinGetDataSourceNameList();
+                    KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(winGetSourceItem.Name, winGetSourceItem.IsInternal);
 
                     if (winGetSourceItem.IsSelected)
                     {
-                        winGetDataSourceNameList.Add(KeyValuePair.Create(winGetSourceItem.Name, winGetSourceItem.IsInternal));
+                        WinGetConfigService.SetWinGetDataSourceName(winGetDataSourceName);
                     }
                     else
                     {
-                        winGetDataSourceNameList.Remove(KeyValuePair.Create(winGetSourceItem.Name, winGetSourceItem.IsInternal));
+                        WinGetConfigService.RemoveWinGetDataSourceName(winGetDataSourceName);
                     }
-
-                    WinGetConfigService.SetWinGetDataSourceNameList(winGetDataSourceNameList);
                 });
             }
         }
@@ -658,17 +673,18 @@ namespace GetStoreApp.Views.Pages
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSourceItem)
             {
-                foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                 {
-                    if (item.Name.Equals(winGetSourceItem.Name))
+                    if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                     {
-                        item.IsOperating = true;
+                        customSourceItem.IsOperating = true;
                         break;
                     }
                 }
 
                 RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
                 {
+                    PackageManager packageManager = new();
                     RemovePackageCatalogOptions removePackageCatalogOptions = new()
                     {
                         Name = winGetSourceItem.Name,
@@ -682,11 +698,16 @@ namespace GetStoreApp.Views.Pages
                 {
                     case RemovePackageCatalogStatus.Ok:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            await Task.Run(() =>
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                WinGetConfigService.RemoveWinGetDataSourceName(KeyValuePair.Create(winGetSourceItem.Name, winGetSourceItem.IsInternal));
+                            });
+
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
+                            {
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    WinGetSourceCustomCollection.Remove(item);
+                                    WinGetSourceCustomCollection.Remove(customSourceItem);
                                     break;
                                 }
                             }
@@ -710,11 +731,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.CatalogError:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -724,11 +745,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.InternalError:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -738,11 +759,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.InvalidOptions:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -752,11 +773,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.AccessDenied:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -779,17 +800,18 @@ namespace GetStoreApp.Views.Pages
         {
             if (RuntimeHelper.IsElevated && args.Parameter is WinGetSourceModel winGetSourceItem)
             {
-                foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                 {
-                    if (item.Name.Equals(winGetSourceItem.Name))
+                    if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                     {
-                        item.IsOperating = true;
+                        customSourceItem.IsOperating = true;
                         break;
                     }
                 }
 
                 RemovePackageCatalogResult removePackageCatalogResult = await Task.Run(async () =>
                 {
+                    PackageManager packageManager = new();
                     RemovePackageCatalogOptions removePackageCatalogOptions = new()
                     {
                         Name = winGetSourceItem.Name,
@@ -803,11 +825,16 @@ namespace GetStoreApp.Views.Pages
                 {
                     case RemovePackageCatalogStatus.Ok:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            await Task.Run(() =>
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                WinGetConfigService.RemoveWinGetDataSourceName(KeyValuePair.Create(winGetSourceItem.Name, winGetSourceItem.IsInternal));
+                            });
+
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
+                            {
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    WinGetSourceCustomCollection.Remove(item);
+                                    WinGetSourceCustomCollection.Remove(customSourceItem);
                                     break;
                                 }
                             }
@@ -817,11 +844,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.GroupPolicyError:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -831,11 +858,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.CatalogError:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -845,11 +872,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.InternalError:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -859,11 +886,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.InvalidOptions:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -873,11 +900,11 @@ namespace GetStoreApp.Views.Pages
                         }
                     case RemovePackageCatalogStatus.AccessDenied:
                         {
-                            foreach (WinGetSourceModel item in WinGetSourceCustomCollection)
+                            foreach (WinGetSourceModel customSourceItem in WinGetSourceCustomCollection)
                             {
-                                if (item.Name.Equals(winGetSourceItem.Name))
+                                if (customSourceItem.Name.Equals(winGetSourceItem.Name))
                                 {
-                                    item.IsOperating = false;
+                                    customSourceItem.IsOperating = false;
                                     break;
                                 }
                             }
@@ -1157,7 +1184,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnConfigurationClicked(object sender, RoutedEventArgs args)
         {
-            if (!IsWinGetConfigMode && WinGetConfigService.IsWinGetInstalled && packageManager is not null)
+            if (!IsWinGetConfigMode && WinGetConfigService.IsWinGetInstalled)
             {
                 IsWinGetConfigMode = true;
                 IsLoadedCompleted = false;
@@ -1652,8 +1679,9 @@ namespace GetStoreApp.Views.Pages
 
             List<WinGetSourceModel> winGetSourceInternalList = await Task.Run(() =>
             {
+                PackageManager packageManager = new();
                 List<WinGetSourceModel> winGetSourceInternalList = [];
-                List<KeyValuePair<string, bool>> winGetDataSourceNameList = WinGetConfigService.GetWinGetDataSourceNameList();
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 
                 List<PackageCatalogReference> predefinedPackageCatalogReferenceList = [];
                 foreach (PredefinedPackageCatalog predefinedPackageCatalog in Enum.GetValues<PredefinedPackageCatalog>())
@@ -1680,7 +1708,7 @@ namespace GetStoreApp.Views.Pages
                     WinGetSourceModel winGetSourceItem = new()
                     {
                         IsOperating = false,
-                        IsSelected = winGetDataSourceNameList.Contains(KeyValuePair.Create(packageCatalogInformation.Name, true)),
+                        IsSelected = winGetDataSourceName.Equals(KeyValuePair.Create(packageCatalogInformation.Name, true)),
                         PackageCatalogInformation = packageCatalogInformation,
                         Name = packageCatalogInformation.Name,
                         Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? None : packageCatalogReference.Info.Argument,
@@ -1714,8 +1742,9 @@ namespace GetStoreApp.Views.Pages
 
             List<WinGetSourceModel> wingetSourceCustomList = await Task.Run(() =>
             {
+                PackageManager packageManager = new();
                 List<WinGetSourceModel> wingetSourceCustomList = [];
-                List<KeyValuePair<string, bool>> winGetDataSourceNameList = WinGetConfigService.GetWinGetDataSourceNameList();
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 
                 IReadOnlyList<PackageCatalogReference> packageCatalogReferenceList = packageManager.GetPackageCatalogs();
 
@@ -1743,7 +1772,7 @@ namespace GetStoreApp.Views.Pages
                     WinGetSourceModel winGetSourceItem = new()
                     {
                         IsOperating = false,
-                        IsSelected = winGetDataSourceNameList.Contains(KeyValuePair.Create(packageCatalogInformation.Name, false)),
+                        IsSelected = winGetDataSourceName.Equals(KeyValuePair.Create(packageCatalogInformation.Name, false)),
                         PackageCatalogInformation = packageCatalogInformation,
                         Name = packageCatalogInformation.Name,
                         Arguments = string.IsNullOrEmpty(packageCatalogInformation.Arguments) ? None : packageCatalogReference.Info.Argument,

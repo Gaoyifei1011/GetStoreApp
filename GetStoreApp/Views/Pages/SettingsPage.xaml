@@ -2916,6 +2916,7 @@
                                                                     Padding="11,0"
                                                                     Command="{StaticResource RemoveCommand}"
                                                                     CommandParameter="{x:Bind}"
+                                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/Remove')}">
 
                                                                     <MenuFlyoutItem.Icon>
@@ -2928,6 +2929,7 @@
                                                                     Padding="11,0"
                                                                     Command="{StaticResource RemovePreserveDataCommand}"
                                                                     CommandParameter="{x:Bind}"
+                                                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
                                                                     Text="{x:Bind root:ResourceService.GetLocalized('Settings/RemovePreserveData')}">
 
                                                                     <MenuFlyoutItem.Icon>

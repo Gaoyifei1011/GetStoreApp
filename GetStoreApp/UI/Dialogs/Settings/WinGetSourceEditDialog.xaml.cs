@@ -37,9 +37,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         private readonly string WinGetDataSourceEditInvalidOptions = ResourceService.GetLocalized("Dialog/WinGetDataSourceEditInvalidOptions");
         private readonly string WinGetDataSourceEditAccessDenied = ResourceService.GetLocalized("Dialog/WinGetDataSourceEditAccessDenied");
         private readonly string WinGetDataSourceEditAuthenticationError = ResourceService.GetLocalized("Dialog/WinGetDataSourceEditAuthenticationError");
-
         private readonly string Unknown = ResourceService.GetLocalized("Dialog/Unknown");
-        private readonly PackageManager packageManager = new();
 
         private WinGetSourceEditKind WinGetSourceEditKind { get; }
 
@@ -289,6 +287,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
                         Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType
                     };
 
+                    PackageManager packageManager = new();
                     return await packageManager.AddPackageCatalogAsync(addPackageCatalogOptions);
                 });
 
@@ -346,6 +345,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
                         PreserveData = true,
                     };
 
+                    PackageManager packageManager = new();
                     return await packageManager.RemovePackageCatalogAsync(removePackageCatalogOptions);
                 });
 
@@ -363,6 +363,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
                             Type = string.IsNullOrEmpty(SourceType) ? string.Empty : SourceType
                         };
 
+                        PackageManager packageManager = new();
                         return await packageManager.AddPackageCatalogAsync(addPackageCatalogOptions);
                     });
 
