@@ -21,7 +21,6 @@ namespace GetStoreApp.Services.Controls.Settings
         private static readonly string winGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
         private static readonly Lock wingetDataSourceLock = new();
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
-        private static PackageManager packageManager;
         private static ApplicationDataContainer wingetDataSourceContainer;
 
         public static bool IsWinGetInstalled { get; private set; }
@@ -51,23 +50,16 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 if (IsWinGetInstalled)
                 {
-                    packageManager = new();
+                    PackageManager packageManager = new();
                     wingetDataSourceLock.Enter();
 
                     try
                     {
-                        if (wingetDataSourceContainer.Values.Count > 0)
+                        if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue)
                         {
-                            List<KeyValuePair<string, bool>> winGetDataSourceNameList = [];
-                            for (int index = 0; index < wingetDataSourceContainer.Values.Count; index++)
-                            {
-                                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource + index.ToString(), out object value) && value is ApplicationDataCompositeValue compositeValue)
-                                {
-                                    winGetDataSourceNameList.Add(KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"])));
-                                }
-                            }
-
+                            KeyValuePair<string, bool> winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
                             wingetDataSourceContainer.Values.Clear();
+                            bool isModified = false;
 
                             // 检查内置数据源
                             List<string> predefinedPackageCatalogReferenceNameList = [];
@@ -79,43 +71,31 @@ namespace GetStoreApp.Services.Controls.Settings
                             // 保存检查完成后的数据
                             foreach (string predefinedPackageCatalogReferenceName in predefinedPackageCatalogReferenceNameList)
                             {
-                                foreach (KeyValuePair<string, bool> winGetDataSourceNameKeyValuePairItem in winGetDataSourceNameList)
+                                if (winGetDataSourceName.Key.Equals(predefinedPackageCatalogReferenceName) && winGetDataSourceName.Value)
                                 {
-                                    if (winGetDataSourceNameKeyValuePairItem.Key.Equals(predefinedPackageCatalogReferenceName) && winGetDataSourceNameKeyValuePairItem.Value)
-                                    {
-                                        ApplicationDataCompositeValue compositeValue = new()
-                                        {
-                                            ["Name"] = predefinedPackageCatalogReferenceName,
-                                            ["IsInternal"] = winGetDataSourceNameKeyValuePairItem.Value
-                                        };
-
-                                        wingetDataSourceContainer.Values.TryAdd(WinetDataSource + wingetDataSourceContainer.Values.Count.ToString(), compositeValue);
-                                    }
+                                    wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
+                                    isModified = true;
+                                    break;
                                 }
                             }
 
-                            // 检查自定义数据源
-                            IReadOnlyList<PackageCatalogReference> packageCatalogReferenceList = packageManager.GetPackageCatalogs();
-                            List<string> packageCatalogReferenceNameList = [];
-                            for (int index = 0; index < packageCatalogReferenceList.Count; index++)
+                            if (!isModified)
                             {
-                                packageCatalogReferenceNameList.Add(packageCatalogReferenceList[index].Info.Name);
-                            }
-
-                            // 保存检查完成后的数据
-                            foreach (string packageCatalogReferenceName in packageCatalogReferenceNameList)
-                            {
-                                foreach (KeyValuePair<string, bool> winGetDataSourceNameKeyValuePairItem in winGetDataSourceNameList)
+                                // 检查自定义数据源
+                                IReadOnlyList<PackageCatalogReference> packageCatalogReferenceList = packageManager.GetPackageCatalogs();
+                                List<string> packageCatalogReferenceNameList = [];
+                                for (int index = 0; index < packageCatalogReferenceList.Count; index++)
                                 {
-                                    if (winGetDataSourceNameKeyValuePairItem.Key.Equals(packageCatalogReferenceName) && !winGetDataSourceNameKeyValuePairItem.Value)
-                                    {
-                                        ApplicationDataCompositeValue compositeValue = new()
-                                        {
-                                            ["Name"] = packageCatalogReferenceName,
-                                            ["IsInternal"] = winGetDataSourceNameKeyValuePairItem.Value
-                                        };
+                                    packageCatalogReferenceNameList.Add(packageCatalogReferenceList[index].Info.Name);
+                                }
 
-                                        wingetDataSourceContainer.Values.TryAdd(WinetDataSource + wingetDataSourceContainer.Values.Count.ToString(), compositeValue);
+                                // 保存检查完成后的数据
+                                foreach (string packageCatalogReferenceName in packageCatalogReferenceNameList)
+                                {
+                                    if (winGetDataSourceName.Key.Equals(packageCatalogReferenceName) && winGetDataSourceName.Value)
+                                    {
+                                        wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
+                                        break;
                                     }
                                 }
                             }
@@ -123,7 +103,7 @@ namespace GetStoreApp.Services.Controls.Settings
                     }
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "Get winget data source settings data failed", e);
+                        LogService.WriteLog(LoggingLevel.Error, "Initialize winget data source settings data failed", e);
                     }
                     finally
                     {
@@ -164,22 +144,16 @@ namespace GetStoreApp.Services.Controls.Settings
         /// <summary>
         /// 获取 WinGet 数据源搜索时选择的所有名称
         /// </summary>
-        public static List<KeyValuePair<string, bool>> GetWinGetDataSourceNameList()
+        public static KeyValuePair<string, bool> GetWinGetDataSourceName()
         {
-            List<KeyValuePair<string, bool>> winGetDataSourceNameList = [];
+            KeyValuePair<string, bool> winGetDataSourceName = default;
             wingetDataSourceLock.Enter();
 
             try
             {
-                if (wingetDataSourceContainer.Values.Count > 0)
+                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue)
                 {
-                    for (int index = 0; index < wingetDataSourceContainer.Values.Count; index++)
-                    {
-                        if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource + index.ToString(), out object value) && value is ApplicationDataCompositeValue compositeValue)
-                        {
-                            winGetDataSourceNameList.Add(KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"])));
-                        }
-                    }
+                    winGetDataSourceName = KeyValuePair.Create(Convert.ToString(compositeValue["Name"]), Convert.ToBoolean(compositeValue["IsInternal"]));
                 }
             }
             catch (Exception e)
@@ -191,29 +165,48 @@ namespace GetStoreApp.Services.Controls.Settings
                 wingetDataSourceLock.Exit();
             }
 
-            return winGetDataSourceNameList;
+            return winGetDataSourceName;
         }
 
         /// <summary>
         /// 设置 WinGet 数据源搜索时选择的所有名称
         /// </summary>
-        public static void SetWinGetDataSourceNameList(List<KeyValuePair<string, bool>> winGetDataSourceNameList)
+        public static void SetWinGetDataSourceName(KeyValuePair<string, bool> winGetDataSourceName)
         {
             wingetDataSourceLock.Enter();
 
             try
             {
-                wingetDataSourceContainer.Values.Clear();
-
-                for (int index = 0; index < winGetDataSourceNameList.Count; index++)
+                ApplicationDataCompositeValue compositeValue = new()
                 {
-                    ApplicationDataCompositeValue compositeValue = new()
-                    {
-                        ["Name"] = winGetDataSourceNameList[index].Key,
-                        ["IsInternal"] = winGetDataSourceNameList[index].Value
-                    };
+                    ["Name"] = winGetDataSourceName.Key,
+                    ["IsInternal"] = winGetDataSourceName.Value
+                };
 
-                    wingetDataSourceContainer.Values.TryAdd(WinetDataSource + index.ToString(), compositeValue);
+                wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Set winget data source settings data failed", e);
+            }
+            finally
+            {
+                wingetDataSourceLock.Exit();
+            }
+        }
+
+        public static void RemoveWinGetDataSourceName(KeyValuePair<string, bool> winGetDataSourceName)
+        {
+            wingetDataSourceLock.Enter();
+
+            try
+            {
+                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue)
+                {
+                    if (compositeValue.TryGetValue("Name", out object nameValue) && Convert.ToString(nameValue).Equals(winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Convert.ToBoolean(isInternalValue).Equals(winGetDataSourceName.Value))
+                    {
+                        wingetDataSourceContainer.Values.Remove(WinetDataSource);
+                    }
                 }
             }
             catch (Exception e)

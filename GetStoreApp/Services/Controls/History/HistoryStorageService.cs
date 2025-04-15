@@ -153,7 +153,7 @@ namespace GetStoreApp.Services.Controls.History
                     };
 
                     string queryLinksKey = QueryLinks + index.ToString();
-                    queryLinksContainer.Values.TryAdd(queryLinksKey, compositeValue);
+                    queryLinksContainer.Values[queryLinksKey] = compositeValue;
                 }
             }
             catch (Exception e)
@@ -187,7 +187,7 @@ namespace GetStoreApp.Services.Controls.History
                     };
 
                     string searchStoreKey = SearchStore + index.ToString();
-                    searchStoreContainer.Values.TryAdd(searchStoreKey, compositeValue);
+                    searchStoreContainer.Values[searchStoreKey] = compositeValue;
                 }
             }
             catch (Exception e)
