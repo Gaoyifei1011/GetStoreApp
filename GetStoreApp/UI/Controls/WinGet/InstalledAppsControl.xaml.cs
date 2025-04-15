@@ -4,7 +4,10 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.ComTypes;
+using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -14,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -29,8 +33,9 @@ namespace GetStoreApp.UI.Controls.WinGet
     {
         private readonly string InstalledAppsCountInfo = ResourceService.GetLocalized("WinGet/InstalledAppsCountInfo");
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
+        private readonly Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
         private bool isInitialized;
-        private PackageManager installedAppsManager;
+        private IOpenControlPanel openControlPanel;
 
         private bool _isLoadedCompleted;
 
@@ -48,6 +53,9 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        /// <summary>
+        /// TODO：无必要，去除
+        /// </summary>
         private bool _isInstalledAppsEmpty;
 
         public bool IsInstalledAppsEmpty
@@ -121,6 +129,16 @@ namespace GetStoreApp.UI.Controls.WinGet
         public InstalledAppsControl()
         {
             InitializeComponent();
+
+            Task.Run(() =>
+            {
+                int createResult = Ole32Library.CoCreateInstance(CLSID_OpenControlPanel, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER | CLSCTX.CLSCTX_INPROC_HANDLER | CLSCTX.CLSCTX_LOCAL_SERVER | CLSCTX.CLSCTX_REMOTE_SERVER, typeof(IOpenControlPanel).GUID, out IntPtr ppv);
+
+                if (createResult is 0)
+                {
+                    openControlPanel = (IOpenControlPanel)Program.StrategyBasedComWrappers.GetOrCreateObjectForComInstance(ppv, CreateObjectFlags.Unwrap);
+                }
+            });
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -152,7 +170,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         // TODO：添加修复操作 RepairOptions
                         // TODO：添加 PackageManagerSettings
-                        UninstallResult unInstallResult = await installedAppsManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, new()
+                        PackageManager packageManager = new();
+                        UninstallResult unInstallResult = await packageManager.UninstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.InstalledVersion.Id == installedApps.AppID).CatalogPackage, new()
                         {
                             // TODO：未完成
                             PackageUninstallMode = PackageUninstallMode.Interactive,
@@ -259,17 +278,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             if (!isInitialized)
             {
                 isInitialized = true;
-
-                try
-                {
-                    installedAppsManager = new();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Installed apps information initialized failed.", e);
-                    return;
-                }
-
                 await GetInstalledAppsAsync();
                 await InitializeDataAsync();
             }
@@ -312,6 +320,25 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
+        /// 打开控制面板的程序与功能
+        /// </summary>
+        private void OnControlPanelClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(() =>
+            {
+                openControlPanel?.Open("Microsoft.ProgramsAndFeatures", null, IntPtr.Zero);
+            });
+        }
+
+        /// <summary>
+        /// 配置 WinGet 数据源
+        /// </summary>
+        private void OnDataSourceSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.WinGetDataSource);
+        }
+
+        /// <summary>
         /// 根据输入的内容检索应用
         /// </summary>
         private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
@@ -348,7 +375,8 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 try
                 {
-                    PackageCatalogReference packageCatalogReference = installedAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
+                    PackageManager packageManager = new();
+                    PackageCatalogReference packageCatalogReference = packageManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
                     ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
 
                     if (connectResult.Status is ConnectResultStatus.Ok)

@@ -5,6 +5,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
@@ -83,13 +84,65 @@
 
             <CommandBar.PrimaryCommands>
                 <AppBarButton
-                    Click="{x:Bind OnOpenTempFolderClicked}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
+                    IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SortToolTip')}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE8B7;" />
+                        <FontIcon Glyph="&#xE8CB;" />
                     </AppBarButton.Icon>
+
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutSubItem
+                                Height="32"
+                                Padding="11,0,11,0"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortWay')}">
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortWayClicked}"
+                                    GroupName="SortWayRadioGroup"
+                                    IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
+                                    Tag="True"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortWayClicked}"
+                                    GroupName="SortWayRadioGroup"
+                                    IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
+                                    Tag="False"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
+                            </MenuFlyoutSubItem>
+
+                            <MenuFlyoutSubItem
+                                Height="32"
+                                Padding="11,0,11,0"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortRule')}">
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortRuleClicked}"
+                                    GroupName="SortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                    Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortRuleClicked}"
+                                    GroupName="SortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                    Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
+                            </MenuFlyoutSubItem>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
                 </AppBarButton>
 
                 <AppBarButton
@@ -103,6 +156,28 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Click="{x:Bind OnOpenTempFolderClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8B7;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton
+                    Click="{x:Bind OnDataSourceSettingsClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/DataSourceSettings')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/DataSourceSettingsToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE713;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
 

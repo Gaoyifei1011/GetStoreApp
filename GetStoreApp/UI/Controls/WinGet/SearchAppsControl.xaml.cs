@@ -36,9 +36,8 @@ namespace GetStoreApp.UI.Controls.WinGet
     {
         private readonly string SearchedAppsCountInfo = ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo");
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
-        private bool isInitialized;
-        private PackageManager searchAppsManager;
         private string cachedSearchText;
+        private bool needToRefreshData;
         private WinGetPage WinGetInstance;
 
         private bool _notSearched = true;
@@ -57,18 +56,34 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private bool _isSearchCompleted;
+        private bool _isLoadedCompleted;
 
-        public bool IsSearchCompleted
+        public bool IsLoadedCompleted
         {
-            get { return _isSearchCompleted; }
+            get { return _isLoadedCompleted; }
 
             set
             {
-                if (!Equals(_isSearchCompleted, value))
+                if (!Equals(_isLoadedCompleted, value))
                 {
-                    _isSearchCompleted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSearchCompleted)));
+                    _isLoadedCompleted = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                }
+            }
+        }
+
+        private bool _isIncrease = true;
+
+        public bool IsIncrease
+        {
+            get { return _isIncrease; }
+
+            set
+            {
+                if (!Equals(_isIncrease, value))
+                {
+                    _isIncrease = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsIncrease)));
                 }
             }
         }
@@ -85,6 +100,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     _searchText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                }
+            }
+        }
+
+        private AppSortRuleKind _selectedRule = AppSortRuleKind.DisplayName;
+
+        public AppSortRuleKind SelectedRule
+        {
+            get { return _selectedRule; }
+
+            set
+            {
+                if (!Equals(_selectedRule, value))
+                {
+                    _selectedRule = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedRule)));
                 }
             }
         }
@@ -148,7 +179,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = searchAppsManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, new()
+                        PackageManager packageManager = new();
+                        IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, new()
                         {
                             PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default,
                             PackageInstallScope = PackageInstallScope.Any
@@ -204,23 +236,40 @@ namespace GetStoreApp.UI.Controls.WinGet
         #region 第二部分：搜索应用控件——挂载的事件
 
         /// <summary>
-        /// 搜索应用控件初始化完成后触发的事件
+        /// 根据排序方式对列表进行排序
         /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
+        private async void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (!isInitialized)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
             {
-                isInitialized = true;
-
-                try
-                {
-                    searchAppsManager = new();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Search apps information initialized failed.", e);
-                }
+                IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
+                await InitializeDataAsync();
             }
+        }
+
+        /// <summary>
+        /// 根据排序规则对列表进行排序
+        /// </summary>
+        private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
+            {
+                SelectedRule = (AppSortRuleKind)radioMenuFlyoutItem.Tag;
+                await InitializeDataAsync();
+            }
+        }
+
+        /// <summary>
+        /// 浮出菜单关闭后更新数据
+        /// </summary>
+        private async void OnClosed(object sender, object args)
+        {
+            if (needToRefreshData)
+            {
+                await InitializeDataAsync();
+            }
+
+            needToRefreshData = false;
         }
 
         /// <summary>
@@ -245,15 +294,24 @@ namespace GetStoreApp.UI.Controls.WinGet
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
             MatchResultList.Clear();
-            IsSearchCompleted = false;
+            IsLoadedCompleted = false;
 
             if (string.IsNullOrEmpty(cachedSearchText))
             {
-                IsSearchCompleted = true;
+                IsLoadedCompleted = true;
                 return;
             }
+
             await GetSearchAppsAsync();
             await InitializeDataAsync();
+        }
+
+        /// <summary>
+        /// 配置 WinGet 数据源
+        /// </summary>
+        private void OnDataSourceSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.WinGetDataSource);
         }
 
         /// <summary>
@@ -265,7 +323,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 cachedSearchText = SearchText;
                 NotSearched = false;
-                IsSearchCompleted = false;
+                IsLoadedCompleted = false;
                 await GetSearchAppsAsync();
                 await InitializeDataAsync();
             }
@@ -593,16 +651,17 @@ namespace GetStoreApp.UI.Controls.WinGet
                 try
                 {
                     // TODO：优化 WinGet 源设置
-                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = searchAppsManager.GetPackageCatalogs();
+                    PackageManager packageManager = new();
+                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = packageManager.GetPackageCatalogs();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
 
-                    for (int index = 0; index < packageCatalogsList.Count; index++)
+                    if (packageCatalogsList.Count > 0)
                     {
-                        PackageCatalogReference catalogReference = packageCatalogsList[index];
+                        PackageCatalogReference catalogReference = packageCatalogsList[0];
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
 
-                    PackageCatalogReference packageCatalogReference = searchAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                    PackageCatalogReference packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
                     ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
 
                     if (connectResult.Status is ConnectResultStatus.Ok)
@@ -684,7 +743,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
             }
 
-            IsSearchCompleted = true;
+            IsLoadedCompleted = true;
         }
     }
 }

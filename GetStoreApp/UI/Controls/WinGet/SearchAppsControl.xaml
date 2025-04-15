@@ -5,10 +5,10 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:winget="using:GetStoreApp.Models.Controls.WinGet"
-    Loaded="{x:Bind OnLoaded}"
     mc:Ignorable="d">
 
     <Grid.Resources>
@@ -75,7 +75,7 @@
             Width="170"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.IsSearchBoxEnabled(NotSearched, IsSearchCompleted), Mode=OneWay}"
+            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.IsSearchBoxEnabled(NotSearched, IsLoadedCompleted), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsPlaceHolderText')}"
             QuerySubmitted="{x:Bind OnQuerySubmitted}"
             Text="{x:Bind SearchText, Mode=OneWay}"
@@ -100,6 +100,186 @@
 
             <CommandBar.PrimaryCommands>
                 <AppBarButton
+                    IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SortToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE8CB;" />
+                    </AppBarButton.Icon>
+
+                    <AppBarButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutSubItem
+                                Height="32"
+                                Padding="11,0,11,0"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortWay')}">
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortWayClicked}"
+                                    GroupName="SortWayRadioGroup"
+                                    IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
+                                    Tag="True"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortWayClicked}"
+                                    GroupName="SortWayRadioGroup"
+                                    IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
+                                    Tag="False"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
+                            </MenuFlyoutSubItem>
+
+                            <MenuFlyoutSubItem
+                                Height="32"
+                                Padding="11,0,11,0"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortRule')}">
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortRuleClicked}"
+                                    GroupName="SortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                    Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
+
+                                <RadioMenuFlyoutItem
+                                    Height="32"
+                                    Padding="11,0"
+                                    Click="{x:Bind OnSortRuleClicked}"
+                                    GroupName="SortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                    Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
+                            </MenuFlyoutSubItem>
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+
+                <AppBarButton
+                    IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchFilter')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchFilterToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE71C;" />
+                    </AppBarButton.Icon>
+
+                    <AppBarButton.Flyout>
+                        <Flyout
+                            Closed="{x:Bind OnClosed}"
+                            Placement="Bottom"
+                            ShouldConstrainToRootBounds="False"
+                            SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+
+                            <!--<StackPanel Padding="12" Spacing="5">
+                                <TextBlock
+                                    Margin="2,0,0,0"
+                                    FontSize="14"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/AppType')}" />
+
+                                <ToggleButton
+                                    Click="{x:Bind OnFilterWayClicked}"
+                                    Content="{x:Bind root:ResourceService.GetLocalized('AppManager/FrameworkPackage')}"
+                                    IsChecked="{x:Bind IsAppFramework, Mode=OneWay}" />
+
+                                <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+                                <TextBlock
+                                    Margin="2,0,0,0"
+                                    FontSize="14"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureType')}" />
+
+                                <Grid ColumnSpacing="5" RowSpacing="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <ToggleButton
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Stretch"
+                                        Click="{x:Bind OnSignatureRuleClicked}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureStore')}"
+                                        IsChecked="{x:Bind IsStoreSignatureSelected, Mode=OneWay}"
+                                        Tag="{x:Bind applicationModel:PackageSignatureKind.Store}" />
+
+                                    <ToggleButton
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Stretch"
+                                        Click="{x:Bind OnSignatureRuleClicked}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureSystem')}"
+                                        IsChecked="{x:Bind IsSystemSignatureSelected, Mode=OneWay}"
+                                        Tag="{x:Bind applicationModel:PackageSignatureKind.System}" />
+
+                                    <ToggleButton
+                                        Grid.Row="0"
+                                        Grid.Column="2"
+                                        HorizontalAlignment="Stretch"
+                                        Click="{x:Bind OnSignatureRuleClicked}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureEnterprise')}"
+                                        IsChecked="{x:Bind IsEnterpriseSignatureSelected, Mode=OneWay}"
+                                        Tag="{x:Bind applicationModel:PackageSignatureKind.Enterprise}" />
+
+                                    <ToggleButton
+                                        Grid.Row="0"
+                                        Grid.Column="3"
+                                        HorizontalAlignment="Stretch"
+                                        Click="{x:Bind OnSignatureRuleClicked}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureDeveloper')}"
+                                        IsChecked="{x:Bind IsDeveloperSignatureSelected, Mode=OneWay}"
+                                        Tag="{x:Bind applicationModel:PackageSignatureKind.Developer}" />
+
+                                    <ToggleButton
+                                        Grid.Row="0"
+                                        Grid.Column="4"
+                                        HorizontalAlignment="Stretch"
+                                        Click="{x:Bind OnSignatureRuleClicked}"
+                                        Content="{x:Bind root:ResourceService.GetLocalized('AppManager/SignatureNone')}"
+                                        IsChecked="{x:Bind IsNoneSignatureSelected, Mode=OneWay}"
+                                        Tag="{x:Bind applicationModel:PackageSignatureKind.None}" />
+                                </Grid>
+                            </StackPanel>-->
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+
+                <AppBarButton
+                    Click="{x:Bind OnRefreshClicked}"
+                    IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE72C;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
                     Click="{x:Bind OnOpenTempFolderClicked}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolder')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenTempFolderToolTip')}">
@@ -110,16 +290,15 @@
                 </AppBarButton>
 
                 <AppBarButton
-                    Click="{x:Bind OnRefreshClicked}"
-                    IsEnabled="{x:Bind IsSearchCompleted, Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
+                    Click="{x:Bind OnDataSourceSettingsClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/DataSourceSettings')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/DataSourceSettingsToolTip')}">
 
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE72C;" />
+                        <FontIcon Glyph="&#xE713;" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-            </CommandBar.PrimaryCommands>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
 
@@ -165,7 +344,7 @@
             Height="60"
             Margin="30,3,30,0"
             Padding="16,12"
-            x:Load="{x:Bind IsSearchCompleted.Equals(x:False), Mode=OneWay}"
+            x:Load="{x:Bind IsLoadedCompleted.Equals(x:False), Mode=OneWay}"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
@@ -190,7 +369,7 @@
         <Grid
             Grid.Row="2"
             Margin="0,3,0,0"
-            Visibility="{x:Bind IsSearchCompleted, Mode=OneWay}">
+            Visibility="{x:Bind IsLoadedCompleted, Mode=OneWay}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

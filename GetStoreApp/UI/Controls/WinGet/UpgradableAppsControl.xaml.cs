@@ -37,7 +37,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
         private readonly string UpgradableAppsCountInfo = ResourceService.GetLocalized("WinGet/UpgradableAppsCountInfo");
         private bool isInitialized;
-        private PackageManager upgradableAppsManager;
         private WinGetPage WinGetInstance;
 
         private bool _isLoadedCompleted;
@@ -56,6 +55,25 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        private bool _isIncrease = true;
+
+        public bool IsIncrease
+        {
+            get { return _isIncrease; }
+
+            set
+            {
+                if (!Equals(_isIncrease, value))
+                {
+                    _isIncrease = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsIncrease)));
+                }
+            }
+        }
+
+        /// <summary>
+        /// TODO：无必要，去除
+        /// </summary>
         private bool _isUpgradableAppsEmpty;
 
         public bool IsUpgradableAppsEmpty
@@ -68,6 +86,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     _isUpgradableAppsEmpty = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpgradableAppsEmpty)));
+                }
+            }
+        }
+
+        private AppSortRuleKind _selectedRule = AppSortRuleKind.DisplayName;
+
+        public AppSortRuleKind SelectedRule
+        {
+            get { return _selectedRule; }
+
+            set
+            {
+                if (!Equals(_selectedRule, value))
+                {
+                    _selectedRule = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedRule)));
                 }
             }
         }
@@ -145,7 +179,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = upgradableAppsManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, new()
+                        PackageManager packageManager = new();
+                        IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.UpgradePackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == upgradableApps.AppID).CatalogPackage, new()
                         {
                             PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default,
                             PackageInstallScope = PackageInstallScope.Any
@@ -187,6 +222,30 @@ namespace GetStoreApp.UI.Controls.WinGet
         #region 第二部分：可升级应用控件——挂载的事件
 
         /// <summary>
+        /// 根据排序方式对列表进行排序
+        /// </summary>
+        private async void OnSortWayClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
+            {
+                IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
+                await InitializeDataAsync();
+            }
+        }
+
+        /// <summary>
+        /// 根据排序规则对列表进行排序
+        /// </summary>
+        private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
+            {
+                SelectedRule = (AppSortRuleKind)radioMenuFlyoutItem.Tag;
+                await InitializeDataAsync();
+            }
+        }
+
+        /// <summary>
         /// 打开临时下载目录
         /// </summary>
         private async void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
@@ -211,6 +270,14 @@ namespace GetStoreApp.UI.Controls.WinGet
             IsLoadedCompleted = false;
             await GetUpgradableAppsAsync();
             await InitializeDataAsync();
+        }
+
+        /// <summary>
+        /// 配置 WinGet 数据源
+        /// </summary>
+        private void OnDataSourceSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.WinGetDataSource);
         }
 
         #endregion 第二部分：可升级应用控件——挂载的事件
@@ -557,17 +624,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             if (!isInitialized)
             {
                 isInitialized = true;
-
-                try
-                {
-                    upgradableAppsManager = new();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "Upgradable apps information initialized failed.", e);
-                    return;
-                }
-
                 await GetUpgradableAppsAsync();
                 await InitializeDataAsync();
             }
@@ -588,17 +644,18 @@ namespace GetStoreApp.UI.Controls.WinGet
                 try
                 {
                     // TODO：优化 WinGet 源设置
-                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = upgradableAppsManager.GetPackageCatalogs();
+                    PackageManager packageManager = new();
+                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = packageManager.GetPackageCatalogs();
                     CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
-                    PackageCatalogReference searchCatalogReference = upgradableAppsManager.GetLocalPackageCatalog(LocalPackageCatalog.InstalledPackages);
 
-                    for (int index = 0; index < packageCatalogsList.Count; index++)
+                    if (packageCatalogsList.Count > 0)
                     {
-                        PackageCatalogReference catalogReference = packageCatalogsList[index];
+                        PackageCatalogReference catalogReference = packageCatalogsList[0];
                         createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
                     }
+
                     createCompositePackageCatalogOptions.CompositeSearchBehavior = CompositeSearchBehavior.LocalCatalogs;
-                    PackageCatalogReference packageCatalogReference = upgradableAppsManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
+                    PackageCatalogReference packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
 
                     if ((await packageCatalogReference.ConnectAsync()).PackageCatalog is PackageCatalog upgradableCatalog)
                     {

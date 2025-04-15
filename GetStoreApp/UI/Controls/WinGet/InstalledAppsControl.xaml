@@ -172,6 +172,28 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Click="{x:Bind OnControlPanelClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanel')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ControlPanelToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE70A;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton
+                    Click="{x:Bind OnDataSourceSettingsClicked}"
+                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/DataSourceSettings')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/DataSourceSettingsToolTip')}">
+
+                    <AppBarButton.Icon>
+                        <FontIcon Glyph="&#xE713;" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
 
