@@ -25,6 +25,8 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static bool IsWinGetInstalled { get; private set; }
 
+        public static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
+
         public static KeyValuePair<string, string> DefaultWinGetInstallMode { get; set; }
 
         public static KeyValuePair<string, string> WinGetInstallMode { get; set; }
@@ -62,16 +64,17 @@ namespace GetStoreApp.Services.Controls.Settings
                             bool isModified = false;
 
                             // 检查内置数据源
-                            List<string> predefinedPackageCatalogReferenceNameList = [];
+
                             foreach (PredefinedPackageCatalog predefinedPackageCatalog in Enum.GetValues<PredefinedPackageCatalog>())
                             {
-                                predefinedPackageCatalogReferenceNameList.Add(packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog).Info.Name);
+                                PackageCatalogReference packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog);
+                                PredefinedPackageCatalogList.Add(KeyValuePair.Create(packageCatalogReference.Info.Name, predefinedPackageCatalog));
                             }
 
                             // 保存检查完成后的数据
-                            foreach (string predefinedPackageCatalogReferenceName in predefinedPackageCatalogReferenceNameList)
+                            foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalogReferenceName in PredefinedPackageCatalogList)
                             {
-                                if (winGetDataSourceName.Key.Equals(predefinedPackageCatalogReferenceName) && winGetDataSourceName.Value)
+                                if (winGetDataSourceName.Key.Equals(predefinedPackageCatalogReferenceName.Key) && winGetDataSourceName.Value)
                                 {
                                     wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
                                     isModified = true;
@@ -92,7 +95,7 @@ namespace GetStoreApp.Services.Controls.Settings
                                 // 保存检查完成后的数据
                                 foreach (string packageCatalogReferenceName in packageCatalogReferenceNameList)
                                 {
-                                    if (winGetDataSourceName.Key.Equals(packageCatalogReferenceName) && winGetDataSourceName.Value)
+                                    if (winGetDataSourceName.Key.Equals(packageCatalogReferenceName) && !winGetDataSourceName.Value)
                                     {
                                         wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
                                         break;

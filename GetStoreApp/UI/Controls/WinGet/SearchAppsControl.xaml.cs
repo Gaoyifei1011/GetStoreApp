@@ -37,7 +37,6 @@ namespace GetStoreApp.UI.Controls.WinGet
         private readonly string SearchedAppsCountInfo = ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo");
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
         private string cachedSearchText;
-        private bool needToRefreshData;
         private WinGetPage WinGetInstance;
 
         private bool _notSearched = true;
@@ -120,6 +119,38 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        private PackageMatchField _packageMatchField = PackageMatchField.Name;
+
+        public PackageMatchField PackageMatchField
+        {
+            get { return _packageMatchField; }
+
+            set
+            {
+                if (!Equals(_packageMatchField, value))
+                {
+                    _packageMatchField = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageMatchField)));
+                }
+            }
+        }
+
+        private PackageFieldMatchOption _packageFieldMatchOption = PackageFieldMatchOption.EqualsCaseInsensitive;
+
+        public PackageFieldMatchOption PackageFieldMatchOption
+        {
+            get { return _packageFieldMatchOption; }
+
+            set
+            {
+                if (!Equals(_packageFieldMatchOption, value))
+                {
+                    _packageFieldMatchOption = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageFieldMatchOption)));
+                }
+            }
+        }
+
         private List<MatchResult> MatchResultList { get; } = [];
 
         private ObservableCollection<SearchAppsModel> SearchAppsCollection { get; } = [];
@@ -165,15 +196,24 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
 
                 // 添加任务
-                WinGetInstance.InstallingAppsCollection.Add(new InstallingAppsModel()
+                WinGetInstance.InstallingAppsLock.Enter();
+                try
                 {
-                    AppID = searchApps.AppID,
-                    AppName = searchApps.AppName,
-                    DownloadProgress = 0,
-                    InstallProgressState = PackageInstallProgressState.Queued,
-                    DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
-                    TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0)
-                });
+                    WinGetInstance.InstallingAppsCollection.Add(new InstallingAppsModel()
+                    {
+                        AppID = searchApps.AppID,
+                        AppName = searchApps.AppName,
+                        DownloadProgress = 0,
+                        InstallProgressState = PackageInstallProgressState.Queued,
+                        DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                        TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0)
+                    });
+                }
+                catch (Exception) { }
+                finally
+                {
+                    WinGetInstance.InstallingAppsLock.Exit();
+                }
 
                 Task.Run(() =>
                 {
@@ -187,7 +227,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         });
 
                         // 第一部分：添加更新任务
-                        WinGetInstance.installStateLock.Enter();
+                        WinGetInstance.InstallStateLock.Enter();
 
                         try
                         {
@@ -199,7 +239,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         finally
                         {
-                            WinGetInstance.installStateLock.Exit();
+                            WinGetInstance.InstallStateLock.Exit();
                         }
 
                         // 第二部分：更新安装进度
@@ -238,54 +278,98 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        private async void OnSortWayClicked(object sender, RoutedEventArgs args)
+        private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase)
             {
-                IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
-                await InitializeDataAsync();
+                IsIncrease = increase;
+                IsLoadedCompleted = false;
+                List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
+                searchAppsList.Reverse();
+                SearchAppsCollection.Clear();
+                foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
+                {
+                    SearchAppsCollection.Add(searchAppsItem);
+                }
+                IsLoadedCompleted = true;
             }
         }
 
         /// <summary>
         /// 根据排序规则对列表进行排序
         /// </summary>
-        private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
             {
-                SelectedRule = (AppSortRuleKind)radioMenuFlyoutItem.Tag;
-                await InitializeDataAsync();
+                SelectedRule = appSortRuleKind;
+                IsLoadedCompleted = false;
+                List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
+                if (SelectedRule is AppSortRuleKind.DisplayName)
+                {
+                    if (IsIncrease)
+                    {
+                        searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                    }
+                    else
+                    {
+                        searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                    }
+                }
+                else
+                {
+                    if (IsIncrease)
+                    {
+                        searchAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
+                    }
+                    else
+                    {
+                        searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
+                    }
+                }
+                IsLoadedCompleted = true;
             }
         }
 
         /// <summary>
-        /// 浮出菜单关闭后更新数据
+        /// 更新应用搜索过滤方式
         /// </summary>
-        private async void OnClosed(object sender, object args)
+        private void OnPackageMatchFieldClicked(object sender, RoutedEventArgs args)
         {
-            if (needToRefreshData)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is PackageMatchField packageMatchField)
             {
-                await InitializeDataAsync();
+                PackageMatchField = packageMatchField;
             }
+        }
 
-            needToRefreshData = false;
+        /// <summary>
+        /// 更新应用搜索过滤规则
+        /// </summary>
+        private void OnPackageFieldMatchOptionClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is PackageFieldMatchOption packageFieldMatchOption)
+            {
+                PackageFieldMatchOption = packageFieldMatchOption;
+            }
         }
 
         /// <summary>
         /// 打开临时下载目录
         /// </summary>
-        private async void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
+        private void OnOpenTempFolderClicked(object sender, RoutedEventArgs args)
         {
-            string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
-            if (Directory.Exists(wingetTempPath))
+            Task.Run(async () =>
             {
-                await Launcher.LaunchFolderPathAsync(wingetTempPath);
-            }
-            else
-            {
-                await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
-            }
+                string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
+                if (Directory.Exists(wingetTempPath))
+                {
+                    await Launcher.LaunchFolderPathAsync(wingetTempPath);
+                }
+                else
+                {
+                    await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
+                }
+            });
         }
 
         /// <summary>
@@ -293,8 +377,8 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            MatchResultList.Clear();
             IsLoadedCompleted = false;
+            SearchAppsCollection.Clear();
 
             if (string.IsNullOrEmpty(cachedSearchText))
             {
@@ -302,8 +386,48 @@ namespace GetStoreApp.UI.Controls.WinGet
                 return;
             }
 
-            await GetSearchAppsAsync();
-            await InitializeDataAsync();
+            PackageManager packageManager = await Task.Run(() =>
+            {
+                return new PackageManager();
+            });
+
+            PackageCatalogReference packageCatalogReference = await Task.Run(() =>
+            {
+                return GetPackageCatalogReference(packageManager);
+            });
+
+            if (packageCatalogReference is not null)
+            {
+                (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) searchAppsResult = await Task.Run(() =>
+                {
+                    return SearchAppsAsync(packageCatalogReference);
+                });
+
+                if (searchAppsResult.connectResult.Status is ConnectResultStatus.Ok)
+                {
+                    if (searchAppsResult.findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                    {
+                        foreach (SearchAppsModel searchAppsItem in searchAppsResult.searchAppsList)
+                        {
+                            SearchAppsCollection.Add(searchAppsItem);
+                        }
+                    }
+                    else
+                    {
+                        // 显示检索失败信息
+                    }
+                }
+                else
+                {
+                    // 显示检索失败信息
+                }
+            }
+            else
+            {
+                // 显示请获取 WinGet 数据源通知
+            }
+
+            IsLoadedCompleted = true;
         }
 
         /// <summary>
@@ -324,8 +448,50 @@ namespace GetStoreApp.UI.Controls.WinGet
                 cachedSearchText = SearchText;
                 NotSearched = false;
                 IsLoadedCompleted = false;
-                await GetSearchAppsAsync();
-                await InitializeDataAsync();
+                SearchAppsCollection.Clear();
+
+                PackageManager packageManager = await Task.Run(() =>
+                {
+                    return new PackageManager();
+                });
+
+                PackageCatalogReference packageCatalogReference = await Task.Run(() =>
+                {
+                    return GetPackageCatalogReference(packageManager);
+                });
+
+                if (packageCatalogReference is not null)
+                {
+                    (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) = await Task.Run(() =>
+                    {
+                        return SearchAppsAsync(packageCatalogReference);
+                    });
+
+                    if (connectResult.Status is ConnectResultStatus.Ok)
+                    {
+                        if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                        {
+                            foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                            {
+                                SearchAppsCollection.Add(searchAppsItem);
+                            }
+                        }
+                        else
+                        {
+                            // 显示检索失败信息
+                        }
+                    }
+                    else
+                    {
+                        // 显示检索失败信息
+                    }
+                }
+                else
+                {
+                    // 显示请获取 WinGet 数据源通知
+                }
+
+                IsLoadedCompleted = true;
             }
         }
 
@@ -356,13 +522,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
+                            WinGetInstance.InstallingAppsLock.Enter();
+                            try
                             {
-                                if (installingItem.AppID == searchApps.AppID)
+                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                 {
-                                    installingItem.InstallProgressState = PackageInstallProgressState.Queued;
-                                    break;
+                                    if (installingItem.AppID.Equals(searchApps.AppID))
+                                    {
+                                        installingItem.InstallProgressState = PackageInstallProgressState.Queued;
+                                        break;
+                                    }
                                 }
+                            }
+                            catch (Exception) { }
+                            finally
+                            {
+                                WinGetInstance.InstallingAppsLock.Exit();
                             }
                         });
                         break;
@@ -372,15 +547,24 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
+                            WinGetInstance.InstallingAppsLock.Enter();
+                            try
                             {
-                                if (installingItem.AppID == searchApps.AppID)
+                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                 {
-                                    installingItem.InstallProgressState = PackageInstallProgressState.Downloading;
-                                    installingItem.DownloadProgress = Math.Round(progress.DownloadProgress * 100, 2); installingItem.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(progress.BytesDownloaded));
-                                    installingItem.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(progress.BytesRequired));
-                                    break;
+                                    if (installingItem.AppID.Equals(searchApps.AppID))
+                                    {
+                                        installingItem.InstallProgressState = PackageInstallProgressState.Downloading;
+                                        installingItem.DownloadProgress = Math.Round(progress.DownloadProgress * 100, 2); installingItem.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(progress.BytesDownloaded));
+                                        installingItem.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(progress.BytesRequired));
+                                        break;
+                                    }
                                 }
+                            }
+                            catch (Exception) { }
+                            finally
+                            {
+                                WinGetInstance.InstallingAppsLock.Exit();
                             }
                         });
 
@@ -391,14 +575,23 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
+                            WinGetInstance.InstallingAppsLock.Enter();
+                            try
                             {
-                                if (installingItem.AppID == searchApps.AppID)
+                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                 {
-                                    installingItem.InstallProgressState = PackageInstallProgressState.Installing;
-                                    installingItem.DownloadProgress = 100;
-                                    break;
+                                    if (installingItem.AppID.Equals(searchApps.AppID))
+                                    {
+                                        installingItem.InstallProgressState = PackageInstallProgressState.Installing;
+                                        installingItem.DownloadProgress = 100;
+                                        break;
+                                    }
                                 }
+                            }
+                            catch (Exception) { }
+                            finally
+                            {
+                                WinGetInstance.InstallingAppsLock.Exit();
                             }
                         });
 
@@ -409,13 +602,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
+                            WinGetInstance.InstallingAppsLock.Enter();
+                            try
                             {
-                                if (installingItem.AppID == searchApps.AppID)
+                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                 {
-                                    installingItem.InstallProgressState = PackageInstallProgressState.PostInstall;
-                                    break;
+                                    if (installingItem.AppID.Equals(searchApps.AppID))
+                                    {
+                                        installingItem.InstallProgressState = PackageInstallProgressState.PostInstall;
+                                        break;
+                                    }
                                 }
+                            }
+                            catch (Exception) { }
+                            finally
+                            {
+                                WinGetInstance.InstallingAppsLock.Exit();
                             }
                         });
 
@@ -426,14 +628,23 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
+                            WinGetInstance.InstallingAppsLock.Enter();
+                            try
                             {
-                                if (installingItem.AppID == searchApps.AppID)
+                                foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                                 {
-                                    installingItem.InstallProgressState = PackageInstallProgressState.Finished;
-                                    installingItem.DownloadProgress = 100;
-                                    break;
+                                    if (installingItem.AppID.Equals(searchApps.AppID))
+                                    {
+                                        installingItem.InstallProgressState = PackageInstallProgressState.Finished;
+                                        installingItem.DownloadProgress = 100;
+                                        break;
+                                    }
                                 }
+                            }
+                            catch (Exception) { }
+                            finally
+                            {
+                                WinGetInstance.InstallingAppsLock.Exit();
                             }
                         });
 
@@ -504,7 +715,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 finally
                 {
-                    WinGetInstance.installStateLock.Exit();
+                    WinGetInstance.InstallStateLock.Exit();
                 }
 
                 DispatcherQueue.TryEnqueue(() =>
@@ -512,7 +723,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     // 应用安装失败，将当前任务状态修改为可安装状态
                     foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                     {
-                        if (searchAppsItem.AppID == searchApps.AppID)
+                        if (searchAppsItem.AppID.Equals(searchApps.AppID))
                         {
                             searchAppsItem.IsInstalling = false;
                             break;
@@ -520,14 +731,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
 
                     // 完成任务后从任务管理中删除任务
-
-                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
+                    WinGetInstance.InstallingAppsLock.Enter();
+                    try
                     {
-                        if (installingAppsItem.AppID == searchApps.AppID)
+                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                         {
-                            WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
-                            break;
+                            if (installingAppsItem.AppID.Equals(searchApps.AppID))
+                            {
+                                WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
+                                break;
+                            }
                         }
+                    }
+                    catch (Exception) { }
+                    finally
+                    {
+                        WinGetInstance.InstallingAppsLock.Exit();
                     }
                 });
             }
@@ -546,7 +765,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 finally
                 {
-                    WinGetInstance.installStateLock.Exit();
+                    WinGetInstance.InstallStateLock.Exit();
                 }
 
                 DispatcherQueue.TryEnqueue(() =>
@@ -554,7 +773,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     // 应用安装失败，将当前任务状态修改为可安装状态
                     foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                     {
-                        if (searchAppsItem.AppID == searchApps.AppID)
+                        if (searchAppsItem.AppID.Equals(searchApps.AppID))
                         {
                             searchAppsItem.IsInstalling = false;
                             break;
@@ -562,14 +781,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
 
                     // 完成任务后从任务管理中删除任务
-
-                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
+                    WinGetInstance.InstallingAppsLock.Enter();
+                    try
                     {
-                        if (installingAppsItem.AppID == searchApps.AppID)
+                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                         {
-                            WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
-                            break;
+                            if (installingAppsItem.AppID.Equals(searchApps.AppID))
+                            {
+                                WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
+                                break;
+                            }
                         }
+                    }
+                    catch (Exception) { }
+                    finally
+                    {
+                        WinGetInstance.InstallingAppsLock.Exit();
                     }
                 });
             }
@@ -588,7 +815,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 finally
                 {
-                    WinGetInstance.installStateLock.Exit();
+                    WinGetInstance.InstallStateLock.Exit();
                 }
 
                 DispatcherQueue.TryEnqueue(() =>
@@ -596,7 +823,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     // 应用安装失败，将当前任务状态修改为可安装状态
                     foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                     {
-                        if (searchAppsItem.AppID == searchApps.AppID)
+                        if (searchAppsItem.AppID.Equals(searchApps.AppID))
                         {
                             searchAppsItem.IsInstalling = false;
                             break;
@@ -604,14 +831,22 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
 
                     // 完成任务后从任务管理中删除任务
-
-                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
+                    WinGetInstance.InstallingAppsLock.Enter();
+                    try
                     {
-                        if (installingAppsItem.AppID == searchApps.AppID)
+                        foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                         {
-                            WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
-                            break;
+                            if (installingAppsItem.AppID.Equals(searchApps.AppID))
+                            {
+                                WinGetInstance.InstallingAppsCollection.Remove(installingAppsItem);
+                                break;
+                            }
                         }
+                    }
+                    catch (Exception) { }
+                    finally
+                    {
+                        WinGetInstance.InstallingAppsLock.Exit();
                     }
                 });
 
@@ -622,8 +857,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
                 appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
                 AppNotificationButton installWithCommandButton = new("Notification/InstallWithCommand");
-                installWithCommandButton.Arguments.Add("action", string.Format
-                    ("InstallWithCommand:{0}", searchApps.AppID));
+                installWithCommandButton.Arguments.Add("action", string.Format("InstallWithCommand:{0}", searchApps.AppID));
                 AppNotificationButton openDownloadFolderButton = new("Notification/OpenDownloadFolder");
                 openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
                 appNotificationBuilder.AddButton(installWithCommandButton);
@@ -642,82 +876,102 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// 搜索应用
+        /// 获取设置中选择的 WinGet 数据源
         /// </summary>
-        private async Task GetSearchAppsAsync()
+
+        private PackageCatalogReference GetPackageCatalogReference(PackageManager packageManager)
         {
-            await Task.Run(async () =>
+            PackageCatalogReference packageCatalogReference = null;
+
+            try
             {
-                try
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                if (!winGetDataSourceName.Equals(default))
                 {
-                    // TODO：优化 WinGet 源设置
-                    PackageManager packageManager = new();
-                    IReadOnlyList<PackageCatalogReference> packageCatalogsList = packageManager.GetPackageCatalogs();
-                    CreateCompositePackageCatalogOptions createCompositePackageCatalogOptions = new();
-
-                    if (packageCatalogsList.Count > 0)
+                    // 使用内置源
+                    if (winGetDataSourceName.Value)
                     {
-                        PackageCatalogReference catalogReference = packageCatalogsList[0];
-                        createCompositePackageCatalogOptions.Catalogs.Add(catalogReference);
-                    }
-
-                    PackageCatalogReference packageCatalogReference = packageManager.CreateCompositePackageCatalog(createCompositePackageCatalogOptions);
-                    ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
-
-                    if (connectResult.Status is ConnectResultStatus.Ok)
-                    {
-                        FindPackagesOptions findPackagesOptions = new();
-
-                        // TODO：添加搜索过滤选项设置
-                        PackageMatchFilter packageMatchFilter = new()
+                        foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalog in WinGetConfigService.PredefinedPackageCatalogList)
                         {
-                            Field = PackageMatchField.Name,
-                            Option = PackageFieldMatchOption.ContainsCaseInsensitive,
-                            Value = cachedSearchText
-                        };
-
-                        findPackagesOptions.Filters.Add(packageMatchFilter);
-
-                        FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
-
-                        for (int index = 0; index < findPackagesResult.Matches.Count; index++)
-                        {
-                            MatchResultList.Add(findPackagesResult.Matches[index]);
+                            if (winGetDataSourceName.Key.Equals(predefinedPackageCatalog.Key))
+                            {
+                                packageCatalogReference = packageManager.GetPredefinedPackageCatalog(predefinedPackageCatalog.Value);
+                                break;
+                            }
                         }
                     }
+                    // 使用自定义源
+                    else
+                    {
+                        packageCatalogReference = packageManager.GetPackageCatalogByName(winGetDataSourceName.Key);
+                    }
                 }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Warning, "Get search apps information failed.", e);
-                }
-            });
+
+                return packageCatalogReference;
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Get package catalog reference failed", e);
+                return packageCatalogReference;
+            }
         }
 
         /// <summary>
-        /// 初始化列表数据
+        /// 搜索应用
         /// </summary>
-        private async Task InitializeDataAsync()
+        private async Task<(ConnectResult, FindPackagesResult, List<SearchAppsModel>)> SearchAppsAsync(PackageCatalogReference packageCatalogReference)
         {
-            SearchAppsCollection.Clear();
-            if (MatchResultList.Count > 0)
+            (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) searchAppsResult = ValueTuple.Create<ConnectResult, FindPackagesResult, List<SearchAppsModel>>(null, null, null);
+
+            try
             {
-                List<SearchAppsModel> searchAppsList = [];
-                await Task.Run(() =>
+                ConnectResult connectResult = await packageCatalogReference.ConnectAsync();
+                searchAppsResult.connectResult = connectResult;
+
+                if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                 {
-                    try
+                    FindPackagesOptions findPackagesOptions = new();
+
+                    PackageMatchFilter packageMatchFilter = new()
                     {
-                        foreach (MatchResult matchItem in MatchResultList)
+                        Field = PackageMatchField,
+                        Option = PackageFieldMatchOption,
+                        Value = cachedSearchText
+                    };
+
+                    findPackagesOptions.Filters.Add(packageMatchFilter);
+
+                    FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
+                    searchAppsResult.findPackagesResult = findPackagesResult;
+
+                    if (findPackagesResult is not null && findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                    {
+                        List<SearchAppsModel> searchAppsList = [];
+
+                        for (int index = 0; index < findPackagesResult.Matches.Count; index++)
                         {
-                            if (matchItem.CatalogPackage.DefaultInstallVersion is not null)
+                            MatchResult matchItem = findPackagesResult.Matches[index];
+
+                            if (matchItem.CatalogPackage is not null)
                             {
                                 bool isInstalling = false;
-                                foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
+                                WinGetInstance.InstallingAppsLock.Enter();
+                                try
                                 {
-                                    if (matchItem.CatalogPackage.DefaultInstallVersion.Id == installingAppsItem.AppID)
+                                    foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
                                     {
-                                        isInstalling = true;
-                                        break;
+                                        if (matchItem.CatalogPackage.DefaultInstallVersion.Id.Equals(installingAppsItem.AppID))
+                                        {
+                                            isInstalling = true;
+                                            break;
+                                        }
                                     }
+                                }
+                                catch (Exception) { }
+                                finally
+                                {
+                                    WinGetInstance.InstallingAppsLock.Exit();
                                 }
 
                                 searchAppsList.Add(new SearchAppsModel()
@@ -727,23 +981,44 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     AppPublisher = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Publisher) || matchItem.CatalogPackage.DefaultInstallVersion.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.Publisher,
                                     AppVersion = string.IsNullOrEmpty(matchItem.CatalogPackage.DefaultInstallVersion.Version) || matchItem.CatalogPackage.DefaultInstallVersion.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : matchItem.CatalogPackage.DefaultInstallVersion.Version,
                                     IsInstalling = isInstalling,
+                                    CatalogPackage = matchItem.CatalogPackage,
                                 });
+
+                                if (SelectedRule is AppSortRuleKind.DisplayName)
+                                {
+                                    if (IsIncrease)
+                                    {
+                                        searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                                    }
+                                    else
+                                    {
+                                        searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                                    }
+                                }
+                                else
+                                {
+                                    if (IsIncrease)
+                                    {
+                                        searchAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
+                                    }
+                                    else
+                                    {
+                                        searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
+                                    }
+                                }
                             }
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Initialize Searched apps data failed", e);
-                    }
-                });
 
-                foreach (SearchAppsModel searchAppsItem in searchAppsList)
-                {
-                    SearchAppsCollection.Add(searchAppsItem);
+                        searchAppsResult.searchAppsList = searchAppsList;
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, "Search winget app failed", e);
+            }
 
-            IsLoadedCompleted = true;
+            return searchAppsResult;
         }
     }
 }

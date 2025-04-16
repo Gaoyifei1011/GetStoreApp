@@ -187,7 +187,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         });
 
                         // 第一部分：添加安装任务
-                        WinGetInstance.installStateLock.Enter();
+                        WinGetInstance.InstallStateLock.Enter();
 
                         try
                         {
@@ -199,7 +199,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         finally
                         {
-                            WinGetInstance.installStateLock.Exit();
+                            WinGetInstance.InstallStateLock.Exit();
                         }
 
                         // 第二部分：更新升级进度
@@ -402,7 +402,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), upgradableApps.AppName));
                     ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
-                    WinGetInstance.installStateLock.Enter();
+                    WinGetInstance.InstallStateLock.Enter();
 
                     try
                     {
@@ -414,7 +414,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
                     finally
                     {
-                        WinGetInstance.installStateLock.Exit();
+                        WinGetInstance.InstallStateLock.Exit();
                     }
 
                     DispatcherQueue.TryEnqueue(async () =>
@@ -457,7 +457,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 else
                 {
-                    WinGetInstance.installStateLock.Enter();
+                    WinGetInstance.InstallStateLock.Enter();
 
                     try
                     {
@@ -469,7 +469,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
                     finally
                     {
-                        WinGetInstance.installStateLock.Exit();
+                        WinGetInstance.InstallStateLock.Exit();
                     }
 
                     DispatcherQueue.TryEnqueue(() =>
@@ -514,7 +514,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 LogService.WriteLog(LoggingLevel.Information, "App installing operation canceled.", new Exception());
 
-                WinGetInstance.installStateLock.Enter();
+                WinGetInstance.InstallStateLock.Enter();
 
                 try
                 {
@@ -526,7 +526,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 finally
                 {
-                    WinGetInstance.installStateLock.Exit();
+                    WinGetInstance.InstallStateLock.Exit();
                 }
 
                 DispatcherQueue.TryEnqueue(() =>
@@ -557,7 +557,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 LogService.WriteLog(LoggingLevel.Error, "App installing failed.", result.ErrorCode);
 
-                WinGetInstance.installStateLock.Enter();
+                WinGetInstance.InstallStateLock.Enter();
 
                 try
                 {
@@ -569,7 +569,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 }
                 finally
                 {
-                    WinGetInstance.installStateLock.Exit();
+                    WinGetInstance.InstallStateLock.Exit();
                 }
 
                 DispatcherQueue.TryEnqueue(() =>

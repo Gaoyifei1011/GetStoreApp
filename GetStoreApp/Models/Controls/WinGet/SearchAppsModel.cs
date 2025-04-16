@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Management.Deployment;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
@@ -45,6 +46,11 @@ namespace GetStoreApp.Models.Controls.WinGet
                 }
             }
         }
+
+        /// <summary>
+        /// 匹配到的应用包
+        /// </summary>
+        public CatalogPackage CatalogPackage { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
