@@ -278,33 +278,14 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        private void OnSortWayClicked(object sender, RoutedEventArgs args)
+        private async void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is bool increase)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase)
             {
-                IsIncrease = increase;
+                IsIncrease = Convert.ToBoolean(increase);
                 IsLoadedCompleted = false;
                 List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
-                searchAppsList.Reverse();
                 SearchAppsCollection.Clear();
-                foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
-                {
-                    SearchAppsCollection.Add(searchAppsItem);
-                }
-                IsLoadedCompleted = true;
-            }
-        }
-
-        /// <summary>
-        /// 根据排序规则对列表进行排序
-        /// </summary>
-        private void OnSortRuleClicked(object sender, RoutedEventArgs args)
-        {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
-            {
-                SelectedRule = appSortRuleKind;
-                IsLoadedCompleted = false;
-                List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
                 if (SelectedRule is AppSortRuleKind.DisplayName)
                 {
                     if (IsIncrease)
@@ -327,6 +308,53 @@ namespace GetStoreApp.UI.Controls.WinGet
                         searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
                     }
                 }
+                foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                {
+                    SearchAppsCollection.Add(searchAppsItem);
+                }
+                await Task.Delay(500);
+                IsLoadedCompleted = true;
+            }
+        }
+
+        /// <summary>
+        /// 根据排序规则对列表进行排序
+        /// </summary>
+        private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
+            {
+                SelectedRule = appSortRuleKind;
+                IsLoadedCompleted = false;
+                List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
+                SearchAppsCollection.Clear();
+                if (SelectedRule is AppSortRuleKind.DisplayName)
+                {
+                    if (IsIncrease)
+                    {
+                        searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                    }
+                    else
+                    {
+                        searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                    }
+                }
+                else
+                {
+                    if (IsIncrease)
+                    {
+                        searchAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
+                    }
+                    else
+                    {
+                        searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
+                    }
+                }
+                foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                {
+                    SearchAppsCollection.Add(searchAppsItem);
+                }
+                await Task.Delay(500);
                 IsLoadedCompleted = true;
             }
         }
@@ -398,16 +426,16 @@ namespace GetStoreApp.UI.Controls.WinGet
 
             if (packageCatalogReference is not null)
             {
-                (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) searchAppsResult = await Task.Run(() =>
+                (ConnectResult connectResult, FindPackagesResult findPackagesResult, List<SearchAppsModel> searchAppsList) = await Task.Run(() =>
                 {
                     return SearchAppsAsync(packageCatalogReference);
                 });
 
-                if (searchAppsResult.connectResult.Status is ConnectResultStatus.Ok)
+                if (connectResult.Status is ConnectResultStatus.Ok)
                 {
-                    if (searchAppsResult.findPackagesResult.Status is FindPackagesResultStatus.Ok)
+                    if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                     {
-                        foreach (SearchAppsModel searchAppsItem in searchAppsResult.searchAppsList)
+                        foreach (SearchAppsModel searchAppsItem in searchAppsList)
                         {
                             SearchAppsCollection.Add(searchAppsItem);
                         }
