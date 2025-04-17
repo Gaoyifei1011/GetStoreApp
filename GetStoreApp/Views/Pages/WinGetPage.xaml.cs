@@ -63,29 +63,29 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 Task.Run(() =>
-                    {
-                        InstallStateLock.Enter();
+                {
+                    InstallStateLock.Enter();
 
-                        try
+                    try
+                    {
+                        if (InstallingStateDict.TryGetValue(appId, out IAsyncInfo asyncInfo))
                         {
-                            if (InstallingStateDict.TryGetValue(appId, out IAsyncInfo asyncInfo))
+                            if (asyncInfo.Status is not AsyncStatus.Canceled)
                             {
-                                if (asyncInfo.Status is not AsyncStatus.Canceled)
-                                {
-                                    asyncInfo.Cancel();
-                                    asyncInfo.Close();
-                                }
+                                asyncInfo.Cancel();
+                                asyncInfo.Close();
                             }
                         }
-                        catch (Exception e)
-                        {
-                            LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
-                        }
-                        finally
-                        {
-                            InstallStateLock.Exit();
-                        }
-                    });
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
+                    }
+                    finally
+                    {
+                        InstallStateLock.Exit();
+                    }
+                });
             }
         }
 

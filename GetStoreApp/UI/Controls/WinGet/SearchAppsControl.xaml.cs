@@ -36,37 +36,26 @@ namespace GetStoreApp.UI.Controls.WinGet
     {
         private readonly string SearchedAppsCountInfo = ResourceService.GetLocalized("WinGet/SearchedAppsCountInfo");
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
+        private readonly string SearchAppsEmptyDescription = ResourceService.GetLocalized("WinGet/SearchAppsEmptyDescription");
+        private readonly string SearchAppsFailed = ResourceService.GetLocalized("WinGet/SearchAppsFailed");
+        private readonly string SearchFindAppsFailed = ResourceService.GetLocalized("WinGet/SearchFindAppsFailed");
+        private readonly string SearchCatalogReferenceFailed = ResourceService.GetLocalized("WinGet/SearchCatalogReferenceFailed");
+        private readonly string SearchNotSelectSource = ResourceService.GetLocalized("WinGet/SearchNotSelectSource");
         private string cachedSearchText;
         private WinGetPage WinGetInstance;
 
-        private bool _notSearched = true;
+        private string _searchText = string.Empty;
 
-        public bool NotSearched
+        public string SearchText
         {
-            get { return _notSearched; }
+            get { return _searchText; }
 
             set
             {
-                if (!Equals(_notSearched, value))
+                if (!Equals(_searchText, value))
                 {
-                    _notSearched = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NotSearched)));
-                }
-            }
-        }
-
-        private bool _isLoadedCompleted;
-
-        public bool IsLoadedCompleted
-        {
-            get { return _isLoadedCompleted; }
-
-            set
-            {
-                if (!Equals(_isLoadedCompleted, value))
-                {
-                    _isLoadedCompleted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                    _searchText = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
                 }
             }
         }
@@ -87,18 +76,18 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private string _searchText = string.Empty;
+        private SearchAppsResultKind _searchAppsResultKind = SearchAppsResultKind.NotSearch;
 
-        public string SearchText
+        public SearchAppsResultKind SearchAppsResultKind
         {
-            get { return _searchText; }
+            get { return _searchAppsResultKind; }
 
             set
             {
-                if (!Equals(_searchText, value))
+                if (!Equals(_searchAppsResultKind, value))
                 {
-                    _searchText = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchText)));
+                    _searchAppsResultKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchAppsResultKind)));
                 }
             }
         }
@@ -151,7 +140,21 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private List<MatchResult> MatchResultList { get; } = [];
+        private string _searchFailedContent;
+
+        public string SearchFailedContent
+        {
+            get { return _searchFailedContent; }
+
+            set
+            {
+                if (!Equals(_searchFailedContent, value))
+                {
+                    _searchFailedContent = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchFailedContent)));
+                }
+            }
+        }
 
         private ObservableCollection<SearchAppsModel> SearchAppsCollection { get; } = [];
 
@@ -188,7 +191,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 // 禁用当前应用的可安装状态
                 foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                 {
-                    if (searchAppsItem.AppID == searchApps.AppID)
+                    if (searchAppsItem.AppID.Equals(searchApps.AppID))
                     {
                         searchAppsItem.IsInstalling = true;
                         break;
@@ -220,7 +223,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     try
                     {
                         PackageManager packageManager = new();
-                        IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(MatchResultList.Find(item => item.CatalogPackage.DefaultInstallVersion.Id == searchApps.AppID).CatalogPackage, new()
+                        IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(searchApps.CatalogPackage, new()
                         {
                             PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default,
                             PackageInstallScope = PackageInstallScope.Any
@@ -251,6 +254,16 @@ namespace GetStoreApp.UI.Controls.WinGet
                     // 其他异常
                     catch (Exception e)
                     {
+                        // 禁用当前应用的可安装状态
+                        foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
+                        {
+                            if (searchAppsItem.AppID.Equals(searchApps.AppID))
+                            {
+                                searchAppsItem.IsInstalling = false;
+                                break;
+                            }
+                        }
+
                         LogService.WriteLog(LoggingLevel.Error, "App installing failed.", e);
                     }
                 });
@@ -280,10 +293,10 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
             {
                 IsIncrease = Convert.ToBoolean(increase);
-                IsLoadedCompleted = false;
+                SearchAppsResultKind = SearchAppsResultKind.Searching;
                 List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
                 SearchAppsCollection.Clear();
                 if (SelectedRule is AppSortRuleKind.DisplayName)
@@ -313,7 +326,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     SearchAppsCollection.Add(searchAppsItem);
                 }
                 await Task.Delay(500);
-                IsLoadedCompleted = true;
+                SearchAppsResultKind = SearchAppsResultKind.Successfully;
             }
         }
 
@@ -322,10 +335,10 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && SearchAppsResultKind is SearchAppsResultKind.Successfully)
             {
                 SelectedRule = appSortRuleKind;
-                IsLoadedCompleted = false;
+                SearchAppsResultKind = SearchAppsResultKind.Searching;
                 List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
                 SearchAppsCollection.Clear();
                 if (SelectedRule is AppSortRuleKind.DisplayName)
@@ -355,7 +368,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     SearchAppsCollection.Add(searchAppsItem);
                 }
                 await Task.Delay(500);
-                IsLoadedCompleted = true;
+                SearchAppsResultKind = SearchAppsResultKind.Successfully;
             }
         }
 
@@ -405,12 +418,13 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            IsLoadedCompleted = false;
+            SearchAppsResultKind = SearchAppsResultKind.Searching;
             SearchAppsCollection.Clear();
 
             if (string.IsNullOrEmpty(cachedSearchText))
             {
-                IsLoadedCompleted = true;
+                SearchAppsResultKind = SearchAppsResultKind.Failed;
+                SearchFailedContent = SearchAppsEmptyDescription;
                 return;
             }
 
@@ -435,27 +449,38 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                     {
-                        foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                        if (searchAppsList.Count is 0)
                         {
-                            SearchAppsCollection.Add(searchAppsItem);
+                            SearchAppsResultKind = SearchAppsResultKind.Failed;
+                            SearchFailedContent = SearchAppsEmptyDescription;
+                        }
+                        else
+                        {
+                            foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                            {
+                                SearchAppsCollection.Add(searchAppsItem);
+                            }
+
+                            SearchAppsResultKind = SearchAppsResultKind.Successfully;
                         }
                     }
                     else
                     {
-                        // 显示检索失败信息
+                        SearchAppsResultKind = SearchAppsResultKind.Failed;
+                        SearchFailedContent = string.Format(SearchAppsFailed, SearchFindAppsFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
                     }
                 }
                 else
                 {
-                    // 显示检索失败信息
+                    SearchAppsResultKind = SearchAppsResultKind.Failed;
+                    SearchFailedContent = string.Format(SearchAppsFailed, SearchCatalogReferenceFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
                 }
             }
             else
             {
-                // 显示请获取 WinGet 数据源通知
+                SearchAppsResultKind = SearchAppsResultKind.Failed;
+                SearchFailedContent = SearchNotSelectSource;
             }
-
-            IsLoadedCompleted = true;
         }
 
         /// <summary>
@@ -474,8 +499,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             if (!string.IsNullOrEmpty(SearchText))
             {
                 cachedSearchText = SearchText;
-                NotSearched = false;
-                IsLoadedCompleted = false;
+                SearchAppsResultKind = SearchAppsResultKind.Searching;
                 SearchAppsCollection.Clear();
 
                 PackageManager packageManager = await Task.Run(() =>
@@ -499,27 +523,38 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         if (findPackagesResult.Status is FindPackagesResultStatus.Ok)
                         {
-                            foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                            if (searchAppsList.Count is 0)
                             {
-                                SearchAppsCollection.Add(searchAppsItem);
+                                SearchAppsResultKind = SearchAppsResultKind.Failed;
+                                SearchFailedContent = SearchAppsEmptyDescription;
+                            }
+                            else
+                            {
+                                foreach (SearchAppsModel searchAppsItem in searchAppsList)
+                                {
+                                    SearchAppsCollection.Add(searchAppsItem);
+                                }
+
+                                SearchAppsResultKind = SearchAppsResultKind.Successfully;
                             }
                         }
                         else
                         {
-                            // 显示检索失败信息
+                            SearchAppsResultKind = SearchAppsResultKind.Failed;
+                            SearchFailedContent = string.Format(SearchAppsFailed, SearchFindAppsFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
                         }
                     }
                     else
                     {
-                        // 显示检索失败信息
+                        SearchAppsResultKind = SearchAppsResultKind.Failed;
+                        SearchFailedContent = string.Format(SearchAppsFailed, SearchCatalogReferenceFailed, findPackagesResult.ExtendedErrorCode is not null ? findPackagesResult.ExtendedErrorCode.HResult : Unknown);
                     }
                 }
                 else
                 {
-                    // 显示请获取 WinGet 数据源通知
+                    SearchAppsResultKind = SearchAppsResultKind.Failed;
+                    SearchFailedContent = SearchNotSelectSource;
                 }
-
-                IsLoadedCompleted = true;
             }
         }
 
@@ -706,13 +741,13 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOptionKind.UpgradeInstall, searchApps.AppName));
 
-                            await Task.Run(() =>
+                            if (contentDialogResult is ContentDialogResult.Primary)
                             {
-                                if (contentDialogResult is ContentDialogResult.Primary)
+                                await Task.Run(() =>
                                 {
                                     ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
-                                }
-                            });
+                                });
+                            }
                         });
                     }
                 }
@@ -732,6 +767,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                     appNotificationBuilder.AddButton(openDownloadFolderButton);
                     ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                 }
+
+                WinGetInstance.InstallStateLock.Enter();
 
                 try
                 {
@@ -783,6 +820,8 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 LogService.WriteLog(LoggingLevel.Information, "App installing operation canceled.", new Exception());
 
+                WinGetInstance.InstallStateLock.Enter();
+
                 try
                 {
                     WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
@@ -832,6 +871,8 @@ namespace GetStoreApp.UI.Controls.WinGet
             else if (status is AsyncStatus.Error)
             {
                 LogService.WriteLog(LoggingLevel.Error, "App installing failed.", result.ErrorCode);
+
+                WinGetInstance.InstallStateLock.Enter();
 
                 try
                 {
@@ -1047,6 +1088,31 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
 
             return searchAppsResult;
+        }
+
+        /// <summary>
+        /// 获取搜索应用是否成功
+        /// </summary>
+        public Visibility GetSearchAppsSuccessfullyState(SearchAppsResultKind searchAppsResultKind, bool isSuccessfully)
+        {
+            return isSuccessfully ? searchAppsResultKind.Equals(SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed : !searchAppsResultKind.Equals(SearchAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 检查搜索应用是否成功
+        /// </summary>
+        public Visibility CheckSearchAppsState(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKink)
+        {
+            return searchAppsResultKind.Equals(comparedSearchAppsResultKink) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 获取是否正在搜索中
+        /// </summary>
+
+        public bool GetIsSearching(SearchAppsResultKind searchAppsResultKind)
+        {
+            return !searchAppsResultKind.Equals(SearchAppsResultKind.Searching);
         }
     }
 }

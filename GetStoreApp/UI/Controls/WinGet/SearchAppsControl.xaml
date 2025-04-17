@@ -28,6 +28,7 @@
         <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
+    <!--  搜索应用控制栏  -->
     <Grid
         Grid.Row="0"
         Height="66"
@@ -77,7 +78,7 @@
             Width="170"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            IsEnabled="{x:Bind converter:ValueCheckConverterHelper.IsSearchBoxEnabled(NotSearched, IsLoadedCompleted), Mode=OneWay}"
+            IsEnabled="{x:Bind GetIsSearching(SearchAppsResultKind), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsPlaceHolderText')}"
             QuerySubmitted="{x:Bind OnQuerySubmitted}"
             Text="{x:Bind SearchText, Mode=OneWay}"
@@ -284,7 +285,7 @@
 
                 <AppBarButton
                     Click="{x:Bind OnRefreshClicked}"
-                    IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                    IsEnabled="{x:Bind GetIsSearching(SearchAppsResultKind), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
 
@@ -318,59 +319,35 @@
         </CommandBar>
     </Grid>
 
+    <!--  搜索应用状态显示栏  -->
     <Grid
-        x:Name="NotSearchedGrid"
         Grid.Row="1"
+        Height="60"
         Margin="30,3,30,0"
         Padding="16,12"
-        x:Load="{x:Bind NotSearched, Mode=OneWay}"
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
-        CornerRadius="{StaticResource ControlCornerRadius}">
+        CornerRadius="{StaticResource ControlCornerRadius}"
+        Visibility="{x:Bind GetSearchAppsSuccessfullyState(SearchAppsResultKind, x:False), Mode=OneWay}">
 
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
-            Spacing="10">
-
+        <Grid>
+            <!--  未搜索  -->
             <TextBlock
                 Margin="0,10"
                 VerticalAlignment="Center"
                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/NotSearchedTip')}"
                 TextAlignment="Center"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/NotSearchedTip')}" />
-        </StackPanel>
-    </Grid>
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/NotSearchedTip')}"
+                Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.NotSearch), Mode=OneWay}" />
 
-    <Grid
-        Grid.Row="2"
-        Padding="0"
-        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(NotSearched), Mode=OneWay}">
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid
-            x:Name="SearchingGrid"
-            Grid.Row="0"
-            Height="60"
-            Margin="30,3,30,0"
-            Padding="16,12"
-            x:Load="{x:Bind IsLoadedCompleted.Equals(x:False), Mode=OneWay}"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{StaticResource ControlCornerRadius}">
-
+            <!--  正在搜索中  -->
             <StackPanel
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Orientation="Horizontal"
-                Spacing="10">
+                Spacing="10"
+                Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.Searching), Mode=OneWay}">
 
                 <ProgressRing IsActive="True" IsEnabled="True" />
 
@@ -380,202 +357,186 @@
                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchingApps')}"
                     TextAlignment="Center" />
             </StackPanel>
-        </Grid>
 
-        <Grid
-            Grid.Row="2"
-            Margin="0,3,0,0"
-            Visibility="{x:Bind IsLoadedCompleted, Mode=OneWay}">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Grid
-                Grid.Row="0"
-                Margin="30,0"
-                Padding="16,12"
-                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="{StaticResource ControlCornerRadius}"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(SearchAppsCollection.Count), Mode=OneWay}">
-                <TextBlock
-                    Margin="0,10"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsEmptyDescription')}"
-                    TextAlignment="Center" />
-            </Grid>
-
-            <ItemsView
-                Grid.Row="1"
-                Padding="30,0,30,30"
-                ItemsSource="{x:Bind SearchAppsCollection, Mode=OneWay}"
-                SelectionMode="None"
-                Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchAppsCollection.Count), Mode=OneWay}">
-
-                <ItemsView.Layout>
-                    <StackLayout />
-                </ItemsView.Layout>
-
-                <ItemsView.ItemTemplate>
-                    <DataTemplate x:DataType="winget:SearchAppsModel">
-                        <ItemContainer Margin="0,0,0,2">
-                            <Grid
-                                Padding="16,12"
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                BorderThickness="1"
-                                ColumnSpacing="10"
-                                CornerRadius="{StaticResource ControlCornerRadius}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock
-                                    Grid.Column="0"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind AppName}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
-                                                <Run Text="{x:Bind AppName}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-
-                                <TextBlock
-                                    Grid.Column="1"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind AppPublisher}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
-                                                <Run Text="{x:Bind AppPublisher}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-
-                                <TextBlock
-                                    Grid.Column="2"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    HorizontalTextAlignment="Left"
-                                    Text="{x:Bind AppVersion}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
-
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
-                                                <Run Text="{x:Bind AppVersion}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-
-                                <StackPanel
-                                    Grid.Column="3"
-                                    Height="30"
-                                    BorderBrush="{ThemeResource ButtonBorderBrush}"
-                                    BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                                    CornerRadius="{ThemeResource ControlCornerRadius}"
-                                    Orientation="Horizontal">
-
-                                    <Button
-                                        VerticalAlignment="Stretch"
-                                        VerticalContentAlignment="Center"
-                                        BorderThickness="0,0,1,0"
-                                        Command="{StaticResource InstallCommand}"
-                                        CommandParameter="{x:Bind}"
-                                        Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
-                                        CornerRadius="0"
-                                        IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}" />
-
-                                    <Button
-                                        Width="35"
-                                        VerticalAlignment="Stretch"
-                                        BorderThickness="0"
-                                        CornerRadius="0"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
-
-                                        <Button.Content>
-                                            <AnimatedIcon
-                                                Width="12"
-                                                Height="12"
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Center"
-                                                AutomationProperties.AccessibilityView="Raw">
-                                                <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                <AnimatedIcon.FallbackIconSource>
-                                                    <FontIconSource
-                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                        FontSize="8"
-                                                        Glyph="&#xE96E;"
-                                                        IsTextScaleFactorEnabled="False" />
-                                                </AnimatedIcon.FallbackIconSource>
-                                            </AnimatedIcon>
-                                        </Button.Content>
-
-                                        <Button.Flyout>
-                                            <MenuFlyout Placement="Bottom">
-                                                <MenuFlyoutItem
-                                                    Command="{StaticResource CopyInstallTextCommand}"
-                                                    CommandParameter="{x:Bind AppID}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
-
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE8C8;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-
-                                                <MenuFlyoutItem
-                                                    Height="32"
-                                                    Padding="11,0"
-                                                    Command="{StaticResource InstallWithCmdCommand}"
-                                                    CommandParameter="{x:Bind AppID}"
-                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
-
-                                                    <MenuFlyoutItem.Icon>
-                                                        <FontIcon Glyph="&#xE756;" />
-                                                    </MenuFlyoutItem.Icon>
-                                                </MenuFlyoutItem>
-                                            </MenuFlyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </StackPanel>
-                            </Grid>
-                        </ItemContainer>
-                    </DataTemplate>
-                </ItemsView.ItemTemplate>
-            </ItemsView>
+            <!--  搜索失败  -->
+            <TextBlock
+                Margin="0,10"
+                VerticalAlignment="Center"
+                Text="{x:Bind SearchFailedContent, Mode=OneWay}"
+                TextAlignment="Center"
+                Visibility="{x:Bind CheckSearchAppsState(SearchAppsResultKind, enum:SearchAppsResultKind.Failed), Mode=OneWay}" />
         </Grid>
     </Grid>
+
+    <!--  搜索应用结果展示项目控件  -->
+    <ItemsView
+        Grid.Row="2"
+        Padding="30,3,30,30"
+        ItemsSource="{x:Bind SearchAppsCollection, Mode=OneWay}"
+        SelectionMode="None"
+        Visibility="{x:Bind GetSearchAppsSuccessfullyState(SearchAppsResultKind, x:True), Mode=OneWay}">
+
+        <ItemsView.Layout>
+            <StackLayout />
+        </ItemsView.Layout>
+
+        <ItemsView.ItemTemplate>
+            <DataTemplate x:DataType="winget:SearchAppsModel">
+                <ItemContainer Margin="0,0,0,2">
+                    <Grid
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        ColumnSpacing="10"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            MinWidth="50"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind AppName}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                        <Run Text="{x:Bind AppName}" />
+                                    </TextBlock>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            MinWidth="50"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind AppPublisher}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
+                                        <Run Text="{x:Bind AppPublisher}" />
+                                    </TextBlock>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <TextBlock
+                            Grid.Column="2"
+                            MinWidth="50"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            HorizontalTextAlignment="Left"
+                            Text="{x:Bind AppVersion}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                        <Run Text="{x:Bind AppVersion}" />
+                                    </TextBlock>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <StackPanel
+                            Grid.Column="3"
+                            Height="30"
+                            BorderBrush="{ThemeResource ButtonBorderBrush}"
+                            BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                            CornerRadius="{ThemeResource ControlCornerRadius}"
+                            Orientation="Horizontal">
+
+                            <Button
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                BorderThickness="0,0,1,0"
+                                Command="{StaticResource InstallCommand}"
+                                CommandParameter="{x:Bind}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
+                                CornerRadius="0"
+                                IsEnabled="{x:Bind IsInstalling.Equals(x:False), Mode=OneWay}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}" />
+
+                            <Button
+                                Width="35"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                CornerRadius="0"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
+
+                                <Button.Content>
+                                    <AnimatedIcon
+                                        Width="12"
+                                        Height="12"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                        <AnimatedIcon.FallbackIconSource>
+                                            <FontIconSource
+                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                FontSize="8"
+                                                Glyph="&#xE96E;"
+                                                IsTextScaleFactorEnabled="False" />
+                                        </AnimatedIcon.FallbackIconSource>
+                                    </AnimatedIcon>
+                                </Button.Content>
+
+                                <Button.Flyout>
+                                    <MenuFlyout Placement="Bottom">
+                                        <MenuFlyoutItem
+                                            Command="{StaticResource CopyInstallTextCommand}"
+                                            CommandParameter="{x:Bind AppID}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE8C8;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource InstallWithCmdCommand}"
+                                            CommandParameter="{x:Bind AppID}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE756;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </ItemContainer>
+            </DataTemplate>
+        </ItemsView.ItemTemplate>
+    </ItemsView>
 </Grid>

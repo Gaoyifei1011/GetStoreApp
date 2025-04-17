@@ -20,14 +20,6 @@ namespace GetStoreApp.Helpers.Converters
         }
 
         /// <summary>
-        /// 检查搜索框是否可用
-        /// </summary>
-        public static bool IsSearchBoxEnabled(bool notSearched, bool isSearchCompleted)
-        {
-            return notSearched || isSearchCompleted;
-        }
-
-        /// <summary>
         /// 确定当前选择的索引是否为目标控件
         /// </summary>
         public static Visibility IsCurrentControl(int selectedIndex, int index)
