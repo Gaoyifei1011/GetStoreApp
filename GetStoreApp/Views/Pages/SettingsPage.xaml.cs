@@ -7,17 +7,16 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,14 +29,12 @@ using Windows.Foundation.Diagnostics;
 using Windows.Globalization;
 using Windows.Management.Core;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
-using WinRT.Interop;
 
-// 抑制 CA1822，IDE0060 警告
-#pragma warning disable CA1822,IDE0060
+// 抑制 CA1822，CS8305，IDE0060 警告
+#pragma warning disable CA1822,CS8305,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -1265,57 +1262,22 @@ namespace GetStoreApp.Views.Pages
                         }
                     case "Custom":
                         {
-                            // 先使用 FolderPicker，FolderPicker 打开失败，再尝试使用 IFileDialog COM 接口选择文件夹，否则提示自定义文件夹失败
-                            bool result = false;
-
-                            // 使用 FolderPicker
                             try
                             {
-                                FolderPicker folderPicker = new();
-                                InitializeWithWindow.Initialize(folderPicker, Win32Interop.GetWindowFromWindowId(MainWindow.Current.AppWindow.Id));
-                                folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;
-
-                                if (await folderPicker.PickSingleFolderAsync() is StorageFolder downloadFolder)
+                                FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
                                 {
-                                    DownloadFolder = downloadFolder;
-                                    DownloadOptionsService.SetFolder(downloadFolder);
+                                    SuggestedStartLocation = PickerLocationId.Downloads
+                                };
+
+                                if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
+                                {
+                                    DownloadFolder = await StorageFolder.GetFolderFromPathAsync(pickFolderResult.Path);
+                                    DownloadOptionsService.SetFolder(DownloadFolder);
                                 }
-                                result = true;
                             }
                             catch (Exception e)
                             {
                                 LogService.WriteLog(LoggingLevel.Error, "Open folderPicker failed", e);
-                            }
-
-                            // 使用 IFileDialog
-                            if (!result)
-                            {
-                                try
-                                {
-                                    OpenFolderDialog openFolderDialog = new(MainWindow.Current.AppWindow.Id)
-                                    {
-                                        Description = ResourceService.GetLocalized("Settings/SelectFolder"),
-                                        RootFolder = DownloadOptionsService.DownloadFolder.Path,
-                                    };
-
-                                    if (openFolderDialog.ShowDialog())
-                                    {
-                                        DownloadFolder = await StorageFolder.GetFolderFromPathAsync(openFolderDialog.SelectedPath);
-                                        DownloadOptionsService.SetFolder(DownloadFolder);
-                                    }
-
-                                    result = true;
-                                    openFolderDialog.Dispose();
-                                }
-                                catch (Exception e)
-                                {
-                                    LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
-                                }
-                            }
-
-                            // 选取文件夹失败，显示提示
-                            if (!result)
-                            {
                                 await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
                             }
 

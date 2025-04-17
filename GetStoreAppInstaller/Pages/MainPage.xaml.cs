@@ -15,6 +15,7 @@ using Microsoft.UI;
 using Microsoft.Windows.ApplicationModel.DynamicDependency;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications.Builder;
+using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,7 +39,6 @@ using Windows.Globalization;
 using Windows.Management.Core;
 using Windows.Management.Deployment;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Composition;
@@ -50,10 +50,9 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using WinRT;
-using WinRT.Interop;
 
-// 抑制 CA1822，IDE0060 警告
-#pragma warning disable CA1822,IDE0060
+// 抑制 CA1822，CS8305，IDE0060 警告
+#pragma warning disable CA1822,CS8305,IDE0060
 
 namespace GetStoreAppInstaller.Pages
 {
@@ -1214,16 +1213,14 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private async void OnOpenPackageClicked(object sender, RoutedEventArgs args)
         {
-            // 先使用 FileOpenPicker，FileOpenPicker 打开失败，再尝试使用 IFileDialog COM 接口选择文件，否则提示打开自定义文件选取框失败
-            bool result = false;
             bool hasSelectFile = false;
 
-            // 使用 FileOpenPicker
             try
             {
-                FileOpenPicker fileOpenPicker = new();
-                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id));
-                fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+                FileOpenPicker fileOpenPicker = new(Program.MainAppWindow.Id)
+                {
+                    SuggestedStartLocation = PickerLocationId.Desktop
+                };
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
                 fileOpenPicker.FileTypeFilter.Add(".msix");
@@ -1231,52 +1228,18 @@ namespace GetStoreAppInstaller.Pages
                 fileOpenPicker.FileTypeFilter.Add(".msixbundle");
                 fileOpenPicker.FileTypeFilter.Add(".appinstaller");
 
-                if (await fileOpenPicker.PickSingleFileAsync() is StorageFile storageFile)
+                if (await fileOpenPicker.PickSingleFileAsync() is PickFileResult pickFileResult)
                 {
-                    fileName = storageFile.Path;
+                    fileName = pickFileResult.Path;
                     hasSelectFile = true;
                 }
-                result = true;
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
             }
 
-            // 使用 IFileDialog
-            if (!result)
-            {
-                try
-                {
-                    OpenFileDialog openFileDialog = new(Program.MainAppWindow.Id)
-                    {
-                        Description = SelectPackage,
-                        UseCustomFilterTypes = true
-                    };
-
-                    openFileDialog.FileTypeFilter.Clear();
-                    openFileDialog.FileTypeFilter.Add("*.appx");
-                    openFileDialog.FileTypeFilter.Add("*.msix");
-                    openFileDialog.FileTypeFilter.Add("*.appxbundle");
-                    openFileDialog.FileTypeFilter.Add("*.msixbundle");
-                    openFileDialog.FileTypeFilter.Add("*.appinstaller");
-
-                    if (openFileDialog.ShowDialog())
-                    {
-                        fileName = openFileDialog.SelectedFile;
-                        hasSelectFile = true;
-                    }
-
-                    result = true;
-                    openFileDialog.Dispose();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
-                }
-            }
-
-            if (result && hasSelectFile)
+            if (hasSelectFile)
             {
                 IsParseEmpty = false;
                 ResetResult();
@@ -1295,16 +1258,14 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private async void OnOpenOtherPackageClicked(object sender, RoutedEventArgs args)
         {
-            // 先使用 FileOpenPicker，FileOpenPicker 打开失败，再尝试使用 IFileDialog COM 接口选择文件，否则提示打开自定义文件选取框失败
-            bool result = false;
             bool hasSelectFile = false;
 
-            // 使用 FileOpenPicker
             try
             {
-                FileOpenPicker fileOpenPicker = new();
-                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id));
-                fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+                FileOpenPicker fileOpenPicker = new(Program.MainAppWindow.Id)
+                {
+                    SuggestedStartLocation = PickerLocationId.Desktop
+                };
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
                 fileOpenPicker.FileTypeFilter.Add(".msix");
@@ -1312,52 +1273,18 @@ namespace GetStoreAppInstaller.Pages
                 fileOpenPicker.FileTypeFilter.Add(".msixbundle");
                 fileOpenPicker.FileTypeFilter.Add(".appinstaller");
 
-                if (await fileOpenPicker.PickSingleFileAsync() is StorageFile storageFile)
+                if (await fileOpenPicker.PickSingleFileAsync() is PickFileResult pickFileResult)
                 {
-                    fileName = storageFile.Path;
+                    fileName = pickFileResult.Path;
                     hasSelectFile = true;
                 }
-                result = true;
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
             }
 
-            // 使用 IFileDialog
-            if (!result)
-            {
-                try
-                {
-                    OpenFileDialog openFileDialog = new(Program.MainAppWindow.Id)
-                    {
-                        Description = SelectPackage,
-                        UseCustomFilterTypes = true
-                    };
-
-                    openFileDialog.FileTypeFilter.Clear();
-                    openFileDialog.FileTypeFilter.Add("*.appx");
-                    openFileDialog.FileTypeFilter.Add("*.msix");
-                    openFileDialog.FileTypeFilter.Add("*.appxbundle");
-                    openFileDialog.FileTypeFilter.Add("*.msixbundle");
-                    openFileDialog.FileTypeFilter.Add("*.appinstaller");
-
-                    if (openFileDialog.ShowDialog())
-                    {
-                        fileName = openFileDialog.SelectedFile;
-                        hasSelectFile = true;
-                    }
-
-                    result = true;
-                    openFileDialog.Dispose();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
-                }
-            }
-
-            if (result && hasSelectFile)
+            if (hasSelectFile)
             {
                 ResetResult();
 
@@ -1375,30 +1302,25 @@ namespace GetStoreAppInstaller.Pages
         /// </summary>
         private async void OnAddDependencyClicked(object sender, RoutedEventArgs args)
         {
-            // 先使用 FileOpenPicker，FileOpenPicker 打开失败，再尝试使用 IFileDialog COM 接口选择文件，否则提示打开自定义文件选取框失败
-            bool result = false;
-
-            // 使用 FileOpenPicker
             try
             {
-                FileOpenPicker fileOpenPicker = new();
-                InitializeWithWindow.Initialize(fileOpenPicker, Win32Interop.GetWindowFromWindowId(Program.MainAppWindow.Id));
-                fileOpenPicker.SuggestedStartLocation = PickerLocationId.Downloads;
+                FileOpenPicker fileOpenPicker = new(Program.MainAppWindow.Id)
+                {
+                    SuggestedStartLocation = PickerLocationId.Desktop
+                };
                 fileOpenPicker.FileTypeFilter.Clear();
                 fileOpenPicker.FileTypeFilter.Add(".appx");
                 fileOpenPicker.FileTypeFilter.Add(".msix");
                 fileOpenPicker.FileTypeFilter.Add(".appxbundle");
                 fileOpenPicker.FileTypeFilter.Add(".msixbundle");
 
-                IReadOnlyList<StorageFile> filesList = await fileOpenPicker.PickMultipleFilesAsync();
-
-                if (filesList is not null)
+                if (await fileOpenPicker.PickMultipleFilesAsync() is IReadOnlyList<PickFileResult> pickFileResultList)
                 {
-                    foreach (StorageFile file in filesList)
+                    foreach (PickFileResult pickFileResult in pickFileResultList)
                     {
                         (bool parseResult, DependencyAppInformation dependencyAppInformation) parseResult = await Task.Run(async () =>
                         {
-                            return await ParseDependencyAppAsync(file.Path);
+                            return await ParseDependencyAppAsync(pickFileResult.Path);
                         });
 
                         if (parseResult.parseResult)
@@ -1407,63 +1329,19 @@ namespace GetStoreAppInstaller.Pages
 
                             InstallDependencyCollection.Add(new InstallDependencyModel()
                             {
-                                DependencyName = file.Name,
+                                DependencyName = Path.GetFileName(pickFileResult.Path),
                                 DependencyVersion = dependencyAppInformation.Version is not null ? dependencyAppInformation.Version : new Version(),
                                 DependencyPublisher = string.IsNullOrEmpty(dependencyAppInformation.PublisherDisplayName) ? Unknown : dependencyAppInformation.PublisherDisplayName,
                                 DependencyFullName = string.IsNullOrEmpty(dependencyAppInformation.PackageFullName) ? GuidHelper.CreateNewGuid().ToString() : dependencyAppInformation.PackageFullName,
-                                DependencyPath = file.Path
+                                DependencyPath = pickFileResult.Path
                             });
                         }
                     }
                 }
-
-                result = true;
             }
             catch (Exception e)
             {
                 LogService.WriteLog(LoggingLevel.Error, "Open fileOpenPicker failed", e);
-            }
-
-            // 使用 IFileDialog
-            if (!result)
-            {
-                try
-                {
-                    OpenFileDialog openFileDialog = new(Program.MainAppWindow.Id)
-                    {
-                        Description = SelectDependencyPackage,
-                        AllowMultiSelect = true,
-                        UseCustomFilterTypes = true
-                    };
-
-                    openFileDialog.FileTypeFilter.Clear();
-                    openFileDialog.FileTypeFilter.Add("*.appx");
-                    openFileDialog.FileTypeFilter.Add("*.msix");
-                    openFileDialog.FileTypeFilter.Add("*.appxbundle");
-                    openFileDialog.FileTypeFilter.Add("*.msixbundle");
-
-                    if (openFileDialog.ShowDialog())
-                    {
-                        foreach (string fileItem in openFileDialog.SelectedFileList)
-                        {
-                            InstallDependencyCollection.Add(new InstallDependencyModel()
-                            {
-                                DependencyName = Path.GetFileName(fileItem),
-                                DependencyVersion = new Version(),
-                                DependencyPublisher = string.Empty,
-                                DependencyFullName = GuidHelper.CreateNewGuid().ToString(),
-                                DependencyPath = fileItem
-                            });
-                        }
-                    }
-
-                    result = true;
-                    openFileDialog.Dispose();
-                }
-                catch (Exception e)
-                {
-                    LogService.WriteLog(LoggingLevel.Error, "OpenFolderDialog(IFileOpenDialog) initialize failed.", e);
-                }
             }
         }
 
