@@ -32,6 +32,7 @@
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <WebView2NeverCopyLoaderDllToOutputDirectory>true</WebView2NeverCopyLoaderDllToOutputDirectory>
     <Win32Resource>GetStoreApp.res</Win32Resource>
+    <WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
     <WindowsAppSDKDeploymentManagerInitialize>false</WindowsAppSDKDeploymentManagerInitialize>
     <WindowsAppSDKSingleFileVerifyConfiguration>false</WindowsAppSDKSingleFileVerifyConfiguration>
     <WindowsSdkPackageVersion>10.0.26100.57</WindowsSdkPackageVersion>
@@ -370,6 +371,8 @@
     <PRIResource Include="Strings\zh-hans\WebView.resjson" />
     <PRIResource Include="Strings\zh-hans\Window.resjson" />
     <PRIResource Include="Strings\zh-hans\WinGet.resjson" />
+    
+    <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
@@ -397,7 +400,7 @@
     <WriteLinesToFile File="$(_EmbedFileResfilePath)" Lines="@(MyEmbeddedFileList)" Overwrite="true" Encoding="Unicode" />
   </Target>
 
-  <Target Name="CopyWinmdToTargetDir" BeforeTargets="BeforeBuild">
+  <Target Name="CopyFilesToTargetDir" BeforeTargets="BeforeBuild">
     <Copy SourceFiles="$(PkgMicrosoft_WindowsPackageManager_ComInterop)\lib\uap10.0\Microsoft.Management.Deployment.winmd" DestinationFolder="$(TargetDir)" />
   </Target>
 

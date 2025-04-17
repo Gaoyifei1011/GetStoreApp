@@ -32,6 +32,7 @@
     <TrimmerRemoveSymbols>true</TrimmerRemoveSymbols>
     <UseUwp>true</UseUwp>
     <Win32Resource>GetStoreAppInstaller.res</Win32Resource>
+    <WindowsAppSDKBackgroundTask>false</WindowsAppSDKBackgroundTask>
     <WindowsSdkPackageVersion>10.0.26100.57</WindowsSdkPackageVersion>
     <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
   </PropertyGroup>
@@ -78,6 +79,7 @@
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.22621.0\Microsoft.Windows.AppNotifications.Builder.Projection.dll" />
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.22621.0\Microsoft.Windows.AppNotifications.Projection.dll" />
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.22621.0\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
+    <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
