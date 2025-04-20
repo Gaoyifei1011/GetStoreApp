@@ -59,7 +59,7 @@
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/add818fa-dc43-473e-b587-6b43fb28b64b" />
 </div>
 
-##### <p align="center">可升级应用</p>
+##### <p align="center">可更新应用</p>
 <div align="center">
 <img src="https://github.com/Gaoyifei1011/GetStoreApp/assets/49179966/ce2cdb09-38ec-43f9-9aed-282f7d7732fe" />
 </div>
