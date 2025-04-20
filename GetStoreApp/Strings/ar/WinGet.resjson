@@ -7,6 +7,7 @@
   "Canceling": "إلغاء",
   "CancelInstall": "إلغاء التثبيت",
   "Close": "إغلاق",
+  "CheckUpdate": "Check update",
   "ControlPanel": "لوحة التحكم",
   "ControlPanelToolTip": "فتح البرامج والميزات في لوحة التحكم",
   "CopyInstallText": "نسخ أمر التثبيت",
@@ -52,6 +53,7 @@
   "MatchFieldPackageFamilyName": "Package family name",
   "MatchFieldProductCode": "Product code",
   "MatchFieldTag": "Tag",
+  "NotCheckUpdateTip": "Click Check for updates to see the updatable status of your installed apps",
   "NotSearchedTip": "تابع للحصول على التطبيقات التي تريد تثبيتها. ستظهر التطبيقات التي تبحث عنها هنا",
   "OpenTempFolder": "فتح مجلد التنزيل",
   "OpenTempFolderToolTip": "فتح الدليل المحلي حيث تم تنزيل حزمة تثبيت التطبيق مؤقتًا",
@@ -93,5 +95,9 @@
   "UpgradableAppsCountEmpty": "لا توجد تطبيقات قابلة للترقية",
   "UpgradableAppsCountInfo": "يوجد {0} تطبيقات قابلة للترقية",
   "UpgradableAppsEmptyDescription": "جميع تطبيقاتك محدثة",
+  "UpgradableAppsFailed": "Check app update failed, error reason: {0}, error code: {1}",
+  "UpgradableCatalogReferenceFailed": "Read data source failed",
+  "UpgradableFindAppsFailed": "Find apps failed",
+  "UpgradableNotSelectSource": "No data source is selected, please select a data source in the settings",
   "ViewMoreOptions": "عرض المزيد من الخيارات"
 }

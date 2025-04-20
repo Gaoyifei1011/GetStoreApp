@@ -7,6 +7,7 @@
   "Canceling": "בוטל",
   "CancelInstall": "בטל התקנה",
   "Close": "סגור",
+  "CheckUpdate": "Check update",
   "ControlPanel": "לוח הבקרה",
   "ControlPanelToolTip": "פתח את תוכניות ותכונות בלוח הבקרה",
   "CopyInstallText": "העתק את פקודת ההתקנה",
@@ -52,6 +53,7 @@
   "MatchFieldPackageFamilyName": "Package family name",
   "MatchFieldProductCode": "Product code",
   "MatchFieldTag": "Tag",
+  "NotCheckUpdateTip": "Click Check for updates to see the updatable status of your installed apps",
   "NotSearchedTip": "גש והורד את האפליקציות שברצונך להתקין. האפליקציות שתחפש יופיעו כאן",
   "OpenTempFolder": "פתח את תיקיית ההורדה",
   "OpenTempFolderToolTip": "פתח את הספרייה המקומית שאליה חבילת התקנת האפליקציה הורדה באופן זמני",
@@ -94,5 +96,9 @@
   "UpgradableAppsCountEmpty": "אין אפליקציות הניתנות לשדרוג",
   "UpgradableAppsCountInfo": "קיימים {0} יישומים הניתנים לשדרוג",
   "UpgradableAppsEmptyDescription": "כל האפליקציות שלך מעודכנות",
+  "UpgradableAppsFailed": "Check app update failed, error reason: {0}, error code: {1}",
+  "UpgradableCatalogReferenceFailed": "Read data source failed",
+  "UpgradableFindAppsFailed": "Find apps failed",
+  "UpgradableNotSelectSource": "No data source is selected, please select a data source in the settings",
   "ViewMoreOptions": "הצג אפשרויות נוספות"
 }
