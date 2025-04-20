@@ -5,10 +5,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
@@ -24,10 +22,7 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class WinGetPage : Page
     {
         private bool isInitialized;
-        public readonly Lock InstallStateLock = new();
         public readonly Lock InstallingAppsLock = new();
-
-        internal Dictionary<string, IAsyncInfo> InstallingStateDict { get; } = [];
 
         public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = [];
 
@@ -53,39 +48,23 @@ namespace GetStoreApp.Views.Pages
                         if (installingAppsItem.AppID.Equals(appId))
                         {
                             installingAppsItem.IsCanceling = true;
+                            if (installingAppsItem.InstallingAppsProgress is not null && installingAppsItem.InstallingAppsProgress.Status is not AsyncStatus.Canceled)
+                            {
+                                installingAppsItem.InstallingAppsProgress.Cancel();
+                            }
+
+                            break;
                         }
                     }
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
+                }
                 finally
                 {
                     InstallingAppsLock.Exit();
                 }
-
-                Task.Run(() =>
-                {
-                    InstallStateLock.Enter();
-
-                    try
-                    {
-                        if (InstallingStateDict.TryGetValue(appId, out IAsyncInfo asyncInfo))
-                        {
-                            if (asyncInfo.Status is not AsyncStatus.Canceled)
-                            {
-                                asyncInfo.Cancel();
-                                asyncInfo.Close();
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Cancel winget download task failed", e);
-                    }
-                    finally
-                    {
-                        InstallStateLock.Exit();
-                    }
-                });
             }
         }
 

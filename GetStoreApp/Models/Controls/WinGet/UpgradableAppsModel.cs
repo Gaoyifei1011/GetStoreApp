@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.Management.Deployment;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
     /// <summary>
-    /// 可升级应用数据模型
+    /// 可更新应用数据模型
     /// </summary>
     public sealed partial class UpgradableAppsModel : INotifyPropertyChanged
     {
@@ -28,7 +29,7 @@ namespace GetStoreApp.Models.Controls.WinGet
         public string AppCurrentVersion { get; set; }
 
         /// <summary>
-        /// 应用可升级的最新版本
+        /// 应用可更新的最新版本
         /// </summary>
         public string AppNewestVersion { get; set; }
 
@@ -50,6 +51,11 @@ namespace GetStoreApp.Models.Controls.WinGet
                 }
             }
         }
+
+        /// <summary>
+        /// 匹配到的应用包
+        /// </summary>
+        public CatalogPackage CatalogPackage { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

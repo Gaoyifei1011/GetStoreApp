@@ -209,7 +209,8 @@ namespace GetStoreApp.UI.Controls.WinGet
                         DownloadProgress = 0,
                         InstallProgressState = PackageInstallProgressState.Queued,
                         DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
-                        TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0)
+                        TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                        InstallingAppsProgress = null
                     });
                 }
                 catch (Exception) { }
@@ -222,6 +223,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
+                        // 第一部分：添加更新任务
                         PackageManager packageManager = new();
                         IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(searchApps.CatalogPackage, new()
                         {
@@ -229,12 +231,18 @@ namespace GetStoreApp.UI.Controls.WinGet
                             PackageInstallScope = PackageInstallScope.Any
                         });
 
-                        // 第一部分：添加更新任务
-                        WinGetInstance.InstallStateLock.Enter();
+                        WinGetInstance.InstallingAppsLock.Enter();
 
                         try
                         {
-                            WinGetInstance.InstallingStateDict.Add(searchApps.AppID, installPackageWithProgress);
+                            foreach (InstallingAppsModel installingAppsItem in WinGetInstance.InstallingAppsCollection)
+                            {
+                                if (installingAppsItem.AppID.Equals(searchApps.AppID) && installingAppsItem.InstallingAppsProgress is null)
+                                {
+                                    installingAppsItem.InstallingAppsProgress = installPackageWithProgress;
+                                    break;
+                                }
+                            }
                         }
                         catch (Exception e)
                         {
@@ -242,7 +250,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                         finally
                         {
-                            WinGetInstance.InstallStateLock.Exit();
+                            WinGetInstance.InstallingAppsLock.Exit();
                         }
 
                         // 第二部分：更新安装进度
@@ -768,21 +776,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                     ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                 }
 
-                WinGetInstance.InstallStateLock.Enter();
-
-                try
-                {
-                    WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-                finally
-                {
-                    WinGetInstance.InstallStateLock.Exit();
-                }
-
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     // 应用安装失败，将当前任务状态修改为可安装状态
@@ -820,21 +813,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             {
                 LogService.WriteLog(LoggingLevel.Information, "App installing operation canceled.", new Exception());
 
-                WinGetInstance.InstallStateLock.Enter();
-
-                try
-                {
-                    WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
-                }
-                catch (Exception exception)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(exception);
-                }
-                finally
-                {
-                    WinGetInstance.InstallStateLock.Exit();
-                }
-
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     // 应用安装失败，将当前任务状态修改为可安装状态
@@ -871,21 +849,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             else if (status is AsyncStatus.Error)
             {
                 LogService.WriteLog(LoggingLevel.Error, "App installing failed.", result.ErrorCode);
-
-                WinGetInstance.InstallStateLock.Enter();
-
-                try
-                {
-                    WinGetInstance.InstallingStateDict.Remove(searchApps.AppID);
-                }
-                catch (Exception exception)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(exception);
-                }
-                finally
-                {
-                    WinGetInstance.InstallStateLock.Exit();
-                }
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -1052,29 +1015,29 @@ namespace GetStoreApp.UI.Controls.WinGet
                                     IsInstalling = isInstalling,
                                     CatalogPackage = matchItem.CatalogPackage,
                                 });
+                            }
+                        }
 
-                                if (SelectedRule is AppSortRuleKind.DisplayName)
-                                {
-                                    if (IsIncrease)
-                                    {
-                                        searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
-                                    }
-                                    else
-                                    {
-                                        searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
-                                    }
-                                }
-                                else
-                                {
-                                    if (IsIncrease)
-                                    {
-                                        searchAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
-                                    }
-                                    else
-                                    {
-                                        searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
-                                    }
-                                }
+                        if (SelectedRule is AppSortRuleKind.DisplayName)
+                        {
+                            if (IsIncrease)
+                            {
+                                searchAppsList.Sort((item1, item2) => item1.AppName.CompareTo(item2.AppName));
+                            }
+                            else
+                            {
+                                searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
+                            }
+                        }
+                        else
+                        {
+                            if (IsIncrease)
+                            {
+                                searchAppsList.Sort((item1, item2) => item1.AppPublisher.CompareTo(item2.AppPublisher));
+                            }
+                            else
+                            {
+                                searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
                             }
                         }
 
@@ -1101,9 +1064,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 检查搜索应用是否成功
         /// </summary>
-        public Visibility CheckSearchAppsState(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKink)
+        public Visibility CheckSearchAppsState(SearchAppsResultKind searchAppsResultKind, SearchAppsResultKind comparedSearchAppsResultKind)
         {
-            return searchAppsResultKind.Equals(comparedSearchAppsResultKink) ? Visibility.Visible : Visibility.Collapsed;
+            return searchAppsResultKind.Equals(comparedSearchAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

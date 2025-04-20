@@ -1,5 +1,6 @@
 ﻿using Microsoft.Management.Deployment;
 using System.ComponentModel;
+using Windows.Foundation;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
@@ -109,6 +110,8 @@ namespace GetStoreApp.Models.Controls.WinGet
                 }
             }
         }
+
+        public IAsyncOperationWithProgress<InstallResult, InstallProgress> InstallingAppsProgress { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
     }
