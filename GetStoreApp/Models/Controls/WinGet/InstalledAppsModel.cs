@@ -1,10 +1,29 @@
-﻿namespace GetStoreApp.Models.Controls.WinGet
+﻿using Microsoft.Management.Deployment;
+using System.ComponentModel;
+
+namespace GetStoreApp.Models.Controls.WinGet
 {
     /// <summary>
     /// 已安装应用数据模型
     /// </summary>
-    public sealed class InstalledAppsModel
+    public sealed partial class InstalledAppsModel : INotifyPropertyChanged
     {
+        private bool _isUninstalling;
+
+        public bool IsUninstalling
+        {
+            get { return _isUninstalling; }
+
+            set
+            {
+                if (!Equals(_isUninstalling, value))
+                {
+                    _isUninstalling = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUninstalling)));
+                }
+            }
+        }
+
         /// <summary>
         /// 应用ID
         /// </summary>
@@ -24,5 +43,9 @@
         /// 应用版本
         /// </summary>
         public string AppVersion { get; set; }
+
+        public CatalogPackage CatalogPackage { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

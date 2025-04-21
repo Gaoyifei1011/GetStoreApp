@@ -76,6 +76,22 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        private AppSortRuleKind _selectedAppSortRuleKind = AppSortRuleKind.DisplayName;
+
+        public AppSortRuleKind SelectedAppSortRuleKind
+        {
+            get { return _selectedAppSortRuleKind; }
+
+            set
+            {
+                if (!Equals(_selectedAppSortRuleKind, value))
+                {
+                    _selectedAppSortRuleKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedAppSortRuleKind)));
+                }
+            }
+        }
+
         private SearchAppsResultKind _searchAppsResultKind = SearchAppsResultKind.NotSearch;
 
         public SearchAppsResultKind SearchAppsResultKind
@@ -88,22 +104,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     _searchAppsResultKind = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SearchAppsResultKind)));
-                }
-            }
-        }
-
-        private AppSortRuleKind _selectedRule = AppSortRuleKind.DisplayName;
-
-        public AppSortRuleKind SelectedRule
-        {
-            get { return _selectedRule; }
-
-            set
-            {
-                if (!Equals(_selectedRule, value))
-                {
-                    _selectedRule = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedRule)));
                 }
             }
         }
@@ -223,7 +223,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     try
                     {
-                        // 第一部分：添加更新任务
+                        // 第一部分：添加安装任务
                         PackageManager packageManager = new();
                         IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(searchApps.CatalogPackage, new()
                         {
@@ -262,7 +262,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                     // 其他异常
                     catch (Exception e)
                     {
-                        // 禁用当前应用的可安装状态
+                        // 启用当前应用的可安装状态
                         foreach (SearchAppsModel searchAppsItem in SearchAppsCollection)
                         {
                             if (searchAppsItem.AppID.Equals(searchApps.AppID))
@@ -307,7 +307,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
                 List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
                 SearchAppsCollection.Clear();
-                if (SelectedRule is AppSortRuleKind.DisplayName)
+                if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
                 {
                     if (IsIncrease)
                     {
@@ -329,11 +329,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                         searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
                     }
                 }
+                await Task.Delay(500);
                 foreach (SearchAppsModel searchAppsItem in searchAppsList)
                 {
                     SearchAppsCollection.Add(searchAppsItem);
                 }
-                await Task.Delay(500);
                 SearchAppsResultKind = SearchAppsResultKind.Successfully;
             }
         }
@@ -345,11 +345,11 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && SearchAppsResultKind is SearchAppsResultKind.Successfully)
             {
-                SelectedRule = appSortRuleKind;
+                SelectedAppSortRuleKind = appSortRuleKind;
                 SearchAppsResultKind = SearchAppsResultKind.Searching;
                 List<SearchAppsModel> searchAppsList = [.. SearchAppsCollection];
                 SearchAppsCollection.Clear();
-                if (SelectedRule is AppSortRuleKind.DisplayName)
+                if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
                 {
                     if (IsIncrease)
                     {
@@ -371,11 +371,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                         searchAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
                     }
                 }
+                await Task.Delay(500);
                 foreach (SearchAppsModel searchAppsItem in searchAppsList)
                 {
                     SearchAppsCollection.Add(searchAppsItem);
                 }
-                await Task.Delay(500);
                 SearchAppsResultKind = SearchAppsResultKind.Successfully;
             }
         }
@@ -422,7 +422,7 @@ namespace GetStoreApp.UI.Controls.WinGet
         }
 
         /// <summary>
-        /// 更新已安装应用数据
+        /// 刷新搜索应用数据
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
@@ -724,6 +724,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        /// <summary>
         /// 应用安装完成时时触发的事件
         /// </summary>
         private void OnInstallPackageCompleted(IAsyncOperationWithProgress<InstallResult, InstallProgress> result, AsyncStatus status, SearchAppsModel searchApps)
@@ -1018,7 +1019,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        if (SelectedRule is AppSortRuleKind.DisplayName)
+                        if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
                         {
                             if (IsIncrease)
                             {

@@ -59,6 +59,22 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        private AppSortRuleKind _selectedAppSortRuleKind = AppSortRuleKind.DisplayName;
+
+        public AppSortRuleKind SelectedAppSortRuleKind
+        {
+            get { return _selectedAppSortRuleKind; }
+
+            set
+            {
+                if (!Equals(_selectedAppSortRuleKind, value))
+                {
+                    _selectedAppSortRuleKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedAppSortRuleKind)));
+                }
+            }
+        }
+
         private UpgradableAppsResultKind _upgradableAppsResultKind = UpgradableAppsResultKind.NotCheckUpdate;
 
         public UpgradableAppsResultKind UpgradableAppsResultKind
@@ -71,22 +87,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                 {
                     _upgradableAppsResultKind = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(UpgradableAppsResultKind)));
-                }
-            }
-        }
-
-        private AppSortRuleKind _selectedRule = AppSortRuleKind.DisplayName;
-
-        public AppSortRuleKind SelectedRule
-        {
-            get { return _selectedRule; }
-
-            set
-            {
-                if (!Equals(_selectedRule, value))
-                {
-                    _selectedRule = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedRule)));
                 }
             }
         }
@@ -226,7 +226,17 @@ namespace GetStoreApp.UI.Controls.WinGet
                     // 其他异常
                     catch (Exception e)
                     {
-                        LogService.WriteLog(LoggingLevel.Error, "App installing failed.", e);
+                        // 启用当前应用的可更新状态
+                        foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
+                        {
+                            if (upgradableAppsItem.AppID == upgradableApps.AppID)
+                            {
+                                upgradableAppsItem.IsUpgrading = false;
+                                break;
+                            }
+                        }
+
+                        LogService.WriteLog(LoggingLevel.Error, "App upgrading failed.", e);
                     }
                 });
             }
@@ -243,11 +253,11 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
-                IsIncrease = Convert.ToBoolean(radioMenuFlyoutItem.Tag);
+                IsIncrease = Convert.ToBoolean(increase);
                 UpgradableAppsResultKind = UpgradableAppsResultKind.Querying;
                 List<UpgradableAppsModel> upgradableAppsList = [.. UpgradableAppsCollection];
                 UpgradableAppsCollection.Clear();
-                if (SelectedRule is AppSortRuleKind.DisplayName)
+                if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
                 {
                     if (IsIncrease)
                     {
@@ -269,11 +279,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                         upgradableAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
                     }
                 }
+                await Task.Delay(500);
                 foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsList)
                 {
                     UpgradableAppsCollection.Add(upgradableAppsItem);
                 }
-                await Task.Delay(500);
                 UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
             }
         }
@@ -285,11 +295,11 @@ namespace GetStoreApp.UI.Controls.WinGet
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && UpgradableAppsResultKind is UpgradableAppsResultKind.Successfully)
             {
-                SelectedRule = appSortRuleKind;
+                SelectedAppSortRuleKind = appSortRuleKind;
                 UpgradableAppsResultKind = UpgradableAppsResultKind.Querying;
                 List<UpgradableAppsModel> upgradableAppsList = [.. UpgradableAppsCollection];
                 UpgradableAppsCollection.Clear();
-                if (SelectedRule is AppSortRuleKind.DisplayName)
+                if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
                 {
                     if (IsIncrease)
                     {
@@ -311,11 +321,11 @@ namespace GetStoreApp.UI.Controls.WinGet
                         upgradableAppsList.Sort((item1, item2) => item2.AppPublisher.CompareTo(item1.AppPublisher));
                     }
                 }
+                await Task.Delay(500);
                 foreach (UpgradableAppsModel upgradableAppsItem in upgradableAppsList)
                 {
                     UpgradableAppsCollection.Add(upgradableAppsItem);
                 }
-                await Task.Delay(500);
                 UpgradableAppsResultKind = UpgradableAppsResultKind.Successfully;
             }
         }
@@ -475,7 +485,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         {
                             foreach (InstallingAppsModel installingItem in WinGetInstance.InstallingAppsCollection)
                             {
-                                if (installingItem.AppID == upgradableApps.AppID)
+                                if (installingItem.AppID.Equals(upgradableApps.AppID))
                                 {
                                     installingItem.InstallProgressState = PackageInstallProgressState.Installing;
                                     installingItem.DownloadProgress = 100;
@@ -542,6 +552,7 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
+        /// <summary>
         /// 应用安装完成时时触发的事件
         /// </summary>
         private void OnInstallPackageCompleted(IAsyncOperationWithProgress<InstallResult, InstallProgress> result, AsyncStatus status, UpgradableAppsModel upgradableApps)
@@ -554,13 +565,13 @@ namespace GetStoreApp.UI.Controls.WinGet
                 // 应用安装成功
                 if (installResult.Status is InstallResultStatus.Ok)
                 {
-                    // 显示 WinGet 应用升级成功通知
+                    // 显示 WinGet 应用更新成功通知
                     AppNotificationBuilder appNotificationBuilder = new();
                     appNotificationBuilder.AddArgument("action", "OpenApp");
                     appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), upgradableApps.AppName));
                     ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
 
-                    // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
+                    // 检测是否需要重启设备完成应用的更新，如果是，询问用户是否需要重启设备
                     if (installResult.RebootRequired)
                     {
                         DispatcherQueue.TryEnqueue(async () =>
@@ -596,7 +607,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    // 应用安装失败，将当前任务状态修改为可安装状态
+                    // 应用更新失败，将当前任务状态修改为可更新状态
                     foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                     {
                         if (upgradableAppsItem.AppID.Equals(upgradableApps.AppID))
@@ -670,7 +681,7 @@ namespace GetStoreApp.UI.Controls.WinGet
 
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    // 应用安装失败，将当前任务状态修改为可安装状态
+                    // 应用更新失败，将当前任务状态修改为可更新状态
                     foreach (UpgradableAppsModel upgradableAppsItem in UpgradableAppsCollection)
                     {
                         if (upgradableAppsItem.AppID.Equals(upgradableApps.AppID))
@@ -740,7 +751,6 @@ namespace GetStoreApp.UI.Controls.WinGet
                 if (connectResult is not null && connectResult.Status is ConnectResultStatus.Ok)
                 {
                     FindPackagesOptions findPackagesOptions = new();
-
                     FindPackagesResult findPackagesResult = await connectResult.PackageCatalog.FindPackagesAsync(findPackagesOptions);
                     upgradableAppsResult.findPackagesResult = findPackagesResult;
 
@@ -786,7 +796,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        if (SelectedRule is AppSortRuleKind.DisplayName)
+                        if (SelectedAppSortRuleKind is AppSortRuleKind.DisplayName)
                         {
                             if (IsIncrease)
                             {

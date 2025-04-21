@@ -18,6 +18,7 @@
 
         <XamlUICommand x:Name="CopyUnInstallTextCommand" ExecuteRequested="{x:Bind OnCopyUnInstallTextExecuteRequested}" />
         <XamlUICommand x:Name="UnInstallCommand" ExecuteRequested="{x:Bind OnUnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
     </Grid.Resources>
 
     <Grid.RowDefinitions>
@@ -26,6 +27,7 @@
         <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
+    <!--  已安装应用控制栏  -->
     <Grid
         Grid.Row="0"
         Height="66"
@@ -75,7 +77,6 @@
             Width="170"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            IsEnabled="{x:Bind IsInstalledAppsEmpty.Equals(x:False), Mode=OneWay}"
             PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsPlaceHolderText')}"
             QuerySubmitted="{x:Bind OnQuerySubmitted}"
             Text="{x:Bind SearchText, Mode=OneWay}"
@@ -99,10 +100,7 @@
             </CommandBar.Resources>
 
             <CommandBar.PrimaryCommands>
-                <AppBarButton
-                    IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
-                    Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SortToolTip')}">
+                <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Sort')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/SortToolTip')}">
 
                     <AppBarButton.Icon>
                         <FontIcon Glyph="&#xE8CB;" />
@@ -119,7 +117,7 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortWayClicked}"
-                                    GroupName="SortWayRadioGroup"
+                                    GroupName="InstalledSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
                                     Tag="True"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
@@ -128,7 +126,7 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortWayClicked}"
-                                    GroupName="SortWayRadioGroup"
+                                    GroupName="InstalledSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
                                     Tag="False"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
@@ -143,8 +141,8 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortRuleClicked}"
-                                    GroupName="SortRuleRadioGroup"
-                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                    GroupName="InstalledSortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
                                     Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
 
@@ -152,8 +150,8 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortRuleClicked}"
-                                    GroupName="SortRuleRadioGroup"
-                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                    GroupName="InstalledSortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
                                     Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
                             </MenuFlyoutSubItem>
@@ -163,7 +161,7 @@
 
                 <AppBarButton
                     Click="{x:Bind OnRefreshClicked}"
-                    IsEnabled="{x:Bind IsLoadedCompleted, Mode=OneWay}"
+                    IsEnabled="{x:Bind GetIsInstalling(InstalledAppsResultKind), Mode=OneWay}"
                     Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
 
@@ -197,242 +195,239 @@
         </CommandBar>
     </Grid>
 
+    <!--  已安装应用状态显示栏  -->
     <Grid
-        x:Name="LoadingGrid"
         Grid.Row="1"
+        Height="60"
         Margin="30,3,30,0"
         Padding="16,12"
-        x:Load="{x:Bind IsLoadedCompleted.Equals(x:False), Mode=OneWay}"
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
-        CornerRadius="{StaticResource ControlCornerRadius}">
-
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
-            Spacing="10">
-
-            <ProgressRing IsActive="True" IsEnabled="True" />
-
-            <TextBlock
-                Margin="0,10"
-                VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
-                TextAlignment="Center" />
-        </StackPanel>
-    </Grid>
-
-    <Grid
-        Grid.Row="2"
-        Padding="0,3,0,0"
-        Visibility="{x:Bind IsLoadedCompleted, Mode=OneWay}">
+        CornerRadius="{StaticResource ControlCornerRadius}"
+        Visibility="{x:Bind GetInstalledAppsSuccessfullyState(InstalledAppsResultKind, InstalledAppsCollection.Count, x:False), Mode=OneWay}">
 
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+            <!--  正在搜索中  -->
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="10"
+                Visibility="{x:Bind CheckInstalledAppsState(InstalledAppsResultKind, enum:InstalledAppsResultKind.Querying), Mode=OneWay}">
 
-            <Grid
-                Grid.Row="0"
-                Margin="30,0"
-                Padding="16,12"
-                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="{StaticResource ControlCornerRadius}"
-                Visibility="{x:Bind IsInstalledAppsEmpty, Mode=OneWay}">
+                <ProgressRing IsActive="True" IsEnabled="True" />
+
                 <TextBlock
                     Margin="0,10"
                     VerticalAlignment="Center"
-                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsEmptyDescription')}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LoadingInstalledApps')}"
                     TextAlignment="Center" />
-            </Grid>
+            </StackPanel>
 
-            <Grid Grid.Row="1" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalledAppsEmpty), Mode=OneWay}">
+            <!--  搜索失败  -->
+            <TextBlock
+                Margin="0,10"
+                VerticalAlignment="Center"
+                Text="{x:Bind InstalledFailedContent, Mode=OneWay}"
+                TextAlignment="Center"
+                Visibility="{x:Bind CheckInstalledAppsState(InstalledAppsResultKind, enum:InstalledAppsResultKind.Failed), Mode=OneWay}" />
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid
-                    Grid.Row="0"
-                    Height="60"
-                    Margin="30,0"
-                    Padding="16,12"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{StaticResource ControlCornerRadius}"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(InstalledAppsCollection.Count), Mode=OneWay}">
-                    <TextBlock
-                        Margin="0,10"
-                        VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}"
-                        TextAlignment="Center" />
-                </Grid>
-
-                <ItemsView
-                    Grid.Row="1"
-                    Padding="30,0,30,30"
-                    ItemsSource="{x:Bind InstalledAppsCollection, Mode=OneWay}"
-                    SelectionMode="None"
-                    Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(InstalledAppsCollection.Count), Mode=OneWay}">
-
-                    <ItemsView.Layout>
-                        <StackLayout />
-                    </ItemsView.Layout>
-
-                    <ItemsView.ItemTemplate>
-                        <DataTemplate x:DataType="winget:InstalledAppsModel">
-                            <ItemContainer Margin="0,0,0,2">
-                                <Grid
-                                    Padding="16,12"
-                                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="1"
-                                    ColumnSpacing="10"
-                                    CornerRadius="{StaticResource ControlCornerRadius}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        MinWidth="50"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind AppName}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
-                                                    <Run Text="{x:Bind AppName}" />
-                                                </TextBlock>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        MinWidth="50"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Text="{x:Bind AppPublisher}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
-                                                    <Run Text="{x:Bind AppPublisher}" />
-                                                </TextBlock>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <TextBlock
-                                        Grid.Column="2"
-                                        MinWidth="50"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        HorizontalTextAlignment="Left"
-                                        Text="{x:Bind AppVersion}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
-                                                    <Run Text="{x:Bind AppVersion}" />
-                                                </TextBlock>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <StackPanel
-                                        Grid.Column="3"
-                                        Height="30"
-                                        BorderBrush="{ThemeResource ButtonBorderBrush}"
-                                        BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                                        CornerRadius="{ThemeResource ControlCornerRadius}"
-                                        Orientation="Horizontal">
-
-                                        <Button
-                                            VerticalAlignment="Stretch"
-                                            VerticalContentAlignment="Center"
-                                            BorderThickness="0,0,1,0"
-                                            Command="{StaticResource UnInstallCommand}"
-                                            CommandParameter="{x:Bind}"
-                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}"
-                                            CornerRadius="0"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}" />
-
-                                        <Button
-                                            Width="35"
-                                            VerticalAlignment="Stretch"
-                                            BorderThickness="0"
-                                            CornerRadius="0"
-                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
-
-                                            <Button.Content>
-                                                <AnimatedIcon
-                                                    Width="12"
-                                                    Height="12"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Center"
-                                                    AutomationProperties.AccessibilityView="Raw">
-                                                    <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                                    <AnimatedIcon.FallbackIconSource>
-                                                        <FontIconSource
-                                                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                            FontSize="8"
-                                                            Glyph="&#xE96E;"
-                                                            IsTextScaleFactorEnabled="False" />
-                                                    </AnimatedIcon.FallbackIconSource>
-                                                </AnimatedIcon>
-                                            </Button.Content>
-
-                                            <Button.Flyout>
-                                                <MenuFlyout Placement="Bottom">
-                                                    <MenuFlyoutItem
-                                                        Height="32"
-                                                        Padding="11,0"
-                                                        Command="{StaticResource CopyUnInstallTextCommand}"
-                                                        CommandParameter="{x:Bind AppID}"
-                                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
-
-                                                        <MenuFlyoutItem.Icon>
-                                                            <FontIcon Glyph="&#xE8C8;" />
-                                                        </MenuFlyoutItem.Icon>
-                                                    </MenuFlyoutItem>
-                                                </MenuFlyout>
-                                            </Button.Flyout>
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
-                            </ItemContainer>
-                        </DataTemplate>
-                    </ItemsView.ItemTemplate>
-                </ItemsView>
-            </Grid>
+            <!--  搜索结果为空  -->
+            <TextBlock
+                Margin="0,10"
+                VerticalAlignment="Center"
+                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledAppsSearchEmptyDescription')}"
+                TextAlignment="Center"
+                Visibility="{x:Bind CheckInstalledAppsState(InstalledAppsResultKind, enum:InstalledAppsResultKind.SearchResult), Mode=OneWay}" />
         </Grid>
     </Grid>
+
+    <!--  搜索应用结果展示项目控件  -->
+    <ItemsView
+        Grid.Row="2"
+        Padding="30,3,30,30"
+        ItemsSource="{x:Bind InstalledAppsCollection, Mode=OneWay}"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        ScrollViewer.HorizontalScrollMode="Disabled"
+        ScrollViewer.VerticalScrollBarVisibility="Auto"
+        ScrollViewer.VerticalScrollMode="Enabled"
+        SelectionMode="None"
+        Visibility="{x:Bind GetInstalledAppsSuccessfullyState(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
+
+        <ItemsView.Layout>
+            <StackLayout />
+        </ItemsView.Layout>
+
+        <ItemsView.ItemTemplate>
+            <DataTemplate x:DataType="winget:InstalledAppsModel">
+                <ItemContainer Margin="0,0,0,2">
+                    <Grid
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        ColumnSpacing="10"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            MinWidth="50"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind AppName}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                        <Run Text="{x:Bind AppName}" />
+                                    </TextBlock>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            MinWidth="50"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind AppPublisher}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
+                                        <Run Text="{x:Bind AppPublisher}" />
+                                    </TextBlock>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <TextBlock
+                            Grid.Column="2"
+                            MinWidth="50"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            HorizontalTextAlignment="Left"
+                            Text="{x:Bind AppVersion}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
+
+                            <ToolTipService.ToolTip>
+                                <ToolTip MaxWidth="9999">
+                                    <TextBlock>
+                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                        <Run Text="{x:Bind AppVersion}" />
+                                    </TextBlock>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+
+                        <ProgressRing
+                            Grid.Column="3"
+                            Width="30"
+                            Height="30"
+                            IsActive="{x:Bind IsUninstalling, Mode=OneWay}"
+                            IsIndeterminate="True"
+                            Visibility="{x:Bind IsUninstalling, Mode=OneWay}" />
+
+                        <StackPanel
+                            Grid.Column="4"
+                            Height="30"
+                            BorderBrush="{ThemeResource ButtonBorderBrush}"
+                            BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                            CornerRadius="{ThemeResource ControlCornerRadius}"
+                            Orientation="Horizontal">
+
+                            <Button
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                BorderThickness="0,0,1,0"
+                                Command="{StaticResource UnInstallCommand}"
+                                CommandParameter="{x:Bind}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}"
+                                CornerRadius="0"
+                                IsEnabled="{x:Bind IsUninstalling.Equals(x:False), Mode=OneWay}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}" />
+
+                            <Button
+                                Width="35"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                CornerRadius="0"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
+
+                                <Button.Content>
+                                    <AnimatedIcon
+                                        Width="12"
+                                        Height="12"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                        <AnimatedIcon.FallbackIconSource>
+                                            <FontIconSource
+                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                FontSize="8"
+                                                Glyph="&#xE96E;"
+                                                IsTextScaleFactorEnabled="False" />
+                                        </AnimatedIcon.FallbackIconSource>
+                                    </AnimatedIcon>
+                                </Button.Content>
+
+                                <Button.Flyout>
+                                    <MenuFlyout Placement="Bottom">
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource CopyUnInstallTextCommand}"
+                                            CommandParameter="{x:Bind AppID}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE8C8;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource RepairCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind IsUninstalling.Equals(x:False), Mode=OneWay}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Repair')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE90F;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </ItemContainer>
+            </DataTemplate>
+        </ItemsView.ItemTemplate>
+    </ItemsView>
 </Grid>

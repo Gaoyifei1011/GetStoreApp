@@ -100,7 +100,7 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortWayClicked}"
-                                    GroupName="SortWayRadioGroup"
+                                    GroupName="UpgradeSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease, Mode=OneWay}"
                                     Tag="True"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortIncrease')}" />
@@ -109,7 +109,7 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortWayClicked}"
-                                    GroupName="SortWayRadioGroup"
+                                    GroupName="UpgradeSortWayRadioGroup"
                                     IsChecked="{x:Bind IsIncrease.Equals(x:False), Mode=OneWay}"
                                     Tag="False"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortDecrease')}" />
@@ -124,8 +124,8 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortRuleClicked}"
-                                    GroupName="SortRuleRadioGroup"
-                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
+                                    GroupName="UpgradeSortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.DisplayName), Mode=OneWay}"
                                     Tag="{x:Bind enum:AppSortRuleKind.DisplayName}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByDisplayName')}" />
 
@@ -133,8 +133,8 @@
                                     Height="32"
                                     Padding="11,0"
                                     Click="{x:Bind OnSortRuleClicked}"
-                                    GroupName="SortRuleRadioGroup"
-                                    IsChecked="{x:Bind x:Object.Equals(SelectedRule, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
+                                    GroupName="UpgradeSortRuleRadioGroup"
+                                    IsChecked="{x:Bind x:Object.Equals(SelectedAppSortRuleKind, enum:AppSortRuleKind.PublisherName), Mode=OneWay}"
                                     Tag="{x:Bind enum:AppSortRuleKind.PublisherName}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
                             </MenuFlyoutSubItem>
@@ -231,6 +231,10 @@
         Grid.Row="2"
         Padding="30,0,30,30"
         ItemsSource="{x:Bind UpgradableAppsCollection, Mode=OneWay}"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        ScrollViewer.HorizontalScrollMode="Disabled"
+        ScrollViewer.VerticalScrollBarVisibility="Auto"
+        ScrollViewer.VerticalScrollMode="Enabled"
         SelectionMode="None"
         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}">
 

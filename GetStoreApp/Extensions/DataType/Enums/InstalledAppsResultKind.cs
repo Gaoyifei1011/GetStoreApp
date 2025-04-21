@@ -5,9 +5,9 @@
     /// </summary>
     public enum InstalledAppsResultKind
     {
-        NotCheckUpdate = 0,
-        Querying = 1,
-        Failed = 2,
-        Successfully = 3,
+        Querying = 0,
+        Failed = 1,
+        Successfully = 2,
+        SearchResult = 3
     }
 }

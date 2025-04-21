@@ -7,6 +7,7 @@
     {
         SearchInstall = 0,
         UnInstall = 1,
-        UpgradeInstall = 2
+        Repair = 2,
+        UpgradeInstall = 3
     }
 }
