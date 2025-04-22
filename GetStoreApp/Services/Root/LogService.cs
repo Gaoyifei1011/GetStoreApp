@@ -22,6 +22,8 @@ namespace GetStoreApp.Services.Root
         private static readonly LoggingChannelOptions channelOptions = new();
         private static SemaphoreSlim logSemaphoreSlim = new(1, 1);
 
+        public static string WinGetFolderPath { get; } = Path.Combine([ApplicationData.Current.LocalCacheFolder.Path, "Logs", "WinGet"]);
+
         /// <summary>
         /// 写入日志
         /// </summary>
