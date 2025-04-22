@@ -79,7 +79,7 @@
   "TraceCleanupTitle": "痕迹清理",
   "Type": "类型",
   "Unknown": "[未知]",
-  "UnInstallNeedReboot": "{0}应用已卸载完成，部分更改需要重启后生效，请问您是否需要重启设备？",
+  "UninstallNeedReboot": "{0}应用已卸载完成，部分更改需要重启后生效，请问您是否需要重启设备？",
   "UpgradeNeedReboot": "{0}应用已升级完成，部分更改需要重启后生效，请问您是否需要重启设备？",
   "WebView2SDKVersion": "WebView2 SDK 版本：",
   "WebViewProcessFailedContent": "浏览器进程发生了异常，程序即将退出",
