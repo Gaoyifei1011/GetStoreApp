@@ -6,7 +6,7 @@
     public enum WinGetOptionKind
     {
         SearchInstall = 0,
-        UnInstall = 1,
+        Uninstall = 1,
         Repair = 2,
         UpgradeInstall = 3
     }

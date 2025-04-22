@@ -1,5 +1,4 @@
 ﻿using GetStoreAppInstaller.Extensions.DataType.Enums;
-using System;
 
 namespace GetStoreAppInstaller.Extensions.PriExtract
 {
