@@ -29,6 +29,25 @@ namespace GetStoreApp.Models.Controls.WinGet
         public string AppVersion { get; set; }
 
         /// <summary>
+        /// 应用是否处于正在下载中状态
+        /// </summary>
+        private bool _isDownloading;
+
+        public bool IsDownloading
+        {
+            get { return _isDownloading; }
+
+            set
+            {
+                if (!Equals(_isDownloading, value))
+                {
+                    _isDownloading = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDownloading)));
+                }
+            }
+        }
+
+        /// <summary>
         /// 应用是否处于正在安装中状态
         /// </summary>
         public bool _isInstalling;
