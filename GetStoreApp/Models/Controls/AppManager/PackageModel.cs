@@ -52,18 +52,18 @@ namespace GetStoreApp.Models.Controls.AppManager
         /// <summary>
         /// 应用是否正在卸载
         /// </summary>
-        private bool _isUnInstalling;
+        private bool _isUninstalling;
 
-        public bool IsUnInstalling
+        public bool IsUninstalling
         {
-            get { return _isUnInstalling; }
+            get { return _isUninstalling; }
 
             set
             {
-                if (!Equals(_isUnInstalling, value))
+                if (!Equals(_isUninstalling, value))
                 {
-                    _isUnInstalling = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUnInstalling)));
+                    _isUninstalling = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUninstalling)));
                 }
             }
         }

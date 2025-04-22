@@ -16,8 +16,8 @@
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
 
-        <XamlUICommand x:Name="CopyUnInstallTextCommand" ExecuteRequested="{x:Bind OnCopyUnInstallTextExecuteRequested}" />
-        <XamlUICommand x:Name="UnInstallCommand" ExecuteRequested="{x:Bind OnUnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="CopyUninstallTextCommand" ExecuteRequested="{x:Bind OnCopyUninstallTextExecuteRequested}" />
+        <XamlUICommand x:Name="UninstallCommand" ExecuteRequested="{x:Bind OnUninstallExecuteRequested}" />
         <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
     </Grid.Resources>
 
@@ -363,12 +363,12 @@
                                 VerticalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
                                 BorderThickness="0,0,1,0"
-                                Command="{StaticResource UnInstallCommand}"
+                                Command="{StaticResource UninstallCommand}"
                                 CommandParameter="{x:Bind}"
-                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}"
                                 CornerRadius="0"
                                 IsEnabled="{x:Bind IsUninstalling.Equals(x:False), Mode=OneWay}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/UnInstall')}" />
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}" />
 
                             <Button
                                 Width="35"
@@ -400,9 +400,9 @@
                                         <MenuFlyoutItem
                                             Height="32"
                                             Padding="11,0"
-                                            Command="{StaticResource CopyUnInstallTextCommand}"
+                                            Command="{StaticResource CopyUninstallTextCommand}"
                                             CommandParameter="{x:Bind AppID}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUnInstallText')}">
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUninstallText')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE8C8;" />

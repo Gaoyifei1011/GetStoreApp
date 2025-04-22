@@ -19,9 +19,9 @@ namespace GetStoreApp.UI.Dialogs.WinGet
                         Content = string.Format(ResourceService.GetLocalized("Dialog/InstallNeedReboot"), appName);
                         break;
                     }
-                case WinGetOptionKind.UnInstall:
+                case WinGetOptionKind.Uninstall:
                     {
-                        Content = string.Format(ResourceService.GetLocalized("Dialog/UnInstallNeedReboot"), appName);
+                        Content = string.Format(ResourceService.GetLocalized("Dialog/UninstallNeedReboot"), appName);
                         break;
                     }
                 case WinGetOptionKind.UpgradeInstall:

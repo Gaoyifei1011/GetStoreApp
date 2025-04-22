@@ -39,7 +39,7 @@
         <XamlUICommand x:Name="PinToStartScreenCommand" ExecuteRequested="{x:Bind OnPinToStartScreenExecuteRequested}" />
         <XamlUICommand x:Name="PinToTaskbarCommand" ExecuteRequested="{x:Bind OnPinToTaskbarExecuteRequested}" />
         <XamlUICommand x:Name="ShowMoreCommand" ExecuteRequested="{x:Bind OnShowMoreExecuteRequested}" />
-        <XamlUICommand x:Name="UnInstallCommand" ExecuteRequested="{x:Bind OnUnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="UninstallCommand" ExecuteRequested="{x:Bind OnUninstallExecuteRequested}" />
         <XamlUICommand x:Name="ViewInformationCommand" ExecuteRequested="{x:Bind OnViewInformationExecuteRequested}" />
     </Page.Resources>
 
@@ -661,9 +661,9 @@
                                                             <MenuFlyoutItem
                                                                 Height="32"
                                                                 Padding="11,0"
-                                                                Command="{StaticResource UnInstallCommand}"
+                                                                Command="{StaticResource UninstallCommand}"
                                                                 CommandParameter="{x:Bind Package}"
-                                                                Text="{x:Bind root:ResourceService.GetLocalized('AppManager/UnInstall')}"
+                                                                Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Uninstall')}"
                                                                 Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}">
 
                                                                 <MenuFlyoutItem.Icon>
@@ -680,7 +680,7 @@
                                             Margin="16,0"
                                             VerticalAlignment="Bottom"
                                             IsIndeterminate="True"
-                                            Visibility="{x:Bind IsUnInstalling, Mode=OneWay}" />
+                                            Visibility="{x:Bind IsUninstalling, Mode=OneWay}" />
                                     </Grid>
                                 </ItemContainer>
                             </DataTemplate>

@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
@@ -40,9 +39,9 @@ namespace GetStoreApp.UI.Controls.WinGet
         private readonly string InstalledCatalogReferenceFailed = ResourceService.GetLocalized("WinGet/InstalledCatalogReferenceFailed");
         private readonly string InstalledNotSelectSource = ResourceService.GetLocalized("WinGet/InstalledNotSelectSource");
         private readonly Guid CLSID_OpenControlPanel = new("06622D85-6856-4460-8DE1-A81921B41C4B");
-        private readonly Lock UnInstallingOrRepairingLock = new();
         private bool isInitialized;
         private IOpenControlPanel openControlPanel;
+        private WinGetPage WinGetInstance;
 
         private string _searchText = string.Empty;
 
@@ -124,8 +123,6 @@ namespace GetStoreApp.UI.Controls.WinGet
             }
         }
 
-        private HashSet<string> UnInstallingOrRepairingSet { get; } = [];
-
         private List<InstalledAppsModel> InstalledAppsList { get; } = [];
 
         private ObservableCollection<InstalledAppsModel> InstalledAppsCollection { get; } = [];
@@ -152,21 +149,21 @@ namespace GetStoreApp.UI.Controls.WinGet
         /// <summary>
         /// 复制卸载命令
         /// </summary>
-        private async void OnCopyUnInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnCopyUninstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
                 string copyContent = string.Format("winget uninstall {0}", appId);
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
 
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUnInstall, copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUninstall, copyResult));
             }
         }
 
         /// <summary>
         /// 卸载应用
         /// </summary>
-        private async void OnUnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private async void OnUninstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is InstalledAppsModel installedApps)
             {
@@ -180,9 +177,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
                 }
 
-                UnInstallingOrRepairingLock.Enter();
-                UnInstallingOrRepairingSet.Add(installedApps.AppID);
-                UnInstallingOrRepairingLock.Exit();
+                //UninstallingOrRepairingLock.Enter();
+                //UninstallingOrRepairingSet.Add(installedApps.AppID);
+                //UninstallingOrRepairingLock.Exit();
 
                 UninstallResult uninstallResult = await Task.Run(async () =>
                 {
@@ -216,7 +213,7 @@ namespace GetStoreApp.UI.Controls.WinGet
                         // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                         if (uninstallResult.RebootRequired)
                         {
-                            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOptionKind.UnInstall, installedApps.AppName));
+                            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOptionKind.Uninstall, installedApps.AppName));
 
                             if (contentDialogResult is ContentDialogResult.Primary)
                             {
@@ -239,18 +236,18 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        UnInstallingOrRepairingLock.Enter();
-                        UnInstallingOrRepairingSet.Remove(installedApps.AppID);
-                        UnInstallingOrRepairingLock.Exit();
+                        //UninstallingOrRepairingLock.Enter();
+                        //UninstallingOrRepairingSet.Remove(installedApps.AppID);
+                        //UninstallingOrRepairingLock.Exit();
 
                         await Task.Run(() =>
                         {
                             // 显示 WinGet 卸载应用失败通知
                             AppNotificationBuilder appNotificationBuilder = new();
                             appNotificationBuilder.AddArgument("action", "OpenApp");
-                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed1"), installedApps.AppName));
-                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed2"));
-                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed3"));
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUninstallFailed1"), installedApps.AppName));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed2"));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed3"));
                             AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
                             openSettingsButton.Arguments.Add("action", "OpenSettings");
                             appNotificationBuilder.AddButton(openSettingsButton);
@@ -270,16 +267,16 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                     }
 
-                    UnInstallingOrRepairingLock.Enter();
-                    UnInstallingOrRepairingSet.Remove(installedApps.AppID);
-                    UnInstallingOrRepairingLock.Exit();
+                    //UninstallingOrRepairingLock.Enter();
+                    //UninstallingOrRepairingSet.Remove(installedApps.AppID);
+                    //UninstallingOrRepairingLock.Exit();
 
                     // 显示 WinGet 卸载应用失败通知
                     AppNotificationBuilder appNotificationBuilder = new();
                     appNotificationBuilder.AddArgument("action", "OpenApp");
-                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed1"), installedApps.AppName));
-                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed2"));
-                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUnInstallFailed3"));
+                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUninstallFailed1"), installedApps.AppName));
+                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed2"));
+                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed3"));
                     AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
                     openSettingsButton.Arguments.Add("action", "OpenSettings");
                     appNotificationBuilder.AddButton(openSettingsButton);
@@ -306,9 +303,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                     }
                 }
 
-                UnInstallingOrRepairingLock.Enter();
-                UnInstallingOrRepairingSet.Add(installedApps.AppID);
-                UnInstallingOrRepairingLock.Exit();
+                //UninstallingOrRepairingLock.Enter();
+                //UninstallingOrRepairingSet.Add(installedApps.AppID);
+                //UninstallingOrRepairingLock.Exit();
 
                 RepairResult repairResult = await Task.Run(async () =>
                 {
@@ -338,9 +335,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                     {
                         installedApps.IsUninstalling = false;
 
-                        UnInstallingOrRepairingLock.Enter();
-                        UnInstallingOrRepairingSet.Remove(installedApps.AppID);
-                        UnInstallingOrRepairingLock.Exit();
+                        //UninstallingOrRepairingLock.Enter();
+                        //UninstallingOrRepairingSet.Remove(installedApps.AppID);
+                        //UninstallingOrRepairingLock.Exit();
 
                         // 检测是否需要重启设备完成应用的修复，如果是，询问用户是否需要重启设备
                         if (repairResult.RebootRequired)
@@ -368,9 +365,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                             }
                         }
 
-                        UnInstallingOrRepairingLock.Enter();
-                        UnInstallingOrRepairingSet.Remove(installedApps.AppID);
-                        UnInstallingOrRepairingLock.Exit();
+                        //UninstallingOrRepairingLock.Enter();
+                        //UninstallingOrRepairingSet.Remove(installedApps.AppID);
+                        //UninstallingOrRepairingLock.Exit();
 
                         await Task.Run(() =>
                         {
@@ -399,9 +396,9 @@ namespace GetStoreApp.UI.Controls.WinGet
                         }
                     }
 
-                    UnInstallingOrRepairingLock.Enter();
-                    UnInstallingOrRepairingSet.Remove(installedApps.AppID);
-                    UnInstallingOrRepairingLock.Exit();
+                    //UninstallingOrRepairingLock.Enter();
+                    //UninstallingOrRepairingSet.Remove(installedApps.AppID);
+                    //UninstallingOrRepairingLock.Exit();
 
                     // 显示 WinGet 修复应用失败通知
                     AppNotificationBuilder appNotificationBuilder = new();
@@ -745,6 +742,11 @@ namespace GetStoreApp.UI.Controls.WinGet
 
         #endregion 第二部分：已安装应用控件——挂载的事件
 
+        public void InitializeWingetInstance(WinGetPage wingetInstance)
+        {
+            WinGetInstance = wingetInstance;
+        }
+
         /// <summary>
         /// 获取已安装应用
         /// </summary>
@@ -774,12 +776,12 @@ namespace GetStoreApp.UI.Controls.WinGet
                             if (matchItem.CatalogPackage is not null && !string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher))
                             {
                                 bool isUninstalling = false;
-                                UnInstallingOrRepairingLock.Enter();
-                                if (UnInstallingOrRepairingSet.Contains(matchItem.CatalogPackage.InstalledVersion.Id))
-                                {
-                                    isUninstalling = true;
-                                }
-                                UnInstallingOrRepairingLock.Exit();
+                                //UninstallingOrRepairingLock.Enter();
+                                //if (UninstallingOrRepairingSet.Contains(matchItem.CatalogPackage.InstalledVersion.Id))
+                                //{
+                                //    isUninstalling = true;
+                                //}
+                                //UninstallingOrRepairingLock.Exit();
 
                                 installedAppsList.Add(new InstalledAppsModel()
                                 {

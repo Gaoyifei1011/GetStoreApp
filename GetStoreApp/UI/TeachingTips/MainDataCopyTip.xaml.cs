@@ -83,14 +83,19 @@ namespace GetStoreApp.UI.TeachingTips
                             CopySuccess.Text = isMultiSelected ? string.Format(ResourceService.GetLocalized("Notification/ResultLinkSelectedCopy"), count) : ResourceService.GetLocalized("Notification/ResultLinkCopy");
                             break;
                         }
+                    case DataCopyKind.WinGetSearchDownload:
+                        {
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/SearchDownloadCopy");
+                            break;
+                        }
                     case DataCopyKind.WinGetSearchInstall:
                         {
                             CopySuccess.Text = ResourceService.GetLocalized("Notification/SearchInstallCopy");
                             break;
                         }
-                    case DataCopyKind.WinGetUnInstall:
+                    case DataCopyKind.WinGetUninstall:
                         {
-                            CopySuccess.Text = ResourceService.GetLocalized("Notification/UnInstallCopy");
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/UninstallCopy");
                             break;
                         }
                     case DataCopyKind.WinGetUpgradeInstall:
