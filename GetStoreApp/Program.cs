@@ -209,7 +209,7 @@ namespace GetStoreApp
                 WebKernelService.InitializeWebKernel();
                 ShellMenuService.InitializeShellMenu();
                 NotificationService.InitializeNotification();
-                WinGetConfigService.InitializeWinGetConfig();
+                await WinGetConfigService.InitializeWinGetConfigAsync();
             }
         }
     }

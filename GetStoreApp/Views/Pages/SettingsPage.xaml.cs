@@ -383,6 +383,22 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private StorageFolder _winGetPackageFolder = WinGetConfigService.DownloadFolder;
+
+        public StorageFolder WinGetPackageFolder
+        {
+            get { return _winGetPackageFolder; }
+
+            set
+            {
+                if (!Equals(_winGetPackageFolder, value))
+                {
+                    _winGetPackageFolder = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetPackageFolder)));
+                }
+            }
+        }
+
         private KeyValuePair<string, string> _winGetInstallMode = WinGetConfigService.WinGetInstallMode;
 
         public KeyValuePair<string, string> WinGetInstallMode
@@ -1022,9 +1038,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnThemeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                Theme = ThemeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                Theme = ThemeList[Convert.ToInt32(tag)];
                 ThemeService.SetTheme(Theme);
             }
         }
@@ -1034,9 +1050,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnBackdropSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                Backdrop = BackdropList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                Backdrop = BackdropList[Convert.ToInt32(tag)];
                 BackdropService.SetBackdrop(Backdrop);
                 AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Backdrop.Key.Equals(BackdropList[0].Key);
 
@@ -1077,9 +1093,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWebKernelSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                WebKernelItem = WebKernelList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                WebKernelItem = WebKernelList[Convert.ToInt32(tag)];
                 WebKernelService.SetWebKernel(WebKernelItem);
             }
         }
@@ -1089,9 +1105,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(tag)];
                 QueryLinksModeService.SetQueryLinksMode(QueryLinksModeItem);
             }
         }
@@ -1195,9 +1211,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(tag)];
                 WinGetConfigService.SetWinGetInstallMode(WinGetInstallMode);
             }
         }
@@ -1226,21 +1242,21 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 打开文件存放目录
+        /// 打开下载文件存放目录
         /// </summary>
-        private async void OnOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private async void OnDownloadOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             await DownloadOptionsService.OpenFolderAsync(DownloadFolder);
         }
 
         /// <summary>
-        /// 修改下载目录
+        /// 修改下载文件存放目录
         /// </summary>
-        private async void OnChangeFolderClicked(object sender, RoutedEventArgs args)
+        private async void OnDownloadChangeFolderClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is not null)
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
             {
-                switch ((string)menuFlyoutItem.Tag)
+                switch (tag)
                 {
                     case "AppCache":
                         {
@@ -1309,9 +1325,9 @@ namespace GetStoreApp.Views.Pages
 
         private void OnDoEngineModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                DoEngineMode = DoEngineModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                DoEngineMode = DoEngineModeList[Convert.ToInt32(tag)];
                 DownloadOptionsService.SetDoEngineMode(DoEngineMode);
             }
         }
@@ -1365,9 +1381,9 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnInstallModeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                InstallMode = InstallModeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                InstallMode = InstallModeList[Convert.ToInt32(tag)];
                 InstallModeService.SetInstallMode(InstallMode);
             }
         }
@@ -1543,6 +1559,68 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.NotElevated));
+            }
+        }
+
+        /// <summary>
+        /// 打开下载文件存放目录
+        /// </summary>
+        private async void OnWinGetOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            await WinGetConfigService.OpenFolderAsync(WinGetPackageFolder);
+        }
+
+        /// <summary>
+        /// 修改下载文件存放目录
+        /// </summary>
+        private async void OnWinGetChangeFolderClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
+            {
+                switch (tag)
+                {
+                    case "AppCache":
+                        {
+                            WinGetPackageFolder = WinGetConfigService.DefaultDownloadFolder;
+                            WinGetConfigService.SetFolder(WinGetPackageFolder);
+                            break;
+                        }
+                    case "Download":
+                        {
+                            WinGetPackageFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Downloads);
+                            WinGetConfigService.SetFolder(WinGetPackageFolder);
+                            break;
+                        }
+                    case "Desktop":
+                        {
+                            WinGetPackageFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Desktop);
+                            WinGetConfigService.SetFolder(WinGetPackageFolder);
+                            break;
+                        }
+                    case "Custom":
+                        {
+                            try
+                            {
+                                FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
+                                {
+                                    SuggestedStartLocation = PickerLocationId.Downloads
+                                };
+
+                                if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
+                                {
+                                    WinGetPackageFolder = await StorageFolder.GetFolderFromPathAsync(pickFolderResult.Path);
+                                    WinGetConfigService.SetFolder(WinGetPackageFolder);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                LogService.WriteLog(LoggingLevel.Error, "Open folderPicker failed", e);
+                                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
+                            }
+
+                            break;
+                        }
+                }
             }
         }
 

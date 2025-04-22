@@ -174,6 +174,7 @@
   "WinGetDataSourceRemoveSuccess": "WinGet data source remove successfully",
   "WinGetInstallMode": "وضع تثبيت WinGet",
   "WinGetInstallModeDescription": "تعيين كيفية تفاعل حزمة WinGet عند تثبيت التطبيقات",
+  "WinGetPackageStoragePath": "Package storage path",
   "WinGetSettings": "إعدادات WinGet",
   "WinGetSettingsDescription": "تخصيص وظيفة حزمة WinGet",
   "WinGetSourceArguments": "Arguments: ",

@@ -47,6 +47,8 @@
 
         public const string WindowWidthKey = "WindowWidth";
 
+        public const string WinGetPackageDownloadFolderKey = "WinGetPackageDownloadFolder";
+
         public const string WindowPositionXAxisKey = "WindowPositionXAxis";
 
         public const string WindowPositionYAxisKey = "WindowPositionYAxis";

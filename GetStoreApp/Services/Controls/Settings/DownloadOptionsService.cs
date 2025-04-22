@@ -34,10 +34,9 @@ namespace GetStoreApp.Services.Controls.Settings
         /// </summary>
         public static async Task InitializeDownloadOptionsAsync()
         {
-            DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
-
             defaultDoEngineMode = InfoHelper.IsDeliveryOptimizationEnabled ? DoEngineModeList[0] : DoEngineModeList[1];
 
+            DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
             DownloadFolder = await GetFolderAsync();
             DoEngineMode = GetDoEngineMode();
         }

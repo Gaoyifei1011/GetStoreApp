@@ -1413,6 +1413,107 @@
                                         Padding="44,0,16,0"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Center">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Orientation="Vertical">
+
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Style="{StaticResource BodyTextBlockStyle}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetPackageStoragePath')}" />
+
+                                            <TextBlock
+                                                Margin="0,0,5,0"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="NoWrap">
+
+                                                <Hyperlink Click="{x:Bind OnWinGetOpenFolderClicked}" UnderlineStyle="None">
+                                                    <Run Text="{x:Bind WinGetPackageFolder.Path, Mode=OneWay}" />
+                                                </Hyperlink>
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip MaxWidth="9999">
+                                                        <StackPanel HorizontalAlignment="Stretch">
+                                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetPackageStoragePath')}" />
+                                                            <TextBlock Text="{x:Bind WinGetPackageFolder.Path, Mode=OneWay}" />
+                                                            <MenuFlyoutSeparator Margin="4,3" />
+                                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" />
+                                                        </StackPanel>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <DropDownButton
+                                            Grid.Column="2"
+                                            Margin="6,0,0,0"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
+
+                                            <DropDownButton.Flyout>
+                                                <MenuFlyout Placement="Bottom">
+                                                    <MenuFlyoutItem
+                                                        Height="32"
+                                                        Padding="11,0"
+                                                        Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                                        Tag="AppCache"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xECAA;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+
+                                                    <MenuFlyoutItem
+                                                        Height="32"
+                                                        Padding="11,0"
+                                                        Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                                        Tag="Download"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE896;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+
+                                                    <MenuFlyoutItem
+                                                        Height="32"
+                                                        Padding="11,0"
+                                                        Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                                        Tag="Desktop"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}">
+
+                                                        <MenuFlyoutItem.Icon>
+                                                            <FontIcon Glyph="&#xE7F4;" />
+                                                        </MenuFlyoutItem.Icon>
+                                                    </MenuFlyoutItem>
+
+                                                    <MenuFlyoutSeparator />
+
+                                                    <MenuFlyoutItem
+                                                        Height="32"
+                                                        Padding="11,0"
+                                                        Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                                        Tag="Custom"
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
+                                                </MenuFlyout>
+                                            </DropDownButton.Flyout>
+                                        </DropDownButton>
+                                    </Grid>
+
+                                    <MenuFlyoutSeparator />
+
+                                    <Grid
+                                        Height="52"
+                                        Padding="44,0,16,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
@@ -1607,7 +1708,7 @@
                                                 TextTrimming="CharacterEllipsis"
                                                 TextWrapping="NoWrap">
 
-                                                <Hyperlink Click="{x:Bind OnOpenFolderClicked}" UnderlineStyle="None">
+                                                <Hyperlink Click="{x:Bind OnDownloadOpenFolderClicked}" UnderlineStyle="None">
                                                     <Run Text="{x:Bind DownloadFolder.Path, Mode=OneWay}" />
                                                 </Hyperlink>
 
@@ -1634,7 +1735,7 @@
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
-                                                        Click="{x:Bind OnChangeFolderClicked}"
+                                                        Click="{x:Bind OnDownloadChangeFolderClicked}"
                                                         Tag="AppCache"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}">
 
@@ -1646,7 +1747,7 @@
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
-                                                        Click="{x:Bind OnChangeFolderClicked}"
+                                                        Click="{x:Bind OnDownloadChangeFolderClicked}"
                                                         Tag="Download"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}">
 
@@ -1658,7 +1759,7 @@
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
-                                                        Click="{x:Bind OnChangeFolderClicked}"
+                                                        Click="{x:Bind OnDownloadChangeFolderClicked}"
                                                         Tag="Desktop"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}">
 
@@ -1672,7 +1773,7 @@
                                                     <MenuFlyoutItem
                                                         Height="32"
                                                         Padding="11,0"
-                                                        Click="{x:Bind OnChangeFolderClicked}"
+                                                        Click="{x:Bind OnDownloadChangeFolderClicked}"
                                                         Tag="Custom"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
                                                 </MenuFlyout>
