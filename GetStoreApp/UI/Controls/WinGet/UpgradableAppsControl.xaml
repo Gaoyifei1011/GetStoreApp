@@ -16,7 +16,7 @@
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
 
         <XamlUICommand x:Name="CopyUpgradeTextCommand" ExecuteRequested="{x:Bind OnCopyUpgradeTextExecuteRequested}" />
-        <XamlUICommand x:Name="InstallWithCmdCommand" ExecuteRequested="{x:Bind OnInstallWithCmdExecuteRequested}" />
+        <XamlUICommand x:Name="UpgradeWithCmdCommand" ExecuteRequested="{x:Bind OnUpgradeWithCmdExecuteRequested}" />
         <XamlUICommand x:Name="UpdateCommand" ExecuteRequested="{x:Bind OnUpdateExecuteRequested}" />
     </Grid.Resources>
 
@@ -409,9 +409,9 @@
                                         <MenuFlyoutItem
                                             Height="32"
                                             Padding="11,0"
-                                            Command="{StaticResource InstallWithCmdCommand}"
+                                            Command="{StaticResource UpgradeWithCmdCommand}"
                                             CommandParameter="{x:Bind AppID}"
-                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeWithCmd')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE756;" />
