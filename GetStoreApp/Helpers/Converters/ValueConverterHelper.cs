@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using Microsoft.UI.Xaml;
 using System;
 
 namespace GetStoreApp.Helpers.Converters
@@ -38,6 +39,15 @@ namespace GetStoreApp.Helpers.Converters
         public static Visibility BooleanToVisibilityReverseConvert(bool value)
         {
             return value ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
+        /// 应用包是否正在下载/安装/更新中
+        /// </summary>
+
+        public static bool IsPackageDownloadOrInstall(PackageOperationKind packageOperationKind)
+        {
+            return packageOperationKind is PackageOperationKind.Download || packageOperationKind is PackageOperationKind.Install || packageOperationKind is PackageOperationKind.Upgrade;
         }
     }
 }

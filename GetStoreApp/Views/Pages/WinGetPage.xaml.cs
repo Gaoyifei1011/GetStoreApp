@@ -6,9 +6,12 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
+using Windows.Storage;
 using Windows.System;
 
 // 抑制 IDE0060 警告
@@ -22,9 +25,9 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class WinGetPage : Page
     {
         private bool isInitialized;
-        public readonly Lock InstallingAppsLock = new();
+        public readonly Lock PackageOperationLock = new();
 
-        public ObservableCollection<InstallingAppsModel> InstallingAppsCollection { get; } = [];
+        public ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
 
         public WinGetPage()
         {
@@ -34,23 +37,23 @@ namespace GetStoreApp.Views.Pages
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
-        /// 取消下载
+        /// 取消应用包任务
         /// </summary>
-        private void OnCancelInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnCancelTaskExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
-                InstallingAppsLock.Enter();
+                PackageOperationLock.Enter();
                 try
                 {
-                    foreach (InstallingAppsModel installingAppsItem in InstallingAppsCollection)
+                    foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
                     {
-                        if (installingAppsItem.AppID.Equals(appId))
+                        if (packageOperationItem.AppID.Equals(appId))
                         {
-                            installingAppsItem.IsCanceling = true;
-                            if (installingAppsItem.InstallingAppsProgress is not null && installingAppsItem.InstallingAppsProgress.Status is not AsyncStatus.Canceled)
+                            packageOperationItem.IsCanceling = true;
+                            if (packageOperationItem.PackageInstallProgress is not null && packageOperationItem.PackageInstallProgress.Status is not AsyncStatus.Canceled)
                             {
-                                installingAppsItem.InstallingAppsProgress.Cancel();
+                                packageOperationItem.PackageInstallProgress.Cancel();
                             }
 
                             break;
@@ -63,8 +66,22 @@ namespace GetStoreApp.Views.Pages
                 }
                 finally
                 {
-                    InstallingAppsLock.Exit();
+                    PackageOperationLock.Exit();
                 }
+            }
+        }
+
+        /// <summary>
+        /// 打开应用包目录
+        /// </summary>
+        private void OnOpenPackageFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is string packagePath && !string.IsNullOrEmpty(packagePath) && Directory.Exists(packagePath))
+            {
+                Task.Run(async () =>
+                {
+                    await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(packagePath));
+                });
             }
         }
 
@@ -82,6 +99,7 @@ namespace GetStoreApp.Views.Pages
                 if (WinGetConfigService.IsWinGetInstalled)
                 {
                     SearchApps.InitializeWingetInstance(this);
+                    InstalledApps.InitializeWingetInstance(this);
                     UpgradableApps.InitializeWingetInstance(this);
                 }
 

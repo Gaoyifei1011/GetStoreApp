@@ -16,8 +16,9 @@
         ResultInformation = 8,
         ResultID = 9,
         ResultLink = 10,
-        WinGetSearchInstall = 11,
-        WinGetUnInstall = 12,
-        WinGetUpgradeInstall = 13
+        WinGetSearchDownload = 11,
+        WinGetSearchInstall = 12,
+        WinGetUninstall = 13,
+        WinGetUpgradeInstall = 14
     }
 }
