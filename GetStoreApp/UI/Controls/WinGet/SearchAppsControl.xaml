@@ -17,7 +17,9 @@
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
 
+        <XamlUICommand x:Name="CopyDownloadTextCommand" ExecuteRequested="{x:Bind OnCopyDownloadTextExecuteRequested}" />
         <XamlUICommand x:Name="CopyInstallTextCommand" ExecuteRequested="{x:Bind OnCopyInstallTextExecuteRequested}" />
+        <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
         <XamlUICommand x:Name="InstallWithCmdCommand" ExecuteRequested="{x:Bind OnInstallWithCmdExecuteRequested}" />
     </Grid.Resources>
@@ -514,12 +516,36 @@
                                 <Button.Flyout>
                                     <MenuFlyout Placement="Bottom">
                                         <MenuFlyoutItem
+                                            Command="{StaticResource CopyDownloadTextCommand}"
+                                            CommandParameter="{x:Bind AppID}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyDownloadText')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE8C8;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem
                                             Command="{StaticResource CopyInstallTextCommand}"
                                             CommandParameter="{x:Bind AppID}"
                                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
 
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xE8C8;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource DownloadCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind IsDownloading.Equals(x:False), Mode=OneWay}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadToolTip')}">
+
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE896;" />
                                             </MenuFlyoutItem.Icon>
                                         </MenuFlyoutItem>
 
