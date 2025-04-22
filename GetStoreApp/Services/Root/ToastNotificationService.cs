@@ -32,16 +32,19 @@ namespace GetStoreApp.Services.Root
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
                 Environment.Exit(Environment.ExitCode);
             }
-            else if (notificationArgs is "OpenDownloadFolder")
+            else if (notificationArgs.Contains("OpenDownloadFolder"))
             {
-                string wingetTempPath = Path.Combine(Path.GetTempPath(), "WinGet");
-                if (Directory.Exists(wingetTempPath))
+                string[] splitList = notificationArgs.Split(':');
+                if (splitList.Length > 1)
                 {
-                    await Launcher.LaunchFolderPathAsync(wingetTempPath);
-                }
-                else
-                {
-                    await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
+                    if (Directory.Exists(splitList[1]))
+                    {
+                        await Launcher.LaunchFolderPathAsync(splitList[1]);
+                    }
+                    else
+                    {
+                        await Launcher.LaunchFolderPathAsync(Path.GetTempPath());
+                    }
                 }
 
                 Environment.Exit(Environment.ExitCode);
@@ -51,13 +54,53 @@ namespace GetStoreApp.Services.Root
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
                 Environment.Exit(Environment.ExitCode);
             }
+            else if (notificationArgs.Contains("DownloadWithCommand"))
+            {
+                string[] splitList = notificationArgs.Split(':');
+                if (splitList.Length is 3)
+                {
+                    string appId = splitList[1];
+                    string path = splitList[2];
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -d ""{1}""", appId, path), null, WindowShowStyle.SW_SHOWNORMAL);
+                }
+                else if (splitList.Length is 4)
+                {
+                    string appId = splitList[1];
+                    string source = splitList[2];
+                    string path = splitList[3];
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -s ""{1}"" -d ""{2}""", appId, source, path), null, WindowShowStyle.SW_SHOWNORMAL);
+                }
+                Environment.Exit(Environment.ExitCode);
+            }
             else if (notificationArgs.Contains("InstallWithCommand"))
             {
                 string[] splitList = notificationArgs.Split(':');
-                if (splitList.Length > 1)
+                if (splitList.Length is 2)
                 {
                     string appId = splitList[1];
                     Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("install {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
+                }
+                else if (splitList.Length is 3)
+                {
+                    string appId = splitList[1];
+                    string path = splitList[2];
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"install {0} -s ""{1}""", appId, path), null, WindowShowStyle.SW_SHOWNORMAL);
+                }
+                Environment.Exit(Environment.ExitCode);
+            }
+            else if (notificationArgs.Contains("UpgradeWithCommand"))
+            {
+                string[] splitList = notificationArgs.Split(':');
+                if (splitList.Length is 2)
+                {
+                    string appId = splitList[1];
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("upgrade {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
+                }
+                else if (splitList.Length is 3)
+                {
+                    string appId = splitList[1];
+                    string path = splitList[2];
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"upgrade {0} -s ""{1}""", appId, path), null, WindowShowStyle.SW_SHOWNORMAL);
                 }
                 Environment.Exit(Environment.ExitCode);
             }
