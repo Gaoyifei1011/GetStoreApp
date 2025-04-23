@@ -253,8 +253,8 @@ namespace GetStoreApp.Views.Windows
 
             if (Content is not null && Content.XamlRoot is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * Content.XamlRoot.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1024 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(768 * Content.XamlRoot.RasterizationScale);
             }
         }
 
@@ -740,8 +740,8 @@ namespace GetStoreApp.Views.Windows
 
             if (Content is not null && Content.XamlRoot is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(960 * Content.XamlRoot.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(600 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1024 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(768 * Content.XamlRoot.RasterizationScale);
             }
         }
 
