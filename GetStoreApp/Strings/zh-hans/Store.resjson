@@ -60,9 +60,8 @@
   "SearchStoreInfoSuccess": "已成功从微软商店的服务器中搜索到这些应用",
   "SearchStoreInfoWarning": "服务器返回的数据为空，请检查您输入的内容",
   "Select": "选择",
-  "SelectAll": "全选",
   "SelectedToolTip": "已选择",
-  "SelectNone": "全部不选",
+  "SelectTip": "点击以全选 / 全部不选",
   "SelectToolTip": "进入多选模式",
   "StoreAppLink": "应用链接",
   "StoreAppName": "应用名称",
@@ -71,5 +70,6 @@
   "UnSelectedToolTip": "未选择",
   "UseInstruction": "使用说明",
   "UseInstructionToolTip": "点击了解应用的具体使用方法",
+  "ViewMoreOptions": "查看更多选项",
   "Welcome": "欢迎使用获取商店应用"
 }

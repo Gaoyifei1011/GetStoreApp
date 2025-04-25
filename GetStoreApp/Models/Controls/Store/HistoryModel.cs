@@ -1,12 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Store
 {
     /// <summary>
     /// 历史记录数据模型
     /// </summary>
-    public sealed class HistoryModel
+    public sealed class HistoryModel : INotifyPropertyChanged
     {
+        private bool _isQuerying;
+
+        public bool IsQuerying
+        {
+            get { return _isQuerying; }
+
+            set
+            {
+                if (!Equals(_isQuerying, value))
+                {
+                    _isQuerying = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQuerying)));
+                }
+            }
+        }
+
         /// <summary>
         /// 共用：历史记录生成时对应的时间戳，本地存储时使用的是格林尼治标准时间（GMT+0）
         /// </summary>
@@ -41,5 +58,7 @@ namespace GetStoreApp.Models.Controls.Store
         /// 搜索应用控件：历史记录的内容
         /// </summary>
         public string HistoryContent { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

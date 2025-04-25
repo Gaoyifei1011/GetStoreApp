@@ -23,7 +23,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
-using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
@@ -33,7 +32,7 @@ namespace GetStoreApp.UI.Controls.Store
     /// <summary>
     /// 查找链接控件
     /// </summary>
-    [GeneratedBindableCustomProperty]
+
     public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
     {
         private readonly string QueryLinksCountInfo = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
@@ -107,18 +106,18 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private bool _isNotQueryingLinks = true;
+        private bool _isQueryingLinks = false;
 
-        public bool IsNotQueryingLinks
+        public bool IsQueryingLinks
         {
-            get { return _isNotQueryingLinks; }
+            get { return _isQueryingLinks; }
 
             set
             {
-                if (!Equals(_isNotQueryingLinks, value))
+                if (!Equals(_isQueryingLinks, value))
                 {
-                    _isNotQueryingLinks = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotQueryingLinks)));
+                    _isQueryingLinks = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsQueryingLinks)));
                 }
             }
         }
@@ -251,9 +250,9 @@ namespace GetStoreApp.UI.Controls.Store
             }
         }
 
-        private static readonly List<string> SampleLinkList = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
+        private List<string> SampleLinkList { get; } = ["https://apps.microsoft.com/store/detail/9WZDNCRFJBMP", "9WZDNCRFJBMP",];
 
-        private readonly List<InfoBarModel> QueryLinksInfoList = ResourceService.QueryLinksInfoList;
+        private List<InfoBarModel> QueryLinksInfoList { get; } = ResourceService.QueryLinksInfoList;
 
         public List<TypeModel> TypeList { get; } = ResourceService.TypeList;
 
@@ -283,9 +282,12 @@ namespace GetStoreApp.UI.Controls.Store
         {
             if (args.Parameter is HistoryModel historyItem)
             {
-                string copyContent = string.Join('\t', new object[] { historyItem.HistoryAppName, historyItem.HistoryType.Value, historyItem.HistoryChannel.Value, historyItem.HistoryLink });
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
+                string copyContent = await Task.Run(() =>
+                {
+                    return string.Join('\t', new string[] { historyItem.HistoryAppName, historyItem.HistoryType.Value, historyItem.HistoryChannel.Value, historyItem.HistoryLink });
+                });
 
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
                 await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.History, copyResult, false));
             }
         }
@@ -313,14 +315,14 @@ namespace GetStoreApp.UI.Controls.Store
                 bool isDownloadSuccessfully = false;
                 await Task.Run(() =>
                 {
-                    List<DownloadSchedulerModel> downloadInfoList = [];
+                    List<DownloadSchedulerModel> downloadSchedulerList = [];
                     DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
                     try
                     {
                         foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
                         {
-                            downloadInfoList.Add(downloadSchedulerItem);
+                            downloadSchedulerList.Add(downloadSchedulerItem);
                         }
                     }
                     catch (Exception e)
@@ -338,7 +340,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
                         {
-                            downloadInfoList.Add(downloadSchedulerItem);
+                            downloadSchedulerList.Add(downloadSchedulerItem);
                         }
                     }
                     catch (Exception e)
@@ -354,7 +356,7 @@ namespace GetStoreApp.UI.Controls.Store
                     string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
                     // 检查下载文件信息是否已存在
-                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadInfoList)
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
                     {
                         if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
                         {
@@ -397,11 +399,14 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 打开指定项目的链接
         /// </summary>
-        private async void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string fileLink && !string.IsNullOrEmpty(fileLink))
             {
-                await Launcher.LaunchUriAsync(new Uri(fileLink));
+                Task.Run(async () =>
+                {
+                    await Launcher.LaunchUriAsync(new Uri(fileLink));
+                });
             }
         }
 
@@ -424,11 +429,10 @@ namespace GetStoreApp.UI.Controls.Store
         {
             if (args.Parameter is QueryLinksModel queryLinksItem)
             {
-                string copyInformation = string.Format("[\n{0}\n{1}\n{2}\n]\n",
-                    queryLinksItem.FileName,
-                    queryLinksItem.FileLink,
-                    queryLinksItem.FileSize
-                    );
+                string copyInformation = await Task.Run(() =>
+                {
+                    return string.Format("[\n{0}\n{1}\n{2}\n]\n", queryLinksItem.FileName, queryLinksItem.FileLink, queryLinksItem.FileSize);
+                });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
                 await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.ResultInformation, copyResult, false));
@@ -477,11 +481,11 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 点击回车键搜索应用
         /// </summary>
-        private void OnKeyDown(object sender, KeyRoutedEventArgs args)
+        private async void OnKeyDown(object sender, KeyRoutedEventArgs args)
         {
             if (args.Key is VirtualKey.Enter)
             {
-                QueryLinks();
+                await QueryLinksAsync();
             }
         }
 
@@ -490,12 +494,11 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                SelectedType = TypeList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                SelectedType = TypeList[Convert.ToInt32(tag)];
                 sampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
                 LinkPlaceHolderText = SampleTitle + sampleLink;
-
                 LinkText = string.Empty;
             }
         }
@@ -505,18 +508,18 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnChannelSelectClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is not null)
+            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                SelectedChannel = ChannelList[Convert.ToInt32(radioMenuFlyoutItem.Tag)];
+                SelectedChannel = ChannelList[Convert.ToInt32(tag)];
             }
         }
 
         /// <summary>
         /// 查询链接
         /// </summary>
-        private void OnQueryLinksClicked(object sender, RoutedEventArgs args)
+        private async void OnQueryLinksClicked(object sender, RoutedEventArgs args)
         {
-            QueryLinks();
+            await QueryLinksAsync();
         }
 
         /// <summary>
@@ -524,22 +527,30 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnCopyQueryedAppInfoClicked(object sender, RoutedEventArgs args)
         {
-            List<string> appInformationCopyStringList = [];
-            appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppName") + AppInfo.Name);
-            appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppPublisher") + AppInfo.Publisher);
-            appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppDescription"));
-            appInformationCopyStringList.Add(AppInfo.Description);
+            string appInformationCopyString = await Task.Run(() =>
+            {
+                List<string> appInformationCopyStringList = [];
+                appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppName") + AppInfo.Name);
+                appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppPublisher") + AppInfo.Publisher);
+                appInformationCopyStringList.Add(ResourceService.GetLocalized("Store/QueryedAppDescription"));
+                appInformationCopyStringList.Add(AppInfo.Description);
 
-            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, appInformationCopyStringList));
+                return string.Join(Environment.NewLine, appInformationCopyStringList);
+            });
+
+            bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformationCopyString);
             await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.AppInformation, copyResult));
         }
 
         /// <summary>
         /// 查看应用更多信息
         /// </summary>
-        private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
+        private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
+            Task.Run(async () =>
+            {
+                await Launcher.LaunchUriAsync(new Uri(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
+            });
         }
 
         /// <summary>
@@ -570,50 +581,51 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
-        /// 全选
+        /// 全选 / 全部不选
         /// </summary>
-        private void OnSelectAllClicked(object sender, RoutedEventArgs args)
+
+        private void OnSelectTapped(object sender, TappedRoutedEventArgs args)
         {
-            queryLinksLock.Enter();
-
-            try
+            if (IsSelectMode)
             {
-                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                queryLinksLock.Enter();
+
+                try
                 {
-                    queryLinksItem.IsSelected = true;
+                    bool isAllSelected = true;
+
+                    foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                    {
+                        if (!queryLinksItem.IsSelected)
+                        {
+                            isAllSelected = false;
+                            break;
+                        }
+                    }
+
+                    if (!isAllSelected)
+                    {
+                        foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                        {
+                            queryLinksItem.IsSelected = true;
+                        }
+                    }
+                    else
+                    {
+                        foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                        {
+                            queryLinksItem.IsSelected = false;
+                        }
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-            }
-            finally
-            {
-                queryLinksLock.Exit();
-            }
-        }
-
-        /// <summary>
-        /// 全部不选
-        /// </summary>
-        private void OnSelectNoneClicked(object sender, RoutedEventArgs args)
-        {
-            queryLinksLock.Enter();
-
-            try
-            {
-                foreach (QueryLinksModel queryLinksItem in QueryLinksCollection)
+                catch (Exception e)
                 {
-                    queryLinksItem.IsSelected = false;
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
-            }
-            catch (Exception e)
-            {
-                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-            }
-            finally
-            {
-                queryLinksLock.Exit();
+                finally
+                {
+                    queryLinksLock.Exit();
+                }
             }
         }
 
@@ -656,17 +668,19 @@ namespace GetStoreApp.UI.Controls.Store
             }
             else
             {
-                List<string> queryLinksCopyStringList = [];
-
-                await Task.Run(() =>
+                string queryLinksCopyString = await Task.Run(() =>
                 {
+                    List<string> queryLinksCopyStringList = [];
+
                     foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                     {
                         queryLinksCopyStringList.Add(string.Format("[\n{0}\n{1}\n{2}\n]", queryLinksItem.FileName, queryLinksItem.FileLink, queryLinksItem.FileSize));
                     }
+
+                    return string.Join(Environment.NewLine, queryLinksCopyStringList);
                 });
 
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(queryLinksCopyString);
                 await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
             }
         }
@@ -676,10 +690,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnCopySelectedLinkClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksModel> selectedQueryLinksList = [];
-
-            await Task.Run(() =>
+            List<QueryLinksModel> selectedQueryLinksList = await Task.Run(() =>
             {
+                List<QueryLinksModel> selectedQueryLinksList = [];
                 queryLinksLock.Enter();
 
                 try
@@ -700,6 +713,8 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     queryLinksLock.Exit();
                 }
+
+                return selectedQueryLinksList;
             });
 
             // 内容为空时显示空提示对话框
@@ -710,17 +725,19 @@ namespace GetStoreApp.UI.Controls.Store
             }
             else
             {
-                List<string> queryLinksCopyStringList = [];
-
-                await Task.Run(() =>
+                string queryLinksCopyString = await Task.Run(() =>
                 {
+                    List<string> queryLinksCopyStringList = [];
+
                     foreach (QueryLinksModel queryLinksItem in selectedQueryLinksList)
                     {
                         queryLinksCopyStringList.Add(queryLinksItem.FileLink);
                     }
+
+                    return string.Join(Environment.NewLine, queryLinksCopyStringList);
                 });
 
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, queryLinksCopyStringList));
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(queryLinksCopyString);
                 await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
             }
         }
@@ -730,10 +747,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private async void OnDownloadSelectedClicked(object sender, RoutedEventArgs args)
         {
-            List<QueryLinksModel> selectedQueryLinksList = [];
-
-            await Task.Run(() =>
+            List<QueryLinksModel> selectedQueryLinksList = await Task.Run(() =>
             {
+                List<QueryLinksModel> selectedQueryLinksList = [];
                 queryLinksLock.Enter();
 
                 try
@@ -754,6 +770,8 @@ namespace GetStoreApp.UI.Controls.Store
                 {
                     queryLinksLock.Exit();
                 }
+
+                return selectedQueryLinksList;
             });
 
             // 内容为空时显示空提示对话框
@@ -765,17 +783,17 @@ namespace GetStoreApp.UI.Controls.Store
             else
             {
                 bool isDownloadSuccessfully = false;
-                List<DownloadSchedulerModel> downloadInfoList = [];
 
-                await Task.Run(() =>
+                List<DownloadSchedulerModel> downloadSchedulerList = await Task.Run(() =>
                 {
+                    List<DownloadSchedulerModel> downloadSchedulerList = [];
                     DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
 
                     try
                     {
                         foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.GetDownloadSchedulerList())
                         {
-                            downloadInfoList.Add(downloadSchedulerItem);
+                            downloadSchedulerList.Add(downloadSchedulerItem);
                         }
                     }
                     catch (Exception e)
@@ -793,7 +811,7 @@ namespace GetStoreApp.UI.Controls.Store
                     {
                         foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadStorageService.GetDownloadData())
                         {
-                            downloadInfoList.Add(downloadSchedulerItem);
+                            downloadSchedulerList.Add(downloadSchedulerItem);
                         }
                     }
                     catch (Exception e)
@@ -811,7 +829,7 @@ namespace GetStoreApp.UI.Controls.Store
                         string downloadFilePath = Path.Combine(DownloadOptionsService.DownloadFolder.Path, queryLinksItem.FileName);
 
                         // 检查下载文件信息是否已存在
-                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadInfoList)
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
                         {
                             if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
                             {
@@ -846,6 +864,8 @@ namespace GetStoreApp.UI.Controls.Store
                             isDownloadSuccessfully = true;
                         }
                     }
+
+                    return downloadSchedulerList;
                 });
 
                 // 显示下载任务创建成功消息
@@ -927,38 +947,46 @@ namespace GetStoreApp.UI.Controls.Store
         /// <summary>
         /// 获取链接
         /// </summary>
-        public void QueryLinks()
+        public async Task QueryLinksAsync()
         {
             // 设置获取数据时的相关控件状态
             LinkText = string.IsNullOrEmpty(LinkText) ? sampleLink : LinkText;
-            IsNotQueryingLinks = false;
+            IsQueryingLinks = true;
             SetControlState(InfoBarSeverity.Informational);
+            foreach (HistoryModel historyItem in HistoryCollection)
+            {
+                historyItem.IsQuerying = true;
+            }
+
+            // 记录当前选定的选项和填入的内容
+            int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
+            int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
+            string link = LinkText;
 
             // 商店接口查询方式
             if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
             {
-                Task.Run(async () =>
+                (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
                 {
-                    List<QueryLinksModel> queryLinksList = [];
-
-                    // 记录当前选定的选项和填入的内容
-                    int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
-                    int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
-                    string link = LinkText;
+                    (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksModel> queryLinksList) queryLinksResult = ValueTuple.Create<bool, bool, AppInfoModel, List<QueryLinksModel>>(false, false, null, null);
 
                     // 解析链接对应的产品 ID
                     string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
-
                     string cookie = await QueryLinksHelper.GetCookieAsync();
 
                     // 获取应用信息
-                    (bool requestResult, AppInfoModel appInfoModelItem) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    (bool requestResult, AppInfoModel appInfoItem) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    queryLinksResult.requestResult = appInformationResult.requestResult;
+                    queryLinksResult.appInfoItem = appInformationResult.appInfoItem;
 
                     if (appInformationResult.requestResult)
                     {
+                        List<QueryLinksModel> queryLinksList = [];
+
                         // 解析非商店应用数据
-                        if (string.IsNullOrEmpty(appInformationResult.appInfoModelItem.CategoryID))
+                        if (string.IsNullOrEmpty(appInformationResult.appInfoItem.CategoryID))
                         {
+                            queryLinksResult.isPackagedApp = false;
                             List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
                             foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
                             {
@@ -968,7 +996,8 @@ namespace GetStoreApp.UI.Controls.Store
                         // 解析商店应用数据
                         else
                         {
-                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, ChannelList[channelIndex].InternalName);
+                            queryLinksResult.isPackagedApp = true;
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.appInfoItem.CategoryID, ChannelList[channelIndex].InternalName);
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {
@@ -1008,75 +1037,80 @@ namespace GetStoreApp.UI.Controls.Store
                             queryLinksList.RemoveAll(item => item.FileName.EndsWith("blockmap", StringComparison.OrdinalIgnoreCase));
                         }
 
+                        // 排序
                         queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
+                        queryLinksResult.queryLinksList = queryLinksList;
+                    }
 
-                        DispatcherQueue.TryEnqueue(() =>
+                    return queryLinksResult;
+                });
+
+                if (requestResult)
+                {
+                    IsQueryingLinks = false;
+                    foreach (HistoryModel historyItem in HistoryCollection)
+                    {
+                        historyItem.IsQuerying = false;
+                    }
+
+                    if (queryLinksList is not null && queryLinksList.Count > 0)
+                    {
+                        UpdateHistory(appInfoItem.Name, typeIndex, channelIndex, link);
+                        SetControlState(InfoBarSeverity.Success);
+                        ResultControlVisable = true;
+                        IsAppInfoVisible = true;
+                        IsPackagedApp = isPackagedApp;
+
+                        AppInfo.Name = appInfoItem.Name;
+                        AppInfo.Publisher = appInfoItem.Publisher;
+                        AppInfo.Description = appInfoItem.Description;
+                        AppInfo.CategoryID = appInfoItem.CategoryID;
+                        AppInfo.ProductID = appInfoItem.ProductID;
+
+                        queryLinksLock.Enter();
+
+                        try
                         {
-                            IsNotQueryingLinks = true;
-
-                            if (queryLinksList.Count > 0)
+                            QueryLinksCollection.Clear();
+                            foreach (QueryLinksModel resultItem in queryLinksList)
                             {
-                                UpdateHistory(appInformationResult.Item2.Name, typeIndex, channelIndex, link);
-                                SetControlState(InfoBarSeverity.Success);
-                                ResultControlVisable = true;
-                                IsAppInfoVisible = true;
-                                IsPackagedApp = !string.IsNullOrEmpty(appInformationResult.Item2.CategoryID);
-
-                                AppInfo.Name = appInformationResult.Item2.Name;
-                                AppInfo.Publisher = appInformationResult.Item2.Publisher;
-                                AppInfo.Description = appInformationResult.Item2.Description;
-                                AppInfo.CategoryID = appInformationResult.Item2.CategoryID;
-                                AppInfo.ProductID = appInformationResult.Item2.ProductID;
-
-                                queryLinksLock.Enter();
-
-                                try
-                                {
-                                    QueryLinksCollection.Clear();
-                                    foreach (QueryLinksModel resultItem in queryLinksList)
-                                    {
-                                        QueryLinksCollection.Add(resultItem);
-                                        Task.Delay(1);
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                                finally
-                                {
-                                    queryLinksLock.Exit();
-                                }
+                                QueryLinksCollection.Add(resultItem);
                             }
-                            else
-                            {
-                                SetControlState(InfoBarSeverity.Warning);
-                                ResultControlVisable = false;
-                                IsAppInfoVisible = false;
-                            }
-                        });
+                        }
+                        catch (Exception e)
+                        {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
+                        finally
+                        {
+                            queryLinksLock.Exit();
+                        }
                     }
                     else
                     {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            IsNotQueryingLinks = true;
-                            SetControlState(InfoBarSeverity.Error);
-                            ResultControlVisable = false;
-                        });
+                        SetControlState(InfoBarSeverity.Warning);
+                        ResultControlVisable = false;
+                        IsAppInfoVisible = false;
                     }
-                });
+                }
+                else
+                {
+                    IsQueryingLinks = false;
+                    SetControlState(InfoBarSeverity.Error);
+                    ResultControlVisable = false;
+                    foreach (HistoryModel historyItem in HistoryCollection)
+                    {
+                        historyItem.IsQuerying = false;
+                    }
+                }
             }
 
             // 第三方接口查询方式
             else if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[1]))
             {
-                Task.Run(async () =>
+                (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
                 {
-                    // 记录当前选定的选项和填入的内容
-                    int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
-                    int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
-                    string link = LinkText;
+                    (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksModel> queryLinksList) queryLinksResult = ValueTuple.Create<InfoBarSeverity, bool, string, List<QueryLinksModel>>(InfoBarSeverity.Error, false, null, null);
 
                     // 生成请求的内容
                     string generateContent = HtmlRequestHelper.GenerateRequestContent(SelectedType.InternalName, link, SelectedChannel.InternalName);
@@ -1086,16 +1120,19 @@ namespace GetStoreApp.UI.Controls.Store
 
                     // 检查服务器返回获取的状态
                     InfoBarSeverity requestState = HtmlRequestHelper.CheckRequestState(httpRequestData);
+                    queryLinksResult.requestState = requestState;
 
                     if (requestState is InfoBarSeverity.Success)
                     {
                         HtmlParseHelper.InitializeParseData(httpRequestData);
                         string categoryId = HtmlParseHelper.HtmlParseCID().ToUpper();
+                        queryLinksResult.categoryId = categoryId;
                         List<QueryLinksModel> queryLinksList = [];
 
                         // CategoryID 为空，非打包应用
                         if (string.IsNullOrEmpty(categoryId))
                         {
+                            queryLinksResult.isPackagedApp = false;
                             List<QueryLinksModel> nonPackagedAppsList = HtmlParseHelper.HtmlParseNonPackagedAppLinks();
 
                             foreach (QueryLinksModel queryLinksItem in nonPackagedAppsList)
@@ -1105,6 +1142,7 @@ namespace GetStoreApp.UI.Controls.Store
                         }
                         else
                         {
+                            queryLinksResult.isPackagedApp = true;
                             List<QueryLinksModel> packagedAppsList = HtmlParseHelper.HtmlParsePackagedAppLinks();
 
                             // 按设置选项设置的内容过滤列表
@@ -1129,60 +1167,73 @@ namespace GetStoreApp.UI.Controls.Store
                             }
                         }
 
+                        // 排序
                         queryLinksList.Sort((item1, item2) => item1.FileName.CompareTo(item2.FileName));
-
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            IsNotQueryingLinks = true;
-                            IsAppInfoVisible = false;
-                            IsPackagedApp = !string.IsNullOrEmpty(categoryId);
-
-                            UpdateHistory(categoryId, typeIndex, channelIndex, link);
-                            SetControlState(InfoBarSeverity.Success);
-                            ResultControlVisable = true;
-
-                            queryLinksLock.Enter();
-
-                            try
-                            {
-                                QueryLinksCollection.Clear();
-                                foreach (QueryLinksModel resultItem in queryLinksList)
-                                {
-                                    QueryLinksCollection.Add(resultItem);
-                                    Task.Delay(1);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                queryLinksLock.Exit();
-                            }
-                        });
+                        queryLinksResult.queryLinksList = queryLinksList;
                     }
-                    else if (requestState is InfoBarSeverity.Warning)
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            IsNotQueryingLinks = true;
-                            SetControlState(InfoBarSeverity.Warning);
-                            ResultControlVisable = false;
-                            IsAppInfoVisible = false;
-                        });
-                    }
-                    else if (requestState is InfoBarSeverity.Error)
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            IsNotQueryingLinks = true;
-                            SetControlState(InfoBarSeverity.Error);
-                            ResultControlVisable = false;
-                            IsAppInfoVisible = false;
-                        });
-                    }
+
+                    return queryLinksResult;
                 });
+
+                if (requestState is InfoBarSeverity.Success)
+                {
+                    IsQueryingLinks = false;
+                    IsAppInfoVisible = false;
+                    IsPackagedApp = isPackagedApp;
+                    foreach (HistoryModel historyItem in HistoryCollection)
+                    {
+                        historyItem.IsQuerying = false;
+                    }
+
+                    UpdateHistory(categoryId, typeIndex, channelIndex, link);
+                    SetControlState(requestState);
+                    ResultControlVisable = true;
+
+                    queryLinksLock.Enter();
+
+                    try
+                    {
+                        QueryLinksCollection.Clear();
+
+                        if (queryLinksList is not null && queryLinksList.Count > 0)
+                        {
+                            foreach (QueryLinksModel resultItem in queryLinksList)
+                            {
+                                QueryLinksCollection.Add(resultItem);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        queryLinksLock.Exit();
+                    }
+                }
+                else if (requestState is InfoBarSeverity.Warning)
+                {
+                    IsQueryingLinks = false;
+                    SetControlState(requestState);
+                    ResultControlVisable = false;
+                    IsAppInfoVisible = false;
+                    foreach (HistoryModel historyItem in HistoryCollection)
+                    {
+                        historyItem.IsQuerying = false;
+                    }
+                }
+                else if (requestState is InfoBarSeverity.Error)
+                {
+                    IsQueryingLinks = false;
+                    SetControlState(requestState);
+                    ResultControlVisable = false;
+                    IsAppInfoVisible = false;
+                    foreach (HistoryModel historyItem in HistoryCollection)
+                    {
+                        historyItem.IsQuerying = false;
+                    }
+                }
             }
         }
 
@@ -1208,7 +1259,6 @@ namespace GetStoreApp.UI.Controls.Store
                 // 计算时间戳
                 long timeStamp = Convert.ToInt64((DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds);
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link);
-
                 List<HistoryModel> historyList = [.. HistoryCollection];
 
                 int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));

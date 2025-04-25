@@ -30,6 +30,7 @@
         <XamlUICommand x:Name="CopyInformationCommand" ExecuteRequested="{x:Bind OnCopyInformationExecuteRequested}" />
     </StackPanel.Resources>
 
+    <!--  查询链接控制栏  -->
     <Grid Margin="0,0,1,0" ColumnSpacing="6">
 
         <Grid.ColumnDefinitions>
@@ -115,7 +116,7 @@
 
         <TextBox
             Grid.Column="2"
-            IsEnabled="{x:Bind IsNotQueryingLinks, Mode=OneWay}"
+            IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
             KeyDown="{x:Bind OnKeyDown}"
             PlaceholderText="{x:Bind LinkPlaceHolderText, Mode=OneWay}"
             Text="{x:Bind LinkText, Mode=OneWay}"
@@ -127,10 +128,11 @@
             VerticalAlignment="Bottom"
             Click="{x:Bind OnQueryLinksClicked}"
             Content="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}"
-            IsEnabled="{x:Bind IsNotQueryingLinks, Mode=OneWay}"
+            IsEnabled="{x:Bind IsQueryingLinks.Equals(x:False), Mode=OneWay}"
             Style="{StaticResource AccentButtonStyle}" />
     </Grid>
 
+    <!--  查询链接信息栏  -->
     <InfoBar
         Height="50"
         IsClosable="False"
@@ -170,6 +172,7 @@
         </InfoBar.ActionButton>
     </InfoBar>
 
+    <!--  查询链接历史记录  -->
     <Expander
         Padding="0"
         HorizontalAlignment="Stretch"
@@ -302,10 +305,6 @@
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
 
-                    <ItemsView.Layout>
-                        <StackLayout />
-                    </ItemsView.Layout>
-
                     <ItemsView.ItemTemplate>
                         <DataTemplate x:DataType="store:HistoryModel">
                             <ItemContainer CornerRadius="0">
@@ -410,7 +409,7 @@
                                         Command="{StaticResource FillinCommand}"
                                         CommandParameter="{x:Bind}"
                                         Content="{x:Bind root:ResourceService.GetLocalized('Store/Fillin')}"
-                                        IsEnabled="{Binding ElementName=QueryLinksRoot, Path=IsNotQueryingLinks}" />
+                                        IsEnabled="{x:Bind IsQuerying.Equals(x:False), Mode=OneWay}" />
 
                                     <HyperlinkButton
                                         Grid.Column="5"
@@ -428,6 +427,7 @@
         </Expander.Content>
     </Expander>
 
+    <!--  查询链接结果  -->
     <Grid CornerRadius="{ThemeResource ControlCornerRadius}" Visibility="{x:Bind ResultControlVisable, Mode=OneWay}">
 
         <Grid.RowDefinitions>
@@ -437,6 +437,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!--  查询链接结果信息栏  -->
         <Expander
             Grid.Row="0"
             Margin="0,0,0,3"
@@ -548,6 +549,7 @@
             </Expander.Content>
         </Expander>
 
+        <!--  查询链接结果控制栏  -->
         <Grid
             Grid.Row="1"
             Height="66"
@@ -616,9 +618,9 @@
                 Grid.Column="5"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
-                x:Load="{x:Bind IsSelectMode.Equals(x:False), Mode=OneWay}"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelectMode), Mode=OneWay}">
 
                 <CommandBar.Resources>
                     <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
@@ -643,9 +645,9 @@
                 Grid.Column="5"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
-                x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
                 Background="Transparent"
-                DefaultLabelPosition="Right">
+                DefaultLabelPosition="Right"
+                Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                 <CommandBar.Resources>
                     <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
@@ -653,20 +655,6 @@
                 </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton Click="{x:Bind OnSelectAllClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectAll')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8B3;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton Click="{x:Bind OnSelectNoneClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Store/SelectNone')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8E6;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
                     <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptions')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/CopyOptionsToolTip')}">
 
                         <AppBarButton.Icon>
@@ -712,6 +700,7 @@
             </CommandBar>
         </Grid>
 
+        <!--  查询链接结果列表表头栏  -->
         <Grid
             Grid.Row="2"
             Height="35"
@@ -736,18 +725,13 @@
                 Width="50"
                 Margin="10,0,0,0"
                 VerticalAlignment="Center"
+                IsTapEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
+                Tapped="{x:Bind OnSelectTapped}"
                 Text="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
                 TextTrimming="CharacterEllipsis"
                 TextWrapping="NoWrap"
-                Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
-
-                <ToolTipService.ToolTip>
-                    <ToolTip
-                        MaxWidth="9999"
-                        Content="{x:Bind root:ResourceService.GetLocalized('Store/Select')}"
-                        Visibility="{x:Bind SelectHeaderText.IsTextTrimmed, Mode=OneWay}" />
-                </ToolTipService.ToolTip>
-            </TextBlock>
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/SelectTip')}"
+                Visibility="{x:Bind IsSelectMode, Mode=OneWay}" />
 
             <TextBlock
                 x:Name="FileNameHeaderText"
@@ -793,6 +777,7 @@
                 ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
         </Grid>
 
+        <!--  查询链接结果列表  -->
         <ItemsView
             Grid.Row="3"
             CornerRadius="0"
@@ -801,10 +786,6 @@
             ItemsSource="{x:Bind QueryLinksCollection, Mode=OneWay}"
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
-
-            <ItemsView.Layout>
-                <StackLayout />
-            </ItemsView.Layout>
 
             <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="store:QueryLinksModel">
@@ -831,7 +812,7 @@
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                IsChecked="{x:Bind IsSelected, Mode=OneWay}"
                                 IsThreeState="False"
                                 Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 

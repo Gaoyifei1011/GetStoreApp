@@ -60,9 +60,8 @@
   "SearchStoreInfoSuccess": "تم البحث عن هذه التطبيقات بنجاح من خوادم متجر Microsoft",
   "SearchStoreInfoWarning": "البيانات التي تم إرجاعها من الخادم فارغة، يرجى التحقق مما أدخلته",
   "Select": "تحديد",
-  "SelectAll": "تحديد الكل",
   "SelectedToolTip": "محدد",
-  "SelectNone": "عدم التحديد",
+  "SelectTip": "Click to select all / select none",
   "SelectToolTip": "الدخول في وضع التحديد المتعدد",
   "StoreAppLink": "رابط التطبيق",
   "StoreAppName": "اسم التطبيق",
@@ -71,5 +70,6 @@
   "UnSelectedToolTip": "غير محدد",
   "UseInstruction": "إرشادات الاستخدام",
   "UseInstructionToolTip": "انقر لمعرفة كيفية استخدام التطبيق",
+  "ViewMoreOptions": "View more options",
   "Welcome": "مرحبًا بك في استخدام GetStoreApp"
 }

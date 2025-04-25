@@ -60,9 +60,8 @@
   "SearchStoreInfoSuccess": "אפליקציות אלו אותרו בהצלחה בשרתי Microsoft Store",
   "SearchStoreInfoWarning": "הנתונים המוחזרים על ידי השרת ריקים, אנא בדוק את מה שהזנת",
   "Select": "בחר",
-  "SelectAll": "בחר הכל",
   "SelectedToolTip": "נבחרו",
-  "SelectNone": "בטל בחירה",
+  "SelectTip": "Click to select all / select none",
   "SelectToolTip": "היכנס למצב בחירה מרובה",
   "StoreAppLink": "קישור אפליקציה",
   "StoreAppName": "שם אפליקציה",
@@ -71,5 +70,6 @@
   "UnSelectedToolTip": "לא נבחר",
   "UseInstruction": "הוראות שימוש",
   "UseInstructionToolTip": "לחץ כדי ללמוד כיצד להשתמש באפליקציה",
+  "ViewMoreOptions": "View more options",
   "Welcome": "ברוך הבא אל אפליקציית GetStoreApp"
 }

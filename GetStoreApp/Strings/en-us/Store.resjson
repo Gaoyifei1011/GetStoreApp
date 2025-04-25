@@ -60,9 +60,8 @@
   "SearchStoreInfoSuccess": "These apps have been successfully searched from the Microsoft Store servers",
   "SearchStoreInfoWarning": "The data returned by the server is empty, please check what you entered",
   "Select": "Select",
-  "SelectAll": "Select all",
   "SelectedToolTip": "Selected",
-  "SelectNone": "Select none",
+  "SelectTip": "Click to select all / select none",
   "SelectToolTip": "Enter multi-select mode",
   "StoreAppLink": "App link",
   "StoreAppName": "App name",
@@ -71,5 +70,6 @@
   "UnSelectedToolTip": "Not selected",
   "UseInstruction": "Direction for use",
   "UseInstructionToolTip": "Click to learn how to use the app",
+  "ViewMoreOptions": "View more options",
   "Welcome": "Welcome to use GetStoreApp"
 }
