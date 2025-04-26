@@ -18,63 +18,86 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid
+        <!--  标题  -->
+        <TextBlock
             Grid.Row="0"
             Margin="30,15,30,0"
-            ColumnSpacing="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock
-                Grid.Column="0"
-                FontSize="22"
-                Text="{x:Bind root:ResourceService.GetLocalized('Store/Title')}" />
-
-            <Button
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                Click="{x:Bind OnLanguageAndRegionClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}" />
-
-            <Button
-                Grid.Column="2"
-                VerticalAlignment="Center"
-                Click="{x:Bind OnUseInstructionClicked}"
-                Content="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"
-                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}" />
-        </Grid>
+            FontSize="22"
+            Text="{x:Bind root:ResourceService.GetLocalized('Store/Title')}" />
 
         <Grid
             Grid.Row="1"
-            Margin="0,8"
-            HorizontalAlignment="Center"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="{ThemeResource ControlCornerRadius}">
+            Margin="30,8"
+            HorizontalAlignment="Stretch">
 
-            <SelectorBar
-                x:Name="StoreSelectorBar"
+            <!--  商店应用控制栏  -->
+            <Grid
+                HorizontalAlignment="Center"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{ThemeResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <SelectorBar
+                    x:Name="StoreSelectorBar"
+                    Padding="0"
+                    HorizontalAlignment="Center"
+                    x:FieldModifier="public"
+                    SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+
+                    <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
+                        <SelectorBarItem.Icon>
+                            <FontIcon Glyph="&#xE71B;" />
+                        </SelectorBarItem.Icon>
+                    </SelectorBarItem>
+
+                    <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
+                        <SelectorBarItem.Icon>
+                            <FontIcon Glyph="&#xE721;" />
+                        </SelectorBarItem.Icon>
+                    </SelectorBarItem>
+                </SelectorBar>
+            </Grid>
+
+            <Button
+                Width="34"
+                Height="34"
                 Padding="0"
-                x:FieldModifier="public"
-                SelectionChanged="{x:Bind OnSelectionChanged}">
+                HorizontalAlignment="Right"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/ViewMoreOptions')}">
 
-                <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
-                    <SelectorBarItem.Icon>
-                        <FontIcon Glyph="&#xE71B;" />
-                    </SelectorBarItem.Icon>
-                </SelectorBarItem>
+                <Button.Content>
+                    <FontIcon FontSize="16" Glyph="&#xE712;" />
+                </Button.Content>
 
-                <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
-                    <SelectorBarItem.Icon>
-                        <FontIcon Glyph="&#xE721;" />
-                    </SelectorBarItem.Icon>
-                </SelectorBarItem>
-            </SelectorBar>
+                <Button.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnLanguageAndRegionClicked}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xF2B7;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnUseInstructionClicked}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE946;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
         </Grid>
 
         <MenuFlyoutSeparator
@@ -82,19 +105,38 @@
             Margin="35,0,35,3"
             Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
-        <ScrollView
-            x:Name="StoreScroll"
+        <!--  内容  -->
+        <FlipView
             Grid.Row="3"
-            HorizontalScrollMode="Disabled"
-            VerticalScrollBarVisibility="Auto"
-            VerticalScrollMode="Enabled">
+            Background="Transparent"
+            Loaded="{x:Bind OnFlipViewLoaded}"
+            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
+            SelectionChanged="{x:Bind OnFlipViewSelectionChanged}"
+            Style="{StaticResource FlipViewStyle}">
 
-            <Border>
-                <Grid Padding="30,0">
+            <FlipViewItem x:Name="QueryLinksPivotItem">
+                <ScrollView
+                    Padding="30,0,30,0"
+                    HorizontalScrollBarVisibility="Hidden"
+                    HorizontalScrollMode="Disabled"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalScrollMode="Enabled">
+
                     <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
+                </ScrollView>
+            </FlipViewItem>
+
+            <FlipViewItem x:Name="SearchStorePivotItem" VerticalContentAlignment="Top">
+                <ScrollView
+                    Padding="30,0,30,0"
+                    HorizontalScrollBarVisibility="Hidden"
+                    HorizontalScrollMode="Disabled"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalScrollMode="Enabled">
+
                     <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
-                </Grid>
-            </Border>
-        </ScrollView>
+                </ScrollView>
+            </FlipViewItem>
+        </FlipView>
     </Grid>
 </Page>
