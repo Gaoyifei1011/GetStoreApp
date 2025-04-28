@@ -424,7 +424,9 @@
                     <Frame.ContentTransitions>
                         <TransitionCollection>
                             <NavigationThemeTransition>
-                                <DrillInNavigationTransitionInfo />
+                                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                    <DrillInNavigationTransitionInfo />
+                                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
                             </NavigationThemeTransition>
                         </TransitionCollection>
                     </Frame.ContentTransitions>

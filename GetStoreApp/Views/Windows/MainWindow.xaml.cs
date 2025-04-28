@@ -476,7 +476,7 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.Key is VirtualKey.Back && args.KeyStatus.IsMenuKeyDown)
             {
-                if (WindowFrame.Content is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
+                if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
                 {
                     appManagerPage.BackToAppList();
                 }
@@ -603,10 +603,6 @@ namespace GetStoreApp.Views.Windows
                         });
                     }
                 }
-
-                NavigateTo(typeof(StorePage));
-                SelectedItem = NavigationItemList[0].NavigationItem;
-                IsBackEnabled = CanGoBack();
             }
 
             // 初始化启动信息
@@ -619,6 +615,8 @@ namespace GetStoreApp.Views.Windows
                 // 正常启动重定向获得的内容
                 if (dataContentList.Count is 1 || dataContentList.Count is 2)
                 {
+                    NavigateTo(typeof(StorePage));
+
                     // 正常启动
                     if (dataContentList[0] is "Launch")
                     {
@@ -656,25 +654,23 @@ namespace GetStoreApp.Views.Windows
                     }
                 }
                 // 带有命令参数启动重定向获得的内容
-                else if (dataContentList.Count > 2 && dataContentList[0] is "Console")
+                else if (dataContentList.Count is 4 && dataContentList[0] is "Console")
                 {
-                    if (GetCurrentPageType() != typeof(StorePage))
+                    if (GetCurrentPageType() == typeof(StorePage))
                     {
-                        NavigateTo(typeof(StorePage));
+                        (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList[1..4]);
                     }
-
-                    if (dataContentList.Count is 4 && WindowFrame.Content is StorePage storePage)
+                    else
                     {
-                        storePage.QueryLinks.SelectedType = Convert.ToInt32(dataContentList[1]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(dataContentList[1])];
-                        storePage.QueryLinks.SelectedChannel = Convert.ToInt32(dataContentList[2]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(dataContentList[2])];
-                        storePage.QueryLinks.LinkText = dataContentList[3] is "PlaceHolderText" ? string.Empty : dataContentList[3];
-                        storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                        NavigateTo(typeof(StorePage), dataContentList[1..4]);
                     }
                 }
             }
             // 从通知协议启动重定向获得的内容
             else if (dataKind is StorageDataKind.Protocol)
             {
+                NavigateTo(typeof(StorePage));
+
                 // 正常启动重定向获得的内容
                 if (dataContentList.Count is 1 || dataContentList.Count is 2)
                 {
@@ -702,17 +698,16 @@ namespace GetStoreApp.Views.Windows
             // 从共享目标启动重定向获得的内容
             else if (dataKind is StorageDataKind.ShareTarget)
             {
-                if (GetCurrentPageType() != typeof(StorePage))
+                if (dataContentList.Count is 3)
                 {
-                    NavigateTo(typeof(StorePage));
-                }
-
-                if (dataContentList.Count is 3 && WindowFrame.Content is StorePage storePage)
-                {
-                    storePage.QueryLinks.SelectedType = Convert.ToInt32(dataContentList[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(dataContentList[0])];
-                    storePage.QueryLinks.SelectedChannel = Convert.ToInt32(dataContentList[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(dataContentList[1])];
-                    storePage.QueryLinks.LinkText = dataContentList[2] is "PlaceHolderText" ? string.Empty : dataContentList[2];
-                    storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                    if (GetCurrentPageType() == typeof(StorePage))
+                    {
+                        (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList);
+                    }
+                    else
+                    {
+                        NavigateTo(typeof(StorePage), dataContentList);
+                    }
                 }
 
                 Show();
@@ -750,11 +745,11 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnBackRequested(object sender, NavigationViewBackRequestedEventArgs args)
         {
-            if (WindowFrame.Content is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
+            if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
             {
                 appManagerPage.BackToAppList();
             }
-            else if (WindowFrame.Content is SettingsPage settingsPage && settingsPage.IsWinGetConfigMode)
+            else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.IsWinGetConfigMode)
             {
                 settingsPage.IsWinGetConfigMode = false;
             }
@@ -793,8 +788,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            Type CurrentPageType = GetCurrentPageType();
-            SelectedItem = NavigationItemList.Find(item => item.NavigationPage == CurrentPageType).NavigationItem;
+            SelectedItem = NavigationItemList.Find(item => item.NavigationPage == GetCurrentPageType()).NavigationItem;
             IsBackEnabled = CanGoBack();
         }
 
@@ -878,21 +872,20 @@ namespace GetStoreApp.Views.Windows
                     }
                 }
                 // 带有命令参数启动重定向获得的内容
-                else if (dataList.Count > 2 && dataList[0] is "Console")
+                else if (dataList.Count is 4 && dataList[0] is "Console")
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        if (GetCurrentPageType() != typeof(StorePage))
+                        if (dataList.Count is 4)
                         {
-                            NavigateTo(typeof(StorePage));
-                        }
-
-                        if (dataList.Count is 4 && WindowFrame.Content is StorePage storePage)
-                        {
-                            storePage.QueryLinks.SelectedType = Convert.ToInt32(dataList[1]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(dataList[1])];
-                            storePage.QueryLinks.SelectedChannel = Convert.ToInt32(dataList[2]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(dataList[2])];
-                            storePage.QueryLinks.LinkText = dataList[3] is "PlaceHolderText" ? string.Empty : dataList[3];
-                            storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                            if (GetCurrentPageType() == typeof(StorePage))
+                            {
+                                (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataList[1..4]);
+                            }
+                            else
+                            {
+                                NavigateTo(typeof(StorePage), dataList[1..4]);
+                            }
                         }
                     });
                 }
@@ -902,17 +895,16 @@ namespace GetStoreApp.Views.Windows
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (GetCurrentPageType() != typeof(StorePage))
+                    if (dataList.Count is 3)
                     {
-                        NavigateTo(typeof(StorePage));
-                    }
-
-                    if (dataList.Count is 3 && WindowFrame.Content is StorePage storePage)
-                    {
-                        storePage.QueryLinks.SelectedType = Convert.ToInt32(dataList[0]) is -1 ? storePage.QueryLinks.TypeList[0] : storePage.QueryLinks.TypeList[Convert.ToInt32(dataList[0])];
-                        storePage.QueryLinks.SelectedChannel = Convert.ToInt32(dataList[1]) is -1 ? storePage.QueryLinks.ChannelList[3] : storePage.QueryLinks.ChannelList[Convert.ToInt32(dataList[1])];
-                        storePage.QueryLinks.LinkText = dataList[2] is "PlaceHolderText" ? string.Empty : dataList[2];
-                        storePage.StoreSelectorBar.SelectedItem ??= storePage.StoreSelectorBar.Items[0];
+                        if (GetCurrentPageType() == typeof(StorePage))
+                        {
+                            (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataList);
+                        }
+                        else
+                        {
+                            NavigateTo(typeof(StorePage), dataList);
+                        }
                     }
 
                     Show();
@@ -1249,6 +1241,7 @@ namespace GetStoreApp.Views.Windows
                 if (navigationItem.NavigationPage == navigationPageType)
                 {
                     WindowFrame.Navigate(navigationItem.NavigationPage, parameter);
+                    break;
                 }
             }
         }

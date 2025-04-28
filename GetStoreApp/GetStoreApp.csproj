@@ -247,8 +247,6 @@
     <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Strings\zh-hans\WinGet.resjson" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
-    <None Remove="UI\Controls\Store\QueryLinksControl.xaml" />
-    <None Remove="UI\Controls\Store\SearchStoreControl.xaml" />
     <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
     <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
@@ -271,6 +269,8 @@
     <None Remove="Views\Pages\AppManagerPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
+    <None Remove="Views\Pages\QueryLinksPage.xaml" />
+    <None Remove="Views\Pages\SearchStorePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
@@ -285,8 +285,6 @@
     <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Controls\Store\QueryLinksControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Controls\Store\SearchStoreControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -306,6 +304,8 @@
     <Page Update="Views\Pages\AppManagerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\QueryLinksPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\StorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

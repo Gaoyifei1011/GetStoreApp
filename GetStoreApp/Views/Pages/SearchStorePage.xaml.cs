@@ -3,7 +3,6 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -14,18 +13,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.System;
-using WinRT;
 
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
 
-namespace GetStoreApp.UI.Controls.Store
+namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// 搜索应用控件
+    /// 搜索应用页面
     /// </summary>
-    [GeneratedBindableCustomProperty]
-    public sealed partial class SearchStoreControl : StackPanel, INotifyPropertyChanged
+    public sealed partial class SearchStorePage : Page, INotifyPropertyChanged
     {
         private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
 
@@ -149,7 +146,7 @@ namespace GetStoreApp.UI.Controls.Store
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SearchStoreControl()
+        public SearchStorePage()
         {
             InitializeComponent();
 
@@ -188,11 +185,9 @@ namespace GetStoreApp.UI.Controls.Store
         /// </summary>
         private void OnQueryLinksExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is string appLink && !string.IsNullOrEmpty(appLink) && MainWindow.Current.GetFrameContent() is StorePage storePage)
+            if (args.Parameter is string appLink && MainWindow.Current.GetFrameContent() is StorePage storePage && !storePage.GetCurrentPageType().Equals(typeof(QueryLinksPage)))
             {
-                storePage.QueryLinks.SelectedType = storePage.QueryLinks.TypeList[0];
-                storePage.QueryLinks.LinkText = appLink;
-                storePage.StoreSelectorBar.SelectedItem = storePage.StoreSelectorBar.Items[0];
+                storePage.NavigateTo(typeof(QueryLinksPage), new List<string> { "0", null, appLink }, false);
             }
         }
 
@@ -253,7 +248,7 @@ namespace GetStoreApp.UI.Controls.Store
             IsNotSeachingStore = false;
             SetControlState(InfoBarSeverity.Informational);
 
-            (bool requestResult, List<SearchStoreModel> searchStoreList) searchStoreResult = await Task.Run(async () =>
+            (bool requestResult, List<SearchStoreModel> searchStoreList) = await Task.Run(async () =>
             {
                 string searchText = SearchText;
                 string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
@@ -261,10 +256,10 @@ namespace GetStoreApp.UI.Controls.Store
             });
 
             // 获取成功
-            if (searchStoreResult.requestResult)
+            if (requestResult)
             {
                 // 搜索成功，有数据
-                if (searchStoreResult.searchStoreList.Count > 0)
+                if (searchStoreList.Count > 0)
                 {
                     IsNotSeachingStore = true;
                     SetControlState(InfoBarSeverity.Success);
@@ -272,7 +267,7 @@ namespace GetStoreApp.UI.Controls.Store
                     UpdateHistory(SearchText);
 
                     SearchStoreCollection.Clear();
-                    foreach (SearchStoreModel searchStoreItem in searchStoreResult.Item2)
+                    foreach (SearchStoreModel searchStoreItem in searchStoreList)
                     {
                         SearchStoreCollection.Add(searchStoreItem);
                     }

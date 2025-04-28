@@ -1,13 +1,16 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 using Windows.System;
 
 // 抑制 IDE0060 警告
@@ -20,50 +23,58 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class StorePage : Page, INotifyPropertyChanged
     {
-        private int _selectedIndex = 0;
+        private SelectorBarItem _selectedItem;
 
-        public int SelectedIndex
+        public SelectorBarItem SelectedItem
         {
-            get { return _selectedIndex; }
+            get { return _selectedItem; }
 
             set
             {
-                if (!Equals(_selectedIndex, value))
+                if (!Equals(_selectedItem, value))
                 {
-                    _selectedIndex = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedIndex)));
+                    _selectedItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
                 }
             }
         }
+
+        public List<Type> PageList { get; } = [typeof(QueryLinksPage), typeof(SearchStorePage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public StorePage()
         {
             InitializeComponent();
-            StoreSelectorBar.SelectedItem = StoreSelectorBar.Items[SelectedIndex];
         }
 
-        #region 第二部分：应用商店页面——挂载的事件
+        #region 第一部分：重写父类事件
 
         /// <summary>
-        /// 分割控件选中项发生改变时引发的事件
+        /// 导航到该页面触发的事件
         /// </summary>
-        private void OnSelectorBarSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
+        protected override void OnNavigatedTo(NavigationEventArgs args)
         {
-            if (sender is SelectorBar selectorBar && selectorBar.SelectedItem is not null)
+            base.OnNavigatedTo(args);
+            StoreFrame.ContentTransitions = SuppressNavigationTransitionCollection;
+
+            // 第一次导航
+            if (GetCurrentPageType() is null)
             {
-                SelectedIndex = selectorBar.Items.IndexOf(selectorBar.SelectedItem);
+                NavigateTo(typeof(QueryLinksPage), args.Parameter, null);
+            }
+            else
+            {
+                if (args.Parameter is List<string> dataList)
+                {
+                    InitializeQueryLinksContent(dataList);
+                }
             }
         }
 
-        private void OnFlipViewSelectionChanged(object sender, SelectionChangedEventArgs args)
-        {
-            if (sender is FlipView flipView && flipView.SelectedItem is not null)
-            {
-                SelectedIndex = flipView.Items.IndexOf(flipView.SelectedItem);
-            }
-        }
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：应用商店页面——挂载的事件
 
         /// <summary>
         /// 打开设置中的语言和区域
@@ -91,32 +102,104 @@ namespace GetStoreApp.Views.Pages
             MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
         }
 
-        private void OnFlipViewLoaded(object sender, RoutedEventArgs args)
+        /// <summary>
+        /// 导航完成后发生
+        /// </summary>
+        private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            if (VisualTreeHelper.GetChildrenCount(sender as FlipView) > 0)
-            {
-                FrameworkElement layoutRoot = (FrameworkElement)VisualTreeHelper.GetChild(sender as FlipView, 0);
+            int index = PageList.FindIndex(item => item == GetCurrentPageType());
 
-                layoutRoot.PointerWheelChanged -= OnPointerWheelChanged;
-                layoutRoot.PointerWheelChanged += OnPointerWheelChanged;
+            if (index >= 0 && index < StoreSelectorBar.Items.Count)
+            {
+                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => item == GetCurrentPageType())];
             }
         }
 
-        private static void OnPointerWheelChanged(object sender, PointerRoutedEventArgs args)
+        /// <summary>
+        /// 点击选择器栏发生的事件
+        /// </summary>
+        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
         {
-            if (sender is FrameworkElement frameworkElement)
+            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
             {
-                if (VisualTreeHelper.GetParent(frameworkElement) is FlipView flipView)
+                int index = Convert.ToInt32(tag);
+                int currentIndex = PageList.FindIndex(item => item == GetCurrentPageType());
+
+                if (index is 0 && !Equals(GetCurrentPageType(), typeof(QueryLinksPage)))
                 {
-                    args.Handled = true;
+                    NavigateTo(typeof(QueryLinksPage), null, index > currentIndex);
                 }
-                else
+                else if (index is 1 && !Equals(GetCurrentPageType(), typeof(SearchStorePage)))
                 {
-                    frameworkElement.PointerWheelChanged -= OnPointerWheelChanged;
+                    NavigateTo(typeof(SearchStorePage), null, index > currentIndex);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 导航失败时发生
+        /// </summary>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
+        {
+            args.Handled = true;
+            int index = PageList.FindIndex(item => item == GetCurrentPageType());
+
+            if (index >= 0 && index < StoreSelectorBar.Items.Count)
+            {
+                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => item == GetCurrentPageType())];
             }
         }
 
         #endregion 第二部分：应用商店页面——挂载的事件
+
+        #region 第三部分：窗口导航方法
+
+        /// <summary>
+        /// 页面向前导航
+        /// </summary>
+        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        {
+            try
+            {
+                if (slideDirection.HasValue)
+                {
+                    StoreFrame.ContentTransitions = slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection;
+                }
+
+                // 导航到该项目对应的页面
+                StoreFrame.Navigate(navigationPageType, parameter);
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), navigationPageType.FullName), e);
+            }
+        }
+
+        /// <summary>
+        /// 获取当前导航到的页
+        /// </summary>
+        public Type GetCurrentPageType()
+        {
+            return StoreFrame.CurrentSourcePageType;
+        }
+
+        public void InitializeQueryLinksContent(List<string> dataList)
+        {
+            if (!Equals(GetCurrentPageType(), typeof(QueryLinksPage)))
+            {
+                NavigateTo(typeof(QueryLinksPage), dataList, false);
+            }
+            else
+            {
+                if (StoreFrame.Content is QueryLinksPage queryLinksPage && dataList.Count is 3)
+                {
+                    queryLinksPage.SelectedType = Convert.ToInt32(dataList[0]) is -1 ? queryLinksPage.TypeList[0] : queryLinksPage.TypeList[Convert.ToInt32(dataList[0])];
+                    queryLinksPage.SelectedChannel = Convert.ToInt32(dataList[1]) is -1 ? queryLinksPage.ChannelList[3] : queryLinksPage.ChannelList[Convert.ToInt32(dataList[1])];
+                    queryLinksPage.LinkText = dataList[2] is "PlaceHolderText" ? string.Empty : dataList[2];
+                }
+            }
+        }
+
+        #endregion 第三部分：窗口导航方法
     }
 }

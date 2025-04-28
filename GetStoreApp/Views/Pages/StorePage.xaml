@@ -4,10 +4,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:GetStoreApp.Models.Window"
     xmlns:root="using:GetStoreApp.Services.Root"
-    xmlns:sc="using:GetStoreApp.UI.Controls.Store"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <TransitionCollection x:Name="SuppressNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+
+        <TransitionCollection x:Name="LeftSlideNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo Effect="FromLeft" />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+
+        <TransitionCollection x:Name="RightSlideNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo Effect="FromRight" />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Resources>
 
     <Grid Padding="0">
 
@@ -38,24 +64,29 @@
                 BorderThickness="1"
                 CornerRadius="{ThemeResource ControlCornerRadius}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
                 <SelectorBar
                     x:Name="StoreSelectorBar"
                     Padding="0"
                     HorizontalAlignment="Center"
-                    x:FieldModifier="public"
-                    SelectionChanged="{x:Bind OnSelectorBarSelectionChanged}">
+                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
 
-                    <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
+                    <SelectorBarItem
+                        Padding="12,6,12,3"
+                        IsTapEnabled="True"
+                        Tag="0"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
                         <SelectorBarItem.Icon>
                             <FontIcon Glyph="&#xE71B;" />
                         </SelectorBarItem.Icon>
                     </SelectorBarItem>
 
-                    <SelectorBarItem Padding="12,6,12,3" Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
+                    <SelectorBarItem
+                        Padding="12,6,12,3"
+                        IsTapEnabled="True"
+                        Tag="1"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
                         <SelectorBarItem.Icon>
                             <FontIcon Glyph="&#xE721;" />
                         </SelectorBarItem.Icon>
@@ -106,37 +137,19 @@
             Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
         <!--  内容  -->
-        <FlipView
+        <ScrollView
             Grid.Row="3"
-            Background="Transparent"
-            Loaded="{x:Bind OnFlipViewLoaded}"
-            SelectedIndex="{x:Bind SelectedIndex, Mode=OneWay}"
-            SelectionChanged="{x:Bind OnFlipViewSelectionChanged}"
-            Style="{StaticResource FlipViewStyle}">
+            Padding="30,0,30,0"
+            HorizontalScrollBarVisibility="Hidden"
+            HorizontalScrollMode="Disabled"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Enabled">
 
-            <FlipViewItem x:Name="QueryLinksPivotItem">
-                <ScrollView
-                    Padding="30,0,30,0"
-                    HorizontalScrollBarVisibility="Hidden"
-                    HorizontalScrollMode="Disabled"
-                    VerticalScrollBarVisibility="Auto"
-                    VerticalScrollMode="Enabled">
-
-                    <sc:QueryLinksControl x:Name="QueryLinks" x:FieldModifier="public" />
-                </ScrollView>
-            </FlipViewItem>
-
-            <FlipViewItem x:Name="SearchStorePivotItem" VerticalContentAlignment="Top">
-                <ScrollView
-                    Padding="30,0,30,0"
-                    HorizontalScrollBarVisibility="Hidden"
-                    HorizontalScrollMode="Disabled"
-                    VerticalScrollBarVisibility="Auto"
-                    VerticalScrollMode="Enabled">
-
-                    <sc:SearchStoreControl x:Name="SearchStore" x:FieldModifier="public" />
-                </ScrollView>
-            </FlipViewItem>
-        </FlipView>
+            <Frame
+                x:Name="StoreFrame"
+                Margin="0,0,0,30"
+                Navigated="{x:Bind OnNavigated}"
+                NavigationFailed="{x:Bind OnNavigationFailed}" />
+        </ScrollView>
     </Grid>
 </Page>

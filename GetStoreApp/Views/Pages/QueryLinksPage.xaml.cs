@@ -8,11 +8,11 @@ using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
-using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,13 +27,13 @@ using Windows.System;
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
 
-namespace GetStoreApp.UI.Controls.Store
+namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// 查找链接控件
+    /// 查找链接页面
     /// </summary>
 
-    public sealed partial class QueryLinksControl : StackPanel, INotifyPropertyChanged
+    public sealed partial class QueryLinksPage : Page, INotifyPropertyChanged
     {
         private readonly string QueryLinksCountInfo = ResourceService.GetLocalized("Store/QueryLinksCountInfo");
         private readonly string SampleTitle = ResourceService.GetLocalized("Store/SampleTitle");
@@ -264,13 +264,41 @@ namespace GetStoreApp.UI.Controls.Store
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public QueryLinksControl()
+        public QueryLinksPage()
         {
             InitializeComponent();
 
             SelectedType = TypeList[0];
             SelectedChannel = ChannelList[3];
             LinkText = string.Empty;
+        }
+
+        /// <summary>
+        /// 点击回车键搜索应用
+        /// </summary>
+        protected override async void OnKeyDown(KeyRoutedEventArgs args)
+        {
+            base.OnKeyDown(args);
+
+            if (args.Key is VirtualKey.Enter)
+            {
+                await QueryLinksAsync();
+            }
+        }
+
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+
+            if (args.Parameter is List<string> dataList && dataList.Count is 3)
+            {
+                SelectedType = Convert.ToInt32(dataList[0]) is -1 ? TypeList[0] : TypeList[Convert.ToInt32(dataList[0])];
+                SelectedChannel = Convert.ToInt32(dataList[1]) is -1 ? ChannelList[3] : ChannelList[Convert.ToInt32(dataList[1])];
+                LinkText = dataList[2] is "PlaceHolderText" ? string.Empty : dataList[2];
+            }
         }
 
         #region 第一部分：XamlUICommand 命令调用时挂载的事件
@@ -405,7 +433,14 @@ namespace GetStoreApp.UI.Controls.Store
             {
                 Task.Run(async () =>
                 {
-                    await Launcher.LaunchUriAsync(new Uri(fileLink));
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new Uri(fileLink));
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
                 });
             }
         }
@@ -479,17 +514,6 @@ namespace GetStoreApp.UI.Controls.Store
         }
 
         /// <summary>
-        /// 点击回车键搜索应用
-        /// </summary>
-        private async void OnKeyDown(object sender, KeyRoutedEventArgs args)
-        {
-            if (args.Key is VirtualKey.Enter)
-            {
-                await QueryLinksAsync();
-            }
-        }
-
-        /// <summary>
         /// 类型修改选择后修改样例文本
         /// </summary>
         private void OnTypeSelectClicked(object sender, RoutedEventArgs args)
@@ -549,7 +573,14 @@ namespace GetStoreApp.UI.Controls.Store
         {
             Task.Run(async () =>
             {
-                await Launcher.LaunchUriAsync(new Uri(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri(string.Format("https://apps.microsoft.com/store/detail/{0}", AppInfo.ProductID)));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
             });
         }
 
