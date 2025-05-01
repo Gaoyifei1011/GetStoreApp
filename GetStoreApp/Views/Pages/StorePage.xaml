@@ -47,7 +47,7 @@
         <!--  标题  -->
         <TextBlock
             Grid.Row="0"
-            Margin="30,15,30,0"
+            Margin="30,10,30,0"
             FontSize="22"
             Text="{x:Bind root:ResourceService.GetLocalized('Store/Title')}" />
 
@@ -137,19 +137,11 @@
             Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 
         <!--  内容  -->
-        <ScrollView
-            Grid.Row="3"
-            Padding="30,0,30,0"
-            HorizontalScrollBarVisibility="Hidden"
-            HorizontalScrollMode="Disabled"
-            VerticalScrollBarVisibility="Auto"
-            VerticalScrollMode="Enabled">
 
-            <Frame
-                x:Name="StoreFrame"
-                Margin="0,0,0,30"
-                Navigated="{x:Bind OnNavigated}"
-                NavigationFailed="{x:Bind OnNavigationFailed}" />
-        </ScrollView>
+        <Frame
+            x:Name="StoreFrame"
+            Grid.Row="3"
+            Navigated="{x:Bind OnNavigated}"
+            NavigationFailed="{x:Bind OnNavigationFailed}" />
     </Grid>
 </Page>

@@ -148,6 +148,8 @@ namespace GetStoreApp.Views.Pages
             {
                 SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => item == GetCurrentPageType())];
             }
+
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
         }
 
         #endregion 第二部分：应用商店页面——挂载的事件
