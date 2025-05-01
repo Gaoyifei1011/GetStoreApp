@@ -7,6 +7,7 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,22 +26,6 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class SearchStorePage : Page, INotifyPropertyChanged
     {
         private readonly string SearchStoreCountInfo = ResourceService.GetLocalized("Store/SearchStoreCountInfo");
-
-        private bool _isNotSearchingStore = true;
-
-        public bool IsNotSeachingStore
-        {
-            get { return _isNotSearchingStore; }
-
-            set
-            {
-                if (!Equals(_isNotSearchingStore, value))
-                {
-                    _isNotSearchingStore = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsNotSeachingStore)));
-                }
-            }
-        }
 
         private string _searchText;
 
@@ -86,6 +71,22 @@ namespace GetStoreApp.Views.Pages
                 {
                     _stateInfoText = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StateInfoText)));
+                }
+            }
+        }
+
+        private bool _isSearchingStore = false;
+
+        public bool IsSeachingStore
+        {
+            get { return _isSearchingStore; }
+
+            set
+            {
+                if (!Equals(_isSearchingStore, value))
+                {
+                    _isSearchingStore = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSeachingStore)));
                 }
             }
         }
@@ -156,14 +157,46 @@ namespace GetStoreApp.Views.Pages
             };
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 点击回车键搜索应用
+        /// </summary>
+        protected override async void OnKeyDown(KeyRoutedEventArgs args)
+        {
+            base.OnKeyDown(args);
+
+            if (args.Key is VirtualKey.Enter)
+            {
+                await SearchStoreAsync();
+            }
+        }
+
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
+        protected override async void OnNavigatedTo(NavigationEventArgs args)
+        {
+            List<HistoryModel> searchStoreHistoryList = await Task.Run(HistoryStorageService.GetSearchStoreData);
+
+            HistoryCollection.Clear();
+            await Task.Delay(10);
+            foreach (HistoryModel historyItem in searchStoreHistoryList)
+            {
+                HistoryCollection.Add(historyItem);
+            }
+        }
+
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 填入到文本框
         /// </summary>
         private void OnFillinExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is string historyContent && !string.IsNullOrEmpty(historyContent) && MainWindow.Current.GetFrameContent() is StorePage)
+            if (args.Parameter is string historyContent && !string.IsNullOrEmpty(historyContent))
             {
                 SearchText = historyContent;
             }
@@ -191,24 +224,9 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：搜索应用控件——挂载的事件
-
-        /// <summary>
-        /// 搜索应用控件初始化完成后触发的事件
-        /// </summary>
-        private async void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            List<HistoryModel> searchStoreHistoryList = await Task.Run(HistoryStorageService.GetSearchStoreData);
-
-            HistoryCollection.Clear();
-            await Task.Delay(10);
-            foreach (HistoryModel historyItem in searchStoreHistoryList)
-            {
-                HistoryCollection.Add(historyItem);
-            }
-        }
+        #region 第三部分：搜索应用控件——挂载的事件
 
         /// <summary>
         /// 输入文本框内容发生改变时响应的事件
@@ -219,73 +237,81 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 点击回车键搜索应用
+        /// 搜索应用
         /// </summary>
-        private void OnKeyDown(object sender, KeyRoutedEventArgs args)
+        private async void OnSearchStoreClicked(object sender, RoutedEventArgs args)
         {
-            if (args.Key is VirtualKey.Enter)
-            {
-                SearchStore();
-            }
+            await SearchStoreAsync();
         }
+
+        #endregion 第三部分：搜索应用控件——挂载的事件
 
         /// <summary>
         /// 搜索应用
         /// </summary>
-        private void OnSearchStoreClicked(object sender, RoutedEventArgs args)
+        public async Task SearchStoreAsync()
         {
-            SearchStore();
-        }
-
-        #endregion 第二部分：搜索应用控件——挂载的事件
-
-        /// <summary>
-        /// 搜索应用
-        /// </summary>
-        public async void SearchStore()
-        {
-            SearchText = string.IsNullOrEmpty(SearchText) ? "Microsoft Corporation" : SearchText;
-            IsNotSeachingStore = false;
-            SetControlState(InfoBarSeverity.Informational);
-
-            (bool requestResult, List<SearchStoreModel> searchStoreList) = await Task.Run(async () =>
+            if (!IsSeachingStore)
             {
-                string searchText = SearchText;
-                string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
-                return await SearchStoreHelper.SerachStoreAppsAsync(generatedContent);
-            });
-
-            // 获取成功
-            if (requestResult)
-            {
-                // 搜索成功，有数据
-                if (searchStoreList.Count > 0)
+                IsSeachingStore = true;
+                SearchText = string.IsNullOrEmpty(SearchText) ? "Microsoft Corporation" : SearchText;
+                SetControlState(InfoBarSeverity.Informational);
+                foreach (HistoryModel historyItem in HistoryCollection)
                 {
-                    IsNotSeachingStore = true;
-                    SetControlState(InfoBarSeverity.Success);
-                    ResultControlVisable = true;
-                    UpdateHistory(SearchText);
+                    historyItem.IsQuerying = true;
+                }
 
-                    SearchStoreCollection.Clear();
-                    foreach (SearchStoreModel searchStoreItem in searchStoreList)
+                (bool requestResult, List<SearchStoreModel> searchStoreList) = await Task.Run(async () =>
+                {
+                    string searchText = SearchText;
+                    string generatedContent = SearchStoreHelper.GenerateSearchString(searchText);
+                    return await SearchStoreHelper.SerachStoreAppsAsync(generatedContent);
+                });
+
+                // 获取成功
+                if (requestResult)
+                {
+                    // 搜索成功，有数据
+                    if (searchStoreList.Count > 0)
                     {
-                        SearchStoreCollection.Add(searchStoreItem);
+                        IsSeachingStore = false;
+                        SetControlState(InfoBarSeverity.Success);
+                        ResultControlVisable = true;
+                        UpdateHistory(SearchText);
+                        foreach (HistoryModel historyItem in HistoryCollection)
+                        {
+                            historyItem.IsQuerying = false;
+                        }
+
+                        SearchStoreCollection.Clear();
+                        foreach (SearchStoreModel searchStoreItem in searchStoreList)
+                        {
+                            SearchStoreCollection.Add(searchStoreItem);
+                        }
+                    }
+                    // 搜索成功，没有数据
+                    else
+                    {
+                        IsSeachingStore = false;
+                        SetControlState(InfoBarSeverity.Warning);
+                        ResultControlVisable = false;
+                        foreach (HistoryModel historyItem in HistoryCollection)
+                        {
+                            historyItem.IsQuerying = false;
+                        }
                     }
                 }
-                // 搜索成功，没有数据
+                // 搜索失败
                 else
                 {
-                    IsNotSeachingStore = true;
-                    SetControlState(InfoBarSeverity.Warning);
+                    IsSeachingStore = false;
+                    SetControlState(InfoBarSeverity.Error);
                     ResultControlVisable = false;
+                    foreach (HistoryModel historyItem in HistoryCollection)
+                    {
+                        historyItem.IsQuerying = false;
+                    }
                 }
-            }
-            // 搜索失败
-            else
-            {
-                IsNotSeachingStore = true;
-                SetControlState(InfoBarSeverity.Error);
-                ResultControlVisable = false;
             }
         }
 
