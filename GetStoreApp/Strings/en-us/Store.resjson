@@ -27,6 +27,7 @@
   "LanguageAndRegion": "Language and region",
   "LanguageAndRegionToolTip": "Open Language and Region in settings",
   "LearnMore": "Learn more",
+  "NavigationFailed": "Page {0} navigation failed",
   "NonPackagedApp": "Classic app",
   "OpenLink": "Open link",
   "OpenLinkToolTip": "Use browser to open the link",

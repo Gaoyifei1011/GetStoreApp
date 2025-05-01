@@ -27,6 +27,7 @@
   "LanguageAndRegion": "שפה ואזור",
   "LanguageAndRegionToolTip": "פתח את 'שפה ואזור' בהגדרות",
   "LearnMore": "למד עוד",
+  "NavigationFailed": "Page {0} navigation failed",
   "NonPackagedApp": "אפליקציה קלאסית",
   "OpenLink": "פתח קישור",
   "OpenLinkToolTip": "השתמש בדפדפן כדי לפתוח את הקישור",

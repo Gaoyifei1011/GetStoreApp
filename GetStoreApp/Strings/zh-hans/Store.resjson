@@ -27,6 +27,7 @@
   "LanguageAndRegion": "语言和区域",
   "LanguageAndRegionToolTip": "打开设置中的语言和区域",
   "LearnMore": "了解更多",
+  "NavigationFailed": "页面{0}导航失败",
   "NonPackagedApp": "传统应用",
   "OpenLink": "打开链接",
   "OpenLinkToolTip": "使用浏览器打开链接",
