@@ -11,6 +11,7 @@
 > * [DirectN](https://github.com/smourier/DirectN)&emsp;
 > * [DODownloaderDotNet](https://github.com/shishirb-MSFT/DODownloaderDotNet)&emsp;
 > * [ExplorerExtensions.Sample](https://github.com/cnbluefire/ExplorerExtensions.Sample)&emsp;
+> * [Files](https://github.com/files-community/Files)&emsp;
 > * [Generating valid tokens to access Limited Access Features in Windows 10](https://www.withinrafael.com/2021/01/04/generating-valid-tokens-to-access-limited-access-features-in-windows-10)&emsp;
 > * [MS-Store-API](https://github.com/ThomasPe/MS-Store-API)&emsp;
 > * [MS-Store-Downloader](https://github.com/Caesar008/MS-Store-Downloader)&emsp;
