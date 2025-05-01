@@ -38,6 +38,7 @@
   "Launch": "Launch",
   "LoadingPackage": "אנא המתן בזמן טעינת רשימת היישומים המותקנים...",
   "More": "עוד",
+  "NavigationFailed": "Page {0} navigation failed",
   "No": "לא",
   "OpenApp": "פתח אפליקציה",
   "OpenCacheFolder": "פתח את תיקיית המטמון",

@@ -38,6 +38,7 @@
   "Launch": "إطلاق",
   "LoadingPackage": "يرجى الانتظار أثناء تحميل قائمة التطبيقات المثبتة...",
   "More": "المزيد",
+  "NavigationFailed": "Page {0} navigation failed",
   "No": "لا",
   "OpenApp": "فتح التطبيق",
   "OpenCacheFolder": "فتح مجلد التخزين المؤقت",

@@ -38,6 +38,7 @@
   "Launch": "Launch",
   "LoadingPackage": "Please wait while loading the list of installed applications...",
   "More": "More",
+  "NavigationFailed": "Page {0} navigation failed",
   "No": "No",
   "OpenApp": "Open app",
   "OpenCacheFolder": "Open cache folder",

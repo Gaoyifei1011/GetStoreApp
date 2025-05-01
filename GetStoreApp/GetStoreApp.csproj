@@ -266,6 +266,8 @@
     <None Remove="UI\TeachingTips\OperationResultTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="Views\Pages\AboutPage.xaml" />
+    <None Remove="Views\Pages\AppInformationPage.xaml" />
+    <None Remove="Views\Pages\AppListPage.xaml" />
     <None Remove="Views\Pages\AppManagerPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
@@ -301,6 +303,8 @@
     <Page Update="UI\TeachingTips\OperationResultTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\AppInformationPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\AppListPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppManagerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

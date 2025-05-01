@@ -38,6 +38,7 @@
   "Launch": "启动",
   "LoadingPackage": "正在加载已安装的应用列表，请稍候......",
   "More": "更多",
+  "NavigationFailed": "页面{0}导航失败",
   "No": "否",
   "OpenApp": "打开应用",
   "OpenCacheFolder": "打开缓存目录",
