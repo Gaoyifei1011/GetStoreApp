@@ -400,26 +400,6 @@
                         <Expander.Content>
                             <StackPanel Margin="0">
                                 <TextBlock
-                                    Margin="30,10,16,10"
-                                    FontSize="15"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/BeginnerGuide')}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStore')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/MicrosoftStoreDescription')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
                                     Margin="30,0,16,5"
                                     FontSize="14"
                                     FontWeight="Normal"
@@ -476,48 +456,6 @@
                                 </StackPanel>
 
                                 <MenuFlyoutSeparator />
-
-                                <TextBlock
-                                    Margin="30,10,16,10"
-                                    FontSize="15"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailed')}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedDescription')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep1')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep2')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep3')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/RequestFailedStep4')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
 
                                 <StackPanel
                                     Margin="30,0,16,5"
@@ -596,22 +534,6 @@
 
                         <Expander.Content>
                             <StackPanel Margin="0">
-
-                                <TextBlock
-                                    Margin="30,10,16,10"
-                                    FontSize="15"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/PaidApps')}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/PaidAppsDescription')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-
-                                <MenuFlyoutSeparator />
 
                                 <TextBlock
                                     Margin="30,10,16,10"

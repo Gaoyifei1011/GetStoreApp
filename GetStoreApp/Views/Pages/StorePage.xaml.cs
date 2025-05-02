@@ -1,6 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Windows;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -77,6 +75,17 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：应用商店页面——挂载的事件
 
         /// <summary>
+        /// 关闭使用说明浮出栏
+        /// </summary>
+        private void OnCloseClicked(object sender, RoutedEventArgs args)
+        {
+            if (StoreSplitView.IsPaneOpen)
+            {
+                StoreSplitView.IsPaneOpen = false;
+            }
+        }
+
+        /// <summary>
         /// 打开设置中的语言和区域
         /// </summary>
         private void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
@@ -99,7 +108,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
-            MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.Instructions);
+            if (!StoreSplitView.IsPaneOpen)
+            {
+                StoreSplitView.IsPaneOpen = true;
+            }
         }
 
         /// <summary>
@@ -184,6 +196,10 @@ namespace GetStoreApp.Views.Pages
         {
             return StoreFrame.CurrentSourcePageType;
         }
+
+        /// <summary>
+        /// 初始化查询链接内容
+        /// </summary>
 
         public void InitializeQueryLinksContent(List<string> dataList)
         {
