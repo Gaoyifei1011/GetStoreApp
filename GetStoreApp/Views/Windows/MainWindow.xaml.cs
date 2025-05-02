@@ -656,7 +656,7 @@ namespace GetStoreApp.Views.Windows
                 // 带有命令参数启动重定向获得的内容
                 else if (dataContentList.Count is 4 && dataContentList[0] is "Console")
                 {
-                    if (GetCurrentPageType() == typeof(StorePage))
+                    if (Equals(GetCurrentPageType(), typeof(StorePage)))
                     {
                         (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList[1..4]);
                     }
@@ -700,7 +700,7 @@ namespace GetStoreApp.Views.Windows
             {
                 if (dataContentList.Count is 3)
                 {
-                    if (GetCurrentPageType() == typeof(StorePage))
+                    if (Equals(GetCurrentPageType(), typeof(StorePage)))
                     {
                         (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataContentList);
                     }
@@ -766,7 +766,7 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is not null)
             {
-                NavigationModel navigationItem = NavigationItemList.Find(item => item.NavigationTag == PageList[PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag))].Key);
+                NavigationModel navigationItem = NavigationItemList.Find(item => Equals(item.NavigationTag, PageList[PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag))].Key));
 
                 if (SelectedItem != navigationItem.NavigationItem)
                 {
@@ -788,7 +788,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            SelectedItem = NavigationItemList.Find(item => item.NavigationPage == GetCurrentPageType()).NavigationItem;
+            SelectedItem = NavigationItemList.Find(item => Equals(item.NavigationPage, GetCurrentPageType())).NavigationItem;
             IsBackEnabled = CanGoBack();
         }
 
@@ -878,7 +878,7 @@ namespace GetStoreApp.Views.Windows
                     {
                         if (dataList.Count is 4)
                         {
-                            if (GetCurrentPageType() == typeof(StorePage))
+                            if (Equals(GetCurrentPageType(), typeof(StorePage)))
                             {
                                 (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataList[1..4]);
                             }
@@ -897,7 +897,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (dataList.Count is 3)
                     {
-                        if (GetCurrentPageType() == typeof(StorePage))
+                        if (Equals(GetCurrentPageType(), typeof(StorePage)))
                         {
                             (GetFrameContent() as StorePage).InitializeQueryLinksContent(dataList);
                         }
@@ -1238,7 +1238,7 @@ namespace GetStoreApp.Views.Windows
         {
             foreach (NavigationModel navigationItem in NavigationItemList)
             {
-                if (navigationItem.NavigationPage == navigationPageType)
+                if (Equals(navigationItem.NavigationPage, navigationPageType))
                 {
                     WindowFrame.Navigate(navigationItem.NavigationPage, parameter);
                     break;

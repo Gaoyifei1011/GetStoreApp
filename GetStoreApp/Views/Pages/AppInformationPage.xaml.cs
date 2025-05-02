@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Classes;
+ï»¿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.AppManager;
@@ -23,13 +23,13 @@ using Windows.System;
 using Windows.UI.Shell;
 using Windows.UI.StartScreen;
 
-// ÒÖÖÆ CA1822£¬IDE0060 ¾¯¸æ
+// æŠ‘åˆ¶ CA1822ï¼ŒIDE0060 è­¦å‘Š
 #pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// Ó¦ÓÃ¹ÜÀíĞÅÏ¢Ò³
+    /// åº”ç”¨ç®¡ç†ä¿¡æ¯é¡µ
     /// </summary>
     public sealed partial class AppInformationPage : Page, INotifyPropertyChanged
     {
@@ -332,10 +332,10 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region µÚÒ»²¿·Ö£ºÖØĞ´¸¸ÀàÊÂ¼ş
+        #region ç¬¬ä¸€éƒ¨åˆ†ï¼šé‡å†™çˆ¶ç±»äº‹ä»¶
 
         /// <summary>
-        /// µ¼º½µ½¸ÃÒ³Ãæ´¥·¢µÄÊÂ¼ş
+        /// å¯¼èˆªåˆ°è¯¥é¡µé¢è§¦å‘çš„äº‹ä»¶
         /// </summary>
         protected override void OnNavigatedTo(NavigationEventArgs args)
         {
@@ -376,12 +376,12 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion µÚÒ»²¿·Ö£ºÖØĞ´¸¸ÀàÊÂ¼ş
+        #endregion ç¬¬ä¸€éƒ¨åˆ†ï¼šé‡å†™çˆ¶ç±»äº‹ä»¶
 
-        #region µÚÒ»²¿·Ö£ºXamlUICommand ÃüÁîµ÷ÓÃÊ±¹ÒÔØµÄÊÂ¼ş
+        #region ç¬¬ä¸€éƒ¨åˆ†ï¼šXamlUICommand å‘½ä»¤è°ƒç”¨æ—¶æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// ¸´ÖÆÓ¦ÓÃÈë¿ÚµÄÓ¦ÓÃ³ÌĞòÓÃ»§Ä£ĞÍ ID
+        /// å¤åˆ¶åº”ç”¨å…¥å£çš„åº”ç”¨ç¨‹åºç”¨æˆ·æ¨¡å‹ ID
         /// </summary>
         private async void OnCopyAUMIDExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -393,7 +393,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸´ÖÆÒÀÀµ°üĞÅÏ¢
+        /// å¤åˆ¶ä¾èµ–åŒ…ä¿¡æ¯
         /// </summary>
         private async void OnCopyDependencyInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -421,7 +421,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸´ÖÆÒÀÀµ°üÃû³Æ
+        /// å¤åˆ¶ä¾èµ–åŒ…åç§°
         /// </summary>
         private async void OnCopyDependencyNameExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -433,7 +433,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// Æô¶¯¶ÔÓ¦Èë¿ÚµÄÓ¦ÓÃ
+        /// å¯åŠ¨å¯¹åº”å…¥å£çš„åº”ç”¨
         /// </summary>
         private void OnLaunchExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -454,7 +454,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ª°²×°Ä¿Â¼
+        /// æ‰“å¼€å®‰è£…ç›®å½•
         /// </summary>
         private void OnOpenFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -475,7 +475,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ªÉÌµê
+        /// æ‰“å¼€å•†åº—
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -496,7 +496,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¹Ì¶¨Ó¦ÓÃµ½×ÀÃæ
+        /// å›ºå®šåº”ç”¨åˆ°æ¡Œé¢
         /// </summary>
         private async void OnPinToDesktopExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -522,7 +522,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¹Ì¶¨Ó¦ÓÃÈë¿Úµ½¿ªÊ¼¡°ÆÁÄ»¡±
+        /// å›ºå®šåº”ç”¨å…¥å£åˆ°å¼€å§‹â€œå±å¹•â€
         /// </summary>
         private async void OnPinToStartScreenExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -549,7 +549,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¹Ì¶¨Ó¦ÓÃÈë¿Úµ½ÈÎÎñÀ¸
+        /// å›ºå®šåº”ç”¨å…¥å£åˆ°ä»»åŠ¡æ 
         /// </summary>
         private void OnPinToTaskbarExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -575,7 +575,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸ü¶à°´Å¥µã»÷Ê±ÏÔÊ¾²Ëµ¥
+        /// æ›´å¤šæŒ‰é’®ç‚¹å‡»æ—¶æ˜¾ç¤ºèœå•
         /// </summary>
         private void OnShowMoreExecuteRequested(object sender, ExecuteRequestedEventArgs args)
         {
@@ -585,12 +585,12 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion µÚÒ»²¿·Ö£ºXamlUICommand ÃüÁîµ÷ÓÃÊ±¹ÒÔØµÄÊÂ¼ş
+        #endregion ç¬¬ä¸€éƒ¨åˆ†ï¼šXamlUICommand å‘½ä»¤è°ƒç”¨æ—¶æŒ‚è½½çš„äº‹ä»¶
 
-        #region µÚ¶ş²¿·Ö£ºÓ¦ÓÃĞÅÏ¢Ò³Ãæ¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #region ç¬¬äºŒéƒ¨åˆ†ï¼šåº”ç”¨ä¿¡æ¯é¡µé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// ¸´ÖÆÓ¦ÓÃĞÅÏ¢
+        /// å¤åˆ¶åº”ç”¨ä¿¡æ¯
         /// </summary>
         private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
@@ -621,6 +621,6 @@ namespace GetStoreApp.Views.Pages
             await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.PackageInformation, copyResult));
         }
 
-        #endregion µÚ¶ş²¿·Ö£ºÓ¦ÓÃĞÅÏ¢Ò³Ãæ¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #endregion ç¬¬äºŒéƒ¨åˆ†ï¼šåº”ç”¨ä¿¡æ¯é¡µé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
     }
 }

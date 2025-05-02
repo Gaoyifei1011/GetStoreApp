@@ -191,10 +191,6 @@
                             SelectionMode="None"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
 
-                            <ItemsView.Layout>
-                                <StackLayout />
-                            </ItemsView.Layout>
-
                             <ItemsView.ItemTemplate>
                                 <DataTemplate x:DataType="store:HistoryModel">
                                     <ItemContainer CornerRadius="0">

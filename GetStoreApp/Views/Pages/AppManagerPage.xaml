@@ -1,4 +1,4 @@
-<Page
+ï»¿<Page
     x:Class="GetStoreApp.Views.Pages.AppManagerPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -64,7 +64,7 @@
             </BreadcrumbBar.ItemTemplate>
         </BreadcrumbBar>
 
-        <!--  ÄÚÈÝ  -->
+        <!--  å†…å®¹  -->
         <Frame
             x:Name="AppManagerFrame"
             Grid.Row="3"

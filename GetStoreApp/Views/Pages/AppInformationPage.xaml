@@ -478,10 +478,6 @@
                             ItemsSource="{x:Bind AppListEntryCollection, Mode=OneWay}"
                             SelectionMode="None">
 
-                            <ItemsView.Layout>
-                                <StackLayout />
-                            </ItemsView.Layout>
-
                             <ItemsView.ItemTemplate>
                                 <DataTemplate x:DataType="appManager:AppListEntryModel">
                                     <ItemContainer CornerRadius="0">
@@ -797,10 +793,6 @@
                             CornerRadius="0"
                             ItemsSource="{x:Bind DependenciesCollection, Mode=OneWay}"
                             SelectionMode="None">
-
-                            <ItemsView.Layout>
-                                <StackLayout />
-                            </ItemsView.Layout>
 
                             <ItemsView.ItemTemplate>
                                 <DataTemplate x:DataType="appManager:PackageModel">

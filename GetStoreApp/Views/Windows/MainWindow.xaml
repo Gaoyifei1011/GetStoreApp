@@ -130,6 +130,7 @@
                 Height="48"
                 Margin="35,0,0,0"
                 VerticalAlignment="Top">
+
                 <TitleBar.IconSource>
                     <ImageIconSource ImageSource="ms-appx:///Assets/MainApp/Square44x44Logo.altform-unplated_targetsize-256.png" />
                 </TitleBar.IconSource>

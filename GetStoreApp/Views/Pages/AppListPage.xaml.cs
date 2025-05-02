@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Classes;
+ï»¿using GetStoreApp.Extensions.DataType.Classes;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.AppManager;
 using GetStoreApp.Services.Root;
@@ -24,13 +24,13 @@ using Windows.Management.Deployment;
 using Windows.Storage;
 using Windows.System;
 
-// ÒÖÖÆ CA1822£¬IDE0060 ¾¯¸æ
+// æŠ‘åˆ¶ CA1822ï¼ŒIDE0060 è­¦å‘Š
 #pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// Ó¦ÓÃ¹ÜÀíÁĞ±íÒ³
+    /// åº”ç”¨ç®¡ç†åˆ—è¡¨é¡µ
     /// </summary>
     public sealed partial class AppListPage : Page, INotifyPropertyChanged
     {
@@ -42,7 +42,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string PackageCountInfo = ResourceService.GetLocalized("AppManager/PackageCountInfo");
         private bool isInitialized;
         private bool needToRefreshData;
-        private readonly PackageManager packageManager = new();
+        private PackageManager packageManager;
 
         private string _searchText = string.Empty;
 
@@ -231,10 +231,10 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region µÚÒ»²¿·Ö£ºÖØĞ´¸¸ÀàÊÂ¼ş
+        #region ç¬¬ä¸€éƒ¨åˆ†ï¼šé‡å†™çˆ¶ç±»äº‹ä»¶
 
         /// <summary>
-        /// µ¼º½µ½¸ÃÒ³Ãæ´¥·¢µÄÊÂ¼ş
+        /// å¯¼èˆªåˆ°è¯¥é¡µé¢è§¦å‘çš„äº‹ä»¶
         /// </summary>
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
@@ -244,6 +244,7 @@ namespace GetStoreApp.Views.Pages
             {
                 isInitialized = true;
 
+                packageManager = new();
                 AppManagerResultKind = AppManagerResultKind.Loading;
                 AppManagerList.Clear();
                 AppManagerCollection.Clear();
@@ -297,12 +298,12 @@ namespace GetStoreApp.Views.Pages
                         {
                             List<PackageModel> conditionWithFrameworkList = [];
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬¿ò¼Ü°üµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«æ¡†æ¶åŒ…çš„æ•°æ®
                             if (IsAppFramework)
                             {
                                 foreach (PackageModel packageItem in AppManagerList)
                                 {
-                                    if (packageItem.IsFramework.Equals(IsAppFramework))
+                                    if (Equals(packageItem.IsFramework, IsAppFramework))
                                     {
                                         conditionWithFrameworkList.Add(packageItem);
                                     }
@@ -313,27 +314,27 @@ namespace GetStoreApp.Views.Pages
                                 conditionWithFrameworkList.AddRange(AppManagerList);
                             }
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             List<PackageModel> conditionWithSignatureKindList = [];
                             foreach (PackageModel packageItem in conditionWithFrameworkList)
                             {
-                                if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                                if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
@@ -341,7 +342,7 @@ namespace GetStoreApp.Views.Pages
 
                             List<PackageModel> searchedList = [];
 
-                            // ¸ù¾İËÑË÷ÄÚÈİÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®æœç´¢å†…å®¹ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             if (string.IsNullOrEmpty(SearchText))
                             {
                                 searchedList.AddRange(conditionWithSignatureKindList);
@@ -357,7 +358,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            // ¶Ô¹ıÂËºóµÄÁĞ±íÊı¾İ½øĞĞÅÅĞò
+                            // å¯¹è¿‡æ»¤åçš„åˆ—è¡¨æ•°æ®è¿›è¡Œæ’åº
                             switch (SelectedAppSortRuleKind)
                             {
                                 case AppSortRuleKind.DisplayName:
@@ -419,12 +420,12 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion µÚÒ»²¿·Ö£ºÖØĞ´¸¸ÀàÊÂ¼ş
+        #endregion ç¬¬ä¸€éƒ¨åˆ†ï¼šé‡å†™çˆ¶ç±»äº‹ä»¶
 
-        #region µÚÒ»²¿·Ö£ºXamlUICommand ÃüÁîµ÷ÓÃÊ±¹ÒÔØµÄÊÂ¼ş
+        #region ç¬¬ä¸€éƒ¨åˆ†ï¼šXamlUICommand å‘½ä»¤è°ƒç”¨æ—¶æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// ´ò¿ªÓ¦ÓÃ
+        /// æ‰“å¼€åº”ç”¨
         /// </summary>
         private void OnOpenAppExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -445,7 +446,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ªÓ¦ÓÃ»º´æÄ¿Â¼
+        /// æ‰“å¼€åº”ç”¨ç¼“å­˜ç›®å½•
         /// </summary>
         private void OnOpenCacheFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -469,7 +470,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ªÓ¦ÓÃ°²×°Ä¿Â¼
+        /// æ‰“å¼€åº”ç”¨å®‰è£…ç›®å½•
         /// </summary>
         private void OnOpenInstalledFolderExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -490,7 +491,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ªÓ¦ÓÃÇåµ¥ÎÄ¼ş
+        /// æ‰“å¼€åº”ç”¨æ¸…å•æ–‡ä»¶
         /// </summary>
         private void OnOpenManifestExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -514,7 +515,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ªÉÌµê
+        /// æ‰“å¼€å•†åº—
         /// </summary>
         private void OnOpenStoreExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -535,7 +536,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// Ğ¶ÔØÓ¦ÓÃ
+        /// å¸è½½åº”ç”¨
         /// </summary>
         private async void OnUninstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -543,7 +544,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (PackageModel packageItem in AppManagerList)
                 {
-                    if (packageItem.Package.Id.FullName.Equals(package.Id.FullName))
+                    if (Equals(packageItem.Package.Id.FullName, package.Id.FullName))
                     {
                         packageItem.IsUninstalling = true;
                         break;
@@ -557,18 +558,21 @@ namespace GetStoreApp.Views.Pages
                         return await packageManager.RemovePackageAsync(package.Id.FullName, RemovalOptions.None);
                     });
 
-                    // Ğ¶ÔØ³É¹¦
+                    // å¸è½½æˆåŠŸ
                     if (deploymentResult.ExtendedErrorCode is null)
                     {
                         foreach (PackageModel pacakgeItem in AppManagerList)
                         {
-                            if (pacakgeItem.Package.Id.FullName.Equals(package.Id.FullName))
+                            if (Equals(pacakgeItem.Package.Id.FullName, package.Id.FullName))
                             {
-                                // ÏÔÊ¾ UWP Ó¦ÓÃĞ¶ÔØ³É¹¦Í¨Öª
-                                AppNotificationBuilder appNotificationBuilder = new();
-                                appNotificationBuilder.AddArgument("action", "OpenApp");
-                                appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallSuccessfully"), pacakgeItem.Package.DisplayName));
-                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                // æ˜¾ç¤º UWP åº”ç”¨å¸è½½æˆåŠŸé€šçŸ¥
+                                await Task.Run(() =>
+                                {
+                                    AppNotificationBuilder appNotificationBuilder = new();
+                                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallSuccessfully"), pacakgeItem.Package.DisplayName));
+                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                });
 
                                 AppManagerList.Remove(pacakgeItem);
                                 AppManagerCollection.Remove(pacakgeItem);
@@ -577,30 +581,34 @@ namespace GetStoreApp.Views.Pages
                         }
                     }
 
-                    // Ğ¶ÔØÊ§°Ü
+                    // å¸è½½å¤±è´¥
                     else
                     {
                         foreach (PackageModel pacakgeItem in AppManagerList)
                         {
-                            if (pacakgeItem.Package.Id.FullName.Equals(package.Id.FullName))
+                            if (Equals(pacakgeItem.Package.Id.FullName, package.Id.FullName))
                             {
-                                // ÏÔÊ¾ UWP Ó¦ÓÃĞ¶ÔØÊ§°ÜÍ¨Öª
-                                AppNotificationBuilder appNotificationBuilder = new();
-                                appNotificationBuilder.AddArgument("action", "OpenApp");
-                                appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed1"), pacakgeItem.Package.DisplayName));
-                                appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUninstallFailed2"));
-
-                                appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                                // æ˜¾ç¤º UWP åº”ç”¨å¸è½½å¤±è´¥é€šçŸ¥
+                                await Task.Run(() =>
                                 {
-                                ResourceService.GetLocalized("Notification/UWPUninstallFailed3"),
-                                string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed4"), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode.HResult : Unknown),
-                                string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed5"), deploymentResult.ErrorText)
-                                }));
-                                AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
-                                openSettingsButton.Arguments.Add("action", "OpenSettings");
-                                appNotificationBuilder.AddButton(openSettingsButton);
-                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", pacakgeItem.Package.DisplayName), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new Exception());
+                                    AppNotificationBuilder appNotificationBuilder = new();
+                                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed1"), pacakgeItem.Package.DisplayName));
+                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUninstallFailed2"));
+
+                                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                                    {
+                                    ResourceService.GetLocalized("Notification/UWPUninstallFailed3"),
+                                    string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed4"), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode.HResult : Unknown),
+                                    string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed5"), deploymentResult.ErrorText)
+                                    }));
+                                    AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                                    openSettingsButton.Arguments.Add("action", "OpenSettings");
+                                    appNotificationBuilder.AddButton(openSettingsButton);
+                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", pacakgeItem.Package.DisplayName), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new Exception());
+                                });
+
                                 pacakgeItem.IsUninstalling = false;
                                 break;
                             }
@@ -615,7 +623,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ²é¿´Ó¦ÓÃĞÅÏ¢
+        /// æŸ¥çœ‹åº”ç”¨ä¿¡æ¯
         /// </summary>
         private async void OnViewInformationExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -816,12 +824,12 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion µÚÒ»²¿·Ö£ºXamlUICommand ÃüÁîµ÷ÓÃÊ±¹ÒÔØµÄÊÂ¼ş
+        #endregion ç¬¬ä¸€éƒ¨åˆ†ï¼šXamlUICommand å‘½ä»¤è°ƒç”¨æ—¶æŒ‚è½½çš„äº‹ä»¶
 
-        #region µÚ¶ş²¿·Ö£ºÓ¦ÓÃ¹ÜÀíÒ³Ãæ¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #region ç¬¬äºŒéƒ¨åˆ†ï¼šåº”ç”¨ç®¡ç†é¡µé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// ´ò¿ªÉèÖÃÖĞµÄ°²×°µÄÓ¦ÓÃ
+        /// æ‰“å¼€è®¾ç½®ä¸­çš„å®‰è£…çš„åº”ç”¨
         /// </summary>
         private async void OnInstalledAppsClicked(object sender, RoutedEventArgs args)
         {
@@ -829,7 +837,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸ù¾İÊäÈëµÄÄÚÈİ¼ìË÷Ó¦ÓÃ
+        /// æ ¹æ®è¾“å…¥çš„å†…å®¹æ£€ç´¢åº”ç”¨
         /// </summary>
         private async void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -846,12 +854,12 @@ namespace GetStoreApp.Views.Pages
                     {
                         List<PackageModel> conditionWithFrameworkList = [];
 
-                        // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬¿ò¼Ü°üµÄÊı¾İ
+                        // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«æ¡†æ¶åŒ…çš„æ•°æ®
                         if (IsAppFramework)
                         {
                             foreach (PackageModel packageItem in AppManagerList)
                             {
-                                if (packageItem.IsFramework.Equals(IsAppFramework))
+                                if (Equals(packageItem.IsFramework, IsAppFramework))
                                 {
                                     conditionWithFrameworkList.Add(packageItem);
                                 }
@@ -862,27 +870,27 @@ namespace GetStoreApp.Views.Pages
                             conditionWithFrameworkList.AddRange(AppManagerList);
                         }
 
-                        // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                        // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                         List<PackageModel> conditionWithSignatureKindList = [];
                         foreach (PackageModel packageItem in conditionWithFrameworkList)
                         {
-                            if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                            if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
@@ -890,7 +898,7 @@ namespace GetStoreApp.Views.Pages
 
                         List<PackageModel> searchedList = [];
 
-                        // ¸ù¾İËÑË÷ÄÚÈİÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                        // æ ¹æ®æœç´¢å†…å®¹ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                         if (string.IsNullOrEmpty(SearchText))
                         {
                             searchedList.AddRange(conditionWithSignatureKindList);
@@ -906,7 +914,7 @@ namespace GetStoreApp.Views.Pages
                             }
                         }
 
-                        // ¶Ô¹ıÂËºóµÄÁĞ±íÊı¾İ½øĞĞÅÅĞò
+                        // å¯¹è¿‡æ»¤åçš„åˆ—è¡¨æ•°æ®è¿›è¡Œæ’åº
                         switch (SelectedAppSortRuleKind)
                         {
                             case AppSortRuleKind.DisplayName:
@@ -968,7 +976,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ÎÄ±¾ÊäÈë¿òÄÚÈİÎª¿ÕÊ±£¬¸´Ô­Ô­À´µÄÄÚÈİ
+        /// æ–‡æœ¬è¾“å…¥æ¡†å†…å®¹ä¸ºç©ºæ—¶ï¼Œå¤åŸåŸæ¥çš„å†…å®¹
         /// </summary>
         private async void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -988,12 +996,12 @@ namespace GetStoreApp.Views.Pages
                         {
                             List<PackageModel> conditionWithFrameworkList = [];
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬¿ò¼Ü°üµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«æ¡†æ¶åŒ…çš„æ•°æ®
                             if (IsAppFramework)
                             {
                                 foreach (PackageModel packageItem in AppManagerList)
                                 {
-                                    if (packageItem.IsFramework.Equals(IsAppFramework))
+                                    if (Equals(packageItem.IsFramework, IsAppFramework))
                                     {
                                         conditionWithFrameworkList.Add(packageItem);
                                     }
@@ -1004,27 +1012,27 @@ namespace GetStoreApp.Views.Pages
                                 conditionWithFrameworkList.AddRange(AppManagerList);
                             }
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             List<PackageModel> conditionWithSignatureKindList = [];
                             foreach (PackageModel packageItem in conditionWithFrameworkList)
                             {
-                                if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                                if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
@@ -1032,7 +1040,7 @@ namespace GetStoreApp.Views.Pages
 
                             List<PackageModel> searchedList = [];
 
-                            // ¸ù¾İËÑË÷ÄÚÈİÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®æœç´¢å†…å®¹ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             if (string.IsNullOrEmpty(SearchText))
                             {
                                 searchedList.AddRange(conditionWithSignatureKindList);
@@ -1048,7 +1056,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            // ¶Ô¹ıÂËºóµÄÁĞ±íÊı¾İ½øĞĞÅÅĞò
+                            // å¯¹è¿‡æ»¤åçš„åˆ—è¡¨æ•°æ®è¿›è¡Œæ’åº
                             switch (SelectedAppSortRuleKind)
                             {
                                 case AppSortRuleKind.DisplayName:
@@ -1111,7 +1119,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸ù¾İÅÅĞò·½Ê½¶ÔÁĞ±í½øĞĞÅÅĞò
+        /// æ ¹æ®æ’åºæ–¹å¼å¯¹åˆ—è¡¨è¿›è¡Œæ’åº
         /// </summary>
         private async void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
@@ -1132,12 +1140,12 @@ namespace GetStoreApp.Views.Pages
                         {
                             List<PackageModel> conditionWithFrameworkList = [];
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬¿ò¼Ü°üµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«æ¡†æ¶åŒ…çš„æ•°æ®
                             if (IsAppFramework)
                             {
                                 foreach (PackageModel packageItem in AppManagerList)
                                 {
-                                    if (packageItem.IsFramework.Equals(IsAppFramework))
+                                    if (Equals(packageItem.IsFramework, IsAppFramework))
                                     {
                                         conditionWithFrameworkList.Add(packageItem);
                                     }
@@ -1148,27 +1156,27 @@ namespace GetStoreApp.Views.Pages
                                 conditionWithFrameworkList.AddRange(AppManagerList);
                             }
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             List<PackageModel> conditionWithSignatureKindList = [];
                             foreach (PackageModel packageItem in conditionWithFrameworkList)
                             {
-                                if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                                if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
@@ -1176,7 +1184,7 @@ namespace GetStoreApp.Views.Pages
 
                             List<PackageModel> searchedList = [];
 
-                            // ¸ù¾İËÑË÷ÄÚÈİÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®æœç´¢å†…å®¹ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             if (string.IsNullOrEmpty(SearchText))
                             {
                                 searchedList.AddRange(conditionWithSignatureKindList);
@@ -1192,7 +1200,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            // ¶Ô¹ıÂËºóµÄÁĞ±íÊı¾İ½øĞĞÅÅĞò
+                            // å¯¹è¿‡æ»¤åçš„åˆ—è¡¨æ•°æ®è¿›è¡Œæ’åº
                             switch (SelectedAppSortRuleKind)
                             {
                                 case AppSortRuleKind.DisplayName:
@@ -1255,7 +1263,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸ù¾İÅÅĞò¹æÔò¶ÔÁĞ±í½øĞĞÅÅĞò
+        /// æ ¹æ®æ’åºè§„åˆ™å¯¹åˆ—è¡¨è¿›è¡Œæ’åº
         /// </summary>
         private async void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
@@ -1276,12 +1284,12 @@ namespace GetStoreApp.Views.Pages
                         {
                             List<PackageModel> conditionWithFrameworkList = [];
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬¿ò¼Ü°üµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«æ¡†æ¶åŒ…çš„æ•°æ®
                             if (IsAppFramework)
                             {
                                 foreach (PackageModel packageItem in AppManagerList)
                                 {
-                                    if (packageItem.IsFramework.Equals(IsAppFramework))
+                                    if (Equals(packageItem.IsFramework, IsAppFramework))
                                     {
                                         conditionWithFrameworkList.Add(packageItem);
                                     }
@@ -1292,27 +1300,27 @@ namespace GetStoreApp.Views.Pages
                                 conditionWithFrameworkList.AddRange(AppManagerList);
                             }
 
-                            // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             List<PackageModel> conditionWithSignatureKindList = [];
                             foreach (PackageModel packageItem in conditionWithFrameworkList)
                             {
-                                if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                                if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
-                                else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                                else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
                                 {
                                     conditionWithSignatureKindList.Add(packageItem);
                                 }
@@ -1320,7 +1328,7 @@ namespace GetStoreApp.Views.Pages
 
                             List<PackageModel> searchedList = [];
 
-                            // ¸ù¾İËÑË÷ÄÚÈİÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                            // æ ¹æ®æœç´¢å†…å®¹ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                             if (string.IsNullOrEmpty(SearchText))
                             {
                                 searchedList.AddRange(conditionWithSignatureKindList);
@@ -1336,7 +1344,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                             }
 
-                            // ¶Ô¹ıÂËºóµÄÁĞ±íÊı¾İ½øĞĞÅÅĞò
+                            // å¯¹è¿‡æ»¤åçš„åˆ—è¡¨æ•°æ®è¿›è¡Œæ’åº
                             switch (SelectedAppSortRuleKind)
                             {
                                 case AppSortRuleKind.DisplayName:
@@ -1399,7 +1407,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸ù¾İ¹ıÂË·½Ê½¶ÔÁĞ±í½øĞĞ¹ıÂË
+        /// æ ¹æ®è¿‡æ»¤æ–¹å¼å¯¹åˆ—è¡¨è¿›è¡Œè¿‡æ»¤
         /// </summary>
         private void OnFilterWayClicked(object sender, RoutedEventArgs args)
         {
@@ -1408,7 +1416,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸ù¾İÇ©Ãû¹æÔò½øĞĞ¹ıÂË
+        /// æ ¹æ®ç­¾åè§„åˆ™è¿›è¡Œè¿‡æ»¤
         /// </summary>
         private void OnSignatureRuleClicked(object sender, RoutedEventArgs args)
         {
@@ -1442,7 +1450,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// Ë¢ĞÂÊı¾İ
+        /// åˆ·æ–°æ•°æ®
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
@@ -1499,12 +1507,12 @@ namespace GetStoreApp.Views.Pages
                     {
                         List<PackageModel> conditionWithFrameworkList = [];
 
-                        // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬¿ò¼Ü°üµÄÊı¾İ
+                        // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«æ¡†æ¶åŒ…çš„æ•°æ®
                         if (IsAppFramework)
                         {
                             foreach (PackageModel packageItem in AppManagerList)
                             {
-                                if (packageItem.IsFramework.Equals(IsAppFramework))
+                                if (Equals(packageItem.IsFramework, IsAppFramework))
                                 {
                                     conditionWithFrameworkList.Add(packageItem);
                                 }
@@ -1515,27 +1523,27 @@ namespace GetStoreApp.Views.Pages
                             conditionWithFrameworkList.AddRange(AppManagerList);
                         }
 
-                        // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                        // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                         List<PackageModel> conditionWithSignatureKindList = [];
                         foreach (PackageModel packageItem in conditionWithFrameworkList)
                         {
-                            if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                            if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
@@ -1543,7 +1551,7 @@ namespace GetStoreApp.Views.Pages
 
                         List<PackageModel> searchedList = [];
 
-                        // ¸ù¾İËÑË÷ÄÚÈİÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                        // æ ¹æ®æœç´¢å†…å®¹ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                         if (string.IsNullOrEmpty(SearchText))
                         {
                             searchedList.AddRange(conditionWithSignatureKindList);
@@ -1559,7 +1567,7 @@ namespace GetStoreApp.Views.Pages
                             }
                         }
 
-                        // ¶Ô¹ıÂËºóµÄÁĞ±íÊı¾İ½øĞĞÅÅĞò
+                        // å¯¹è¿‡æ»¤åçš„åˆ—è¡¨æ•°æ®è¿›è¡Œæ’åº
                         switch (SelectedAppSortRuleKind)
                         {
                             case AppSortRuleKind.DisplayName:
@@ -1621,7 +1629,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸¡³ö²Ëµ¥¹Ø±Õºó¸üĞÂÊı¾İ
+        /// æµ®å‡ºèœå•å…³é—­åæ›´æ–°æ•°æ®
         /// </summary>
         private async void OnClosed(object sender, object args)
         {
@@ -1638,12 +1646,12 @@ namespace GetStoreApp.Views.Pages
                     {
                         List<PackageModel> conditionWithFrameworkList = [];
 
-                        // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬¿ò¼Ü°üµÄÊı¾İ
+                        // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«æ¡†æ¶åŒ…çš„æ•°æ®
                         if (IsAppFramework)
                         {
                             foreach (PackageModel packageItem in AppManagerList)
                             {
-                                if (packageItem.IsFramework.Equals(IsAppFramework))
+                                if (Equals(packageItem.IsFramework, IsAppFramework))
                                 {
                                     conditionWithFrameworkList.Add(packageItem);
                                 }
@@ -1654,27 +1662,27 @@ namespace GetStoreApp.Views.Pages
                             conditionWithFrameworkList.AddRange(AppManagerList);
                         }
 
-                        // ¸ù¾İÑ¡ÏîÊÇ·ñÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                        // æ ¹æ®é€‰é¡¹æ˜¯å¦ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                         List<PackageModel> conditionWithSignatureKindList = [];
                         foreach (PackageModel packageItem in conditionWithFrameworkList)
                         {
-                            if (packageItem.SignatureKind.Equals(PackageSignatureKind.Store) && IsStoreSignatureSelected)
+                            if (Equals(packageItem.SignatureKind, PackageSignatureKind.Store) && IsStoreSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.System) && IsSystemSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.System) && IsSystemSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Enterprise) && IsEnterpriseSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.Developer) && IsDeveloperSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
-                            else if (packageItem.SignatureKind.Equals(PackageSignatureKind.None) && IsNoneSignatureSelected)
+                            else if (Equals(packageItem.SignatureKind, PackageSignatureKind.None) && IsNoneSignatureSelected)
                             {
                                 conditionWithSignatureKindList.Add(packageItem);
                             }
@@ -1682,7 +1690,7 @@ namespace GetStoreApp.Views.Pages
 
                         List<PackageModel> searchedList = [];
 
-                        // ¸ù¾İËÑË÷ÄÚÈİÉ¸Ñ¡°üº¬ÌØ¶¨Ç©ÃûÀàĞÍµÄÊı¾İ
+                        // æ ¹æ®æœç´¢å†…å®¹ç­›é€‰åŒ…å«ç‰¹å®šç­¾åç±»å‹çš„æ•°æ®
                         if (string.IsNullOrEmpty(SearchText))
                         {
                             searchedList.AddRange(conditionWithSignatureKindList);
@@ -1698,7 +1706,7 @@ namespace GetStoreApp.Views.Pages
                             }
                         }
 
-                        // ¶Ô¹ıÂËºóµÄÁĞ±íÊı¾İ½øĞĞÅÅĞò
+                        // å¯¹è¿‡æ»¤åçš„åˆ—è¡¨æ•°æ®è¿›è¡Œæ’åº
                         switch (SelectedAppSortRuleKind)
                         {
                             case AppSortRuleKind.DisplayName:
@@ -1761,35 +1769,35 @@ namespace GetStoreApp.Views.Pages
             needToRefreshData = false;
         }
 
-        #endregion µÚ¶ş²¿·Ö£ºÓ¦ÓÃ¹ÜÀíÒ³Ãæ¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #endregion ç¬¬äºŒéƒ¨åˆ†ï¼šåº”ç”¨ç®¡ç†é¡µé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// »ñÈ¡¼ÓÔØÓ¦ÓÃÊÇ·ñ³É¹¦
+        /// è·å–åŠ è½½åº”ç”¨æ˜¯å¦æˆåŠŸ
         /// </summary>
-        public Visibility GetAppManagerSuccessfullyState(AppManagerResultKind appManagerResultKind, bool isSuccessfully)
+        private Visibility GetAppManagerSuccessfullyState(AppManagerResultKind appManagerResultKind, bool isSuccessfully)
         {
             return isSuccessfully ? appManagerResultKind is AppManagerResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : appManagerResultKind is AppManagerResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
-        /// ¼ì²éËÑË÷Ó¦ÓÃÊÇ·ñ³É¹¦
+        /// æ£€æŸ¥æœç´¢åº”ç”¨æ˜¯å¦æˆåŠŸ
         /// </summary>
-        public Visibility CheckAppManagerState(AppManagerResultKind appManagerResultKind, AppManagerResultKind comparedAppManagerResultKind)
+        private Visibility CheckAppManagerState(AppManagerResultKind appManagerResultKind, AppManagerResultKind comparedAppManagerResultKind)
         {
-            return appManagerResultKind.Equals(comparedAppManagerResultKind) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(appManagerResultKind, comparedAppManagerResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// »ñÈ¡ÊÇ·ñÕıÔÚ¼ÓÔØÖĞ
+        /// è·å–æ˜¯å¦æ­£åœ¨åŠ è½½ä¸­
         /// </summary>
 
         public bool GetIsLoading(AppManagerResultKind appManagerResultKind)
         {
-            return !appManagerResultKind.Equals(AppManagerResultKind.Loading);
+            return !Equals(appManagerResultKind, AppManagerResultKind.Loading);
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃ°üÊÇ·ñÎª¿ò¼Ü°ü
+        /// è·å–åº”ç”¨åŒ…æ˜¯å¦ä¸ºæ¡†æ¶åŒ…
         /// </summary>
         private static bool GetIsFramework(Package package)
         {
@@ -1805,7 +1813,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃ°üµÄÈë¿ÚÊı
+        /// è·å–åº”ç”¨åŒ…çš„å…¥å£æ•°
         /// </summary>
         private static int GetAppListEntriesCount(Package package)
         {
@@ -1821,7 +1829,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃµÄÏÔÊ¾Ãû³Æ
+        /// è·å–åº”ç”¨çš„æ˜¾ç¤ºåç§°
         /// </summary>
         private string GetDisplayName(Package package)
         {
@@ -1837,7 +1845,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃµÄ·¢²¼ÕßÏÔÊ¾Ãû³Æ
+        /// è·å–åº”ç”¨çš„å‘å¸ƒè€…æ˜¾ç¤ºåç§°
         /// </summary>
         private string GetPublisherDisplayName(Package package)
         {
@@ -1853,7 +1861,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃµÄ°æ±¾ĞÅÏ¢
+        /// è·å–åº”ç”¨çš„ç‰ˆæœ¬ä¿¡æ¯
         /// </summary>
         private static string GetVersion(Package package)
         {
@@ -1869,7 +1877,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃµÄ°²×°ÈÕÆÚ
+        /// è·å–åº”ç”¨çš„å®‰è£…æ—¥æœŸ
         /// </summary>
         private static string GetInstallDate(Package package)
         {
@@ -1885,7 +1893,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃ°üÇ©Ãû·½Ê½
+        /// è·å–åº”ç”¨åŒ…ç­¾åæ–¹å¼
         /// </summary>
         private static PackageSignatureKind GetSignatureKind(Package package)
         {
@@ -1901,7 +1909,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡Ó¦ÓÃ°ü°²×°ÈÕÆÚ
+        /// è·å–åº”ç”¨åŒ…å®‰è£…æ—¥æœŸ
         /// </summary>
         private static DateTimeOffset GetInstalledDate(Package package)
         {

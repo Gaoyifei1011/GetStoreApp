@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Enums;
+ï»¿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
-// ÒÖÖÆ IDE0060 ¾¯¸æ
+// æŠ‘åˆ¶ IDE0060 è­¦å‘Š
 #pragma warning disable IDE0060
 
 namespace GetStoreApp.UI.Dialogs.Settings
 {
     /// <summary>
-    /// WinGet Êı¾İÔ´±à¼­¶Ô»°¿ò
+    /// WinGet æ•°æ®æºç¼–è¾‘å¯¹è¯æ¡†
     /// </summary>
     public sealed partial class WinGetSourceEditDialog : ContentDialog, INotifyPropertyChanged
     {
@@ -198,7 +198,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         }
 
         /// <summary>
-        /// ÎÄ±¾ÊäÈë¿òÄÚÈİ·¢Éú¸ü¸ÄÊ±´¥·¢µÄÊÂ¼ş
+        /// æ–‡æœ¬è¾“å…¥æ¡†å†…å®¹å‘ç”Ÿæ›´æ”¹æ—¶è§¦å‘çš„äº‹ä»¶
         /// </summary>
         private void OnTextChanged(object sender, TextChangedEventArgs args)
         {
@@ -231,7 +231,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         }
 
         /// <summary>
-        /// ÊÇ·ñÎªÏÔĞÔ¿ª¹Ø·¢Éú¸ü¸ÄÊ±´¥·¢µÄÊÂ¼ş
+        /// æ˜¯å¦ä¸ºæ˜¾æ€§å¼€å…³å‘ç”Ÿæ›´æ”¹æ—¶è§¦å‘çš„äº‹ä»¶
         /// </summary>
         private void OnExplicitToggled(object sender, RoutedEventArgs args)
         {
@@ -242,7 +242,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         }
 
         /// <summary>
-        /// Êı¾İÔ´ĞÅÈÎµÈ¼¶·¢Éú¸ü¸ÄÊ±´¥·¢µÄÊÂ¼ş
+        /// æ•°æ®æºä¿¡ä»»ç­‰çº§å‘ç”Ÿæ›´æ”¹æ—¶è§¦å‘çš„äº‹ä»¶
         /// </summary>
         private void OnCatalogTrustLevelClicked(object sender, RoutedEventArgs args)
         {
@@ -253,7 +253,7 @@ namespace GetStoreApp.UI.Dialogs.Settings
         }
 
         /// <summary>
-        /// ±£´æÌí¼Ó»òĞŞ¸ÄµÄ WinGet Êı¾İÔ´
+        /// ä¿å­˜æ·»åŠ æˆ–ä¿®æ”¹çš„ WinGet æ•°æ®æº
         /// </summary>
         private async void OnSaveClicked(object sender, ContentDialogButtonClickEventArgs args)
         {

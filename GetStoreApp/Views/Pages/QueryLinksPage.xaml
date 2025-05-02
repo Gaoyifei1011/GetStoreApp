@@ -1,4 +1,4 @@
-<Page
+ï»¿<Page
     x:Class="GetStoreApp.Views.Pages.QueryLinksPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -44,7 +44,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!--  ²éÑ¯Á´½Ó¿ØÖÆÀ¸  -->
+            <!--  æŸ¥è¯¢é“¾æŽ¥æŽ§åˆ¶æ   -->
             <Grid
                 Grid.Row="0"
                 Margin="0,0,1,3"
@@ -148,7 +148,7 @@
                     Style="{StaticResource AccentButtonStyle}" />
             </Grid>
 
-            <!--  ²éÑ¯Á´½ÓÐÅÏ¢À¸  -->
+            <!--  æŸ¥è¯¢é“¾æŽ¥ä¿¡æ¯æ   -->
             <InfoBar
                 Grid.Row="1"
                 Height="50"
@@ -190,7 +190,7 @@
                 </InfoBar.ActionButton>
             </InfoBar>
 
-            <!--  ²éÑ¯Á´½ÓÀúÊ·¼ÇÂ¼  -->
+            <!--  æŸ¥è¯¢é“¾æŽ¥åŽ†å²è®°å½•  -->
             <Expander
                 Grid.Row="2"
                 Margin="0,0,0,3"
@@ -447,7 +447,7 @@
                 </Expander.Content>
             </Expander>
 
-            <!--  ²éÑ¯Á´½Ó½á¹û  -->
+            <!--  æŸ¥è¯¢é“¾æŽ¥ç»“æžœ  -->
             <Grid
                 Grid.Row="3"
                 CornerRadius="{ThemeResource ControlCornerRadius}"
@@ -460,7 +460,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!--  ²éÑ¯Á´½Ó½á¹ûÐÅÏ¢À¸  -->
+                <!--  æŸ¥è¯¢é“¾æŽ¥ç»“æžœä¿¡æ¯æ   -->
                 <Expander
                     Grid.Row="0"
                     Margin="0,0,0,3"
@@ -572,7 +572,7 @@
                     </Expander.Content>
                 </Expander>
 
-                <!--  ²éÑ¯Á´½Ó½á¹û¿ØÖÆÀ¸  -->
+                <!--  æŸ¥è¯¢é“¾æŽ¥ç»“æžœæŽ§åˆ¶æ   -->
                 <Grid
                     Grid.Row="1"
                     Height="66"
@@ -723,7 +723,7 @@
                     </CommandBar>
                 </Grid>
 
-                <!--  ²éÑ¯Á´½Ó½á¹ûÁÐ±í±íÍ·À¸  -->
+                <!--  æŸ¥è¯¢é“¾æŽ¥ç»“æžœåˆ—è¡¨è¡¨å¤´æ   -->
                 <Grid
                     Grid.Row="2"
                     Height="35"
@@ -800,7 +800,7 @@
                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/OptionsToolTip')}" />
                 </Grid>
 
-                <!--  ²éÑ¯Á´½Ó½á¹ûÁÐ±í  -->
+                <!--  æŸ¥è¯¢é“¾æŽ¥ç»“æžœåˆ—è¡¨  -->
                 <ItemsView
                     Grid.Row="3"
                     CornerRadius="0"

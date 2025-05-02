@@ -10,6 +10,25 @@ namespace GetStoreApp.Models.Controls.AppManager
     public sealed partial class PackageModel : INotifyPropertyChanged
     {
         /// <summary>
+        /// 应用图标
+        /// </summary>
+        private Uri _logoImage;
+
+        public Uri LogoImage
+        {
+            get { return _logoImage; }
+
+            set
+            {
+                if (!Equals(_logoImage, value))
+                {
+                    _logoImage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LogoImage)));
+                }
+            }
+        }
+
+        /// <summary>
         /// 是否为框架包
         /// </summary>
         public bool IsFramework { get; set; }

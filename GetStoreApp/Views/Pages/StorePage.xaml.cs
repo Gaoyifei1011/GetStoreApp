@@ -119,11 +119,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            int index = PageList.FindIndex(item => item == GetCurrentPageType());
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
 
             if (index >= 0 && index < StoreSelectorBar.Items.Count)
             {
-                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => item == GetCurrentPageType())];
+                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
         }
 
@@ -135,7 +135,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
             {
                 int index = Convert.ToInt32(tag);
-                int currentIndex = PageList.FindIndex(item => item == GetCurrentPageType());
+                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
 
                 if (index is 0 && !Equals(GetCurrentPageType(), typeof(QueryLinksPage)))
                 {
@@ -154,11 +154,11 @@ namespace GetStoreApp.Views.Pages
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
             args.Handled = true;
-            int index = PageList.FindIndex(item => item == GetCurrentPageType());
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
 
             if (index >= 0 && index < StoreSelectorBar.Items.Count)
             {
-                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => item == GetCurrentPageType())];
+                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
 
             LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), args.SourcePageType.FullName), args.Exception);

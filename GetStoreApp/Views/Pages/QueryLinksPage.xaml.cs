@@ -348,8 +348,8 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is HistoryModel historyItem && MainWindow.Current.GetFrameContent() is StorePage storePage)
             {
-                SelectedType = TypeList.Find(item => item.InternalName.Equals(historyItem.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
-                SelectedChannel = ChannelList.Find(item => item.InternalName.Equals(historyItem.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
+                SelectedType = TypeList.Find(item => string.Equals(item.InternalName, historyItem.HistoryType.Key, StringComparison.OrdinalIgnoreCase));
+                SelectedChannel = ChannelList.Find(item => string.Equals(item.InternalName, historyItem.HistoryChannel.Key, StringComparison.OrdinalIgnoreCase));
                 LinkText = historyItem.HistoryLink;
             }
         }
@@ -407,7 +407,7 @@ namespace GetStoreApp.Views.Pages
                     // 检查下载文件信息是否已存在
                     foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
                     {
-                        if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(queryLinksItem.FileName, downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
                         {
                             isExisted = true;
                             break;
@@ -515,7 +515,7 @@ namespace GetStoreApp.Views.Pages
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
                 SelectedType = TypeList[Convert.ToInt32(tag)];
-                sampleLink = SampleLinkList[TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName)];
+                sampleLink = SampleLinkList[TypeList.FindIndex(item => Equals(item.InternalName, SelectedType.InternalName))];
                 LinkPlaceHolderText = SampleTitle + sampleLink;
                 LinkText = string.Empty;
             }
@@ -856,7 +856,7 @@ namespace GetStoreApp.Views.Pages
                         // 检查下载文件信息是否已存在
                         foreach (DownloadSchedulerModel downloadSchedulerItem in downloadSchedulerList)
                         {
-                            if (queryLinksItem.FileName.Equals(downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && downloadFilePath.Equals(downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
+                            if (string.Equals(queryLinksItem.FileName, downloadSchedulerItem.FileName, StringComparison.OrdinalIgnoreCase) && string.Equals(downloadFilePath, downloadSchedulerItem.FilePath, StringComparison.OrdinalIgnoreCase))
                             {
                                 isExisted = true;
                                 break;
@@ -986,19 +986,19 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 // 记录当前选定的选项和填入的内容
-                int typeIndex = TypeList.FindIndex(item => item.InternalName == SelectedType.InternalName);
-                int channelIndex = ChannelList.FindIndex(item => item.InternalName == SelectedChannel.InternalName);
+                int typeIndex = TypeList.FindIndex(item => Equals(item.InternalName, SelectedType.InternalName));
+                int channelIndex = ChannelList.FindIndex(item => Equals(item.InternalName, SelectedChannel.InternalName));
                 string link = LinkText;
 
                 // 商店接口查询方式
-                if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
+                if (Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[0]))
                 {
                     (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
                     {
                         (bool requestResult, bool isPackagedApp, AppInfoModel appInfoItem, List<QueryLinksModel> queryLinksList) queryLinksResult = ValueTuple.Create<bool, bool, AppInfoModel, List<QueryLinksModel>>(false, false, null, null);
 
                         // 解析链接对应的产品 ID
-                        string productId = SelectedType.Equals(TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
+                        string productId = Equals(SelectedType, TypeList[0]) ? QueryLinksHelper.ParseRequestContent(LinkText) : LinkText;
                         string cookie = await QueryLinksHelper.GetCookieAsync();
 
                         // 获取应用信息
@@ -1034,7 +1034,7 @@ namespace GetStoreApp.Views.Pages
                                         bool isExisted = false;
                                         foreach (QueryLinksModel queryLinksItem in queryLinksList)
                                         {
-                                            if (queryLinksItem.FileName.Equals(appxPackage.FileName) && queryLinksItem.FileLink.Equals(appxPackage.FileLink) && queryLinksItem.FileSize.Equals(queryLinksItem.FileSize))
+                                            if (Equals(queryLinksItem.FileName, appxPackage.FileName) && Equals(queryLinksItem.FileLink, appxPackage.FileLink) && Equals(queryLinksItem.FileSize, queryLinksItem.FileSize))
                                             {
                                                 isExisted = true;
                                             }
@@ -1133,7 +1133,7 @@ namespace GetStoreApp.Views.Pages
                 }
 
                 // 第三方接口查询方式
-                else if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[1]))
+                else if (Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
                 {
                     (InfoBarSeverity requestState, bool isPackagedApp, string categoryId, List<QueryLinksModel> queryLinksList) = await Task.Run(async () =>
                     {
@@ -1289,7 +1289,7 @@ namespace GetStoreApp.Views.Pages
                 string historyKey = HashAlgorithmHelper.GenerateHistoryKey(TypeList[selectedType].InternalName, ChannelList[selectedChannel].InternalName, link);
                 List<HistoryModel> historyList = [.. HistoryCollection];
 
-                int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
+                int index = historyList.FindIndex(item => string.Equals(item.HistoryKey, historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加
                 if (index is -1)
