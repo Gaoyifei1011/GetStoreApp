@@ -1,9 +1,11 @@
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.AppUpdate;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
@@ -18,8 +20,8 @@ using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.System;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -28,6 +30,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppUpdatePage : Page, INotifyPropertyChanged
     {
+        private bool _isInitialized;
+
         private readonly string AcquiringLicense = ResourceService.GetLocalized("AppUpdate/AcquiringLicense");
         private readonly string Canceled = ResourceService.GetLocalized("AppUpdate/Canceled");
         private readonly string Completed = ResourceService.GetLocalized("AppUpdate/Completed");
@@ -41,61 +45,47 @@ namespace GetStoreApp.Views.Pages
         private readonly string RestoringData = ResourceService.GetLocalized("AppUpdate/RestoringData");
         private readonly string Starting = ResourceService.GetLocalized("AppUpdate/Starting");
         private readonly string AppUpdateCountInfo = ResourceService.GetLocalized("AppUpdate/AppUpdateCountInfo");
+        private readonly string AppUpdateEmpty = ResourceService.GetLocalized("AppUpdate/AppUpdateEmpty");
         private readonly string AppUpdateSuccessfully = ResourceService.GetLocalized("Notification/AppUpdateSuccessfully");
 
-        private readonly AppInstallManager appInstallManager = new();
-        private readonly PackageManager packageManager = new();
+        private readonly Lock AppUpdateLock = new();
 
-        private readonly Lock appinstallingLock = new();
-        private readonly Dictionary<string, AppInstallItem> AppInstallingDict = [];
+        private AppInstallManager appInstallManager;
+        private PackageManager packageManager;
 
-        private bool _isInitialized;
+        private AppUpdateResultKind _appUpdateResultKind = AppUpdateResultKind.NotCheckUpdate;
 
-        public bool IsInitialized
+        public AppUpdateResultKind AppUpdateResultKind
         {
-            get { return _isInitialized; }
+            get { return _appUpdateResultKind; }
 
             set
             {
-                if (!Equals(_isInitialized, value))
+                if (!Equals(_appUpdateResultKind, value))
                 {
-                    _isInitialized = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsInitialized)));
+                    _appUpdateResultKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdateResultKind)));
                 }
             }
         }
 
-        private bool _isLoadedCompleted = true;
+        private string _appUpdateFailedContent;
 
-        public bool IsLoadedCompleted
+        public string AppUpdateFailedContent
         {
-            get { return _isLoadedCompleted; }
+            get { return _appUpdateFailedContent; }
 
             set
             {
-                if (!Equals(_isLoadedCompleted, value))
+                if (!Equals(_appUpdateResultKind, value))
                 {
-                    _isLoadedCompleted = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsLoadedCompleted)));
+                    _appUpdateFailedContent = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AppUpdateFailedContent)));
                 }
             }
         }
 
-        private bool _isUpdateEmpty = true;
-
-        public bool IsUpdateEmpty
-        {
-            get { return _isUpdateEmpty; }
-
-            set
-            {
-                if (!Equals(_isUpdateEmpty, value))
-                {
-                    _isUpdateEmpty = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdateEmpty)));
-                }
-            }
-        }
+        private List<AppUpdateModel> AppUpdateList { get; } = [];
 
         private ObservableCollection<AppUpdateModel> AppUpdateCollection { get; } = [];
 
@@ -106,7 +96,29 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+
+            if (!_isInitialized)
+            {
+                _isInitialized = true;
+                appInstallManager = new();
+                packageManager = new();
+
+                appInstallManager.ItemStatusChanged += OnAppInstallItemStatusChanged;
+                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+            }
+        }
+
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 更新选定的应用
@@ -115,52 +127,57 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is string packageFamilyName && !string.IsNullOrEmpty(packageFamilyName))
             {
-                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                AppUpdateLock.Enter();
+
+                try
                 {
-                    if (appUpdateItem.PackageFamilyName == packageFamilyName)
+                    foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                     {
-                        appUpdateItem.AppInstallState = AppInstallState.Pending;
-                        appUpdateItem.IsUpdating = true;
-                        appUpdateItem.InstallInformation = Pending;
-                        appUpdateItem.PercentComplete = 0;
-
-                        await Task.Run(async () =>
+                        if (Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
                         {
-                            AppInstallItem appInstallItem = null;
-
-                            try
+                            appUpdateItem.IsOperating = true;
+                            AppInstallItem appInstallItem = await Task.Run(async () =>
                             {
-                                appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, string.Format("Update app failed: package family name {0}", appUpdateItem.PackageFamilyName), e);
-                            }
-
-                            appinstallingLock.Enter();
-
-                            try
-                            {
-                                if (appInstallItem is not null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
+                                try
                                 {
-                                    appInstallItem.StatusChanged += OnAppInstallItemStatausChanged;
-                                    appInstallItem.Completed += OnAppInstallItemCompleted;
-
-                                    AppInstallingDict.TryAdd(appInstallItem.PackageFamilyName, appInstallItem);
+                                    return await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
                                 }
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                appinstallingLock.Exit();
-                            }
-                        });
+                                catch (Exception e)
+                                {
+                                    LogService.WriteLog(LoggingLevel.Error, string.Format("Update app failed: package family name {0}", appUpdateItem.PackageFamilyName), e);
+                                    return null;
+                                }
+                            });
 
-                        break;
+                            // 安装更新添加成功
+                            if (appInstallItem is not null)
+                            {
+                                appUpdateItem.IsOperating = false;
+                                appUpdateItem.AppInstallState = AppInstallState.Pending;
+                                appUpdateItem.IsUpdating = true;
+                                appUpdateItem.InstallInformation = Pending;
+                                appUpdateItem.PercentComplete = 0;
+                            }
+                            // 安装更新添加失败
+                            else
+                            {
+                                appUpdateItem.IsOperating = false;
+                                appUpdateItem.AppInstallState = AppInstallState.Error;
+                                appUpdateItem.IsUpdating = false;
+                                appUpdateItem.InstallInformation = Error;
+                            }
+
+                            break;
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    AppUpdateLock.Exit();
                 }
             }
         }
@@ -172,55 +189,51 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is string packageFamilyName && !string.IsNullOrEmpty(packageFamilyName))
             {
+                AppUpdateLock.Enter();
+
+                try
+                {
+                    foreach (AppUpdateModel appUpdateItem in AppUpdateList)
+                    {
+                        if (Equals(appUpdateItem.PackageFamilyName, packageFamilyName))
+                        {
+                            appUpdateItem.IsOperating = true;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    AppUpdateLock.Exit();
+                }
+
                 await Task.Run(() =>
                 {
-                    appinstallingLock.Enter();
-
                     try
                     {
-                        if (AppInstallingDict.TryGetValue(packageFamilyName, out AppInstallItem appInstallItem))
+                        foreach (AppInstallItem appInstallItem in appInstallManager.AppInstallItems)
                         {
-                            try
+                            if (Equals(packageFamilyName, appInstallItem.PackageFamilyName))
                             {
-                                appInstallItem.Completed -= OnAppInstallItemCompleted;
-                                appInstallItem.StatusChanged -= OnAppInstallItemStatausChanged;
                                 appInstallItem.Cancel();
+                                break;
                             }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, "Store app cancel install failed", e);
-                            }
-
-                            AppInstallingDict.Remove(packageFamilyName);
                         }
                     }
                     catch (Exception e)
                     {
                         ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                     }
-                    finally
-                    {
-                        appinstallingLock.Exit();
-                    }
                 });
-
-                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
-                {
-                    if (appUpdateItem.PackageFamilyName == packageFamilyName)
-                    {
-                        appUpdateItem.AppInstallState = AppInstallState.Canceled;
-                        appUpdateItem.IsUpdating = false;
-                        appUpdateItem.InstallInformation = Canceled;
-                        appUpdateItem.PercentComplete = 0;
-                        break;
-                    }
-                }
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：商店应用更新页面——挂载的事件
+        #region 第三部分：商店应用更新页面——挂载的事件
 
         /// <summary>
         /// 打开微软商店并更新微软商店应用
@@ -243,39 +256,64 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCheckUpdateClicked(object sender, RoutedEventArgs args)
         {
-            IsLoadedCompleted = false;
+            AppUpdateResultKind = AppUpdateResultKind.Querying;
+            AppUpdateCollection.Clear();
 
-            if (!IsInitialized) IsInitialized = true;
-
-            List<AppUpdateModel> appUpdateList = [];
-            await Task.Run(async () =>
+            List<AppUpdateModel> appUpdateList = await Task.Run(async () =>
             {
+                List<AppUpdateModel> appUpdateList = [];
+
                 try
                 {
                     AppUpdateOptions updateOptions = new()
                     {
                         AutomaticallyDownloadAndInstallUpdateIfFound = false,
-                        AllowForcedAppRestart = false
+                        AllowForcedAppRestart = true,
                     };
+
                     IReadOnlyList<AppInstallItem> upgradableAppsList = await appInstallManager.SearchForAllUpdatesAsync(string.Empty, string.Empty, updateOptions);
 
                     foreach (AppInstallItem upgradableAppItem in upgradableAppsList)
                     {
-                        // 判断是否已经添加到 AppUpdateCollection 中，没有则添加
+                        // 判断是否已经添加到应用更新队列中，没有则添加
                         bool isExisted = false;
-                        foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                        bool isUpdating = false;
+                        AppUpdateLock.Enter();
+
+                        try
                         {
-                            if (appUpdateItem.PackageFamilyName.Equals(upgradableAppItem.PackageFamilyName))
+                            foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                             {
-                                isExisted = true;
+                                if (appUpdateItem.PackageFamilyName.Equals(upgradableAppItem.PackageFamilyName))
+                                {
+                                    isExisted = true;
+                                    isUpdating = appUpdateItem.IsUpdating;
+                                    break;
+                                }
                             }
                         }
-
-                        if (!isExisted)
+                        catch (Exception e)
                         {
+                            ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                        }
+
+                        AppUpdateLock.Exit();
+
+                        if (isExisted)
+                        {
+                            // 已经检测到的应用暂未进行更新，取消自动安装当前更新
+                            if (!isUpdating)
+                            {
+                                upgradableAppItem.Cancel();
+                            }
+                        }
+                        else
+                        {
+                            upgradableAppItem.Cancel();
+
                             foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
                             {
-                                if (packageItem.Id.FamilyName.Equals(upgradableAppItem.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
+                                if (string.Equals(packageItem.Id.FamilyName, upgradableAppItem.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                                 {
                                     AppInstallStatus appInstallStatus = upgradableAppItem.GetCurrentStatus();
                                     string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
@@ -283,6 +321,7 @@ namespace GetStoreApp.Views.Pages
 
                                     appUpdateList.Add(new AppUpdateModel()
                                     {
+                                        LogoImage = packageItem.Logo,
                                         AppInstallState = appInstallStatus.InstallState,
                                         DisplayName = packageItem.DisplayName,
                                         PublisherDisplayName = packageItem.PublisherDisplayName,
@@ -299,26 +338,6 @@ namespace GetStoreApp.Views.Pages
                                         ProductId = upgradableAppItem.ProductId
                                     });
 
-                                    appinstallingLock.Enter();
-
-                                    try
-                                    {
-                                        if (upgradableAppItem is not null && !AppInstallingDict.ContainsKey(upgradableAppItem.PackageFamilyName))
-                                        {
-                                            upgradableAppItem.StatusChanged += OnAppInstallItemStatausChanged;
-                                            upgradableAppItem.Completed += OnAppInstallItemCompleted;
-
-                                            AppInstallingDict.TryAdd(upgradableAppItem.PackageFamilyName, upgradableAppItem);
-                                        }
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                    }
-                                    finally
-                                    {
-                                        appinstallingLock.Exit();
-                                    }
                                     break;
                                 }
                             }
@@ -329,175 +348,182 @@ namespace GetStoreApp.Views.Pages
                 {
                     LogService.WriteLog(LoggingLevel.Error, "Check store update status failed", e);
                 }
+
+                return appUpdateList;
             });
 
             // 只添加未有的项
-            foreach (AppUpdateModel appUpdateItem in appUpdateList)
+            AppUpdateLock.Enter();
+
+            try
             {
-                AppUpdateCollection.Add(appUpdateItem);
+                foreach (AppUpdateModel appUpdateItem in appUpdateList)
+                {
+                    AppUpdateList.Add(appUpdateItem);
+                }
+
+                AppUpdateList.Sort((item1, item2) => item1.DisplayName.CompareTo(item2.DisplayName));
+
+                foreach (AppUpdateModel appUpdateItem in AppUpdateList)
+                {
+                    AppUpdateCollection.Add(appUpdateItem);
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
             }
 
-            IsLoadedCompleted = true;
+            AppUpdateLock.Exit();
+
+            if (AppUpdateList.Count > 0)
+            {
+                AppUpdateResultKind = AppUpdateResultKind.Successfully;
+                AppUpdateFailedContent = string.Empty;
+            }
+            else
+            {
+                AppUpdateResultKind = AppUpdateResultKind.Failed;
+                AppUpdateFailedContent = AppUpdateEmpty;
+            }
         }
 
         /// <summary>
         /// 更新所有应用
         /// </summary>
-        private void OnUpdateAllClicked(object sender, RoutedEventArgs args)
+        private async void OnUpdateAllClicked(object sender, RoutedEventArgs args)
         {
-            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+            AppUpdateLock.Enter();
+
+            foreach (AppUpdateModel appUpdateItem in AppUpdateList)
             {
                 if (!appUpdateItem.IsUpdating)
                 {
-                    appUpdateItem.AppInstallState = AppInstallState.Pending;
-                    appUpdateItem.IsUpdating = true;
-                    appUpdateItem.InstallInformation = Pending;
-                    appUpdateItem.PercentComplete = 0;
+                    appUpdateItem.IsOperating = true;
                 }
             }
 
-            Task.Run(async () =>
+            foreach (AppUpdateModel appUpdateItem in AppUpdateList)
             {
-                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                if (!appUpdateItem.IsUpdating && appUpdateItem.IsOperating)
                 {
-                    AppInstallItem appInstallItem = await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
-
-                    appinstallingLock.Enter();
-
-                    try
-                    {
-                        if (appInstallItem is not null && !AppInstallingDict.ContainsKey(appInstallItem.PackageFamilyName))
-                        {
-                            appInstallItem.StatusChanged += OnAppInstallItemStatausChanged;
-                            appInstallItem.Completed += OnAppInstallItemCompleted;
-
-                            AppInstallingDict.TryAdd(appInstallItem.PackageFamilyName, appInstallItem);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                    finally
-                    {
-                        appinstallingLock.Exit();
-                    }
-                }
-            });
-        }
-
-        /// <summary>
-        /// 当前应用安装完成时发生的事件
-        /// </summary>
-        private void OnAppInstallItemCompleted(AppInstallItem sender, object args)
-        {
-            foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
-            {
-                if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
-                {
-                    sender.Completed -= OnAppInstallItemCompleted;
-                    sender.StatusChanged -= OnAppInstallItemStatausChanged;
-
-                    appinstallingLock.Enter();
-
-                    try
-                    {
-                        AppInstallingDict.Remove(appUpdateItem.PackageFamilyName);
-                    }
-                    catch (Exception e)
-                    {
-                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    }
-                    finally
-                    {
-                        appinstallingLock.Exit();
-                    }
-
-                    // 显示商店应用更新成功通知
-                    if (appUpdateItem.AppInstallState is AppInstallState.Completed)
-                    {
-                        AppNotificationBuilder appNotificationBuilder = new();
-                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                        appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfully, appUpdateItem.DisplayName));
-                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                    }
-
-                    break;
-                }
-            }
-
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
-                {
-                    if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
+                    AppInstallItem appInstallItem = await Task.Run(async () =>
                     {
                         try
                         {
-                            AppUpdateCollection.Remove(appUpdateItem);
-                            break;
+                            return await appInstallManager.UpdateAppByPackageFamilyNameAsync(appUpdateItem.PackageFamilyName);
                         }
                         catch (Exception e)
                         {
-                            LogService.WriteLog(LoggingLevel.Warning, "AppUpdateCollection remove items failed", e);
+                            LogService.WriteLog(LoggingLevel.Error, string.Format("Update app failed: package family name {0}", appUpdateItem.PackageFamilyName), e);
+                            return null;
                         }
+                    });
+
+                    // 安装更新添加成功
+                    if (appInstallItem is not null)
+                    {
+                        appUpdateItem.IsOperating = false;
+                        appUpdateItem.AppInstallState = AppInstallState.Pending;
+                        appUpdateItem.IsUpdating = true;
+                        appUpdateItem.InstallInformation = Pending;
+                        appUpdateItem.PercentComplete = 0;
+                    }
+                    // 安装更新添加失败
+                    else
+                    {
+                        appUpdateItem.IsOperating = false;
+                        appUpdateItem.AppInstallState = AppInstallState.Error;
+                        appUpdateItem.IsUpdating = false;
+                        appUpdateItem.InstallInformation = Error;
                     }
                 }
-            });
+            }
         }
 
-        #endregion 第二部分：商店应用更新页面——挂载的事件
+        #endregion 第三部分：商店应用更新页面——挂载的事件
 
-        #region 第三部分：自定义事件
+        #region 第四部分：自定义事件
+
+        /// <summary>
+        /// 应用程序退出时触发的事件
+        /// </summary>
+        private void OnApplicationExit(object sender, EventArgs args)
+        {
+            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+            appInstallManager.ItemStatusChanged -= OnAppInstallItemStatusChanged;
+        }
 
         /// <summary>
         /// 当前应用的安装状态发生更改时的事件
         /// </summary>
-        private void OnAppInstallItemStatausChanged(AppInstallItem sender, object args)
+        private void OnAppInstallItemStatusChanged(AppInstallManager sender, AppInstallManagerItemEventArgs args)
         {
-            DispatcherQueue.TryEnqueue(async () =>
+            AppInstallStatus appInstallStatus = args.Item.GetCurrentStatus();
+
+            if (appInstallStatus is not null)
             {
-                foreach (AppUpdateModel appUpdateItem in AppUpdateCollection)
+                string installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
+                string installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
+
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (appUpdateItem.PackageFamilyName == sender.PackageFamilyName)
+                    AppUpdateLock.Enter();
+
+                    try
                     {
-                        AppInstallStatus appInstallStatus = null;
-                        string installInformation = string.Empty;
-                        string installSubInformation = string.Empty;
-
-                        await Task.Run(() =>
+                        foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                         {
-                            try
+                            if (string.Equals(appUpdateItem.PackageFamilyName, args.Item.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                             {
-                                appInstallStatus = sender.GetCurrentStatus();
-                                installInformation = GetInstallInformation(appInstallStatus.InstallState, appInstallStatus);
-                                installSubInformation = string.Format(InstallingSubInformation, FileSizeHelper.ConvertFileSizeToString(appInstallStatus.DownloadSizeInBytes), FileSizeHelper.ConvertFileSizeToString(appInstallStatus.BytesDownloaded));
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, "Get current app install status failed", e);
-                            }
-                        });
+                                appUpdateItem.AppInstallState = appInstallStatus.InstallState;
+                                appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
+                                appUpdateItem.InstallInformation = installInformation;
+                                appUpdateItem.InstallSubInformation = installSubInformation;
+                                appUpdateItem.IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
+                                        appInstallStatus.InstallState is AppInstallState.Starting ||
+                                        appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
+                                        appInstallStatus.InstallState is AppInstallState.Downloading ||
+                                        appInstallStatus.InstallState is AppInstallState.RestoringData ||
+                                        appInstallStatus.InstallState is AppInstallState.Installing;
 
-                        if (appInstallStatus is not null)
-                        {
-                            appUpdateItem.AppInstallState = appInstallStatus.InstallState;
-                            appUpdateItem.PercentComplete = appInstallStatus.PercentComplete;
-                            appUpdateItem.InstallInformation = installInformation;
-                            appUpdateItem.InstallSubInformation = installSubInformation;
-                            appUpdateItem.IsUpdating = appInstallStatus.InstallState is AppInstallState.Pending ||
-                                         appInstallStatus.InstallState is AppInstallState.Starting ||
-                                         appInstallStatus.InstallState is AppInstallState.AcquiringLicense ||
-                                         appInstallStatus.InstallState is AppInstallState.Downloading ||
-                                         appInstallStatus.InstallState is AppInstallState.RestoringData ||
-                                         appInstallStatus.InstallState is AppInstallState.Installing;
+                                // 更新已取消
+                                if (appInstallStatus.InstallState is AppInstallState.Canceled && appUpdateItem.IsOperating)
+                                {
+                                    appUpdateItem.IsOperating = false;
+                                }
+                                // 更新已完成
+                                else if (appUpdateItem.AppInstallState is AppInstallState.Completed)
+                                {
+                                    Task.Run(() =>
+                                    {
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(AppUpdateSuccessfully, appUpdateItem.DisplayName));
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+
+                                    AppUpdateList.Remove(appUpdateItem);
+                                    AppUpdateCollection.Remove(appUpdateItem);
+
+                                    AppUpdateResultKind = AppUpdateResultKind.Failed;
+                                    AppUpdateFailedContent = AppUpdateEmpty;
+                                }
+                                break;
+                            }
                         }
                     }
-                }
-            });
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+
+                    AppUpdateLock.Exit();
+                });
+            }
         }
 
-        #endregion 第三部分：自定义事件
+        #endregion 第四部分：自定义事件
 
         /// <summary>
         /// 获取应用安装的描述信息
@@ -522,6 +548,31 @@ namespace GetStoreApp.Views.Pages
                 AppInstallState.Starting => Starting,
                 _ => string.Empty,
             };
+        }
+
+        /// <summary>
+        /// 获取加载应用更新是否成功
+        /// </summary>
+        private Visibility GetAppUpdateSuccessfullyState(AppUpdateResultKind appUpdateResultKind, bool isSuccessfully)
+        {
+            return isSuccessfully ? appUpdateResultKind is AppUpdateResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : appUpdateResultKind is AppUpdateResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
+        /// 检查搜索应用更新是否成功
+        /// </summary>
+        private Visibility CheckAppUpdateState(AppUpdateResultKind appUpdateResultKind, AppUpdateResultKind comparedAppUpdateResultKind)
+        {
+            return appUpdateResultKind.Equals(comparedAppUpdateResultKind) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 获取是否正在检查更新中
+        /// </summary>
+
+        private bool GetIsCheckingUpdate(AppUpdateResultKind appUpdateResultKind)
+        {
+            return !appUpdateResultKind.Equals(AppUpdateResultKind.Querying);
         }
     }
 }

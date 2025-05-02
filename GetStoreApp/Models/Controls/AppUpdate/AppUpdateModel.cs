@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Windows.ApplicationModel.Store.Preview.InstallControl;
 
 namespace GetStoreApp.Models.Controls.AppUpdate
@@ -8,6 +9,25 @@ namespace GetStoreApp.Models.Controls.AppUpdate
     /// </summary>
     public sealed partial class AppUpdateModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// 应用图标
+        /// </summary>
+        private Uri _logoImage;
+
+        public Uri LogoImage
+        {
+            get { return _logoImage; }
+
+            set
+            {
+                if (!Equals(_logoImage, value))
+                {
+                    _logoImage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LogoImage)));
+                }
+            }
+        }
+
         /// <summary>
         /// 标志应用是否处于升级状态
         /// </summary>
@@ -23,6 +43,22 @@ namespace GetStoreApp.Models.Controls.AppUpdate
                 {
                     _isUpdating = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUpdating)));
+                }
+            }
+        }
+
+        private bool _isOperating;
+
+        public bool IsOperating
+        {
+            get { return _isOperating; }
+
+            set
+            {
+                if (!Equals(_isOperating, value))
+                {
+                    _isOperating = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsOperating)));
                 }
             }
         }
