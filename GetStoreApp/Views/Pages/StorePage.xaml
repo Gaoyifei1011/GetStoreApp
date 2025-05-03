@@ -118,6 +118,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <TextBlock
@@ -196,17 +197,36 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
-                        <MenuFlyoutSeparator Grid.Row="10" />
+                        <StackPanel
+                            Grid.Row="10"
+                            Margin="16,0,16,5"
+                            Orientation="Horizontal"
+                            Spacing="15">
+
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/CheckNetwork')}" />
+                                </Hyperlink>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/TroubleShoot')}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <MenuFlyoutSeparator Grid.Row="11" />
 
                         <TextBlock
-                            Grid.Row="11"
+                            Grid.Row="12"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
                             Text="{x:Bind root:ResourceService.GetLocalized('Store/PaidApps')}"
                             TextAlignment="Left" />
                         <TextBlock
-                            Grid.Row="12"
+                            Grid.Row="13"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"

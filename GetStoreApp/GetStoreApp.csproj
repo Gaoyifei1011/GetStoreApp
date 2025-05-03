@@ -266,16 +266,23 @@
     <None Remove="UI\TeachingTips\OperationResultTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="Views\Pages\AboutPage.xaml" />
+    <None Remove="Views\Pages\AdvancedPage.xaml" />
+    <None Remove="Views\Pages\AppearancePage.xaml" />
     <None Remove="Views\Pages\AppInformationPage.xaml" />
     <None Remove="Views\Pages\AppListPage.xaml" />
     <None Remove="Views\Pages\AppManagerPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
+    <None Remove="Views\Pages\GeneralPage.xaml" />
     <None Remove="Views\Pages\QueryLinksPage.xaml" />
     <None Remove="Views\Pages\SearchStorePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
+    <None Remove="Views\Pages\WinGetInstalledPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
+    <None Remove="Views\Pages\WinGetSearchPage.xaml" />
+    <None Remove="Views\Pages\WinGetSourcePage.xaml" />
+    <None Remove="Views\Pages\WinGetUpgradePage.xaml" />
     <None Remove="Views\Windows\MainWindow.xaml" />
     <None Remove="WinUIApp.xaml" />
     
@@ -377,6 +384,53 @@
     <PRIResource Include="Strings\zh-hans\WinGet.resjson" />
     
     <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\WinGetSourcePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\AdvancedPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\GeneralPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\AppearancePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Dialogs\" />
+    <Folder Include="Views\TeachingTips\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\WinGetUpgradePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\WinGetInstalledPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\Pages\WinGetSearchPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->

@@ -1,6 +1,7 @@
 ﻿using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -83,6 +84,22 @@ namespace GetStoreApp.Views.Pages
             {
                 StoreSplitView.IsPaneOpen = false;
             }
+        }
+
+        /// <summary>
+        /// 检查网络
+        /// </summary>
+        private async void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+        }
+
+        /// <summary>
+        /// 疑难解答
+        /// </summary>
+        private async void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
         }
 
         /// <summary>
