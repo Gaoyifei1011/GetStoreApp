@@ -51,17 +51,17 @@
 
                 <SelectorBarItem
                     Padding="12,5"
-                    FontSize="18"
+                    FontSize="22"
                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchApps')}" />
 
                 <SelectorBarItem
                     Padding="12,5"
-                    FontSize="18"
+                    FontSize="22"
                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstalledApps')}" />
 
                 <SelectorBarItem
                     Padding="12,5"
-                    FontSize="18"
+                    FontSize="22"
                     Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradableApps')}" />
             </SelectorBar>
 

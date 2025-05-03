@@ -63,6 +63,22 @@ namespace GetStoreApp.Views.Pages
         private readonly string WinGetDataSourceRemoveSuccess = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveSuccess");
         private AppNaviagtionArgs settingNavigationArgs = AppNaviagtionArgs.None;
 
+        private SelectorBarItem _selectedItem;
+
+        public SelectorBarItem SelectedItem
+        {
+            get { return _selectedItem; }
+
+            set
+            {
+                if (!Equals(_selectedItem, value))
+                {
+                    _selectedItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                }
+            }
+        }
+
         private KeyValuePair<string, string> _theme = ThemeService.AppTheme;
 
         public KeyValuePair<string, string> Theme
@@ -1006,6 +1022,27 @@ namespace GetStoreApp.Views.Pages
             else
             {
                 SettingsScroll.ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
+            }
+        }
+
+        /// <summary>
+        /// 点击选择器栏发生的事件
+        /// </summary>
+        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        {
+            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
+            {
+                int index = Convert.ToInt32(tag);
+                //int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+                //if (index is 0 && !Equals(GetCurrentPageType(), typeof(QueryLinksPage)))
+                //{
+                //    NavigateTo(typeof(QueryLinksPage), null, index > currentIndex);
+                //}
+                //else if (index is 1 && !Equals(GetCurrentPageType(), typeof(SearchStorePage)))
+                //{
+                //    NavigateTo(typeof(SearchStorePage), null, index > currentIndex);
+                //}
             }
         }
 

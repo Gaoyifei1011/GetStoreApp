@@ -32,37 +32,92 @@
         <Grid Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsWinGetConfigMode), Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="30,15,30,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="30,15,30,5"
+                FontSize="22"
+                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Title')}" />
 
-                <TextBlock
-                    Grid.Column="0"
-                    FontSize="22"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Title')}" />
+            <Grid Grid.Row="1" Margin="20,0,30,3">
+                <SelectorBar
+                    x:Name="SettingsSelectorBar"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
+
+                    <SelectorBarItem
+                        FontSize="16"
+                        IsTapEnabled="True"
+                        Tag="0"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/Appearance')}" />
+
+                    <SelectorBarItem
+                        FontSize="16"
+                        IsTapEnabled="True"
+                        Tag="1"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/General')}" />
+
+                    <SelectorBarItem
+                        FontSize="16"
+                        IsTapEnabled="True"
+                        Tag="2"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
+
+                    <SelectorBarItem
+                        FontSize="16"
+                        IsTapEnabled="True"
+                        Tag="3"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/About')}" />
+                </SelectorBar>
 
                 <Button
-                    Grid.Column="1"
-                    Margin="0,0,6,0"
-                    Click="{x:Bind OnRestartAppsClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/RestartAppToolTip')}" />
+                    Width="34"
+                    Height="34"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ViewMoreOptions')}">
 
-                <Button
-                    Grid.Column="2"
-                    Click="{x:Bind OnSettingsInstructionClicked}"
-                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}" />
+                    <Button.Content>
+                        <FontIcon FontSize="16" Glyph="&#xE712;" />
+                    </Button.Content>
+
+                    <Button.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Click="{x:Bind OnRestartAppsClicked}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/RestartAppToolTip')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE895;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE946;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
             </Grid>
+
+            <MenuFlyoutSeparator Grid.Row="2" Margin="32,0,34,3" />
 
             <ScrollView
                 x:Name="SettingsScroll"
-                Grid.Row="1"
+                Grid.Row="3"
                 HorizontalScrollMode="Disabled"
                 VerticalScrollBarVisibility="Auto"
                 VerticalScrollMode="Enabled">
