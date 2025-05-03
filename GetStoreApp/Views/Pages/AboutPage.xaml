@@ -455,28 +455,6 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <MenuFlyoutSeparator />
-
-                                <StackPanel
-                                    Margin="30,0,16,5"
-                                    Orientation="Horizontal"
-                                    Spacing="15">
-
-                                    <TextBlock>
-                                        <Hyperlink Click="{x:Bind OnCheckNetWorkClicked}" UnderlineStyle="None">
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('About/CheckNetwork')}" />
-                                        </Hyperlink>
-                                    </TextBlock>
-
-                                    <TextBlock>
-                                        <Hyperlink Click="{x:Bind OnTroubleShootClicked}" UnderlineStyle="None">
-                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('About/TroubleShoot')}" />
-                                        </Hyperlink>
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <MenuFlyoutSeparator />
-
                                 <TextBlock
                                     Margin="30,10,16,10"
                                     FontSize="15"
@@ -512,42 +490,6 @@
                                         </Hyperlink>
                                     </TextBlock>
                                 </StackPanel>
-                            </StackPanel>
-                        </Expander.Content>
-                    </Expander>
-
-                    <!--  注意事项信息  -->
-                    <Expander
-                        Padding="0"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        IsExpanded="True">
-
-                        <Expander.Header>
-                            <TextBlock
-                                Padding="15,0,0,0"
-                                FontSize="16"
-                                FontWeight="Medium"
-                                Text="{x:Bind root:ResourceService.GetLocalized('About/Precaution')}" />
-                        </Expander.Header>
-
-                        <Expander.Content>
-                            <StackPanel Margin="0">
-
-                                <TextBlock
-                                    Margin="30,10,16,10"
-                                    FontSize="15"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorage')}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Margin="30,0,16,10"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/DataStorageDescription')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
                             </StackPanel>
                         </Expander.Content>
                     </Expander>
