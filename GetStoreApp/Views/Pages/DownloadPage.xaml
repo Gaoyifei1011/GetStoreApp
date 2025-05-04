@@ -35,12 +35,12 @@
 
                 <SelectorBarItem
                     Padding="12,5"
-                    FontSize="18"
+                    FontSize="22"
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" />
 
                 <SelectorBarItem
                     Padding="12,5"
-                    FontSize="18"
+                    FontSize="22"
                     Text="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" />
             </SelectorBar>
 
