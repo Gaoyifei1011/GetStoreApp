@@ -27,7 +27,6 @@
         <x:Double x:Key="ContentDialogMinWidth">480</x:Double>
         <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
         <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-        <Thickness x:Key="ContentDialogPadding">24,24,24,24</Thickness>
     </ContentDialog.Resources>
 
     <Grid>
