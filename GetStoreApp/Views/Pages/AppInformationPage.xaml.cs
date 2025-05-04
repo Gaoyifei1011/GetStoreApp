@@ -594,9 +594,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnCopyClicked(object sender, RoutedEventArgs args)
         {
-            List<string> copyStringList = [];
-            await Task.Run(() =>
+            List<string> copyStringList = await Task.Run(() =>
             {
+                List<string> copyStringList = [];
+
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/DisplayName"), DisplayName));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FamilyName"), FamilyName));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/FullName"), FullName));
@@ -615,6 +616,7 @@ namespace GetStoreApp.Views.Pages
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsResourcePackage"), IsResourcePackage));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/IsStub"), IsStub));
                 copyStringList.Add(string.Format("{0}:\t{1}", ResourceService.GetLocalized("AppManager/VertifyIsOK"), VertifyIsOK));
+                return copyStringList;
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyStringList));
