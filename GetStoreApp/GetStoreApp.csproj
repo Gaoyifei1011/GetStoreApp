@@ -247,9 +247,6 @@
     <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Strings\zh-hans\WinGet.resjson" />
     <None Remove="UI\Controls\Download\CompletedControl.xaml" />
-    <None Remove="UI\Controls\WinGet\InstalledAppsControl.xaml" />
-    <None Remove="UI\Controls\WinGet\SearchAppsControl.xaml" />
-    <None Remove="UI\Controls\WinGet\UpgradableAppsControl.xaml" />
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" />
@@ -265,6 +262,7 @@
     <None Remove="UI\TeachingTips\MainDataCopyTip.xaml" />
     <None Remove="UI\TeachingTips\OperationResultTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
+    <None Remove="Views\Dialogs\WinGetAppsVersionDialog.xaml" />
     <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\AdvancedPage.xaml" />
     <None Remove="Views\Pages\AppearancePage.xaml" />
@@ -278,6 +276,10 @@
     <None Remove="Views\Pages\SearchStorePage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
+    <None Remove="Views\Pages\WinGetAppsCommandPage.xaml" />
+    <None Remove="Views\Pages\WinGetAppsCopyPage.xaml" />
+    <None Remove="Views\Pages\WinGetAppsInfoPage.xaml" />
+    <None Remove="Views\Pages\WinGetAppsOperationPage.xaml" />
     <None Remove="Views\Pages\WinGetInstalledPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
     <None Remove="Views\Pages\WinGetSearchPage.xaml" />
@@ -291,9 +293,6 @@
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
     
     <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Controls\WinGet\InstalledAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Controls\WinGet\SearchAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\Controls\WinGet\UpgradableAppsControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -309,17 +308,29 @@
     <Page Update="UI\TeachingTips\MainDataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\OperationResultTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Dialogs\WinGetAppsVersionDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\AdvancedPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\AppearancePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppInformationPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppListPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppManagerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\GeneralPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\QueryLinksPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\StorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetAppsCommandPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetAppsCopyPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetAppsInfoPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetAppsOperationPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetInstalledPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetSearchPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetSourcePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetUpgradePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Windows\MainWindow.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Remove="WinUIApp.xaml" />
 
@@ -384,53 +395,6 @@
     <PRIResource Include="Strings\zh-hans\WinGet.resjson" />
     
     <Reference Include="Microsoft.Windows.Storage.Pickers.Projection.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Pages\WinGetSourcePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Pages\AdvancedPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Pages\GeneralPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Pages\AppearancePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Dialogs\" />
-    <Folder Include="Views\TeachingTips\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Pages\WinGetUpgradePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Pages\WinGetInstalledPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\Pages\WinGetSearchPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->
