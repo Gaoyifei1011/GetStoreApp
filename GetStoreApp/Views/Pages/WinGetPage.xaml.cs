@@ -4,8 +4,11 @@ using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,27 +17,65 @@ using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
     /// WinGet 程序包页面
     /// </summary>
-    public sealed partial class WinGetPage : Page
+    public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
-        private bool isInitialized;
+        private SelectorBarItem _selectedItem;
+
+        public SelectorBarItem SelectedItem
+        {
+            get { return _selectedItem; }
+
+            set
+            {
+                if (!Equals(_selectedItem, value))
+                {
+                    _selectedItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                }
+            }
+        }
+
         public readonly Lock PackageOperationLock = new();
 
+        public List<Type> PageList { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
+
         public ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public WinGetPage()
         {
             InitializeComponent();
         }
 
-        #region 第一部分：XamlUICommand 命令调用时挂载的事件
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            WinGetFrame.ContentTransitions = SuppressNavigationTransitionCollection;
+
+            // 第一次导航
+            if (WinGetConfigService.IsWinGetInstalled && GetCurrentPageType() is null)
+            {
+                NavigateTo(PageList[0], this, null);
+            }
+        }
+
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
         /// 取消应用包任务
@@ -85,39 +126,19 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion 第一部分：XamlUICommand 命令调用时挂载的事件
+        #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        #region 第二部分：WinGet 程序包页面——挂载的事件
-
-        /// <summary>
-        /// 初始化 WinGet 程序包页面
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (!isInitialized)
-            {
-                if (WinGetConfigService.IsWinGetInstalled)
-                {
-                    SearchApps.InitializeWingetInstance(this);
-                    InstalledApps.InitializeWingetInstance(this);
-                    UpgradableApps.InitializeWingetInstance(this);
-                }
-
-                if (WinGetSelectorBar is not null)
-                {
-                    WinGetSelectorBar.SelectedItem = WinGetSelectorBar.Items[0];
-                }
-            }
-
-            isInitialized = true;
-        }
+        #region 第三部分：WinGet 程序包页面——挂载的事件
 
         /// <summary>
         /// 点击关闭按钮关闭任务管理
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
-            TaskManagerFlyout.Hide();
+            if (WinGetSplitView.IsPaneOpen)
+            {
+                WinGetSplitView.IsPaneOpen = false;
+            }
         }
 
         /// <summary>
@@ -144,11 +165,100 @@ namespace GetStoreApp.Views.Pages
             await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
         }
 
-        #endregion 第二部分：WinGet 程序包页面——挂载的事件
-
-        private Visibility GetSelectedItem(SelectorBarItem selectorBarItem, int index)
+        /// <summary>
+        /// 导航完成后发生
+        /// </summary>
+        private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            return WinGetSelectorBar is not null ? WinGetSelectorBar.Items.IndexOf(selectorBarItem).Equals(index) ? Visibility.Visible : Visibility.Collapsed : Visibility.Collapsed;
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < WinGetSelectorBar.Items.Count)
+            {
+                SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+            }
+        }
+
+        /// <summary>
+        /// 点击选择器栏发生的事件
+        /// </summary>
+        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        {
+            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
+            {
+                int index = Convert.ToInt32(tag);
+                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
+                {
+                    NavigateTo(PageList[0], this, index > currentIndex);
+                }
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+                {
+                    NavigateTo(PageList[1], this, index > currentIndex);
+                }
+                else if (index is 2 && !Equals(GetCurrentPageType(), PageList[2]))
+                {
+                    NavigateTo(PageList[2], this, index > currentIndex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 导航失败时发生
+        /// </summary>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
+        {
+            args.Handled = true;
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < WinGetSelectorBar.Items.Count)
+            {
+                SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+            }
+
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("WinGet/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+        }
+
+        #endregion 第三部分：WinGet 程序包页面——挂载的事件
+
+        /// <summary>
+        /// 页面向前导航
+        /// </summary>
+        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        {
+            try
+            {
+                if (slideDirection.HasValue)
+                {
+                    WinGetFrame.ContentTransitions = slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection;
+                }
+
+                // 导航到该项目对应的页面
+                WinGetFrame.Navigate(navigationPageType, parameter);
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("WinGet/NavigationFailed"), navigationPageType.FullName), e);
+            }
+        }
+
+        /// <summary>
+        /// 获取当前导航到的页
+        /// </summary>
+        public Type GetCurrentPageType()
+        {
+            return WinGetFrame.CurrentSourcePageType;
+        }
+
+        /// <summary>
+        /// 显示任务管理
+        /// </summary>
+        public void ShowTaskManager()
+        {
+            if (!WinGetSplitView.IsPaneOpen)
+            {
+                WinGetSplitView.IsPaneOpen = true;
+            }
         }
     }
 }
