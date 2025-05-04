@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 using Windows.System;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
@@ -60,7 +60,7 @@ namespace GetStoreApp.Views.Pages
             // 第一次导航
             if (GetCurrentPageType() is null)
             {
-                NavigateTo(typeof(QueryLinksPage), args.Parameter, null);
+                NavigateTo(PageList[0], args.Parameter, null);
             }
             else
             {
@@ -154,13 +154,13 @@ namespace GetStoreApp.Views.Pages
                 int index = Convert.ToInt32(tag);
                 int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
 
-                if (index is 0 && !Equals(GetCurrentPageType(), typeof(QueryLinksPage)))
+                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
                 {
-                    NavigateTo(typeof(QueryLinksPage), null, index > currentIndex);
+                    NavigateTo(PageList[0], null, index > currentIndex);
                 }
-                else if (index is 1 && !Equals(GetCurrentPageType(), typeof(SearchStorePage)))
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
                 {
-                    NavigateTo(typeof(SearchStorePage), null, index > currentIndex);
+                    NavigateTo(PageList[1], null, index > currentIndex);
                 }
             }
         }
@@ -202,7 +202,7 @@ namespace GetStoreApp.Views.Pages
             }
             catch (Exception e)
             {
-                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Window/NavigationFailed"), navigationPageType.FullName), e);
+                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), navigationPageType.FullName), e);
             }
         }
 
@@ -220,9 +220,9 @@ namespace GetStoreApp.Views.Pages
 
         public void InitializeQueryLinksContent(List<string> dataList)
         {
-            if (!Equals(GetCurrentPageType(), typeof(QueryLinksPage)))
+            if (!Equals(GetCurrentPageType(), PageList[0]))
             {
-                NavigateTo(typeof(QueryLinksPage), dataList, false);
+                NavigateTo(PageList[0], dataList, false);
             }
             else
             {

@@ -37,11 +37,120 @@
 
     <SplitView
         x:Name="StoreSplitView"
-        CornerRadius="4"
         DisplayMode="Overlay"
         OpenPaneLength="320"
         PaneBackground="Transparent"
         PanePlacement="Right">
+
+        <SplitView.Content>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--  标题  -->
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="30,10,30,0"
+                    FontSize="22"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Store/Title')}" />
+
+                <Grid
+                    Grid.Row="1"
+                    Margin="30,8"
+                    HorizontalAlignment="Stretch">
+
+                    <!--  商店应用控制栏  -->
+                    <Grid
+                        HorizontalAlignment="Center"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{ThemeResource ControlCornerRadius}">
+
+                        <SelectorBar
+                            x:Name="StoreSelectorBar"
+                            Padding="0"
+                            HorizontalAlignment="Center"
+                            SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
+
+                            <SelectorBarItem
+                                Padding="12,6,12,3"
+                                IsTapEnabled="True"
+                                Tag="0"
+                                Tapped="{x:Bind OnSelectorBarTapped}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
+                                <SelectorBarItem.Icon>
+                                    <FontIcon Glyph="&#xE71B;" />
+                                </SelectorBarItem.Icon>
+                            </SelectorBarItem>
+
+                            <SelectorBarItem
+                                Padding="12,6,12,3"
+                                IsTapEnabled="True"
+                                Tag="1"
+                                Tapped="{x:Bind OnSelectorBarTapped}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
+                                <SelectorBarItem.Icon>
+                                    <FontIcon Glyph="&#xE721;" />
+                                </SelectorBarItem.Icon>
+                            </SelectorBarItem>
+                        </SelectorBar>
+                    </Grid>
+
+                    <Button
+                        Width="34"
+                        Height="34"
+                        Padding="0"
+                        HorizontalAlignment="Right"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/ViewMoreOptions')}">
+
+                        <Button.Content>
+                            <FontIcon FontSize="16" Glyph="&#xE712;" />
+                        </Button.Content>
+
+                        <Button.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnLanguageAndRegionClicked}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xF2B7;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+
+                                <MenuFlyoutItem
+                                    Click="{x:Bind OnUseInstructionClicked}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"
+                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
+
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon Glyph="&#xE946;" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
+
+                <MenuFlyoutSeparator
+                    Grid.Row="2"
+                    Margin="35,0,35,3"
+                    Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+                <!--  内容  -->
+                <Frame
+                    x:Name="StoreFrame"
+                    Grid.Row="3"
+                    Navigated="{x:Bind OnNavigated}"
+                    NavigationFailed="{x:Bind OnNavigationFailed}" />
+            </Grid>
+        </SplitView.Content>
 
         <SplitView.Pane>
             <!--  使用说明  -->
@@ -237,114 +346,5 @@
                 </ScrollView>
             </Grid>
         </SplitView.Pane>
-
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <!--  标题  -->
-            <TextBlock
-                Grid.Row="0"
-                Margin="30,10,30,0"
-                FontSize="22"
-                Text="{x:Bind root:ResourceService.GetLocalized('Store/Title')}" />
-
-            <Grid
-                Grid.Row="1"
-                Margin="30,8"
-                HorizontalAlignment="Stretch">
-
-                <!--  商店应用控制栏  -->
-                <Grid
-                    HorizontalAlignment="Center"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{ThemeResource ControlCornerRadius}">
-
-                    <SelectorBar
-                        x:Name="StoreSelectorBar"
-                        Padding="0"
-                        HorizontalAlignment="Center"
-                        SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
-
-                        <SelectorBarItem
-                            Padding="12,6,12,3"
-                            IsTapEnabled="True"
-                            Tag="0"
-                            Tapped="{x:Bind OnSelectorBarTapped}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/QueryLinks')}">
-                            <SelectorBarItem.Icon>
-                                <FontIcon Glyph="&#xE71B;" />
-                            </SelectorBarItem.Icon>
-                        </SelectorBarItem>
-
-                        <SelectorBarItem
-                            Padding="12,6,12,3"
-                            IsTapEnabled="True"
-                            Tag="1"
-                            Tapped="{x:Bind OnSelectorBarTapped}"
-                            Text="{x:Bind root:ResourceService.GetLocalized('Store/SearchApps')}">
-                            <SelectorBarItem.Icon>
-                                <FontIcon Glyph="&#xE721;" />
-                            </SelectorBarItem.Icon>
-                        </SelectorBarItem>
-                    </SelectorBar>
-                </Grid>
-
-                <Button
-                    Width="34"
-                    Height="34"
-                    Padding="0"
-                    HorizontalAlignment="Right"
-                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/ViewMoreOptions')}">
-
-                    <Button.Content>
-                        <FontIcon FontSize="16" Glyph="&#xE712;" />
-                    </Button.Content>
-
-                    <Button.Flyout>
-                        <MenuFlyout Placement="Bottom">
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnLanguageAndRegionClicked}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegion')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/LanguageAndRegionToolTip')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xF2B7;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-
-                            <MenuFlyoutItem
-                                Click="{x:Bind OnUseInstructionClicked}"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Store/UseInstruction')}"
-                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Store/UseInstructionToolTip')}">
-
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Glyph="&#xE946;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </Button.Flyout>
-                </Button>
-            </Grid>
-
-            <MenuFlyoutSeparator
-                Grid.Row="2"
-                Margin="35,0,35,3"
-                Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
-
-            <!--  内容  -->
-
-            <Frame
-                x:Name="StoreFrame"
-                Grid.Row="3"
-                Navigated="{x:Bind OnNavigated}"
-                NavigationFailed="{x:Bind OnNavigationFailed}" />
-        </Grid>
     </SplitView>
 </Page>
