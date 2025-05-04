@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Views.Pages;
 using Microsoft.UI.Xaml;
@@ -14,7 +14,7 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
-        /// �رնԻ���
+        /// 关闭对话框
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
         {
