@@ -26,6 +26,11 @@ namespace GetStoreApp.Models.Controls.WinGet
         public string AppName { get; set; }
 
         /// <summary>
+        /// 应用版本
+        /// </summary>
+        public string AppVersion { get; set; }
+
+        /// <summary>
         /// 应用包下载目录
         /// </summary>
         public string PackagePath { get; set; }

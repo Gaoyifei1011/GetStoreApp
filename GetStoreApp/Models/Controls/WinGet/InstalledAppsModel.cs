@@ -8,22 +8,6 @@ namespace GetStoreApp.Models.Controls.WinGet
     /// </summary>
     public sealed partial class InstalledAppsModel : INotifyPropertyChanged
     {
-        private bool _isUninstalling;
-
-        public bool IsUninstalling
-        {
-            get { return _isUninstalling; }
-
-            set
-            {
-                if (!Equals(_isUninstalling, value))
-                {
-                    _isUninstalling = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUninstalling)));
-                }
-            }
-        }
-
         /// <summary>
         /// 应用ID
         /// </summary>
@@ -43,6 +27,38 @@ namespace GetStoreApp.Models.Controls.WinGet
         /// 应用版本
         /// </summary>
         public string AppVersion { get; set; }
+
+        private bool _isUninstalling;
+
+        public bool IsUninstalling
+        {
+            get { return _isUninstalling; }
+
+            set
+            {
+                if (!Equals(_isUninstalling, value))
+                {
+                    _isUninstalling = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUninstalling)));
+                }
+            }
+        }
+
+        private bool _isRepairing;
+
+        public bool IsRepairing
+        {
+            get { return _isRepairing; }
+
+            set
+            {
+                if (!Equals(_isRepairing, value))
+                {
+                    _isRepairing = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRepairing)));
+                }
+            }
+        }
 
         public CatalogPackage CatalogPackage { get; set; }
 
