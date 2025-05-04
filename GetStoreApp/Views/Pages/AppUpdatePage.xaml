@@ -208,7 +208,6 @@
                                     <ColumnDefinition Width="40" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="1.2*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
@@ -229,30 +228,48 @@
                                     </ImageIcon>
                                 </Grid>
 
-                                <TextBlock
+                                <StackPanel
                                     Grid.Column="1"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
+                                    Margin="0,12"
                                     VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind DisplayName}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap" />
+                                    Orientation="Vertical">
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind PublisherDisplayName}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap" />
+                                    <TextBlock
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind DisplayName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
+                                                    <Run Text="{x:Bind DisplayName}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="{x:Bind PublisherDisplayName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
+                                                    <Run Text="{x:Bind PublisherDisplayName}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
 
                                 <StackPanel
-                                    Grid.Column="3"
+                                    Grid.Column="2"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Spacing="2">
@@ -277,7 +294,7 @@
                                 </StackPanel>
 
                                 <Button
-                                    Grid.Column="4"
+                                    Grid.Column="3"
                                     Command="{StaticResource UpdateCommand}"
                                     CommandParameter="{x:Bind PackageFamilyName}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Update')}"
@@ -285,7 +302,7 @@
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsUpdating), Mode=OneWay}" />
 
                                 <Button
-                                    Grid.Column="4"
+                                    Grid.Column="3"
                                     Command="{StaticResource CancelCommand}"
                                     CommandParameter="{x:Bind PackageFamilyName}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Cancel')}"
