@@ -304,14 +304,7 @@
                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('AppManager/InstalledAppsToolTip')}">
 
                         <AppBarButton.Icon>
-                            <AnimatedIcon>
-                                <AnimatedIcon.Source>
-                                    <animatedvisuals:AnimatedSettingsVisualSource />
-                                </AnimatedIcon.Source>
-                                <AnimatedIcon.FallbackIconSource>
-                                    <FontIconSource Glyph="&#xE713;" />
-                                </AnimatedIcon.FallbackIconSource>
-                            </AnimatedIcon>
+                            <FontIcon Glyph="&#xE71D;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar.SecondaryCommands>
@@ -382,9 +375,6 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
@@ -405,94 +395,64 @@
                                     </ImageIcon>
                                 </Grid>
 
-                                <TextBlock
+                                <StackPanel
                                     Grid.Column="1"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind DisplayName}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                    Orientation="Vertical">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
-                                                <Run Text="{x:Bind DisplayName}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    <TextBlock
+                                        Style="{StaticResource BodyTextBlockStyle}"
+                                        Text="{x:Bind DisplayName}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                <TextBlock
-                                    Grid.Column="2"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Text="{x:Bind PublisherDisplayName}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
+                                                    <Run Text="{x:Bind DisplayName}" />
+                                                </TextBlock>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
-                                                <Run Text="{x:Bind PublisherDisplayName}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                <TextBlock
-                                    Grid.Column="3"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    HorizontalTextAlignment="Left"
-                                    Text="{x:Bind Version}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                        <Run Text="{x:Bind PublisherDisplayName}" />
+                                        <Run Text=" | " />
+                                        <Run Text="{x:Bind Version}" />
+                                        <Run Text=" | " />
+                                        <Run Text="{x:Bind InstallDate}" />
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/VersionToolTip')}" />
-                                                <Run Text="{x:Bind Version}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
+                                                        <Run Text="{x:Bind PublisherDisplayName}" />
+                                                    </TextBlock>
 
-                                <TextBlock
-                                    Grid.Column="4"
-                                    MinWidth="50"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    HorizontalTextAlignment="Left"
-                                    Text="{x:Bind InstallDate}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/VersionToolTip')}" />
+                                                        <Run Text="{x:Bind Version}" />
+                                                    </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/InstallDateToolTip')}" />
-                                                <Run Text="{x:Bind InstallDate}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/InstallDateToolTip')}" />
+                                                        <Run Text="{x:Bind InstallDate}" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </StackPanel>
 
                                 <StackPanel
-                                    Grid.Column="5"
+                                    Grid.Column="2"
                                     Height="30"
                                     BorderBrush="{ThemeResource ButtonBorderBrush}"
                                     BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
