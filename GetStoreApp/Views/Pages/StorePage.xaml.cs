@@ -132,19 +132,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航完成后发生
-        /// </summary>
-        private void OnNavigated(object sender, NavigationEventArgs args)
-        {
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
-
-            if (index >= 0 && index < StoreSelectorBar.Items.Count)
-            {
-                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
-            }
-        }
-
-        /// <summary>
         /// 点击选择器栏发生的事件
         /// </summary>
         private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
@@ -162,6 +149,19 @@ namespace GetStoreApp.Views.Pages
                 {
                     NavigateTo(PageList[1], null, index > currentIndex);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 导航完成后发生
+        /// </summary>
+        private void OnNavigated(object sender, NavigationEventArgs args)
+        {
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < StoreSelectorBar.Items.Count)
+            {
+                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
             }
         }
 

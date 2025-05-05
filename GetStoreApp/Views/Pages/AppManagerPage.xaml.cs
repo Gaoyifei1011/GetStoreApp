@@ -45,6 +45,17 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：应用管理页面——挂载的事件
 
         /// <summary>
+        /// 单击痕迹栏条目时发生的事件
+        /// </summary>
+        private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
+        {
+            if (args.Item is ContentLinkInfo breadItem && BreadCollection.Count is 2 && breadItem.SecondaryText.Equals(BreadCollection[0].SecondaryText))
+            {
+                NavigateTo(typeof(AppListPage), null, false);
+            }
+        }
+
+        /// <summary>
         /// 导航完成后发生
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
@@ -78,17 +89,6 @@ namespace GetStoreApp.Views.Pages
         {
             args.Handled = true;
             LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("AppManager/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
-        }
-
-        /// <summary>
-        /// 单击痕迹栏条目时发生的事件
-        /// </summary>
-        private void OnItemClicked(object sender, BreadcrumbBarItemClickedEventArgs args)
-        {
-            if (args.Item is ContentLinkInfo breadItem && BreadCollection.Count is 2 && breadItem.SecondaryText.Equals(BreadCollection[0].SecondaryText))
-            {
-                NavigateTo(typeof(AppListPage), null, false);
-            }
         }
 
         #endregion 第二部分：应用管理页面——挂载的事件

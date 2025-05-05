@@ -166,19 +166,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航完成后发生
-        /// </summary>
-        private void OnNavigated(object sender, NavigationEventArgs args)
-        {
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
-
-            if (index >= 0 && index < WinGetSelectorBar.Items.Count)
-            {
-                SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
-            }
-        }
-
-        /// <summary>
         /// 点击选择器栏发生的事件
         /// </summary>
         private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
@@ -204,7 +191,20 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 导航失败时发生
+        /// 导航完成后发生
+        /// </summary>
+        private void OnNavigated(object sender, NavigationEventArgs args)
+        {
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < WinGetSelectorBar.Items.Count)
+            {
+                SelectedItem = WinGetSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+            }
+        }
+
+        /// <summary>
+        /// 导航失败时发生的事件
         /// </summary>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
         {
@@ -222,9 +222,20 @@ namespace GetStoreApp.Views.Pages
         #endregion 第三部分：WinGet 程序包页面——挂载的事件
 
         /// <summary>
+        /// 显示任务管理
+        /// </summary>
+        public void ShowTaskManager()
+        {
+            if (!WinGetSplitView.IsPaneOpen)
+            {
+                WinGetSplitView.IsPaneOpen = true;
+            }
+        }
+
+        /// <summary>
         /// 页面向前导航
         /// </summary>
-        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        private void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
         {
             try
             {
@@ -245,20 +256,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取当前导航到的页
         /// </summary>
-        public Type GetCurrentPageType()
+        private Type GetCurrentPageType()
         {
             return WinGetFrame.CurrentSourcePageType;
-        }
-
-        /// <summary>
-        /// 显示任务管理
-        /// </summary>
-        public void ShowTaskManager()
-        {
-            if (!WinGetSplitView.IsPaneOpen)
-            {
-                WinGetSplitView.IsPaneOpen = true;
-            }
         }
     }
 }
