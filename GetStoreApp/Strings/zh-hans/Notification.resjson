@@ -1,5 +1,6 @@
 {
   "AppInformationCopy": "应用信息已成功复制到剪贴板",
+  "WinGetAppInformation": "WinGet 应用信息已成功复制到剪贴板",
   "AppInstallFailed": "{0} 安装失败",
   "AppInstallFailedReason": "错误原因：{0}",
   "AppInstallSelf": "即将安装本应用，安装过程中程序可能会自动退出。",

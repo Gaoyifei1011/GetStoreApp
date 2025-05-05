@@ -1,5 +1,6 @@
 {
   "AppInformationCopy": "تم نسخ معلومات التطبيق بنجاح إلى الحافظة",
+  "WinGetAppInformation": "WinGet app information has been successfully copied to the clipboard",
   "AppInstallFailed": "{0} install failed",
   "AppInstallFailedReason": "Error reason: {0}",
   "AppInstallSelf": "The application may exit automatically during installation.",
