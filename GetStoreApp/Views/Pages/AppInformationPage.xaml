@@ -35,7 +35,7 @@
         VerticalScrollBarVisibility="Auto"
         VerticalScrollMode="Enabled">
 
-        <Grid>
+        <Grid Margin="0,0,0,30">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -475,7 +475,7 @@
 
                         <ItemsView
                             CornerRadius="0"
-                            ItemsSource="{x:Bind AppListEntryCollection, Mode=OneWay}"
+                            ItemsSource="{x:Bind AppListEntryCollection}"
                             SelectionMode="None">
 
                             <ItemsView.ItemTemplate>
@@ -791,7 +791,7 @@
 
                         <ItemsView
                             CornerRadius="0"
-                            ItemsSource="{x:Bind DependenciesCollection, Mode=OneWay}"
+                            ItemsSource="{x:Bind DependenciesCollection}"
                             SelectionMode="None">
 
                             <ItemsView.ItemTemplate>

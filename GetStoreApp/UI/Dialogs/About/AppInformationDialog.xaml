@@ -43,7 +43,7 @@
 
         <ItemsView
             CornerRadius="0"
-            ItemsSource="{x:Bind AppInformationCollection, Mode=OneWay}"
+            ItemsSource="{x:Bind AppInformationCollection}"
             SelectionMode="None"
             Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
 

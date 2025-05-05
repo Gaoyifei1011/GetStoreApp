@@ -355,7 +355,7 @@
         <ItemsView
             Grid.Row="2"
             Padding="30,0,30,30"
-            ItemsSource="{x:Bind AppManagerCollection, Mode=OneWay}"
+            ItemsSource="{x:Bind AppManagerCollection}"
             SelectionMode="None"
             Visibility="{x:Bind GetAppManagerSuccessfullyState(AppManagerResultKind, x:True), Mode=OneWay}">
 

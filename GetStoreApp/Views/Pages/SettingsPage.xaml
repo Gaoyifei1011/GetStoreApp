@@ -523,7 +523,7 @@
                                             x:Name="LanguageItemsView"
                                             MaxHeight="300"
                                             Background="Transparent"
-                                            ItemsSource="{x:Bind LanguageCollection, Mode=OneWay}"
+                                            ItemsSource="{x:Bind LanguageCollection}"
                                             SelectionMode="None">
 
                                             <ItemsView.Resources>
@@ -1154,7 +1154,7 @@
                                                         x:Name="StoreRegionItemsView"
                                                         MaxHeight="300"
                                                         Background="Transparent"
-                                                        ItemsSource="{x:Bind StoreRegionCollection, Mode=OneWay}"
+                                                        ItemsSource="{x:Bind StoreRegionCollection}"
                                                         SelectionMode="None">
 
                                                         <ItemsView.Resources>
@@ -2624,7 +2624,7 @@
                     Grid.Row="1"
                     Padding="30,0,30,0"
                     CornerRadius="0"
-                    ItemsSource="{x:Bind WinGetSourceInternalCollection, Mode=OneWay}"
+                    ItemsSource="{x:Bind WinGetSourceInternalCollection}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(WinGetSourceInternalCollection.Count), Mode=OneWay}">
 
@@ -2927,7 +2927,7 @@
                     Grid.Row="3"
                     Padding="30,0,30,0"
                     CornerRadius="0"
-                    ItemsSource="{x:Bind WinGetSourceCustomCollection, Mode=OneWay}"
+                    ItemsSource="{x:Bind WinGetSourceCustomCollection}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(WinGetSourceCustomCollection.Count), Mode=OneWay}">
 

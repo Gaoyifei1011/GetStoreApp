@@ -187,7 +187,7 @@
 
                         <ItemsView
                             CornerRadius="0"
-                            ItemsSource="{x:Bind HistoryCollection, Mode=OneWay}"
+                            ItemsSource="{x:Bind HistoryCollection}"
                             SelectionMode="None"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
 
@@ -373,7 +373,7 @@
 
                 <ItemsView
                     Grid.Row="2"
-                    ItemsSource="{x:Bind SearchStoreCollection, Mode=OneWay}"
+                    ItemsSource="{x:Bind SearchStoreCollection}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(SearchStoreCollection.Count), Mode=OneWay}">
 

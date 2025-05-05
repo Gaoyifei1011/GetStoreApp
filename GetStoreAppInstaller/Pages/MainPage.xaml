@@ -471,7 +471,7 @@
                                                         Grid.Row="1"
                                                         Width="450"
                                                         Height="200"
-                                                        ItemsSource="{x:Bind InstallDependencyCollection, Mode=OneWay}"
+                                                        ItemsSource="{x:Bind InstallDependencyCollection}"
                                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                         ScrollViewer.HorizontalScrollMode="Disabled"
                                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -1427,7 +1427,7 @@
 
                                             <ListView
                                                 Grid.Row="1"
-                                                ItemsSource="{x:Bind TargetDeviceFamilyCollection, Mode=OneWay}"
+                                                ItemsSource="{x:Bind TargetDeviceFamilyCollection}"
                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                 ScrollViewer.HorizontalScrollMode="Disabled"
                                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -1636,7 +1636,7 @@
                                                 x:Name="PackageDependencyListView"
                                                 Grid.Row="1"
                                                 x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.Package), Mode=OneWay}"
-                                                ItemsSource="{x:Bind DependencyCollection, Mode=OneWay}"
+                                                ItemsSource="{x:Bind DependencyCollection}"
                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                 ScrollViewer.HorizontalScrollMode="Disabled"
                                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -1836,7 +1836,7 @@
                                                 x:Name="AppInstallerDependencyListView"
                                                 Grid.Row="1"
                                                 x:Load="{x:Bind x:Object.Equals(PackageFileType, enum:PackageFileType.AppInstaller), Mode=OneWay}"
-                                                ItemsSource="{x:Bind DependencyCollection, Mode=OneWay}"
+                                                ItemsSource="{x:Bind DependencyCollection}"
                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                 ScrollViewer.HorizontalScrollMode="Disabled"
                                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -1998,7 +1998,7 @@
                                     <muxc:Expander.Content>
                                         <GridView
                                             Margin="10,4,10,-4"
-                                            ItemsSource="{x:Bind CapabilitiesCollection, Mode=OneWay}"
+                                            ItemsSource="{x:Bind CapabilitiesCollection}"
                                             SelectionMode="None">
 
                                             <GridView.ItemContainerStyle>
@@ -2197,7 +2197,7 @@
 
                                             <ListView
                                                 Grid.Row="1"
-                                                ItemsSource="{x:Bind ApplicationCollection, Mode=OneWay}"
+                                                ItemsSource="{x:Bind ApplicationCollection}"
                                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                                 ScrollViewer.HorizontalScrollMode="Disabled"
                                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -2358,7 +2358,7 @@
                                     <muxc:Expander.Content>
                                         <GridView
                                             Margin="16,4,16,-4"
-                                            ItemsSource="{x:Bind LanguageCollection, Mode=OneWay}"
+                                            ItemsSource="{x:Bind LanguageCollection}"
                                             SelectionMode="None">
 
                                             <GridView.ItemContainerStyle>

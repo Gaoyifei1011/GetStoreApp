@@ -321,7 +321,7 @@
 
                         <ItemsView
                             CornerRadius="0"
-                            ItemsSource="{x:Bind HistoryCollection, Mode=OneWay}"
+                            ItemsSource="{x:Bind HistoryCollection}"
                             SelectionMode="None"
                             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(HistoryCollection.Count), Mode=OneWay}">
 
@@ -806,7 +806,7 @@
                     CornerRadius="0"
                     IsItemInvokedEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
                     ItemInvoked="{x:Bind OnItemInvoked}"
-                    ItemsSource="{x:Bind QueryLinksCollection, Mode=OneWay}"
+                    ItemsSource="{x:Bind QueryLinksCollection}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(QueryLinksCollection.Count), Mode=OneWay}">
 

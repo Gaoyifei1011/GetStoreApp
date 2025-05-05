@@ -207,7 +207,7 @@
             Padding="30,3,30,30"
             IsItemInvokedEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
             ItemInvoked="{x:Bind OnItemInvoked}"
-            ItemsSource="{x:Bind DownloadingCollection, Mode=OneWay}"
+            ItemsSource="{x:Bind DownloadingCollection}"
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}">
 

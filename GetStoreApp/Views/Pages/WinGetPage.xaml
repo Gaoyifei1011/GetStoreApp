@@ -285,7 +285,7 @@
                     Grid.Row="1"
                     Width="450"
                     Height="200"
-                    ItemsSource="{x:Bind PackageOperationCollection, Mode=OneWay}"
+                    ItemsSource="{x:Bind PackageOperationCollection}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(PackageOperationCollection.Count), Mode=OneWay}">
 
