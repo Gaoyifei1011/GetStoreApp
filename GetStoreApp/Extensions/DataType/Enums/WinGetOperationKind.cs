@@ -3,7 +3,7 @@
     /// <summary>
     /// WinGet 操作枚举值
     /// </summary>
-    public enum WinGetOptionKind
+    public enum WinGetOperationKind
     {
         SearchDownloadCopy = 0,
         SearchInstallCopy = 1,

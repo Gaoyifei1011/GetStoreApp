@@ -9,22 +9,22 @@ namespace GetStoreApp.UI.Dialogs.WinGet
     /// </summary>
     public sealed partial class RebootDialog : ContentDialog
     {
-        public RebootDialog(WinGetOptionKind options, string appName)
+        public RebootDialog(WinGetOperationKind options, string appName)
         {
             InitializeComponent();
             switch (options)
             {
-                case WinGetOptionKind.SearchInstall:
+                case WinGetOperationKind.SearchInstall:
                     {
                         Content = string.Format(ResourceService.GetLocalized("Dialog/InstallNeedReboot"), appName);
                         break;
                     }
-                case WinGetOptionKind.Uninstall:
+                case WinGetOperationKind.Uninstall:
                     {
                         Content = string.Format(ResourceService.GetLocalized("Dialog/UninstallNeedReboot"), appName);
                         break;
                     }
-                case WinGetOptionKind.Upgrade:
+                case WinGetOperationKind.Upgrade:
                     {
                         Content = string.Format(ResourceService.GetLocalized("Dialog/UpgradeNeedReboot"), appName);
                         break;
