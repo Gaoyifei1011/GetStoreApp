@@ -1,5 +1,4 @@
 ﻿using Microsoft.Management.Deployment;
-using System.Collections.Generic;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
@@ -22,10 +21,5 @@ namespace GetStoreApp.Models.Controls.WinGet
         /// 匹配到的应用包
         /// </summary>
         public CatalogPackage CatalogPackage { get; set; }
-
-        /// <summary>
-        /// 可用版本列表
-        /// </summary>
-        public List<AvailableVersionModel> AvailableVersion { get; set; }
     }
 }
