@@ -170,7 +170,6 @@ namespace GetStoreApp.Views.Windows
             KeyValuePair.Create("AppManager", typeof(AppManagerPage)),
             KeyValuePair.Create("Download", typeof(DownloadPage)),
             KeyValuePair.Create<string, Type>("Web",null),
-            KeyValuePair.Create("About", typeof(AboutPage)),
             KeyValuePair.Create("Settings", typeof(SettingsPage))
         ];
 
@@ -505,7 +504,6 @@ namespace GetStoreApp.Views.Windows
                     case "AppManager": displayName = WindowAppManagerText.Text; break;
                     case "Download": displayName = WindowDownloadText.Text; break;
                     case "Web": displayName = WindowWebText.Text; break;
-                    case "About": displayName = WindowAboutText.Text; break;
                     case "Settings": displayName = WindowSettingsText.Text; break;
                 }
 

@@ -373,28 +373,6 @@
                 </NavigationView.MenuItems>
 
                 <NavigationView.FooterMenuItems>
-                    <NavigationViewItem Tag="About">
-
-                        <NavigationViewItem.Content>
-                            <TextBlock
-                                x:Name="WindowAboutText"
-                                Text="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                        </NavigationViewItem.Content>
-
-                        <NavigationViewItem.Icon>
-                            <ImageIcon Source="ms-appx:///Assets/Icon/Control/About.png" />
-                        </NavigationViewItem.Icon>
-
-                        <ToolTipService.ToolTip>
-                            <ToolTip
-                                MaxWidth="9999"
-                                Content="{x:Bind root:ResourceService.GetLocalized('Window/About')}"
-                                Visibility="{x:Bind WindowAboutText.IsTextTrimmed, Mode=OneWay}" />
-                        </ToolTipService.ToolTip>
-                    </NavigationViewItem>
-
                     <NavigationViewItem Tag="Settings">
 
                         <NavigationViewItem.Content>
