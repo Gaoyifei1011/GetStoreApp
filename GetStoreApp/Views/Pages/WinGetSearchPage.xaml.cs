@@ -4,7 +4,6 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.WinGet;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
@@ -168,112 +167,35 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        /// <summary>
-        /// 复制下载命令
-        /// </summary>
-        private async void OnCopyDownloadTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is SearchAppsModel searchApps)
-            {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchDownloadCopy, WinGetPageInstance, searchApps));
-            }
-        }
-
-        /// <summary>
-        /// 复制安装命令
-        /// </summary>
-        private async void OnCopyInstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is SearchAppsModel searchApps)
-            {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchInstallCopy, WinGetPageInstance, searchApps));
-            }
-        }
-
-        /// <summary>
-        /// 复制修复命令
-        /// </summary>
-        private async void OnCopyRepairTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is SearchAppsModel searchApps)
-            {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchRepairCopy, WinGetPageInstance, searchApps));
-            }
-        }
+        // TODO: 未完成
 
         /// <summary>
         /// 下载应用
         /// </summary>
-        private async void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnDownloadExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchDownload, WinGetPageInstance, searchApps));
-            }
-        }
-
-        /// <summary>
-        /// 使用命令提示符下载应用
-        /// </summary>
-        private async void OnDownloadWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
-            {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchDownloadCommand, WinGetPageInstance, searchApps));
             }
         }
 
         /// <summary>
         /// 安装应用
         /// </summary>
-        private async void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnInstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchInstall, WinGetPageInstance, searchApps));
-            }
-        }
-
-        /// <summary>
-        /// 安装应用（默认版本）
-        /// </summary>
-        private void OnInstallDefaultExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
-            {
-            }
-        }
-
-        /// <summary>
-        /// 使用命令提示符安装应用
-        /// </summary>
-        private async void OnInstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
-            {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchInstallCommand, WinGetPageInstance, searchApps));
             }
         }
 
         /// <summary>
         /// 修复应用
         /// </summary>
-        private async void OnRepairExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnRepairExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchRepair, WinGetPageInstance, searchApps));
-            }
-        }
-
-        /// <summary>
-        /// 使用命令提示符修复应用
-        /// </summary>
-        private async void OnRepairWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
-            {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchRepairCommand, WinGetPageInstance, searchApps));
             }
         }
 

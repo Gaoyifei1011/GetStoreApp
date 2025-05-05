@@ -14,6 +14,7 @@
   "WinGetAppsVersion": "There are {0} versions",
   "AppCurrentVersionToolTip": "Current version:",
   "AppIDToolTip": "App ID: ",
+  "AppName": "App name: ",
   "AppNameToolTip": "App name:",
   "AppNewestVersionToolTip": "The newest version:",
   "AppPublisher": "Publisher:",

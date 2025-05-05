@@ -14,6 +14,7 @@
   "WinGetAppsVersion": "There are {0} versions",
   "AppCurrentVersionToolTip": "الإصدار الحالي:",
   "AppIDToolTip": "App ID: ",
+  "AppName": "App name: ",
   "AppNameToolTip": "اسم التطبيق:",
   "AppNewestVersionToolTip": "أحدث إصدار:",
   "LoadingInformation": "Loading information...",

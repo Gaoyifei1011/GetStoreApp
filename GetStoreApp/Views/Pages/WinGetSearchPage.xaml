@@ -18,16 +18,9 @@
             <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
             <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
 
-            <XamlUICommand x:Name="CopyDownloadTextCommand" ExecuteRequested="{x:Bind OnCopyDownloadTextExecuteRequested}" />
-            <XamlUICommand x:Name="CopyInstallTextCommand" ExecuteRequested="{x:Bind OnCopyInstallTextExecuteRequested}" />
-            <XamlUICommand x:Name="CopyRepairTextCommand" ExecuteRequested="{x:Bind OnCopyRepairTextExecuteRequested}" />
             <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
-            <XamlUICommand x:Name="DownloadWithCmdCommand" ExecuteRequested="{x:Bind OnDownloadWithCmdExecuteRequested}" />
             <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
-            <XamlUICommand x:Name="InstallDefaultCommand" ExecuteRequested="{x:Bind OnInstallDefaultExecuteRequested}" />
-            <XamlUICommand x:Name="InstallWithCmdCommand" ExecuteRequested="{x:Bind OnInstallWithCmdExecuteRequested}" />
             <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
-            <XamlUICommand x:Name="RepairWithCmdCommand" ExecuteRequested="{x:Bind OnRepairWithCmdExecuteRequested}" />
             <XamlUICommand x:Name="ViewVersionInfoCommand" ExecuteRequested="{x:Bind OnViewVersionInfoExecuteRequested}" />
         </Grid.Resources>
 
@@ -436,7 +429,7 @@
                                     VerticalAlignment="Stretch"
                                     VerticalContentAlignment="Center"
                                     BorderThickness="0,0,1,0"
-                                    Command="{StaticResource InstallDefaultCommand}"
+                                    Command="{StaticResource InstallCommand}"
                                     CommandParameter="{x:Bind}"
                                     Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
                                     CornerRadius="0"
@@ -472,59 +465,9 @@
                                             <MenuFlyoutItem
                                                 Height="32"
                                                 Padding="11,0"
-                                                Command="{StaticResource CopyDownloadTextCommand}"
-                                                CommandParameter="{x:Bind AppID}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyDownloadText')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8C8;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource CopyInstallTextCommand}"
-                                                CommandParameter="{x:Bind AppID}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8C8;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource CopyRepairTextCommand}"
-                                                CommandParameter="{x:Bind AppID}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyRepairText')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8C8;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutSeparator />
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
                                                 Command="{StaticResource DownloadCommand}"
                                                 CommandParameter="{x:Bind}"
                                                 Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE896;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource InstallCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}">
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE896;" />
@@ -540,44 +483,6 @@
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE90F;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutSeparator />
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource DownloadWithCmdCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadWithCmd')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE756;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource InstallWithCmdCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE756;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource RepairWithCmdCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairWithCmd')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE756;" />
                                                 </MenuFlyoutItem.Icon>
                                             </MenuFlyoutItem>
 
