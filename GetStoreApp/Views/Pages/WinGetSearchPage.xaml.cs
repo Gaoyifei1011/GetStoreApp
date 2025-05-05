@@ -175,7 +175,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchDownloadCopy, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchDownloadCopy, WinGetPageInstance, searchApps));
             }
         }
 
@@ -186,7 +186,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchInstallCopy, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchInstallCopy, WinGetPageInstance, searchApps));
             }
         }
 
@@ -197,7 +197,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchRepairCopy, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchRepairCopy, WinGetPageInstance, searchApps));
             }
         }
 
@@ -208,7 +208,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchDownload, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchDownload, WinGetPageInstance, searchApps));
             }
         }
 
@@ -219,7 +219,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchDownloadCommand, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchDownloadCommand, WinGetPageInstance, searchApps));
             }
         }
 
@@ -230,7 +230,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchInstall, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchInstall, WinGetPageInstance, searchApps));
             }
         }
 
@@ -251,7 +251,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchInstallCommand, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchInstallCommand, WinGetPageInstance, searchApps));
             }
         }
 
@@ -262,7 +262,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchRepair, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchRepair, WinGetPageInstance, searchApps));
             }
         }
 
@@ -273,7 +273,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.SearchRepairCommand, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.SearchRepairCommand, WinGetPageInstance, searchApps));
             }
         }
 
@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
-                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOptionKind.VersionInfo, WinGetPageInstance, searchApps));
+                await MainWindow.Current.ShowDialogAsync(new WinGetAppsVersionDialog(WinGetOperationKind.VersionInfo, WinGetPageInstance, searchApps));
             }
         }
 
@@ -609,7 +609,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         DispatcherQueue.TryEnqueue(async () =>
                         {
-                            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOptionKind.SearchInstall, searchApps.AppName));
+                            ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.SearchInstall, searchApps.AppName));
 
                             if (contentDialogResult is ContentDialogResult.Primary)
                             {
@@ -918,31 +918,10 @@ namespace GetStoreApp.Views.Pages
 
                             if (matchItem.CatalogPackage is not null && matchItem.CatalogPackage.Id is not null)
                             {
-                                // 获取当前应用可用版本
-                                List<AvailableVersionModel> availableVersionCollection = [];
-
-                                for (int subIndex = 0; subIndex < matchItem.CatalogPackage.AvailableVersions.Count; subIndex++)
-                                {
-                                    PackageVersionId packageVersionId = matchItem.CatalogPackage.AvailableVersions[subIndex];
-                                    PackageVersionInfo packageVersionInfo = matchItem.CatalogPackage.GetPackageVersionInfo(packageVersionId);
-
-                                    if (!string.IsNullOrEmpty(packageVersionId.Version))
-                                    {
-                                        availableVersionCollection.Add(new AvailableVersionModel()
-                                        {
-                                            Channel = string.IsNullOrEmpty(packageVersionInfo.Channel) || packageVersionInfo.Channel.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : packageVersionInfo.Channel,
-                                            Publisher = string.IsNullOrEmpty(packageVersionInfo.Publisher) || packageVersionInfo.Publisher.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : packageVersionInfo.Publisher,
-                                            Version = string.IsNullOrEmpty(packageVersionInfo.Version) || packageVersionInfo.Version.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : packageVersionInfo.Version,
-                                            PackageVersionId = packageVersionId,
-                                        });
-                                    }
-                                }
-
                                 searchAppsList.Add(new SearchAppsModel()
                                 {
                                     AppID = matchItem.CatalogPackage.Id,
                                     AppName = string.IsNullOrEmpty(matchItem.CatalogPackage.Name) || matchItem.CatalogPackage.Name.Equals("Unknown", StringComparison.OrdinalIgnoreCase) ? Unknown : matchItem.CatalogPackage.Name,
-                                    AvailableVersion = availableVersionCollection,
                                     CatalogPackage = matchItem.CatalogPackage,
                                 });
                             }
@@ -986,12 +965,21 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 获取是否正在搜索中
+        /// 获取搜索框是否可进行搜索
         /// </summary>
 
-        public bool GetIsSearching(SearchAppsResultKind searchAppsResultKind)
+        public bool GetSearchBoxEnabled(SearchAppsResultKind searchAppsResultKind)
         {
-            return !searchAppsResultKind.Equals(SearchAppsResultKind.Searching) || !searchAppsResultKind.Equals(SearchAppsResultKind.NotSearch);
+            return !searchAppsResultKind.Equals(SearchAppsResultKind.Searching);
+        }
+
+        /// <summary>
+        /// 获取搜索框是否可进行搜索
+        /// </summary>
+
+        public bool GetSearchRefreshEnabled(SearchAppsResultKind searchAppsResultKind)
+        {
+            return !(searchAppsResultKind.Equals(SearchAppsResultKind.Searching) || searchAppsResultKind.Equals(SearchAppsResultKind.NotSearch));
         }
     }
 }

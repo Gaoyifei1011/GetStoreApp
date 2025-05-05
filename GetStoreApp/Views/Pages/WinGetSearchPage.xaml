@@ -87,7 +87,7 @@
                 Width="170"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                IsEnabled="{x:Bind GetIsSearching(SearchAppsResultKind), Mode=OneWay}"
+                IsEnabled="{x:Bind GetSearchBoxEnabled(SearchAppsResultKind), Mode=OneWay}"
                 PlaceholderText="{x:Bind root:ResourceService.GetLocalized('WinGet/SearchAppsPlaceHolderText')}"
                 QuerySubmitted="{x:Bind OnQuerySubmitted}"
                 Text="{x:Bind SearchText, Mode=OneWay}"
@@ -273,7 +273,7 @@
                 <CommandBar.SecondaryCommands>
                     <AppBarButton
                         Click="{x:Bind OnRefreshClicked}"
-                        IsEnabled="{x:Bind GetIsSearching(SearchAppsResultKind), Mode=OneWay}"
+                        IsEnabled="{x:Bind GetSearchRefreshEnabled(SearchAppsResultKind), Mode=OneWay}"
                         Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Refresh')}"
                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RefreshToolTip')}">
 
@@ -358,7 +358,7 @@
         <ItemsView
             Grid.Row="2"
             Padding="30,3,30,30"
-            ItemsSource="{x:Bind SearchAppsCollection, Mode=OneWay}"
+            ItemsSource="{x:Bind SearchAppsCollection}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.HorizontalScrollMode="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -416,7 +416,7 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppIDToolTip')}" />
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
                                                 <Run Text="{x:Bind AppID}" />
                                             </TextBlock>
                                         </ToolTip>
