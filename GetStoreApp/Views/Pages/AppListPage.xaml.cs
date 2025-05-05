@@ -1791,7 +1791,7 @@ namespace GetStoreApp.Views.Pages
         /// 获取是否正在加载中
         /// </summary>
 
-        public bool GetIsLoading(AppManagerResultKind appManagerResultKind)
+        private bool GetIsLoading(AppManagerResultKind appManagerResultKind)
         {
             return !Equals(appManagerResultKind, AppManagerResultKind.Loading);
         }
