@@ -65,7 +65,6 @@
     <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="SourceItemGroup" />
 
     <Content Include="$(TargetDir)\Microsoft.Management.Deployment.winmd" ExcludeFromSingleFile="true" Link="Microsoft.Management.Deployment.winmd" CopyToOutputDirectory="Always" />
-    <Content Include="Assets\Icon\Control\About.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppManager.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\AppUpdate.png" CopyToOutputDirectory="Always" />
     <Content Include="Assets\Icon\Control\Download.png" CopyToOutputDirectory="Always" />
