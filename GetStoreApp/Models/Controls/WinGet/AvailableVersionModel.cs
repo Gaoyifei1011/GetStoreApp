@@ -1,5 +1,4 @@
 ﻿using Microsoft.Management.Deployment;
-using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.WinGet
 {
@@ -9,9 +8,9 @@ namespace GetStoreApp.Models.Controls.WinGet
     public partial class AvailableVersionModel
     {
         /// <summary>
-        /// 该版本对应的发布者
+        /// 是否是默认版本
         /// </summary>
-        public string Publisher { get; set; }
+        public bool IsDefaultVersion { get; set; }
 
         /// <summary>
         /// 该版本对应的版本号
@@ -19,13 +18,8 @@ namespace GetStoreApp.Models.Controls.WinGet
         public string Version { get; set; }
 
         /// <summary>
-        /// 该版本对应的通道
-        /// </summary>
-        public string Channel { get; set; }
-
-        /// <summary>
         /// 该版本所有信息
         /// </summary>
-        public PackageVersionId PackageVersionId { get; set; }
+        public PackageVersionInfo PackageVersionInfo { get; set; }
     }
 }
