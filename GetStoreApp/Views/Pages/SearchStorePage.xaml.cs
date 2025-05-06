@@ -218,7 +218,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnQueryLinksExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is string appLink && MainWindow.Current.GetFrameContent() is StorePage storePage && !storePage.GetCurrentPageType().Equals(typeof(QueryLinksPage)))
+            if (args.Parameter is string appLink && MainWindow.Current.GetFrameContent() is StorePage storePage && !Equals(storePage.GetCurrentPageType(), typeof(QueryLinksPage)))
             {
                 storePage.NavigateTo(typeof(QueryLinksPage), new List<string> { "0", null, appLink }, false);
             }
@@ -340,7 +340,7 @@ namespace GetStoreApp.Views.Pages
 
                 List<HistoryModel> historyList = [.. HistoryCollection];
 
-                int index = historyList.FindIndex(item => item.HistoryKey.Equals(historyKey, StringComparison.OrdinalIgnoreCase));
+                int index = historyList.FindIndex(item => string.Equals(item.HistoryKey, historyKey, StringComparison.OrdinalIgnoreCase));
 
                 // 不存在直接添加
                 if (index is -1)

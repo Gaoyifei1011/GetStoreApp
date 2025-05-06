@@ -284,7 +284,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             foreach (AppUpdateModel appUpdateItem in AppUpdateList)
                             {
-                                if (appUpdateItem.PackageFamilyName.Equals(upgradableAppItem.PackageFamilyName))
+                                if (Equals(appUpdateItem.PackageFamilyName, upgradableAppItem.PackageFamilyName))
                                 {
                                     isExisted = true;
                                     isUpdating = appUpdateItem.IsUpdating;
@@ -563,7 +563,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private Visibility CheckAppUpdateState(AppUpdateResultKind appUpdateResultKind, AppUpdateResultKind comparedAppUpdateResultKind)
         {
-            return appUpdateResultKind.Equals(comparedAppUpdateResultKind) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(appUpdateResultKind, comparedAppUpdateResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -572,7 +572,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsCheckingUpdate(AppUpdateResultKind appUpdateResultKind)
         {
-            return !appUpdateResultKind.Equals(AppUpdateResultKind.Querying);
+            return !Equals(appUpdateResultKind, AppUpdateResultKind.Querying);
         }
     }
 }
