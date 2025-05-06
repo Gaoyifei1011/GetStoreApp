@@ -42,6 +42,7 @@
         </TransitionCollection>
 
         <XamlUICommand x:Name="CancelTaskCommand" ExecuteRequested="{x:Bind OnCancelTaskExecuteRequested}" />
+        <XamlUICommand x:Name="RemoveTaskCommand" ExecuteRequested="{x:Bind OnRemoveTaskExecuteRequested}" />
         <XamlUICommand x:Name="OpenPackageFolderCommand" ExecuteRequested="{x:Bind OnOpenPackageFolderExecuteRequested}" />
     </Page.Resources>
 
@@ -234,6 +235,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <FontIcon
@@ -251,6 +253,23 @@
 
                     <Button
                         Grid.Column="2"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Click="{x:Bind OnRemoveFinishedTasklicked}"
+                        Style="{StaticResource AlternateCloseButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RemoveFinishedTask')}">
+
+                        <Button.Content>
+                            <FontIcon
+                                Margin="4"
+                                FontSize="16"
+                                Glyph="&#xE74D;" />
+                        </Button.Content>
+                    </Button>
+
+                    <Button
+                        Grid.Column="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Click="{x:Bind OnCloseClicked}"
@@ -283,15 +302,11 @@
 
                 <ItemsView
                     Grid.Row="1"
-                    Width="450"
-                    Height="200"
+                    Margin="0,2,0,0"
+                    Padding="0,0,0,30"
                     ItemsSource="{x:Bind PackageOperationCollection}"
                     SelectionMode="None"
                     Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(PackageOperationCollection.Count), Mode=OneWay}">
-
-                    <ItemsView.Layout>
-                        <StackLayout />
-                    </ItemsView.Layout>
 
                     <ItemsView.ItemTemplate>
                         <DataTemplate x:DataType="model:PackageOperationModel">
@@ -305,309 +320,1102 @@
                                     BorderThickness="1"
                                     CornerRadius="{StaticResource ControlCornerRadius}">
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                    <!--  下载应用  -->
+                                    <Grid x:Name="DownloadGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Download)}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <Grid.ContextFlyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem
-                                                Command="{StaticResource OpenPackageFolderCommand}"
-                                                CommandParameter="{x:Bind PackagePath}"
-                                                IsEnabled="{x:Bind converter:ValueConverterHelper.IsPackageDownloadOrInstall(PackageOperationKind)}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenPackageFolder')}">
+                                        <Grid.ContextFlyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource OpenPackageFolderCommand}"
+                                                    CommandParameter="{x:Bind PackagePath}"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenPackageFolder')}">
 
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8B7;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </Grid.ContextFlyout>
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8B7;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Grid.ContextFlyout>
 
-                                    <Grid
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        RowSpacing="2">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE896;" />
 
-                                        <Grid Grid.Row="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
+                                        <Grid
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            RowSpacing="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
 
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                MinWidth="50"
-                                                Margin="0,0,5,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Text="{x:Bind AppName}"
-                                                TextAlignment="Left"
-                                                TextTrimming="CharacterEllipsis" />
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
 
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                Margin="0,0,8,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
-                                                TextAlignment="Right">
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    MinWidth="50"
+                                                    Margin="0,0,5,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis">
 
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip MaxWidth="9999">
-                                                        <TextBlock>
-                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadProgressToolTip')}" />
-                                                            <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
-                                                        </TextBlock>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
-                                            </TextBlock>
+                                                    <Run Text="{x:Bind AppName}" />
+                                                    <Run Text=" - " />
+                                                    <Run Text="{x:Bind AppVersion}" />
 
-                                            <TextBlock
-                                                Grid.Column="2"
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
-                                                TextAlignment="Right"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading), Mode=OneWay}">
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip>
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
 
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip MaxWidth="9999">
-                                                        <TextBlock>
-                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
-                                                            <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
-                                                        </TextBlock>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
-                                            </TextBlock>
+                                                                <TextBlock Grid.Row="0">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind AppName}" />
+                                                                </TextBlock>
 
-                                            <TextBlock
-                                                Grid.Column="3"
-                                                Margin="2,0,2,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Text="/"
-                                                TextAlignment="Right"
-                                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading), Mode=OneWay}" />
+                                                                <TextBlock Grid.Row="1">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind AppVersion}" />
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
 
-                                            <TextBlock
-                                                Grid.Column="4"
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Text="{x:Bind TotalFileSize, Mode=OneWay}"
-                                                TextAlignment="Right">
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
+                                                    TextAlignment="Right">
 
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip MaxWidth="9999">
-                                                        <TextBlock>
-                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
-                                                            <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
-                                                        </TextBlock>
-                                                    </ToolTip>
-                                                </ToolTipService.ToolTip>
-                                            </TextBlock>
-                                        </Grid>
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
 
-                                        <Grid Grid.Row="1" ColumnSpacing="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Margin="2,0,2,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="|"
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}" />
 
-                                            <TextBlock
-                                                Grid.Column="0"
-                                                FontSize="14"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Canceling')}"
-                                                Visibility="{x:Bind IsCanceling, Mode=OneWay}" />
+                                                <TextBlock
+                                                    Grid.Column="3"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}">
 
-                                            <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsCanceling), Mode=OneWay}">
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
 
-                                                <!--  下载应用  -->
-                                                <Grid x:Name="DownloadGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Download)}">
+                                                <TextBlock
+                                                    Grid.Column="4"
+                                                    Margin="2,0,2,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="|"
+                                                    TextAlignment="Right" />
+
+                                                <TextBlock
+                                                    Grid.Column="5"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                    TextAlignment="Right">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+                                            </Grid>
+
+                                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadQueued')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Queued), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Downloading')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFinished')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:False), Mode=OneWay}" />
                                                 </Grid>
 
-                                                <!--  安装应用  -->
-                                                <Grid x:Name="InstallGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Install)}">
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Canceling')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFailed')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <ProgressBar
+                                                    Grid.Column="1"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageDownloading(PackageDownloadProgressState), Mode=OneWay}"
+                                                    ShowError="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}"
+                                                    ShowPaused="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}"
+                                                    Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
+                                            </Grid>
+                                        </Grid>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource CancelTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:True), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE711;" />
+                                            </Button.Content>
+                                        </Button>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource RemoveTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Finished, x:False), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE74D;" />
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+
+                                    <!--  安装应用  -->
+                                    <Grid x:Name="InstallGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Install)}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.ContextFlyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource OpenPackageFolderCommand}"
+                                                    CommandParameter="{x:Bind PackagePath}"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenPackageFolder')}">
+
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8B7;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Grid.ContextFlyout>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE710;" />
+
+                                        <Grid
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            RowSpacing="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    MinWidth="50"
+                                                    Margin="0,0,5,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis">
+
+                                                    <Run Text="{x:Bind AppName}" />
+                                                    <Run Text=" - " />
+                                                    <Run Text="{x:Bind AppVersion}" />
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip>
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+
+                                                                <TextBlock Grid.Row="0">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind AppName}" />
+                                                                </TextBlock>
+
+                                                                <TextBlock Grid.Row="1">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind AppVersion}" />
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
+                                                    TextAlignment="Right">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Margin="2,0,2,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="|"
+                                                    TextAlignment="Right" />
+
+                                                <TextBlock
+                                                    Grid.Column="3"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="4"
+                                                    Margin="2,0,2,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="|"
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
+
+                                                <TextBlock
+                                                    Grid.Column="5"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                    TextAlignment="Right">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+                                            </Grid>
+
+                                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallQueued')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Queued), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Downloading')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Installing')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Installing), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Installing, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallPostInstall')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.PostInstall), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.PostInstall, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallFinished')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}" />
                                                 </Grid>
 
-                                                <!--  卸载应用  -->
-                                                <Grid x:Name="UninstallGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Uninstall)}">
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Canceling')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallFailed')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <ProgressBar
+                                                    Grid.Column="1"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageInstalling(PackageInstallProgressState), Mode=OneWay}"
+                                                    ShowError="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}"
+                                                    ShowPaused="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}"
+                                                    Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
+                                            </Grid>
+                                        </Grid>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource CancelTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE711;" />
+                                            </Button.Content>
+                                        </Button>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource RemoveTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE74D;" />
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+
+                                    <!--  卸载应用  -->
+                                    <Grid x:Name="UninstallGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Uninstall)}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE74D;" />
+
+                                        <Grid
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            RowSpacing="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                MinWidth="50"
+                                                Margin="0,0,5,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                TextAlignment="Left"
+                                                TextTrimming="CharacterEllipsis">
+
+                                                <Run Text="{x:Bind AppName}" />
+                                                <Run Text=" - " />
+                                                <Run Text="{x:Bind AppVersion}" />
+
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </Grid.RowDefinitions>
+
+                                                            <TextBlock Grid.Row="0">
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                <Run Text="{x:Bind AppName}" />
+                                                            </TextBlock>
+
+                                                            <TextBlock Grid.Row="1">
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                <Run Text="{x:Bind AppVersion}" />
+                                                            </TextBlock>
+                                                        </Grid>
+                                                    </ToolTip>
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+
+                                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallQueued')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Queued), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstalling')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Uninstalling), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Uninstalling, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallPostUninstall')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.PostUninstall), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.PostUninstall, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallFinished')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:False), Mode=OneWay}" />
                                                 </Grid>
 
-                                                <!--  修复应用  -->
-                                                <Grid x:Name="RepairGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Repair)}">
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Canceling')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallFailed')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <ProgressBar
+                                                    Grid.Column="1"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageUninstalling(PackageUninstallProgressState), Mode=OneWay}"
+                                                    ShowError="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}"
+                                                    ShowPaused="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}"
+                                                    Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
+                                            </Grid>
+                                        </Grid>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource CancelTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:True), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE711;" />
+                                            </Button.Content>
+                                        </Button>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource RemoveTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUninstallProgressState(PackageUninstallProgressState, deployment:PackageUninstallProgressState.Finished, x:False), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE74D;" />
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+
+                                    <!--  修复应用  -->
+                                    <Grid x:Name="RepairGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Repair)}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE90F;" />
+
+                                        <Grid
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            RowSpacing="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    MinWidth="50"
+                                                    Margin="0,0,5,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis">
+
+                                                    <Run Text="{x:Bind AppName}" />
+                                                    <Run Text=" - " />
+                                                    <Run Text="{x:Bind AppVersion}" />
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip>
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+
+                                                                <TextBlock Grid.Row="0">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind AppName}" />
+                                                                </TextBlock>
+
+                                                                <TextBlock Grid.Row="1">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind AppVersion}" />
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
+                                                    TextAlignment="Right">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+                                            </Grid>
+
+                                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairQueued')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Queued), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Repairing')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Repairing), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Repairing, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
-                                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairPostPostRepair')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.PostRepair), Mode=OneWay}" />
+                                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairPostRepair')}"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.PostRepair, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairFinished')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:False), Mode=OneWay}" />
                                                 </Grid>
 
-                                                <!--  更新应用  -->
-                                                <Grid x:Name="UpgradeGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Upgrade)}">
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Canceling')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairFailed')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <ProgressBar
+                                                    Grid.Column="1"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageRepairing(PackageRepairProgressState), Mode=OneWay}"
+                                                    ShowError="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}"
+                                                    ShowPaused="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}"
+                                                    Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
+                                            </Grid>
+                                        </Grid>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource CancelTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:True), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE711;" />
+                                            </Button.Content>
+                                        </Button>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource RemoveTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageRepairProgressState(PackageRepairProgressState, deployment:PackageRepairProgressState.Finished, x:False), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE74D;" />
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+
+                                    <!--  更新应用  -->
+                                    <Grid x:Name="UpgradeGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Upgrade)}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            Margin="0,0,12,0"
+                                            FontSize="16"
+                                            Glyph="&#xE898;" />
+
+                                        <Grid
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            RowSpacing="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    MinWidth="50"
+                                                    Margin="0,0,5,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="CharacterEllipsis">
+
+                                                    <Run Text="{x:Bind AppName}" />
+                                                    <Run Text=" - " />
+                                                    <Run Text="{x:Bind AppVersion}" />
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip>
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+
+                                                                <TextBlock Grid.Row="0">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                                                    <Run Text="{x:Bind AppName}" />
+                                                                </TextBlock>
+
+                                                                <TextBlock Grid.Row="1">
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind AppVersion}" />
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
+                                                    TextAlignment="Right">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    Margin="2,0,2,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="|"
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
+
+                                                <TextBlock
+                                                    Grid.Column="3"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Grid.Column="4"
+                                                    Margin="2,0,2,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="|"
+                                                    TextAlignment="Right" />
+
+                                                <TextBlock
+                                                    Grid.Column="5"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                    TextAlignment="Right">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock>
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                            </TextBlock>
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+                                            </Grid>
+
+                                            <Grid Grid.Row="1" ColumnSpacing="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Column="0" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeQueued')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Queued), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Queued, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Downloading')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrading')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Installing), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Installing, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradePostInstall')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.PostInstall), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.PostInstall, x:False), Mode=OneWay}" />
 
                                                     <TextBlock
                                                         FontSize="14"
                                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeFinished')}"
-                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished), Mode=OneWay}" />
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}" />
                                                 </Grid>
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Canceling')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}" />
+
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    FontSize="14"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeFailed')}"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}">
+
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip MaxWidth="9999">
+                                                            <TextBlock Text="{x:Bind PackageOperationFailedContent, Mode=OneWay}" />
+                                                        </ToolTip>
+                                                    </ToolTipService.ToolTip>
+                                                </TextBlock>
+
+                                                <ProgressBar
+                                                    Grid.Column="1"
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageUpgrading(PackageInstallProgressState), Mode=OneWay}"
+                                                    ShowError="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Failed), Mode=OneWay}"
+                                                    ShowPaused="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Cancel), Mode=OneWay}"
+                                                    Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
                                             </Grid>
-
-                                            <ProgressBar
-                                                x:Name="DownloadProgressBar"
-                                                Grid.Column="1"
-                                                x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Download)}"
-                                                IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageDownloading(PackageDownloadProgressState), Mode=OneWay}"
-                                                Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
-
-                                            <ProgressBar
-                                                x:Name="InstallProgressBar"
-                                                Grid.Column="1"
-                                                x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Install)}"
-                                                IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageInstalling(PackageInstallProgressState), Mode=OneWay}"
-                                                Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
-
-                                            <ProgressBar
-                                                x:Name="UninstallProgressBar"
-                                                Grid.Column="1"
-                                                x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Uninstall)}"
-                                                IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageUninstalling(PackageUninstallProgressState), Mode=OneWay}"
-                                                Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
-
-                                            <ProgressBar
-                                                x:Name="RepairProgressBar"
-                                                Grid.Column="1"
-                                                x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Repair)}"
-                                                IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageRepairing(PackageRepairProgressState), Mode=OneWay}"
-                                                Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
-
-                                            <ProgressBar
-                                                x:Name="UpgradeProgressBar"
-                                                Grid.Column="1"
-                                                x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Upgrade)}"
-                                                IsIndeterminate="{x:Bind converter:ValueCheckConverterHelper.IsPackageUpgrading(PackageInstallProgressState), Mode=OneWay}"
-                                                Value="{x:Bind PackageOperationProgress, Mode=OneWay}" />
                                         </Grid>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource CancelTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            IsEnabled="{x:Bind x:Object.Equals(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:True), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE711;" />
+                                            </Button.Content>
+                                        </Button>
+
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Command="{StaticResource RemoveTaskCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Style="{StaticResource AlternateCloseButtonStyle}"
+                                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RemoveTask')}"
+                                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Finished, x:False), Mode=OneWay}">
+
+                                            <Button.Content>
+                                                <FontIcon
+                                                    Margin="4"
+                                                    FontSize="16"
+                                                    Glyph="&#xE74D;" />
+                                            </Button.Content>
+                                        </Button>
                                     </Grid>
-
-                                    <Button
-                                        Grid.Column="1"
-                                        Width="Auto"
-                                        Height="Auto"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Command="{StaticResource CancelTaskCommand}"
-                                        CommandParameter="{x:Bind AppID}"
-                                        IsEnabled="{x:Bind IsCanceling.Equals(x:False), Mode=OneWay}"
-                                        Style="{StaticResource AlternateCloseButtonStyle}"
-                                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/CancelTask')}">
-
-                                        <Button.Content>
-                                            <FontIcon
-                                                Margin="4"
-                                                FontSize="16"
-                                                Glyph="&#xE711;" />
-                                        </Button.Content>
-                                    </Button>
                                 </Grid>
                             </ItemContainer>
                         </DataTemplate>
