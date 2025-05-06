@@ -252,8 +252,8 @@ namespace GetStoreApp.Views.Windows
 
             if (Content is not null && Content.XamlRoot is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1024 * Content.XamlRoot.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(768 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * Content.XamlRoot.RasterizationScale);
             }
         }
 
@@ -369,7 +369,7 @@ namespace GetStoreApp.Views.Windows
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                if (ThemeService.AppTheme.Equals(ThemeService.ThemeList[0]))
+                if (Equals(ThemeService.AppTheme, ThemeService.ThemeList[0]))
                 {
                     WindowTheme = Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark;
                 }
@@ -576,7 +576,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (menuItem is NavigationViewItem navigationViewItem)
                     {
-                        int tagIndex = PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag));
+                        int tagIndex = PageList.FindIndex(item => Equals(item.Key, navigationViewItem.Tag));
 
                         NavigationItemList.Add(new NavigationModel()
                         {
@@ -591,7 +591,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     if (footerMenuItem is NavigationViewItem navigationViewItem)
                     {
-                        int tagIndex = PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag));
+                        int tagIndex = PageList.FindIndex(item => Equals(item.Key, navigationViewItem.Tag));
 
                         NavigationItemList.Add(new NavigationModel()
                         {
@@ -733,8 +733,8 @@ namespace GetStoreApp.Views.Windows
 
             if (Content is not null && Content.XamlRoot is not null)
             {
-                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1024 * Content.XamlRoot.RasterizationScale);
-                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(768 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumWidth = Convert.ToInt32(1280 * Content.XamlRoot.RasterizationScale);
+                overlappedPresenter.PreferredMinimumHeight = Convert.ToInt32(720 * Content.XamlRoot.RasterizationScale);
             }
         }
 
@@ -764,11 +764,11 @@ namespace GetStoreApp.Views.Windows
         {
             if (args.SelectedItemContainer is NavigationViewItemBase navigationViewItem && navigationViewItem.Tag is not null)
             {
-                NavigationModel navigationItem = NavigationItemList.Find(item => Equals(item.NavigationTag, PageList[PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag))].Key));
+                NavigationModel navigationItem = NavigationItemList.Find(item => Equals(item.NavigationTag, PageList[PageList.FindIndex(item => Equals(item.Key, navigationViewItem.Tag))].Key));
 
                 if (SelectedItem != navigationItem.NavigationItem)
                 {
-                    if (PageList[PageList.FindIndex(item => item.Key.Equals(navigationViewItem.Tag))].Key is "Web")
+                    if (PageList[PageList.FindIndex(item => Equals(item.Key, navigationViewItem.Tag))].Key is "Web")
                     {
                         await Launcher.LaunchUriAsync(new Uri("getstoreappwebbrowser:"));
                         sender.SelectedItem = SelectedItem;
@@ -995,15 +995,15 @@ namespace GetStoreApp.Views.Windows
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                if (args.PropertyName.Equals(nameof(ThemeService.AppTheme)))
+                if (Equals(args.PropertyName, nameof(ThemeService.AppTheme)))
                 {
                     SetWindowTheme();
                 }
-                if (args.PropertyName.Equals(nameof(BackdropService.AppBackdrop)))
+                if (Equals(args.PropertyName, nameof(BackdropService.AppBackdrop)))
                 {
                     SetSystemBackdrop();
                 }
-                if (args.PropertyName.Equals(nameof(TopMostService.TopMostValue)))
+                if (Equals(args.PropertyName, nameof(TopMostService.TopMostValue)))
                 {
                     SetTopMost();
                 }
@@ -1019,7 +1019,7 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void SetWindowTheme()
         {
-            WindowTheme = ThemeService.AppTheme.Equals(ThemeService.ThemeList[0])
+            WindowTheme = Equals(ThemeService.AppTheme, ThemeService.ThemeList[0])
                 ? Application.Current.RequestedTheme is ApplicationTheme.Light ? ElementTheme.Light : ElementTheme.Dark
                 : Enum.TryParse(ThemeService.AppTheme.Key, out ElementTheme elementTheme) ? elementTheme : ElementTheme.Default;
         }
@@ -1029,27 +1029,27 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         private void SetSystemBackdrop()
         {
-            if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[1]))
+            if (Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[1]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[2]))
+            else if (Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[2]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(MicaKind.BaseAlt);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[3]))
+            else if (Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[3]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Default);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[4]))
+            else if (Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[4]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Base);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
             }
-            else if (BackdropService.AppBackdrop.Equals(BackdropService.BackdropList[5]))
+            else if (Equals(BackdropService.AppBackdrop, BackdropService.BackdropList[5]))
             {
                 WindowSystemBackdrop = new MaterialBackdrop(DesktopAcrylicKind.Thin);
                 VisualStateManager.GoToState(MainPage, "BackgroundTransparent", false);
