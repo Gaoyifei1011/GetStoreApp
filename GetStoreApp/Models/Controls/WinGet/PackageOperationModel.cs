@@ -36,6 +36,17 @@ namespace GetStoreApp.Models.Controls.WinGet
         public string PackagePath { get; set; }
 
         /// <summary>
+        /// 版本所有信息
+        /// </summary>
+        public PackageVersionId PackageVersionId { get; set; }
+
+        public SearchAppsModel SearchApps { get; set; }
+
+        public InstalledAppsModel InstalledApps { get; set; }
+
+        public UpgradableAppsModel UpgradableApps { get; set; }
+
+        /// <summary>
         /// 下载进度
         /// </summary>
         private double _packageOperationProgress;
@@ -92,18 +103,18 @@ namespace GetStoreApp.Models.Controls.WinGet
             }
         }
 
-        private bool _isCanceling;
+        private PackageOperationResultKind _packageOperationResultKind;
 
-        public bool IsCanceling
+        public PackageOperationResultKind PackageOperationResultKind
         {
-            get { return _isCanceling; }
+            get { return _packageOperationResultKind; }
 
             set
             {
-                if (!Equals(_isCanceling, value))
+                if (!Equals(_packageOperationResultKind, value))
                 {
-                    _isCanceling = true;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCanceling)));
+                    _packageOperationResultKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationResultKind)));
                 }
             }
         }
@@ -174,6 +185,22 @@ namespace GetStoreApp.Models.Controls.WinGet
                 {
                     _packageRepairProgressState = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageRepairProgressState)));
+                }
+            }
+        }
+
+        private string _packageOperationFailedContent;
+
+        public string PackageOperationFailedContent
+        {
+            get { return _packageOperationFailedContent; }
+
+            set
+            {
+                if (!Equals(_packageOperationFailedContent, value))
+                {
+                    _packageOperationFailedContent = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PackageOperationFailedContent)));
                 }
             }
         }
