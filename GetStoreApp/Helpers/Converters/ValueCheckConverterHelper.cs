@@ -64,7 +64,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static bool IsPackageDownloading(PackageDownloadProgressState packageDownloadProgressState)
         {
-            return packageDownloadProgressState is not PackageDownloadProgressState.Downloading;
+            return packageDownloadProgressState is PackageDownloadProgressState.Queued;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static bool IsPackageInstalling(PackageInstallProgressState packageInstallProgressState)
         {
-            return packageInstallProgressState is not PackageInstallProgressState.Downloading;
+            return packageInstallProgressState is PackageInstallProgressState.Queued || packageInstallProgressState is PackageInstallProgressState.Installing || packageInstallProgressState is PackageInstallProgressState.PostInstall;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static bool IsPackageUninstalling(PackageUninstallProgressState packageUninstallProgressState)
         {
-            return packageUninstallProgressState is not PackageUninstallProgressState.Uninstalling;
+            return packageUninstallProgressState is PackageUninstallProgressState.Queued || packageUninstallProgressState is PackageUninstallProgressState.Uninstalling || packageUninstallProgressState is PackageUninstallProgressState.PostUninstall;
         }
 
         /// <summary>
@@ -88,55 +88,63 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static bool IsPackageRepairing(PackageRepairProgressState packageRepairProgressState)
         {
-            return packageRepairProgressState is not PackageRepairProgressState.Repairing;
+            return packageRepairProgressState is  PackageRepairProgressState.Queued || packageRepairProgressState is  PackageRepairProgressState.Repairing || packageRepairProgressState is  PackageRepairProgressState.PostRepair;
         }
 
         /// <summary>
-        /// 检查 WinGet 应用是否是升级状态
+        /// 检查 WinGet 应用是否是更新状态
         /// </summary>
         public static bool IsPackageUpgrading(PackageInstallProgressState packageInstallProgressState)
         {
-            return packageInstallProgressState is not PackageInstallProgressState.Downloading;
+            return packageInstallProgressState is PackageInstallProgressState.Queued || packageInstallProgressState is PackageInstallProgressState.Installing || packageInstallProgressState is PackageInstallProgressState.PostInstall;
         }
 
         /// <summary>
         /// 检查 WinGet 应用的下载状态
         /// </summary>
-        public static Visibility CheckPackageDownloadProgressState(PackageDownloadProgressState packageDownloadProgressState, PackageDownloadProgressState comparedPackageDownloadProgressState)
+        public static Visibility CheckPackageDownloadProgressState(PackageDownloadProgressState packageDownloadProgressState, PackageDownloadProgressState comparedPackageDownloadProgressState, bool isReverse)
         {
-            return packageDownloadProgressState.Equals(comparedPackageDownloadProgressState) ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? Equals(packageDownloadProgressState, comparedPackageDownloadProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageDownloadProgressState, comparedPackageDownloadProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
         /// 检查 WinGet 应用的安装状态
         /// </summary>
-        public static Visibility CheckPackageInstallProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState)
+        public static Visibility CheckPackageInstallProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState, bool isReverse)
         {
-            return packageInstallProgressState.Equals(comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
         /// 检查 WinGet 应用的卸载状态
         /// </summary>
-        public static Visibility CheckPackageUninstallProgressState(PackageUninstallProgressState packageUninstallProgressState, PackageUninstallProgressState comparedPackageUninstallProgressState)
+        public static Visibility CheckPackageUninstallProgressState(PackageUninstallProgressState packageUninstallProgressState, PackageUninstallProgressState comparedPackageUninstallProgressState, bool isReverse)
         {
-            return packageUninstallProgressState.Equals(comparedPackageUninstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? Equals(packageUninstallProgressState, comparedPackageUninstallProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageUninstallProgressState, comparedPackageUninstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
         /// 检查 WinGet 应用的修复状态
         /// </summary>
-        public static Visibility CheckPackageRepairProgressState(PackageRepairProgressState packageRepairProgressState, PackageRepairProgressState comparedPackageRepairProgressState)
+        public static Visibility CheckPackageRepairProgressState(PackageRepairProgressState packageRepairProgressState, PackageRepairProgressState comparedPackageRepairProgressState, bool isReverse)
         {
-            return packageRepairProgressState.Equals(comparedPackageRepairProgressState) ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? Equals(packageRepairProgressState, comparedPackageRepairProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageRepairProgressState, comparedPackageRepairProgressState) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
-        /// 检查 WinGet 应用的更新状态
+        /// 检查 WinGet 应用的安装状态
         /// </summary>
-        public static Visibility CheckPackageUpgradeProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState)
+        public static Visibility CheckPackageUpgradeProgressState(PackageInstallProgressState packageInstallProgressState, PackageInstallProgressState comparedPackageInstallProgressState, bool isReverse)
         {
-            return packageInstallProgressState.Equals(comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
+            return isReverse ? Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Collapsed : Visibility.Visible : Equals(packageInstallProgressState, comparedPackageInstallProgressState) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 检查 WinGet 应用的安装状态
+        /// </summary>
+        public static Visibility CheckPackageOperationResultKind(PackageOperationResultKind packageOperationResultKind, PackageOperationResultKind comparedPackageOperationResultKind)
+        {
+            return Equals(packageOperationResultKind, comparedPackageOperationResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
