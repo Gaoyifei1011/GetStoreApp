@@ -18,8 +18,8 @@ namespace GetStoreApp.Models.Controls.WinGet
         public string Version { get; set; }
 
         /// <summary>
-        /// 该版本所有信息
+        /// 版本所有信息
         /// </summary>
-        public PackageVersionInfo PackageVersionInfo { get; set; }
+        public PackageVersionId PackageVersionId { get; set; }
     }
 }
