@@ -78,9 +78,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="$(ProjectDir)\Microsoft.Windows.Storage.Pickers.dll" CopyToOutputDirectory="Always"/>
+    <Content Include="$(ProjectDir)\Microsoft.Windows.Storage.Pickers.dll" CopyToOutputDirectory="Always" />
     <None Include="GetStoreAppPackage_SignKey.pfx" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.3916" />
     <ProjectReference Include="..\GetStoreApp\GetStoreApp.csproj" />
     <ProjectReference Include="..\GetStoreAppInstaller\GetStoreAppInstaller.csproj" />
     <ProjectReference Include="..\GetStoreAppShellExtension\GetStoreAppShellExtension.csproj" />
@@ -100,7 +100,7 @@
     </ItemGroup>
   </Target>
   <Target Name="CopyFilesToTargetDir" BeforeTargets="BeforeBuild">
-    <Copy SourceFiles="$(ProjectDir)\Platforms\$(Platform)\Microsoft.Windows.Storage.Pickers.dll"  DestinationFolder="$(ProjectDir)" />
+    <Copy SourceFiles="$(ProjectDir)\Platforms\$(Platform)\Microsoft.Windows.Storage.Pickers.dll" DestinationFolder="$(ProjectDir)" />
   </Target>
   <!--
     Workaround for bug https://devdiv.visualstudio.com/DevDiv/_workitems/edit/1149545

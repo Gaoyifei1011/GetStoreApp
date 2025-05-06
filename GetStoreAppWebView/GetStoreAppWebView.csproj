@@ -69,6 +69,8 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.3916" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.5.20250417.1" GeneratePathProperty="True" />
     
     <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
