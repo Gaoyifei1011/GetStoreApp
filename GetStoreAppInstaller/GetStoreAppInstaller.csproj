@@ -5,7 +5,7 @@
     <AssemblyName>GetStoreAppInstaller</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
-    <CustomAfterMicrosoftCommonTargets>$(SolutionDir)Configuration\MrtCore.PriGen.targets</CustomAfterMicrosoftCommonTargets>
+    <CustomAfterMicrosoftCommonTargets>$(Pkg_Microsoft_Windows_SDK_BuildTools_MSIX)\build\Microsoft.Windows.SDK.BuildTools.MSIX.MrtCore.PriGen.targets</CustomAfterMicrosoftCommonTargets>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
