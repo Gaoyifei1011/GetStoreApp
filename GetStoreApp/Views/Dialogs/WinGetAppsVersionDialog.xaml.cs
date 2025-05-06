@@ -1,10 +1,12 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Pages;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -524,7 +526,6 @@ namespace GetStoreApp.Views.Dialogs
                     for (int subIndex = 0; subIndex < SearchApps.CatalogPackage.AvailableVersions.Count; subIndex++)
                     {
                         PackageVersionId packageVersionId = SearchApps.CatalogPackage.AvailableVersions[subIndex];
-                        PackageVersionInfo packageVersionInfo = SearchApps.CatalogPackage.GetPackageVersionInfo(packageVersionId);
 
                         if (!string.IsNullOrEmpty(packageVersionId.Version))
                         {
@@ -539,8 +540,8 @@ namespace GetStoreApp.Views.Dialogs
                             availableVersionList.Add(new AvailableVersionModel()
                             {
                                 IsDefaultVersion = isDefaultVersion,
-                                Version = packageVersionInfo.Version,
-                                PackageVersionInfo = packageVersionInfo,
+                                Version = packageVersionId.Version,
+                                PackageVersionId = packageVersionId,
                             });
                         }
                     }
@@ -618,65 +619,123 @@ namespace GetStoreApp.Views.Dialogs
             await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetAppInformation, copyResult));
         }
 
-        // TODO: 未完成
-
         /// <summary>
         /// 复制下载命令信息
         /// </summary>
-        private void OnCopyDownloadTextClicked(object sender, RoutedEventArgs args)
+        private async void OnCopyDownloadTextClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget download {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version) : string.Format(@"winget download {0} -s ""{1}"" -d ""{2}"" -v ""{3}""", SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
+
+                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchDownload, copyResult));
             }
         }
 
         /// <summary>
         /// 复制安装命令信息
         /// </summary>
-        private void OnCopyInstallTextClicked(object sender, RoutedEventArgs args)
+        private async void OnCopyInstallTextClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget install {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version) : string.Format(@"winget install {0} -s ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
+
+                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
             }
         }
 
         /// <summary>
         /// 复制修复命令信息
         /// </summary>
-        private void OnCopyRepairTextClicked(object sender, RoutedEventArgs args)
+        private async void OnCopyRepairTextClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget repair {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version) : string.Format(@"winget repair {0} -s ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
+
+                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchRepair, copyResult));
             }
         }
 
         /// <summary>
         /// 下载当前版本应用
         /// </summary>
-        private void OnDownloadClicked(object sender, RoutedEventArgs args)
+        private async void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                {
+                    PackageOperationKind = PackageOperationKind.Download,
+                    AppID = SearchApps.AppID,
+                    AppName = SearchApps.AppName,
+                    AppVersion = SelectedItem.Version,
+                    PackagePath = WinGetConfigService.DownloadFolder.Path,
+                    PackageOperationProgress = 0,
+                    PackageDownloadProgressState = PackageDownloadProgressState.Queued,
+                    PackageVersionId = SelectedItem.PackageVersionId,
+                    DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    PackageDownloadProgress = null,
+                    SearchApps = SearchApps,
+                });
             }
         }
 
         /// <summary>
         /// 安装当前版本应用
         /// </summary>
-        private void OnInstallClicked(object sender, RoutedEventArgs args)
+        private async void OnInstallClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                {
+                    PackageOperationKind = PackageOperationKind.Install,
+                    AppID = SearchApps.AppID,
+                    AppName = SearchApps.AppName,
+                    AppVersion = SelectedItem.Version,
+                    PackagePath = WinGetConfigService.DownloadFolder.Path,
+                    PackageOperationProgress = 0,
+                    PackageInstallProgressState = PackageInstallProgressState.Queued,
+                    PackageVersionId = SelectedItem.PackageVersionId,
+                    DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    PackageInstallProgress = null,
+                    SearchApps = SearchApps,
+                });
             }
         }
 
         /// <summary>
         /// 修复当前版本应用
         /// </summary>
-        private void OnRepairClicked(object sender, RoutedEventArgs args)
+        private async void OnRepairClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                {
+                    PackageOperationKind = PackageOperationKind.Repair,
+                    AppID = SearchApps.AppID,
+                    AppName = SearchApps.AppName,
+                    AppVersion = SelectedItem.Version,
+                    PackagePath = WinGetConfigService.DownloadFolder.Path,
+                    PackageOperationProgress = 0,
+                    PackageRepairProgressState = PackageRepairProgressState.Queued,
+                    PackageVersionId = SelectedItem.PackageVersionId,
+                    DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    PackageRepairProgress = null,
+                    SearchApps = SearchApps,
+                });
             }
         }
 
@@ -685,8 +744,21 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnDownloadWithCmdClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                Task.Run(() =>
+                {
+                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                    if (Equals(winGetDataSourceName, default))
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                    else
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -s ""{1}"" -d ""{2}"" -v ""{3}""", SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                });
             }
         }
 
@@ -695,8 +767,21 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnInstallWithCmdClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                Task.Run(() =>
+                {
+                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                    if (Equals(winGetDataSourceName, default))
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"install {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                    else
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"install {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                });
             }
         }
 
@@ -705,8 +790,21 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void OnRepairWithCmdClicked(object sender, RoutedEventArgs args)
         {
-            if (SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null)
             {
+                Task.Run(() =>
+                {
+                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                    if (Equals(winGetDataSourceName, default))
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"repair {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                    else
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"repair {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                });
             }
         }
 
@@ -717,11 +815,11 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private void InitializeVersionInformation(AvailableVersionModel availableVersion)
         {
-            if (availableVersion.PackageVersionInfo is not null && availableVersion.PackageVersionInfo.GetCatalogPackageMetadata() is CatalogPackageMetadata catalogPackageMetadata)
+            if (availableVersion.PackageVersionId is not null && SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) is PackageVersionInfo packageVersionInfo && packageVersionInfo.GetCatalogPackageMetadata() is CatalogPackageMetadata catalogPackageMetadata)
             {
                 DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? Unknown : catalogPackageMetadata.PackageName;
                 Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? Unknown : catalogPackageMetadata.Description;
-                Version = string.IsNullOrEmpty(availableVersion.PackageVersionInfo.Version) ? Unknown : availableVersion.PackageVersionInfo.Version;
+                Version = string.IsNullOrEmpty(packageVersionInfo.Version) ? Unknown : packageVersionInfo.Version;
                 if (Uri.TryCreate(catalogPackageMetadata.PackageUrl, new UriCreationOptions(), out Uri packageLinkUri))
                 {
                     IsPackageLinkExisted = true;
@@ -733,7 +831,7 @@ namespace GetStoreApp.Views.Dialogs
                     PackageLink = null;
                 }
                 Author = string.IsNullOrEmpty(catalogPackageMetadata.Author) ? Unknown : catalogPackageMetadata.Author;
-                Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? Unknown : availableVersion.PackageVersionInfo.Publisher;
+                Publisher = string.IsNullOrEmpty(catalogPackageMetadata.Publisher) ? Unknown : packageVersionInfo.Publisher;
                 if (Uri.TryCreate(catalogPackageMetadata.PublisherUrl, new UriCreationOptions(), out Uri publisherLinkUri))
                 {
                     IsPublisherLinkExisted = true;
