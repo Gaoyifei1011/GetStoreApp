@@ -19,7 +19,8 @@
         WinGetAppInformation = 11,
         WinGetSearchDownload = 12,
         WinGetSearchInstall = 13,
-        WinGetUninstall = 14,
-        WinGetUpgradeInstall = 15
+        WinGetSearchRepair = 14,
+        WinGetUninstall = 15,
+        WinGetUpgradeInstall = 16
     }
 }
