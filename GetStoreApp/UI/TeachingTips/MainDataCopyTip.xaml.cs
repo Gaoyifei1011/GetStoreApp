@@ -98,6 +98,11 @@ namespace GetStoreApp.UI.TeachingTips
                             CopySuccess.Text = ResourceService.GetLocalized("Notification/SearchInstallCopy");
                             break;
                         }
+                    case DataCopyKind.WinGetSearchRepair:
+                        {
+                            CopySuccess.Text = ResourceService.GetLocalized("Notification/SearchRepairCopy");
+                            break;
+                        }
                     case DataCopyKind.WinGetUninstall:
                         {
                             CopySuccess.Text = ResourceService.GetLocalized("Notification/UninstallCopy");
