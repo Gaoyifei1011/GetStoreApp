@@ -163,8 +163,6 @@ namespace GetStoreApp.Views.Pages
 
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
-        // TODO: 未完成
-
         /// <summary>
         /// 下载应用
         /// </summary>
@@ -203,7 +201,6 @@ namespace GetStoreApp.Views.Pages
                     AppID = searchApps.AppID,
                     AppName = searchApps.AppName,
                     AppVersion = searchApps.CatalogPackage.DefaultInstallVersion.Version,
-                    PackagePath = WinGetConfigService.DownloadFolder.Path,
                     PackageOperationProgress = 0,
                     PackageInstallProgressState = PackageInstallProgressState.Queued,
                     PackageVersionId = null,
@@ -228,7 +225,6 @@ namespace GetStoreApp.Views.Pages
                     AppID = searchApps.AppID,
                     AppName = searchApps.AppName,
                     AppVersion = searchApps.CatalogPackage.DefaultInstallVersion.Version,
-                    PackagePath = WinGetConfigService.DownloadFolder.Path,
                     PackageOperationProgress = 0,
                     PackageRepairProgressState = PackageRepairProgressState.Queued,
                     PackageVersionId = null,
