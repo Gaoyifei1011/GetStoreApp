@@ -34,6 +34,59 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
+        private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
+        private readonly string PackageDownloadFailedContent = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent");
+        private readonly string PackageInstallFailedContent = ResourceService.GetLocalized("WinGet/PackageInstallFailedContent");
+        private readonly string PackageUninstallFailedContent = ResourceService.GetLocalized("WinGet/PackageUninstallFailedContent");
+        private readonly string PackageRepairFailedContent = ResourceService.GetLocalized("WinGet/PackageRepairFailedContent");
+        private readonly string PackageUpgradeFailedContent = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent");
+        private readonly string WinGetPackageDownloadBlockedByPolicy = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadBlockedByPolicy");
+        private readonly string WinGetPackageDownloadCatalogError = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadCatalogError");
+        private readonly string WinGetPackageDownloadInternalError = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadInternalError");
+        private readonly string WinGetPackageDownloadInvalidOptions = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadInvalidOptions");
+        private readonly string WinGetPackageDownloadError = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadError");
+        private readonly string WinGetPackageDownloadManifestError = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadManifestError");
+        private readonly string WinGetPackageDownloadNoApplicableInstallers = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadNoApplicableInstallers");
+        private readonly string WinGetPackageDownloadAgreementsNotAccepted = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadAgreementsNotAccepted");
+        private readonly string WinGetPackageDownloadOtherError = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadOtherError");
+        private readonly string WinGetPackageInstallBlockedByPolicy = ResourceService.GetLocalized("WinGet/WinGetPackageInstallBlockedByPolicy");
+        private readonly string WinGetPackageInstallCatalogError = ResourceService.GetLocalized("WinGet/WinGetPackageInstallCatalogError");
+        private readonly string WinGetPackageInstallInternalError = ResourceService.GetLocalized("WinGet/WinGetPackageInstallInternalError");
+        private readonly string WinGetPackageInstallInvalidOptions = ResourceService.GetLocalized("WinGet/WinGetPackageInstallInvalidOptions");
+        private readonly string WinGetPackageInstallDownloadError = ResourceService.GetLocalized("WinGet/WinGetPackageInstallDownloadError");
+        private readonly string WinGetPackageInstallError = ResourceService.GetLocalized("WinGet/WinGetPackageInstallError");
+        private readonly string WinGetPackageInstallManifestError = ResourceService.GetLocalized("WinGet/WinGetPackageInstallManifestError");
+        private readonly string WinGetPackageInstallNoApplicableInstallers = ResourceService.GetLocalized("WinGet/WinGetPackageInstallNoApplicableInstallers");
+        private readonly string WinGetPackageInstallAgreementsNotAccepted = ResourceService.GetLocalized("WinGet/WinGetPackageInstallAgreementsNotAccepted");
+        private readonly string WinGetPackageInstallOtherError = ResourceService.GetLocalized("WinGet/WinGetPackageInstallOtherError");
+        private readonly string WinGetPackageUninstallBlockedByPolicy = ResourceService.GetLocalized("WinGet/WinGetPackageUninstallBlockedByPolicy");
+        private readonly string WinGetPackageUninstallCatalogError = ResourceService.GetLocalized("WinGet/WinGetPackageUninstallCatalogError");
+        private readonly string WinGetPackageUninstallInternalError = ResourceService.GetLocalized("WinGet/WinGetPackageUninstallInternalError");
+        private readonly string WinGetPackageUninstallInvalidOptions = ResourceService.GetLocalized("WinGet/WinGetPackageUninstallInvalidOptions");
+        private readonly string WinGetPackageUninstallError = ResourceService.GetLocalized("WinGet/WinGetPackageUninstallError");
+        private readonly string WinGetPackageUninstallManifestError = ResourceService.GetLocalized("WinGet/WinGetPackageUninstallManifestError");
+        private readonly string WinGetPackageUninstallOtherError = ResourceService.GetLocalized("WinGet/WinGetPackageUninstallOtherError");
+        private readonly string WinGetPackageRepairBlockedByPolicy = ResourceService.GetLocalized("WinGet/WinGetPackageRepairBlockedByPolicy");
+        private readonly string WinGetPackageRepairCatalogError = ResourceService.GetLocalized("WinGet/WinGetPackageRepairCatalogError");
+        private readonly string WinGetPackageRepairInternalError = ResourceService.GetLocalized("WinGet/WinGetPackageRepairInternalError");
+        private readonly string WinGetPackageRepairInvalidOptions = ResourceService.GetLocalized("WinGet/WinGetPackageRepairInvalidOptions");
+        private readonly string WinGetPackageRepairError = ResourceService.GetLocalized("WinGet/WinGetPackageRepairError");
+        private readonly string WinGetPackageRepairManifestError = ResourceService.GetLocalized("WinGet/WinGetPackageRepairManifestError");
+        private readonly string WinGetPackageRepairNoApplicableRepairer = ResourceService.GetLocalized("WinGet/WinGetPackageRepairNoApplicableRepairer");
+        private readonly string WinGetPackageRepairAgreementsNotAccepted = ResourceService.GetLocalized("WinGet/WinGetPackageRepairAgreementsNotAccepted");
+        private readonly string WinGetPackageRepairOtherError = ResourceService.GetLocalized("WinGet/WinGetPackageRepairOtherError");
+        private readonly string WinGetPackageUpgradeBlockedByPolicy = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeBlockedByPolicy");
+        private readonly string WinGetPackageUpgradeCatalogError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeCatalogError");
+        private readonly string WinGetPackageUpgradeInternalError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeInternalError");
+        private readonly string WinGetPackageUpgradeInvalidOptions = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeInvalidOptions");
+        private readonly string WinGetPackageUpgradeDownloadError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeDownloadError");
+        private readonly string WinGetPackageUpgradeError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeError");
+        private readonly string WinGetPackageUpgradeManifestError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeManifestError");
+        private readonly string WinGetPackageUpgradeNoApplicableInstallers = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeNoApplicableInstallers");
+        private readonly string WinGetPackageUpgradeNoApplicableUpgrade = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeNoApplicableUpgrade");
+        private readonly string WinGetPackageUpgradeAgreementsNotAccepted = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeAgreementsNotAccepted");
+        private readonly string WinGetPackageUpgradeOtherError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeOtherError");
+
         private readonly Lock PackageOperationLock = new();
 
         private SelectorBarItem _selectedItem;
@@ -317,7 +370,7 @@ namespace GetStoreApp.Views.Pages
         #endregion 第三部分：WinGet 程序包页面——挂载的事件
 
         /// <summary>
-        /// 更新下载进度
+        /// 更新应用下载进度
         /// </summary>
         private void OnPackageDownloadProgress(IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> result, PackageDownloadProgress packageDownloadProgress, PackageOperationModel packageOperation)
         {
@@ -331,14 +384,7 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageDownloadProgressState = packageDownloadProgress.State;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
                             }
                             catch (Exception e)
                             {
@@ -359,46 +405,10 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageDownloadProgressState = packageDownloadProgress.State;
-                                        packageOperationItem.PackageOperationProgress = Math.Round(packageDownloadProgress.DownloadProgress * 100, 2);
-                                        packageOperationItem.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesDownloaded));
-                                        packageOperationItem.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesRequired));
-                                        break;
-                                    }
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                // 处于下载完成状态
-                case PackageDownloadProgressState.Finished:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            PackageOperationLock.Enter();
-                            try
-                            {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageDownloadProgressState = packageDownloadProgress.State;
-                                        packageOperationItem.PackageOperationProgress = 100;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
+                                packageOperation.PackageOperationProgress = Math.Round(packageDownloadProgress.DownloadProgress * 100, 2);
+                                packageOperation.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesDownloaded));
+                                packageOperation.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesRequired));
                             }
                             catch (Exception e)
                             {
@@ -415,7 +425,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 更新安装或更新进度
+        /// 更新应用安装或更新进度
         /// </summary>
         private void OnPackageInstallProgress(IAsyncOperationWithProgress<InstallResult, InstallProgress> result, InstallProgress installProgress, PackageOperationModel packageOperation)
         {
@@ -431,14 +441,7 @@ namespace GetStoreApp.Views.Pages
                                 PackageOperationLock.Enter();
                                 try
                                 {
-                                    foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                    {
-                                        if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                        {
-                                            packageOperationItem.PackageInstallProgressState = installProgress.State;
-                                            break;
-                                        }
-                                    }
+                                    packageOperation.PackageInstallProgressState = installProgress.State;
                                 }
                                 catch (Exception e)
                                 {
@@ -459,17 +462,10 @@ namespace GetStoreApp.Views.Pages
                                 PackageOperationLock.Enter();
                                 try
                                 {
-                                    foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                    {
-                                        if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                        {
-                                            packageOperationItem.PackageInstallProgressState = installProgress.State;
-                                            packageOperationItem.PackageOperationProgress = Math.Round(installProgress.DownloadProgress * 100, 2);
-                                            packageOperationItem.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesDownloaded));
-                                            packageOperationItem.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesRequired));
-                                            break;
-                                        }
-                                    }
+                                    packageOperation.PackageInstallProgressState = installProgress.State;
+                                    packageOperation.PackageOperationProgress = Math.Round(installProgress.DownloadProgress * 100, 2);
+                                    packageOperation.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesDownloaded));
+                                    packageOperation.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(installProgress.BytesRequired));
                                 }
                                 catch (Exception e)
                                 {
@@ -490,15 +486,8 @@ namespace GetStoreApp.Views.Pages
                                 PackageOperationLock.Enter();
                                 try
                                 {
-                                    foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                    {
-                                        if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                        {
-                                            packageOperationItem.PackageInstallProgressState = installProgress.State;
-                                            packageOperationItem.PackageOperationProgress = 100;
-                                            break;
-                                        }
-                                    }
+                                    packageOperation.PackageInstallProgressState = installProgress.State;
+                                    packageOperation.PackageOperationProgress = 100;
                                 }
                                 catch (Exception e)
                                 {
@@ -519,43 +508,7 @@ namespace GetStoreApp.Views.Pages
                                 PackageOperationLock.Enter();
                                 try
                                 {
-                                    foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                    {
-                                        if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                        {
-                                            packageOperationItem.PackageInstallProgressState = installProgress.State;
-                                            break;
-                                        }
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                                }
-                                finally
-                                {
-                                    PackageOperationLock.Exit();
-                                }
-                            });
-                            break;
-                        }
-                    // 处于安装完成状态
-                    case PackageInstallProgressState.Finished:
-                        {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                PackageOperationLock.Enter();
-                                try
-                                {
-                                    foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                    {
-                                        if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                        {
-                                            packageOperationItem.PackageInstallProgressState = installProgress.State;
-                                            packageOperationItem.PackageOperationProgress = 100;
-                                            break;
-                                        }
-                                    }
+                                    packageOperation.PackageInstallProgressState = installProgress.State;
                                 }
                                 catch (Exception e)
                                 {
@@ -573,7 +526,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 更新卸载进度
+        /// 更新应用卸载进度
         /// </summary>
         private void OnPackageUninstallProgress(IAsyncOperationWithProgress<UninstallResult, UninstallProgress> result, UninstallProgress uninstallProgress, PackageOperationModel packageOperation)
         {
@@ -587,14 +540,7 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageUninstallProgressState = uninstallProgress.State;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageUninstallProgressState = uninstallProgress.State;
                             }
                             catch (Exception e)
                             {
@@ -615,14 +561,7 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageUninstallProgressState = uninstallProgress.State;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageUninstallProgressState = uninstallProgress.State;
                             }
                             catch (Exception e)
                             {
@@ -643,14 +582,7 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageUninstallProgressState = uninstallProgress.State;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageUninstallProgressState = uninstallProgress.State;
                             }
                             catch (Exception e)
                             {
@@ -663,41 +595,11 @@ namespace GetStoreApp.Views.Pages
                         });
                         break;
                     }
-                // 处于卸载完成状态
-                case PackageUninstallProgressState.Finished:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            PackageOperationLock.Enter();
-                            try
-                            {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageUninstallProgressState = uninstallProgress.State;
-                                        break;
-                                    }
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                default:
-                    break;
             }
         }
 
         /// <summary>
-        /// 更新修复进度
+        /// 更新应用修复进度
         /// </summary>
         private void OnPackageRepairProgress(IAsyncOperationWithProgress<RepairResult, RepairProgress> result, RepairProgress repairProgress, PackageOperationModel packageOperation)
         {
@@ -711,14 +613,7 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageRepairProgressState = repairProgress.State;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageRepairProgressState = repairProgress.State;
                             }
                             catch (Exception e)
                             {
@@ -739,15 +634,8 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageRepairProgressState = repairProgress.State;
-                                        packageOperationItem.PackageOperationProgress = Math.Round(repairProgress.RepairCompletionProgress * 100, 2);
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageRepairProgressState = repairProgress.State;
+                                packageOperation.PackageOperationProgress = Math.Round(repairProgress.RepairCompletionProgress * 100, 2);
                             }
                             catch (Exception e)
                             {
@@ -768,14 +656,7 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageRepairProgressState = repairProgress.State;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageRepairProgressState = repairProgress.State;
                             }
                             catch (Exception e)
                             {
@@ -796,14 +677,7 @@ namespace GetStoreApp.Views.Pages
                             PackageOperationLock.Enter();
                             try
                             {
-                                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                {
-                                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                    {
-                                        packageOperationItem.PackageRepairProgressState = repairProgress.State;
-                                        break;
-                                    }
-                                }
+                                packageOperation.PackageRepairProgressState = repairProgress.State;
                             }
                             catch (Exception e)
                             {
@@ -833,7 +707,6 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 添加任务
         /// </summary>
-
         public async Task AddTaskAsync(PackageOperationModel packageOperation)
         {
             switch (packageOperation.PackageOperationKind)
@@ -845,7 +718,7 @@ namespace GetStoreApp.Views.Pages
 
                         if (!isExisted)
                         {
-                            DownloadResult downloadResult = await Task.Run(async () =>
+                            (bool result, bool isCanceled, DownloadResult downloadResult, Exception exception) = await Task.Run(async () =>
                             {
                                 try
                                 {
@@ -865,14 +738,7 @@ namespace GetStoreApp.Views.Pages
 
                                     try
                                     {
-                                        foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                        {
-                                            if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                            {
-                                                packageOperationItem.PackageDownloadProgress = downloadPackageWithProgress;
-                                                break;
-                                            }
-                                        }
+                                        packageOperation.PackageDownloadProgress = downloadPackageWithProgress;
                                     }
                                     catch (Exception e)
                                     {
@@ -883,48 +749,286 @@ namespace GetStoreApp.Views.Pages
                                         PackageOperationLock.Exit();
                                     }
 
-                                    // 第二部分：更新下载进度
+                                    // 第二部分：更新应用下载进度
                                     downloadPackageWithProgress.Progress = (result, progress) => OnPackageDownloadProgress(result, progress, packageOperation);
-                                    return await downloadPackageWithProgress;
+                                    return ValueTuple.Create<bool, bool, DownloadResult, Exception>(true, false, await downloadPackageWithProgress, null);
+                                }
+                                // 任务已取消
+                                catch (TaskCanceledException e)
+                                {
+                                    return ValueTuple.Create<bool, bool, DownloadResult, Exception>(false, true, null, e);
                                 }
                                 // 其他异常
                                 catch (Exception e)
                                 {
                                     LogService.WriteLog(LoggingLevel.Error, "App download failed.", e);
-                                    return null;
+                                    return ValueTuple.Create<bool, bool, DownloadResult, Exception>(false, false, null, e);
                                 }
                             });
 
-                            // 下载成功
-                            if (downloadResult is not null && downloadResult.Status is DownloadResultStatus.Ok)
+                            // 应用包操作成功
+                            if (result)
                             {
-                                await Task.Run(() =>
+                                // 存在下载结果
+                                if (downloadResult is not null)
                                 {
-                                    // 显示 WinGet 应用下载成功通知
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadSuccessfully"), packageOperation.SearchApps.AppName));
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageDownloadProgressState = PackageDownloadProgressState.Finished;
+                                        packageOperation.PackageOperationProgress = 100;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    switch (downloadResult.Status)
+                                    {
+                                        // 下载成功
+                                        case DownloadResultStatus.Ok:
+                                            {
+                                                await Task.Run(() =>
+                                                {
+                                                    // 显示 WinGet 应用下载成功通知
+                                                    AppNotificationBuilder appNotificationBuilder = new();
+                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadSuccessfully"), packageOperation.SearchApps.AppName));
+                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                                });
+                                                break;
+                                            }
+                                        // 被策略阻止
+                                        case DownloadResultStatus.BlockedByPolicy:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadBlockedByPolicy, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 数据源错误
+                                        case DownloadResultStatus.CatalogError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadCatalogError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 内部错误
+                                        case DownloadResultStatus.InternalError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadInternalError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 非法错误
+                                        case DownloadResultStatus.InvalidOptions:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadInvalidOptions, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 下载错误
+                                        case DownloadResultStatus.DownloadError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 清单错误
+                                        case DownloadResultStatus.ManifestError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadManifestError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 没有合适的应用安装包
+                                        case DownloadResultStatus.NoApplicableInstallers:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadNoApplicableInstallers, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 未接受许可协议
+                                        case DownloadResultStatus.PackageAgreementsNotAccepted:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadAgreementsNotAccepted, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                    }
+                                }
+                                // 不存在下载结果
+                                else
+                                {
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    await Task.Run(() =>
+                                    {
+                                        // 显示 WinGet 应用下载失败通知
+                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadFailed1"), packageOperation.SearchApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed3"));
+                                        AppNotificationButton downloadWithCommandButton = new(ResourceService.GetLocalized("Notification/DownloadWithCommand"));
+                                        downloadWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("DownloadWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, WinGetConfigService.DownloadFolder.Path) : string.Format("DownloadWithCommand:{0}:{1}:{2}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path));
+                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                                        openDownloadFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
+                                        appNotificationBuilder.AddButton(downloadWithCommandButton);
+                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
-                            // 下载失败
+                            // 应用包操作失败
                             else
                             {
-                                // 显示 WinGet 应用下载失败通知
-                                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                                // 下载任务已取消
+                                if (isCanceled)
+                                {
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        PackageOperationCollection.Remove(packageOperation);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+                                }
+                                else
+                                {
+                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadOtherError, exception is not null ? exception.HResult : Unknown);
 
-                                AppNotificationBuilder appNotificationBuilder = new();
-                                appNotificationBuilder.AddArgument("action", "OpenApp");
-                                appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadFailed1"), packageOperation.SearchApps.AppName));
-                                appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed2"));
-                                appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed3"));
-                                AppNotificationButton downloadWithCommandButton = new(ResourceService.GetLocalized("Notification/DownloadWithCommand"));
-                                downloadWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("DownloadWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, WinGetConfigService.DownloadFolder.Path) : string.Format("DownloadWithCommand:{0}:{1}:{2}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path));
-                                AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                openDownloadFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                appNotificationBuilder.AddButton(downloadWithCommandButton);
-                                appNotificationBuilder.AddButton(openDownloadFolderButton);
-                                ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    await Task.Run(() =>
+                                    {
+                                        // 显示 WinGet 应用下载失败通知
+                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadFailed1"), packageOperation.SearchApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed3"));
+                                        AppNotificationButton downloadWithCommandButton = new(ResourceService.GetLocalized("Notification/DownloadWithCommand"));
+                                        downloadWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("DownloadWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, WinGetConfigService.DownloadFolder.Path) : string.Format("DownloadWithCommand:{0}:{1}:{2}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path));
+                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                                        openDownloadFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
+                                        appNotificationBuilder.AddButton(downloadWithCommandButton);
+                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
                         }
                         break;
@@ -936,7 +1040,7 @@ namespace GetStoreApp.Views.Pages
 
                         if (!isExisted)
                         {
-                            InstallResult installResult = await Task.Run(async () =>
+                            (bool result, bool isCanceled, InstallResult installResult, Exception exception) = await Task.Run(async () =>
                             {
                                 try
                                 {
@@ -960,14 +1064,7 @@ namespace GetStoreApp.Views.Pages
 
                                     try
                                     {
-                                        foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                        {
-                                            if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                            {
-                                                packageOperationItem.PackageInstallProgress = installPackageWithProgress;
-                                                break;
-                                            }
-                                        }
+                                        packageOperation.PackageInstallProgress = installPackageWithProgress;
                                     }
                                     catch (Exception e)
                                     {
@@ -978,65 +1075,318 @@ namespace GetStoreApp.Views.Pages
                                         PackageOperationLock.Exit();
                                     }
 
-                                    // 第二部分：更新安装进度
+                                    // 第二部分：更新应用安装进度
                                     installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, packageOperation);
-                                    return await installPackageWithProgress;
+                                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(true, false, await installPackageWithProgress, null);
+                                }
+                                // 任务已取消
+                                catch (TaskCanceledException e)
+                                {
+                                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, true, null, e);
                                 }
                                 // 其他异常
                                 catch (Exception e)
                                 {
                                     LogService.WriteLog(LoggingLevel.Error, "App install failed.", e);
-                                    return null;
+                                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
                                 }
                             });
 
-                            // 安装成功
-                            if (installResult is not null && installResult.Status is InstallResultStatus.Ok)
+                            if (result)
                             {
-                                await Task.Run(() =>
+                                // 存在安装结果
+                                if (installResult is not null)
                                 {
-                                    // 显示 WinGet 应用安装成功通知
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), packageOperation.SearchApps.AppName));
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
-
-                                // 检测是否需要重启设备完成应用的安装，如果是，询问用户是否需要重启设备
-                                if (installResult.RebootRequired)
-                                {
-                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.SearchInstall, packageOperation.SearchApps.AppName));
-
-                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                    PackageOperationLock.Enter();
+                                    try
                                     {
-                                        await Task.Run(() =>
-                                        {
-                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
-                                        });
+                                        packageOperation.PackageInstallProgressState = PackageInstallProgressState.Finished;
+                                        packageOperation.PackageOperationProgress = 100;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    switch (installResult.Status)
+                                    {
+                                        // 安装成功
+                                        case InstallResultStatus.Ok:
+                                            {
+                                                await Task.Run(() =>
+                                                {
+                                                    // 显示 WinGet 应用安装成功通知
+                                                    AppNotificationBuilder appNotificationBuilder = new();
+                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), packageOperation.SearchApps.AppName));
+                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                                });
+
+                                                // 检测是否需要重启设备完成应用的安装，如果是，询问用户是否需要重启设备
+                                                if (installResult.RebootRequired)
+                                                {
+                                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.SearchInstall, packageOperation.SearchApps.AppName));
+
+                                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                                    {
+                                                        await Task.Run(() =>
+                                                        {
+                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                        });
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        // 被组策略阻止
+                                        case InstallResultStatus.BlockedByPolicy:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallBlockedByPolicy, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 数据源错误
+                                        case InstallResultStatus.CatalogError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallCatalogError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 内部错误
+                                        case InstallResultStatus.InternalError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallInternalError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 非法错误
+                                        case InstallResultStatus.InvalidOptions:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallInvalidOptions, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 下载错误
+                                        case InstallResultStatus.DownloadError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallDownloadError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 安装错误
+                                        case InstallResultStatus.InstallError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 清单错误
+                                        case InstallResultStatus.ManifestError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallManifestError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 没有合适的应用安装包
+                                        case InstallResultStatus.NoApplicableInstallers:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallNoApplicableInstallers, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 未接受许可协议
+                                        case InstallResultStatus.PackageAgreementsNotAccepted:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallAgreementsNotAccepted, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
                                     }
                                 }
+                                // 不存在安装结果
+                                else
+                                {
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    await Task.Run(() =>
+                                    {
+                                        // 显示 WinGet 应用安装失败通知
+                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed1"), packageOperation.SearchApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
+                                        AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
+                                        installWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("InstallWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("InstallWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
+                                        AppNotificationButton openInstallFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                                        openInstallFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
+                                        appNotificationBuilder.AddButton(installWithCommandButton);
+                                        appNotificationBuilder.AddButton(openInstallFolderButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
-                            // 安装失败
+                            // 应用包操作失败
                             else
                             {
-                                await Task.Run(() =>
+                                // 安装任务已取消
+                                if (isCanceled)
                                 {
-                                    // 显示 WinGet 应用安装失败通知
-                                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        PackageOperationCollection.Remove(packageOperation);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+                                }
+                                // 安装任务发生其他异常
+                                else
+                                {
+                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallOtherError, exception is not null ? exception.HResult : Unknown);
 
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed1"), packageOperation.SearchApps.AppName));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
-                                    AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
-                                    installWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("InstallWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("InstallWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
-                                    AppNotificationButton openInstallFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                    openInstallFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                    appNotificationBuilder.AddButton(installWithCommandButton);
-                                    appNotificationBuilder.AddButton(openInstallFolderButton);
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
+                                    await Task.Run(() =>
+                                    {
+                                        // 显示 WinGet 应用安装失败通知
+                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed1"), packageOperation.SearchApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
+                                        AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
+                                        installWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("InstallWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("InstallWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
+                                        AppNotificationButton openInstallFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                                        openInstallFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
+                                        appNotificationBuilder.AddButton(installWithCommandButton);
+                                        appNotificationBuilder.AddButton(openInstallFolderButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
                         }
                         break;
@@ -1048,7 +1398,7 @@ namespace GetStoreApp.Views.Pages
 
                         if (!isExisted)
                         {
-                            UninstallResult uninstallResult = await Task.Run(async () =>
+                            (bool result, bool isCanceled, UninstallResult uninstallResult, Exception exception) = await Task.Run(async () =>
                             {
                                 try
                                 {
@@ -1068,14 +1418,7 @@ namespace GetStoreApp.Views.Pages
 
                                     try
                                     {
-                                        foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                        {
-                                            if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                            {
-                                                packageOperationItem.PackageUninstallProgress = uninstallPackageWithProgress;
-                                                break;
-                                            }
-                                        }
+                                        packageOperation.PackageUninstallProgress = uninstallPackageWithProgress;
                                     }
                                     catch (Exception e)
                                     {
@@ -1086,40 +1429,223 @@ namespace GetStoreApp.Views.Pages
                                         PackageOperationLock.Exit();
                                     }
 
-                                    // 第二部分：更新卸载进度
+                                    // 第二部分：更新应用卸载进度
                                     uninstallPackageWithProgress.Progress = (result, progress) => OnPackageUninstallProgress(result, progress, packageOperation);
-                                    return await uninstallPackageWithProgress;
+                                    return ValueTuple.Create<bool, bool, UninstallResult, Exception>(true, false, await uninstallPackageWithProgress, null);
+                                }
+                                // 任务已取消
+                                catch (TaskCanceledException e)
+                                {
+                                    return ValueTuple.Create<bool, bool, UninstallResult, Exception>(false, true, null, e);
                                 }
                                 // 其他异常
                                 catch (Exception e)
                                 {
                                     LogService.WriteLog(LoggingLevel.Error, "App uninstall failed.", e);
-                                    return null;
+                                    return ValueTuple.Create<bool, bool, UninstallResult, Exception>(false, false, null, e);
                                 }
                             });
 
-                            // 卸载成功
-                            if (uninstallResult is not null && uninstallResult.Status is UninstallResultStatus.Ok)
+                            // 应用包操作成功
+                            if (result)
                             {
-                                // TODO: 移除列表操作
-
-                                // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
-                                if (uninstallResult.RebootRequired)
+                                // 存在卸载结果
+                                if (uninstallResult is not null)
                                 {
-                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.Uninstall, packageOperation.InstalledApps.AppName));
-
-                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                    PackageOperationLock.Enter();
+                                    try
                                     {
-                                        await Task.Run(() =>
-                                        {
-                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
-                                        });
+                                        packageOperation.PackageUninstallProgressState = PackageUninstallProgressState.Finished;
+                                        packageOperation.PackageOperationProgress = 100;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    switch (uninstallResult.Status)
+                                    {
+                                        // 卸载成功
+                                        case UninstallResultStatus.Ok:
+                                            {
+                                                await Task.Run(() =>
+                                                {
+                                                    // 显示 WinGet 应用卸载成功通知
+                                                    AppNotificationBuilder appNotificationBuilder = new();
+                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadSuccessfully"), packageOperation.SearchApps.AppName));
+                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                                });
+
+                                                // TODO: 移除列表操作
+
+                                                // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
+                                                if (uninstallResult.RebootRequired)
+                                                {
+                                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.Uninstall, packageOperation.InstalledApps.AppName));
+
+                                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                                    {
+                                                        await Task.Run(() =>
+                                                        {
+                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                        });
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        // 被组策略阻止
+                                        case UninstallResultStatus.BlockedByPolicy:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallBlockedByPolicy, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 数据源错误
+                                        case UninstallResultStatus.CatalogError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallCatalogError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 内部错误
+                                        case UninstallResultStatus.InternalError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallInternalError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 非法错误
+                                        case UninstallResultStatus.InvalidOptions:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallInvalidOptions, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 卸载错误
+                                        case UninstallResultStatus.UninstallError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 清单错误
+                                        case UninstallResultStatus.ManifestError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallManifestError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
                                     }
                                 }
+                                // 不存在卸载结果
+                                else
+                                {
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    await Task.Run(() =>
+                                    {
+                                        // 显示 WinGet 卸载应用失败通知
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUninstallFailed1"), packageOperation.InstalledApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed3"));
+                                        AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                                        openSettingsButton.Arguments.Add("action", "OpenSettings");
+                                        appNotificationBuilder.AddButton(openSettingsButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
-                            // 卸载失败
+                            // 应用包操作失败
                             else
                             {
+                                packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallOtherError, exception is not null ? exception.HResult : Unknown);
+
                                 await Task.Run(() =>
                                 {
                                     // 显示 WinGet 卸载应用失败通知
@@ -1144,7 +1670,7 @@ namespace GetStoreApp.Views.Pages
 
                         if (!isExisted)
                         {
-                            RepairResult repairResult = await Task.Run(async () =>
+                            (bool result, bool isCanceled, RepairResult repairResult, Exception exception) = await Task.Run(async () =>
                             {
                                 try
                                 {
@@ -1167,14 +1693,7 @@ namespace GetStoreApp.Views.Pages
 
                                     try
                                     {
-                                        foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
-                                        {
-                                            if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
-                                            {
-                                                packageOperationItem.PackageRepairProgress = repairPackageWithProgress;
-                                                break;
-                                            }
-                                        }
+                                        packageOperation.PackageRepairProgress = repairPackageWithProgress;
                                     }
                                     catch (Exception e)
                                     {
@@ -1185,48 +1704,230 @@ namespace GetStoreApp.Views.Pages
                                         PackageOperationLock.Exit();
                                     }
 
-                                    // 第二部分：更新安装进度
+                                    // 第二部分：更新应用安装进度
                                     repairPackageWithProgress.Progress = (result, progress) => OnPackageRepairProgress(result, progress, packageOperation);
-                                    return await repairPackageWithProgress;
+                                    return ValueTuple.Create<bool, bool, RepairResult, Exception>(true, false, await repairPackageWithProgress, null);
+                                }
+                                // 任务已取消
+                                catch (TaskCanceledException e)
+                                {
+                                    return ValueTuple.Create<bool, bool, RepairResult, Exception>(false, true, null, e);
                                 }
                                 // 其他异常
                                 catch (Exception e)
                                 {
                                     LogService.WriteLog(LoggingLevel.Error, "App repair failed.", e);
-                                    return null;
+                                    return ValueTuple.Create<bool, bool, RepairResult, Exception>(false, false, null, e);
                                 }
                             });
 
-                            if (repairResult is not null && repairResult.Status is RepairResultStatus.Ok)
+                            // 应用包操作成功
+                            if (result)
                             {
-                                await Task.Run(() =>
+                                // 存在修复结果
+                                if (repairResult is not null)
                                 {
-                                    // 显示 WinGet 应用修复成功通知
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetRepairSuccessfully"), packageOperation.SearchApps.AppName));
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
-
-                                // 检测是否需要重启设备完成应用的修复，如果是，询问用户是否需要重启设备
-                                if (repairResult.RebootRequired)
-                                {
-                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.SearchRepair, packageOperation.InstalledApps.AppName));
-
-                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                    PackageOperationLock.Enter();
+                                    try
                                     {
-                                        await Task.Run(() =>
-                                        {
-                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
-                                        });
+                                        packageOperation.PackageRepairProgressState = PackageRepairProgressState.Finished;
+                                        packageOperation.PackageOperationProgress = 100;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+                                }
+                                else
+                                {
+                                    switch (repairResult.Status)
+                                    {
+                                        // 修复成功
+                                        case RepairResultStatus.Ok:
+                                            {
+                                                await Task.Run(() =>
+                                                {
+                                                    // 显示 WinGet 应用修复成功通知
+                                                    AppNotificationBuilder appNotificationBuilder = new();
+                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetRepairSuccessfully"), packageOperation.SearchApps.AppName));
+                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                                });
+
+                                                // 检测是否需要重启设备完成应用的修复，如果是，询问用户是否需要重启设备
+                                                if (repairResult.RebootRequired)
+                                                {
+                                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.SearchRepair, packageOperation.InstalledApps.AppName));
+
+                                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                                    {
+                                                        await Task.Run(() =>
+                                                        {
+                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                        });
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        // 被组策略阻止
+                                        case RepairResultStatus.BlockedByPolicy:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairBlockedByPolicy, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 数据源错误
+                                        case RepairResultStatus.CatalogError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairCatalogError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 内部错误
+                                        case RepairResultStatus.InternalError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairInternalError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 非法错误
+                                        case RepairResultStatus.InvalidOptions:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairInvalidOptions, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 修复错误
+                                        case RepairResultStatus.RepairError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 清单错误
+                                        case RepairResultStatus.ManifestError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairManifestError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 没有合适的应用修复包
+                                        case RepairResultStatus.NoApplicableRepairer:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairNoApplicableRepairer, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 未接受许可协议
+                                        case RepairResultStatus.PackageAgreementsNotAccepted:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairAgreementsNotAccepted, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
                                     }
                                 }
                             }
+                            // 应用包操作失败
                             else
                             {
+                                packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairOtherError, exception is not null ? exception.HResult : Unknown);
+
                                 await Task.Run(() =>
                                 {
-                                    // 显示 WinGet 应用修复失败通知
                                     KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 
                                     AppNotificationBuilder appNotificationBuilder = new();
@@ -1253,7 +1954,7 @@ namespace GetStoreApp.Views.Pages
 
                         if (!isExisted)
                         {
-                            InstallResult installResult = await Task.Run(async () =>
+                            (bool result, bool isCanceled, InstallResult installResult, Exception exception) = await Task.Run(async () =>
                             {
                                 try
                                 {
@@ -1295,61 +1996,338 @@ namespace GetStoreApp.Views.Pages
                                         PackageOperationLock.Exit();
                                     }
 
-                                    // 第二部分：更新安装进度
+                                    // 第二部分：更新应用安装进度
                                     upgradePackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, packageOperation);
-                                    return await upgradePackageWithProgress;
+                                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(true, false, await upgradePackageWithProgress, null);
+                                }
+                                // 任务已取消
+                                catch (TaskCanceledException e)
+                                {
+                                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, true, null, e);
                                 }
                                 // 其他异常
                                 catch (Exception e)
                                 {
-                                    LogService.WriteLog(LoggingLevel.Error, "App repair failed.", e);
-                                    return null;
+                                    LogService.WriteLog(LoggingLevel.Error, "App upgrade failed.", e);
+                                    return ValueTuple.Create<bool, bool, InstallResult, Exception>(false, false, null, e);
                                 }
                             });
 
-                            if (installResult.Status is InstallResultStatus.Ok)
+                            if (result)
                             {
-                                await Task.Run(() =>
+                                // 存在更新结果
+                                if (installResult is not null)
                                 {
-                                    // 显示 WinGet 应用更新成功通知
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), packageOperation.UpgradableApps.AppName));
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
-
-                                // 检测是否需要重启设备完成应用的更新，如果是，询问用户是否需要重启设备
-                                if (installResult.RebootRequired)
-                                {
-                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.Upgrade, packageOperation.UpgradableApps.AppName));
-
-                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                    PackageOperationLock.Enter();
+                                    try
                                     {
-                                        await Task.Run(() =>
-                                        {
-                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
-                                        });
+                                        packageOperation.PackageInstallProgressState = PackageInstallProgressState.Finished;
+                                        packageOperation.PackageOperationProgress = 100;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    switch (installResult.Status)
+                                    {
+                                        // 安装成功
+                                        case InstallResultStatus.Ok:
+                                            {
+                                                await Task.Run(() =>
+                                                {
+                                                    // 显示 WinGet 应用更新成功通知
+                                                    AppNotificationBuilder appNotificationBuilder = new();
+                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), packageOperation.UpgradableApps.AppName));
+                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                                });
+
+                                                // TODO：添加移除操作
+
+                                                // 检测是否需要重启设备完成应用的更新，如果是，询问用户是否需要重启设备
+                                                if (installResult.RebootRequired)
+                                                {
+                                                    ContentDialogResult contentDialogResult = await MainWindow.Current.ShowDialogAsync(new RebootDialog(WinGetOperationKind.Upgrade, packageOperation.UpgradableApps.AppName));
+
+                                                    if (contentDialogResult is ContentDialogResult.Primary)
+                                                    {
+                                                        await Task.Run(() =>
+                                                        {
+                                                            ShutdownHelper.Restart(ResourceService.GetLocalized("WinGet/RestartPC"), TimeSpan.FromSeconds(120));
+                                                        });
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        // 被组策略阻止
+                                        case InstallResultStatus.BlockedByPolicy:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeBlockedByPolicy, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 数据源错误
+                                        case InstallResultStatus.CatalogError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeCatalogError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 内部错误
+                                        case InstallResultStatus.InternalError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeInternalError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 非法错误
+                                        case InstallResultStatus.InvalidOptions:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeInvalidOptions, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 下载错误
+                                        case InstallResultStatus.DownloadError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeDownloadError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 安装错误
+                                        case InstallResultStatus.InstallError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 清单错误
+                                        case InstallResultStatus.ManifestError:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeManifestError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 没有合适的应用安装包
+                                        case InstallResultStatus.NoApplicableInstallers:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeNoApplicableInstallers, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 没有合适的应用更新包
+                                        case InstallResultStatus.NoApplicableUpgrade:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeNoApplicableUpgrade, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
+                                        // 未接受许可协议
+                                        case InstallResultStatus.PackageAgreementsNotAccepted:
+                                            {
+                                                PackageOperationLock.Enter();
+                                                try
+                                                {
+                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeAgreementsNotAccepted, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                                }
+                                                finally
+                                                {
+                                                    PackageOperationLock.Exit();
+                                                }
+                                                break;
+                                            }
                                     }
                                 }
+                                // 不存在安装结果
+                                else
+                                {
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    await Task.Run(() =>
+                                    {
+                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                                        // 显示 WinGet 应用更新失败通知
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed1"), packageOperation.UpgradableApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
+                                        AppNotificationButton upgradeWithCommandButton = new(ResourceService.GetLocalized("Notification/UpgradeWithCommand"));
+                                        upgradeWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("UpgradeWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("UpgradeWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
+                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                                        openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
+                                        appNotificationBuilder.AddButton(upgradeWithCommandButton);
+                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
+                            // 应用包操作失败
                             else
                             {
-                                await Task.Run(() =>
+                                // 安装任务已取消
+                                if (isCanceled)
                                 {
-                                    // 显示 WinGet 应用升级失败通知
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed1"), packageOperation.UpgradableApps.AppName));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
-                                    AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
-                                    installWithCommandButton.Arguments.Add("action", string.Format("InstallWithCommand:{0}", "TestAppID"));
-                                    AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                    openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
-                                    appNotificationBuilder.AddButton(installWithCommandButton);
-                                    appNotificationBuilder.AddButton(openDownloadFolderButton);
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        PackageOperationCollection.Remove(packageOperation);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+                                }
+                                // 安装任务发生其他异常
+                                else
+                                {
+                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeOtherError, exception is not null ? exception.HResult : Unknown);
+
+                                    await Task.Run(() =>
+                                    {
+                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                                        // 显示 WinGet 应用更新失败通知
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed1"), packageOperation.UpgradableApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
+                                        AppNotificationButton upgradeWithCommandButton = new(ResourceService.GetLocalized("Notification/UpgradeWithCommand"));
+                                        upgradeWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("UpgradeWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("UpgradeWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
+                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                                        openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
+                                        appNotificationBuilder.AddButton(upgradeWithCommandButton);
+                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
                         }
                         break;

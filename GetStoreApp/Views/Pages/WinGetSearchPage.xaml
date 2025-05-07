@@ -13,17 +13,17 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
+
+        <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
+        <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
+        <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
+        <XamlUICommand x:Name="ViewVersionInfoCommand" ExecuteRequested="{x:Bind OnViewVersionInfoExecuteRequested}" />
+    </Page.Resources>
+
     <Grid>
-        <Grid.Resources>
-            <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-            <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
-            <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
-            <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
-            <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
-            <XamlUICommand x:Name="ViewVersionInfoCommand" ExecuteRequested="{x:Bind OnViewVersionInfoExecuteRequested}" />
-        </Grid.Resources>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -370,11 +370,9 @@
                             BorderThickness="1"
                             ColumnSpacing="10"
                             CornerRadius="{StaticResource ControlCornerRadius}">
+
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="120" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
@@ -418,7 +416,7 @@
                             </StackPanel>
 
                             <StackPanel
-                                Grid.Column="4"
+                                Grid.Column="1"
                                 Height="30"
                                 BorderBrush="{ThemeResource ButtonBorderBrush}"
                                 BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
