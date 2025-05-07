@@ -255,20 +255,20 @@ namespace GetStoreApp.Views.Pages
 
                     try
                     {
-                        foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
+                        foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
                         {
                             packageList.Add(new PackageModel()
                             {
-                                LogoImage = packageItem.Logo,
-                                IsFramework = GetIsFramework(packageItem),
-                                AppListEntryCount = GetAppListEntriesCount(packageItem),
-                                DisplayName = GetDisplayName(packageItem),
-                                InstallDate = GetInstallDate(packageItem),
-                                PublisherDisplayName = GetPublisherDisplayName(packageItem),
-                                Version = GetVersion(packageItem),
-                                SignatureKind = GetSignatureKind(packageItem),
-                                InstalledDate = GetInstalledDate(packageItem),
-                                Package = packageItem,
+                                LogoImage = package.Logo,
+                                IsFramework = GetIsFramework(package),
+                                AppListEntryCount = GetAppListEntriesCount(package),
+                                DisplayName = GetDisplayName(package),
+                                InstallDate = GetInstallDate(package),
+                                PublisherDisplayName = GetPublisherDisplayName(package),
+                                Version = GetVersion(package),
+                                SignatureKind = GetSignatureKind(package),
+                                InstalledDate = GetInstalledDate(package),
+                                Package = package,
                                 IsUninstalling = false
                             });
                         }
@@ -540,84 +540,63 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnUninstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is Package package)
+            if (args.Parameter is PackageModel package)
             {
-                foreach (PackageModel packageItem in AppManagerList)
-                {
-                    if (Equals(packageItem.Package.Id.FullName, package.Id.FullName))
-                    {
-                        packageItem.IsUninstalling = true;
-                        break;
-                    }
-                }
+                package.IsUninstalling = true;
 
                 try
                 {
                     DeploymentResult deploymentResult = await Task.Run(async () =>
                     {
-                        return await packageManager.RemovePackageAsync(package.Id.FullName, RemovalOptions.None);
+                        return await packageManager.RemovePackageAsync(package.Package.Id.FullName, RemovalOptions.None);
                     });
 
                     // 卸载成功
                     if (deploymentResult.ExtendedErrorCode is null)
                     {
-                        foreach (PackageModel pacakgeItem in AppManagerList)
+                        // 显示 UWP 应用卸载成功通知
+                        await Task.Run(() =>
                         {
-                            if (Equals(pacakgeItem.Package.Id.FullName, package.Id.FullName))
-                            {
-                                // 显示 UWP 应用卸载成功通知
-                                await Task.Run(() =>
-                                {
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallSuccessfully"), pacakgeItem.Package.DisplayName));
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallSuccessfully"), package.Package.DisplayName));
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                        });
 
-                                AppManagerList.Remove(pacakgeItem);
-                                AppManagerCollection.Remove(pacakgeItem);
-                                break;
-                            }
-                        }
+                        AppManagerList.Remove(package);
+                        AppManagerCollection.Remove(package);
                     }
 
                     // 卸载失败
                     else
                     {
-                        foreach (PackageModel pacakgeItem in AppManagerList)
+                        // 显示 UWP 应用卸载失败通知
+                        await Task.Run(() =>
                         {
-                            if (Equals(pacakgeItem.Package.Id.FullName, package.Id.FullName))
-                            {
-                                // 显示 UWP 应用卸载失败通知
-                                await Task.Run(() =>
-                                {
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed1"), pacakgeItem.Package.DisplayName));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUninstallFailed2"));
+                            AppNotificationBuilder appNotificationBuilder = new();
+                            appNotificationBuilder.AddArgument("action", "OpenApp");
+                            appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed1"), package.Package.DisplayName));
+                            appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/UWPUninstallFailed2"));
 
-                                    appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
-                                    {
+                            appNotificationBuilder.AddText(string.Join(Environment.NewLine, new string[]
+                            {
                                     ResourceService.GetLocalized("Notification/UWPUninstallFailed3"),
                                     string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed4"), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode.HResult : Unknown),
                                     string.Format(ResourceService.GetLocalized("Notification/UWPUninstallFailed5"), deploymentResult.ErrorText)
-                                    }));
-                                    AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
-                                    openSettingsButton.Arguments.Add("action", "OpenSettings");
-                                    appNotificationBuilder.AddButton(openSettingsButton);
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", pacakgeItem.Package.DisplayName), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new Exception());
-                                });
+                            }));
+                            AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
+                            openSettingsButton.Arguments.Add("action", "OpenSettings");
+                            appNotificationBuilder.AddButton(openSettingsButton);
+                            ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                            LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", package.Package.DisplayName), deploymentResult.ExtendedErrorCode is not null ? deploymentResult.ExtendedErrorCode : new Exception());
+                        });
 
-                                pacakgeItem.IsUninstalling = false;
-                                break;
-                            }
-                        }
+                        package.IsUninstalling = false;
                     }
                 }
                 catch (Exception e)
                 {
-                    LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", package.Id.FullName), e);
+                    LogService.WriteLog(LoggingLevel.Information, string.Format("Uninstall app {0} failed", package.Package.Id.FullName), e);
                 }
             }
         }
@@ -1464,20 +1443,20 @@ namespace GetStoreApp.Views.Pages
 
                 try
                 {
-                    foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
+                    foreach (Package package in packageManager.FindPackagesForUser(string.Empty))
                     {
                         packageList.Add(new PackageModel()
                         {
-                            LogoImage = packageItem.Logo,
-                            IsFramework = GetIsFramework(packageItem),
-                            AppListEntryCount = GetAppListEntriesCount(packageItem),
-                            DisplayName = GetDisplayName(packageItem),
-                            InstallDate = GetInstallDate(packageItem),
-                            PublisherDisplayName = GetPublisherDisplayName(packageItem),
-                            Version = GetVersion(packageItem),
-                            SignatureKind = GetSignatureKind(packageItem),
-                            InstalledDate = GetInstalledDate(packageItem),
-                            Package = packageItem,
+                            LogoImage = package.Logo,
+                            IsFramework = GetIsFramework(package),
+                            AppListEntryCount = GetAppListEntriesCount(package),
+                            DisplayName = GetDisplayName(package),
+                            InstallDate = GetInstallDate(package),
+                            PublisherDisplayName = GetPublisherDisplayName(package),
+                            Version = GetVersion(package),
+                            SignatureKind = GetSignatureKind(package),
+                            InstalledDate = GetInstalledDate(package),
+                            Package = package,
                             IsUninstalling = false
                         });
                     }

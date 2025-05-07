@@ -562,7 +562,7 @@
                                                     Height="32"
                                                     Padding="11,0"
                                                     Command="{StaticResource UninstallCommand}"
-                                                    CommandParameter="{x:Bind Package}"
+                                                    CommandParameter="{x:Bind}"
                                                     Text="{x:Bind root:ResourceService.GetLocalized('AppManager/Uninstall')}"
                                                     Visibility="{x:Bind converter:ValueCheckConverterHelper.IsNotSystemPackage(SignatureKind)}">
 
