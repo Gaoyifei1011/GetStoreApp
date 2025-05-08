@@ -26,8 +26,8 @@ using Windows.UI.StartScreen;
 using Windows.UI.Text;
 using Windows.Web.Http;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
