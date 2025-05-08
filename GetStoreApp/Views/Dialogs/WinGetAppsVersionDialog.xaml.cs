@@ -18,8 +18,8 @@ using System.Globalization;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 
-// 抑制 IDE0060 警告
-#pragma warning disable IDE0060
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Dialogs
 {
@@ -30,11 +30,12 @@ namespace GetStoreApp.Views.Dialogs
     {
         private readonly string WinGetAppsVersion = ResourceService.GetLocalized("WinGet/WinGetAppsVersion");
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
-        private bool isInitialized;
 
         private WinGetPage WinGetPage { get; }
 
         private SearchAppsModel SearchApps { get; }
+
+        private UpgradableAppsModel UpgradableApps { get; }
 
         private bool _isLoadCompleted;
 
@@ -474,11 +475,21 @@ namespace GetStoreApp.Views.Dialogs
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public WinGetAppsVersionDialog(WinGetOperationKind winGetOptionKind, WinGetPage winGetPage, SearchAppsModel searchApps)
+        public WinGetAppsVersionDialog(WinGetOperationKind winGetOptionKind, WinGetPage winGetPage, object winGetApps)
         {
             InitializeComponent();
             WinGetPage = winGetPage;
-            SearchApps = searchApps;
+
+            // 搜索应用
+            if (winGetApps is SearchAppsModel searchApps)
+            {
+                SearchApps = searchApps;
+            }
+            // 可更新应用
+            else if (winGetApps is UpgradableAppsModel upgradableApps)
+            {
+                UpgradableApps = upgradableApps;
+            }
 
             DisplayName = Unknown;
             Description = Unknown;
@@ -514,54 +525,114 @@ namespace GetStoreApp.Views.Dialogs
         /// </summary>
         private async void OnOpened(object sender, ContentDialogOpenedEventArgs args)
         {
-            if (!isInitialized && !IsLoadCompleted && SearchApps is not null)
+            if (!IsLoadCompleted)
             {
-                isInitialized = true;
-
-                // 获取当前应用可用版本
-                List<AvailableVersionModel> availableVersionList = await Task.Run(() =>
+                if (SearchApps is not null)
                 {
-                    List<AvailableVersionModel> availableVersionList = [];
-
-                    for (int subIndex = 0; subIndex < SearchApps.CatalogPackage.AvailableVersions.Count; subIndex++)
+                    // 获取当前应用可用版本
+                    List<AvailableVersionModel> availableVersionList = await Task.Run(() =>
                     {
-                        PackageVersionId packageVersionId = SearchApps.CatalogPackage.AvailableVersions[subIndex];
+                        List<AvailableVersionModel> availableVersionList = [];
 
-                        if (!string.IsNullOrEmpty(packageVersionId.Version))
+                        for (int subIndex = 0; subIndex < SearchApps.CatalogPackage.AvailableVersions.Count; subIndex++)
                         {
-                            bool isDefaultVersion = false;
+                            PackageVersionId packageVersionId = SearchApps.CatalogPackage.AvailableVersions[subIndex];
 
-                            // 判断是否等同于默认版本
-                            if (SearchApps.CatalogPackage.DefaultInstallVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
+                            if (!string.IsNullOrEmpty(packageVersionId.Version))
                             {
-                                isDefaultVersion = true;
+                                bool isDefaultVersion = false;
+
+                                // 判断是否等同于默认版本
+                                if (SearchApps.CatalogPackage.DefaultInstallVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
+                                {
+                                    isDefaultVersion = true;
+                                }
+
+                                // 添加所有已经获取到的所有版本
+                                availableVersionList.Add(new AvailableVersionModel()
+                                {
+                                    IsDefaultVersion = isDefaultVersion,
+                                    Version = packageVersionId.Version,
+                                    PackageVersionId = packageVersionId,
+                                });
                             }
+                        }
 
-                            availableVersionList.Add(new AvailableVersionModel()
+                        return availableVersionList;
+                    });
+
+                    foreach (AvailableVersionModel availableVersionItem in availableVersionList)
+                    {
+                        WinGetAppsVersionCollection.Add(availableVersionItem);
+
+                        if (availableVersionItem.IsDefaultVersion)
+                        {
+                            SelectedItem = availableVersionItem;
+                            await InitializeVersionInformationAsync(availableVersionItem);
+                        }
+                    }
+                }
+                else if (UpgradableApps is not null)
+                {
+                    // 获取当前应用可用版本
+                    List<AvailableVersionModel> availableVersionList = await Task.Run(() =>
+                    {
+                        List<AvailableVersionModel> availableVersionList = [];
+
+                        for (int subIndex = 0; subIndex < UpgradableApps.CatalogPackage.AvailableVersions.Count; subIndex++)
+                        {
+                            PackageVersionId packageVersionId = UpgradableApps.CatalogPackage.AvailableVersions[subIndex];
+
+                            if (!string.IsNullOrEmpty(packageVersionId.Version))
                             {
-                                IsDefaultVersion = isDefaultVersion,
-                                Version = packageVersionId.Version,
-                                PackageVersionId = packageVersionId,
-                            });
+                                // 获取大于已安装应用版本的所有版本
+                                if (UpgradableApps.CatalogPackage.InstalledVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Lesser)
+                                {
+                                    bool isDefaultVersion = false;
+
+                                    // 判断是否等同于默认版本
+                                    if (UpgradableApps.CatalogPackage.DefaultInstallVersion.CompareToVersion(packageVersionId.Version) is CompareResult.Equal)
+                                    {
+                                        isDefaultVersion = true;
+                                    }
+
+                                    // 添加所有已经获取到的所有版本
+                                    availableVersionList.Add(new AvailableVersionModel()
+                                    {
+                                        IsDefaultVersion = isDefaultVersion,
+                                        Version = packageVersionId.Version,
+                                        PackageVersionId = packageVersionId,
+                                    });
+                                }
+                            }
+                        }
+
+                        return availableVersionList;
+                    });
+
+                    bool isDefaultVersionSelected = false;
+
+                    foreach (AvailableVersionModel availableVersionItem in availableVersionList)
+                    {
+                        WinGetAppsVersionCollection.Add(availableVersionItem);
+
+                        if (availableVersionItem.IsDefaultVersion)
+                        {
+                            isDefaultVersionSelected = true;
+                            SelectedItem = availableVersionItem;
+                            await InitializeVersionInformationAsync(availableVersionItem);
                         }
                     }
 
-                    return availableVersionList;
-                });
-
-                foreach (AvailableVersionModel availableVersionItem in availableVersionList)
-                {
-                    WinGetAppsVersionCollection.Add(availableVersionItem);
-
-                    if (availableVersionItem.IsDefaultVersion)
+                    if (!isDefaultVersionSelected && WinGetAppsVersionCollection.Count > 0)
                     {
-                        SelectedItem = availableVersionItem;
-                        InitializeVersionInformation(availableVersionItem);
+                        SelectedItem = WinGetAppsVersionCollection[0];
+                        await InitializeVersionInformationAsync(WinGetAppsVersionCollection[0]);
                     }
                 }
-
-                IsLoadCompleted = true;
             }
+
+            IsLoadCompleted = true;
         }
 
         /// <summary>
@@ -575,12 +646,12 @@ namespace GetStoreApp.Views.Dialogs
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        private void OnItemClicked(object sender, ItemClickEventArgs args)
+        private async void OnItemClicked(object sender, ItemClickEventArgs args)
         {
             if (args.ClickedItem is AvailableVersionModel availableVersionItem && !Equals(SelectedItem, availableVersionItem))
             {
                 SelectedItem = availableVersionItem;
-                InitializeVersionInformation(availableVersionItem);
+                await InitializeVersionInformationAsync(availableVersionItem);
             }
         }
 
@@ -665,6 +736,21 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
+        /// 复制更新命令信息
+        /// </summary>
+        private async void OnCopyUpgradeTextClicked(object sender, RoutedEventArgs args)
+        {
+            if (UpgradableApps is not null && SelectedItem is not null)
+            {
+                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget upgrade {0} -v ""{1}""", UpgradableApps.AppID, SelectedItem.Version) : string.Format(@"winget upgrade {0} -s ""{1}"" -v ""{2}""", UpgradableApps.AppID, winGetDataSourceName.Key, SelectedItem.Version);
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
+
+                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUpgradeInstall, copyResult));
+            }
+        }
+
+        /// <summary>
         /// 下载当前版本应用
         /// </summary>
         private async void OnDownloadClicked(object sender, RoutedEventArgs args)
@@ -738,6 +824,30 @@ namespace GetStoreApp.Views.Dialogs
         }
 
         /// <summary>
+        /// 更新当前版本应用
+        /// </summary>
+        private async void OnUpgradeClicked(object sender, RoutedEventArgs args)
+        {
+            if (UpgradableApps is not null && SelectedItem is not null)
+            {
+                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                {
+                    PackageOperationKind = PackageOperationKind.Upgrade,
+                    AppID = UpgradableApps.AppID,
+                    AppName = UpgradableApps.AppName,
+                    AppVersion = SelectedItem.Version,
+                    PackageOperationProgress = 0,
+                    PackageInstallProgressState = PackageInstallProgressState.Queued,
+                    PackageVersionId = SelectedItem.PackageVersionId,
+                    DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
+                    PackageInstallProgress = null,
+                    UpgradableApps = UpgradableApps,
+                });
+            }
+        }
+
+        /// <summary>
         /// 使用命令下载当前版本应用
         /// </summary>
         private void OnDownloadWithCmdClicked(object sender, RoutedEventArgs args)
@@ -806,14 +916,56 @@ namespace GetStoreApp.Views.Dialogs
             }
         }
 
+        /// <summary>
+        /// 使用更新修复当前版本应用
+        /// </summary>
+        private void OnUpgradeWithCmdClicked(object sender, RoutedEventArgs args)
+        {
+            if (UpgradableApps is not null && SelectedItem is not null)
+            {
+                Task.Run(() =>
+                {
+                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                    if (Equals(winGetDataSourceName, default))
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"upgrade {0} -v ""{1}""", UpgradableApps.AppID, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                    else
+                    {
+                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"upgrade {0} -d ""{1}"" -v ""{2}""", UpgradableApps.AppID, winGetDataSourceName.Key, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
+                    }
+                });
+            }
+        }
+
         #endregion 第一部分：WinGet 应用版本信息对话框——挂载的事件
 
         /// <summary>
         /// 初始化对应版本信息
         /// </summary>
-        private void InitializeVersionInformation(AvailableVersionModel availableVersion)
+        private async Task InitializeVersionInformationAsync(AvailableVersionModel availableVersion)
         {
-            if (availableVersion.PackageVersionId is not null && SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId) is PackageVersionInfo packageVersionInfo && packageVersionInfo.GetCatalogPackageMetadata() is CatalogPackageMetadata catalogPackageMetadata)
+            (PackageVersionInfo packageVersionInfo, CatalogPackageMetadata catalogPackageMetadata) = await Task.Run(() =>
+            {
+                PackageVersionInfo packageVersionInfo = null;
+                CatalogPackageMetadata catalogPackageMetadata = null;
+
+                if (SearchApps is not null && availableVersion.PackageVersionId is not null)
+                {
+                    packageVersionInfo = SearchApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId);
+                    catalogPackageMetadata = packageVersionInfo.GetCatalogPackageMetadata();
+                }
+                else if (UpgradableApps is not null && availableVersion.PackageVersionId is not null)
+                {
+                    packageVersionInfo = UpgradableApps.CatalogPackage.GetPackageVersionInfo(availableVersion.PackageVersionId);
+                    catalogPackageMetadata = packageVersionInfo.GetCatalogPackageMetadata();
+                }
+
+                return ValueTuple.Create(packageVersionInfo, catalogPackageMetadata);
+            });
+
+            if (packageVersionInfo is not null && catalogPackageMetadata is not null)
             {
                 DisplayName = string.IsNullOrEmpty(catalogPackageMetadata.PackageName) ? Unknown : catalogPackageMetadata.PackageName;
                 Description = string.IsNullOrEmpty(catalogPackageMetadata.Description) ? Unknown : catalogPackageMetadata.Description;
@@ -926,6 +1078,14 @@ namespace GetStoreApp.Views.Dialogs
                     TagCollection.Add(tag);
                 }
             }
+        }
+
+        /// <summary>
+        /// 获取显示的应用类型
+        /// </summary>
+        private Visibility GetWinGetAppsType(object wingetApps)
+        {
+            return wingetApps is null ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

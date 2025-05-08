@@ -53,7 +53,7 @@
                 Margin="0,0,0,2"
                 VerticalAlignment="Center"
                 FontSize="16"
-                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/AppInformationTitle')}" />
+                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/AppVersionInformation')}" />
 
             <Button
                 Grid.Column="2"
@@ -141,13 +141,23 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" Padding="10,0,0,3">
-                        <TextBlock VerticalAlignment="Center" Text="{x:Bind x:String.Format(WinGetAppsVersion, WinGetAppsVersionCollection.Count), Mode=OneWay}" />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind x:String.Format(WinGetAppsVersion, WinGetAppsVersionCollection.Count), Mode=OneWay}" />
 
                         <CommandBar
+                            Grid.Column="1"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Background="Transparent"
-                            DefaultLabelPosition="Right">
+                            DefaultLabelPosition="Right"
+                            Visibility="{x:Bind GetWinGetAppsType(SearchApps)}">
 
                             <CommandBar.Resources>
                                 <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
@@ -216,6 +226,48 @@
                                 </AppBarButton>
 
                                 <AppBarButton Click="{x:Bind OnRepairWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairWithCmd')}">
+                                    <AppBarButton.Icon>
+                                        <FontIcon Glyph="&#xE756;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                            </CommandBar.SecondaryCommands>
+                        </CommandBar>
+
+                        <CommandBar
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            DefaultLabelPosition="Right"
+                            Visibility="{x:Bind GetWinGetAppsType(UpgradableApps)}">
+
+                            <CommandBar.Resources>
+                                <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
+                                <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
+                            </CommandBar.Resources>
+
+                            <CommandBar.PrimaryCommands>
+                                <AppBarButton Click="{x:Bind OnCopyInformationClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInformation')}">
+                                    <AppBarButton.Icon>
+                                        <FontIcon Glyph="&#xE8C8;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                            </CommandBar.PrimaryCommands>
+
+                            <CommandBar.SecondaryCommands>
+                                <AppBarButton Click="{x:Bind OnCopyUpgradeTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
+                                    <AppBarButton.Icon>
+                                        <FontIcon Glyph="&#xE8C8;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+
+                                <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}">
+                                    <AppBarButton.Icon>
+                                        <FontIcon Glyph="&#xE898;" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+
+                                <AppBarButton Click="{x:Bind OnUpgradeWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeWithCmd')}">
                                     <AppBarButton.Icon>
                                         <FontIcon Glyph="&#xE756;" />
                                     </AppBarButton.Icon>
