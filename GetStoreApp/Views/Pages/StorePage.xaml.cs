@@ -38,7 +38,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public List<Type> PageList { get; } = [typeof(QueryLinksPage), typeof(SearchStorePage)];
+        private List<Type> PageList { get; } = [typeof(QueryLinksPage), typeof(SearchStorePage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
