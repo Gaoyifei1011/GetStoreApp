@@ -53,12 +53,12 @@ namespace GetStoreApp.Services.Shell
                     AppInfoModel appInfo = null;
 
                     // 获取应用信息
-                    (bool requestResult, AppInfoModel appInfoModelItem) appInformationResult = await QueryLinksHelper.GetAppInformationAsync(productId);
+                    (bool requestResult, AppInfoModel appInfoModelItem) = await QueryLinksHelper.GetAppInformationAsync(productId);
 
-                    if (appInformationResult.requestResult)
+                    if (requestResult)
                     {
                         // 解析非商店应用数据
-                        if (string.IsNullOrEmpty(appInformationResult.appInfoModelItem.CategoryID))
+                        if (string.IsNullOrEmpty(appInfoModelItem.CategoryID))
                         {
                             List<QueryLinksModel> nonAppxPackagesList = await QueryLinksHelper.GetNonAppxPackagesAsync(productId);
                             foreach (QueryLinksModel nonAppxPackage in nonAppxPackagesList)
@@ -70,7 +70,7 @@ namespace GetStoreApp.Services.Shell
                         // 解析商店应用数据
                         else
                         {
-                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInformationResult.Item2.CategoryID, selectedChannel);
+                            string fileListXml = await QueryLinksHelper.GetFileListXmlAsync(cookie, appInfoModelItem.CategoryID, selectedChannel);
 
                             if (!string.IsNullOrEmpty(fileListXml))
                             {
@@ -83,7 +83,7 @@ namespace GetStoreApp.Services.Shell
                             }
                         }
 
-                        appInfo = appInformationResult.Item2;
+                        appInfo = appInfoModelItem;
                     }
                     else
                     {

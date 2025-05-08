@@ -2611,7 +2611,7 @@ namespace GetStoreAppInstaller.Pages
                                                         if (candidate.DataItemSectionAndIndex != default)
                                                         {
                                                             DataItemSection dataItemSection = sectionArray[candidate.DataItemSectionAndIndex.DataItemSection] as DataItemSection;
-                                                            byteSpan = dataItemSection is not null ? dataItemSection.DataItemsList[candidate.DataItemSectionAndIndex.Item2] : candidate.Data;
+                                                            byteSpan = dataItemSection is not null ? dataItemSection.DataItemsList[candidate.DataItemSectionAndIndex.DataItemIndex] : candidate.Data;
                                                         }
 
                                                         if (byteSpan is not null)

@@ -178,7 +178,7 @@ namespace GetStoreAppInstaller.Extensions.PriExtract
 
                 for (int j = 0; j < childrenArray.Length; j++)
                 {
-                    (ushort parent, ushort fullPathLength, uint hashCode, uint nameOffset, ushort index) = scopeAndItemInfoList[scopeExInfo[i].Item3 + j];
+                    (ushort parent, ushort fullPathLength, uint hashCode, uint nameOffset, ushort index) = scopeAndItemInfoList[scopeExInfo[i].firstChildIndex + j];
 
                     bool isScope = (hashCode & 0x10000000) is not 0;
 
