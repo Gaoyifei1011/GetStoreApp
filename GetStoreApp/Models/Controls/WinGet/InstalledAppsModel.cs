@@ -28,6 +28,9 @@ namespace GetStoreApp.Models.Controls.WinGet
         /// </summary>
         public string AppVersion { get; set; }
 
+        /// <summary>
+        /// 是否正在卸载应用
+        /// </summary>
         private bool _isUninstalling;
 
         public bool IsUninstalling
@@ -40,22 +43,6 @@ namespace GetStoreApp.Models.Controls.WinGet
                 {
                     _isUninstalling = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUninstalling)));
-                }
-            }
-        }
-
-        private bool _isRepairing;
-
-        public bool IsRepairing
-        {
-            get { return _isRepairing; }
-
-            set
-            {
-                if (!Equals(_isRepairing, value))
-                {
-                    _isRepairing = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRepairing)));
                 }
             }
         }
