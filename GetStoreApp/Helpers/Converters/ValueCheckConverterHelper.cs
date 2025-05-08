@@ -88,7 +88,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static bool IsPackageRepairing(PackageRepairProgressState packageRepairProgressState)
         {
-            return packageRepairProgressState is  PackageRepairProgressState.Queued || packageRepairProgressState is  PackageRepairProgressState.Repairing || packageRepairProgressState is  PackageRepairProgressState.PostRepair;
+            return packageRepairProgressState is PackageRepairProgressState.Queued || packageRepairProgressState is PackageRepairProgressState.Repairing || packageRepairProgressState is PackageRepairProgressState.PostRepair;
         }
 
         /// <summary>
