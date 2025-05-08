@@ -121,10 +121,6 @@
             ItemsSource="{x:Bind DesktopStartupArgsList}"
             SelectionMode="None">
 
-            <ItemsView.Layout>
-                <StackLayout />
-            </ItemsView.Layout>
-
             <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="dialog:StartupArgsModel">
                     <ItemContainer CornerRadius="0">

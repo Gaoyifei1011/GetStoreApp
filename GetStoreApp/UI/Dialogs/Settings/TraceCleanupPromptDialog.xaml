@@ -37,10 +37,6 @@
 
         <ItemsView ItemsSource="{x:Bind TraceCleanupList}" SelectionMode="None">
 
-            <ItemsView.Layout>
-                <StackLayout />
-            </ItemsView.Layout>
-
             <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="dialog:TraceCleanupModel">
                     <ItemContainer>

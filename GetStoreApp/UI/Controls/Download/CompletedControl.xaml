@@ -209,10 +209,6 @@
         SelectionMode="None"
         Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}">
 
-        <ItemsView.Layout>
-            <StackLayout />
-        </ItemsView.Layout>
-
         <ItemsView.ItemTemplate>
             <DataTemplate x:DataType="download:CompletedModel">
                 <ItemContainer Margin="0,0,0,2">

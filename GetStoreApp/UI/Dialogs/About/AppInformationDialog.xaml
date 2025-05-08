@@ -47,10 +47,6 @@
             SelectionMode="None"
             Visibility="{x:Bind IsLoadCompleted, Mode=OneWay}">
 
-            <ItemsView.Layout>
-                <StackLayout />
-            </ItemsView.Layout>
-
             <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="text:ContentLinkInfo">
                     <ItemContainer>
