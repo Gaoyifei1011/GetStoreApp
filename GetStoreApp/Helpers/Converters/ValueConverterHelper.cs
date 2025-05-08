@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using System;
 
 namespace GetStoreApp.Helpers.Converters
