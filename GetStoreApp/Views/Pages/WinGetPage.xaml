@@ -10,6 +10,7 @@
     xmlns:model="using:GetStoreApp.Models.Controls.WinGet"
     xmlns:root="using:GetStoreApp.Services.Root"
     xmlns:service="using:GetStoreApp.Services.Controls.Settings"
+    xmlns:sys="using:System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -233,6 +234,7 @@
                     BorderThickness="0,0,0,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -251,12 +253,19 @@
                         FontSize="14"
                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TaskManager')}" />
 
-                    <Button
+                    <InfoBadge
                         Grid.Column="2"
-                        Margin="0,0,5,0"
+                        Margin="6,2,0,0"
+                        HorizontalAlignment="Left"
+                        Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(PackageOperationCollection.Count), Mode=OneWay}"
+                        Value="{x:Bind PackageOperationCollection.Count, Mode=OneWay}" />
+
+                    <Button
+                        Grid.Column="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Click="{x:Bind OnRemoveFinishedTasklicked}"
+                        IsEnabled="{x:Bind sys:Convert.ToBoolean(PackageOperationCollection.Count), Mode=OneWay}"
                         Style="{StaticResource AlternateCloseButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/RemoveFinishedTask')}">
 
@@ -269,7 +278,7 @@
                     </Button>
 
                     <Button
-                        Grid.Column="3"
+                        Grid.Column="4"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Click="{x:Bind OnCloseClicked}"
@@ -295,7 +304,7 @@
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallingAppsListEmpty')}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationEmpty')}"
                         TextAlignment="Center"
                         TextWrapping="WrapWholeWords" />
                 </Grid>
@@ -361,10 +370,6 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock
@@ -394,7 +399,7 @@
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadVersionToolTip')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -402,74 +407,84 @@
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="1"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
-                                                    TextAlignment="Right">
+                                                <Grid Grid.Column="1" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
-                                                                <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
+                                                        TextAlignment="Right">
 
-                                                <TextBlock
-                                                    Grid.Column="2"
-                                                    Margin="2,0,2,0"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="|"
-                                                    TextAlignment="Right"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}" />
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                    <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="3"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
-                                                    TextAlignment="Right"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}">
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        Margin="2,0,2,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="|"
+                                                        TextAlignment="Right"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
-                                                                <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="2"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                        TextAlignment="Right"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageDownloadProgressState(PackageDownloadProgressState, deployment:PackageDownloadProgressState.Downloading, x:False), Mode=OneWay}">
 
-                                                <TextBlock
-                                                    Grid.Column="4"
-                                                    Margin="2,0,2,0"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="|"
-                                                    TextAlignment="Right" />
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="5"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind TotalFileSize, Mode=OneWay}"
-                                                    TextAlignment="Right">
+                                                    <TextBlock
+                                                        Grid.Column="3"
+                                                        Margin="2,0,2,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="|"
+                                                        TextAlignment="Right" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
-                                                                <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="4"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                        TextAlignment="Right">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+                                                </Grid>
                                             </Grid>
 
                                             <Grid Grid.Row="1" ColumnSpacing="5">
@@ -610,10 +625,6 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock
@@ -643,7 +654,7 @@
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallVersionToolTip')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -651,74 +662,84 @@
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="1"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
-                                                    TextAlignment="Right">
+                                                <Grid Grid.Column="1" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
-                                                                <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
+                                                        TextAlignment="Right">
 
-                                                <TextBlock
-                                                    Grid.Column="2"
-                                                    Margin="2,0,2,0"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="|"
-                                                    TextAlignment="Right" />
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                    <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="3"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
-                                                    TextAlignment="Right"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        Margin="2,0,2,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="|"
+                                                        TextAlignment="Right" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
-                                                                <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="2"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                        TextAlignment="Right"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
 
-                                                <TextBlock
-                                                    Grid.Column="4"
-                                                    Margin="2,0,2,0"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="|"
-                                                    TextAlignment="Right"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="5"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind TotalFileSize, Mode=OneWay}"
-                                                    TextAlignment="Right">
+                                                    <TextBlock
+                                                        Grid.Column="3"
+                                                        Margin="2,0,2,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="|"
+                                                        TextAlignment="Right"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageInstallProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
-                                                                <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="4"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                        TextAlignment="Right">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+                                                </Grid>
                                             </Grid>
 
                                             <Grid Grid.Row="1" ColumnSpacing="5">
@@ -861,8 +882,6 @@
                                                 TextTrimming="CharacterEllipsis">
 
                                                 <Run Text="{x:Bind AppName}" />
-                                                <Run Text=" - " />
-                                                <Run Text="{x:Bind AppVersion}" />
 
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip>
@@ -878,7 +897,7 @@
                                                             </TextBlock>
 
                                                             <TextBlock Grid.Row="1">
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallVersionToolTip')}" />
                                                                 <Run Text="{x:Bind AppVersion}" />
                                                             </TextBlock>
                                                         </Grid>
@@ -1044,7 +1063,7 @@
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairVersionToolTip')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -1057,7 +1076,8 @@
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
-                                                    TextAlignment="Right">
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
 
                                                     <ToolTipService.ToolTip>
                                                         <ToolTip MaxWidth="9999">
@@ -1199,10 +1219,6 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock
@@ -1232,7 +1248,7 @@
                                                                 </TextBlock>
 
                                                                 <TextBlock Grid.Row="1">
-                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeVersionToolTip')}" />
                                                                     <Run Text="{x:Bind AppVersion}" />
                                                                 </TextBlock>
                                                             </Grid>
@@ -1240,74 +1256,84 @@
                                                     </ToolTipService.ToolTip>
                                                 </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="1"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
-                                                    TextAlignment="Right">
+                                                <Grid Grid.Column="1" Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageOperationResultKind(PackageOperationResultKind, enum:PackageOperationResultKind.Normal), Mode=OneWay}">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
-                                                                <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}"
+                                                        TextAlignment="Right">
 
-                                                <TextBlock
-                                                    Grid.Column="2"
-                                                    Margin="2,0,2,0"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="|"
-                                                    TextAlignment="Right"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageOperationProgressToolTip')}" />
+                                                                    <Run Text="{x:Bind x:String.Format('{0}%', PackageOperationProgress), Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="3"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
-                                                    TextAlignment="Right"
-                                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        Margin="2,0,2,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="|"
+                                                        TextAlignment="Right"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
-                                                                <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="2"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind DownloadedFileSize, Mode=OneWay}"
+                                                        TextAlignment="Right"
+                                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckPackageUpgradeProgressState(PackageInstallProgressState, deployment:PackageInstallProgressState.Downloading, x:False), Mode=OneWay}">
 
-                                                <TextBlock
-                                                    Grid.Column="4"
-                                                    Margin="2,0,2,0"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="|"
-                                                    TextAlignment="Right" />
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadedFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind DownloadedFileSize, Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
 
-                                                <TextBlock
-                                                    Grid.Column="5"
-                                                    VerticalAlignment="Center"
-                                                    FontSize="14"
-                                                    Text="{x:Bind TotalFileSize, Mode=OneWay}"
-                                                    TextAlignment="Right">
+                                                    <TextBlock
+                                                        Grid.Column="3"
+                                                        Margin="2,0,2,0"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="|"
+                                                        TextAlignment="Right" />
 
-                                                    <ToolTipService.ToolTip>
-                                                        <ToolTip MaxWidth="9999">
-                                                            <TextBlock>
-                                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
-                                                                <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
-                                                            </TextBlock>
-                                                        </ToolTip>
-                                                    </ToolTipService.ToolTip>
-                                                </TextBlock>
+                                                    <TextBlock
+                                                        Grid.Column="4"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="14"
+                                                        Text="{x:Bind TotalFileSize, Mode=OneWay}"
+                                                        TextAlignment="Right">
+
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip MaxWidth="9999">
+                                                                <TextBlock>
+                                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/TotalFileSizeToolTip')}" />
+                                                                    <Run Text="{x:Bind TotalFileSize, Mode=OneWay}" />
+                                                                </TextBlock>
+                                                            </ToolTip>
+                                                        </ToolTipService.ToolTip>
+                                                    </TextBlock>
+                                                </Grid>
                                             </Grid>
 
                                             <Grid Grid.Row="1" ColumnSpacing="5">

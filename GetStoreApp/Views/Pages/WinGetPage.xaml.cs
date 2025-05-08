@@ -86,8 +86,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string WinGetPackageUpgradeNoApplicableUpgrade = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeNoApplicableUpgrade");
         private readonly string WinGetPackageUpgradeAgreementsNotAccepted = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeAgreementsNotAccepted");
         private readonly string WinGetPackageUpgradeOtherError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeOtherError");
-
-        private readonly Lock PackageOperationLock = new();
+        public readonly Lock PackageOperationLock = new();
 
         private SelectorBarItem _selectedItem;
 
@@ -105,9 +104,13 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        public List<Type> PageList { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
+        private List<Type> PageList { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
 
         public ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
+
+        public event Action<bool, bool, InstalledAppsModel, UninstallResult> InstalledAppsPackageOperationEvent;
+
+        public event Action<bool, bool, UpgradableAppsModel, InstallResult> UpgradeAppsPackageOperationEvent;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -151,23 +154,24 @@ namespace GetStoreApp.Views.Pages
                     {
                         packageOperation.PackageDownloadProgress.Cancel();
                     }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Install && packageOperation.PackageInstallProgressState is PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
+                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Install && packageOperation.PackageInstallProgressState is not PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
                     {
                         packageOperation.PackageInstallProgress.Cancel();
                     }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Uninstall && packageOperation.PackageUninstallProgressState is PackageUninstallProgressState.Finished && packageOperation.PackageUninstallProgress is not null)
+                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Uninstall && packageOperation.PackageUninstallProgressState is not PackageUninstallProgressState.Finished && packageOperation.PackageUninstallProgress is not null)
                     {
                         packageOperation.PackageUninstallProgress.Cancel();
                     }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Repair && packageOperation.PackageRepairProgressState is PackageRepairProgressState.Finished && packageOperation.PackageRepairProgress is not null)
+                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Repair && packageOperation.PackageRepairProgressState is not PackageRepairProgressState.Finished && packageOperation.PackageRepairProgress is not null)
                     {
                         packageOperation.PackageRepairProgress.Cancel();
                     }
-                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Upgrade && packageOperation.PackageInstallProgressState is PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
+                    else if (packageOperation.PackageOperationKind is PackageOperationKind.Upgrade && packageOperation.PackageInstallProgressState is not PackageInstallProgressState.Finished && packageOperation.PackageInstallProgress is not null)
                     {
                         packageOperation.PackageInstallProgress.Cancel();
                     }
 
+                    packageOperation.PackageOperationProgress = 100;
                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Cancel;
                 }
                 catch (Exception e)
@@ -374,53 +378,56 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageDownloadProgress(IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> result, PackageDownloadProgress packageDownloadProgress, PackageOperationModel packageOperation)
         {
-            switch (packageDownloadProgress.State)
+            if (packageOperation.PackageOperationResultKind is PackageOperationResultKind.Normal)
             {
-                // 处于等待中状态
-                case PackageDownloadProgressState.Queued:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                switch (packageDownloadProgress.State)
+                {
+                    // 处于等待中状态
+                    case PackageDownloadProgressState.Queued:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                // 处于下载中状态
-                case PackageDownloadProgressState.Downloading:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                    // 处于下载中状态
+                    case PackageDownloadProgressState.Downloading:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
-                                packageOperation.PackageOperationProgress = Math.Round(packageDownloadProgress.DownloadProgress * 100, 2);
-                                packageOperation.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesDownloaded));
-                                packageOperation.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesRequired));
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageDownloadProgressState = packageDownloadProgress.State;
+                                    packageOperation.PackageOperationProgress = Math.Round(packageDownloadProgress.DownloadProgress * 100, 2);
+                                    packageOperation.DownloadedFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesDownloaded));
+                                    packageOperation.TotalFileSize = Convert.ToString(FileSizeHelper.ConvertFileSizeToString(packageDownloadProgress.BytesRequired));
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                }
             }
         }
 
@@ -429,7 +436,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageInstallProgress(IAsyncOperationWithProgress<InstallResult, InstallProgress> result, InstallProgress installProgress, PackageOperationModel packageOperation)
         {
-            if (packageOperation.PackageOperationKind is PackageOperationKind.Install)
+            if (packageOperation.PackageOperationResultKind is PackageOperationResultKind.Normal)
             {
                 switch (installProgress.State)
                 {
@@ -530,71 +537,74 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageUninstallProgress(IAsyncOperationWithProgress<UninstallResult, UninstallProgress> result, UninstallProgress uninstallProgress, PackageOperationModel packageOperation)
         {
-            switch (uninstallProgress.State)
+            if (packageOperation.PackageOperationResultKind is PackageOperationResultKind.Normal)
             {
-                // 处于等待中状态
-                case PackageUninstallProgressState.Queued:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                switch (uninstallProgress.State)
+                {
+                    // 处于等待中状态
+                    case PackageUninstallProgressState.Queued:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageUninstallProgressState = uninstallProgress.State;
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                // 处于卸载中状态
-                case PackageUninstallProgressState.Uninstalling:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageUninstallProgressState = uninstallProgress.State;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                    // 处于卸载中状态
+                    case PackageUninstallProgressState.Uninstalling:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageUninstallProgressState = uninstallProgress.State;
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                // 处于卸载完成后等待其他操作状态
-                case PackageUninstallProgressState.PostUninstall:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageUninstallProgressState = uninstallProgress.State;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                    // 处于卸载完成后等待其他操作状态
+                    case PackageUninstallProgressState.PostUninstall:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageUninstallProgressState = uninstallProgress.State;
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageUninstallProgressState = uninstallProgress.State;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                }
             }
         }
 
@@ -603,93 +613,96 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPackageRepairProgress(IAsyncOperationWithProgress<RepairResult, RepairProgress> result, RepairProgress repairProgress, PackageOperationModel packageOperation)
         {
-            switch (repairProgress.State)
+            if (packageOperation.PackageOperationResultKind is PackageOperationResultKind.Normal)
             {
-                // 处于等待中状态
-                case PackageRepairProgressState.Queued:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                switch (repairProgress.State)
+                {
+                    // 处于等待中状态
+                    case PackageRepairProgressState.Queued:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageRepairProgressState = repairProgress.State;
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                // 处于修复中状态
-                case PackageRepairProgressState.Repairing:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageRepairProgressState = repairProgress.State;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                    // 处于修复中状态
+                    case PackageRepairProgressState.Repairing:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageRepairProgressState = repairProgress.State;
-                                packageOperation.PackageOperationProgress = Math.Round(repairProgress.RepairCompletionProgress * 100, 2);
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                // 处于修复完成后等待其他操作状态
-                case PackageRepairProgressState.PostRepair:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageRepairProgressState = repairProgress.State;
+                                    packageOperation.PackageOperationProgress = Math.Round(repairProgress.RepairCompletionProgress * 100, 2);
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                    // 处于修复完成后等待其他操作状态
+                    case PackageRepairProgressState.PostRepair:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageRepairProgressState = repairProgress.State;
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
-                // 处于修复完成状态
-                case PackageRepairProgressState.Finished:
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageRepairProgressState = repairProgress.State;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                    // 处于修复完成状态
+                    case PackageRepairProgressState.Finished:
                         {
-                            PackageOperationLock.Enter();
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                packageOperation.PackageRepairProgressState = repairProgress.State;
-                            }
-                            catch (Exception e)
-                            {
-                                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                            }
-                            finally
-                            {
-                                PackageOperationLock.Exit();
-                            }
-                        });
-                        break;
-                    }
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageRepairProgressState = repairProgress.State;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
+                            });
+                            break;
+                        }
+                }
             }
         }
 
@@ -808,6 +821,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadBlockedByPolicy, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -826,6 +840,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadCatalogError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -844,6 +859,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadInternalError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -862,6 +878,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadInvalidOptions, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -880,6 +897,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -898,6 +916,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadManifestError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -916,6 +935,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadNoApplicableInstallers, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -934,6 +954,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadAgreementsNotAccepted, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -955,6 +976,7 @@ namespace GetStoreApp.Views.Pages
                                     try
                                     {
                                         packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = Unknown;
                                     }
                                     catch (Exception e)
                                     {
@@ -1147,6 +1169,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallBlockedByPolicy, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1165,6 +1188,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallCatalogError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1183,6 +1207,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallInternalError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1201,6 +1226,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallInvalidOptions, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1219,6 +1245,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallDownloadError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1237,6 +1264,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1255,6 +1283,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallManifestError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1273,6 +1302,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallNoApplicableInstallers, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1291,6 +1321,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallAgreementsNotAccepted, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1312,6 +1343,7 @@ namespace GetStoreApp.Views.Pages
                                     try
                                     {
                                         packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = Unknown;
                                     }
                                     catch (Exception e)
                                     {
@@ -1446,6 +1478,8 @@ namespace GetStoreApp.Views.Pages
                                 }
                             });
 
+                            InstalledAppsPackageOperationEvent?.Invoke(result, isCanceled, packageOperation.InstalledApps, uninstallResult);
+
                             // 应用包操作成功
                             if (result)
                             {
@@ -1504,6 +1538,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallBlockedByPolicy, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1522,6 +1557,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallCatalogError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1540,6 +1576,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallInternalError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1558,6 +1595,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallInvalidOptions, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1576,6 +1614,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1594,6 +1633,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallManifestError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1615,6 +1655,7 @@ namespace GetStoreApp.Views.Pages
                                     try
                                     {
                                         packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = Unknown;
                                     }
                                     catch (Exception e)
                                     {
@@ -1741,9 +1782,7 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         PackageOperationLock.Exit();
                                     }
-                                }
-                                else
-                                {
+
                                     switch (repairResult.Status)
                                     {
                                         // 修复成功
@@ -1779,6 +1818,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationFailedContent = Unknown;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairBlockedByPolicy, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1797,6 +1837,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationFailedContent = Unknown;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairCatalogError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1815,6 +1856,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairInternalError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1833,6 +1875,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairInvalidOptions, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1851,6 +1894,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1869,6 +1913,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairManifestError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1887,6 +1932,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairNoApplicableRepairer, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1905,6 +1951,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairAgreementsNotAccepted, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -1919,6 +1966,43 @@ namespace GetStoreApp.Views.Pages
                                             }
                                     }
                                 }
+                                // 不存在修复结果
+                                else
+                                {
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = Unknown;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
+
+                                    await Task.Run(() =>
+                                    {
+                                        // 显示 WinGet 修复应用失败通知
+                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
+
+                                        AppNotificationBuilder appNotificationBuilder = new();
+                                        appNotificationBuilder.AddArgument("action", "OpenApp");
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetRepairFailed1"), packageOperation.SearchApps.AppName));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetRepairFailed2"));
+                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetRepairFailed3"));
+                                        AppNotificationButton repairWithCommandButton = new(ResourceService.GetLocalized("Notification/RepairWithCommand"));
+                                        repairWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("RepairWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("RepairWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
+                                        AppNotificationButton openRepairFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
+                                        openRepairFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
+                                        appNotificationBuilder.AddButton(repairWithCommandButton);
+                                        appNotificationBuilder.AddButton(openRepairFolderButton);
+                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                                    });
+                                }
                             }
                             // 应用包操作失败
                             else
@@ -1928,6 +2012,7 @@ namespace GetStoreApp.Views.Pages
 
                                 await Task.Run(() =>
                                 {
+                                    // 显示 WinGet 修复应用失败通知
                                     KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
 
                                     AppNotificationBuilder appNotificationBuilder = new();
@@ -2013,6 +2098,8 @@ namespace GetStoreApp.Views.Pages
                                 }
                             });
 
+                            UpgradeAppsPackageOperationEvent.Invoke(result, isCanceled, packageOperation.UpgradableApps, installResult);
+
                             if (result)
                             {
                                 // 存在更新结果
@@ -2070,6 +2157,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeBlockedByPolicy, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2088,6 +2176,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeCatalogError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2106,6 +2195,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeInternalError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2124,6 +2214,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeInvalidOptions, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2142,6 +2233,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeDownloadError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2160,6 +2252,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2178,6 +2271,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeManifestError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2196,6 +2290,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeNoApplicableInstallers, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2214,6 +2309,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeNoApplicableUpgrade, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2232,6 +2328,7 @@ namespace GetStoreApp.Views.Pages
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeAgreementsNotAccepted, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
                                                 }
                                                 catch (Exception e)
@@ -2246,13 +2343,14 @@ namespace GetStoreApp.Views.Pages
                                             }
                                     }
                                 }
-                                // 不存在安装结果
+                                // 不存在更新结果
                                 else
                                 {
                                     PackageOperationLock.Enter();
                                     try
                                     {
                                         packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = Unknown;
                                     }
                                     catch (Exception e)
                                     {
@@ -2376,7 +2474,33 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
                 {
-                    if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
+                    // 重复项添加时，移除已经完成的或删除已经失败的任务
+                    if (packageOperationItem.PackageOperationKind is PackageOperationKind.Download && (packageOperationItem.PackageDownloadProgressState is PackageDownloadProgressState.Finished || packageOperationItem.PackageOperationResultKind is PackageOperationResultKind.Failed))
+                    {
+                        PackageOperationCollection.Remove(packageOperationItem);
+                        break;
+                    }
+                    else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Install && (packageOperationItem.PackageInstallProgressState is PackageInstallProgressState.Finished || packageOperationItem.PackageOperationResultKind is PackageOperationResultKind.Failed))
+                    {
+                        PackageOperationCollection.Remove(packageOperationItem);
+                        break;
+                    }
+                    else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Uninstall && (packageOperationItem.PackageUninstallProgressState is PackageUninstallProgressState.Finished || packageOperationItem.PackageOperationResultKind is PackageOperationResultKind.Failed))
+                    {
+                        PackageOperationCollection.Remove(packageOperationItem);
+                        break;
+                    }
+                    else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Repair && (packageOperationItem.PackageRepairProgressState is PackageRepairProgressState.Finished || packageOperationItem.PackageOperationResultKind is PackageOperationResultKind.Failed))
+                    {
+                        PackageOperationCollection.Remove(packageOperationItem);
+                        break;
+                    }
+                    else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Upgrade && (packageOperationItem.PackageInstallProgressState is PackageInstallProgressState.Finished || packageOperationItem.PackageOperationResultKind is PackageOperationResultKind.Failed))
+                    {
+                        PackageOperationCollection.Remove(packageOperationItem);
+                        break;
+                    }
+                    else if (Equals(packageOperation.AppID, packageOperationItem.AppID) && Equals(packageOperation.AppVersion, packageOperationItem.AppVersion) && Equals(packageOperation.PackageOperationKind, packageOperationItem.PackageOperationKind))
                     {
                         isExisted = true;
                         break;
