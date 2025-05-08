@@ -73,7 +73,10 @@
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.3916" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.5.20250417.1" GeneratePathProperty="True" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools.MSIX" Version="1.6.20250507.1" GeneratePathProperty="True">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250401001" IncludeAssets="none" PrivateAssets="all" GeneratePathProperty="True" />
     
     <Reference Include="$(PkgMicrosoft_WindowsAppSDK)\lib\net6.0-windows10.0.22621.0\Microsoft.InteractiveExperiences.Projection.dll" />
