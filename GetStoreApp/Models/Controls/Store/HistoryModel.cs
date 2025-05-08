@@ -6,7 +6,7 @@ namespace GetStoreApp.Models.Controls.Store
     /// <summary>
     /// 历史记录数据模型
     /// </summary>
-    public sealed class HistoryModel : INotifyPropertyChanged
+    public sealed partial class HistoryModel : INotifyPropertyChanged
     {
         private bool _isQuerying;
 
