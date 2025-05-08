@@ -1,4 +1,4 @@
-using GetStoreApp.Extensions.DataType.Enums;
+ï»¿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
@@ -21,13 +21,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
 
-// ÒÖÖÆ CA1822£¬IDE0060 ¾¯¸æ
+// æŠ‘åˆ¶ CA1822ï¼ŒIDE0060 è­¦å‘Š
 #pragma warning disable CA1822,IDE0060
 
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
-    /// WinGet ÒÑ°²×°Ó¦ÓÃ½çÃæ
+    /// WinGet å·²å®‰è£…åº”ç”¨ç•Œé¢
     /// </summary>
     public sealed partial class WinGetInstalledPage : Page, INotifyPropertyChanged
     {
@@ -144,10 +144,10 @@ namespace GetStoreApp.Views.Pages
             });
         }
 
-        #region µÚÒ»²¿·Ö£ºÖØĞ´¸¸ÀàÊÂ¼ş
+        #region ç¬¬ä¸€éƒ¨åˆ†ï¼šé‡å†™çˆ¶ç±»äº‹ä»¶
 
         /// <summary>
-        /// µ¼º½µ½¸ÃÒ³Ãæ´¥·¢µÄÊÂ¼ş
+        /// å¯¼èˆªåˆ°è¯¥é¡µé¢è§¦å‘çš„äº‹ä»¶
         /// </summary>
         protected override async void OnNavigatedTo(NavigationEventArgs args)
         {
@@ -156,16 +156,18 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is WinGetPage winGetPage && WinGetPageInstance is null)
             {
                 WinGetPageInstance = winGetPage;
+                GlobalNotificationService.ApplicationExit += OnApplicationExit;
+                WinGetPageInstance.InstalledAppsPackageOperationEvent += OnInstalledAppsPackageOperationEvent;
                 await InitializeSearchAppsDataAsync();
             }
         }
 
-        #endregion µÚÒ»²¿·Ö£ºÖØĞ´¸¸ÀàÊÂ¼ş
+        #endregion ç¬¬ä¸€éƒ¨åˆ†ï¼šé‡å†™çˆ¶ç±»äº‹ä»¶
 
-        #region µÚ¶ş²¿·Ö£ºXamlUICommand ÃüÁîµ÷ÓÃÊ±¹ÒÔØµÄÊÂ¼ş
+        #region ç¬¬äºŒéƒ¨åˆ†ï¼šXamlUICommand å‘½ä»¤è°ƒç”¨æ—¶æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// ¸´ÖÆĞ¶ÔØÃüÁî
+        /// å¤åˆ¶å¸è½½å‘½ä»¤
         /// </summary>
         private async void OnCopyUninstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
@@ -179,18 +181,30 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// Ğ¶ÔØÓ¦ÓÃ
+        /// å¸è½½åº”ç”¨
         /// </summary>
         private async void OnUninstallExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is InstalledAppsModel installedApps && WinGetPageInstance is not null)
             {
-                // ½ûÓÃµ±Ç°Ó¦ÓÃµÄ¿ÉĞ¶ÔØ×´Ì¬
-                installedApps.IsUninstalling = true;
+                // ç¦ç”¨å½“å‰åº”ç”¨çš„å¯å¸è½½çŠ¶æ€
+                InstalledAppsLock.Enter();
+                try
+                {
+                    installedApps.IsUninstalling = true;
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    InstalledAppsLock.Exit();
+                }
 
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
-                    PackageOperationKind = PackageOperationKind.Download,
+                    PackageOperationKind = PackageOperationKind.Uninstall,
                     AppID = installedApps.AppID,
                     AppName = installedApps.AppName,
                     AppVersion = installedApps.CatalogPackage.InstalledVersion.Version,
@@ -199,42 +213,42 @@ namespace GetStoreApp.Views.Pages
                     PackageVersionId = null,
                     DownloadedFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
-                    PackageDownloadProgress = null,
+                    PackageUninstallProgress = null,
                     InstalledApps = installedApps,
                 });
             }
         }
 
-        #endregion µÚ¶ş²¿·Ö£ºXamlUICommand ÃüÁîµ÷ÓÃÊ±¹ÒÔØµÄÊÂ¼ş
+        #endregion ç¬¬äºŒéƒ¨åˆ†ï¼šXamlUICommand å‘½ä»¤è°ƒç”¨æ—¶æŒ‚è½½çš„äº‹ä»¶
 
-        #region µÚÈı²¿·Ö£ºÒÑ°²×°Ó¦ÓÃ¿Ø¼ş¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #region ç¬¬ä¸‰éƒ¨åˆ†ï¼šWinGet å·²å®‰è£…åº”ç”¨ç•Œé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
 
         /// <summary>
-        /// ¸ù¾İÅÅĞò·½Ê½¶ÔÁĞ±í½øĞĞÅÅĞò
+        /// æ ¹æ®æ’åºæ–¹å¼å¯¹åˆ—è¡¨è¿›è¡Œæ’åº
         /// </summary>
         private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 IsIncrease = Convert.ToBoolean(increase);
-                UpdateSearchInstalledApps();
+                InitializeMatchedInstalledApps();
             }
         }
 
         /// <summary>
-        /// ¸ù¾İÅÅĞò¹æÔò¶ÔÁĞ±í½øĞĞÅÅĞò
+        /// æ ¹æ®æ’åºè§„åˆ™å¯¹åˆ—è¡¨è¿›è¡Œæ’åº
         /// </summary>
         private void OnSortRuleClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is AppSortRuleKind appSortRuleKind && (InstalledAppsResultKind is InstalledAppsResultKind.Successfully || InstalledAppsResultKind is InstalledAppsResultKind.SearchResult))
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
-                UpdateSearchInstalledApps();
+                InitializeMatchedInstalledApps();
             }
         }
 
         /// <summary>
-        /// ¸üĞÂÒÑ°²×°Ó¦ÓÃÊı¾İ
+        /// æ›´æ–°å·²å®‰è£…åº”ç”¨æ•°æ®
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
@@ -242,7 +256,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ªÈÎÎñ¹ÜÀí
+        /// æ‰“å¼€ä»»åŠ¡ç®¡ç†
         /// </summary>
 
         private void OnTaskManagerClicked(object sender, RoutedEventArgs args)
@@ -251,7 +265,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ´ò¿ª¿ØÖÆÃæ°åµÄ³ÌĞòÓë¹¦ÄÜ
+        /// æ‰“å¼€æ§åˆ¶é¢æ¿çš„ç¨‹åºä¸åŠŸèƒ½
         /// </summary>
         private void OnControlPanelClicked(object sender, RoutedEventArgs args)
         {
@@ -262,7 +276,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸ù¾İÊäÈëµÄÄÚÈİ¼ìË÷Ó¦ÓÃ
+        /// æ ¹æ®è¾“å…¥çš„å†…å®¹æ£€ç´¢åº”ç”¨
         /// </summary>
         private void OnQuerySubmitted(object sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -274,13 +288,16 @@ namespace GetStoreApp.Views.Pages
                 InstalledAppsLock.Enter();
                 try
                 {
-                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
+                    if (string.IsNullOrEmpty(SearchText))
                     {
-                        if (string.IsNullOrEmpty(SearchText))
+                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                         {
                             InstalledAppsCollection.Add(installedAppsItem);
                         }
-                        else
+                    }
+                    else
+                    {
+                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                         {
                             if (installedAppsItem.AppName.Contains(SearchText) || installedAppsItem.AppPublisher.Contains(SearchText))
                             {
@@ -302,7 +319,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ÎÄ±¾ÊäÈë¿òÄÚÈİÎª¿ÕÊ±£¬¸´Ô­Ô­À´µÄÄÚÈİ
+        /// æ–‡æœ¬è¾“å…¥æ¡†å†…å®¹ä¸ºç©ºæ—¶ï¼Œå¤åŸåŸæ¥çš„å†…å®¹
         /// </summary>
         private void OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -333,10 +350,68 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        #endregion µÚÈı²¿·Ö£ºÒÑ°²×°Ó¦ÓÃ¿Ø¼ş¡ª¡ª¹ÒÔØµÄÊÂ¼ş
+        #endregion ç¬¬ä¸‰éƒ¨åˆ†ï¼šWinGet å·²å®‰è£…åº”ç”¨ç•Œé¢â€”â€”æŒ‚è½½çš„äº‹ä»¶
+
+        #region ç¬¬å››éƒ¨åˆ†ï¼šWinGet å·²å®‰è£…åº”ç”¨ç•Œé¢â€”â€”è‡ªå®šä¹‰äº‹ä»¶
 
         /// <summary>
-        /// ³õÊ¼»¯ÒÑ°²×°Ó¦ÓÃÊı¾İ
+        /// åº”ç”¨ç¨‹åºé€€å‡ºæ—¶è§¦å‘çš„äº‹ä»¶
+        /// </summary>
+        private void OnApplicationExit(object sender, EventArgs args)
+        {
+            GlobalNotificationService.ApplicationExit -= OnApplicationExit;
+            WinGetPageInstance.InstalledAppsPackageOperationEvent -= OnInstalledAppsPackageOperationEvent;
+        }
+
+        /// <summary>
+        /// å¯æ›´æ–°é¡¹ç›®å®‰è£…å®Œæˆåå‘ç”Ÿçš„äº‹ä»¶
+        /// </summary>
+        private void OnInstalledAppsPackageOperationEvent(bool result, bool isCanceled, InstalledAppsModel installedApps, UninstallResult uninstallResult)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                InstalledAppsLock.Enter();
+
+                try
+                {
+                    if (result && uninstallResult.Status is UninstallResultStatus.Ok)
+                    {
+                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
+                        {
+                            if (Equals(installedApps.AppID, installedAppsItem.AppID) && Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
+                            {
+                                InstalledAppsList.Remove(installedAppsItem);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
+                        {
+                            if (Equals(installedApps.AppID, installedAppsItem.AppID) && Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
+                            {
+                                installedAppsItem.IsUninstalling = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    InstalledAppsLock.Exit();
+                }
+            });
+        }
+
+        #endregion ç¬¬å››éƒ¨åˆ†ï¼šWinGet å·²å®‰è£…åº”ç”¨ç•Œé¢â€”â€”è‡ªå®šä¹‰äº‹ä»¶
+
+        /// <summary>
+        /// åˆå§‹åŒ–å·²å®‰è£…åº”ç”¨æ•°æ®
         /// </summary>
         private async Task InitializeSearchAppsDataAsync()
         {
@@ -389,13 +464,16 @@ namespace GetStoreApp.Views.Pages
                                     InstalledAppsList.Add(installedAppsItem);
                                 }
 
-                                foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
+                                if (string.IsNullOrEmpty(SearchText))
                                 {
-                                    if (string.IsNullOrEmpty(SearchText))
+                                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                                     {
                                         InstalledAppsCollection.Add(installedAppsItem);
                                     }
-                                    else
+                                }
+                                else
+                                {
+                                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                                     {
                                         if (installedAppsItem.AppName.Contains(SearchText) || installedAppsItem.AppPublisher.Contains(SearchText))
                                         {
@@ -436,9 +514,9 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¸üĞÂ´øËÑË÷µÄÒÑ°²×°Ó¦ÓÃ½á¹û
+        /// åˆå§‹åŒ–ç¬¦åˆçš„å·²å®‰è£…åº”ç”¨ç»“æœ
         /// </summary>
-        private void UpdateSearchInstalledApps()
+        private void InitializeMatchedInstalledApps()
         {
             InstalledAppsResultKind = InstalledAppsResultKind.Querying;
             InstalledAppsLock.Enter();
@@ -468,13 +546,16 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
 
-                foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
+                if (string.IsNullOrEmpty(SearchText))
                 {
-                    if (string.IsNullOrEmpty(SearchText))
+                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                     {
                         InstalledAppsCollection.Add(installedAppsItem);
                     }
-                    else
+                }
+                else
+                {
+                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
                     {
                         if (installedAppsItem.AppName.Contains(SearchText) || installedAppsItem.AppPublisher.Contains(SearchText))
                         {
@@ -495,7 +576,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡ÒÑ°²×°Ó¦ÓÃ
+        /// è·å–å·²å®‰è£…åº”ç”¨
         /// </summary>
         private async Task<(ConnectResult, FindPackagesResult, List<InstalledAppsModel>)> InstalledAppsAsync(PackageCatalogReference packageCatalogReference)
         {
@@ -523,12 +604,12 @@ namespace GetStoreApp.Views.Pages
                             if (matchItem.CatalogPackage is not null && !string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher))
                             {
                                 bool isUninstalling = false;
-                                InstalledAppsLock.Enter();
+                                WinGetPageInstance.PackageOperationLock.Enter();
                                 try
                                 {
-                                    foreach (InstalledAppsModel installedAppsItem in InstalledAppsList)
+                                    foreach (PackageOperationModel packageOperationItem in WinGetPageInstance.PackageOperationCollection)
                                     {
-                                        if (Equals(matchItem.CatalogPackage.InstalledVersion.Id, installedAppsItem.AppID) && Equals(matchItem.CatalogPackage.InstalledVersion.Version, installedAppsItem.AppVersion))
+                                        if (Equals(matchItem.CatalogPackage.InstalledVersion.Id, packageOperationItem.AppID) && Equals(matchItem.CatalogPackage.InstalledVersion.Version, packageOperationItem.AppVersion))
                                         {
                                             isUninstalling = true;
                                             break;
@@ -541,7 +622,7 @@ namespace GetStoreApp.Views.Pages
                                 }
                                 finally
                                 {
-                                    InstalledAppsLock.Exit();
+                                    WinGetPageInstance.PackageOperationLock.Exit();
                                 }
 
                                 installedAppsList.Add(new InstalledAppsModel()
@@ -592,7 +673,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡ËÑË÷Ó¦ÓÃÊÇ·ñ³É¹¦
+        /// è·å–æœç´¢åº”ç”¨æ˜¯å¦æˆåŠŸ
         /// </summary>
         private Visibility GetInstalledAppsSuccessfullyState(InstalledAppsResultKind installedAppsResultKind, int count, bool isSuccessfully)
         {
@@ -629,7 +710,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// ¼ì²éËÑË÷Ó¦ÓÃÊÇ·ñ³É¹¦
+        /// æ£€æŸ¥æœç´¢åº”ç”¨æ˜¯å¦æˆåŠŸ
         /// </summary>
         private Visibility CheckInstalledAppsState(InstalledAppsResultKind installedAppsResultKind, InstalledAppsResultKind comparedInstalledAppsResultKind)
         {
@@ -637,7 +718,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// »ñÈ¡ÊÇ·ñÕıÔÚËÑË÷ÖĞ
+        /// è·å–æ˜¯å¦æ­£åœ¨æœç´¢ä¸­
         /// </summary>
 
         private bool GetIsInstalling(InstalledAppsResultKind installedAppsResultKind)

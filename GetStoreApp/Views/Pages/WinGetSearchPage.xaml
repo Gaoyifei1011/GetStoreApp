@@ -352,10 +352,6 @@
             Grid.Row="2"
             Padding="30,3,30,30"
             ItemsSource="{x:Bind SearchAppsCollection}"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            ScrollViewer.HorizontalScrollMode="Disabled"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollMode="Enabled"
             SelectionMode="None"
             Visibility="{x:Bind GetSearchAppsSuccessfullyState(SearchAppsResultKind, x:True), Mode=OneWay}">
 
