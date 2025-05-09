@@ -7,16 +7,15 @@ using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Store.Preview;
 using Windows.Data.Json;
-using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
 using Windows.Foundation.Metadata;
@@ -89,50 +88,7 @@ namespace GetStoreApp.Views.Pages
             InitializeComponent();
         }
 
-        #region 第一部分：重写父类事件
-
-        /// <summary>
-        /// 导航到该页面触发的事件
-        /// </summary>
-        protected override void OnNavigatedTo(NavigationEventArgs args)
-        {
-            base.OnNavigatedTo(args);
-            aboutNavigationArgs = args.Parameter is not null && Enum.TryParse(Convert.ToString(args.Parameter), out AppNaviagtionArgs appNaviagtionArgs) ? appNaviagtionArgs : AppNaviagtionArgs.None;
-        }
-
-        #endregion 第一部分：重写父类事件
-
         #region 第二部分：关于页面——挂载的事件
-
-        /// <summary>
-        /// 页面加载完成后如果有具体的要求，将页面滚动到指定位置
-        /// </summary>
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            double currentScrollPosition = AboutScroll.VerticalOffset;
-            Point currentPoint = new(0, (int)currentScrollPosition);
-
-            switch (aboutNavigationArgs)
-            {
-                case AppNaviagtionArgs.Instructions:
-                    {
-                        Point targetPosition = Instructions.TransformToVisual(AboutScroll).TransformPoint(currentPoint);
-                        AboutScroll.ScrollTo(0, targetPosition.Y, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
-                        break;
-                    }
-                case AppNaviagtionArgs.SettingsHelp:
-                    {
-                        Point targetPosition = SettingsHelp.TransformToVisual(AboutScroll).TransformPoint(currentPoint);
-                        AboutScroll.ScrollTo(0, targetPosition.Y, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
-                        break;
-                    }
-                default:
-                    {
-                        AboutScroll.ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
-                        break;
-                    }
-            }
-        }
 
         /// <summary>
         /// 创建应用的桌面快捷方式
@@ -340,35 +296,39 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 桌面程序启动参数说明
-        /// </summary>
-        private async void OnDesktopLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await MainWindow.Current.ShowDialogAsync(new DesktopStartupArgsDialog());
-        }
-
-        /// <summary>
-        /// 控制台程序启动参数说明
-        /// </summary>
-        private async void OnConsoleLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await MainWindow.Current.ShowDialogAsync(new ConsoleStartupArgsDialog());
-        }
-
-        /// <summary>
         /// 检查网络
         /// </summary>
-        private async void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 疑难解答
         /// </summary>
-        private async void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
@@ -377,30 +337,6 @@ namespace GetStoreApp.Views.Pages
         private void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
-        }
-
-        /// <summary>
-        /// 系统信息
-        /// </summary>
-        private async void OnSystemInformationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
-        }
-
-        /// <summary>
-        /// 应用信息
-        /// </summary>
-        private async void OnAppInformationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await MainWindow.Current.ShowDialogAsync(new AppInformationDialog());
-        }
-
-        /// <summary>
-        /// 应用设置
-        /// </summary>
-        private async void OnAppSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures-app"));
         }
 
         #endregion 第二部分：关于页面——挂载的事件

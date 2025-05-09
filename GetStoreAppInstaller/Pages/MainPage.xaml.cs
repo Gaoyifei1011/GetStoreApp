@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -1200,11 +1201,21 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 打开设置
         /// </summary>
-        private async void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
+        private void OnOpenSettingsClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("getstoreapp:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Windows.ApplicationModel.Package.Current.Id.FamilyName }, new ValueSet()
+            Task.Run(async () =>
             {
-                { "Parameter", "Settings" }
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("getstoreapp:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Windows.ApplicationModel.Package.Current.Id.FamilyName }, new ValueSet()
+                    {
+                        { "Parameter", "Settings" }
+                    });
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
             });
         }
 
@@ -1569,7 +1580,14 @@ namespace GetStoreAppInstaller.Pages
             {
                 if (!string.IsNullOrEmpty(AppInstallerSourceLink))
                 {
-                    await Launcher.LaunchUriAsync(new Uri(AppInstallerSourceLink));
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new Uri(AppInstallerSourceLink));
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
                 }
             });
         }
@@ -1583,7 +1601,14 @@ namespace GetStoreAppInstaller.Pages
             {
                 if (!string.IsNullOrEmpty(PackageSourceLink))
                 {
-                    await Launcher.LaunchUriAsync(new Uri(PackageSourceLink));
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new Uri(PackageSourceLink));
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
                 }
             });
         }
@@ -1591,33 +1616,73 @@ namespace GetStoreAppInstaller.Pages
         /// <summary>
         /// 了解目标设备系列
         /// </summary>
-        private async void OnLearnTargetDeviceFamilyClicked(object sender, RoutedEventArgs args)
+        private void OnLearnTargetDeviceFamilyClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/uwp/extension-sdks/device-families-overview"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/uwp/extension-sdks/device-families-overview"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 了解更新设置
         /// </summary>
-        private async void OnLearnUpdateSettingsClicked(object sender, RoutedEventArgs args)
+        private void OnLearnUpdateSettingsClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/msix/app-installer/how-to-create-appinstaller-file"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/msix/app-installer/how-to-create-appinstaller-file"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 了解应用包依赖
         /// </summary>
-        private async void OnLearnPackageDependencyClicked(object sender, RoutedEventArgs args)
+        private void OnLearnPackageDependencyClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-packagedependency"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-packagedependency"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 了解应用包功能
         /// </summary>
-        private async void OnLearnPackageCapabilityClicked(object sender, RoutedEventArgs args)
+        private void OnLearnPackageCapabilityClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/uwp/packaging/app-capability-declarations"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/uwp/packaging/app-capability-declarations"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         #endregion 第四部分：应用安装器主页面——挂载的事件

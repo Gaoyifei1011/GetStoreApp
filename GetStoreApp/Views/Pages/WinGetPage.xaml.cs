@@ -218,7 +218,14 @@ namespace GetStoreApp.Views.Pages
             {
                 Task.Run(async () =>
                 {
-                    await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(packagePath));
+                    try
+                    {
+                        await Launcher.LaunchFolderAsync(await StorageFolder.GetFolderFromPathAsync(packagePath));
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
                 });
             }
         }
@@ -297,25 +304,55 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 了解更多有关 WinGet 程序包的描述信息
         /// </summary>
-        private async void OnLearnMoreClicked(object sender, RoutedEventArgs args)
+        private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri(@"https://learn.microsoft.com/windows/package-manager"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 从微软商店中下载 WinGet 程序包管理器
         /// </summary>
-        private async void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadFromMicrosoftStoreClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/ProductId=9NBLGGH4NNS1"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-windows-store://pdp/ProductId=9NBLGGH4NNS1"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 从Github中下载 WinGet 程序包管理器
         /// </summary>
-        private async void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadFromGithubClicked(object sender, RoutedEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/winget-cli/releases"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

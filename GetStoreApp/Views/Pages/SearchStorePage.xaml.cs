@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.System;
 
@@ -205,11 +206,21 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开指定项目的链接
         /// </summary>
-        private async void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        private void OnOpenLinkExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string appLink && !string.IsNullOrEmpty(appLink))
             {
-                await Launcher.LaunchUriAsync(new Uri(appLink));
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await Launcher.LaunchUriAsync(new Uri(appLink));
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                });
             }
         }
 
@@ -220,7 +231,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is string appLink && MainWindow.Current.GetFrameContent() is StorePage storePage && !Equals(storePage.GetCurrentPageType(), typeof(QueryLinksPage)))
             {
-                storePage.NavigateTo(typeof(QueryLinksPage), new List<string> { "0", null, appLink }, false);
+                storePage.NavigateTo(storePage.PageList[0], new List<string> { "0", null, appLink }, false);
             }
         }
 

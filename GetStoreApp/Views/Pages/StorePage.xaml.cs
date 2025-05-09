@@ -1,4 +1,6 @@
 ﻿using GetStoreApp.Services.Root;
+using GetStoreApp.UI.Dialogs.About;
+using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
@@ -38,7 +40,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<Type> PageList { get; } = [typeof(QueryLinksPage), typeof(SearchStorePage)];
+        public List<Type> PageList { get; } = [typeof(QueryLinksPage), typeof(SearchStorePage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -87,19 +89,55 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 桌面程序启动参数说明
+        /// </summary>
+        private async void OnDesktopLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            await MainWindow.Current.ShowDialogAsync(new DesktopStartupArgsDialog());
+        }
+
+        /// <summary>
+        /// 控制台程序启动参数说明
+        /// </summary>
+        private async void OnConsoleLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            await MainWindow.Current.ShowDialogAsync(new ConsoleStartupArgsDialog());
+        }
+
+        /// <summary>
         /// 检查网络
         /// </summary>
-        private async void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
         /// 疑难解答
         /// </summary>
-        private async void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>
@@ -183,7 +221,7 @@ namespace GetStoreApp.Views.Pages
 
         #endregion 第二部分：应用商店页面——挂载的事件
 
-        #region 第三部分：窗口导航方法
+        #region 第三部分：应用商店页面——窗口导航方法
 
         /// <summary>
         /// 页面向前导航
@@ -214,6 +252,8 @@ namespace GetStoreApp.Views.Pages
             return StoreFrame.CurrentSourcePageType;
         }
 
+        #endregion 第三部分：应用商店页面——窗口导航方法
+
         /// <summary>
         /// 初始化查询链接内容
         /// </summary>
@@ -234,7 +274,5 @@ namespace GetStoreApp.Views.Pages
                 }
             }
         }
-
-        #endregion 第三部分：窗口导航方法
     }
 }
