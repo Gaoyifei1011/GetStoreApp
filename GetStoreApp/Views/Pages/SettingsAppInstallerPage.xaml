@@ -1,0 +1,251 @@
+<Page
+    x:Class="GetStoreApp.Views.Pages.SettingsAppInstallerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <ScrollView
+        HorizontalScrollBarVisibility="Hidden"
+        HorizontalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Enabled">
+
+        <Grid Margin="30,0,30,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--  允许安装未签名安装包  -->
+            <Grid
+                Grid.Row="0"
+                Height="61"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xEB95;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackage')}" />
+
+                    <TextBlock
+                        x:Name="AllowUnsignedPackageDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageDescription')}"
+                                Visibility="{x:Bind AllowUnsignedPackageDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <HyperlinkButton
+                    Grid.Column="2"
+                    Margin="0,0,5,0"
+                    VerticalAlignment="Center"
+                    Click="{x:Bind OnOpenDevelopersClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/DeveloperOptions')}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/DeveloperOptionsToolTip')}" />
+
+                <StackPanel
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOffContent')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUnsignedPackageValue), Mode=OneWay}" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/AllowUnsignedPackageOnContent')}"
+                        Visibility="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}" />
+
+                    <ToggleSwitch
+                        MinWidth="0"
+                        Margin="10,-2,-2,0"
+                        IsOn="{x:Bind AllowUnsignedPackageValue, Mode=OneWay}"
+                        OffContent=""
+                        OnContent=""
+                        Toggled="{x:Bind OnAllowUnsignedPackageToggled}" />
+                </StackPanel>
+            </Grid>
+
+            <!--  安装应用时强制关闭应用  -->
+            <Grid
+                Grid.Row="1"
+                Height="61"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE711;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceAppShutdown')}" />
+
+                    <TextBlock
+                        x:Name="ForceAppShutdownDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceAppShutdownDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/ForceAppShutdownDescription')}"
+                                Visibility="{x:Bind ForceAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOffContent')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceTargetAppShutdownValue), Mode=OneWay}" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOnContent')}"
+                        Visibility="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}" />
+
+                    <ToggleSwitch
+                        MinWidth="0"
+                        Margin="10,-2,-2,0"
+                        IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
+                        OffContent=""
+                        OnContent=""
+                        Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
+                </StackPanel>
+            </Grid>
+
+            <!--  安装应用时强制关闭与包关联的进程  -->
+            <Grid
+                Grid.Row="2"
+                Height="61"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE711;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdown')}" />
+
+                    <TextBlock
+                        x:Name="ForceTargetAppShutdownDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownDescription')}"
+                                Visibility="{x:Bind ForceTargetAppShutdownDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOffContent')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(ForceTargetAppShutdownValue), Mode=OneWay}" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/ForceTargetAppShutdownOnContent')}"
+                        Visibility="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}" />
+
+                    <ToggleSwitch
+                        MinWidth="0"
+                        Margin="10,-2,-2,0"
+                        IsOn="{x:Bind ForceTargetAppShutdownValue, Mode=OneWay}"
+                        OffContent=""
+                        OnContent=""
+                        Toggled="{x:Bind OnForceTargetAppShutdownToggled}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</Page>
