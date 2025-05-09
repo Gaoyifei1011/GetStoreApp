@@ -86,6 +86,7 @@ namespace GetStoreApp.Views.Pages
         private readonly string WinGetPackageUpgradeNoApplicableUpgrade = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeNoApplicableUpgrade");
         private readonly string WinGetPackageUpgradeAgreementsNotAccepted = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeAgreementsNotAccepted");
         private readonly string WinGetPackageUpgradeOtherError = ResourceService.GetLocalized("WinGet/WinGetPackageUpgradeOtherError");
+        private readonly string WinGetPackageOperationCompleted = ResourceService.GetLocalized("Notification/WinGetPackageOperationCompleted");
         public readonly Lock PackageOperationLock = new();
 
         private SelectorBarItem _selectedItem;
@@ -802,19 +803,6 @@ namespace GetStoreApp.Views.Pages
 
                                     switch (downloadResult.Status)
                                     {
-                                        // 下载成功
-                                        case DownloadResultStatus.Ok:
-                                            {
-                                                await Task.Run(() =>
-                                                {
-                                                    // 显示 WinGet 应用下载成功通知
-                                                    AppNotificationBuilder appNotificationBuilder = new();
-                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadSuccessfully"), packageOperation.SearchApps.AppName));
-                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                                });
-                                                break;
-                                            }
                                         // 被策略阻止
                                         case DownloadResultStatus.BlockedByPolicy:
                                             {
@@ -986,25 +974,6 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         PackageOperationLock.Exit();
                                     }
-
-                                    await Task.Run(() =>
-                                    {
-                                        // 显示 WinGet 应用下载失败通知
-                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadFailed1"), packageOperation.SearchApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed3"));
-                                        AppNotificationButton downloadWithCommandButton = new(ResourceService.GetLocalized("Notification/DownloadWithCommand"));
-                                        downloadWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("DownloadWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, WinGetConfigService.DownloadFolder.Path) : string.Format("DownloadWithCommand:{0}:{1}:{2}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path));
-                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                        openDownloadFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                        appNotificationBuilder.AddButton(downloadWithCommandButton);
-                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
                             // 应用包操作失败
@@ -1031,27 +1000,10 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                     packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadOtherError, exception is not null ? exception.HResult : Unknown);
-
-                                    await Task.Run(() =>
-                                    {
-                                        // 显示 WinGet 应用下载失败通知
-                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadFailed1"), packageOperation.SearchApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetDownloadFailed3"));
-                                        AppNotificationButton downloadWithCommandButton = new(ResourceService.GetLocalized("Notification/DownloadWithCommand"));
-                                        downloadWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("DownloadWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, WinGetConfigService.DownloadFolder.Path) : string.Format("DownloadWithCommand:{0}:{1}:{2}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path));
-                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                        openDownloadFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                        appNotificationBuilder.AddButton(downloadWithCommandButton);
-                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
+
+                            ShowTaskCompletedNotification();
                         }
                         break;
                     }
@@ -1139,15 +1091,6 @@ namespace GetStoreApp.Views.Pages
                                         // 安装成功
                                         case InstallResultStatus.Ok:
                                             {
-                                                await Task.Run(() =>
-                                                {
-                                                    // 显示 WinGet 应用安装成功通知
-                                                    AppNotificationBuilder appNotificationBuilder = new();
-                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallSuccessfully"), packageOperation.SearchApps.AppName));
-                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                                });
-
                                                 // 检测是否需要重启设备完成应用的安装，如果是，询问用户是否需要重启设备
                                                 if (installResult.RebootRequired)
                                                 {
@@ -1353,25 +1296,6 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         PackageOperationLock.Exit();
                                     }
-
-                                    await Task.Run(() =>
-                                    {
-                                        // 显示 WinGet 应用安装失败通知
-                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed1"), packageOperation.SearchApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
-                                        AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
-                                        installWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("InstallWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("InstallWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
-                                        AppNotificationButton openInstallFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                        openInstallFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                        appNotificationBuilder.AddButton(installWithCommandButton);
-                                        appNotificationBuilder.AddButton(openInstallFolderButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
                             // 应用包操作失败
@@ -1399,27 +1323,10 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                     packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallOtherError, exception is not null ? exception.HResult : Unknown);
-
-                                    await Task.Run(() =>
-                                    {
-                                        // 显示 WinGet 应用安装失败通知
-                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetInstallFailed1"), packageOperation.SearchApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetInstallFailed3"));
-                                        AppNotificationButton installWithCommandButton = new(ResourceService.GetLocalized("Notification/InstallWithCommand"));
-                                        installWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("InstallWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("InstallWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
-                                        AppNotificationButton openInstallFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                        openInstallFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                        appNotificationBuilder.AddButton(installWithCommandButton);
-                                        appNotificationBuilder.AddButton(openInstallFolderButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
+
+                            ShowTaskCompletedNotification();
                         }
                         break;
                     }
@@ -1506,17 +1413,6 @@ namespace GetStoreApp.Views.Pages
                                         // 卸载成功
                                         case UninstallResultStatus.Ok:
                                             {
-                                                await Task.Run(() =>
-                                                {
-                                                    // 显示 WinGet 应用卸载成功通知
-                                                    AppNotificationBuilder appNotificationBuilder = new();
-                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetDownloadSuccessfully"), packageOperation.SearchApps.AppName));
-                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                                });
-
-                                                // TODO: 移除列表操作
-
                                                 // 检测是否需要重启设备完成应用的卸载，如果是，询问用户是否需要重启设备
                                                 if (uninstallResult.RebootRequired)
                                                 {
@@ -1665,20 +1561,6 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         PackageOperationLock.Exit();
                                     }
-
-                                    await Task.Run(() =>
-                                    {
-                                        // 显示 WinGet 卸载应用失败通知
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUninstallFailed1"), packageOperation.InstalledApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed3"));
-                                        AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
-                                        openSettingsButton.Arguments.Add("action", "OpenSettings");
-                                        appNotificationBuilder.AddButton(openSettingsButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
                             // 应用包操作失败
@@ -1686,21 +1568,9 @@ namespace GetStoreApp.Views.Pages
                             {
                                 packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                 packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallOtherError, exception is not null ? exception.HResult : Unknown);
-
-                                await Task.Run(() =>
-                                {
-                                    // 显示 WinGet 卸载应用失败通知
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUninstallFailed1"), packageOperation.InstalledApps.AppName));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed2"));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUninstallFailed3"));
-                                    AppNotificationButton openSettingsButton = new(ResourceService.GetLocalized("Notification/OpenSettings"));
-                                    openSettingsButton.Arguments.Add("action", "OpenSettings");
-                                    appNotificationBuilder.AddButton(openSettingsButton);
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
                             }
+
+                            ShowTaskCompletedNotification();
                         }
                         break;
                     }
@@ -1788,15 +1658,6 @@ namespace GetStoreApp.Views.Pages
                                         // 修复成功
                                         case RepairResultStatus.Ok:
                                             {
-                                                await Task.Run(() =>
-                                                {
-                                                    // 显示 WinGet 应用修复成功通知
-                                                    AppNotificationBuilder appNotificationBuilder = new();
-                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetRepairSuccessfully"), packageOperation.SearchApps.AppName));
-                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                                });
-
                                                 // 检测是否需要重启设备完成应用的修复，如果是，询问用户是否需要重启设备
                                                 if (repairResult.RebootRequired)
                                                 {
@@ -1983,25 +1844,6 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         PackageOperationLock.Exit();
                                     }
-
-                                    await Task.Run(() =>
-                                    {
-                                        // 显示 WinGet 修复应用失败通知
-                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetRepairFailed1"), packageOperation.SearchApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetRepairFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetRepairFailed3"));
-                                        AppNotificationButton repairWithCommandButton = new(ResourceService.GetLocalized("Notification/RepairWithCommand"));
-                                        repairWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("RepairWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("RepairWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
-                                        AppNotificationButton openRepairFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                        openRepairFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                        appNotificationBuilder.AddButton(repairWithCommandButton);
-                                        appNotificationBuilder.AddButton(openRepairFolderButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
                             // 应用包操作失败
@@ -2009,26 +1851,9 @@ namespace GetStoreApp.Views.Pages
                             {
                                 packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                 packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairOtherError, exception is not null ? exception.HResult : Unknown);
-
-                                await Task.Run(() =>
-                                {
-                                    // 显示 WinGet 修复应用失败通知
-                                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                    AppNotificationBuilder appNotificationBuilder = new();
-                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetRepairFailed1"), packageOperation.SearchApps.AppName));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetRepairFailed2"));
-                                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetRepairFailed3"));
-                                    AppNotificationButton repairWithCommandButton = new(ResourceService.GetLocalized("Notification/RepairWithCommand"));
-                                    repairWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("RepairWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("RepairWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
-                                    AppNotificationButton openRepairFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                    openRepairFolderButton.Arguments.Add("action", string.Format("OpenDownloadFolder:{0}", WinGetConfigService.DownloadFolder.Path));
-                                    appNotificationBuilder.AddButton(repairWithCommandButton);
-                                    appNotificationBuilder.AddButton(openRepairFolderButton);
-                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                });
                             }
+
+                            ShowTaskCompletedNotification();
                         }
                         break;
                     }
@@ -2125,17 +1950,6 @@ namespace GetStoreApp.Views.Pages
                                         // 安装成功
                                         case InstallResultStatus.Ok:
                                             {
-                                                await Task.Run(() =>
-                                                {
-                                                    // 显示 WinGet 应用更新成功通知
-                                                    AppNotificationBuilder appNotificationBuilder = new();
-                                                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                                                    appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeSuccessfully"), packageOperation.UpgradableApps.AppName));
-                                                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                                });
-
-                                                // TODO：添加移除操作
-
                                                 // 检测是否需要重启设备完成应用的更新，如果是，询问用户是否需要重启设备
                                                 if (installResult.RebootRequired)
                                                 {
@@ -2360,25 +2174,6 @@ namespace GetStoreApp.Views.Pages
                                     {
                                         PackageOperationLock.Exit();
                                     }
-
-                                    await Task.Run(() =>
-                                    {
-                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                        // 显示 WinGet 应用更新失败通知
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed1"), packageOperation.UpgradableApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
-                                        AppNotificationButton upgradeWithCommandButton = new(ResourceService.GetLocalized("Notification/UpgradeWithCommand"));
-                                        upgradeWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("UpgradeWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("UpgradeWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
-                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                        openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
-                                        appNotificationBuilder.AddButton(upgradeWithCommandButton);
-                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
                             // 应用包操作失败
@@ -2406,27 +2201,10 @@ namespace GetStoreApp.Views.Pages
                                 {
                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
                                     packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeOtherError, exception is not null ? exception.HResult : Unknown);
-
-                                    await Task.Run(() =>
-                                    {
-                                        KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                                        // 显示 WinGet 应用更新失败通知
-                                        AppNotificationBuilder appNotificationBuilder = new();
-                                        appNotificationBuilder.AddArgument("action", "OpenApp");
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed1"), packageOperation.UpgradableApps.AppName));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed2"));
-                                        appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/WinGetUpgradeFailed3"));
-                                        AppNotificationButton upgradeWithCommandButton = new(ResourceService.GetLocalized("Notification/UpgradeWithCommand"));
-                                        upgradeWithCommandButton.Arguments.Add("action", Equals(winGetDataSourceName, default) ? string.Format("UpgradeWithCommand:{0}", packageOperation.SearchApps.AppID) : string.Format("UpgradeWithCommand:{0}:{1}", packageOperation.SearchApps.AppID, winGetDataSourceName.Key));
-                                        AppNotificationButton openDownloadFolderButton = new(ResourceService.GetLocalized("Notification/OpenDownloadFolder"));
-                                        openDownloadFolderButton.Arguments.Add("action", "OpenDownloadFolder");
-                                        appNotificationBuilder.AddButton(upgradeWithCommandButton);
-                                        appNotificationBuilder.AddButton(openDownloadFolderButton);
-                                        ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
-                                    });
                                 }
                             }
+
+                            ShowTaskCompletedNotification();
                         }
                         break;
                     }
@@ -2522,6 +2300,71 @@ namespace GetStoreApp.Views.Pages
             }
 
             return isExisted;
+        }
+
+        /// <summary>
+        /// 显示所有任务都已经操作完成通知
+        /// </summary>
+        private void ShowTaskCompletedNotification()
+        {
+            bool taskCompleted = true;
+            PackageOperationLock.Enter();
+
+            try
+            {
+                foreach (PackageOperationModel packageOperationItem in PackageOperationCollection)
+                {
+                    if (packageOperationItem.PackageOperationResultKind is PackageOperationResultKind.Normal)
+                    {
+                        if (packageOperationItem.PackageOperationKind is PackageOperationKind.Download && packageOperationItem.PackageDownloadProgressState is not PackageDownloadProgressState.Finished)
+                        {
+                            taskCompleted = false;
+                            break;
+                        }
+                        else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Install && packageOperationItem.PackageInstallProgressState is not PackageInstallProgressState.Finished)
+                        {
+                            taskCompleted = false;
+                            break;
+                        }
+                        else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Uninstall && packageOperationItem.PackageUninstallProgressState is not PackageUninstallProgressState.Finished)
+                        {
+                            taskCompleted = false;
+                            break;
+                        }
+                        else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Repair && packageOperationItem.PackageRepairProgressState is not PackageRepairProgressState.Finished)
+                        {
+                            taskCompleted = false;
+                            break;
+                        }
+                        else if (packageOperationItem.PackageOperationKind is PackageOperationKind.Upgrade && packageOperationItem.PackageInstallProgressState is not PackageInstallProgressState.Finished)
+                        {
+                            taskCompleted = false;
+                            break;
+                        }
+                    }
+                    else if (packageOperationItem.PackageOperationResultKind is PackageOperationResultKind.Cancel)
+                    {
+                        taskCompleted = false;
+                        break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
+
+            if (taskCompleted)
+            {
+                Task.Run(() =>
+                {
+                    // 显示 WinGet 应用操作完成通知
+                    AppNotificationBuilder appNotificationBuilder = new();
+                    appNotificationBuilder.AddArgument("action", "OpenApp");
+                    appNotificationBuilder.AddText(WinGetPackageOperationCompleted);
+                    ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
+                });
+            }
         }
     }
 }

@@ -78,6 +78,7 @@
   "WinGetInstallFailed2": "应用安装失败，请检查您是否有安装应用的权限",
   "WinGetInstallFailed3": "您或者可以尝试手动安装该应用",
   "WinGetInstallSuccessfully": "{0}应用安装成功",
+  "WinGetPackageOperationCompleted": "WinGet 任务都已完成",
   "WinGetRepairFailed1": "{0}应用修复失败",
   "WinGetRepairFailed2": "应用卸载失败，请检查您是否有修复应用的权限",
   "WinGetRepairFailed3": "您或者可以尝试在设置中修复您的应用",

@@ -78,6 +78,7 @@
   "WinGetInstallFailed2": "App install failed, please check if you have permission to install the app",
   "WinGetInstallFailed3": "Alternatively, you can try installing the app manually",
   "WinGetInstallSuccessfully": "{0} app install successfully",
+  "WinGetPackageOperationCompleted": "WinGet tasks have all been completed",
   "WinGetRepairFailed1": "{0} app repair failed",
   "WinGetRepairFailed2": "App repair failed, please check if you have permission to repair the app",
   "WinGetRepairFailed3": "Alternatively, you can try repairing your app in Settings",

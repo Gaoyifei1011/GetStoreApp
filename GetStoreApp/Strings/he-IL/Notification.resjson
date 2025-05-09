@@ -78,6 +78,7 @@
   "WinGetInstallFailed2": "התקנת האפליקציה נכשלה, אנא בדוק אם יש לך הרשאה להתקין את האפליקציה",
   "WinGetInstallFailed3": "לחלופין, אתה יכול לנסות להתקין את האפליקציה באופן ידני",
   "WinGetInstallSuccessfully": "התקנת האפליקציה {0} הצליחה",
+  "WinGetPackageOperationCompleted": "WinGet tasks have all been completed",
   "WinGetRepairFailed1": "{0} app repair failed",
   "WinGetRepairFailed2": "App repair failed, please check if you have permission to repair the app",
   "WinGetRepairFailed3": "Alternatively, you can try repairing your app in Settings",
