@@ -798,7 +798,7 @@ namespace GetStoreApp.Views.Pages
 
                 if (MainWindow.Current.GetFrameContent() is AppManagerPage appManagerPage && Equals(appManagerPage.GetCurrentPageType(), typeof(AppListPage)))
                 {
-                    appManagerPage.NavigateTo(typeof(AppInformationPage), appInformation, true);
+                    appManagerPage.NavigateTo(appManagerPage.PageList[1], appInformation, true);
                 }
             }
         }
