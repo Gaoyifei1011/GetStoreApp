@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Windows.AppNotifications;
 using System;
 using System.Collections.Generic;
@@ -52,56 +51,6 @@ namespace GetStoreApp.Services.Root
             else if (notificationArgs is "OpenSettings")
             {
                 await Launcher.LaunchUriAsync(new Uri("ms-settings:appsfeatures"));
-                Environment.Exit(Environment.ExitCode);
-            }
-            else if (notificationArgs.Contains("DownloadWithCommand"))
-            {
-                string[] splitList = notificationArgs.Split(':');
-                if (splitList.Length is 3)
-                {
-                    string appId = splitList[1];
-                    string path = splitList[2];
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -d ""{1}""", appId, path), null, WindowShowStyle.SW_SHOWNORMAL);
-                }
-                else if (splitList.Length is 4)
-                {
-                    string appId = splitList[1];
-                    string source = splitList[2];
-                    string path = splitList[3];
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -s ""{1}"" -d ""{2}""", appId, source, path), null, WindowShowStyle.SW_SHOWNORMAL);
-                }
-                Environment.Exit(Environment.ExitCode);
-            }
-            else if (notificationArgs.Contains("InstallWithCommand"))
-            {
-                string[] splitList = notificationArgs.Split(':');
-                if (splitList.Length is 2)
-                {
-                    string appId = splitList[1];
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("install {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
-                }
-                else if (splitList.Length is 3)
-                {
-                    string appId = splitList[1];
-                    string path = splitList[2];
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"install {0} -s ""{1}""", appId, path), null, WindowShowStyle.SW_SHOWNORMAL);
-                }
-                Environment.Exit(Environment.ExitCode);
-            }
-            else if (notificationArgs.Contains("UpgradeWithCommand"))
-            {
-                string[] splitList = notificationArgs.Split(':');
-                if (splitList.Length is 2)
-                {
-                    string appId = splitList[1];
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format("upgrade {0}", appId), null, WindowShowStyle.SW_SHOWNORMAL);
-                }
-                else if (splitList.Length is 3)
-                {
-                    string appId = splitList[1];
-                    string path = splitList[2];
-                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"upgrade {0} -s ""{1}""", appId, path), null, WindowShowStyle.SW_SHOWNORMAL);
-                }
                 Environment.Exit(Environment.ExitCode);
             }
             else if (notificationArgs.Contains("OpenApp"))

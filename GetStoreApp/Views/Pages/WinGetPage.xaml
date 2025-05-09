@@ -1015,6 +1015,20 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
+                                        <Grid.ContextFlyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource OpenPackageFolderCommand}"
+                                                    CommandParameter="{x:Bind PackagePath}"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenPackageFolder')}">
+
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8B7;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Grid.ContextFlyout>
+
                                         <FontIcon
                                             Grid.Column="0"
                                             Margin="0,0,12,0"
@@ -1199,6 +1213,20 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
+
+                                        <Grid.ContextFlyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem
+                                                    Command="{StaticResource OpenPackageFolderCommand}"
+                                                    CommandParameter="{x:Bind PackagePath}"
+                                                    Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenPackageFolder')}">
+
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE8B7;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Grid.ContextFlyout>
 
                                         <FontIcon
                                             Grid.Column="0"

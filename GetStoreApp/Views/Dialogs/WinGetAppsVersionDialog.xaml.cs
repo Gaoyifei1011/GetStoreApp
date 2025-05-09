@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 
@@ -788,6 +789,7 @@ namespace GetStoreApp.Views.Dialogs
                     AppID = SearchApps.AppID,
                     AppName = SearchApps.AppName,
                     AppVersion = SelectedItem.Version,
+                    PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
                     PackageOperationProgress = 0,
                     PackageInstallProgressState = PackageInstallProgressState.Queued,
                     PackageVersionId = SelectedItem.PackageVersionId,
@@ -812,6 +814,7 @@ namespace GetStoreApp.Views.Dialogs
                     AppID = SearchApps.AppID,
                     AppName = SearchApps.AppName,
                     AppVersion = SelectedItem.Version,
+                    PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
                     PackageOperationProgress = 0,
                     PackageRepairProgressState = PackageRepairProgressState.Queued,
                     PackageVersionId = SelectedItem.PackageVersionId,
@@ -836,6 +839,7 @@ namespace GetStoreApp.Views.Dialogs
                     AppID = UpgradableApps.AppID,
                     AppName = UpgradableApps.AppName,
                     AppVersion = SelectedItem.Version,
+                    PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
                     PackageOperationProgress = 0,
                     PackageInstallProgressState = PackageInstallProgressState.Queued,
                     PackageVersionId = SelectedItem.PackageVersionId,

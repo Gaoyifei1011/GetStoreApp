@@ -163,6 +163,7 @@ namespace GetStoreApp.Views.Pages
                     AppID = upgradableApps.AppID,
                     AppName = upgradableApps.AppName,
                     AppVersion = upgradableApps.CatalogPackage.DefaultInstallVersion.Version,
+                    PackagePath = Path.Combine(Path.GetTempPath(), "WinGet"),
                     PackageOperationProgress = 0,
                     PackageInstallProgressState = PackageInstallProgressState.Queued,
                     PackageVersionId = null,
