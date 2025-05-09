@@ -1,0 +1,328 @@
+<Page
+    x:Class="GetStoreApp.Views.Pages.SettingsWinGetPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:service="using:GetStoreApp.Services.Controls.Settings"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <ScrollView
+        HorizontalScrollBarVisibility="Hidden"
+        HorizontalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Enabled">
+
+        <Grid Margin="30,0,30,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--  WinGet 数据源配置  -->
+            <Grid
+                Grid.Row="0"
+                Height="61"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE958;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSourceConfiguration')}" />
+
+                    <TextBlock
+                        x:Name="WinGetSourceConfigurationDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSourceConfigurationDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSourceConfigurationDescription')}"
+                                Visibility="{x:Bind WinGetSourceConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <Button
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Click="{x:Bind OnConfigurationClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/Configuration')}"
+                    IsEnabled="{x:Bind service:WinGetConfigService.IsWinGetInstalled}" />
+            </Grid>
+
+            <!--  WinGet 程序包存放路径  -->
+            <Grid
+                Grid.Row="1"
+                Height="61"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xF12B;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetPackageStoragePath')}" />
+
+                    <TextBlock
+                        Margin="0,0,5,0"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <Hyperlink Click="{x:Bind OnWinGetOpenFolderClicked}" UnderlineStyle="None">
+                            <Run Text="{x:Bind WinGetPackageFolder.Path, Mode=OneWay}" />
+                        </Hyperlink>
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip MaxWidth="9999">
+                                <StackPanel HorizontalAlignment="Stretch">
+                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetPackageStoragePath')}" />
+                                    <TextBlock Text="{x:Bind WinGetPackageFolder.Path, Mode=OneWay}" />
+                                    <MenuFlyoutSeparator Margin="4,3" />
+                                    <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('Settings/OpenFolderToolTip')}" />
+                                </StackPanel>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <DropDownButton
+                    Grid.Column="2"
+                    Margin="6,0,0,0"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/ChangeFolder')}">
+
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                Tag="AppCache"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppCacheFolder')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xECAA;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                Tag="Download"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DownloadFolder')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE896;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                Tag="Desktop"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/DesktopFolder')}">
+
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon Glyph="&#xE7F4;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+
+                            <MenuFlyoutSeparator />
+
+                            <MenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnWinGetChangeFolderClicked}"
+                                Tag="Custom"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/Custom')}" />
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+            </Grid>
+
+            <!--  WinGet 安装方式  -->
+            <Grid
+                Grid.Row="2"
+                Height="61"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE896;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallMode')}" />
+
+                    <TextBlock
+                        x:Name="WinGetInstallModeDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetInstallModeDescription')}"
+                                Visibility="{x:Bind WinGetInstallModeDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <DropDownButton
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Content="{x:Bind WinGetInstallMode.Value, Mode=OneWay}">
+
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="Bottom">
+                            <RadioMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnWinGetInstallModeSelectClicked}"
+                                GroupName="WinGetInstallModeModeRadioGroup"
+                                IsChecked="{x:Bind WinGetInstallMode.Key.Equals(WinGetInstallModeList[0].Key), Mode=OneWay}"
+                                Tag="0"
+                                Text="{x:Bind WinGetInstallModeList[0].Value}" />
+
+                            <RadioMenuFlyoutItem
+                                Height="32"
+                                Padding="11,0"
+                                Click="{x:Bind OnWinGetInstallModeSelectClicked}"
+                                GroupName="WinGetInstallModeModeRadioGroup"
+                                IsChecked="{x:Bind WinGetInstallMode.Key.Equals(WinGetInstallModeList[1].Key), Mode=OneWay}"
+                                Tag="1"
+                                Text="{x:Bind WinGetInstallModeList[1].Value}" />
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                </DropDownButton>
+            </Grid>
+
+            <!--  WinGet 设置  -->
+            <Grid
+                Grid.Row="3"
+                Height="61"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE713;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettings')}" />
+
+                    <TextBlock
+                        x:Name="WinGetSettingsDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/WinGetSettingsDescription')}"
+                                Visibility="{x:Bind WinGetSettingsDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <HyperlinkButton
+                    Grid.Column="2"
+                    Margin="0,0,6,0"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/LearnConfig')}"
+                    NavigateUri="https://learn.microsoft.com/windows/package-manager/winget/settings" />
+
+                <Button
+                    Grid.Column="3"
+                    Click="{x:Bind OnOpenWinGetSettingsClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettings')}"
+                    IsEnabled="{x:Bind service:WinGetConfigService.IsWinGetInstalled}"
+                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
+            </Grid>
+        </Grid>
+    </ScrollView>
+</Page>
