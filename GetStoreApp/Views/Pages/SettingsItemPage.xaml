@@ -1,0 +1,138 @@
+<Page
+    x:Class="GetStoreApp.Views.Pages.SettingsItemPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <TransitionCollection x:Name="SuppressNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+
+        <TransitionCollection x:Name="LeftSlideNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo Effect="FromLeft" />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+
+        <TransitionCollection x:Name="RightSlideNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo Effect="FromRight" />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  设置项控制栏  -->
+        <Grid Grid.Row="0" Margin="20,0,30,3">
+            <SelectorBar
+                x:Name="SettingsItemSelectorBar"
+                Padding="0"
+                HorizontalAlignment="Left"
+                SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
+
+                <SelectorBarItem
+                    FontSize="16"
+                    IsTapEnabled="True"
+                    Tag="0"
+                    Tapped="{x:Bind OnSelectorBarTapped}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/General')}" />
+
+                <SelectorBarItem
+                    FontSize="16"
+                    IsTapEnabled="True"
+                    Tag="1"
+                    Tapped="{x:Bind OnSelectorBarTapped}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/StoreAndUpdate')}" />
+
+                <SelectorBarItem
+                    FontSize="16"
+                    IsTapEnabled="True"
+                    Tag="2"
+                    Tapped="{x:Bind OnSelectorBarTapped}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/WinGet')}" />
+
+                <SelectorBarItem
+                    FontSize="16"
+                    IsTapEnabled="True"
+                    Tag="3"
+                    Tapped="{x:Bind OnSelectorBarTapped}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppInstaller')}" />
+
+                <SelectorBarItem
+                    FontSize="16"
+                    IsTapEnabled="True"
+                    Tag="4"
+                    Tapped="{x:Bind OnSelectorBarTapped}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/Advanced')}" />
+
+                <SelectorBarItem
+                    FontSize="16"
+                    IsTapEnabled="True"
+                    Tag="5"
+                    Tapped="{x:Bind OnSelectorBarTapped}"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Settings/About')}" />
+            </SelectorBar>
+
+            <Button
+                Width="34"
+                Height="34"
+                Padding="0"
+                HorizontalAlignment="Right"
+                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/ViewMoreOptions')}">
+
+                <Button.Content>
+                    <FontIcon FontSize="16" Glyph="&#xE712;" />
+                </Button.Content>
+
+                <Button.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem
+                            Click="{x:Bind OnRestartAppsClicked}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Settings/RestartApp')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/RestartAppToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE895;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem Click="{x:Bind OnSettingsInstructionClicked}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/SettingsInstruction')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE946;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+
+        <MenuFlyoutSeparator Grid.Row="1" Margin="32,0,34,3" />
+
+        <!--  设置项内容  -->
+        <Frame
+            x:Name="SettingsItemFrame"
+            Grid.Row="2"
+            Navigated="{x:Bind OnNavigated}"
+            NavigationFailed="{x:Bind OnNavigationFailed}" />
+    </Grid>
+</Page>
