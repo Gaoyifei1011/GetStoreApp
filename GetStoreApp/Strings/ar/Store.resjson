@@ -1,5 +1,9 @@
 {
   "BeginnerGuide": "دليل المبتدئين",
+  "LaunchParameters": "معلمات الإطلاق",
+  "ConsoleLaunch": "معلمات برنامج وحدة التحكم",
+  "DesktopLaunch": "معلمات برنامج سطح المكتب",
+  "LaunchParametersDescription": "يدعم تطبيق سطح المكتب الآن تشغيل المعلمات، يرجى النقر على وصف المعلمات أدناه للاستخدام المحدد",
   "Cancel": "إلغاء",
   "CancelToolTip": "الخروج من وضع التحديد المتعدد",
   "CheckNetwork": "تحقق من الشبكة",
