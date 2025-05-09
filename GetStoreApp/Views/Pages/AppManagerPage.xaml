@@ -64,7 +64,7 @@
             </BreadcrumbBar.ItemTemplate>
         </BreadcrumbBar>
 
-        <!--  内容  -->
+        <!--  应用管理内容  -->
         <Frame
             x:Name="AppManagerFrame"
             Grid.Row="3"

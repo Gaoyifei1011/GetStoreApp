@@ -2,6 +2,7 @@ using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation.Diagnostics;
 using Windows.UI.Text;
@@ -16,6 +17,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class AppManagerPage : Page
     {
+        public List<Type> PageList { get; } = [typeof(AppListPage), typeof(AppInformationPage)];
+
         public ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
         public AppManagerPage()
@@ -36,7 +39,7 @@ namespace GetStoreApp.Views.Pages
             // 第一次导航
             if (GetCurrentPageType() is null)
             {
-                NavigateTo(typeof(AppListPage), null, null);
+                NavigateTo(PageList[0], null, null);
             }
         }
 
@@ -51,7 +54,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Item is ContentLinkInfo breadItem && BreadCollection.Count is 2 && Equals(breadItem.SecondaryText, BreadCollection[0].SecondaryText))
             {
-                NavigateTo(typeof(AppListPage), null, false);
+                NavigateTo(PageList[0], null, false);
             }
         }
 
@@ -60,7 +63,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), typeof(AppListPage)))
+            if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), PageList[0]))
             {
                 BreadCollection.Add(new ContentLinkInfo()
                 {
@@ -68,7 +71,7 @@ namespace GetStoreApp.Views.Pages
                     SecondaryText = "AppList"
                 });
             }
-            if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), typeof(AppInformationPage)))
+            if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
             {
                 BreadCollection.Add(new ContentLinkInfo()
                 {
@@ -76,7 +79,7 @@ namespace GetStoreApp.Views.Pages
                     SecondaryText = "AppInformation"
                 });
             }
-            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), typeof(AppListPage)))
+            else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageList[0]))
             {
                 BreadCollection.RemoveAt(1);
             }
@@ -92,6 +95,8 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第二部分：应用管理页面——挂载的事件
+
+        #region 第三部分：应用管理页面——窗口导航方法
 
         /// <summary>
         /// 页面向前导航
@@ -121,5 +126,7 @@ namespace GetStoreApp.Views.Pages
         {
             return AppManagerFrame.CurrentSourcePageType;
         }
+
+        #endregion 第三部分：应用管理页面——窗口导航方法
     }
 }
