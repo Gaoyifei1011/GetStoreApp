@@ -18,6 +18,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
+// 抑制 CA1822，IDE0060 警告
+#pragma warning disable CA1822,IDE0060
+
 namespace GetStoreApp.Views.Pages
 {
     /// <summary>
@@ -42,6 +45,8 @@ namespace GetStoreApp.Views.Pages
         private readonly string WinGetDataSourceRemoveInvalidOptions = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInvalidOptions");
         private readonly string WinGetDataSourceRemoveAccessDenied = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveAccessDenied");
         private readonly string WinGetDataSourceRemoveSuccess = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveSuccess");
+        private readonly string WinGetSourceCountEmpty = ResourceService.GetLocalized("Settings/WinGetSourceCountEmpty");
+        private readonly string WinGetSourceCountInfo = ResourceService.GetLocalized("Settings/WinGetSourceCountInfo");
         private bool isInitialized;
 
         private bool _isLoadedCompleted;
@@ -586,6 +591,16 @@ namespace GetStoreApp.Views.Pages
             {
                 WinGetSourceCustomCollection.Add(wingetSourceItem);
             }
+        }
+
+        private Visibility GetCountVisibility(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount, bool isReverse)
+        {
+            return isReverse ? (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Collapsed : Visibility.Visible : (winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount) > 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private string GetLocalizedWinGetSourceCountInfo(int winGetSourceInternalCollectionCount, int winGetSourceCustomCollectionCount)
+        {
+            return string.Format(WinGetSourceCountInfo, winGetSourceInternalCollectionCount + winGetSourceCustomCollectionCount);
         }
     }
 }
