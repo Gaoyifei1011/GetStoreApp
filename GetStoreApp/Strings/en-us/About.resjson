@@ -51,8 +51,5 @@
   "Title": "About",
   "UpdatePath": "Update path",
   "UpdatePathDescription": "Apps listed on the Microsoft Store can only be downloaded or updated through the Microsoft Store and are not allowed to be downloaded and installed through other third-party channels. This practice ensures the reliability of the application source path. As a result, the app somehow violates the policies of the Microsoft Store and cannot be listed in the Microsoft Store. You can open the release page of the project by \"Check for Updates\", find the latest version of the app yourself, and download the installation package in MSIX format for the project to update.",
-  "UseInstruction": "Direction for use",
-  "WinGetPackage": "2. WinGet package",
-  "WinGetPackageDescription1": "Windows Package Manager is a comprehensive package manager solution that consists of a command line tool and set of services for installing applications on Windows 10 and Windows 11.",
-  "WinGetPackageDescription2": "The WinGet application provides a package-friendly graphical interface that includes searching and installing required applications, managing installed and upgradeable applications on the device. It is easy to operate and manage traditional applications (i.e. non-store applications) on the device."
+  "UseInstruction": "Direction for use"
 }
