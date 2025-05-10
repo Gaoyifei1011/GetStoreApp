@@ -292,7 +292,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 });
 
                 AddPackageCatalogStatusResult = addPackageCatalogResult.Status;
-                await Task.Delay(500);
                 IsSaving = false;
 
                 switch (addPackageCatalogResult.Status)
@@ -368,7 +367,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
                     });
 
                     AddPackageCatalogStatusResult = addPackageCatalogResult.Status;
-                    await Task.Delay(500);
                     IsSaving = false;
 
                     switch (addPackageCatalogResult.Status)
@@ -413,7 +411,6 @@ namespace GetStoreApp.UI.Dialogs.Settings
                 }
                 else
                 {
-                    await Task.Delay(500);
                     IsSaving = false;
 
                     switch (removePackageCatalogResult.Status)

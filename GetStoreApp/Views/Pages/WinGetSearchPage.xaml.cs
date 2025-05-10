@@ -257,7 +257,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 根据排序方式对列表进行排序
         /// </summary>
-        private async void OnSortWayClicked(object sender, RoutedEventArgs args)
+        private void OnSortWayClicked(object sender, RoutedEventArgs args)
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string increase && SearchAppsResultKind is SearchAppsResultKind.Successfully)
             {
@@ -273,7 +273,7 @@ namespace GetStoreApp.Views.Pages
                 {
                     searchAppsList.Sort((item1, item2) => item2.AppName.CompareTo(item1.AppName));
                 }
-                await Task.Delay(500);
+
                 foreach (SearchAppsModel searchAppsItem in searchAppsList)
                 {
                     SearchAppsCollection.Add(searchAppsItem);

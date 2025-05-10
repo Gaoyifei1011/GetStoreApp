@@ -181,7 +181,6 @@ namespace GetStoreApp.Views.Pages
             List<HistoryModel> searchStoreHistoryList = await Task.Run(HistoryStorageService.GetSearchStoreData);
 
             HistoryCollection.Clear();
-            await Task.Delay(10);
             foreach (HistoryModel historyItem in searchStoreHistoryList)
             {
                 HistoryCollection.Add(historyItem);
