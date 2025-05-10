@@ -279,6 +279,8 @@
     <None Remove="Views\Pages\SettingsWinGetPage.xaml" />
     <None Remove="Views\Pages\SettingsWinGetSourcePage.xaml" />
     <None Remove="Views\Pages\StorePage.xaml" />
+    <None Remove="Views\Pages\WinGetAppsVersionInfoPage.xaml" />
+    <None Remove="Views\Pages\WinGetAppsVersionOptionsPage.xaml" />
     <None Remove="Views\Pages\WinGetInstalledPage.xaml" />
     <None Remove="Views\Pages\WinGetPage.xaml" />
     <None Remove="Views\Pages\WinGetSearchPage.xaml" />
@@ -325,6 +327,8 @@
     <Page Update="Views\Pages\SettingsWinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsWinGetSourcePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\StorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetAppsVersionInfoPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WinGetAppsVersionOptionsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetInstalledPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\WinGetSearchPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
