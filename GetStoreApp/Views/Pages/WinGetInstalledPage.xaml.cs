@@ -158,7 +158,7 @@ namespace GetStoreApp.Views.Pages
                 WinGetPageInstance = winGetPage;
                 GlobalNotificationService.ApplicationExit += OnApplicationExit;
                 WinGetPageInstance.InstalledAppsPackageOperationEvent += OnInstalledAppsPackageOperationEvent;
-                await InitializeSearchAppsDataAsync();
+                await InitializeInstalledAppsDataAsync();
             }
         }
 
@@ -252,7 +252,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            await InitializeSearchAppsDataAsync();
+            await InitializeInstalledAppsDataAsync();
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 初始化已安装应用数据
         /// </summary>
-        private async Task InitializeSearchAppsDataAsync()
+        private async Task InitializeInstalledAppsDataAsync()
         {
             InstalledAppsResultKind = InstalledAppsResultKind.Querying;
 
@@ -601,7 +601,7 @@ namespace GetStoreApp.Views.Pages
                         {
                             MatchResult matchItem = findPackagesResult.Matches[index];
 
-                            if (matchItem.CatalogPackage is not null && !string.IsNullOrEmpty(matchItem.CatalogPackage.InstalledVersion.Publisher))
+                            if (matchItem.CatalogPackage is not null && !matchItem.CatalogPackage.InstalledVersion.Id.StartsWith("MSIX", StringComparison.OrdinalIgnoreCase))
                             {
                                 bool isUninstalling = false;
                                 WinGetPageInstance.PackageOperationLock.Enter();
