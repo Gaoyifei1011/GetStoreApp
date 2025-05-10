@@ -333,6 +333,14 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 了解 WinGet 程序包具体的使用说明
+        /// </summary>
+        private async void OnUseInstructionClicked(object sender, RoutedEventArgs args)
+        {
+            await WinGetPageInstance?.ShowUseInstructionAsync();
+        }
+
+        /// <summary>
         /// 刷新搜索应用数据
         /// </summary>
         private async void OnRefreshClicked(object sender, RoutedEventArgs args)

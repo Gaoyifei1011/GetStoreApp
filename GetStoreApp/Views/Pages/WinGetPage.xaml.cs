@@ -105,6 +105,22 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private WinGetPaneKind _winGetPaneKind;
+
+        public WinGetPaneKind WinGetPaneKind
+        {
+            get { return _winGetPaneKind; }
+
+            set
+            {
+                if (!Equals(_winGetPaneKind, value))
+                {
+                    _winGetPaneKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetPaneKind)));
+                }
+            }
+        }
+
         private List<Type> PageList { get; } = [typeof(WinGetSearchPage), typeof(WinGetInstalledPage), typeof(WinGetUpgradePage)];
 
         public ObservableCollection<PackageOperationModel> PackageOperationCollection { get; } = [];
@@ -233,6 +249,25 @@ namespace GetStoreApp.Views.Pages
         #endregion 第二部分：XamlUICommand 命令调用时挂载的事件
 
         #region 第三部分：WinGet 程序包页面——挂载的事件
+
+        /// <summary>
+        /// 了解 WinGet 程序包
+        /// </summary>
+        private void OnLearnWinGetClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/package-manager"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    throw;
+                }
+            });
+        }
 
         /// <summary>
         /// 移除已完成任务
@@ -410,6 +445,8 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第三部分：WinGet 程序包页面——挂载的事件
+
+        #region 第四部分：WinGet 程序包页面——自定义事件
 
         /// <summary>
         /// 更新应用下载进度
@@ -744,13 +781,18 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        #endregion 第四部分：WinGet 程序包页面——自定义事件
+
         /// <summary>
         /// 显示任务管理
         /// </summary>
         public void ShowTaskManager()
         {
+            WinGetPaneKind = WinGetPaneKind.TaskManager;
+
             if (!WinGetSplitView.IsPaneOpen)
             {
+                WinGetSplitView.OpenPaneLength = 400;
                 WinGetSplitView.IsPaneOpen = true;
             }
         }
@@ -2249,6 +2291,20 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 显示使用说明
+        /// </summary>
+        public async Task ShowUseInstructionAsync()
+        {
+            WinGetPaneKind = WinGetPaneKind.UseInstruction;
+            await Task.Delay(300);
+            if (!WinGetSplitView.IsPaneOpen)
+            {
+                WinGetSplitView.OpenPaneLength = 320;
+                WinGetSplitView.IsPaneOpen = true;
+            }
+        }
+
+        /// <summary>
         /// 页面向前导航
         /// </summary>
         private void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
@@ -2402,6 +2458,14 @@ namespace GetStoreApp.Views.Pages
                     ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                 });
             }
+        }
+
+        /// <summary>
+        /// 检查 WinGet 浮出面板状态
+        /// </summary>
+        private Visibility CheckWinGetPaneKindState(WinGetPaneKind winGetPaneKind, WinGetPaneKind comparedWinGetPaneKind)
+        {
+            return Equals(winGetPaneKind, comparedWinGetPaneKind) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

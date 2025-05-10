@@ -125,6 +125,7 @@
                 </Button.Content>
             </Button>
         </Grid>
+
         <!--  应用管理内容  -->
         <Frame
             x:Name="WinGetAppsVersionFrame"

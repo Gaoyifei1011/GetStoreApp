@@ -397,30 +397,6 @@
                         <Expander.Content>
                             <StackPanel Margin="0">
                                 <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackage')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription1')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    Margin="30,0,16,5"
-                                    FontSize="14"
-                                    FontWeight="Normal"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('About/WinGetPackageDescription2')}"
-                                    TextAlignment="Justify"
-                                    TextWrapping="Wrap" />
-
-                                <MenuFlyoutSeparator />
-
-                                <TextBlock
                                     Margin="30,10,16,10"
                                     FontSize="15"
                                     FontWeight="Normal"

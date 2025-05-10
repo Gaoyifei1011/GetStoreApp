@@ -228,6 +228,7 @@
                             FontWeight="Normal"
                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeInstruction')}"
                             TextAlignment="Left" />
+
                         <TextBlock
                             Grid.Row="5"
                             Margin="16,0,16,5"
@@ -236,6 +237,7 @@
                             Text="{x:Bind root:ResourceService.GetLocalized('Settings/QueryLinksModeInstructionDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
+
                         <TextBlock
                             Grid.Row="6"
                             Margin="16,0,16,5"

@@ -188,6 +188,16 @@
                             <FontIcon Glyph="&#xE70A;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
+
+                    <AppBarButton
+                        Click="{x:Bind OnUseInstructionClicked}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('WinGet/UseInstruction')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/UseInstructionToolTip')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE946;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                 </CommandBar.SecondaryCommands>
             </CommandBar>
         </Grid>
