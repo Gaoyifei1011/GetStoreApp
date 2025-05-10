@@ -477,7 +477,11 @@ namespace GetStoreApp.Views.Windows
             {
                 if (GetFrameContent() is AppManagerPage appManagerPage && appManagerPage.BreadCollection.Count is 2)
                 {
-                    appManagerPage.NavigateTo(typeof(AppListPage), null, false);
+                    appManagerPage.NavigateTo(appManagerPage.PageList[0], null, false);
+                }
+                else if (GetFrameContent() is SettingsPage settingsPage && settingsPage.BreadCollection.Count is 2)
+                {
+                    settingsPage.NavigateTo(settingsPage.PageList[0], null, false);
                 }
                 else
                 {
