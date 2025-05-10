@@ -7,6 +7,7 @@
   "AppVersionInformation": "App version information",
   "Argument": "ארגומנט",
   "ArgumentName": "שם ארגומנט",
+  "Back": "Back",
   "Cancel": "ביטול",
   "CatalogTrustLevel": "Data source trust level",
   "CatalogTrustLevelNone": "Distrust",

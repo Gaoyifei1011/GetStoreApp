@@ -123,6 +123,7 @@
   "OpenLogFolder": "פתח תיקיה",
   "OpenWinGetSettings": "פתח",
   "OpenWinGetSettingsToolTip": "פתח את קובץ התצורה",
+  "Operation": "Operation",
   "Options": "Options",
   "Origin": "Sourcce type: ",
   "OtherOptionInstruction": "Other options instruction",
@@ -214,6 +215,8 @@
   "WinGetSourceArguments": "Arguments: ",
   "WinGetSourceConfiguration": "WinGet data source configuration",
   "WinGetSourceConfigurationDescription": "Configure winget data source, administrator mode is required",
+  "WinGetSourceCountEmpty": "There is no added WinGet data source",
+  "WinGetSourceCountInfo": "There are {0} added WinGet data sources",
   "WinGetSourceExplicit": "Explicit",
   "WinGetSourceName": "Name: ",
   "Yes": "Yes"

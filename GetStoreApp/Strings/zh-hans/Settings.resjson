@@ -123,6 +123,7 @@
   "OpenLogFolder": "打开文件夹",
   "OpenWinGetSettings": "打开",
   "OpenWinGetSettingsToolTip": "打开配置文件",
+  "Operation": "操作",
   "Options": "选项",
   "Origin": "源类型：",
   "OtherOptionInstruction": "其他选项说明",
@@ -214,6 +215,8 @@
   "WinGetSourceArguments": "参数：",
   "WinGetSourceConfiguration": "WinGet 数据源配置",
   "WinGetSourceConfigurationDescription": "配置 WinGet 数据获取源，需要管理员模式",
+  "WinGetSourceCountEmpty": "没有已添加的 WinGet 数据源",
+  "WinGetSourceCountInfo": "共有{0}个已添加的 WinGet 数据源",
   "WinGetSourceExplicit": "显式",
   "WinGetSourceName": "名称：",
   "Yes": "是"
