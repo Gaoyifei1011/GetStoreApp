@@ -79,7 +79,6 @@
                 <Frame
                     x:Name="SettingsFrame"
                     Grid.Row="1"
-                    Padding="0,0,0,0"
                     Navigated="{x:Bind OnNavigated}"
                     NavigationFailed="{x:Bind OnNavigationFailed}" />
             </Grid>
