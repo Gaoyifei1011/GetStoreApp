@@ -25,7 +25,7 @@
             <!--  允许安装未签名安装包  -->
             <Grid
                 Grid.Row="0"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -106,7 +106,7 @@
             <!--  安装应用时强制关闭应用  -->
             <Grid
                 Grid.Row="1"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -178,7 +178,7 @@
             <!--  安装应用时强制关闭与包关联的进程  -->
             <Grid
                 Grid.Row="2"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"

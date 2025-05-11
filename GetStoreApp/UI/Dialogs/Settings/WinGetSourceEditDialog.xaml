@@ -73,7 +73,7 @@
             <Border>
                 <StackPanel Spacing="3">
                     <Grid
-                        Height="61"
+                        Height="60"
                         Padding="16,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -102,7 +102,7 @@
                     </Grid>
 
                     <Grid
-                        Height="61"
+                        Height="60"
                         Padding="16,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -131,7 +131,7 @@
                     </Grid>
 
                     <Grid
-                        Height="61"
+                        Height="60"
                         Padding="16,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -160,7 +160,7 @@
                     </Grid>
 
                     <Grid
-                        Height="61"
+                        Height="60"
                         Padding="16,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -189,7 +189,7 @@
                     </Grid>
 
                     <Grid
-                        Height="61"
+                        Height="60"
                         Padding="16,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -234,7 +234,7 @@
                     </Grid>
 
                     <Grid
-                        Height="61"
+                        Height="60"
                         Padding="16,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"

@@ -37,7 +37,7 @@
             <!--  应用主题设置  -->
             <Grid
                 Grid.Row="0"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -130,7 +130,7 @@
             <!--  窗口背景材质设置  -->
             <Grid
                 Grid.Row="1"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -267,7 +267,7 @@
             <!--  始终显示背景色设置  -->
             <Grid
                 Grid.Row="2"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -340,7 +340,7 @@
             <!--  界面语言设置  -->
             <Grid
                 Grid.Row="3"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -448,7 +448,7 @@
             <!--  窗口置顶设置  -->
             <Grid
                 Grid.Row="4"
-                Height="61"
+                Height="60"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"

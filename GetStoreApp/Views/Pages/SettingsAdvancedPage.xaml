@@ -27,7 +27,7 @@
             <!--  应用通知设置  -->
             <Grid
                 Grid.Row="0"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -108,7 +108,7 @@
             <!--  浏览器内核设置  -->
             <Grid
                 Grid.Row="1"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -191,7 +191,7 @@
             <!--  文件右键菜单设置  -->
             <Grid
                 Grid.Row="2"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -280,7 +280,7 @@
             <!--  痕迹清理  -->
             <Grid
                 Grid.Row="3"
-                Height="61"
+                Height="60"
                 Margin="0,0,0,2"
                 Padding="16,12"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
