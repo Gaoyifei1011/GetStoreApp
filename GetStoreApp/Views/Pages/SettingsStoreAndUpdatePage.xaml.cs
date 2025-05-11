@@ -440,7 +440,10 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLearnDoEngineClicked(object sender, RoutedEventArgs args)
         {
-            MainWindow.Current.NavigateTo(typeof(SettingsAboutPage), AppNaviagtionArgs.SettingsHelp);
+            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
+            {
+                settingsPage.ShowSettingsInstruction();
+            }
         }
 
         /// <summary>
