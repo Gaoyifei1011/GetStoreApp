@@ -440,7 +440,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLearnDoEngineClicked(object sender, RoutedEventArgs args)
         {
-            MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+            MainWindow.Current.NavigateTo(typeof(SettingsAboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
         /// <summary>

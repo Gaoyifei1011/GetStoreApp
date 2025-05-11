@@ -1,5 +1,8 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
+using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,7 +11,16 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Store.Preview;
+using Windows.Foundation.Collections;
 using Windows.Foundation.Diagnostics;
+using Windows.Foundation.Metadata;
+using Windows.System;
+using Windows.UI.Shell;
+using Windows.UI.StartScreen;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -36,7 +48,7 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        private List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsAppInstallerPage), typeof(SettingsAdvancedPage), typeof(AboutPage)];
+        private List<Type> PageList { get; } = [typeof(SettingsGeneralPage), typeof(SettingsStoreAndUpdatePage), typeof(SettingsWinGetPage), typeof(SettingsAppInstallerPage), typeof(SettingsAdvancedPage), typeof(SettingsAboutPage)];
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -148,6 +160,114 @@ namespace GetStoreApp.Views.Pages
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
                 settingsPage.ShowSettingsInstruction();
+            }
+        }
+
+        /// <summary>
+        /// 创建应用的桌面快捷方式
+        /// </summary>
+        private async void OnPinToDesktopClicked(object sender, RoutedEventArgs args)
+        {
+            bool isCreatedSuccessfully = false;
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    if (StoreConfiguration.IsPinToDesktopSupported())
+                    {
+                        StoreConfiguration.PinToDesktop(Package.Current.Id.FamilyName);
+                        isCreatedSuccessfully = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Create desktop shortcut failed.", e);
+                }
+            });
+
+            await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
+        }
+
+        /// <summary>
+        /// 将应用固定到“开始”屏幕
+        /// </summary>
+        private async void OnPinToStartScreenClicked(object sender, RoutedEventArgs args)
+        {
+            bool isPinnedSuccessfully = false;
+
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    IReadOnlyList<AppListEntry> appEntries = await Package.Current.GetAppListEntriesAsync();
+
+                    if (appEntries[0] is AppListEntry defaultEntry)
+                    {
+                        StartScreenManager startScreenManager = StartScreenManager.GetDefault();
+
+                        isPinnedSuccessfully = await startScreenManager.RequestAddAppListEntryAsync(defaultEntry);
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Pin app to startscreen failed.", e);
+                }
+            });
+
+            await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+        }
+
+        /// <summary>
+        /// 将应用固定到任务栏
+        /// </summary>
+        private async void OnPinToTaskbarClicked(object sender, RoutedEventArgs args)
+        {
+            (LimitedAccessFeatureStatus limitedAccessFeatureStatus, bool isPinnedSuccessfully) pinnedRsult = await Task.Run(async () =>
+            {
+                LimitedAccessFeatureStatus limitedAccessFeatureStatus = LimitedAccessFeatureStatus.Unknown;
+                bool isPinnedSuccessfully = false;
+
+                if (!RuntimeHelper.IsElevated)
+                {
+                    try
+                    {
+                        if (ApiInformation.IsTypePresent("Windows.UI.Shell.ITaskbarManagerDesktopAppSupportStatics"))
+                        {
+                            string featureId = "com.microsoft.windows.taskbar.pin";
+                            string token = FeatureAccessHelper.GenerateTokenFromFeatureId(featureId);
+                            string attestation = FeatureAccessHelper.GenerateAttestation(featureId);
+                            LimitedAccessFeatureRequestResult accessResult = LimitedAccessFeatures.TryUnlockFeature(featureId, token, attestation);
+                            limitedAccessFeatureStatus = accessResult.Status;
+
+                            if (limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available)
+                            {
+                                isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinCurrentAppAsync();
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.WriteLog(LoggingLevel.Error, "Use TaskbarManager api to pin app to taskbar failed.", e);
+                    }
+                }
+
+                if ((limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unavailable || limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Unknown) && !isPinnedSuccessfully)
+                {
+                    await Launcher.LaunchUriAsync(new Uri("getstoreapppinner:"), new LauncherOptions() { TargetApplicationPackageFamilyName = Package.Current.Id.FamilyName }, new ValueSet()
+                        {
+                            {"Type", nameof(TaskbarManager) },
+                            { "AppUserModelId", Package.Current.GetAppListEntries()[0].AppUserModelId },
+                            { "PackageFullName", Package.Current.Id.FullName },
+                        });
+                }
+
+                return ValueTuple.Create(limitedAccessFeatureStatus, isPinnedSuccessfully);
+            });
+
+            if (pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
+            {
+                await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
             }
         }
 

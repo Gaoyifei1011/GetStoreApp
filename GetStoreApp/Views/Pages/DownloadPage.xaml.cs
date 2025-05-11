@@ -58,7 +58,7 @@ namespace GetStoreApp.Views.Pages
         private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
         {
             DownloadFlyout.Hide();
-            MainWindow.Current.NavigateTo(typeof(AboutPage), AppNaviagtionArgs.SettingsHelp);
+            MainWindow.Current.NavigateTo(typeof(SettingsAboutPage), AppNaviagtionArgs.SettingsHelp);
         }
 
         #endregion 第一部分：下载页面——挂载的事件

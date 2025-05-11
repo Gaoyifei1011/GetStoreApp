@@ -121,6 +121,44 @@
                                 <FontIcon Glyph="&#xE946;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
+
+                        <MenuFlyoutSeparator />
+
+                        <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
+                            Click="{x:Bind OnPinToDesktopClicked}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktop')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToDesktopToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE70A;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
+                            Click="{x:Bind OnPinToStartScreenClicked}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreen')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToStartScreenToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE8FC;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+
+                        <MenuFlyoutItem
+                            Height="32"
+                            Padding="11,0"
+                            Click="{x:Bind OnPinToTaskbarClicked}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbar')}"
+                            ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/PinToTaskbarToolTip')}">
+
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon Glyph="&#xE75B;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>
