@@ -230,6 +230,18 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
                         <TextBlock
@@ -295,8 +307,10 @@
                             </TextBlock>
                         </StackPanel>
 
+                        <MenuFlyoutSeparator Grid.Row="7" />
+
                         <TextBlock
-                            Grid.Row="7"
+                            Grid.Row="8"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -304,7 +318,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="8"
+                            Grid.Row="9"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -313,7 +327,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="9"
+                            Grid.Row="10"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -322,7 +336,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="10"
+                            Grid.Row="11"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -331,7 +345,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="11"
+                            Grid.Row="12"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -340,7 +354,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="12"
+                            Grid.Row="13"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -349,7 +363,7 @@
                             TextWrapping="Wrap" />
 
                         <StackPanel
-                            Grid.Row="13"
+                            Grid.Row="14"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -366,10 +380,10 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <MenuFlyoutSeparator Grid.Row="14" />
+                        <MenuFlyoutSeparator Grid.Row="15" />
 
                         <TextBlock
-                            Grid.Row="15"
+                            Grid.Row="16"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -377,13 +391,108 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="16"
+                            Grid.Row="17"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
                             Text="{x:Bind root:ResourceService.GetLocalized('Store/PaidAppsDescription')}"
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
+
+                        <MenuFlyoutSeparator Grid.Row="18" />
+
+                        <TextBlock
+                            Grid.Row="19"
+                            Margin="16,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadInstruction')}"
+                            TextAlignment="Left" />
+
+                        <TextBlock
+                            Grid.Row="20"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadInstruction1')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="21"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadInstruction2')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <StackPanel
+                            Grid.Row="22"
+                            Margin="16,0,16,5"
+                            Spacing="5">
+
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnLearnDownloadMoreClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/LearnDownloadMore')}" />
+                                </Hyperlink>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnOpenDownloadSettingsClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/OpenDownloadSettings')}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <MenuFlyoutSeparator Grid.Row="23" />
+
+                        <TextBlock
+                            Grid.Row="24"
+                            Margin="16,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailed')}"
+                            TextAlignment="Left" />
+
+                        <TextBlock
+                            Grid.Row="25"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailedDescription')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="26"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailedStep1')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="27"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadFailedStep2')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <StackPanel
+                            Grid.Row="28"
+                            Margin="16,0,16,5"
+                            Spacing="5">
+
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/DownloadSettings')}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
                     </Grid>
                 </ScrollView>
             </Grid>

@@ -1,4 +1,5 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
@@ -78,6 +79,85 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：应用商店页面——挂载的事件
 
         /// <summary>
+        /// 点击选择器栏发生的事件
+        /// </summary>
+        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        {
+            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
+            {
+                int index = Convert.ToInt32(tag);
+                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
+                {
+                    NavigateTo(PageList[0], null, index > currentIndex);
+                }
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+                {
+                    NavigateTo(PageList[1], null, index > currentIndex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 打开设置中的语言和区域
+        /// </summary>
+        private void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 了解应用具体的使用说明
+        /// </summary>
+        private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
+        {
+            if (!StoreSplitView.IsPaneOpen)
+            {
+                StoreSplitView.IsPaneOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// 导航完成后发生
+        /// </summary>
+        private void OnNavigated(object sender, NavigationEventArgs args)
+        {
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < StoreSelectorBar.Items.Count)
+            {
+                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+            }
+        }
+
+        /// <summary>
+        /// 导航失败时发生
+        /// </summary>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
+        {
+            args.Handled = true;
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < StoreSelectorBar.Items.Count)
+            {
+                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+            }
+
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+        }
+
+        /// <summary>
         /// 关闭使用说明浮出栏
         /// </summary>
         private void OnCloseClicked(object sender, RoutedEventArgs args)
@@ -141,82 +221,38 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 打开设置中的语言和区域
+        /// 了解更多下载管理说明
         /// </summary>
-        private void OnLanguageAndRegionClicked(object sender, RoutedEventArgs args)
+        private async void OnLearnDownloadMoreClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:regionformatting"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
+            StoreSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
 
-        /// <summary>
-        /// 了解应用具体的使用说明
-        /// </summary>
-        private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
-        {
-            if (!StoreSplitView.IsPaneOpen)
+            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
-                StoreSplitView.IsPaneOpen = true;
+                settingsPage.ShowSettingsInstruction();
             }
         }
 
         /// <summary>
-        /// 点击选择器栏发生的事件
+        /// 打开应用“下载设置”
         /// </summary>
-        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        private async void OnOpenDownloadSettingsClicked(object sender, RoutedEventArgs args)
         {
-            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
-            {
-                int index = Convert.ToInt32(tag);
-                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
-
-                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
-                {
-                    NavigateTo(PageList[0], null, index > currentIndex);
-                }
-                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
-                {
-                    NavigateTo(PageList[1], null, index > currentIndex);
-                }
-            }
+            StoreSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
 
         /// <summary>
-        /// 导航完成后发生
+        /// 打开下载设置
         /// </summary>
-        private void OnNavigated(object sender, NavigationEventArgs args)
+        private async void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
-
-            if (index >= 0 && index < StoreSelectorBar.Items.Count)
-            {
-                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
-            }
-        }
-
-        /// <summary>
-        /// 导航失败时发生
-        /// </summary>
-        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
-        {
-            args.Handled = true;
-            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
-
-            if (index >= 0 && index < StoreSelectorBar.Items.Count)
-            {
-                SelectedItem = StoreSelectorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
-            }
-
-            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+            StoreSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
         }
 
         #endregion 第二部分：应用商店页面——挂载的事件
