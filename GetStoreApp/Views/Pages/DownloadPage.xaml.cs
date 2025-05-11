@@ -43,24 +43,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        /// <summary>
-        /// 打开应用“下载设置”
-        /// </summary>
-        private void OnDownloadSettingsClicked(object sender, RoutedEventArgs args)
-        {
-            DownloadFlyout.Hide();
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
-        }
-
-        /// <summary>
-        /// 了解更多下载管理说明
-        /// </summary>
-        private void OnLearnMoreClicked(object sender, RoutedEventArgs args)
-        {
-            DownloadFlyout.Hide();
-            MainWindow.Current.NavigateTo(typeof(SettingsAboutPage), AppNaviagtionArgs.SettingsHelp);
-        }
-
         #endregion 第一部分：下载页面——挂载的事件
     }
 }
