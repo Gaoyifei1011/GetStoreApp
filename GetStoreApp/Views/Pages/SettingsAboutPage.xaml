@@ -1,0 +1,515 @@
+﻿<Page
+    x:Class="GetStoreApp.Views.Pages.SettingsAboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helper="using:GetStoreApp.Helpers.Root"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:text="using:Windows.UI.Text"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <ScrollView
+        HorizontalScrollBarVisibility="Hidden"
+        HorizontalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Auto"
+        VerticalScrollMode="Enabled">
+
+        <StackPanel Margin="30,0" Padding="0,0,0,30">
+
+            <!--  顶部栏介绍信息  -->
+            <Grid Margin="0,20,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Image
+                    Grid.Column="0"
+                    Width="120"
+                    Height="120"
+                    Margin="0,0,30,0"
+                    Source="ms-appx:///Assets/MainApp/Square44x44Logo.altform-unplated_targetsize-256.png" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="0,-8,0,0"
+                    VerticalAlignment="Center"
+                    Spacing="5">
+
+                    <TextBlock FontSize="22" Text="{x:Bind root:ResourceService.GetLocalized('About/AppName')}" />
+                    <TextBlock FontSize="15" Text="{x:Bind helper:InfoHelper.AppVersion.ToString()}" />
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/Developer')}" />
+
+                        <TextBlock VerticalAlignment="Center" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('About/DeveloperNameToolTip')}">
+                            <Hyperlink NavigateUri="https://github.com/Gaoyifei1011" UnderlineStyle="None">
+                                <Run Text="{x:Bind root:ResourceService.GetLocalized('About/DeveloperName')}" />
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <TextBlock FontSize="15" Text="Copyright 2022-2025 高怡飞 All Rights Reserved" />
+                </StackPanel>
+            </Grid>
+
+            <!--  快捷操作栏  -->
+            <GridView Padding="0" SelectionMode="None">
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnProjectDescriptionClicked}">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xE80F;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/ProjectHomePage')}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
+
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnSendFeedbackClicked}">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xED15;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/SendFeedback')}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
+
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnCheckUpdateClicked}"
+                        IsEnabled="{x:Bind IsChecking.Equals(x:False), Mode=OneWay}">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xE895;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/CheckUpdate')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsChecking), Mode=OneWay}" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/Checking')}"
+                                Visibility="{x:Bind IsChecking, Mode=OneWay}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
+
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnHelpTranslateClicked}">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xF2B7;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/HelpTranslate')}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
+
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xE779;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/ShowLicense')}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
+
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnShowReleaseNotesClicked}">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xE70B;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('About/ShowReleaseNotes')}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
+            </GridView>
+
+            <!--  应用简介信息  -->
+            <Expander
+                Margin="0,0,0,3"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                IsExpanded="True">
+
+                <Expander.Header>
+                    <TextBlock
+                        Padding="15,0,0,0"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Text="{x:Bind root:ResourceService.GetLocalized('About/BriefIntroduction')}" />
+                </Expander.Header>
+
+                <Expander.Content>
+                    <StackPanel Margin="0">
+                        <TextBlock
+                            Margin="30,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurpose')}"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Margin="30,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/DevelopPurposeDescription')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <MenuFlyoutSeparator />
+
+                        <TextBlock
+                            Margin="30,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePath')}"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Margin="30,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/UpdatePathDescription')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <MenuFlyoutSeparator />
+
+                        <TextBlock
+                            Margin="30,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurity')}"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Margin="30,0,16,10"
+                            Padding="0,0,2,0"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/PrivacyandSecurityDescription')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Expander.Content>
+            </Expander>
+
+            <!--  项目引用信息  -->
+            <Expander
+                Margin="0,0,0,3"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                IsExpanded="True">
+
+                <Expander.Header>
+                    <TextBlock
+                        Padding="16,0,0,0"
+                        FontSize="15"
+                        FontWeight="Medium"
+                        Text="{x:Bind root:ResourceService.GetLocalized('About/Reference')}" />
+                </Expander.Header>
+
+                <Expander.Content>
+                    <ItemsView
+                        Margin="26,0,16,0"
+                        Padding="5"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        ItemsSource="{x:Bind ReferenceList}"
+                        SelectionMode="None">
+
+                        <ItemsView.Layout>
+                            <UniformGridLayout />
+                        </ItemsView.Layout>
+
+                        <ItemsView.ItemTemplate>
+                            <DataTemplate x:DataType="text:ContentLinkInfo">
+                                <ItemContainer>
+                                    <TextBlock
+                                        Width="320"
+                                        Padding="5,8"
+                                        HorizontalAlignment="Center"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
+
+                                        <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                            <Run Text="{x:Bind DisplayText}" />
+                                        </Hyperlink>
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind DisplayText}" />
+                                                        <LineBreak />
+                                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
+                                </ItemContainer>
+                            </DataTemplate>
+                        </ItemsView.ItemTemplate>
+                    </ItemsView>
+                </Expander.Content>
+            </Expander>
+
+            <Expander
+                x:Name="Instructions"
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                IsExpanded="True"
+                Visibility="Collapsed">
+
+                <Expander.Header>
+                    <TextBlock
+                        Padding="15,0,0,0"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Text="{x:Bind root:ResourceService.GetLocalized('About/UseInstruction')}" />
+                </Expander.Header>
+
+                <Expander.Content>
+                    <StackPanel Margin="0">
+                        <TextBlock
+                            Margin="30,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailed')}"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Margin="30,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedDescription')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Margin="30,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep1')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Margin="30,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep2')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <StackPanel Margin="30,0,16,10" Orientation="Horizontal">
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander.Content>
+            </Expander>
+
+            <!--  感谢用户信息  -->
+            <Expander
+                Padding="0"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                IsExpanded="True">
+
+                <Expander.Header>
+                    <TextBlock
+                        Padding="15,0,0,0"
+                        FontSize="16"
+                        FontWeight="Medium"
+                        Text="{x:Bind root:ResourceService.GetLocalized('About/Thanks')}" />
+                </Expander.Header>
+
+                <Expander.Content>
+                    <StackPanel Margin="0">
+                        <TextBlock
+                            Margin="30,10,16,5"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksDescription')}"
+                            TextAlignment="Left" />
+
+                        <MenuFlyoutSeparator />
+
+                        <ItemsView
+                            Margin="26,0,16,0"
+                            Padding="5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            ItemsSource="{x:Bind ThanksList}"
+                            SelectionMode="None">
+
+                            <ItemsView.Layout>
+                                <UniformGridLayout />
+                            </ItemsView.Layout>
+
+                            <ItemsView.ItemTemplate>
+                                <DataTemplate x:DataType="text:ContentLinkInfo">
+                                    <ItemContainer>
+                                        <TextBlock
+                                            Width="150"
+                                            Padding="5,8"
+                                            HorizontalAlignment="Center"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap">
+
+                                            <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                                <Run Text="{x:Bind DisplayText}" />
+                                            </Hyperlink>
+
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip MaxWidth="9999">
+                                                    <StackPanel>
+                                                        <TextBlock>
+                                                            <Run Text="{x:Bind DisplayText}" />
+                                                            <LineBreak />
+                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </ToolTip>
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                    </ItemContainer>
+                                </DataTemplate>
+                            </ItemsView.ItemTemplate>
+                        </ItemsView>
+                    </StackPanel>
+                </Expander.Content>
+            </Expander>
+        </StackPanel>
+    </ScrollView>
+</Page>
