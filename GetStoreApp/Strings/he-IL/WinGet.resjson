@@ -4,7 +4,7 @@
   "WinGetPackage": "ב. חבילת WinGet",
   "WinGetPackageDescription1": "Windows Package Manager הוא פתרון מקיף למנהל החבילות המורכב מכלי שורת פקודה ומערך שירותים להתקנת יישומים ב-Windows 10 ו-Windows 11.",
   "WinGetPackageDescription2": "אפליקציית WinGet מספקת ממשק גרפי ידידותי לחבילות הכולל חיפוש והתקנה של אפליקציות נדרשות, ניהול אפליקציות מותקנות ושניתנות לשדרוג במכשיר. מקל על תפעול וניהול אפליקציות מסורתיות (כלומר אפליקציות שאינן מהחנות) במכשיר.",
-  "WinGetPackageDescription3": "The main interface performs the default installation. If you want to customize a personalized installation, please operate in the version information dialog",
+  "WinGetPackageDescription3": "The main interface performs the default download / install / repair / upgrade. If you want to customize a personalized installation, please operate in the version information dialog",
   "UseInstruction": "Use instruction",
   "AppIDToolTip": "App ID: ",
   "AppName": "App name: ",
