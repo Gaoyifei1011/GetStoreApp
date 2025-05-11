@@ -178,50 +178,6 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
-        /// <summary>
-        /// 检查网络
-        /// </summary>
-        private void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:network"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 疑难解答
-        /// </summary>
-        private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:troubleshoot"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 打开下载设置
-        /// </summary>
-        private void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
-        }
-
         #endregion 第二部分：设置关于页面——挂载的事件
     }
 }

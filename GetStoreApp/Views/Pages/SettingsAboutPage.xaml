@@ -194,7 +194,8 @@
                     <Button
                         Width="240"
                         Height="60"
-                        HorizontalContentAlignment="Stretch">
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnShowLicenseClicked}">
 
                         <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
@@ -379,63 +380,6 @@
                             </DataTemplate>
                         </ItemsView.ItemTemplate>
                     </ItemsView>
-                </Expander.Content>
-            </Expander>
-
-            <Expander
-                x:Name="Instructions"
-                Padding="0"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                IsExpanded="True"
-                Visibility="Collapsed">
-
-                <Expander.Header>
-                    <TextBlock
-                        Padding="15,0,0,0"
-                        FontSize="16"
-                        FontWeight="Medium"
-                        Text="{x:Bind root:ResourceService.GetLocalized('About/UseInstruction')}" />
-                </Expander.Header>
-
-                <Expander.Content>
-                    <StackPanel Margin="0">
-                        <TextBlock
-                            Margin="30,10,16,10"
-                            FontSize="15"
-                            FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailed')}"
-                            TextAlignment="Left" />
-                        <TextBlock
-                            Margin="30,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedDescription')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-                        <TextBlock
-                            Margin="30,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep1')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-                        <TextBlock
-                            Margin="30,0,16,5"
-                            FontSize="14"
-                            FontWeight="Normal"
-                            Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadFailedStep2')}"
-                            TextAlignment="Justify"
-                            TextWrapping="Wrap" />
-
-                        <StackPanel Margin="30,0,16,10" Orientation="Horizontal">
-                            <TextBlock>
-                                <Hyperlink Click="{x:Bind OnDownloadSettingsClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('About/DownloadSettings')}" />
-                                </Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
-                    </StackPanel>
                 </Expander.Content>
             </Expander>
 
