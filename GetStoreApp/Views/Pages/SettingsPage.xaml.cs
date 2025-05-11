@@ -49,7 +49,10 @@ namespace GetStoreApp.Views.Pages
 
             if (settingNavigationArgs is AppNaviagtionArgs.WinGetDataSource)
             {
-                NavigateTo(PageList[1], null, null);
+                if (!Equals(GetCurrentPageType(), PageList[1]))
+                {
+                    NavigateTo(PageList[1], null, null);
+                }
             }
             else
             {
@@ -86,14 +89,31 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnNavigated(object sender, NavigationEventArgs args)
         {
-            if (BreadCollection.Count is 0 && Equals(GetCurrentPageType(), PageList[0]))
+            if (BreadCollection.Count is 0)
             {
-                BreadCollection.Add(new ContentLinkInfo()
+                if (Equals(GetCurrentPageType(), PageList[0]))
                 {
-                    DisplayText = ResourceService.GetLocalized("Settings/Title"),
-                    SecondaryText = "Settings"
-                });
+                    BreadCollection.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Settings/Title"),
+                        SecondaryText = "Settings"
+                    });
+                }
+                else if (Equals(GetCurrentPageType(), PageList[1]))
+                {
+                    BreadCollection.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Settings/Title"),
+                        SecondaryText = "Settings"
+                    });
+                    BreadCollection.Add(new ContentLinkInfo()
+                    {
+                        DisplayText = ResourceService.GetLocalized("Settings/WinGetSourceConfiguration"),
+                        SecondaryText = "WinGetSourceConfiguration"
+                    });
+                }
             }
+
             if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
             {
                 BreadCollection.Add(new ContentLinkInfo()
