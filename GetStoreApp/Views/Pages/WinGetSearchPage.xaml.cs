@@ -362,8 +362,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 配置 WinGet 数据源
         /// </summary>
-        private void OnDataSourceSettingsClicked(object sender, RoutedEventArgs args)
+        private async void OnDataSourceSettingsClicked(object sender, RoutedEventArgs args)
         {
+            await Task.Delay(300);
             MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.WinGetDataSource);
         }
 
