@@ -262,7 +262,6 @@
     <None Remove="UI\TeachingTips\OperationResultTip.xaml" />
     <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="Views\Dialogs\WinGetAppsVersionDialog.xaml" />
-    <None Remove="Views\Pages\AboutPage.xaml" />
     <None Remove="Views\Pages\AppInformationPage.xaml" />
     <None Remove="Views\Pages\AppListPage.xaml" />
     <None Remove="Views\Pages\AppManagerPage.xaml" />
@@ -270,7 +269,10 @@
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\QueryLinksPage.xaml" />
     <None Remove="Views\Pages\SearchStorePage.xaml" />
+    <None Remove="Views\Pages\SettingsAboutPage.xaml" />
+    <None Remove="Views\Pages\SettingsAdvancedPage.xaml" />
     <None Remove="Views\Pages\SettingsAppInstallerPage.xaml" />
+    <None Remove="Views\Pages\SettingsGeneralPage.xaml" />
     <None Remove="Views\Pages\SettingsItemPage.xaml" />
     <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Pages\SettingsAdvancedPage.xaml" />
@@ -310,7 +312,6 @@
     <Page Update="UI\TeachingTips\OperationResultTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\TeachingTips\QuickOperationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetAppsVersionDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\AboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppInformationPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppListPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppManagerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -318,12 +319,13 @@
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\QueryLinksPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\SettingsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\SettingsAboutPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAdvancedPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsAppInstallerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsGeneralPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Pages\SettingsStoreAndUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsItemPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\SettingsPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\SettingsStoreAndUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsWinGetPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SettingsWinGetSourcePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\StorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
