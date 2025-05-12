@@ -1,0 +1,1318 @@
+<Page
+    x:Class="GetStoreApp.Views.Pages.WinGetAppsVersionOptionsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:deployment="using:Microsoft.Management.Deployment"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:system="using:Windows.System"
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+
+    <Grid>
+        <!--  下载应用控件  -->
+        <Grid x:Name="DownloadGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Download)}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Padding="10,0,0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind WinGetAppsOptionsTitle, Mode=OneWay}" />
+
+                <CommandBar
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    DefaultLabelPosition="Right">
+
+                    <CommandBar.PrimaryCommands>
+                        <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE896;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.PrimaryCommands>
+
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Click="{x:Bind OnCopyDownloadTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyDownloadText')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE8C8;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+
+                        <AppBarButton Click="{x:Bind OnDownloadWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadWithCmd')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE756;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
+                </CommandBar>
+            </Grid>
+
+            <MenuFlyoutSeparator Grid.Row="1" />
+
+            <ScrollView
+                Grid.Row="2"
+                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollMode="Disabled"
+                VerticalScrollBarVisibility="Visible"
+                VerticalScrollMode="Enabled">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  是否对安装包哈希检验  -->
+                    <Grid
+                        Grid.Row="0"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
+
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
+                                Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-10,0"
+                                IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnAllowHashMismatchToggled}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  安装包架构  -->
+                    <Grid
+                        Grid.Row="1"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageArchitecture')}" />
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind PackageArchitecture.Value, Mode=OneWay}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[0].Key), Mode=OneWay}"
+                                        Tag="0"
+                                        Text="{x:Bind PackageInstallScopeList[0].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[1].Key), Mode=OneWay}"
+                                        Tag="1"
+                                        Text="{x:Bind PackageInstallScopeList[1].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[2].Key), Mode=OneWay}"
+                                        Tag="2"
+                                        Text="{x:Bind PackageInstallScopeList[2].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[3].Key), Mode=OneWay}"
+                                        Tag="3"
+                                        Text="{x:Bind PackageInstallScopeList[3].Value}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <!--  安装包安装范围  -->
+                    <Grid
+                        Grid.Row="2"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind PackageInstallScope.Value, Mode=OneWay}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
+                                        Tag="0"
+                                        Text="{x:Bind PackageInstallScopeList[0].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
+                                        Tag="1"
+                                        Text="{x:Bind PackageInstallScopeList[1].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
+                                        Tag="2"
+                                        Text="{x:Bind PackageInstallScopeList[2].Value}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <!--  下载时存放路径  -->
+                    <Grid
+                        Grid.Row="1"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xF12B;" />
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
+
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <Hyperlink Click="{x:Bind OnPackageDownloadPathClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind PackageDownloadPath, Mode=OneWay}" />
+                                </Hyperlink>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <StackPanel HorizontalAlignment="Stretch">
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
+                                            <TextBlock Text="{x:Bind PackageDownloadPath, Mode=OneWay}" />
+                                            <MenuFlyoutSeparator Margin="4,3" />
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            Margin="6,0,0,0"
+                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="AppCache"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCacheFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xECAA;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="Download"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE896;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="Desktop"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DesktopFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE7F4;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutSeparator />
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="Custom"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Custom')}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+                </Grid>
+            </ScrollView>
+        </Grid>
+
+        <!--  安装 / 更新应用控件  -->
+        <Grid x:Name="InstallOrUpgrade" x:Load="{x:Bind GetAppInstallOrUpgrade(PackageOperationKind), Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Padding="10,0,0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind WinGetAppsOptionsTitle, Mode=OneWay}" />
+
+                <CommandBar
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    DefaultLabelPosition="Right">
+
+                    <CommandBar.PrimaryCommands>
+                        <AppBarButton Click="{x:Bind OnInstallClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE710;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.PrimaryCommands>
+
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Click="{x:Bind OnCopyInstallTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE8C8;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+
+                        <AppBarButton Click="{x:Bind OnInstallWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE756;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
+                </CommandBar>
+            </Grid>
+
+            <MenuFlyoutSeparator Grid.Row="1" />
+
+            <ScrollView
+                Grid.Row="2"
+                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollMode="Disabled"
+                VerticalScrollBarVisibility="Visible"
+                VerticalScrollMode="Enabled">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  是否跳过哈希检验  -->
+                    <Grid
+                        Grid.Row="0"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
+
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
+                                Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-10,0"
+                                IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnAllowHashMismatchToggled}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  是否跳过商店策略检查  -->
+                    <Grid
+                        Grid.Row="1"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheck')}" />
+
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(BypassIsStoreClientBlockedPolicyCheck), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/BypassIsStoreClientBlockedPolicyCheckOnContent')}"
+                                Visibility="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-10,0"
+                                IsOn="{x:Bind BypassIsStoreClientBlockedPolicyCheck, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnBypassIsStoreClientBlockedPolicyCheckToggled}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  是否允许升级到某一个未知版本  -->
+                    <Grid
+                        Grid.Row="2"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersion')}" />
+
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowUpgradeToUnknownVersion), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowUpgradeToUnknownVersionOnContent')}"
+                                Visibility="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-10,0"
+                                IsOn="{x:Bind AllowUpgradeToUnknownVersion, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnAllowUpgradeToUnknownVersionToggled}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  是否强制安装  -->
+                    <Grid
+                        Grid.Row="3"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceInstall')}" />
+
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceInstallOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceInstallOnContent')}"
+                                Visibility="{x:Bind Force, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-10,0"
+                                IsOn="{x:Bind Force, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnForceToggled}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  安装包安装范围  -->
+                    <Grid
+                        Grid.Row="4"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind PackageInstallScope.Value, Mode=OneWay}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
+                                        Tag="{x:Bind deployment:PackageInstallScope.Any}"
+                                        Text="{x:Bind PackageInstallScopeList[0].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
+                                        Tag="{x:Bind deployment:PackageInstallScope.User}"
+                                        Text="{x:Bind PackageInstallScopeList[1].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
+                                        Tag="{x:Bind deployment:PackageInstallScope.System}"
+                                        Text="{x:Bind PackageInstallScopeList[2].Value}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <!--  应用安装模式  -->
+                    <Grid
+                        Grid.Row="5"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallMode')}" />
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind PackageInstallMode.Value, Mode=OneWay}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
+                                        GroupName="PackageInstallModeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallMode.Key, PackageInstallModeList[0].Key), Mode=OneWay}"
+                                        Tag="0"
+                                        Text="{x:Bind PackageInstallScopeList[0].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
+                                        GroupName="PackageInstallModeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallMode.Key, PackageInstallModeList[1].Key), Mode=OneWay}"
+                                        Tag="1"
+                                        Text="{x:Bind PackageInstallScopeList[1].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallModeSelectClicked}"
+                                        GroupName="PackageInstallModeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallMode.Key, PackageInstallModeList[2].Key), Mode=OneWay}"
+                                        Tag="2"
+                                        Text="{x:Bind PackageInstallScopeList[2].Value}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <!--  应用安装路径  -->
+                    <Grid
+                        Grid.Row="6"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xF12B;" />
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
+
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <Hyperlink Click="{x:Bind OnPackageInstallPathClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind PackageInstallPath, Mode=OneWay}" />
+                                </Hyperlink>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <StackPanel HorizontalAlignment="Stretch">
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallPath')}" />
+                                            <TextBlock Text="{x:Bind PackageInstallPath, Mode=OneWay}" />
+                                            <MenuFlyoutSeparator Margin="4,3" />
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            Margin="6,0,0,0"
+                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageInstallPathClicked}"
+                                        Tag="AppCache"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCacheFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xECAA;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageInstallPathClicked}"
+                                        Tag="Download"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE896;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageInstallPathClicked}"
+                                        Tag="Desktop"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DesktopFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE7F4;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutSeparator />
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageInstallPathClicked}"
+                                        Tag="Custom"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Custom')}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <!--  额外安装参数  -->
+                    <Grid
+                        Grid.Row="7"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AdditionalInstallerArguments')}" />
+
+                        <TextBox
+                            Grid.Column="2"
+                            Text="{x:Bind AdditionalInstallerArguments, Mode=OneWay}"
+                            TextChanged="{x:Bind OnAdditionalInstallerArgumentsTextChanged}" />
+                    </Grid>
+                </Grid>
+            </ScrollView>
+        </Grid>
+
+        <!--  修复应用控件  -->
+        <Grid x:Name="RepairGrid" x:Load="{x:Bind x:Object.Equals(PackageOperationKind, enum:PackageOperationKind.Repair)}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Padding="10,0,0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind WinGetAppsOptionsTitle, Mode=OneWay}" />
+
+                <CommandBar
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    DefaultLabelPosition="Right">
+
+                    <!--<CommandBar.PrimaryCommands>
+                        <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Repair')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE90F;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.PrimaryCommands>
+
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton Click="{x:Bind OnCopyRepairTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyRepairText')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE8C8;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+
+                        <AppBarButton Click="{x:Bind OnRepairWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairWithCmd')}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE756;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>-->
+                </CommandBar>
+            </Grid>
+
+            <MenuFlyoutSeparator Grid.Row="1" />
+
+            <ScrollView
+                Grid.Row="2"
+                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollMode="Disabled"
+                VerticalScrollBarVisibility="Visible"
+                VerticalScrollMode="Enabled">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  是否对安装包哈希检验  -->
+                    <Grid
+                        Grid.Row="0"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatch')}" />
+
+                        <StackPanel
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOffContent')}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(AllowHashMismatch), Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowHashMismatchOnContent')}"
+                                Visibility="{x:Bind AllowHashMismatch, Mode=OneWay}" />
+
+                            <ToggleSwitch
+                                MinWidth="0"
+                                Margin="10,-2,-10,0"
+                                IsOn="{x:Bind AllowHashMismatch, Mode=OneWay}"
+                                OffContent=""
+                                OnContent=""
+                                Toggled="{x:Bind OnAllowHashMismatchToggled}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!--  安装包架构  -->
+                    <Grid
+                        Grid.Row="1"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageArchitecture')}" />
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind PackageArchitecture.Value, Mode=OneWay}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[0].Key), Mode=OneWay}"
+                                        Tag="0"
+                                        Text="{x:Bind PackageInstallScopeList[0].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[1].Key), Mode=OneWay}"
+                                        Tag="1"
+                                        Text="{x:Bind PackageInstallScopeList[1].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[2].Key), Mode=OneWay}"
+                                        Tag="2"
+                                        Text="{x:Bind PackageInstallScopeList[2].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageArchitectureSelectClicked}"
+                                        GroupName="PackageArchitectureRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageArchitecture.Key, PackageArchitectureList[3].Key), Mode=OneWay}"
+                                        Tag="3"
+                                        Text="{x:Bind PackageInstallScopeList[3].Value}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <!--  安装包安装范围  -->
+                    <Grid
+                        Grid.Row="2"
+                        Height="60"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xE790;" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageInstallScope')}" />
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            VerticalAlignment="Center"
+                            Content="{x:Bind PackageInstallScope.Value, Mode=OneWay}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[0].Key), Mode=OneWay}"
+                                        Tag="0"
+                                        Text="{x:Bind PackageInstallScopeList[0].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[1].Key), Mode=OneWay}"
+                                        Tag="1"
+                                        Text="{x:Bind PackageInstallScopeList[1].Value}" />
+
+                                    <RadioMenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnPackageInstallScopeSelectClicked}"
+                                        GroupName="PackageInstallScopeRadioGroup"
+                                        IsChecked="{x:Bind x:Object.Equals(PackageInstallScope.Key, PackageInstallScopeList[2].Key), Mode=OneWay}"
+                                        Tag="2"
+                                        Text="{x:Bind PackageInstallScopeList[2].Value}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+
+                    <!--  下载时存放路径  -->
+                    <Grid
+                        Grid.Row="1"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            FontSize="16"
+                            Glyph="&#xF12B;" />
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
+
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <Hyperlink Click="{x:Bind OnPackageDownloadPathClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind PackageDownloadPath, Mode=OneWay}" />
+                                </Hyperlink>
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <StackPanel HorizontalAlignment="Stretch">
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageDownloadPath')}" />
+                                            <TextBlock Text="{x:Bind PackageDownloadPath, Mode=OneWay}" />
+                                            <MenuFlyoutSeparator Margin="4,3" />
+                                            <TextBlock Text="{x:Bind root:ResourceService.GetLocalized('WinGet/OpenFolderToolTip')}" />
+                                        </StackPanel>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <DropDownButton
+                            Grid.Column="2"
+                            Margin="6,0,0,0"
+                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}">
+
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="Bottom">
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="AppCache"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCacheFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xECAA;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="Download"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE896;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="Desktop"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/DesktopFolder')}">
+
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon Glyph="&#xE7F4;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutSeparator />
+
+                                    <MenuFlyoutItem
+                                        Height="32"
+                                        Padding="11,0"
+                                        Click="{x:Bind OnChangePackageDownloadPathClicked}"
+                                        Tag="Custom"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Custom')}" />
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </Grid>
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </Grid>
+</Page>

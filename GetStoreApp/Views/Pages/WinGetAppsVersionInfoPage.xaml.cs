@@ -4,6 +4,7 @@ using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
@@ -33,6 +34,8 @@ namespace GetStoreApp.Views.Pages
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
 
         private WinGetPage WinGetPage { get; set; }
+
+        private WinGetAppsVersionDialog WinGetAppsVersionDialog { get; set; }
 
         private SearchAppsModel SearchApps { get; set; }
 
@@ -490,9 +493,10 @@ namespace GetStoreApp.Views.Pages
         {
             base.OnNavigatedTo(args);
 
-            if (args.Parameter is List<object> argsList && argsList.Count is 2 && WinGetPage is null && argsList[0] is WinGetPage winGetPage)
+            if (args.Parameter is List<object> argsList && argsList.Count is 3 && WinGetPage is null && argsList[0] is WinGetPage winGetPage && argsList[1] is WinGetAppsVersionDialog winGetAppsVersionDialog)
             {
                 WinGetPage = winGetPage;
+                WinGetAppsVersionDialog = winGetAppsVersionDialog;
 
                 // 搜索应用
                 if (argsList[1] is SearchAppsModel searchApps)
@@ -693,73 +697,13 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 复制下载命令信息
-        /// </summary>
-        private async void OnCopyDownloadTextClicked(object sender, RoutedEventArgs args)
-        {
-            if (SearchApps is not null && SelectedItem is not null)
-            {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget download {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version) : string.Format(@"winget download {0} -s ""{1}"" -d ""{2}"" -v ""{3}""", SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version);
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
-
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchDownload, copyResult));
-            }
-        }
-
-        /// <summary>
-        /// 复制安装命令信息
-        /// </summary>
-        private async void OnCopyInstallTextClicked(object sender, RoutedEventArgs args)
-        {
-            if (SearchApps is not null && SelectedItem is not null)
-            {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget install {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version) : string.Format(@"winget install {0} -s ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version);
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
-
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
-            }
-        }
-
-        /// <summary>
-        /// 复制修复命令信息
-        /// </summary>
-        private async void OnCopyRepairTextClicked(object sender, RoutedEventArgs args)
-        {
-            if (SearchApps is not null && SelectedItem is not null)
-            {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget repair {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version) : string.Format(@"winget repair {0} -s ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version);
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
-
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchRepair, copyResult));
-            }
-        }
-
-        /// <summary>
-        /// 复制更新命令信息
-        /// </summary>
-        private async void OnCopyUpgradeTextClicked(object sender, RoutedEventArgs args)
-        {
-            if (UpgradableApps is not null && SelectedItem is not null)
-            {
-                KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-                string copyContent = Equals(winGetDataSourceName, default) ? string.Format(@"winget upgrade {0} -v ""{1}""", UpgradableApps.AppID, SelectedItem.Version) : string.Format(@"winget upgrade {0} -s ""{1}"" -v ""{2}""", UpgradableApps.AppID, winGetDataSourceName.Key, SelectedItem.Version);
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
-
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUpgradeInstall, copyResult));
-            }
-        }
-
-        /// <summary>
         /// 下载当前版本应用
         /// </summary>
-        private async void OnDownloadClicked(object sender, RoutedEventArgs args)
+        private void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
-            if (SearchApps is not null && SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Download,
                     AppID = SearchApps.AppID,
@@ -773,18 +717,18 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageDownloadProgress = null,
                     SearchApps = SearchApps,
-                });
+                }});
             }
         }
 
         /// <summary>
         /// 安装当前版本应用
         /// </summary>
-        private async void OnInstallClicked(object sender, RoutedEventArgs args)
+        private void OnInstallClicked(object sender, RoutedEventArgs args)
         {
-            if (SearchApps is not null && SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Install,
                     AppID = SearchApps.AppID,
@@ -798,18 +742,18 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageInstallProgress = null,
                     SearchApps = SearchApps,
-                });
+                }});
             }
         }
 
         /// <summary>
         /// 修复当前版本应用
         /// </summary>
-        private async void OnRepairClicked(object sender, RoutedEventArgs args)
+        private void OnRepairClicked(object sender, RoutedEventArgs args)
         {
-            if (SearchApps is not null && SelectedItem is not null)
+            if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Repair,
                     AppID = SearchApps.AppID,
@@ -823,7 +767,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageRepairProgress = null,
                     SearchApps = SearchApps,
-                });
+                }});
             }
         }
 
@@ -848,98 +792,6 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageInstallProgress = null,
                     UpgradableApps = UpgradableApps,
-                });
-            }
-        }
-
-        /// <summary>
-        /// 使用命令下载当前版本应用
-        /// </summary>
-        private void OnDownloadWithCmdClicked(object sender, RoutedEventArgs args)
-        {
-            if (SearchApps is not null && SelectedItem is not null)
-            {
-                Task.Run(() =>
-                {
-                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                    if (Equals(winGetDataSourceName, default))
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
-                    else
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"download {0} -s ""{1}"" -d ""{2}"" -v ""{3}""", SearchApps.AppID, winGetDataSourceName.Key, WinGetConfigService.DownloadFolder.Path, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
-                });
-            }
-        }
-
-        /// <summary>
-        /// 使用命令安装当前版本应用
-        /// </summary>
-        private void OnInstallWithCmdClicked(object sender, RoutedEventArgs args)
-        {
-            if (SearchApps is not null && SelectedItem is not null)
-            {
-                Task.Run(() =>
-                {
-                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                    if (Equals(winGetDataSourceName, default))
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"install {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
-                    else
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"install {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
-                });
-            }
-        }
-
-        /// <summary>
-        /// 使用命令修复当前版本应用
-        /// </summary>
-        private void OnRepairWithCmdClicked(object sender, RoutedEventArgs args)
-        {
-            if (SearchApps is not null && SelectedItem is not null)
-            {
-                Task.Run(() =>
-                {
-                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                    if (Equals(winGetDataSourceName, default))
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"repair {0} -v ""{1}""", SearchApps.AppID, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
-                    else
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"repair {0} -d ""{1}"" -v ""{2}""", SearchApps.AppID, winGetDataSourceName.Key, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
-                });
-            }
-        }
-
-        /// <summary>
-        /// 使用更新修复当前版本应用
-        /// </summary>
-        private void OnUpgradeWithCmdClicked(object sender, RoutedEventArgs args)
-        {
-            if (UpgradableApps is not null && SelectedItem is not null)
-            {
-                Task.Run(() =>
-                {
-                    KeyValuePair<string, bool> winGetDataSourceName = WinGetConfigService.GetWinGetDataSourceName();
-
-                    if (Equals(winGetDataSourceName, default))
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"upgrade {0} -v ""{1}""", UpgradableApps.AppID, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
-                    else
-                    {
-                        Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", string.Format(@"upgrade {0} -d ""{1}"" -v ""{2}""", UpgradableApps.AppID, winGetDataSourceName.Key, SelectedItem.Version), null, WindowShowStyle.SW_SHOWNORMAL);
-                    }
                 });
             }
         }

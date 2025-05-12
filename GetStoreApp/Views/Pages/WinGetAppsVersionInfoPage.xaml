@@ -115,26 +115,6 @@
                         </CommandBar.PrimaryCommands>
 
                         <CommandBar.SecondaryCommands>
-                            <AppBarButton Click="{x:Bind OnCopyDownloadTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyDownloadText')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE8C8;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
-                            <AppBarButton Click="{x:Bind OnCopyInstallTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyInstallText')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE8C8;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
-                            <AppBarButton Click="{x:Bind OnCopyRepairTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyRepairText')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE8C8;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
-                            <AppBarSeparator />
-
                             <AppBarButton Click="{x:Bind OnDownloadClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE896;" />
@@ -150,26 +130,6 @@
                             <AppBarButton Click="{x:Bind OnRepairClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Repair')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE90F;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
-                            <AppBarSeparator />
-
-                            <AppBarButton Click="{x:Bind OnDownloadWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/DownloadWithCmd')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE756;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
-                            <AppBarButton Click="{x:Bind OnInstallWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallWithCmd')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE756;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
-                            <AppBarButton Click="{x:Bind OnRepairWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/RepairWithCmd')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE756;" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                         </CommandBar.SecondaryCommands>
@@ -197,21 +157,9 @@
                         </CommandBar.PrimaryCommands>
 
                         <CommandBar.SecondaryCommands>
-                            <AppBarButton Click="{x:Bind OnCopyUpgradeTextClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUpgradeText')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE8C8;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
                             <AppBarButton Click="{x:Bind OnUpgradeClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}">
                                 <AppBarButton.Icon>
                                     <FontIcon Glyph="&#xE898;" />
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-
-                            <AppBarButton Click="{x:Bind OnUpgradeWithCmdClicked}" Label="{x:Bind root:ResourceService.GetLocalized('WinGet/UpgradeWithCmd')}">
-                                <AppBarButton.Icon>
-                                    <FontIcon Glyph="&#xE756;" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                         </CommandBar.SecondaryCommands>
