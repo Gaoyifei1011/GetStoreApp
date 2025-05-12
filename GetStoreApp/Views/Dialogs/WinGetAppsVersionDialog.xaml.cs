@@ -24,7 +24,8 @@ namespace GetStoreApp.Views.Dialogs
         private WinGetPage WinGetPage { get; }
 
         private object WinGetApps { get; }
-        private List<Type> PageList { get; } = [typeof(WinGetAppsVersionInfoPage), typeof(WinGetAppsVersionOptionsPage)];
+
+        public List<Type> PageList { get; } = [typeof(WinGetAppsVersionInfoPage), typeof(WinGetAppsVersionOptionsPage)];
 
         public ObservableCollection<ContentLinkInfo> BreadCollection { get; } = [];
 
@@ -47,7 +48,7 @@ namespace GetStoreApp.Views.Dialogs
             // 第一次导航
             if (WinGetConfigService.IsWinGetInstalled && GetCurrentPageType() is null)
             {
-                NavigateTo(PageList[0], new List<object>() { WinGetPage, WinGetApps }, null);
+                NavigateTo(PageList[0], new List<object>() { WinGetPage, this, WinGetApps }, null);
             }
         }
 
