@@ -266,6 +266,8 @@
     <None Remove="Views\Pages\AppListPage.xaml" />
     <None Remove="Views\Pages\AppManagerPage.xaml" />
     <None Remove="Views\Pages\AppUpdatePage.xaml" />
+    <None Remove="Views\Pages\CompletedPage.xaml" />
+    <None Remove="Views\Pages\DownloadingPage.xaml" />
     <None Remove="Views\Pages\DownloadPage.xaml" />
     <None Remove="Views\Pages\QueryLinksPage.xaml" />
     <None Remove="Views\Pages\SearchStorePage.xaml" />
@@ -316,6 +318,8 @@
     <Page Update="Views\Pages\AppListPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppManagerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppUpdatePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\CompletedPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\DownloadingPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\DownloadPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\QueryLinksPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\SearchStorePage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
