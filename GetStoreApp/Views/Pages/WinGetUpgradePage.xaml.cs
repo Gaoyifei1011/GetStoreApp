@@ -157,6 +157,11 @@ namespace GetStoreApp.Views.Pages
                     UpgradableAppsLock.Exit();
                 }
 
+                InstallOptions installOptions = await Task.Run(() =>
+                {
+                    return new InstallOptions();
+                });
+
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Upgrade,
@@ -171,6 +176,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageInstallProgress = null,
                     UpgradableApps = upgradableApps,
+                    InstallOptions = installOptions,
                 });
             }
         }

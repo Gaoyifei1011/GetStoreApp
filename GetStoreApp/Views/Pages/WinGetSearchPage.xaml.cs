@@ -170,6 +170,11 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && searchApps.CatalogPackage.DefaultInstallVersion is not null && WinGetPageInstance is not null)
             {
+                DownloadOptions downloadOptions = await Task.Run(() =>
+                {
+                    return new DownloadOptions();
+                });
+
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Download,
@@ -184,6 +189,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageDownloadProgress = null,
                     SearchApps = searchApps,
+                    DownloadOptions = downloadOptions
                 });
             }
         }
@@ -195,6 +201,11 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
+                InstallOptions installOptions = await Task.Run(() =>
+                {
+                    return new InstallOptions();
+                });
+
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Install,
@@ -209,6 +220,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageInstallProgress = null,
                     SearchApps = searchApps,
+                    InstallOptions = installOptions
                 });
             }
         }
@@ -220,6 +232,11 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is SearchAppsModel searchApps && WinGetPageInstance is not null)
             {
+                RepairOptions repairOptions = await Task.Run(() =>
+                {
+                    return new RepairOptions();
+                });
+
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Repair,
@@ -234,6 +251,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageRepairProgress = null,
                     SearchApps = searchApps,
+                    RepairOptions = repairOptions
                 });
             }
         }
