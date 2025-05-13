@@ -6,9 +6,11 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -91,6 +93,54 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private bool _force;
+
+        public bool Force
+        {
+            get { return _force; }
+
+            set
+            {
+                if (!Equals(_force, value))
+                {
+                    _force = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Force)));
+                }
+            }
+        }
+
+        private PackageUninstallScope _selectedPackageUninstallScope = PackageUninstallScope.Any;
+
+        public PackageUninstallScope SelectedPackageUninstallScope
+        {
+            get { return _selectedPackageUninstallScope; }
+
+            set
+            {
+                if (!Equals(_selectedPackageUninstallScope, value))
+                {
+                    _selectedPackageUninstallScope = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallScope)));
+                }
+            }
+        }
+
+        private PackageUninstallMode _selectedPackageUninstallMode = PackageUninstallMode.Default;
+
+        public PackageUninstallMode SelectedPackageUninstallMode
+        {
+            get { return _selectedPackageUninstallMode; }
+
+            set
+            {
+                if (!Equals(_selectedPackageUninstallScope, value))
+                {
+                    _selectedPackageUninstallMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedPackageUninstallMode)));
+                }
+            }
+        }
+
         private InstalledAppsResultKind _installedAppsResultKind;
 
         public InstalledAppsResultKind InstalledAppsResultKind
@@ -167,16 +217,94 @@ namespace GetStoreApp.Views.Pages
         #region 第二部分：XamlUICommand 命令调用时挂载的事件
 
         /// <summary>
-        /// 复制卸载命令
+        /// 复制卸载命令信息
         /// </summary>
         private async void OnCopyUninstallTextExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
             {
-                string copyContent = string.Format("winget uninstall {0}", appId);
-                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
+                string uninstallCommand = await Task.Run(() =>
+                {
+                    List<string> argsList = ["winget.exe", "uninstall", "--id", string.Format(@"""{0}""", appId)];
 
+                    if (Force)
+                    {
+                        argsList.Add("--force");
+                    }
+
+                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Interactive))
+                    {
+                        argsList.Add("--interactive");
+                    }
+
+                    if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.User))
+                    {
+                        argsList.Add("--scope");
+                        argsList.Add("user");
+                    }
+                    else if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.System))
+                    {
+                        argsList.Add("--scope");
+                        argsList.Add("machine");
+                    }
+
+                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Silent))
+                    {
+                        argsList.Add("--silent");
+                    }
+
+                    return string.Join(' ', argsList);
+                });
+
+                bool copyResult = CopyPasteHelper.CopyTextToClipBoard(uninstallCommand);
                 await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUninstall, copyResult));
+            }
+        }
+
+        /// <summary>
+        /// 使用命令卸载当前应用
+        /// </summary>
+        private async void OnUninstallWithCmdExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        {
+            if (args.Parameter is string appId && !string.IsNullOrEmpty(appId))
+            {
+                string uninstallParameter = await Task.Run(() =>
+                {
+                    List<string> argsList = ["uninstall", "--id", string.Format(@"""{0}""", appId)];
+
+                    if (Force)
+                    {
+                        argsList.Add("--force");
+                    }
+
+                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Interactive))
+                    {
+                        argsList.Add("--interactive");
+                    }
+
+                    if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.User))
+                    {
+                        argsList.Add("--scope");
+                        argsList.Add("user");
+                    }
+                    else if (Equals(SelectedPackageUninstallScope, PackageUninstallScope.System))
+                    {
+                        argsList.Add("--scope");
+                        argsList.Add("machine");
+                    }
+
+                    if (Equals(SelectedPackageUninstallMode, PackageUninstallMode.Silent))
+                    {
+                        argsList.Add("--silent");
+                    }
+
+                    return string.Join(' ', argsList);
+                });
+
+                await Task.Run(() =>
+                {
+                    Shell32Library.ShellExecute(IntPtr.Zero, "open", "winget.exe", uninstallParameter, null, WindowShowStyle.SW_SHOWNORMAL);
+                });
             }
         }
 
@@ -202,6 +330,17 @@ namespace GetStoreApp.Views.Pages
                     InstalledAppsLock.Exit();
                 }
 
+                UninstallOptions uninstallOptions = await Task.Run(() =>
+                {
+                    return new UninstallOptions()
+                    {
+                        Force = Force,
+                        LogOutputPath = LogService.WinGetFolderPath,
+                        PackageUninstallScope = SelectedPackageUninstallScope,
+                        PackageUninstallMode = SelectedPackageUninstallMode,
+                    };
+                });
+
                 await WinGetPageInstance.AddTaskAsync(new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Uninstall,
@@ -215,6 +354,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageUninstallProgress = null,
                     InstalledApps = installedApps,
+                    UninstallOptions = uninstallOptions
                 });
             }
         }
@@ -244,6 +384,39 @@ namespace GetStoreApp.Views.Pages
             {
                 SelectedAppSortRuleKind = appSortRuleKind;
                 InitializeMatchedInstalledApps();
+            }
+        }
+
+        /// <summary>
+        /// 是否强制卸载
+        /// </summary>
+        private void OnForceToggled(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                Force = toggleSwitch.IsOn;
+            }
+        }
+
+        /// <summary>
+        /// 应用卸载范围发生更改时触发的事件
+        /// </summary>
+        private void OnPackageUninstallScopeClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleButton toggleButton && toggleButton.Tag is PackageUninstallScope packageUninstallScope)
+            {
+                SelectedPackageUninstallScope = packageUninstallScope;
+            }
+        }
+
+        /// <summary>
+        /// 应用卸载模式发生更改时触发的事件
+        /// </summary>
+        private void OnPackageUninstallModeClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleButton toggleButton && toggleButton.Tag is PackageUninstallMode packageUninstallMode)
+            {
+                SelectedPackageUninstallMode = packageUninstallMode;
             }
         }
 
@@ -372,7 +545,7 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 可更新项目安装完成后发生的事件
+        /// 可卸载项目卸载完成后发生的事件
         /// </summary>
         private void OnInstalledAppsPackageOperationEvent(bool result, bool isCanceled, InstalledAppsModel installedApps, UninstallResult uninstallResult)
         {

@@ -5,6 +5,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:deployment="using:Microsoft.Management.Deployment"
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -18,6 +19,7 @@
 
         <XamlUICommand x:Name="CopyUninstallTextCommand" ExecuteRequested="{x:Bind OnCopyUninstallTextExecuteRequested}" />
         <XamlUICommand x:Name="UninstallCommand" ExecuteRequested="{x:Bind OnUninstallExecuteRequested}" />
+        <XamlUICommand x:Name="UninstallWithCmdCommand" ExecuteRequested="{x:Bind OnUninstallWithCmdExecuteRequested}" />
     </Page.Resources>
 
     <Grid>
@@ -156,6 +158,156 @@
                                         Text="{x:Bind root:ResourceService.GetLocalized('WinGet/SortByPublisher')}" />
                                 </MenuFlyoutSubItem>
                             </MenuFlyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+
+                    <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallOptions')}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE700;" />
+                        </AppBarButton.Icon>
+
+                        <AppBarButton.Flyout>
+                            <Flyout
+                                Placement="Bottom"
+                                ShouldConstrainToRootBounds="False"
+                                SystemBackdrop="{StaticResource AcrylicBackgroundFillColorDefaultBackdrop}">
+
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="MinWidth" Value="350" />
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
+
+                                <StackPanel Padding="12" Spacing="5">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Margin="2,0,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUninstall')}" />
+
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUninstallOffContent')}"
+                                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(Force), Mode=OneWay}" />
+
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ForceUninstallOnContent')}"
+                                                Visibility="{x:Bind Force, Mode=OneWay}" />
+
+                                            <ToggleSwitch
+                                                MinWidth="0"
+                                                Margin="10,-2,-10,0"
+                                                IsOn="{x:Bind Force, Mode=OneWay}"
+                                                OffContent=""
+                                                OnContent=""
+                                                Toggled="{x:Bind OnForceToggled}" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+                                    <TextBlock
+                                        Margin="2,0,0,0"
+                                        FontSize="14"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScope')}" />
+
+                                    <Grid
+                                        HorizontalAlignment="Left"
+                                        ColumnSpacing="5"
+                                        RowSpacing="5">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <RadioButton
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnPackageUninstallScopeClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScopeAny')}"
+                                            IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallScope, deployment:PackageUninstallScope.Any), Mode=OneWay}"
+                                            Tag="{x:Bind deployment:PackageUninstallScope.Any}" />
+
+                                        <RadioButton
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnPackageUninstallScopeClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScopeUser')}"
+                                            IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallScope, deployment:PackageUninstallScope.User), Mode=OneWay}"
+                                            Tag="{x:Bind deployment:PackageUninstallScope.User}" />
+
+                                        <RadioButton
+                                            Grid.Column="2"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnPackageUninstallScopeClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallScopeSystem')}"
+                                            IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallScope, deployment:PackageUninstallScope.System), Mode=OneWay}"
+                                            Tag="{x:Bind deployment:PackageUninstallScope.System}" />
+                                    </Grid>
+
+                                    <MenuFlyoutSeparator Margin="4,0,6,0" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
+
+                                    <TextBlock
+                                        Margin="2,0,0,0"
+                                        FontSize="14"
+                                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallMode')}" />
+
+                                    <Grid
+                                        HorizontalAlignment="Left"
+                                        ColumnSpacing="5"
+                                        RowSpacing="5">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <RadioButton
+                                            Grid.Column="0"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnPackageUninstallModeClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallModeDefault')}"
+                                            IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallMode, deployment:PackageUninstallMode.Default), Mode=OneWay}"
+                                            Tag="{x:Bind deployment:PackageUninstallMode.Default}" />
+
+                                        <RadioButton
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnPackageUninstallModeClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallModeInteractive')}"
+                                            IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallMode, deployment:PackageUninstallMode.Interactive), Mode=OneWay}"
+                                            Tag="{x:Bind deployment:PackageUninstallMode.Interactive}" />
+
+                                        <RadioButton
+                                            Grid.Column="2"
+                                            HorizontalAlignment="Stretch"
+                                            Click="{x:Bind OnPackageUninstallModeClicked}"
+                                            Content="{x:Bind root:ResourceService.GetLocalized('WinGet/PackageUninstallModeSilent')}"
+                                            IsChecked="{x:Bind x:Object.Equals(SelectedPackageUninstallMode, deployment:PackageUninstallMode.Silent), Mode=OneWay}"
+                                            Tag="{x:Bind deployment:PackageUninstallMode.Silent}" />
+                                    </Grid>
+                                </StackPanel>
+                            </Flyout>
                         </AppBarButton.Flyout>
                     </AppBarButton>
 
@@ -399,6 +551,18 @@
 
                                                 <MenuFlyoutItem.Icon>
                                                     <FontIcon Glyph="&#xE8C8;" />
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+
+                                            <MenuFlyoutItem
+                                                Height="32"
+                                                Padding="11,0"
+                                                Command="{StaticResource UninstallWithCmdCommand}"
+                                                CommandParameter="{x:Bind AppID}"
+                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallWithCmd')}">
+
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon Glyph="&#xE756;" />
                                                 </MenuFlyoutItem.Icon>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
