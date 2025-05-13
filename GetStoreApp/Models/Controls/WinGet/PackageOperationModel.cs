@@ -205,6 +205,14 @@ namespace GetStoreApp.Models.Controls.WinGet
             }
         }
 
+        public DownloadOptions DownloadOptions { get; set; }
+
+        public InstallOptions InstallOptions { get; set; }
+
+        public UninstallOptions UninstallOptions { get; set; }
+
+        public RepairOptions RepairOptions { get; set; }
+
         public IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> PackageDownloadProgress { get; set; }
 
         public IAsyncOperationWithProgress<InstallResult, InstallProgress> PackageInstallProgress { get; set; }
