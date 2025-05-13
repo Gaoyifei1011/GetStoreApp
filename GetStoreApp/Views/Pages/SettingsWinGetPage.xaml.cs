@@ -1,20 +1,13 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
-using GetStoreApp.Helpers.Root;
-using GetStoreApp.Services.Controls.Settings;
-using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
+﻿using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
-using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.Foundation.Diagnostics;
 using Windows.Management.Core;
 using Windows.Storage;
 using Windows.System;
@@ -82,18 +75,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// WinGet 程序包安装方式设置
-        /// </summary>
-        private void OnWinGetInstallModeSelectClicked(object sender, RoutedEventArgs args)
-        {
-            if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
-            {
-                WinGetInstallMode = WinGetInstallModeList[Convert.ToInt32(tag)];
-                WinGetConfigService.SetWinGetInstallMode(WinGetInstallMode);
-            }
-        }
-
-        /// <summary>
         /// 打开 WinGet 程序包设置
         /// </summary>
         private void OnOpenWinGetSettingsClicked(object sender, RoutedEventArgs args)
@@ -114,68 +95,6 @@ namespace GetStoreApp.Views.Pages
                     }
                 }
             });
-        }
-
-        /// <summary>
-        /// 打开下载文件存放目录
-        /// </summary>
-        private async void OnWinGetOpenFolderClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await WinGetConfigService.OpenFolderAsync(WinGetPackageFolder);
-        }
-
-        /// <summary>
-        /// 修改下载文件存放目录
-        /// </summary>
-        private async void OnWinGetChangeFolderClicked(object sender, RoutedEventArgs args)
-        {
-            if (sender is MenuFlyoutItem menuFlyoutItem && menuFlyoutItem.Tag is string tag)
-            {
-                switch (tag)
-                {
-                    case "AppCache":
-                        {
-                            WinGetPackageFolder = WinGetConfigService.DefaultDownloadFolder;
-                            WinGetConfigService.SetFolder(WinGetPackageFolder);
-                            break;
-                        }
-                    case "Download":
-                        {
-                            WinGetPackageFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Downloads);
-                            WinGetConfigService.SetFolder(WinGetPackageFolder);
-                            break;
-                        }
-                    case "Desktop":
-                        {
-                            WinGetPackageFolder = await StorageFolder.GetFolderFromPathAsync(InfoHelper.UserDataPath.Desktop);
-                            WinGetConfigService.SetFolder(WinGetPackageFolder);
-                            break;
-                        }
-                    case "Custom":
-                        {
-                            try
-                            {
-                                FolderPicker folderPicker = new(MainWindow.Current.AppWindow.Id)
-                                {
-                                    SuggestedStartLocation = PickerLocationId.Downloads
-                                };
-
-                                if (await folderPicker.PickSingleFolderAsync() is PickFolderResult pickFolderResult)
-                                {
-                                    WinGetPackageFolder = await StorageFolder.GetFolderFromPathAsync(pickFolderResult.Path);
-                                    WinGetConfigService.SetFolder(WinGetPackageFolder);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                LogService.WriteLog(LoggingLevel.Error, "Open folderPicker failed", e);
-                                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.FolderPicker));
-                            }
-
-                            break;
-                        }
-                }
-            }
         }
     }
 }
