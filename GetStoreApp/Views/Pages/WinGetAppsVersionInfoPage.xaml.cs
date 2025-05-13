@@ -6,7 +6,6 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -499,12 +498,12 @@ namespace GetStoreApp.Views.Pages
                 WinGetAppsVersionDialog = winGetAppsVersionDialog;
 
                 // 搜索应用
-                if (argsList[1] is SearchAppsModel searchApps)
+                if (argsList[2] is SearchAppsModel searchApps)
                 {
                     SearchApps = searchApps;
                 }
                 // 可更新应用
-                else if (argsList[1] is UpgradableAppsModel upgradableApps)
+                else if (argsList[2] is UpgradableAppsModel upgradableApps)
                 {
                     UpgradableApps = upgradableApps;
                 }
@@ -703,7 +702,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, new PackageOperationModel()
+                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Download,
                     AppID = SearchApps.AppID,
@@ -717,7 +716,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageDownloadProgress = null,
                     SearchApps = SearchApps,
-                }});
+                 }}, true);
             }
         }
 
@@ -728,7 +727,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, new PackageOperationModel()
+                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Install,
                     AppID = SearchApps.AppID,
@@ -742,7 +741,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageInstallProgress = null,
                     SearchApps = SearchApps,
-                }});
+                }}, true);
             }
         }
 
@@ -753,7 +752,7 @@ namespace GetStoreApp.Views.Pages
         {
             if (SearchApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, new PackageOperationModel()
+                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Repair,
                     AppID = SearchApps.AppID,
@@ -767,18 +766,18 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageRepairProgress = null,
                     SearchApps = SearchApps,
-                }});
+                }}, true);
             }
         }
 
         /// <summary>
         /// 更新当前版本应用
         /// </summary>
-        private async void OnUpgradeClicked(object sender, RoutedEventArgs args)
+        private void OnUpgradeClicked(object sender, RoutedEventArgs args)
         {
-            if (UpgradableApps is not null && SelectedItem is not null)
+            if (UpgradableApps is not null && SelectedItem is not null && WinGetAppsVersionDialog is not null)
             {
-                await WinGetPage.AddTaskAsync(new PackageOperationModel()
+                WinGetAppsVersionDialog.NavigateTo(WinGetAppsVersionDialog.PageList[1], new List<object>(){ WinGetPage, WinGetAppsVersionDialog, new PackageOperationModel()
                 {
                     PackageOperationKind = PackageOperationKind.Upgrade,
                     AppID = UpgradableApps.AppID,
@@ -792,7 +791,7 @@ namespace GetStoreApp.Views.Pages
                     TotalFileSize = FileSizeHelper.ConvertFileSizeToString(0),
                     PackageInstallProgress = null,
                     UpgradableApps = UpgradableApps,
-                });
+                }}, true);
             }
         }
 
