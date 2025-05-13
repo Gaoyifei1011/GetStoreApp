@@ -816,16 +816,7 @@ namespace GetStoreApp.Views.Pages
                                 try
                                 {
                                     PackageManager packageManager = new();
-                                    DownloadOptions downloadOptions = new()
-                                    {
-                                        AcceptPackageAgreements = true,
-                                        AllowHashMismatch = true, // TODO:设置选项
-                                        PackageVersionId = packageOperation.PackageVersionId,
-                                        DownloadDirectory = WinGetConfigService.DownloadFolder.Path,
-                                        Scope = PackageInstallScope.Any, // TODO:设置选项
-                                    };
-
-                                    IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> downloadPackageWithProgress = packageManager.DownloadPackageAsync(packageOperation.SearchApps.CatalogPackage, downloadOptions);
+                                    IAsyncOperationWithProgress<DownloadResult, PackageDownloadProgress> downloadPackageWithProgress = packageManager.DownloadPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.DownloadOptions);
 
                                     PackageOperationLock.Enter();
 
@@ -1098,20 +1089,7 @@ namespace GetStoreApp.Views.Pages
                                 try
                                 {
                                     PackageManager packageManager = new();
-                                    InstallOptions installOptions = new()
-                                    {
-                                        AcceptPackageAgreements = true,
-                                        AllowHashMismatch = true, // TODO:设置选项
-                                        BypassIsStoreClientBlockedPolicyCheck = true, // TODO:设置选项
-                                        Force = true,
-                                        PackageVersionId = packageOperation.PackageVersionId,
-                                        AllowUpgradeToUnknownVersion = true, // TODO:设置选项
-                                        LogOutputPath = LogService.WinGetFolderPath,
-                                        PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default,
-                                        PackageInstallScope = PackageInstallScope.Any,  // TODO:设置选项
-                                    };
-
-                                    IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(packageOperation.SearchApps.CatalogPackage, installOptions);
+                                    IAsyncOperationWithProgress<InstallResult, InstallProgress> installPackageWithProgress = packageManager.InstallPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.InstallOptions);
 
                                     PackageOperationLock.Enter();
 
@@ -1421,16 +1399,7 @@ namespace GetStoreApp.Views.Pages
                                 try
                                 {
                                     PackageManager packageManager = new();
-                                    UninstallOptions uninstallOptions = new()
-                                    {
-                                        Force = true,
-                                        LogOutputPath = LogService.WinGetFolderPath,
-                                        PackageVersionId = packageOperation.PackageVersionId,
-                                        PackageUninstallMode = PackageUninstallMode.Default, // TODO:设置选项
-                                        PackageUninstallScope = PackageUninstallScope.Any, // TODO:设置选项
-                                    };
-
-                                    IAsyncOperationWithProgress<UninstallResult, UninstallProgress> uninstallPackageWithProgress = packageManager.UninstallPackageAsync(packageOperation.InstalledApps.CatalogPackage, uninstallOptions);
+                                    IAsyncOperationWithProgress<UninstallResult, UninstallProgress> uninstallPackageWithProgress = packageManager.UninstallPackageAsync(packageOperation.InstalledApps.CatalogPackage, packageOperation.UninstallOptions);
 
                                     PackageOperationLock.Enter();
 
@@ -1665,19 +1634,7 @@ namespace GetStoreApp.Views.Pages
                                 try
                                 {
                                     PackageManager packageManager = new();
-                                    RepairOptions repairOptions = new()
-                                    {
-                                        AcceptPackageAgreements = true,
-                                        AllowHashMismatch = true, // TODO:设置选项
-                                        BypassIsStoreClientBlockedPolicyCheck = true, // TODO:设置选项
-                                        Force = true,
-                                        PackageVersionId = packageOperation.PackageVersionId,
-                                        LogOutputPath = LogService.WinGetFolderPath,
-                                        PackageRepairMode = PackageRepairMode.Default, // TODO:设置选项
-                                        PackageRepairScope = PackageRepairScope.Any,  // TODO:设置选项
-                                    };
-
-                                    IAsyncOperationWithProgress<RepairResult, RepairProgress> repairPackageWithProgress = packageManager.RepairPackageAsync(packageOperation.SearchApps.CatalogPackage, repairOptions);
+                                    IAsyncOperationWithProgress<RepairResult, RepairProgress> repairPackageWithProgress = packageManager.RepairPackageAsync(packageOperation.SearchApps.CatalogPackage, packageOperation.RepairOptions);
 
                                     PackageOperationLock.Enter();
 
@@ -1948,20 +1905,7 @@ namespace GetStoreApp.Views.Pages
                                 try
                                 {
                                     PackageManager packageManager = new();
-                                    InstallOptions installOptions = new()
-                                    {
-                                        AcceptPackageAgreements = true,
-                                        AllowHashMismatch = true, // TODO:设置选项
-                                        BypassIsStoreClientBlockedPolicyCheck = true, // TODO:设置选项
-                                        Force = true,
-                                        PackageVersionId = packageOperation.PackageVersionId,
-                                        AllowUpgradeToUnknownVersion = true, // TODO:设置选项
-                                        LogOutputPath = LogService.WinGetFolderPath,
-                                        PackageInstallMode = Enum.TryParse(WinGetConfigService.WinGetInstallMode.Key, out PackageInstallMode packageInstallMode) ? packageInstallMode : PackageInstallMode.Default,
-                                        PackageInstallScope = PackageInstallScope.Any,  // TODO:设置选项
-                                    };
-
-                                    IAsyncOperationWithProgress<InstallResult, InstallProgress> upgradePackageWithProgress = packageManager.UpgradePackageAsync(packageOperation.UpgradableApps.CatalogPackage, installOptions);
+                                    IAsyncOperationWithProgress<InstallResult, InstallProgress> upgradePackageWithProgress = packageManager.UpgradePackageAsync(packageOperation.UpgradableApps.CatalogPackage, packageOperation.InstallOptions);
 
                                     PackageOperationLock.Enter();
 
