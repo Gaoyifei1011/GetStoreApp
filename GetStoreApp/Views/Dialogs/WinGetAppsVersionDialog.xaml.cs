@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.Views.Pages;
@@ -89,6 +90,48 @@ namespace GetStoreApp.Views.Dialogs
             }
             if (BreadCollection.Count is 1 && Equals(GetCurrentPageType(), PageList[1]))
             {
+                if (args.Parameter is List<object> argsList && argsList.Count is 3 && argsList[2] is PackageOperationModel packageOperation)
+                {
+                    switch (packageOperation.PackageOperationKind)
+                    {
+                        case PackageOperationKind.Download:
+                            {
+                                BreadCollection.Add(new ContentLinkInfo()
+                                {
+                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsDownloadOption"),
+                                    SecondaryText = "DownloadOption"
+                                });
+                                break;
+                            }
+                        case PackageOperationKind.Install:
+                            {
+                                BreadCollection.Add(new ContentLinkInfo()
+                                {
+                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsInstallOption"),
+                                    SecondaryText = "InstallOption"
+                                });
+                                break;
+                            }
+                        case PackageOperationKind.Repair:
+                            {
+                                BreadCollection.Add(new ContentLinkInfo()
+                                {
+                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsRepairOption"),
+                                    SecondaryText = "RepairOption"
+                                });
+                                break;
+                            }
+                        case PackageOperationKind.Upgrade:
+                            {
+                                BreadCollection.Add(new ContentLinkInfo()
+                                {
+                                    DisplayText = ResourceService.GetLocalized("Dialog/WinGetAppsUpgradeOption"),
+                                    SecondaryText = "UpgradeOption"
+                                });
+                                break;
+                            }
+                    }
+                }
             }
             else if (BreadCollection.Count is 2 && Equals(GetCurrentPageType(), PageList[0]))
             {
