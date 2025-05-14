@@ -322,7 +322,10 @@
                                 Spacing="5">
 
                                 <TextBlock>
-                                    <Hyperlink Click="{x:Bind OnLearnWinGetClicked}" UnderlineStyle="None">
+                                    <Hyperlink
+                                        Click="{x:Bind OnLearnWinGetClicked}"
+                                        NavigateUri="https://learn.microsoft.com/windows/package-manager"
+                                        UnderlineStyle="None">
                                         <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/LearnWinGet')}" />
                                     </Hyperlink>
                                 </TextBlock>

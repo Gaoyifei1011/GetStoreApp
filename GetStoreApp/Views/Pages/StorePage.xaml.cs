@@ -173,6 +173,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnDesktopLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
+            StoreSplitView.IsPaneOpen = false;
             await MainWindow.Current.ShowDialogAsync(new DesktopStartupArgsDialog());
         }
 
@@ -181,6 +182,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnConsoleLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
+            StoreSplitView.IsPaneOpen = false;
             await MainWindow.Current.ShowDialogAsync(new ConsoleStartupArgsDialog());
         }
 
@@ -189,6 +191,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
+            StoreSplitView.IsPaneOpen = false;
             Task.Run(async () =>
             {
                 try
@@ -207,6 +210,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
+            StoreSplitView.IsPaneOpen = false;
             Task.Run(async () =>
             {
                 try

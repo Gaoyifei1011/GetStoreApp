@@ -255,18 +255,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnLearnWinGetClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("https://learn.microsoft.com/windows/package-manager"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                    throw;
-                }
-            });
+            WinGetSplitView.IsPaneOpen = false;
         }
 
         /// <summary>

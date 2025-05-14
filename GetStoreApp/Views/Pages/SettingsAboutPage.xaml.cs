@@ -6,9 +6,11 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Data.Json;
 using Windows.Foundation.Diagnostics;
@@ -85,6 +87,32 @@ namespace GetStoreApp.Views.Pages
         private async void OnShowReleaseNotesClicked(object sender, RoutedEventArgs args)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/Gaoyifei1011/GetStoreApp/releases"));
+        }
+
+        /// <summary>
+        /// 应用信息
+        /// </summary>
+        private async void OnAppInformationClicked(object sender, RoutedEventArgs args)
+        {
+            await MainWindow.Current.ShowDialogAsync(new AppInformationDialog());
+        }
+
+        /// <summary>
+        /// 系统信息
+        /// </summary>
+        private void OnSystemInformationClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

@@ -149,36 +149,11 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 系统信息
-        /// </summary>
-        private void OnSystemInformationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await Launcher.LaunchUriAsync(new Uri("ms-settings:about"));
-                }
-                catch (Exception e)
-                {
-                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-                }
-            });
-        }
-
-        /// <summary>
-        /// 应用信息
-        /// </summary>
-        private async void OnAppInformationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            await MainWindow.Current.ShowDialogAsync(new AppInformationDialog());
-        }
-
-        /// <summary>
         /// 应用设置
         /// </summary>
         private void OnAppSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
+            SettingsSplitView.IsPaneOpen = false;
             Task.Run(async () =>
             {
                 try
@@ -193,10 +168,51 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 了解加密包
+        /// </summary>
+        private void OnEncryptedPackageClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            SettingsSplitView.IsPaneOpen = false;
+        }
+
+        /// <summary>
+        /// 了解包块映射文件
+        /// </summary>
+        private void OnBlockMapClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            SettingsSplitView.IsPaneOpen = false;
+        }
+
+        /// <summary>
+        /// 了解 WinGet 配置选项
+        /// </summary>
+        private void OnLearnWinGetConfigClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            SettingsSplitView.IsPaneOpen = false;
+        }
+
+        /// <summary>
+        /// 了解传递优化
+        /// </summary>
+        private void OnLearnDeliveryOptimizationClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            SettingsSplitView.IsPaneOpen = false;
+        }
+
+        /// <summary>
+        /// 了解后台智能传输服务
+        /// </summary>
+        private void OnLearnBitsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
+            SettingsSplitView.IsPaneOpen = false;
+        }
+
+        /// <summary>
         /// 疑难解答
         /// </summary>
         private void OnTroubleShootClicked(Hyperlink sender, HyperlinkClickEventArgs args)
         {
+            SettingsSplitView.IsPaneOpen = false;
             Task.Run(async () =>
             {
                 try

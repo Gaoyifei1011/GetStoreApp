@@ -201,18 +201,6 @@
                             Spacing="5">
 
                             <TextBlock>
-                                <Hyperlink Click="{x:Bind OnSystemInformationClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/SystemInformation')}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock>
-                                <Hyperlink Click="{x:Bind OnAppInformationClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppInformation')}" />
-                                </Hyperlink>
-                            </TextBlock>
-
-                            <TextBlock>
                                 <Hyperlink Click="{x:Bind OnAppSettingsClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppSettings')}" />
                                 </Hyperlink>
@@ -281,13 +269,19 @@
                             Spacing="5">
 
                             <TextBlock>
-                                <Hyperlink NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle" UnderlineStyle="None">
+                                <Hyperlink
+                                    Click="{x:Bind OnEncryptedPackageClicked}"
+                                    NavigateUri="https://github.com/MicrosoftDocs/msix-docs/blob/main/msix-src/package/create-app-package-with-makeappx-tool.md#encrypt-or-decrypt-a-package-or-bundle"
+                                    UnderlineStyle="None">
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/EncryptedPackageButton')}" />
                                 </Hyperlink>
                             </TextBlock>
 
                             <TextBlock>
-                                <Hyperlink NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map" UnderlineStyle="None">
+                                <Hyperlink
+                                    Click="{x:Bind OnBlockMapClicked}"
+                                    NavigateUri="https://docs.microsoft.com/uwp/schemas/blockmapschema/app-package-block-map"
+                                    UnderlineStyle="None">
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/BlockMapButton')}" />
                                 </Hyperlink>
                             </TextBlock>
@@ -318,7 +312,10 @@
                             Spacing="5">
 
                             <TextBlock>
-                                <Hyperlink NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration" UnderlineStyle="None">
+                                <Hyperlink
+                                    Click="{x:Bind OnLearnWinGetConfigClicked}"
+                                    NavigateUri="https://learn.microsoft.com/windows/package-manager/configuration"
+                                    UnderlineStyle="None">
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/LearnWinGetConfig')}" />
                                 </Hyperlink>
                             </TextBlock>
@@ -367,13 +364,19 @@
                             Spacing="5">
 
                             <TextBlock>
-                                <Hyperlink NavigateUri="https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization" UnderlineStyle="None">
+                                <Hyperlink
+                                    Click="{x:Bind OnLearnDeliveryOptimizationClicked}"
+                                    NavigateUri="https://learn.microsoft.com/windows/deployment/do/waas-delivery-optimization"
+                                    UnderlineStyle="None">
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/LearnDeliveryOptimization')}" />
                                 </Hyperlink>
                             </TextBlock>
 
                             <TextBlock>
-                                <Hyperlink NavigateUri="https://learn.microsoft.com/windows/win32/bits/background-intelligent-transfer-service-portal" UnderlineStyle="None">
+                                <Hyperlink
+                                    Click="{x:Bind OnLearnBitsClicked}"
+                                    NavigateUri="https://learn.microsoft.com/windows/win32/bits/background-intelligent-transfer-service-portal"
+                                    UnderlineStyle="None">
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Settings/LearnBits')}" />
                                 </Hyperlink>
                             </TextBlock>

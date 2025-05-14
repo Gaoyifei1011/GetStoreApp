@@ -251,6 +251,68 @@
                         </Grid>
                     </Button>
                 </GridViewItem>
+
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnAppInformationClicked}">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xECAA;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/AppInformation')}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
+
+                <GridViewItem>
+                    <Button
+                        Width="240"
+                        Height="60"
+                        HorizontalContentAlignment="Stretch"
+                        Click="{x:Bind OnSystemInformationClicked}">
+
+                        <Grid Margin="0,-2,0,0" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="0,2,12,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Glyph="&#xE770;" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Settings/SystemInformation')}" />
+                        </Grid>
+                    </Button>
+                </GridViewItem>
             </GridView>
 
             <!--  应用简介信息  -->
