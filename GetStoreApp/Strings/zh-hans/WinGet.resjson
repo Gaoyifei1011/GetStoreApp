@@ -1,5 +1,6 @@
 {
   "AdditionalInstallerArguments": "额外安装参数",
+  "AllowedArchitectures": "允许的处理器架构",
   "AllowHashMismatch": "忽略安装程序哈希检查失败",
   "AllowHashMismatchOffContent": "否",
   "AllowHashMismatchOnContent": "是",

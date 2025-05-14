@@ -8,7 +8,9 @@
     xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
+    xmlns:sys="using:System"
     xmlns:system="using:Windows.System"
+    xmlns:winrt="using:Windows.System"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
@@ -445,6 +447,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!--  忽略安装程序哈希检查失败  -->
@@ -812,9 +815,57 @@
                             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}" />
                     </Grid>
 
-                    <!--  额外安装参数  -->
+                    <!--  允许的处理器架构  -->
                     <Grid
                         Grid.Row="7"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12,22,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowedArchitectures')}" />
+
+                        <ToggleButton
+                            Grid.Column="1"
+                            Margin="6,0,2,0"
+                            Click="{x:Bind OnProcessorArchitectureClicked}"
+                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X86)}"
+                            IsChecked="{x:Bind IsX86ProcessorArchitecture, Mode=OneWay}"
+                            Tag="{x:Bind winrt:ProcessorArchitecture.X86}" />
+
+                        <ToggleButton
+                            Grid.Column="2"
+                            Margin="0,0,2,0"
+                            Click="{x:Bind OnProcessorArchitectureClicked}"
+                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X64)}"
+                            IsChecked="{x:Bind IsX64ProcessorArchitecture, Mode=OneWay}"
+                            Tag="{x:Bind winrt:ProcessorArchitecture.X64}" />
+
+                        <ToggleButton
+                            Grid.Column="3"
+                            Click="{x:Bind OnProcessorArchitectureClicked}"
+                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.Arm64)}"
+                            IsChecked="{x:Bind IsArm64ProcessorArchitecture, Mode=OneWay}"
+                            Tag="{x:Bind winrt:ProcessorArchitecture.Arm64}" />
+                    </Grid>
+
+                    <!--  额外安装参数  -->
+                    <Grid
+                        Grid.Row="8"
                         Height="60"
                         Padding="16,12,22,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
@@ -1256,6 +1307,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <!--  忽略安装程序哈希检查失败  -->
@@ -1623,9 +1675,57 @@
                             Content="{x:Bind root:ResourceService.GetLocalized('WinGet/ChangeFolder')}" />
                     </Grid>
 
-                    <!--  额外安装参数  -->
+                    <!--  允许的处理器架构  -->
                     <Grid
                         Grid.Row="7"
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,12,22,12"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource BodyTextBlockStyle}"
+                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AllowedArchitectures')}" />
+
+                        <ToggleButton
+                            Grid.Column="1"
+                            Margin="6,0,2,0"
+                            Click="{x:Bind OnProcessorArchitectureClicked}"
+                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X86)}"
+                            IsChecked="{x:Bind IsX86ProcessorArchitecture, Mode=OneWay}"
+                            Tag="{x:Bind winrt:ProcessorArchitecture.X86}" />
+
+                        <ToggleButton
+                            Grid.Column="2"
+                            Margin="0,0,2,0"
+                            Click="{x:Bind OnProcessorArchitectureClicked}"
+                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.X64)}"
+                            IsChecked="{x:Bind IsX64ProcessorArchitecture, Mode=OneWay}"
+                            Tag="{x:Bind winrt:ProcessorArchitecture.X64}" />
+
+                        <ToggleButton
+                            Grid.Column="3"
+                            Click="{x:Bind OnProcessorArchitectureClicked}"
+                            Content="{x:Bind sys:Convert.ToString(winrt:ProcessorArchitecture.Arm64)}"
+                            IsChecked="{x:Bind IsArm64ProcessorArchitecture, Mode=OneWay}"
+                            Tag="{x:Bind winrt:ProcessorArchitecture.Arm64}" />
+                    </Grid>
+
+                    <!--  额外安装参数  -->
+                    <Grid
+                        Grid.Row="8"
                         Height="60"
                         Padding="16,12,22,12"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"

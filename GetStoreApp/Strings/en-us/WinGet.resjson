@@ -1,5 +1,6 @@
 {
   "AdditionalInstallerArguments": "Additional install arguments",
+  "AllowedArchitectures": "Allowed architectures",
   "AllowHashMismatch": "Ignore the installer hash check failure",
   "AllowHashMismatchOffContent": "No",
   "AllowHashMismatchOnContent": "Yes",

@@ -10,6 +10,7 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.Storage.Pickers;
@@ -18,6 +19,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
 using Windows.System;
@@ -32,6 +34,8 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class WinGetAppsVersionOptionsPage : Page, INotifyPropertyChanged
     {
+        private readonly ProcessorArchitecture currentProcessorArchitecture = Package.Current.Id.Architecture;
+
         private WinGetPage WinGetPage { get; set; }
 
         private WinGetAppsVersionDialog WinGetAppsVersionDialog { get; set; }
@@ -214,6 +218,54 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private bool _isX86ProcessorArchitecture;
+
+        public bool IsX86ProcessorArchitecture
+        {
+            get { return _isX86ProcessorArchitecture; }
+
+            set
+            {
+                if (!Equals(_isX86ProcessorArchitecture, value))
+                {
+                    _isX86ProcessorArchitecture = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsX86ProcessorArchitecture)));
+                }
+            }
+        }
+
+        private bool _isX64ProcessorArchitecture;
+
+        public bool IsX64ProcessorArchitecture
+        {
+            get { return _isX64ProcessorArchitecture; }
+
+            set
+            {
+                if (!Equals(_isX64ProcessorArchitecture, value))
+                {
+                    _isX64ProcessorArchitecture = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsX64ProcessorArchitecture)));
+                }
+            }
+        }
+
+        private bool _isArm64ProcessorArchitecture;
+
+        public bool IsArm64ProcessorArchitecture
+        {
+            get { return _isArm64ProcessorArchitecture; }
+
+            set
+            {
+                if (!Equals(_isArm64ProcessorArchitecture, value))
+                {
+                    _isArm64ProcessorArchitecture = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsArm64ProcessorArchitecture)));
+                }
+            }
+        }
+
         private string _additionalInstallerArguments;
 
         public string AdditionalInstallerArguments
@@ -342,6 +394,9 @@ namespace GetStoreApp.Views.Pages
                             PackageInstallScope = PackageInstallScopeList[0];
                             PackageInstallMode = PackageInstallModeList[0];
                             PackageInstallPath = string.Empty;
+                            IsX86ProcessorArchitecture = currentProcessorArchitecture is ProcessorArchitecture.X86;
+                            IsX64ProcessorArchitecture = currentProcessorArchitecture is ProcessorArchitecture.X64;
+                            IsArm64ProcessorArchitecture = currentProcessorArchitecture is ProcessorArchitecture.Arm64;
                             AdditionalInstallerArguments = string.Empty;
                             break;
                         }
@@ -365,6 +420,9 @@ namespace GetStoreApp.Views.Pages
                             PackageInstallScope = PackageInstallScopeList[0];
                             PackageInstallMode = PackageInstallModeList[0];
                             PackageInstallPath = string.Empty;
+                            IsX86ProcessorArchitecture = currentProcessorArchitecture is ProcessorArchitecture.X86;
+                            IsX64ProcessorArchitecture = currentProcessorArchitecture is ProcessorArchitecture.X64;
+                            IsArm64ProcessorArchitecture = currentProcessorArchitecture is ProcessorArchitecture.Arm64;
                             AdditionalInstallerArguments = string.Empty;
                             break;
                         }
@@ -625,7 +683,7 @@ namespace GetStoreApp.Views.Pages
         {
             PackageOperation.InstallOptions = await Task.Run(() =>
             {
-                return new InstallOptions()
+                InstallOptions installOptions = new InstallOptions()
                 {
                     AcceptPackageAgreements = true,
                     AdditionalInstallerArguments = AdditionalInstallerArguments,
@@ -640,6 +698,22 @@ namespace GetStoreApp.Views.Pages
                     PreferredInstallLocation = PackageInstallPath,
                     SkipDependencies = false,
                 };
+
+                installOptions.AllowedArchitectures.Clear();
+                if (IsX86ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X86);
+                }
+                if (IsX64ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X64);
+                }
+                if (IsArm64ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.Arm64);
+                }
+
+                return installOptions;
             });
 
             WinGetAppsVersionDialog.Hide();
@@ -892,6 +966,34 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
+        /// 允许的处理器架构发生更改时触发的事件
+        /// </summary>
+        private void OnProcessorArchitectureClicked(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleButton toggleButton && toggleButton.Tag is ProcessorArchitecture processorArchitecture)
+            {
+                switch (processorArchitecture)
+                {
+                    case ProcessorArchitecture.X86:
+                        {
+                            IsX86ProcessorArchitecture = !IsX86ProcessorArchitecture;
+                            break;
+                        }
+                    case ProcessorArchitecture.X64:
+                        {
+                            IsX64ProcessorArchitecture = !IsX64ProcessorArchitecture;
+                            break;
+                        }
+                    case ProcessorArchitecture.Arm64:
+                        {
+                            IsArm64ProcessorArchitecture = !IsArm64ProcessorArchitecture;
+                            break;
+                        }
+                }
+            }
+        }
+
+        /// <summary>
         /// 修复当前版本应用
         /// </summary>
         private async void OnRepairClicked(object sender, RoutedEventArgs args)
@@ -1062,21 +1164,40 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private async void OnUpgradeClicked(object sender, RoutedEventArgs args)
         {
-            PackageOperation.InstallOptions = new()
+            PackageOperation.InstallOptions = await Task.Run(() =>
             {
-                AcceptPackageAgreements = true,
-                AdditionalInstallerArguments = AdditionalInstallerArguments,
-                AllowHashMismatch = AllowHashMismatch,
-                AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion,
-                BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
-                Force = Force,
-                LogOutputPath = LogService.WinGetFolderPath,
-                PackageInstallMode = PackageInstallMode.Key,
-                PackageInstallScope = PackageInstallScope.Key,
-                PackageVersionId = PackageOperation.PackageVersionId,
-                PreferredInstallLocation = PackageInstallPath,
-                SkipDependencies = false,
-            };
+                InstallOptions installOptions = new InstallOptions()
+                {
+                    AcceptPackageAgreements = true,
+                    AdditionalInstallerArguments = AdditionalInstallerArguments,
+                    AllowHashMismatch = AllowHashMismatch,
+                    AllowUpgradeToUnknownVersion = AllowUpgradeToUnknownVersion,
+                    BypassIsStoreClientBlockedPolicyCheck = BypassIsStoreClientBlockedPolicyCheck,
+                    Force = Force,
+                    LogOutputPath = LogService.WinGetFolderPath,
+                    PackageInstallMode = PackageInstallMode.Key,
+                    PackageInstallScope = PackageInstallScope.Key,
+                    PackageVersionId = PackageOperation.PackageVersionId,
+                    PreferredInstallLocation = PackageInstallPath,
+                    SkipDependencies = false,
+                };
+
+                installOptions.AllowedArchitectures.Clear();
+                if (IsX86ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X86);
+                }
+                if (IsX64ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.X64);
+                }
+                if (IsArm64ProcessorArchitecture)
+                {
+                    installOptions.AllowedArchitectures.Add(ProcessorArchitecture.Arm64);
+                }
+
+                return installOptions;
+            });
 
             WinGetAppsVersionDialog.Hide();
             await WinGetPage.AddTaskAsync(PackageOperation);
