@@ -1,5 +1,4 @@
-﻿using GetStoreApp.Extensions.DataType.Constant;
-using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Services.Root;
 using Microsoft.Management.Deployment;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation.Diagnostics;
 using Windows.Storage;
-using Windows.System;
 
 namespace GetStoreApp.Services.Controls.Settings
 {
@@ -19,8 +17,6 @@ namespace GetStoreApp.Services.Controls.Settings
     public static class WinGetConfigService
     {
         private const string WinetDataSource = "WinetDataSource";
-        private static readonly string winGetPackageDownloadFolderKey = ConfigKey.WinGetPackageDownloadFolderKey;
-        private static readonly string winGetInstallModeSettingsKey = ConfigKey.WinGetInstallModeKey;
         private static readonly Lock wingetDataSourceLock = new();
         private static readonly ApplicationDataContainer localSettingsContainer = ApplicationData.Current.LocalSettings;
         private static ApplicationDataContainer wingetDataSourceContainer;
@@ -29,15 +25,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
         public static StorageFolder DefaultDownloadFolder { get; private set; }
 
-        public static StorageFolder DownloadFolder { get; private set; }
-
         public static List<KeyValuePair<string, PredefinedPackageCatalog>> PredefinedPackageCatalogList { get; } = [];
-
-        public static KeyValuePair<string, string> DefaultWinGetInstallMode { get; set; }
-
-        public static KeyValuePair<string, string> WinGetInstallMode { get; set; }
-
-        public static List<KeyValuePair<string, string>> WinGetInstallModeList { get; set; }
 
         /// <summary>
         /// 应用在初始化前获取设置存储的是否使用开发版本布尔值和 WinGet 程序包安装方式值
@@ -45,13 +33,8 @@ namespace GetStoreApp.Services.Controls.Settings
         public static async Task InitializeWinGetConfigAsync()
         {
             wingetDataSourceContainer = localSettingsContainer.CreateContainer(WinetDataSource, ApplicationDataCreateDisposition.Always);
-
-            WinGetInstallModeList = ResourceService.WinGetInstallModeList;
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("WinGet", CreationCollisionOption.OpenIfExists);
-            DefaultWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(PackageInstallMode.Interactive.ToString(), StringComparison.OrdinalIgnoreCase));
-            DownloadFolder = await GetFolderAsync();
             IsWinGetInstalled = GetWinGetInstalledState();
-            WinGetInstallMode = GetWinGetInstallMode();
 
             // 每次获取时读取已经添加的安装源，并去除掉已经被删除的值
             await Task.Run(() =>
@@ -120,71 +103,6 @@ namespace GetStoreApp.Services.Controls.Settings
                     }
                 }
             });
-        }
-
-        /// <summary>
-        /// 获取设置存储的 WinGet 安装包下载位置值，然后检查目录的读写权限。如果不能读取，使用默认的目录
-        /// </summary>
-        private static async Task<StorageFolder> GetFolderAsync()
-        {
-            string folder = LocalSettingsService.ReadSetting<string>(winGetPackageDownloadFolderKey);
-
-            try
-            {
-                if (string.IsNullOrEmpty(folder))
-                {
-                    SetFolder(DefaultDownloadFolder);
-                    return DefaultDownloadFolder;
-                }
-                else
-                {
-                    return await StorageFolder.GetFolderFromPathAsync(folder);
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Get winget package saved folder failed.", e);
-                SetFolder(DefaultDownloadFolder);
-                return DefaultDownloadFolder;
-            }
-        }
-
-        /// <summary>
-        /// 获取设置存储的 WinGet 程序包安装方式值，如果设置没有存储，使用默认值
-        /// </summary>
-        private static KeyValuePair<string, string> GetWinGetInstallMode()
-        {
-            string winGetInstallMode = LocalSettingsService.ReadSetting<string>(winGetInstallModeSettingsKey);
-
-            if (string.IsNullOrEmpty(winGetInstallMode))
-            {
-                SetWinGetInstallMode(DefaultWinGetInstallMode);
-                return WinGetInstallModeList.Find(item => item.Key.Equals(DefaultWinGetInstallMode.Key));
-            }
-
-            KeyValuePair<string, string> selectedWinGetInstallMode = WinGetInstallModeList.Find(item => item.Key.Equals(winGetInstallMode, StringComparison.OrdinalIgnoreCase));
-
-            return string.IsNullOrEmpty(selectedWinGetInstallMode.Key) ? DefaultWinGetInstallMode : selectedWinGetInstallMode;
-        }
-
-        /// <summary>
-        /// 下载位置发生修改时修改设置存储的下载位置值
-        /// </summary>
-        public static void SetFolder(StorageFolder downloadFolder)
-        {
-            DownloadFolder = downloadFolder;
-
-            LocalSettingsService.SaveSetting(winGetPackageDownloadFolderKey, downloadFolder.Path);
-        }
-
-        /// <summary>
-        /// 应用安装方式发生修改时修改设置存储的 WinGet 程序包安装方式
-        /// </summary>
-        public static void SetWinGetInstallMode(KeyValuePair<string, string> winGetInstallMode)
-        {
-            WinGetInstallMode = winGetInstallMode;
-
-            LocalSettingsService.SaveSetting(winGetInstallModeSettingsKey, winGetInstallMode.Key);
         }
 
         /// <summary>
@@ -266,19 +184,6 @@ namespace GetStoreApp.Services.Controls.Settings
             {
                 wingetDataSourceLock.Exit();
             }
-        }
-
-        /// <summary>
-        /// 安全访问目录（当目录不存在的时候直接创建目录）
-        /// </summary>
-        public static async Task OpenFolderAsync(StorageFolder folder)
-        {
-            if (!Directory.Exists(folder.Path))
-            {
-                Directory.CreateDirectory(folder.Path);
-            }
-
-            await Launcher.LaunchFolderAsync(folder);
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Store;
 using GetStoreApp.Models.Dialogs;
-using Microsoft.Management.Deployment;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -47,8 +46,6 @@ namespace GetStoreApp.Services.Root
 
         public static List<TraceCleanupModel> TraceCleanupList { get; } = [];
 
-        public static List<KeyValuePair<string, string>> WinGetInstallModeList { get; } = [];
-
         public static List<KeyValuePair<string, string>> DoEngineModeList { get; } = [];
 
         /// <summary>
@@ -86,7 +83,6 @@ namespace GetStoreApp.Services.Root
             InitializeInstallModeList();
             InitializeThemeList();
             InitializeTraceCleanupList();
-            InitializeWinGetInstallModeList();
             InitializeDoEngineModeList();
         }
 
@@ -293,15 +289,6 @@ namespace GetStoreApp.Services.Root
                 InternalName = CleanKind.LocalFile,
                 CleanFailedText = GetLocalized("Dialog/LocalFileCleanError")
             });
-        }
-
-        /// <summary>
-        /// 初始化 WinGet 程序包安装模式信息列表
-        /// </summary>
-        private static void InitializeWinGetInstallModeList()
-        {
-            WinGetInstallModeList.Add(KeyValuePair.Create(nameof(PackageInstallMode.Interactive), GetLocalized("Settings/InteractiveInstall")));
-            WinGetInstallModeList.Add(KeyValuePair.Create(nameof(PackageInstallMode.Silent), GetLocalized("Settings/SlientInstall")));
         }
 
         /// <summary>

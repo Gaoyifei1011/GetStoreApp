@@ -4,8 +4,6 @@ using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Management.Core;
@@ -20,44 +18,8 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 设置 WinGet 程序包选项页面
     /// </summary>
-    public sealed partial class SettingsWinGetPage : Page, INotifyPropertyChanged
+    public sealed partial class SettingsWinGetPage : Page
     {
-        private StorageFolder _winGetPackageFolder = WinGetConfigService.DownloadFolder;
-
-        public StorageFolder WinGetPackageFolder
-        {
-            get { return _winGetPackageFolder; }
-
-            set
-            {
-                if (!Equals(_winGetPackageFolder, value))
-                {
-                    _winGetPackageFolder = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetPackageFolder)));
-                }
-            }
-        }
-
-        private KeyValuePair<string, string> _winGetInstallMode = WinGetConfigService.WinGetInstallMode;
-
-        public KeyValuePair<string, string> WinGetInstallMode
-        {
-            get { return _winGetInstallMode; }
-
-            set
-            {
-                if (!Equals(_winGetInstallMode, value))
-                {
-                    _winGetInstallMode = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinGetInstallMode)));
-                }
-            }
-        }
-
-        private List<KeyValuePair<string, string>> WinGetInstallModeList { get; } = WinGetConfigService.WinGetInstallModeList;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public SettingsWinGetPage()
         {
             InitializeComponent();
