@@ -225,31 +225,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 了解更多下载管理说明
-        /// </summary>
-        private async void OnLearnDownloadMoreClicked(object sender, RoutedEventArgs args)
-        {
-            StoreSplitView.IsPaneOpen = false;
-            await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
-
-            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
-            {
-                settingsPage.ShowSettingsInstruction();
-            }
-        }
-
-        /// <summary>
-        /// 打开应用“下载设置”
-        /// </summary>
-        private async void OnOpenDownloadSettingsClicked(object sender, RoutedEventArgs args)
-        {
-            StoreSplitView.IsPaneOpen = false;
-            await Task.Delay(300);
-            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
-        }
-
-        /// <summary>
         /// 打开下载设置
         /// </summary>
         private async void OnDownloadSettingsClicked(Hyperlink sender, HyperlinkClickEventArgs args)
