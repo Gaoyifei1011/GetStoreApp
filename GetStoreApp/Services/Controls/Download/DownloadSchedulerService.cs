@@ -24,7 +24,7 @@ namespace GetStoreApp.Services.Controls.Download
 
         public static SemaphoreSlim DownloadSchedulerSemaphoreSlim { get; private set; } = new(1, 1);
 
-        private static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
+        public static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
 
         public static event Action<Guid, DownloadSchedulerModel> DownloadCreated;
 

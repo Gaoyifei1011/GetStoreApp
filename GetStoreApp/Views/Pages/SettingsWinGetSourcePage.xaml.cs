@@ -45,7 +45,6 @@ namespace GetStoreApp.Views.Pages
         private readonly string WinGetDataSourceRemoveInvalidOptions = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveInvalidOptions");
         private readonly string WinGetDataSourceRemoveAccessDenied = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveAccessDenied");
         private readonly string WinGetDataSourceRemoveSuccess = ResourceService.GetLocalized("Settings/WinGetDataSourceRemoveSuccess");
-        private readonly string WinGetSourceCountEmpty = ResourceService.GetLocalized("Settings/WinGetSourceCountEmpty");
         private readonly string WinGetSourceCountInfo = ResourceService.GetLocalized("Settings/WinGetSourceCountInfo");
         private bool isInitialized;
 

@@ -6,7 +6,6 @@ using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
