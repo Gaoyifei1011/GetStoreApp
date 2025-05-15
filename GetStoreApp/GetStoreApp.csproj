@@ -245,7 +245,6 @@
     <None Remove="Strings\zh-hans\WebView.resjson" />
     <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Strings\zh-hans\WinGet.resjson" />
-    <None Remove="UI\Controls\Download\CompletedControl.xaml" />
     <None Remove="UI\Dialogs\About\AppInformationDialog.xaml" />
     <None Remove="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" />
     <None Remove="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" />
@@ -296,8 +295,6 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.3916" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250401001" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
-    
-    <Page Update="UI\Controls\Download\CompletedControl.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\ConsoleStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="UI\Dialogs\About\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
