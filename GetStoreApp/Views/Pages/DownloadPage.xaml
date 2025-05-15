@@ -3,49 +3,201 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dc="using:GetStoreApp.UI.Controls.Download"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Grid Padding="0">
+    <Page.Resources>
+        <TransitionCollection x:Name="SuppressNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SuppressNavigationTransitionInfo />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        <TransitionCollection x:Name="LeftSlideNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo Effect="FromLeft" />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
 
-        <Grid
-            Grid.Row="0"
-            Margin="20,10,30,3"
-            ColumnSpacing="5">
+        <TransitionCollection x:Name="RightSlideNavigationTransitionCollection">
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo Effect="FromRight" />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Resources>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+    <SplitView
+        x:Name="DownloadSplitView"
+        Grid.Row="1"
+        PaneBackground="Transparent"
+        PanePlacement="Right">
 
-            <SelectorBar
-                x:Name="DownloadSelctorBar"
-                Grid.Column="0"
-                Padding="0"
-                HorizontalAlignment="Left"
-                SelectionChanged="{x:Bind OnSelectionChanged}">
+        <SplitView.Content>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                <SelectorBarItem
-                    Padding="12,5"
-                    FontSize="22"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" />
+                <!--  下载管理控制栏  -->
+                <SelectorBar
+                    x:Name="DownloadSelctorBar"
+                    Grid.Row="0"
+                    Margin="20,6,30,3"
+                    Padding="0"
+                    HorizontalAlignment="Left"
+                    SelectedItem="{x:Bind SelectedItem, Mode=OneWay}">
 
-                <SelectorBarItem
-                    Padding="12,5"
-                    FontSize="22"
-                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" />
-            </SelectorBar>
-        </Grid>
+                    <SelectorBarItem
+                        Padding="12,5"
+                        FontSize="22"
+                        IsTapEnabled="True"
+                        Tag="0"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}" />
 
-        <dc:DownloadingControl x:Name="Downloading" Grid.Row="1" />
-        <dc:CompletedControl x:Name="Completed" Grid.Row="1" />
-    </Grid>
+                    <SelectorBarItem
+                        Padding="12,5"
+                        FontSize="22"
+                        IsTapEnabled="True"
+                        Tag="1"
+                        Tapped="{x:Bind OnSelectorBarTapped}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Download/Completed')}" />
+                </SelectorBar>
+
+                <!--  WinGet 程序包内容  -->
+                <Frame
+                    x:Name="DownloadFrame"
+                    Grid.Row="1"
+                    Navigated="{x:Bind OnNavigated}"
+                    NavigationFailed="{x:Bind OnNavigationFailed}" />
+            </Grid>
+        </SplitView.Content>
+
+        <SplitView.Pane>
+            <!--  使用说明  -->
+            <Grid
+                Margin="0,10,0,0"
+                Background="{ThemeResource NavigationViewDefaultPaneBackground}"
+                CornerRadius="4,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid
+                    Grid.Row="0"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="0,0,0,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <FontIcon
+                        Grid.Column="0"
+                        Margin="16,0,6,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Glyph="&#xE946;" />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UseInstruction')}" />
+
+                    <Button
+                        Grid.Column="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Click="{x:Bind OnCloseClicked}"
+                        Style="{StaticResource AlternateCloseButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Close')}">
+
+                        <Button.Content>
+                            <FontIcon
+                                Margin="4"
+                                FontSize="16"
+                                Glyph="&#xE711;" />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+
+                <ScrollView
+                    Grid.Row="1"
+                    HorizontalScrollBarVisibility="Hidden"
+                    HorizontalScrollMode="Disabled"
+                    VerticalScrollBarVisibility="Visible"
+                    VerticalScrollMode="Enabled">
+
+                    <Grid Margin="0,0,0,30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="19"
+                            Margin="16,10,16,10"
+                            FontSize="15"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction')}"
+                            TextAlignment="Left" />
+
+                        <TextBlock
+                            Grid.Row="20"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction1')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="21"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction2')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
+                        <StackPanel
+                            Grid.Row="22"
+                            Margin="16,0,16,5"
+                            Spacing="5">
+
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnLearnDownloadMoreClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/LearnDownloadMore')}" />
+                                </Hyperlink>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Hyperlink Click="{x:Bind OnOpenDownloadSettingsClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenDownloadSettings')}" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <MenuFlyoutSeparator Grid.Row="23" />
+                    </Grid>
+                </ScrollView>
+            </Grid>
+        </SplitView.Pane>
+    </SplitView>
 </Page>

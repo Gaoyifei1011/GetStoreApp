@@ -1,5 +1,15 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
+using GetStoreApp.Views.Windows;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Navigation;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Windows.Foundation.Diagnostics;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -9,38 +19,184 @@ namespace GetStoreApp.Views.Pages
     /// <summary>
     /// 下载页面
     /// </summary>
-    public sealed partial class DownloadPage : Page
+    public sealed partial class DownloadPage : Page, INotifyPropertyChanged
     {
-        public DownloadPage()
-        {
-            InitializeComponent();
-            DownloadSelctorBar.SelectedItem = DownloadSelctorBar.Items[0];
-        }
+        private SelectorBarItem _selectedItem;
 
-        #region 第一部分：下载页面——挂载的事件
-
-        /// <summary>
-        /// 下载透视控件选中项发生变化时，关闭离开页面的事件，开启要导航到的页面的事件，并更新新页面的数据
-        /// </summary>
-        private void OnSelectionChanged(object sender, SelectorBarSelectionChangedEventArgs args)
+        public SelectorBarItem SelectedItem
         {
-            if (sender is SelectorBar selectorBar && selectorBar.SelectedItem is not null)
+            get { return _selectedItem; }
+
+            set
             {
-                int selectedIndex = selectorBar.Items.IndexOf(selectorBar.SelectedItem);
-
-                if (selectedIndex is 0)
+                if (!Equals(_selectedItem, value))
                 {
-                    Downloading.Visibility = Visibility.Visible;
-                    Completed.Visibility = Visibility.Collapsed;
-                }
-                else if (selectedIndex is 1)
-                {
-                    Downloading.Visibility = Visibility.Collapsed;
-                    Completed.Visibility = Visibility.Visible;
+                    _selectedItem = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
                 }
             }
         }
 
-        #endregion 第一部分：下载页面——挂载的事件
+        public List<Type> PageList { get; } = [typeof(DownloadingPage), typeof(CompletedPage)];
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public DownloadPage()
+        {
+            InitializeComponent();
+        }
+
+        #region 第一部分：重写父类事件
+
+        /// <summary>
+        /// 导航到该页面触发的事件
+        /// </summary>
+        protected override void OnNavigatedTo(NavigationEventArgs args)
+        {
+            base.OnNavigatedTo(args);
+            DownloadFrame.ContentTransitions = SuppressNavigationTransitionCollection;
+
+            // 第一次导航
+            if (GetCurrentPageType() is null)
+            {
+                NavigateTo(PageList[0], args.Parameter, null);
+            }
+        }
+
+        #endregion 第一部分：重写父类事件
+
+        #region 第二部分：下载页面——挂载的事件
+
+        /// <summary>
+        /// 点击选择器栏发生的事件
+        /// </summary>
+        private void OnSelectorBarTapped(object sender, TappedRoutedEventArgs args)
+        {
+            if (sender is SelectorBarItem selectorBarItem && selectorBarItem.Tag is string tag)
+            {
+                int index = Convert.ToInt32(tag);
+                int currentIndex = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+                if (index is 0 && !Equals(GetCurrentPageType(), PageList[0]))
+                {
+                    NavigateTo(PageList[0], null, index > currentIndex);
+                }
+                else if (index is 1 && !Equals(GetCurrentPageType(), PageList[1]))
+                {
+                    NavigateTo(PageList[1], null, index > currentIndex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 导航完成后发生
+        /// </summary>
+        private void OnNavigated(object sender, NavigationEventArgs args)
+        {
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < DownloadSelctorBar.Items.Count)
+            {
+                SelectedItem = DownloadSelctorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+            }
+        }
+
+        /// <summary>
+        /// 导航失败时发生
+        /// </summary>
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs args)
+        {
+            args.Handled = true;
+            int index = PageList.FindIndex(item => Equals(item, GetCurrentPageType()));
+
+            if (index >= 0 && index < DownloadSelctorBar.Items.Count)
+            {
+                SelectedItem = DownloadSelctorBar.Items[PageList.FindIndex(item => Equals(item, GetCurrentPageType()))];
+            }
+
+            LogService.WriteLog(LoggingLevel.Warning, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), args.SourcePageType.FullName), args.Exception);
+        }
+
+        /// <summary>
+        /// 关闭使用说明浮出栏
+        /// </summary>
+        private void OnCloseClicked(object sender, RoutedEventArgs args)
+        {
+            if (DownloadSplitView.IsPaneOpen)
+            {
+                DownloadSplitView.IsPaneOpen = false;
+            }
+        }
+
+        /// <summary>
+        /// 了解更多下载管理说明
+        /// </summary>
+        private async void OnLearnDownloadMoreClicked(object sender, RoutedEventArgs args)
+        {
+            DownloadSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
+
+            if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
+            {
+                settingsPage.ShowSettingsInstruction();
+            }
+        }
+
+        /// <summary>
+        /// 打开应用“下载设置”
+        /// </summary>
+        private async void OnOpenDownloadSettingsClicked(object sender, RoutedEventArgs args)
+        {
+            DownloadSplitView.IsPaneOpen = false;
+            await Task.Delay(300);
+            MainWindow.Current.NavigateTo(typeof(SettingsPage), AppNaviagtionArgs.DownloadOptions);
+        }
+
+        #endregion 第二部分：下载页面——挂载的事件
+
+        #region 第三部分：应用商店页面——窗口导航方法
+
+        /// <summary>
+        /// 页面向前导航
+        /// </summary>
+        public void NavigateTo(Type navigationPageType, object parameter = null, bool? slideDirection = null)
+        {
+            try
+            {
+                if (slideDirection.HasValue)
+                {
+                    DownloadFrame.ContentTransitions = slideDirection.Value ? RightSlideNavigationTransitionCollection : LeftSlideNavigationTransitionCollection;
+                }
+
+                // 导航到该项目对应的页面
+                DownloadFrame.Navigate(navigationPageType, parameter);
+            }
+            catch (Exception e)
+            {
+                LogService.WriteLog(LoggingLevel.Error, string.Format(ResourceService.GetLocalized("Store/NavigationFailed"), navigationPageType.FullName), e);
+            }
+        }
+
+        /// <summary>
+        /// 获取当前导航到的页
+        /// </summary>
+        public Type GetCurrentPageType()
+        {
+            return DownloadFrame.CurrentSourcePageType;
+        }
+
+        #endregion 第三部分：应用商店页面——窗口导航方法
+
+        /// <summary>
+        /// 显示下载使用说明
+        /// </summary>
+        public void ShowUseInstruction()
+        {
+            if (!DownloadSplitView.IsPaneOpen)
+            {
+                DownloadSplitView.IsPaneOpen = true;
+            }
+        }
     }
 }
