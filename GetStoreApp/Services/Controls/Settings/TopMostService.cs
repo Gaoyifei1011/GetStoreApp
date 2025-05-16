@@ -57,7 +57,7 @@ namespace GetStoreApp.Services.Controls.Settings
         }
 
         /// <summary>
-        /// 使用说明按钮显示发生修改时修改设置存储的使用说明按钮显示值
+        /// 使用说明按钮显示发生修改时修改设置存储的窗口置顶值
         /// </summary>
         public static void SetTopMostValue(bool topMostValue)
         {
