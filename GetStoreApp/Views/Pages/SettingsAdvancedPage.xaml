@@ -9,7 +9,7 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <ScrollView
+    <ScrollViewer
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -478,5 +478,5 @@
                 </Expander.Content>
             </Expander>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

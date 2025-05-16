@@ -73,7 +73,7 @@
 
             <MenuFlyoutSeparator Grid.Row="1" />
 
-            <ScrollView
+            <ScrollViewer
                 Grid.Row="2"
                 HorizontalScrollBarVisibility="Hidden"
                 HorizontalScrollMode="Disabled"
@@ -369,7 +369,7 @@
                         </DropDownButton>
                     </Grid>
                 </Grid>
-            </ScrollView>
+            </ScrollViewer>
         </Grid>
 
         <!--  安装应用控件  -->
@@ -430,7 +430,7 @@
 
             <MenuFlyoutSeparator Grid.Row="1" />
 
-            <ScrollView
+            <ScrollViewer
                 Grid.Row="2"
                 HorizontalScrollBarVisibility="Hidden"
                 HorizontalScrollMode="Disabled"
@@ -891,7 +891,7 @@
                             TextChanged="{x:Bind OnAdditionalInstallerArgumentsTextChanged}" />
                     </Grid>
                 </Grid>
-            </ScrollView>
+            </ScrollViewer>
         </Grid>
 
         <!--  修复应用控件  -->
@@ -952,7 +952,7 @@
 
             <MenuFlyoutSeparator Grid.Row="1" />
 
-            <ScrollView
+            <ScrollViewer
                 Grid.Row="2"
                 HorizontalScrollBarVisibility="Hidden"
                 HorizontalScrollMode="Disabled"
@@ -1229,7 +1229,7 @@
                         </DropDownButton>
                     </Grid>
                 </Grid>
-            </ScrollView>
+            </ScrollViewer>
         </Grid>
 
         <!--  更新应用控件  -->
@@ -1290,7 +1290,7 @@
 
             <MenuFlyoutSeparator Grid.Row="1" />
 
-            <ScrollView
+            <ScrollViewer
                 Grid.Row="2"
                 HorizontalScrollBarVisibility="Hidden"
                 HorizontalScrollMode="Disabled"
@@ -1751,7 +1751,7 @@
                             TextChanged="{x:Bind OnAdditionalInstallerArgumentsTextChanged}" />
                     </Grid>
                 </Grid>
-            </ScrollView>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>

@@ -27,7 +27,7 @@
         <XamlUICommand x:Name="QueryLinksCommand" ExecuteRequested="{x:Bind OnQueryLinksExecuteRequested}" />
     </Page.Resources>
 
-    <ScrollView
+    <ScrollViewer
         Padding="30,0,30,0"
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
@@ -473,5 +473,5 @@
                 </ItemsView>
             </Grid>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

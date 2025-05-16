@@ -11,7 +11,7 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <ScrollView
+    <ScrollViewer
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -517,5 +517,5 @@
                 </Expander.Content>
             </Expander>
         </StackPanel>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

@@ -9,7 +9,7 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <ScrollView
+    <ScrollViewer
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -138,5 +138,5 @@
                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Settings/OpenWinGetSettingsToolTip')}" />
             </Grid>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

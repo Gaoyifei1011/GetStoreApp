@@ -9,7 +9,7 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <ScrollView
+    <ScrollViewer
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -247,5 +247,5 @@
                 </StackPanel>
             </Grid>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

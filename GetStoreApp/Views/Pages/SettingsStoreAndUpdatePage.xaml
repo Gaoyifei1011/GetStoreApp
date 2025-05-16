@@ -17,7 +17,7 @@
         <XamlUICommand x:Name="StoreRegionCommand" ExecuteRequested="{x:Bind OnStoreRegionExecuteRequested}" />
     </Page.Resources>
 
-    <ScrollView
+    <ScrollViewer
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -934,5 +934,5 @@
                 </Expander.Content>
             </Expander>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

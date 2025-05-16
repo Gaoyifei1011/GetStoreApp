@@ -204,7 +204,7 @@
                     </Button>
                 </Grid>
 
-                <ScrollView
+                <ScrollViewer
                     Grid.Row="1"
                     HorizontalScrollBarVisibility="Hidden"
                     HorizontalScrollMode="Disabled"
@@ -443,7 +443,7 @@
                             </TextBlock>
                         </StackPanel>
                     </Grid>
-                </ScrollView>
+                </ScrollViewer>
             </Grid>
         </SplitView.Pane>
     </SplitView>

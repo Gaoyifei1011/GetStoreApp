@@ -168,7 +168,7 @@
 
                 <MenuFlyoutSeparator Grid.Row="1" />
 
-                <ScrollView Grid.Row="2">
+                <ScrollViewer Grid.Row="2">
                     <Grid Margin="10,5,10,30">
 
                         <Grid.RowDefinitions>
@@ -514,7 +514,7 @@
                             </ItemsView.ItemTemplate>
                         </ItemsView>
                     </Grid>
-                </ScrollView>
+                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>

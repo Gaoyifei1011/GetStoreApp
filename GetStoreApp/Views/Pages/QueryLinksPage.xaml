@@ -29,7 +29,7 @@
         <XamlUICommand x:Name="CopyInformationCommand" ExecuteRequested="{x:Bind OnCopyInformationExecuteRequested}" />
     </Page.Resources>
 
-    <ScrollView
+    <ScrollViewer
         Padding="30,0,30,0"
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
@@ -933,5 +933,5 @@
                 </ItemsView>
             </Grid>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

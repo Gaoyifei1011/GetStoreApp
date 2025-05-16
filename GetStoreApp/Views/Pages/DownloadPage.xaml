@@ -134,7 +134,7 @@
                     </Button>
                 </Grid>
 
-                <ScrollView
+                <ScrollViewer
                     Grid.Row="1"
                     HorizontalScrollBarVisibility="Hidden"
                     HorizontalScrollMode="Disabled"
@@ -196,7 +196,7 @@
 
                         <MenuFlyoutSeparator Grid.Row="23" />
                     </Grid>
-                </ScrollView>
+                </ScrollViewer>
             </Grid>
         </SplitView.Pane>
     </SplitView>

@@ -108,7 +108,7 @@
             </CommandBar>
         </Grid>
 
-        <ScrollView
+        <ScrollViewer
             Grid.Row="1"
             HorizontalScrollBarVisibility="Hidden"
             HorizontalScrollMode="Disabled"
@@ -839,6 +839,6 @@
                     </ItemsView>
                 </Grid>
             </Grid>
-        </ScrollView>
+        </ScrollViewer>
     </Grid>
 </Page>

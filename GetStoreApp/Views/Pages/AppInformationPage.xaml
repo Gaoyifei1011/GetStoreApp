@@ -29,7 +29,7 @@
         <XamlUICommand x:Name="ShowMoreCommand" ExecuteRequested="{x:Bind OnShowMoreExecuteRequested}" />
     </Page.Resources>
 
-    <ScrollView
+    <ScrollViewer
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -976,5 +976,5 @@
                 </Expander.Content>
             </Expander>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>

@@ -18,7 +18,7 @@
         <XamlUICommand x:Name="LanguageCommand" ExecuteRequested="{x:Bind OnLanguageExecuteRequested}" />
     </Page.Resources>
 
-    <ScrollView
+    <ScrollViewer
         HorizontalScrollBarVisibility="Hidden"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
@@ -516,5 +516,5 @@
                 </StackPanel>
             </Grid>
         </Grid>
-    </ScrollView>
+    </ScrollViewer>
 </Page>
