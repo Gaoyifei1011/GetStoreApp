@@ -13,6 +13,8 @@
 
         public const string BlockMapFilterKey = "BlockMapFilterValue";
 
+        public const string CancelAutoUpdateKey = "CancelAutoUpdateValue";
+
         public const string DownloadFolderKey = "DownloadFolder";
 
         public const string DoEngineModeKey = "DoEngineMode";
