@@ -379,7 +379,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Grid
-                                    Grid.Row="0"
+                                    Grid.Column="0"
                                     Width="30"
                                     Height="30"
                                     Margin="0,-6,0,-6"
