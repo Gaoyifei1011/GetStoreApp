@@ -22,8 +22,6 @@
 
     <ContentDialog.Resources>
         <x:Double x:Key="ContentDialogMinWidth">600</x:Double>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </ContentDialog.Resources>
 
     <ContentDialog.Title>

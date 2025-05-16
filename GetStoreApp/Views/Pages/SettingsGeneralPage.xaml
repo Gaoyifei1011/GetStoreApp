@@ -12,14 +12,11 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
         <XamlUICommand x:Name="LanguageCommand" ExecuteRequested="{x:Bind OnLanguageExecuteRequested}" />
     </Page.Resources>
 
     <ScrollViewer
-        HorizontalScrollBarVisibility="Hidden"
+        HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
         VerticalScrollMode="Enabled">
@@ -413,33 +410,39 @@
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
 
-                            <ItemsView
-                                x:Name="LanguageItemsView"
+                            <ListView
+                                x:Name="LanguageListView"
                                 MaxHeight="300"
                                 Background="Transparent"
                                 ItemsSource="{x:Bind LanguageCollection}"
                                 SelectionMode="None">
 
-                                <ItemsView.Resources>
-                                    <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-                                    <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-                                </ItemsView.Resources>
+                                <ListView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="MinHeight" Value="0" />
+                                        <Setter Property="Padding" Value="0" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
 
-                                <ItemsView.ItemTemplate>
+                                <ItemsControl.ItemContainerTransitions>
+                                    <TransitionCollection />
+                                </ItemsControl.ItemContainerTransitions>
+
+                                <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="model:LanguageModel">
-                                        <ItemContainer>
-                                            <RadioMenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource LanguageCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                GroupName="LanguageRadioGroup"
-                                                IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                Text="{x:Bind LangaugeInfo.Value}" />
-                                        </ItemContainer>
+                                        <RadioMenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource LanguageCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            GroupName="LanguageRadioGroup"
+                                            IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                            Text="{x:Bind LangaugeInfo.Value}" />
                                     </DataTemplate>
-                                </ItemsView.ItemTemplate>
-                            </ItemsView>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </Flyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>

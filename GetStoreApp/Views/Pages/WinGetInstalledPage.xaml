@@ -14,9 +14,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
         <XamlUICommand x:Name="CopyUninstallTextCommand" ExecuteRequested="{x:Bind OnCopyUninstallTextExecuteRequested}" />
         <XamlUICommand x:Name="UninstallCommand" ExecuteRequested="{x:Bind OnUninstallExecuteRequested}" />
         <XamlUICommand x:Name="UninstallWithCmdCommand" ExecuteRequested="{x:Bind OnUninstallWithCmdExecuteRequested}" />
@@ -403,176 +400,188 @@
         </Grid>
 
         <!--  已安装应用结果展示项目控件  -->
-        <ItemsView
+        <ListView
             Grid.Row="2"
             Padding="30,0,30,30"
             ItemsSource="{x:Bind InstalledAppsCollection, Mode=OneWay}"
             SelectionMode="None"
             Visibility="{x:Bind GetInstalledAppsSuccessfullyState(InstalledAppsResultKind, InstalledAppsCollection.Count, x:True), Mode=OneWay}">
 
-            <ItemsView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
+
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="winget:InstalledAppsModel">
-                    <ItemContainer Margin="0,0,0,2">
-                        <Grid
-                            Height="60"
-                            Padding="16,0"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            ColumnSpacing="10"
-                            CornerRadius="{StaticResource ControlCornerRadius}">
+                    <Grid
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,0"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        ColumnSpacing="10"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <StackPanel
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Orientation="Vertical">
+                        <StackPanel
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
 
-                                <TextBlock
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind AppName}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind AppName}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
-                                                <Run Text="{x:Bind AppName}" />
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <TextBlock>
+                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <Run Text="{x:Bind AppPublisher}" />
+                                <Run Text=" | " />
+                                <Run Text="{x:Bind AppVersion}" />
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Grid.Row="0">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
+                                                <Run Text="{x:Bind AppPublisher}" />
                                             </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
 
-                                <TextBlock
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                                            <TextBlock Grid.Row="1">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
+                                                <Run Text="{x:Bind AppVersion}" />
+                                            </TextBlock>
 
-                                    <Run Text="{x:Bind AppPublisher}" />
-                                    <Run Text=" | " />
-                                    <Run Text="{x:Bind AppVersion}" />
+                                            <TextBlock Grid.Row="2">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
+                                                <Run Text="{x:Bind AppID}" />
+                                            </TextBlock>
+                                        </Grid>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                </Grid.RowDefinitions>
+                        <ProgressRing
+                            Grid.Column="1"
+                            Width="30"
+                            Height="30"
+                            IsActive="{x:Bind IsUninstalling, Mode=OneWay}"
+                            IsIndeterminate="True"
+                            Visibility="{x:Bind IsUninstalling, Mode=OneWay}" />
 
-                                                <TextBlock Grid.Row="0">
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
-                                                    <Run Text="{x:Bind AppPublisher}" />
-                                                </TextBlock>
+                        <StackPanel
+                            Grid.Column="2"
+                            Height="30"
+                            BorderBrush="{ThemeResource ButtonBorderBrush}"
+                            BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                            CornerRadius="{ThemeResource ControlCornerRadius}"
+                            Orientation="Horizontal">
 
-                                                <TextBlock Grid.Row="1">
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppVersionToolTip')}" />
-                                                    <Run Text="{x:Bind AppVersion}" />
-                                                </TextBlock>
+                            <Button
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                BorderThickness="0,0,1,0"
+                                Command="{StaticResource UninstallCommand}"
+                                CommandParameter="{x:Bind}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}"
+                                CornerRadius="0"
+                                IsEnabled="{x:Bind IsUninstalling.Equals(x:False), Mode=OneWay}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}" />
 
-                                                <TextBlock Grid.Row="2">
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
-                                                    <Run Text="{x:Bind AppID}" />
-                                                </TextBlock>
-                                            </Grid>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
+                            <Button
+                                Width="35"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                CornerRadius="0"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
 
-                            <ProgressRing
-                                Grid.Column="1"
-                                Width="30"
-                                Height="30"
-                                IsActive="{x:Bind IsUninstalling, Mode=OneWay}"
-                                IsIndeterminate="True"
-                                Visibility="{x:Bind IsUninstalling, Mode=OneWay}" />
+                                <Button.Content>
+                                    <AnimatedIcon
+                                        Width="12"
+                                        Height="12"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                        <AnimatedIcon.FallbackIconSource>
+                                            <FontIconSource
+                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                FontSize="8"
+                                                Glyph="&#xE96E;"
+                                                IsTextScaleFactorEnabled="False" />
+                                        </AnimatedIcon.FallbackIconSource>
+                                    </AnimatedIcon>
+                                </Button.Content>
 
-                            <StackPanel
-                                Grid.Column="2"
-                                Height="30"
-                                BorderBrush="{ThemeResource ButtonBorderBrush}"
-                                BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                                CornerRadius="{ThemeResource ControlCornerRadius}"
-                                Orientation="Horizontal">
+                                <Button.Flyout>
+                                    <MenuFlyout Placement="Bottom">
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource CopyUninstallTextCommand}"
+                                            CommandParameter="{x:Bind AppID}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUninstallText')}">
 
-                                <Button
-                                    VerticalAlignment="Stretch"
-                                    VerticalContentAlignment="Center"
-                                    BorderThickness="0,0,1,0"
-                                    Command="{StaticResource UninstallCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}"
-                                    CornerRadius="0"
-                                    IsEnabled="{x:Bind IsUninstalling.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Uninstall')}" />
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE8C8;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
 
-                                <Button
-                                    Width="35"
-                                    VerticalAlignment="Stretch"
-                                    BorderThickness="0"
-                                    CornerRadius="0"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource UninstallWithCmdCommand}"
+                                            CommandParameter="{x:Bind AppID}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallWithCmd')}">
 
-                                    <Button.Content>
-                                        <AnimatedIcon
-                                            Width="12"
-                                            Height="12"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            AutomationProperties.AccessibilityView="Raw">
-                                            <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                            <AnimatedIcon.FallbackIconSource>
-                                                <FontIconSource
-                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                    FontSize="8"
-                                                    Glyph="&#xE96E;"
-                                                    IsTextScaleFactorEnabled="False" />
-                                            </AnimatedIcon.FallbackIconSource>
-                                        </AnimatedIcon>
-                                    </Button.Content>
-
-                                    <Button.Flyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource CopyUninstallTextCommand}"
-                                                CommandParameter="{x:Bind AppID}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/CopyUninstallText')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE8C8;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource UninstallWithCmdCommand}"
-                                                CommandParameter="{x:Bind AppID}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/UninstallWithCmd')}">
-
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE756;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </ItemContainer>
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE756;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
-            </ItemsView.ItemTemplate>
-        </ItemsView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

@@ -10,11 +10,6 @@
     NavigationCacheMode="Enabled"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-    </Page.Resources>
-
     <Grid>
         <Grid
             HorizontalAlignment="Center"
@@ -486,33 +481,53 @@
                             Margin="0,0,0,5"
                             Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Tag')}" />
 
-                        <ItemsView
+                        <GridView
                             Grid.Row="6"
                             ItemsSource="{x:Bind TagCollection}"
                             SelectionMode="None">
 
-                            <ItemsView.Layout>
-                                <LinedFlowLayout LineSpacing="8" />
-                            </ItemsView.Layout>
+                            <GridView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="Padding" Value="0" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
 
-                            <ItemsView.ItemTemplate>
+                            <ItemsControl.ItemContainerTransitions>
+                                <TransitionCollection />
+                            </ItemsControl.ItemContainerTransitions>
+
+                            <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
-                                    <ItemContainer>
-                                        <Grid
-                                            Margin="0,0,8,0"
-                                            BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
-                                            BorderThickness="1"
-                                            CornerRadius="{StaticResource ControlCornerRadius}">
-                                            <TextBlock
-                                                Margin="10,5"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Text="{x:Bind}" />
-                                        </Grid>
-                                    </ItemContainer>
+                                    <Grid
+                                        Width="110"
+                                        Margin="0,0,8,8"
+                                        BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource ControlCornerRadius}">
+
+                                        <TextBlock
+                                            x:Name="TagText"
+                                            Margin="10,5"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Text="{x:Bind}"
+                                            TextAlignment="Center"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap" />
+
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip
+                                                MaxWidth="9999"
+                                                Content="{x:Bind}"
+                                                Visibility="{Binding ElementName=TagText, Path=IsTextTrimmed, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                    </Grid>
                                 </DataTemplate>
-                            </ItemsView.ItemTemplate>
-                        </ItemsView>
+                            </GridView.ItemTemplate>
+                        </GridView>
                     </Grid>
                 </ScrollViewer>
             </Grid>

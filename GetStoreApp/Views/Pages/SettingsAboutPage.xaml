@@ -12,15 +12,24 @@
     mc:Ignorable="d">
 
     <ScrollViewer
-        HorizontalScrollBarVisibility="Hidden"
+        Margin="1"
+        HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
         VerticalScrollMode="Enabled">
 
-        <StackPanel Margin="30,0" Padding="0,0,0,30">
+        <Grid Margin="30,0,30,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
             <!--  顶部栏介绍信息  -->
-            <Grid Margin="0,20,0,20">
+            <Grid Grid.Row="0" Margin="0,20,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -61,7 +70,10 @@
             </Grid>
 
             <!--  快捷操作栏  -->
-            <GridView Padding="0" SelectionMode="None">
+            <GridView
+                Grid.Row="1"
+                Padding="0"
+                SelectionMode="None">
                 <GridViewItem>
                     <Button
                         Width="240"
@@ -317,6 +329,7 @@
 
             <!--  应用简介信息  -->
             <Expander
+                Grid.Row="2"
                 Margin="0,0,0,3"
                 Padding="0"
                 HorizontalAlignment="Stretch"
@@ -385,6 +398,7 @@
 
             <!--  项目引用信息  -->
             <Expander
+                Grid.Row="3"
                 Margin="0,0,0,3"
                 Padding="0"
                 HorizontalAlignment="Stretch"
@@ -400,7 +414,7 @@
                 </Expander.Header>
 
                 <Expander.Content>
-                    <ItemsView
+                    <GridView
                         Margin="26,0,16,0"
                         Padding="5"
                         HorizontalAlignment="Stretch"
@@ -408,45 +422,53 @@
                         ItemsSource="{x:Bind ReferenceList}"
                         SelectionMode="None">
 
-                        <ItemsView.Layout>
-                            <UniformGridLayout />
-                        </ItemsView.Layout>
+                        <GridView.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </GridView.ItemContainerStyle>
 
-                        <ItemsView.ItemTemplate>
+                        <ItemsControl.ItemContainerTransitions>
+                            <TransitionCollection />
+                        </ItemsControl.ItemContainerTransitions>
+
+                        <GridView.ItemTemplate>
                             <DataTemplate x:DataType="text:ContentLinkInfo">
-                                <ItemContainer>
-                                    <TextBlock
-                                        Width="320"
-                                        Padding="5,8"
-                                        HorizontalAlignment="Center"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                <TextBlock
+                                    Width="320"
+                                    Padding="0,8"
+                                    HorizontalAlignment="Center"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
-                                        <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                            <Run Text="{x:Bind DisplayText}" />
-                                        </Hyperlink>
+                                    <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                        <Run Text="{x:Bind DisplayText}" />
+                                    </Hyperlink>
 
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
-                                                <StackPanel>
-                                                    <TextBlock>
-                                                        <Run Text="{x:Bind DisplayText}" />
-                                                        <LineBreak />
-                                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                </ItemContainer>
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip MaxWidth="9999">
+                                            <StackPanel>
+                                                <TextBlock>
+                                                    <Run Text="{x:Bind DisplayText}" />
+                                                    <LineBreak />
+                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ReferenceToolTip')}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
                             </DataTemplate>
-                        </ItemsView.ItemTemplate>
-                    </ItemsView>
+                        </GridView.ItemTemplate>
+                    </GridView>
                 </Expander.Content>
             </Expander>
 
             <!--  感谢用户信息  -->
             <Expander
+                Grid.Row="4"
                 Padding="0"
                 HorizontalAlignment="Stretch"
                 HorizontalContentAlignment="Stretch"
@@ -471,7 +493,7 @@
 
                         <MenuFlyoutSeparator />
 
-                        <ItemsView
+                        <GridView
                             Margin="26,0,16,0"
                             Padding="5"
                             HorizontalAlignment="Stretch"
@@ -479,43 +501,50 @@
                             ItemsSource="{x:Bind ThanksList}"
                             SelectionMode="None">
 
-                            <ItemsView.Layout>
-                                <UniformGridLayout />
-                            </ItemsView.Layout>
+                            <GridView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                    <Setter Property="Padding" Value="0" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
 
-                            <ItemsView.ItemTemplate>
+                            <ItemsControl.ItemContainerTransitions>
+                                <TransitionCollection />
+                            </ItemsControl.ItemContainerTransitions>
+
+                            <GridView.ItemTemplate>
                                 <DataTemplate x:DataType="text:ContentLinkInfo">
-                                    <ItemContainer>
-                                        <TextBlock
-                                            Width="150"
-                                            Padding="5,8"
-                                            HorizontalAlignment="Center"
-                                            TextTrimming="CharacterEllipsis"
-                                            TextWrapping="NoWrap">
+                                    <TextBlock
+                                        Width="150"
+                                        Padding="0,8"
+                                        HorizontalAlignment="Center"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap">
 
-                                            <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
-                                                <Run Text="{x:Bind DisplayText}" />
-                                            </Hyperlink>
+                                        <Hyperlink NavigateUri="{x:Bind Uri}" UnderlineStyle="None">
+                                            <Run Text="{x:Bind DisplayText}" />
+                                        </Hyperlink>
 
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip MaxWidth="9999">
-                                                    <StackPanel>
-                                                        <TextBlock>
-                                                            <Run Text="{x:Bind DisplayText}" />
-                                                            <LineBreak />
-                                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
-                                                        </TextBlock>
-                                                    </StackPanel>
-                                                </ToolTip>
-                                            </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                    </ItemContainer>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip MaxWidth="9999">
+                                                <StackPanel>
+                                                    <TextBlock>
+                                                        <Run Text="{x:Bind DisplayText}" />
+                                                        <LineBreak />
+                                                        <Run Text="{x:Bind root:ResourceService.GetLocalized('About/ThanksToolTip')}" />
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </TextBlock>
                                 </DataTemplate>
-                            </ItemsView.ItemTemplate>
-                        </ItemsView>
+                            </GridView.ItemTemplate>
+                        </GridView>
                     </StackPanel>
                 </Expander.Content>
             </Expander>
-        </StackPanel>
+        </Grid>
     </ScrollViewer>
 </Page>

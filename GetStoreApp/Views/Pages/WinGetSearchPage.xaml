@@ -14,9 +14,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
         <XamlUICommand x:Name="DownloadCommand" ExecuteRequested="{x:Bind OnDownloadExecuteRequested}" />
         <XamlUICommand x:Name="InstallCommand" ExecuteRequested="{x:Bind OnInstallExecuteRequested}" />
         <XamlUICommand x:Name="RepairCommand" ExecuteRequested="{x:Bind OnRepairExecuteRequested}" />
@@ -358,159 +355,171 @@
         </Grid>
 
         <!--  搜索应用结果展示项目控件  -->
-        <ItemsView
+        <ListView
             Grid.Row="2"
             Padding="30,3,30,30"
             ItemsSource="{x:Bind SearchAppsCollection}"
             SelectionMode="None"
             Visibility="{x:Bind GetSearchAppsSuccessfullyState(SearchAppsResultKind, x:True), Mode=OneWay}">
 
-            <ItemsView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
+
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="winget:SearchAppsModel">
-                    <ItemContainer Margin="0,0,0,2">
-                        <Grid
-                            Height="60"
-                            Padding="16,0"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            ColumnSpacing="10"
-                            CornerRadius="{StaticResource ControlCornerRadius}">
+                    <Grid
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,0"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        ColumnSpacing="10"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <StackPanel
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Orientation="Vertical">
+                        <StackPanel
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
 
-                                <TextBlock
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind AppName}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind AppName}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
-                                                <Run Text="{x:Bind AppName}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <TextBlock>
+                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
 
-                                <TextBlock
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind AppID}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap">
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind AppID}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
-                                                <Run Text="{x:Bind AppID}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </StackPanel>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <TextBlock>
+                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
+                                            <Run Text="{x:Bind AppID}" />
+                                        </TextBlock>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </StackPanel>
 
-                            <StackPanel
-                                Grid.Column="1"
-                                Height="30"
-                                BorderBrush="{ThemeResource ButtonBorderBrush}"
-                                BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                                CornerRadius="{ThemeResource ControlCornerRadius}"
-                                Orientation="Horizontal">
+                        <StackPanel
+                            Grid.Column="1"
+                            Height="30"
+                            BorderBrush="{ThemeResource ButtonBorderBrush}"
+                            BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                            CornerRadius="{ThemeResource ControlCornerRadius}"
+                            Orientation="Horizontal">
 
-                                <Button
-                                    VerticalAlignment="Stretch"
-                                    VerticalContentAlignment="Center"
-                                    BorderThickness="0,0,1,0"
-                                    Command="{StaticResource InstallCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
-                                    CornerRadius="0"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallDefaultVersion')}" />
+                            <Button
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                BorderThickness="0,0,1,0"
+                                Command="{StaticResource InstallCommand}"
+                                CommandParameter="{x:Bind}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Install')}"
+                                CornerRadius="0"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/InstallDefaultVersion')}" />
 
-                                <Button
-                                    Width="35"
-                                    VerticalAlignment="Stretch"
-                                    BorderThickness="0"
-                                    CornerRadius="0"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
+                            <Button
+                                Width="35"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                CornerRadius="0"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
 
-                                    <Button.Content>
-                                        <AnimatedIcon
-                                            Width="12"
-                                            Height="12"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            AutomationProperties.AccessibilityView="Raw">
-                                            <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                            <AnimatedIcon.FallbackIconSource>
-                                                <FontIconSource
-                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                    FontSize="8"
-                                                    Glyph="&#xE96E;"
-                                                    IsTextScaleFactorEnabled="False" />
-                                            </AnimatedIcon.FallbackIconSource>
-                                        </AnimatedIcon>
-                                    </Button.Content>
+                                <Button.Content>
+                                    <AnimatedIcon
+                                        Width="12"
+                                        Height="12"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                        <AnimatedIcon.FallbackIconSource>
+                                            <FontIconSource
+                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                FontSize="8"
+                                                Glyph="&#xE96E;"
+                                                IsTextScaleFactorEnabled="False" />
+                                        </AnimatedIcon.FallbackIconSource>
+                                    </AnimatedIcon>
+                                </Button.Content>
 
-                                    <Button.Flyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource DownloadCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}">
+                                <Button.Flyout>
+                                    <MenuFlyout Placement="Bottom">
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource DownloadCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Download')}">
 
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE896;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE896;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
 
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource RepairCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Repair')}">
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource RepairCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/Repair')}">
 
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE90F;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE90F;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
 
-                                            <MenuFlyoutSeparator />
+                                        <MenuFlyoutSeparator />
 
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource ViewVersionInfoCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewVersionInfo')}">
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource ViewVersionInfoCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewVersionInfo')}">
 
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE946;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </ItemContainer>
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE946;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
-            </ItemsView.ItemTemplate>
-        </ItemsView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

@@ -13,9 +13,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
         <XamlUICommand x:Name="UpdateCommand" ExecuteRequested="{x:Bind OnUpdateExecuteRequested}" />
         <XamlUICommand x:Name="CancelCommand" ExecuteRequested="{x:Bind OnCancelExecuteRequested}" />
     </Page.Resources>
@@ -184,143 +181,154 @@
         </Grid>
 
         <!--  应用更新结果展示项目控件  -->
-        <ItemsView
+        <ListView
             Grid.Row="2"
             Padding="30,0,30,30"
             ItemsSource="{x:Bind AppUpdateCollection}"
             SelectionMode="None"
             Visibility="{x:Bind GetAppUpdateSuccessfullyState(AppUpdateResultKind, x:True), Mode=OneWay}">
 
-            <ItemsView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
+
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="appUpdate:AppUpdateModel">
-                    <ItemContainer Margin="0,0,0,2">
-                        <Grid>
+                    <Grid Margin="0,0,0,2">
+                        <Grid
+                            Height="60"
+                            Padding="16,12"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            ColumnSpacing="10"
+                            CornerRadius="{StaticResource ControlCornerRadius}">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
                             <Grid
-                                Height="60"
-                                Padding="16,12"
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                Grid.Row="0"
+                                Width="30"
+                                Height="30"
+                                Margin="0,-6,0,-6"
+                                HorizontalAlignment="Left"
+                                Background="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1"
-                                ColumnSpacing="10"
                                 CornerRadius="{StaticResource ControlCornerRadius}">
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid
-                                    Grid.Row="0"
-                                    Width="30"
-                                    Height="30"
-                                    Margin="0,-6,0,-6"
-                                    HorizontalAlignment="Left"
-                                    Background="{ThemeResource CardStrokeColorDefaultBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource ControlCornerRadius}">
-
-                                    <ImageIcon>
-                                        <ImageIcon.Source>
-                                            <BitmapImage UriSource="{x:Bind LogoImage, Mode=OneWay}" />
-                                        </ImageIcon.Source>
-                                    </ImageIcon>
-                                </Grid>
-
-                                <StackPanel
-                                    Grid.Column="1"
-                                    Margin="0,12"
-                                    VerticalAlignment="Center"
-                                    Orientation="Vertical">
-
-                                    <TextBlock
-                                        Style="{StaticResource BodyTextBlockStyle}"
-                                        Text="{x:Bind DisplayName}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
-                                                    <Run Text="{x:Bind DisplayName}" />
-                                                </TextBlock>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-
-                                    <TextBlock
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        Text="{x:Bind PublisherDisplayName}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
-
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip MaxWidth="9999">
-                                                <TextBlock>
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
-                                                    <Run Text="{x:Bind PublisherDisplayName}" />
-                                                </TextBlock>
-                                            </ToolTip>
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Spacing="2">
-
-                                    <TextBlock
-                                        MinWidth="50"
-                                        FontSize="14"
-                                        HorizontalTextAlignment="Left"
-                                        Text="{x:Bind InstallInformation, Mode=OneWay}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap" />
-
-                                    <TextBlock
-                                        MinWidth="50"
-                                        FontSize="12"
-                                        Text="{x:Bind InstallSubInformation, Mode=OneWay}"
-                                        TextAlignment="Left"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap"
-                                        Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppInstallDownloading(AppInstallState), Mode=OneWay}" />
-                                </StackPanel>
-
-                                <Button
-                                    Grid.Column="3"
-                                    Command="{StaticResource UpdateCommand}"
-                                    CommandParameter="{x:Bind PackageFamilyName}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Update')}"
-                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                    Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsUpdating), Mode=OneWay}" />
-
-                                <Button
-                                    Grid.Column="3"
-                                    Command="{StaticResource CancelCommand}"
-                                    CommandParameter="{x:Bind PackageFamilyName}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Cancel')}"
-                                    IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
-                                    Style="{StaticResource AccentButtonStyle}"
-                                    Visibility="{x:Bind IsUpdating, Mode=OneWay}" />
+                                <ImageIcon>
+                                    <ImageIcon.Source>
+                                        <BitmapImage UriSource="{x:Bind LogoImage, Mode=OneWay}" />
+                                    </ImageIcon.Source>
+                                </ImageIcon>
                             </Grid>
 
-                            <ProgressBar
-                                Margin="16,0"
-                                VerticalAlignment="Bottom"
-                                IsIndeterminate="False"
-                                Visibility="{x:Bind IsUpdating, Mode=OneWay}"
-                                Value="{x:Bind PercentComplete, Mode=OneWay}" />
+                            <StackPanel
+                                Grid.Column="1"
+                                Margin="0,12"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+
+                                <TextBlock
+                                    Style="{StaticResource BodyTextBlockStyle}"
+                                    Text="{x:Bind DisplayName}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip MaxWidth="9999">
+                                            <TextBlock>
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/DisplayNameToolTip')}" />
+                                                <Run Text="{x:Bind DisplayName}" />
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+
+                                <TextBlock
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind PublisherDisplayName}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
+
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip MaxWidth="9999">
+                                            <TextBlock>
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('AppManager/PublisherDisplayNameToolTip')}" />
+                                                <Run Text="{x:Bind PublisherDisplayName}" />
+                                            </TextBlock>
+                                        </ToolTip>
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Column="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Spacing="2">
+
+                                <TextBlock
+                                    MinWidth="50"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Left"
+                                    Text="{x:Bind InstallInformation, Mode=OneWay}"
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap" />
+
+                                <TextBlock
+                                    MinWidth="50"
+                                    FontSize="12"
+                                    Text="{x:Bind InstallSubInformation, Mode=OneWay}"
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.IsAppInstallDownloading(AppInstallState), Mode=OneWay}" />
+                            </StackPanel>
+
+                            <Button
+                                Grid.Column="3"
+                                Command="{StaticResource UpdateCommand}"
+                                CommandParameter="{x:Bind PackageFamilyName}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Update')}"
+                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsUpdating), Mode=OneWay}" />
+
+                            <Button
+                                Grid.Column="3"
+                                Command="{StaticResource CancelCommand}"
+                                CommandParameter="{x:Bind PackageFamilyName}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('AppUpdate/Cancel')}"
+                                IsEnabled="{x:Bind IsOperating.Equals(x:False), Mode=OneWay}"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Visibility="{x:Bind IsUpdating, Mode=OneWay}" />
                         </Grid>
-                    </ItemContainer>
+
+                        <ProgressBar
+                            Margin="16,0"
+                            VerticalAlignment="Bottom"
+                            IsIndeterminate="False"
+                            Visibility="{x:Bind IsUpdating, Mode=OneWay}"
+                            Value="{x:Bind PercentComplete, Mode=OneWay}" />
+                    </Grid>
                 </DataTemplate>
-            </ItemsView.ItemTemplate>
-        </ItemsView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

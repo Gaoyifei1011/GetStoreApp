@@ -22,9 +22,6 @@
     mc:Ignorable="d">
 
     <ContentDialog.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
         <XamlUICommand x:Name="CheckBoxCommand" ExecuteRequested="{x:Bind OnCheckBoxExecuteRequested}" />
     </ContentDialog.Resources>
 
@@ -35,42 +32,53 @@
             TextAlignment="Justify"
             TextWrapping="Wrap" />
 
-        <ItemsView ItemsSource="{x:Bind TraceCleanupList}" SelectionMode="None">
+        <ListView ItemsSource="{x:Bind TraceCleanupList}" SelectionMode="None">
 
-            <ItemsView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
+
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="dialog:TraceCleanupModel">
-                    <ItemContainer>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox
-                                Margin="0,0,10,0"
-                                Command="{StaticResource CheckBoxCommand}"
-                                Content="{x:Bind DisplayName}"
-                                IsChecked="{x:Bind IsSelected, Mode=TwoWay}" />
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox
+                            Margin="0,0,10,0"
+                            Command="{StaticResource CheckBoxCommand}"
+                            Content="{x:Bind DisplayName}"
+                            IsChecked="{x:Bind IsSelected, Mode=TwoWay}" />
 
-                            <ContentControl>
-                                <TextBlock
-                                    x:Name="CleanFailed"
-                                    Margin="0,5,0,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
-                                    Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanFailed')}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap"
-                                    Visibility="{x:Bind IsCleanFailed, Mode=OneWay}">
+                        <ContentControl>
+                            <TextBlock
+                                x:Name="CleanFailed"
+                                Margin="0,5,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource InfoBarErrorSeverityIconBackground}"
+                                Text="{x:Bind root:ResourceService.GetLocalized('Dialog/CleanFailed')}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
+                                Visibility="{x:Bind IsCleanFailed, Mode=OneWay}">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip
-                                            MaxWidth="9999"
-                                            Content="{x:Bind CleanFailedText}"
-                                            Visibility="{Binding ElementName=CleanFailed, Path=IsTextTrimmed, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                </TextBlock>
-                            </ContentControl>
-                        </StackPanel>
-                    </ItemContainer>
+                                <ToolTipService.ToolTip>
+                                    <ToolTip
+                                        MaxWidth="9999"
+                                        Content="{x:Bind CleanFailedText}"
+                                        Visibility="{Binding ElementName=CleanFailed, Path=IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+                        </ContentControl>
+                    </StackPanel>
                 </DataTemplate>
-            </ItemsView.ItemTemplate>
-        </ItemsView>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <StackPanel Orientation="Horizontal" Visibility="{x:Bind IsCleaning, Mode=OneWay}">
             <ProgressRing

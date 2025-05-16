@@ -75,7 +75,7 @@
 
             <ScrollViewer
                 Grid.Row="2"
-                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollBarVisibility="Disabled"
                 HorizontalScrollMode="Disabled"
                 VerticalScrollBarVisibility="Visible"
                 VerticalScrollMode="Enabled">
@@ -432,7 +432,7 @@
 
             <ScrollViewer
                 Grid.Row="2"
-                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollBarVisibility="Disabled"
                 HorizontalScrollMode="Disabled"
                 VerticalScrollBarVisibility="Visible"
                 VerticalScrollMode="Enabled">
@@ -954,7 +954,7 @@
 
             <ScrollViewer
                 Grid.Row="2"
-                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollBarVisibility="Disabled"
                 HorizontalScrollMode="Disabled"
                 VerticalScrollBarVisibility="Visible"
                 VerticalScrollMode="Enabled">
@@ -1292,7 +1292,7 @@
 
             <ScrollViewer
                 Grid.Row="2"
-                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollBarVisibility="Disabled"
                 HorizontalScrollMode="Disabled"
                 VerticalScrollBarVisibility="Visible"
                 VerticalScrollMode="Enabled">

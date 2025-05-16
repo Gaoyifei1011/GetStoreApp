@@ -320,7 +320,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (LanguageCollection[index].IsChecked)
                 {
-                    LanguageItemsView.ScrollView.ScrollTo(0, index * 32 - 134, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
+                    LanguageListView.ScrollIntoView(LanguageCollection[index]);
                     break;
                 }
             }

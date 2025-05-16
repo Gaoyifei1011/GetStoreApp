@@ -299,9 +299,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 在多选模式下点击项目选择相应的条目
         /// </summary>
-        private void OnItemInvoked(object sender, ItemsViewItemInvokedEventArgs args)
+        private void OnItemClick(object sender, ItemClickEventArgs args)
         {
-            if (args.InvokedItem is DownloadingModel downloadingItem)
+            if (args.ClickedItem is DownloadingModel downloadingItem)
             {
                 downloadingItem.IsSelected = !downloadingItem.IsSelected;
             }

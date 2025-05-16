@@ -13,9 +13,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
         <XamlUICommand x:Name="UpgradeCommand" ExecuteRequested="{x:Bind OnUpgradeExecuteRequested}" />
         <XamlUICommand x:Name="ViewVersionInfoCommand" ExecuteRequested="{x:Bind OnViewVersionInfoExecuteRequested}" />
     </Page.Resources>
@@ -245,190 +242,202 @@
         </Grid>
 
         <!--  可更新应用结果展示项目控件  -->
-        <ItemsView
+        <ListView
             Grid.Row="2"
             Padding="30,0,30,30"
             ItemsSource="{x:Bind UpgradableAppsCollection, Mode=OneWay}"
             SelectionMode="None"
             Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(UpgradableAppsCollection.Count), Mode=OneWay}">
 
-            <ItemsView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
+
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="winget:UpgradableAppsModel">
-                    <ItemContainer Margin="0,0,0,2">
-                        <Grid
-                            Height="60"
-                            Padding="16,0"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            ColumnSpacing="10"
-                            CornerRadius="{StaticResource ControlCornerRadius}">
+                    <Grid
+                        Height="60"
+                        Margin="0,0,0,2"
+                        Padding="16,0"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        ColumnSpacing="10"
+                        CornerRadius="{StaticResource ControlCornerRadius}">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <StackPanel
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Orientation="Vertical">
+                        <StackPanel
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
 
+                            <TextBlock
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="{x:Bind AppName}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap">
+
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <TextBlock>
+                                            <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
+                                            <Run Text="{x:Bind AppName}" />
+                                        </TextBlock>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
+
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock
-                                    Style="{StaticResource BodyTextBlockStyle}"
-                                    Text="{x:Bind AppName}"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap">
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <TextBlock>
-                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNameToolTip')}" />
-                                                <Run Text="{x:Bind AppName}" />
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
+                                    <Run Text="{x:Bind AppPublisher}" />
+                                    <Run Text=" | " />
+                                    <Run Text="{x:Bind AppCurrentVersion}" />
                                 </TextBlock>
 
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                <FontIcon
+                                    Margin="4,1,4,0"
+                                    FontSize="{StaticResource CaptionTextBlockFontSize}"
+                                    FontWeight="Normal"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Glyph="&#xEBE7;" />
 
-                                        <Run Text="{x:Bind AppPublisher}" />
-                                        <Run Text=" | " />
-                                        <Run Text="{x:Bind AppCurrentVersion}" />
-                                    </TextBlock>
+                                <TextBlock
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
-                                    <FontIcon
-                                        Margin="4,1,4,0"
-                                        FontSize="{StaticResource CaptionTextBlockFontSize}"
-                                        FontWeight="Normal"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="&#xEBE7;" />
+                                    <Run Text="{x:Bind AppNewestVersion}" />
+                                    <Run Text=" | " />
+                                    <Run Text="{x:Bind AppID}" />
+                                </TextBlock>
 
-                                    <TextBlock
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        TextTrimming="CharacterEllipsis"
-                                        TextWrapping="NoWrap">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip MaxWidth="9999">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
 
-                                        <Run Text="{x:Bind AppNewestVersion}" />
-                                        <Run Text=" | " />
-                                        <Run Text="{x:Bind AppID}" />
-                                    </TextBlock>
+                                            <TextBlock Grid.Row="0">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
+                                                <Run Text="{x:Bind AppPublisher}" />
+                                            </TextBlock>
 
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip MaxWidth="9999">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="Auto" />
-                                                </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="1">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCurrentVersionToolTip')}" />
+                                                <Run Text="{x:Bind AppCurrentVersion}" />
+                                            </TextBlock>
 
-                                                <TextBlock Grid.Row="0">
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppPublisherToolTip')}" />
-                                                    <Run Text="{x:Bind AppPublisher}" />
-                                                </TextBlock>
+                                            <TextBlock Grid.Row="2">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNewestVersionToolTip')}" />
+                                                <Run Text="{x:Bind AppNewestVersion}" />
+                                            </TextBlock>
 
-                                                <TextBlock Grid.Row="1">
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppCurrentVersionToolTip')}" />
-                                                    <Run Text="{x:Bind AppCurrentVersion}" />
-                                                </TextBlock>
-
-                                                <TextBlock Grid.Row="2">
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppNewestVersionToolTip')}" />
-                                                    <Run Text="{x:Bind AppNewestVersion}" />
-                                                </TextBlock>
-
-                                                <TextBlock Grid.Row="3">
-                                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
-                                                    <Run Text="{x:Bind AppID}" />
-                                                </TextBlock>
-                                            </Grid>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                </StackPanel>
+                                            <TextBlock Grid.Row="3">
+                                                <Run Text="{x:Bind root:ResourceService.GetLocalized('WinGet/AppIDToolTip')}" />
+                                                <Run Text="{x:Bind AppID}" />
+                                            </TextBlock>
+                                        </Grid>
+                                    </ToolTip>
+                                </ToolTipService.ToolTip>
                             </StackPanel>
+                        </StackPanel>
 
-                            <ProgressRing
-                                Grid.Column="1"
-                                Width="30"
-                                Height="30"
-                                IsActive="{x:Bind IsUpgrading, Mode=OneWay}"
-                                IsIndeterminate="True"
-                                Visibility="{x:Bind IsUpgrading, Mode=OneWay}" />
+                        <ProgressRing
+                            Grid.Column="1"
+                            Width="30"
+                            Height="30"
+                            IsActive="{x:Bind IsUpgrading, Mode=OneWay}"
+                            IsIndeterminate="True"
+                            Visibility="{x:Bind IsUpgrading, Mode=OneWay}" />
 
-                            <StackPanel
-                                Grid.Column="2"
-                                Height="30"
-                                BorderBrush="{ThemeResource ButtonBorderBrush}"
-                                BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
-                                CornerRadius="{ThemeResource ControlCornerRadius}"
-                                Orientation="Horizontal">
+                        <StackPanel
+                            Grid.Column="2"
+                            Height="30"
+                            BorderBrush="{ThemeResource ButtonBorderBrush}"
+                            BorderThickness="{ThemeResource ButtonBorderThemeThickness}"
+                            CornerRadius="{ThemeResource ControlCornerRadius}"
+                            Orientation="Horizontal">
 
-                                <Button
-                                    VerticalAlignment="Stretch"
-                                    VerticalContentAlignment="Center"
-                                    BorderThickness="0,0,1,0"
-                                    Command="{StaticResource UpgradeCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}"
-                                    CornerRadius="0"
-                                    IsEnabled="{x:Bind IsUpgrading.Equals(x:False), Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}" />
+                            <Button
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                BorderThickness="0,0,1,0"
+                                Command="{StaticResource UpgradeCommand}"
+                                CommandParameter="{x:Bind}"
+                                Content="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}"
+                                CornerRadius="0"
+                                IsEnabled="{x:Bind IsUpgrading.Equals(x:False), Mode=OneWay}"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/Upgrade')}" />
 
-                                <Button
-                                    Width="35"
-                                    VerticalAlignment="Stretch"
-                                    BorderThickness="0"
-                                    CornerRadius="0"
-                                    ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
+                            <Button
+                                Width="35"
+                                VerticalAlignment="Stretch"
+                                BorderThickness="0"
+                                CornerRadius="0"
+                                ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewMoreOptions')}">
 
-                                    <Button.Content>
-                                        <AnimatedIcon
-                                            Width="12"
-                                            Height="12"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            AutomationProperties.AccessibilityView="Raw">
-                                            <animatedvisuals:AnimatedChevronDownSmallVisualSource />
-                                            <AnimatedIcon.FallbackIconSource>
-                                                <FontIconSource
-                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                    FontSize="8"
-                                                    Glyph="&#xE96E;"
-                                                    IsTextScaleFactorEnabled="False" />
-                                            </AnimatedIcon.FallbackIconSource>
-                                        </AnimatedIcon>
-                                    </Button.Content>
+                                <Button.Content>
+                                    <AnimatedIcon
+                                        Width="12"
+                                        Height="12"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        AutomationProperties.AccessibilityView="Raw">
+                                        <animatedvisuals:AnimatedChevronDownSmallVisualSource />
+                                        <AnimatedIcon.FallbackIconSource>
+                                            <FontIconSource
+                                                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                FontSize="8"
+                                                Glyph="&#xE96E;"
+                                                IsTextScaleFactorEnabled="False" />
+                                        </AnimatedIcon.FallbackIconSource>
+                                    </AnimatedIcon>
+                                </Button.Content>
 
-                                    <Button.Flyout>
-                                        <MenuFlyout Placement="Bottom">
-                                            <MenuFlyoutItem
-                                                Height="32"
-                                                Padding="11,0"
-                                                Command="{StaticResource ViewVersionInfoCommand}"
-                                                CommandParameter="{x:Bind}"
-                                                Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewVersionInfo')}">
+                                <Button.Flyout>
+                                    <MenuFlyout Placement="Bottom">
+                                        <MenuFlyoutItem
+                                            Height="32"
+                                            Padding="11,0"
+                                            Command="{StaticResource ViewVersionInfoCommand}"
+                                            CommandParameter="{x:Bind}"
+                                            Text="{x:Bind root:ResourceService.GetLocalized('WinGet/ViewVersionInfo')}">
 
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE946;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </ItemContainer>
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xE946;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
-            </ItemsView.ItemTemplate>
-        </ItemsView>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

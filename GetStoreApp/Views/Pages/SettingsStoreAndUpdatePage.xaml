@@ -11,14 +11,11 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-
         <XamlUICommand x:Name="StoreRegionCommand" ExecuteRequested="{x:Bind OnStoreRegionExecuteRequested}" />
     </Page.Resources>
 
     <ScrollViewer
-        HorizontalScrollBarVisibility="Hidden"
+        HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
         VerticalScrollMode="Enabled">
@@ -443,33 +440,39 @@
                                             </Style>
                                         </Flyout.FlyoutPresenterStyle>
 
-                                        <ItemsView
-                                            x:Name="StoreRegionItemsView"
+                                        <ListView
+                                            x:Name="StoreRegionListView"
                                             MaxHeight="300"
                                             Background="Transparent"
                                             ItemsSource="{x:Bind StoreRegionCollection}"
                                             SelectionMode="None">
 
-                                            <ItemsView.Resources>
-                                                <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-                                                <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
-                                            </ItemsView.Resources>
+                                            <ListView.ItemContainerStyle>
+                                                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Setter Property="Margin" Value="0" />
+                                                    <Setter Property="MinHeight" Value="0" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
 
-                                            <ItemsView.ItemTemplate>
+                                            <ItemsControl.ItemContainerTransitions>
+                                                <TransitionCollection />
+                                            </ItemsControl.ItemContainerTransitions>
+
+                                            <ListView.ItemTemplate>
                                                 <DataTemplate x:DataType="model:StoreRegionModel">
-                                                    <ItemContainer>
-                                                        <RadioMenuFlyoutItem
-                                                            Height="32"
-                                                            Padding="11,0"
-                                                            Command="{StaticResource StoreRegionCommand}"
-                                                            CommandParameter="{x:Bind}"
-                                                            GroupName="StoreRegionRadioGroup"
-                                                            IsChecked="{x:Bind IsChecked, Mode=OneWay}"
-                                                            Text="{x:Bind StoreRegionInfo.DisplayName}" />
-                                                    </ItemContainer>
+                                                    <RadioMenuFlyoutItem
+                                                        Height="32"
+                                                        Padding="11,0"
+                                                        Command="{StaticResource StoreRegionCommand}"
+                                                        CommandParameter="{x:Bind}"
+                                                        GroupName="StoreRegionRadioGroup"
+                                                        IsChecked="{x:Bind IsChecked, Mode=OneWay}"
+                                                        Text="{x:Bind StoreRegionInfo.DisplayName}" />
                                                 </DataTemplate>
-                                            </ItemsView.ItemTemplate>
-                                        </ItemsView>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
                                     </Flyout>
                                 </DropDownButton.Flyout>
                             </DropDownButton>

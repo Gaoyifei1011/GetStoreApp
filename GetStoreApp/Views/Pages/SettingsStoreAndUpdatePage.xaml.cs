@@ -353,7 +353,7 @@ namespace GetStoreApp.Views.Pages
             {
                 if (StoreRegionCollection[index].IsChecked)
                 {
-                    StoreRegionItemsView.ScrollView.ScrollTo(0, index * 32 - 134, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
+                    StoreRegionListView.ScrollIntoView(StoreRegionCollection[index]);
                     break;
                 }
             }

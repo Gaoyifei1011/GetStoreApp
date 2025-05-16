@@ -206,7 +206,7 @@
 
                 <ScrollViewer
                     Grid.Row="1"
-                    HorizontalScrollBarVisibility="Hidden"
+                    HorizontalScrollBarVisibility="Disabled"
                     HorizontalScrollMode="Disabled"
                     VerticalScrollBarVisibility="Visible"
                     VerticalScrollMode="Enabled">

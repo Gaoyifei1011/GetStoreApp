@@ -16,9 +16,6 @@
 
     <ContentDialog.Resources>
         <x:Double x:Key="ContentDialogMaxWidth">560</x:Double>
-
-        <SolidColorBrush x:Key="ItemContainerPointerOverBackground" Color="Transparent" />
-        <SolidColorBrush x:Key="ItemContainerPressedBackground" Color="Transparent" />
     </ContentDialog.Resources>
 
     <StackPanel>
@@ -115,113 +112,124 @@
             </TextBlock>
         </Grid>
 
-        <ItemsView
+        <ListView
             Margin="0,0,0,5"
             CornerRadius="0"
             ItemsSource="{x:Bind DesktopStartupArgsList}"
             SelectionMode="None">
 
-            <ItemsView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="MinHeight" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection />
+            </ItemsControl.ItemContainerTransitions>
+
+            <ListView.ItemTemplate>
                 <DataTemplate x:DataType="dialog:StartupArgsModel">
-                    <ItemContainer CornerRadius="0">
-                        <Grid
-                            Height="35"
-                            Padding="6,0,0,0"
-                            BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
-                            BorderThickness="1,0,1,1"
-                            CornerRadius="0">
+                    <Grid
+                        Height="35"
+                        Padding="6,0,0,0"
+                        BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                        BorderThickness="1,0,1,1"
+                        CornerRadius="0">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                            <TextBlock
-                                x:Name="ArgumentNameText"
-                                Grid.Column="0"
-                                MinWidth="50"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{x:Bind ArgumentName}"
-                                TextAlignment="Left"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <TextBlock
+                            x:Name="ArgumentNameText"
+                            Grid.Column="0"
+                            MinWidth="50"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind ArgumentName}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind ArgumentName}"
-                                        Visibility="{Binding ElementName=ArgumentNameText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind ArgumentName}"
+                                    Visibility="{Binding ElementName=ArgumentNameText, Path=IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
 
-                            <TextBlock
-                                x:Name="ArgumentText"
-                                Grid.Column="1"
-                                MinWidth="50"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{x:Bind Argument}"
-                                TextAlignment="Left"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <TextBlock
+                            x:Name="ArgumentText"
+                            Grid.Column="1"
+                            MinWidth="50"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind Argument}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind Argument}"
-                                        Visibility="{Binding ElementName=ArgumentText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind Argument}"
+                                    Visibility="{Binding ElementName=ArgumentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
 
-                            <TextBlock
-                                x:Name="IsRequiredText"
-                                Grid.Column="2"
-                                MinWidth="50"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{x:Bind IsRequired}"
-                                TextAlignment="Left"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <TextBlock
+                            x:Name="IsRequiredText"
+                            Grid.Column="2"
+                            MinWidth="50"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind IsRequired}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind IsRequired}"
-                                        Visibility="{Binding ElementName=IsRequiredText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind IsRequired}"
+                                    Visibility="{Binding ElementName=IsRequiredText, Path=IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
 
-                            <TextBlock
-                                x:Name="ArgumentContentText"
-                                Grid.Column="3"
-                                MinWidth="50"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{x:Bind ArgumentContent}"
-                                TextAlignment="Left"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap">
+                        <TextBlock
+                            x:Name="ArgumentContentText"
+                            Grid.Column="3"
+                            MinWidth="50"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind ArgumentContent}"
+                            TextAlignment="Left"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap">
 
-                                <ToolTipService.ToolTip>
-                                    <ToolTip
-                                        MaxWidth="9999"
-                                        Content="{x:Bind ArgumentContent}"
-                                        Visibility="{Binding ElementName=ArgumentContentText, Path=IsTextTrimmed, Mode=OneWay}" />
-                                </ToolTipService.ToolTip>
-                            </TextBlock>
-                        </Grid>
-                    </ItemContainer>
+                            <ToolTipService.ToolTip>
+                                <ToolTip
+                                    MaxWidth="9999"
+                                    Content="{x:Bind ArgumentContent}"
+                                    Visibility="{Binding ElementName=ArgumentContentText, Path=IsTextTrimmed, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
+                        </TextBlock>
+                    </Grid>
                 </DataTemplate>
-            </ItemsView.ItemTemplate>
-        </ItemsView>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <MenuFlyoutSeparator Margin="4,4,4,2" Background="{ThemeResource SurfaceStrokeColorDefaultBrush}" />
 

@@ -488,6 +488,10 @@
                                                             </Style>
                                                         </ListView.ItemContainerStyle>
 
+                                                        <ItemsControl.ItemContainerTransitions>
+                                                            <TransitionCollection />
+                                                        </ItemsControl.ItemContainerTransitions>
+
                                                         <ListView.ItemTemplate>
                                                             <DataTemplate x:DataType="model:InstallDependencyModel">
                                                                 <Grid
@@ -1443,6 +1447,10 @@
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
 
+                                                <ItemsControl.ItemContainerTransitions>
+                                                    <TransitionCollection />
+                                                </ItemsControl.ItemContainerTransitions>
+
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:TargetDeviceFamilyModel">
                                                         <Grid
@@ -1652,6 +1660,10 @@
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
 
+                                                <ItemsControl.ItemContainerTransitions>
+                                                    <TransitionCollection />
+                                                </ItemsControl.ItemContainerTransitions>
+
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:DependencyModel">
                                                         <Grid
@@ -1851,6 +1863,10 @@
                                                         <Setter Property="Padding" Value="0" />
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
+
+                                                <ItemsControl.ItemContainerTransitions>
+                                                    <TransitionCollection />
+                                                </ItemsControl.ItemContainerTransitions>
 
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:DependencyModel">
@@ -2212,6 +2228,10 @@
                                                         <Setter Property="Padding" Value="0" />
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
+
+                                                <ItemsControl.ItemContainerTransitions>
+                                                    <TransitionCollection />
+                                                </ItemsControl.ItemContainerTransitions>
 
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:DataType="model:ApplicationModel">

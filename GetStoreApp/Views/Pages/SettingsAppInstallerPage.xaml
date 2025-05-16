@@ -10,7 +10,7 @@
     mc:Ignorable="d">
 
     <ScrollViewer
-        HorizontalScrollBarVisibility="Hidden"
+        HorizontalScrollBarVisibility="Disabled"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Auto"
         VerticalScrollMode="Enabled">
