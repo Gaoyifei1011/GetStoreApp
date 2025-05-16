@@ -63,10 +63,10 @@ namespace GetStoreAppInstaller.Pages
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         private readonly string msresource = "ms-resource:";
-        private readonly string AppInstallFailed = ResourceService.GetLocalized("Installer/AppInstallFailed");
-        private readonly string AppInstallFailedReason = ResourceService.GetLocalized("Installer/AppInstallFailedReason");
-        private readonly string AppInstallSelf = ResourceService.GetLocalized("Installer/AppInstallSelf");
-        private readonly string AppInstallSuccessfully = ResourceService.GetLocalized("Installer/AppInstallSuccessfully");
+        private readonly string AppInstallFailed = ResourceService.GetLocalized("Notification/AppInstallFailed");
+        private readonly string AppInstallFailedReason = ResourceService.GetLocalized("Notification/AppInstallFailedReason");
+        private readonly string AppInstallSelf = ResourceService.GetLocalized("Notification/AppInstallSelf");
+        private readonly string AppInstallSuccessfully = ResourceService.GetLocalized("Notification/AppInstallSuccessfully");
         private readonly string AppNotInstall = ResourceService.GetLocalized("Installer/AppNotInstall");
         private readonly string AppInstalledNotNewVersion = ResourceService.GetLocalized("Installer/AppInstalledNotNewVersion");
         private readonly string AppInstalledNewVersion = ResourceService.GetLocalized("Installer/AppInstalledNewVersion");
