@@ -13,6 +13,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications.Builder;
 using System;
@@ -26,6 +27,7 @@ using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 using Windows.Management.Deployment;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.System;
 
 // 抑制 CA1822，IDE0060 警告
@@ -93,6 +95,7 @@ namespace GetStoreApp.Views.Pages
                     {
                         CompletedCollection.Add(new CompletedModel()
                         {
+                            IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
                             DownloadKey = downloadSchedulerItem.DownloadKey,
                             FileName = downloadSchedulerItem.FileName,
                             FilePath = downloadSchedulerItem.FilePath,
@@ -244,7 +247,7 @@ namespace GetStoreApp.Views.Pages
                                 // 标记安装状态
                                 completedItem.IsInstalling = true;
 
-                                DeploymentResult deploymentResult = await Task.Run(async () =>
+                                (bool result, DeploymentResult deploymentResult, Exception exception) = await Task.Run(async () =>
                                 {
                                     try
                                     {
@@ -260,17 +263,17 @@ namespace GetStoreApp.Views.Pages
 
                                         // 更新安装进度
                                         installPackageWithProgress.Progress = (result, progress) => OnPackageInstallProgress(result, progress, completedItem);
-                                        return await installPackageWithProgress;
+                                        return ValueTuple.Create<bool, DeploymentResult, Exception>(true, await installPackageWithProgress, null);
                                     }
                                     // 安装失败显示失败信息
                                     catch (Exception e)
                                     {
                                         LogService.WriteLog(LoggingLevel.Warning, "Install apps failed.", e);
-                                        return null;
+                                        return ValueTuple.Create<bool, DeploymentResult, Exception>(false, null, e);
                                     }
                                 });
 
-                                if (deploymentResult is not null)
+                                if (result && deploymentResult is not null)
                                 {
                                     // 安装成功
                                     if (deploymentResult.ExtendedErrorCode is null)
@@ -310,7 +313,7 @@ namespace GetStoreApp.Views.Pages
                                         AppNotificationBuilder appNotificationBuilder = new();
                                         appNotificationBuilder.AddArgument("action", "OpenApp");
                                         appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed1"), completedFile.Name));
-                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), deploymentResult.ExtendedErrorCode.Message));
+                                        appNotificationBuilder.AddText(string.Format(ResourceService.GetLocalized("Notification/InstallFailed2"), exception.Message));
                                         ToastNotificationService.Show(appNotificationBuilder.BuildNotification());
                                     });
                                 }
@@ -705,10 +708,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnStorageDataAdded(DownloadSchedulerModel downloadSchedulerItem)
         {
-            DispatcherQueue.TryEnqueue(() =>
+            DispatcherQueue.TryEnqueue(async () =>
             {
                 CompletedCollection.Add(new CompletedModel()
                 {
+                    IconImage = await GetFileIconImageAsync(downloadSchedulerItem.FilePath),
                     DownloadKey = downloadSchedulerItem.DownloadKey,
                     FileName = downloadSchedulerItem.FileName,
                     FilePath = downloadSchedulerItem.FilePath,
@@ -766,5 +770,43 @@ namespace GetStoreApp.Views.Pages
         }
 
         #endregion 第三部分：已下载完成页面——自定义事件
+
+        /// <summary>
+        /// 获取文件缩略图
+        /// </summary>
+        public async Task<BitmapImage> GetFileIconImageAsync(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                StorageItemThumbnail storageItemThumbnail = await Task.Run(async () =>
+                {
+                    try
+                    {
+                        StorageFile storageFile = await StorageFile.GetFileFromPathAsync(filePath);
+                        return await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 32, ThumbnailOptions.UseCurrentScale);
+                    }
+                    catch (Exception)
+                    {
+                        return null;
+                    }
+                });
+
+                if (storageItemThumbnail is not null)
+                {
+                    BitmapImage bitmapImage = new();
+                    await bitmapImage.SetSourceAsync(storageItemThumbnail);
+                    storageItemThumbnail.Dispose();
+                    return bitmapImage;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
