@@ -1,4 +1,5 @@
 ﻿using GetStoreApp.Services.Root;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Download
@@ -8,7 +9,23 @@ namespace GetStoreApp.Models.Controls.Download
     /// </summary>
     public sealed partial class CompletedModel : INotifyPropertyChanged
     {
-        public string InstalledValue = ResourceService.GetLocalized("Download/InstalledValue");
+        public readonly string InstalledValue = ResourceService.GetLocalized("Download/InstalledValue");
+
+        private BitmapImage _iconImage;
+
+        public BitmapImage IconImage
+        {
+            get { return _iconImage; }
+
+            set
+            {
+                if (!Equals(_iconImage, value))
+                {
+                    _iconImage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IconImage)));
+                }
+            }
+        }
 
         /// <summary>
         /// 在多选模式下，该行历史记录是否被选择的标志
