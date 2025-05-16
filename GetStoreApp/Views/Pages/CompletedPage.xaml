@@ -260,7 +260,7 @@
                     <ItemContainer Margin="0,0,0,2">
                         <Grid
                             Height="60"
-                            Padding="16,10"
+                            Padding="16,0"
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
@@ -361,8 +361,11 @@
                                 <TextBlock
                                     Grid.Row="1"
                                     MinWidth="50"
+                                    Margin="0,-4,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="14"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
                                     Text="{x:Bind root:ResourceService.GetLocalized('Download/CompleteDownload')}"
                                     TextAlignment="Left"
                                     Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsInstalling), Mode=OneWay}" />
@@ -382,8 +385,11 @@
                                     <TextBlock
                                         Grid.Column="0"
                                         MinWidth="50"
+                                        Margin="0,-4,0,0"
                                         VerticalAlignment="Center"
                                         FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Download/Installing')}"
                                         TextAlignment="Left" />
 
@@ -397,9 +403,12 @@
                                         x:Name="InstallStateInfo"
                                         Grid.Column="2"
                                         MinWidth="50"
+                                        Margin="0,-4,0,0"
                                         VerticalAlignment="Center"
                                         x:Load="{x:Bind InstallError.Equals(x:False), Mode=OneWay}"
                                         FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
                                         Text="{x:Bind x:String.Format(InstalledValue, InstallValue), Mode=OneWay}"
                                         TextAlignment="Left" />
 
@@ -407,9 +416,12 @@
                                         x:Name="InstallErrorInfo"
                                         Grid.Column="2"
                                         MinWidth="50"
+                                        Margin="0,-4,0,0"
                                         VerticalAlignment="Center"
                                         x:Load="{x:Bind InstallError, Mode=OneWay}"
                                         FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
                                         Text="{x:Bind root:ResourceService.GetLocalized('Download/InstallError')}"
                                         TextAlignment="Left" />
                                 </Grid>

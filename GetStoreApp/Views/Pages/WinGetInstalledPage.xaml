@@ -402,7 +402,7 @@
             </Grid>
         </Grid>
 
-        <!--  搜索应用结果展示项目控件  -->
+        <!--  已安装应用结果展示项目控件  -->
         <ItemsView
             Grid.Row="2"
             Padding="30,0,30,30"
@@ -415,7 +415,7 @@
                     <ItemContainer Margin="0,0,0,2">
                         <Grid
                             Height="60"
-                            Padding="16,12"
+                            Padding="16,0"
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
