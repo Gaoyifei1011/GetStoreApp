@@ -15,6 +15,7 @@
   "DeleteDownloadingToolTip": "Deletes the currently downloaded record",
   "DeleteOptions": "Delete options",
   "DownloadInstruction": "Download instructions",
+  "LoadingDownloadCompletedFiles": "Loading files, please wait...",
   "DownloadInstruction1": "The download link is time-sensitive, and the app does not currently support resuming downloads for apps that fail to download.",
   "DownloadInstruction2": "If you encounter a download service that quits because of an exception, we recommend restarting the app before trying to download.",
   "LearnDownloadMore": "Learn more",

@@ -17,6 +17,7 @@
   "DeleteOptionsToolTip": "单击显示删除选项",
   "DeleteSelected": "删除",
   "UseInstruction": "使用说明",
+  "LoadingDownloadCompletedFiles": "正在加载文件中，请稍候...",
   "UseInstructionToolTip": "点击了解下载管理的的具体使用方法",
   "DownloadInstruction": "下载说明",
   "DownloadInstruction1": "下载链接具有时效性，该应用暂不支持下载失败的应用恢复下载。",

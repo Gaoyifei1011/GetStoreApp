@@ -16,6 +16,7 @@
   "DeleteOptions": "خيارات الحذف",
   "DeleteOptionsToolTip": "انقر لعرض خيارات الحذف",
   "DeleteSelected": "حذف",
+  "LoadingDownloadCompletedFiles": "Loading files, please wait...",
   "DeleteSelectedToolTip": "احذف فقط سجلات العناصر المحددة، دون تضمين الملفات",
   "DeleteSelectedWithFile": "حذف (بما في ذلك الملفات)",
   "DeleteSelectedWithFileToolTip": "احذف سجلات العناصر المحددة واحذف الملفات المحلية",

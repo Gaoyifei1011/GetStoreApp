@@ -12,6 +12,7 @@
   "ContinueToolTip": "המשך להוריד את המשימה הנוכחית",
   "CurrentSpeedToolTip": "מהירות נוכחית:",
   "Delete": "מחק",
+  "LoadingDownloadCompletedFiles": "Loading files, please wait...",
   "DeleteDownloadingToolTip": "מוחק את הרשומה שהורדת כעת",
   "DeleteOptions": "אפשרויות מחיקה",
   "DeleteOptionsToolTip": "לחץ על הצג אפשרויות מחיקה",
