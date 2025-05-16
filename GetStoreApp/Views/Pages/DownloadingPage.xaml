@@ -1,4 +1,4 @@
-<Page
+﻿<Page
     x:Class="GetStoreApp.Views.Pages.DownloadingPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -29,10 +29,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!--  下载中文件控制栏  -->
         <Grid
             Grid.Row="0"
             Height="66"
-            Margin="30,0"
+            Margin="30,0,30,3"
             Padding="16,8,2,8"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -218,9 +219,10 @@
             </CommandBar>
         </Grid>
 
+        <!--  下载内容空提示栏  -->
         <Grid
             Grid.Row="1"
-            Margin="30,3,30,0"
+            Margin="30,0,30,0"
             Padding="16,12"
             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -235,9 +237,10 @@
                 TextAlignment="Center" />
         </Grid>
 
+        <!--  下载内容列表控件  -->
         <ItemsView
             Grid.Row="2"
-            Padding="30,3,30,30"
+            Padding="30,0,30,30"
             IsItemInvokedEnabled="{x:Bind IsSelectMode, Mode=OneWay}"
             ItemInvoked="{x:Bind OnItemInvoked}"
             ItemsSource="{x:Bind DownloadingCollection}"
@@ -248,13 +251,14 @@
                 <DataTemplate x:DataType="download:DownloadingModel">
                     <ItemContainer Margin="0,0,0,2">
                         <Grid
-                            Height="66"
+                            Height="60"
                             Padding="16,12"
                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
                             CornerRadius="{StaticResource ControlCornerRadius}">
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
@@ -263,6 +267,7 @@
                             <CheckBox
                                 Grid.Column="0"
                                 MinWidth="0"
+                                Margin="0,0,6,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
@@ -279,8 +284,32 @@
                                 </ToolTipService.ToolTip>
                             </CheckBox>
 
-                            <Grid
+                            <FontIcon
                                 Grid.Column="1"
+                                Margin="0,0,12,0"
+                                FontSize="18"
+                                FontWeight="Thin"
+                                Glyph="&#xE896;"
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}" />
+
+                            <FontIcon
+                                Grid.Column="1"
+                                Margin="0,0,12,0"
+                                FontSize="18"
+                                FontWeight="Thin"
+                                Glyph="&#xE769;"
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}" />
+
+                            <FontIcon
+                                Grid.Column="1"
+                                Margin="0,0,12,0"
+                                FontSize="18"
+                                FontWeight="Thin"
+                                Glyph="&#xEA39;"
+                                Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Error), Mode=OneWay}" />
+
+                            <Grid
+                                Grid.Column="2"
                                 Margin="0,0,10,0"
                                 VerticalAlignment="Center"
                                 RowSpacing="4">
@@ -396,7 +425,7 @@
                             </Grid>
 
                             <ContentControl
-                                Grid.Column="2"
+                                Grid.Column="3"
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
