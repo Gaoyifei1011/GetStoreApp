@@ -4,6 +4,7 @@ using GetStoreApp.Services.Root;
 using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Windows;
+using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -160,6 +161,23 @@ namespace GetStoreApp.Views.Pages
             if (MainWindow.Current.GetFrameContent() is SettingsPage settingsPage)
             {
                 settingsPage.ShowSettingsInstruction();
+            }
+        }
+
+        /// <summary>
+        /// 以管理员身份运行
+        /// </summary>
+        private async void OnRunAsAdministratorClicked(object sender, RoutedEventArgs args)
+        {
+            int result = await Task.Run(() =>
+            {
+                return Shell32Library.ShellExecute(IntPtr.Zero, "runas", Environment.ProcessPath, null, null, WindowShowStyle.SW_SHOWNORMAL);
+            });
+
+            //返回值大于 32 代表函数执行成功
+            if (result > 32)
+            {
+                (Application.Current as WinUIApp).Dispose();
             }
         }
 

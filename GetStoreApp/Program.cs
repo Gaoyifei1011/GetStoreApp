@@ -69,17 +69,14 @@ namespace GetStoreApp
 
             bool isDesktopProgram = true;
 
-            if (appActivationArguments.Kind is ExtendedActivationKind.Launch)
+            if (appActivationArguments.Kind is ExtendedActivationKind.Launch && appActivationArguments.Data is IInspectable inspectable)
             {
-                if (appActivationArguments.Data is IInspectable inspectable)
-                {
-                    Windows.ApplicationModel.Activation.LaunchActivatedEventArgs launchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr);
-                    string[] arguments = launchActivatedEventArgs.Arguments.Split(' ');
+                Windows.ApplicationModel.Activation.LaunchActivatedEventArgs launchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr);
+                string[] arguments = launchActivatedEventArgs.Arguments.Split(' ');
 
-                    if (arguments.Length >= 2 && arguments[1].Equals("Console", StringComparison.OrdinalIgnoreCase))
-                    {
-                        isDesktopProgram = false;
-                    }
+                if (arguments.Length >= 2 && arguments[1].Equals("Console", StringComparison.OrdinalIgnoreCase))
+                {
+                    isDesktopProgram = false;
                 }
             }
 

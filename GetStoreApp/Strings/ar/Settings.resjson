@@ -13,6 +13,7 @@
   "AllowUnsignedPackageOffContent": "No",
   "AllowUnsignedPackageOnContent": "Yes",
   "AlwaysShowBackdrop": "عرض الخلفية دائمًا",
+  "RunAsAdministrator": "Run as administrator",
   "AlwaysShowBackdropDescription": "لا يتراجع النافذة إلى لون صلب عندما تفقد التركيز",
   "AlwaysShowBackdropOffContent": "مغلق",
   "AlwaysShowBackdropOnContent": "مفتوح",

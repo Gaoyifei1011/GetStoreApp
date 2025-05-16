@@ -176,6 +176,7 @@
   "TopMostDescription": "将当前应用的窗口置于最顶端",
   "TopMostOffContent": "未置顶",
   "TopMostOnContent": "置顶",
+  "RunAsAdministrator": "以管理员身份运行",
   "TraceCleanup": "痕迹清理",
   "TraceCleanupDescription": "清理应用内使用过的所有痕迹",
   "TraceClear": "选择要清理的内容",
