@@ -63,6 +63,22 @@ namespace GetStoreApp.Views.Pages
             }
         }
 
+        private bool _cancelAutoUpdateValue = CancelAutoUpdateService.CancelAutoUpdateValue;
+
+        public bool CancelAutoUpdateValue
+        {
+            get { return _cancelAutoUpdateValue; }
+
+            set
+            {
+                if (!Equals(_cancelAutoUpdateValue, value))
+                {
+                    _cancelAutoUpdateValue = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CancelAutoUpdateValue)));
+                }
+            }
+        }
+
         private bool _useSystemRegionValue = StoreRegionService.UseSystemRegionValue;
 
         public bool UseSystemRegionValue
@@ -267,6 +283,18 @@ namespace GetStoreApp.Views.Pages
             {
                 InstallMode = InstallModeList[Convert.ToInt32(tag)];
                 InstallModeService.SetInstallMode(InstallMode);
+            }
+        }
+
+        /// <summary>
+        /// 设置是否取消自动更新应用
+        /// </summary>
+        private void OnCancelAutoUpdateToggled(object sender, RoutedEventArgs args)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                CancelAutoUpdateService.SetCancelAutoUpdateValue(toggleSwitch.IsOn);
+                CancelAutoUpdateValue = toggleSwitch.IsOn;
             }
         }
 

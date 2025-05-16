@@ -30,6 +30,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!--  查询链接方式设置  -->
@@ -183,9 +184,81 @@
                 </DropDownButton>
             </Grid>
 
+            <!--  检测到更新后是否直接取消更新  -->
+            <Grid
+                Grid.Row="2"
+                Height="60"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE895;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdate')}" />
+
+                    <TextBlock
+                        x:Name="CancelAutoUpdateDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateDescription')}"
+                                Visibility="{x:Bind CancelAutoUpdateDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateOffContent')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(CancelAutoUpdateValue), Mode=OneWay}" />
+
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/CancelAutoUpdateOnContent')}"
+                        Visibility="{x:Bind CancelAutoUpdateValue, Mode=OneWay}" />
+
+                    <ToggleSwitch
+                        MinWidth="0"
+                        Margin="10,-2,-2,0"
+                        IsOn="{x:Bind CancelAutoUpdateValue, Mode=OneWay}"
+                        OffContent=""
+                        OnContent=""
+                        Toggled="{x:Bind OnCancelAutoUpdateToggled}" />
+                </StackPanel>
+            </Grid>
+
             <!--  商店区域设置  -->
             <Expander
-                Grid.Row="2"
+                Grid.Row="3"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"
@@ -407,7 +480,7 @@
 
             <!--  链接过滤设置  -->
             <Expander
-                Grid.Row="3"
+                Grid.Row="4"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"
@@ -587,8 +660,7 @@
 
             <!--  下载管理设置  -->
             <Expander
-                x:Name="DownloadOptions"
-                Grid.Row="4"
+                Grid.Row="5"
                 Margin="0,0,0,2"
                 Padding="0"
                 HorizontalAlignment="Stretch"
