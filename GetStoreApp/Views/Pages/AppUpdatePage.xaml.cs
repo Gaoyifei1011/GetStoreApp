@@ -1,6 +1,7 @@
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.AppUpdate;
+using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -302,14 +303,17 @@ namespace GetStoreApp.Views.Pages
                         if (isExisted)
                         {
                             // 已经检测到的应用暂未进行更新，取消自动安装当前更新
-                            if (!isUpdating)
+                            if (CancelAutoUpdateService.CancelAutoUpdateValue && !isUpdating)
                             {
                                 upgradableAppItem.Cancel();
                             }
                         }
                         else
                         {
-                            upgradableAppItem.Cancel();
+                            if (CancelAutoUpdateService.CancelAutoUpdateValue)
+                            {
+                                upgradableAppItem.Cancel();
+                            }
 
                             foreach (Package packageItem in packageManager.FindPackagesForUser(string.Empty))
                             {
