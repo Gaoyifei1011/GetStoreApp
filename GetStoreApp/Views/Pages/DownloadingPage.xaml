@@ -74,7 +74,6 @@
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(DownloadingCollection.Count), Mode=OneWay}" />
 
             <CommandBar
-                x:Name="NormalMode"
                 Grid.Column="4"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
@@ -146,7 +145,6 @@
             </CommandBar>
 
             <CommandBar
-                x:Name="SelectMode"
                 Grid.Column="4"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"

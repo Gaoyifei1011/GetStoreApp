@@ -44,6 +44,22 @@ namespace GetStoreApp.Views.Pages
         private bool isInitialized;
         private PackageManager packageManager;
 
+        private CompletedResultKind _completedResultKind = CompletedResultKind.Loading;
+
+        public CompletedResultKind CompletedResultKind
+        {
+            get { return _completedResultKind; }
+
+            set
+            {
+                if (!Equals(_completedResultKind, value))
+                {
+                    _completedResultKind = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedResultKind)));
+                }
+            }
+        }
+
         private bool _isSelectMode;
 
         public bool IsSelectMode
@@ -119,6 +135,8 @@ namespace GetStoreApp.Views.Pages
 
                     DownloadStorageService.DownloadStorageSemaphoreSlim?.Release();
                 });
+
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }
 
@@ -524,6 +542,8 @@ namespace GetStoreApp.Views.Pages
                         });
                     }
                 }
+
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }
 
@@ -590,6 +610,8 @@ namespace GetStoreApp.Views.Pages
                         });
                     }
                 }
+
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             }
         }
 
@@ -600,16 +622,13 @@ namespace GetStoreApp.Views.Pages
         {
             List<CompletedModel> selectedCompletedDataList = [];
 
-            await Task.Run(() =>
+            foreach (CompletedModel completedItem in CompletedCollection)
             {
-                foreach (CompletedModel completedItem in CompletedCollection)
+                if (completedItem.IsSelected)
                 {
-                    if (completedItem.IsSelected)
-                    {
-                        selectedCompletedDataList.Add(completedItem);
-                    }
+                    selectedCompletedDataList.Add(completedItem);
                 }
-            });
+            }
 
             // 没有选中任何内容时显示空提示对话框
             if (selectedCompletedDataList.Count is 0)
@@ -722,6 +741,8 @@ namespace GetStoreApp.Views.Pages
                     IsSelected = false,
                     IsSelectMode = false
                 });
+
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             });
         }
 
@@ -740,6 +761,8 @@ namespace GetStoreApp.Views.Pages
                         break;
                     }
                 }
+
+                CompletedResultKind = CompletedCollection.Count is 0 ? CompletedResultKind.Empty : CompletedResultKind.Successfully;
             });
         }
 
@@ -774,7 +797,7 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 获取文件缩略图
         /// </summary>
-        public async Task<BitmapImage> GetFileIconImageAsync(string filePath)
+        private async Task<BitmapImage> GetFileIconImageAsync(string filePath)
         {
             if (File.Exists(filePath))
             {
@@ -807,6 +830,31 @@ namespace GetStoreApp.Views.Pages
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 获取加载下载已完成文件是否成功
+        /// </summary>
+        private Visibility GetCompletedSuccessfullyState(CompletedResultKind completedResultKind, bool isSuccessfully)
+        {
+            return isSuccessfully ? completedResultKind is CompletedResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : completedResultKind is CompletedResultKind.Successfully ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
+        /// 检查加载下载已完成文件是否成功
+        /// </summary>
+        private Visibility CheckCompletedState(CompletedResultKind completedResultKind, CompletedResultKind comparedCompletedResultKind)
+        {
+            return Equals(completedResultKind, comparedCompletedResultKind) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 获取是否正在加载中
+        /// </summary>
+
+        private bool GetIsLoading(CompletedResultKind completedKind)
+        {
+            return !Equals(completedKind, CompletedResultKind.Loading);
         }
     }
 }

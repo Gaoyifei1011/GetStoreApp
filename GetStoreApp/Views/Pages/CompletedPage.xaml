@@ -5,6 +5,7 @@
     xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:download="using:GetStoreApp.Models.Controls.Download"
+    xmlns:enum="using:GetStoreApp.Extensions.DataType.Enums"
     xmlns:helper="using:GetStoreApp.Helpers.Root"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -75,71 +76,9 @@
                 Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}" />
 
             <CommandBar
-                x:Name="NormalMode"
                 Grid.Column="4"
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
-                Background="Transparent"
-                DefaultLabelPosition="Right"
-                Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelectMode), Mode=OneWay}">
-
-                <CommandBar.Resources>
-                    <SolidColorBrush x:Key="CommandBarBackgroundOpen" Color="Transparent" />
-                    <Thickness x:Key="CommandBarBorderThicknessOpen">0</Thickness>
-                </CommandBar.Resources>
-
-                <CommandBar.PrimaryCommands>
-                    <AppBarButton
-                        Click="{x:Bind OnOpenFolderClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8B7;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton
-                        Click="{x:Bind OnSelectClicked}"
-                        IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedCollection.Count), Mode=OneWay}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE762;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.PrimaryCommands>
-
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton
-                        Click="{x:Bind OnOpenFolderClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolder')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/OpenFolderToolTip')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE8B7;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton
-                        Click="{x:Bind OnUseInstructionClicked}"
-                        Label="{x:Bind root:ResourceService.GetLocalized('Download/UseInstruction')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/UseInstructionToolTip')}">
-
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE946;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
-
-            <CommandBar
-                x:Name="SelectMode"
-                Grid.Column="4"
-                Margin="0,0,10,0"
-                VerticalAlignment="Center"
-                x:Load="{x:Bind IsSelectMode, Mode=OneWay}"
                 Background="Transparent"
                 DefaultLabelPosition="Right">
 
@@ -149,21 +88,46 @@
                 </CommandBar.Resources>
 
                 <CommandBar.PrimaryCommands>
-                    <AppBarButton Click="{x:Bind OnSelectAllClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}">
+                    <AppBarButton
+                        Click="{x:Bind OnSelectClicked}"
+                        IsEnabled="{x:Bind sys:Convert.ToBoolean(CompletedCollection.Count), Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Download/Select')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/SelectToolTip')}"
+                        Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSelectMode), Mode=OneWay}">
+
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE762;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
+                    <AppBarButton
+                        Click="{x:Bind OnSelectAllClicked}"
+                        IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectAll')}"
+                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8B3;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton Click="{x:Bind OnSelectNoneClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}">
+                    <AppBarButton
+                        Click="{x:Bind OnSelectNoneClicked}"
+                        IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Download/SelectNone')}"
+                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8E6;" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}" ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptionsToolTip')}">
+                    <AppBarButton
+                        IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptions')}"
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/DeleteOptionsToolTip')}"
+                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
+
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE74D;" />
                         </AppBarButton.Icon>
@@ -190,7 +154,8 @@
                     <AppBarButton
                         Click="{x:Bind OnCancelClicked}"
                         Label="{x:Bind root:ResourceService.GetLocalized('Download/Cancel')}"
-                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}">
+                        ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/CancelToolTip')}"
+                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE711;" />
@@ -199,7 +164,11 @@
                 </CommandBar.PrimaryCommands>
 
                 <CommandBar.SecondaryCommands>
-                    <AppBarButton Click="{x:Bind OnShareSelectedFileClicked}" Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}">
+                    <AppBarButton
+                        Click="{x:Bind OnShareSelectedFileClicked}"
+                        IsEnabled="{x:Bind GetIsLoading(CompletedResultKind), Mode=OneWay}"
+                        Label="{x:Bind root:ResourceService.GetLocalized('Download/ShareSelectedFile')}"
+                        Visibility="{x:Bind IsSelectMode, Mode=OneWay}">
 
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE72D;" />
@@ -229,6 +198,7 @@
             </CommandBar>
         </Grid>
 
+        <!--  下载文件状态显示栏  -->
         <Grid
             Grid.Row="1"
             Height="60"
@@ -238,12 +208,34 @@
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
             CornerRadius="{StaticResource ControlCornerRadius}"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityReverseConvert(CompletedCollection.Count), Mode=OneWay}">
-            <TextBlock
-                Margin="0,10"
-                VerticalAlignment="Center"
-                Text="{x:Bind root:ResourceService.GetLocalized('Download/CompletedEmptyDescription')}"
-                TextAlignment="Center" />
+            Visibility="{x:Bind GetCompletedSuccessfullyState(CompletedResultKind, x:False), Mode=OneWay}">
+
+            <Grid>
+                <!--  正在加载中  -->
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="10"
+                    Visibility="{x:Bind CheckCompletedState(CompletedResultKind, enum:CompletedResultKind.Loading), Mode=OneWay}">
+
+                    <ProgressRing IsActive="True" IsEnabled="True" />
+
+                    <TextBlock
+                        Margin="0,10"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Download/LoadingDownloadCompletedFiles')}"
+                        TextAlignment="Center" />
+                </StackPanel>
+
+                <!--  下载已完成列表为空  -->
+                <TextBlock
+                    Margin="0,10"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind root:ResourceService.GetLocalized('Download/CompletedEmptyDescription')}"
+                    TextAlignment="Center"
+                    Visibility="{x:Bind CheckCompletedState(CompletedResultKind, enum:CompletedResultKind.Empty), Mode=OneWay}" />
+            </Grid>
         </Grid>
 
         <ItemsView
@@ -253,7 +245,7 @@
             ItemInvoked="{x:Bind OnItemInvoked}"
             ItemsSource="{x:Bind CompletedCollection}"
             SelectionMode="None"
-            Visibility="{x:Bind converter:ValueConverterHelper.IntToVisibilityConvert(CompletedCollection.Count), Mode=OneWay}">
+            Visibility="{x:Bind GetCompletedSuccessfullyState(CompletedResultKind, x:True), Mode=OneWay}">
 
             <ItemsView.ItemTemplate>
                 <DataTemplate x:DataType="download:CompletedModel">
