@@ -206,6 +206,7 @@ namespace GetStoreApp
                 ThemeService.InitializeTheme();
                 TopMostService.InitializeTopMost();
 
+                CancelAutoUpdateService.InitializeCancelAutoUpdate();
                 WebKernelService.InitializeWebKernel();
                 ShellMenuService.InitializeShellMenu();
                 NotificationService.InitializeNotification();
