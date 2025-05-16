@@ -35,11 +35,26 @@ namespace GetStoreApp.Views.Pages
     public sealed partial class WinGetPage : Page, INotifyPropertyChanged
     {
         private readonly string Unknown = ResourceService.GetLocalized("WinGet/Unknown");
-        private readonly string PackageDownloadFailedContent = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent");
-        private readonly string PackageInstallFailedContent = ResourceService.GetLocalized("WinGet/PackageInstallFailedContent");
-        private readonly string PackageUninstallFailedContent = ResourceService.GetLocalized("WinGet/PackageUninstallFailedContent");
-        private readonly string PackageRepairFailedContent = ResourceService.GetLocalized("WinGet/PackageRepairFailedContent");
-        private readonly string PackageUpgradeFailedContent = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent");
+        private readonly string PackageDownloadFailedContent1 = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent1");
+        private readonly string PackageDownloadFailedContent2 = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent2");
+        private readonly string PackageDownloadFailedContent3 = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent3");
+        private readonly string PackageDownloadFailedContent4 = ResourceService.GetLocalized("WinGet/PackageDownloadFailedContent4");
+        private readonly string PackageInstallFailedContent1 = ResourceService.GetLocalized("WinGet/PackageInstallFailedContent1");
+        private readonly string PackageInstallFailedContent2 = ResourceService.GetLocalized("WinGet/PackageInstallFailedContent2");
+        private readonly string PackageInstallFailedContent3 = ResourceService.GetLocalized("WinGet/PackageInstallFailedContent3");
+        private readonly string PackageInstallFailedContent4 = ResourceService.GetLocalized("WinGet/PackageInstallFailedContent4");
+        private readonly string PackageUninstallFailedContent1 = ResourceService.GetLocalized("WinGet/PackageUninstallFailedContent1");
+        private readonly string PackageUninstallFailedContent2 = ResourceService.GetLocalized("WinGet/PackageUninstallFailedContent2");
+        private readonly string PackageUninstallFailedContent3 = ResourceService.GetLocalized("WinGet/PackageUninstallFailedContent3");
+        private readonly string PackageUninstallFailedContent4 = ResourceService.GetLocalized("WinGet/PackageUninstallFailedContent4");
+        private readonly string PackageRepairFailedContent1 = ResourceService.GetLocalized("WinGet/PackageRepairFailedContent1");
+        private readonly string PackageRepairFailedContent2 = ResourceService.GetLocalized("WinGet/PackageRepairFailedContent2");
+        private readonly string PackageRepairFailedContent3 = ResourceService.GetLocalized("WinGet/PackageRepairFailedContent3");
+        private readonly string PackageRepairFailedContent4 = ResourceService.GetLocalized("WinGet/PackageRepairFailedContent4");
+        private readonly string PackageUpgradeFailedContent1 = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent1");
+        private readonly string PackageUpgradeFailedContent2 = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent2");
+        private readonly string PackageUpgradeFailedContent3 = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent3");
+        private readonly string PackageUpgradeFailedContent4 = ResourceService.GetLocalized("WinGet/PackageUpgradeFailedContent4");
         private readonly string WinGetPackageDownloadBlockedByPolicy = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadBlockedByPolicy");
         private readonly string WinGetPackageDownloadCatalogError = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadCatalogError");
         private readonly string WinGetPackageDownloadInternalError = ResourceService.GetLocalized("WinGet/WinGetPackageDownloadInternalError");
@@ -865,11 +880,21 @@ namespace GetStoreApp.Views.Pages
                                         // 被策略阻止
                                         case DownloadResultStatus.BlockedByPolicy:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadBlockedByPolicy) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadBlockedByPolicy, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadBlockedByPolicy, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -884,11 +909,20 @@ namespace GetStoreApp.Views.Pages
                                         // 数据源错误
                                         case DownloadResultStatus.CatalogError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadCatalogError) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadCatalogError, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadCatalogError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -903,11 +937,20 @@ namespace GetStoreApp.Views.Pages
                                         // 内部错误
                                         case DownloadResultStatus.InternalError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadInternalError) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadInternalError, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadInternalError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -922,11 +965,20 @@ namespace GetStoreApp.Views.Pages
                                         // 非法错误
                                         case DownloadResultStatus.InvalidOptions:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadInvalidOptions) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadInvalidOptions, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadInvalidOptions, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -941,11 +993,20 @@ namespace GetStoreApp.Views.Pages
                                         // 下载错误
                                         case DownloadResultStatus.DownloadError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadError) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadError, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -960,11 +1021,20 @@ namespace GetStoreApp.Views.Pages
                                         // 清单错误
                                         case DownloadResultStatus.ManifestError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadManifestError) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadManifestError, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadManifestError, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -979,11 +1049,20 @@ namespace GetStoreApp.Views.Pages
                                         // 没有合适的应用安装包
                                         case DownloadResultStatus.NoApplicableInstallers:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadNoApplicableInstallers) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadNoApplicableInstallers, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadNoApplicableInstallers, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -998,11 +1077,20 @@ namespace GetStoreApp.Views.Pages
                                         // 未接受许可协议
                                         case DownloadResultStatus.PackageAgreementsNotAccepted:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageDownloadFailedContentList = [];
+                                                    packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadAgreementsNotAccepted) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadAgreementsNotAccepted, downloadResult.ExtendedErrorCode.Message));
+                                                    packageDownloadFailedContentList.Add(downloadResult.ExtendedErrorCode is not null ? string.Format(PackageDownloadFailedContent4, downloadResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadAgreementsNotAccepted, downloadResult.ExtendedErrorCode is not null ? downloadResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1057,8 +1145,29 @@ namespace GetStoreApp.Views.Pages
                                 }
                                 else
                                 {
-                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                    packageOperation.PackageOperationFailedContent = string.Format(PackageDownloadFailedContent, WinGetPackageDownloadOtherError, exception is not null ? exception.HResult : Unknown);
+                                    string packageOperationFailedContent = await Task.Run(() =>
+                                    {
+                                        List<string> packageDownloadFailedContentList = [];
+                                        packageDownloadFailedContentList.Add(PackageDownloadFailedContent1);
+                                        packageDownloadFailedContentList.Add(exception is not null ? string.Format(PackageDownloadFailedContent2, WinGetPackageDownloadOtherError) : string.Format(PackageDownloadFailedContent3, WinGetPackageDownloadOtherError, exception.Message));
+                                        packageDownloadFailedContentList.Add(exception is not null ? string.Format(PackageDownloadFailedContent4, exception.HResult) : Unknown);
+                                        return string.Join(Environment.NewLine, packageDownloadFailedContentList);
+                                    });
+
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
                                 }
                             }
 
@@ -1155,11 +1264,20 @@ namespace GetStoreApp.Views.Pages
                                         // 被组策略阻止
                                         case InstallResultStatus.BlockedByPolicy:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallBlockedByPolicy) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallBlockedByPolicy, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallBlockedByPolicy, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1174,11 +1292,20 @@ namespace GetStoreApp.Views.Pages
                                         // 数据源错误
                                         case InstallResultStatus.CatalogError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallCatalogError) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallCatalogError, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallCatalogError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1193,11 +1320,20 @@ namespace GetStoreApp.Views.Pages
                                         // 内部错误
                                         case InstallResultStatus.InternalError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallInternalError) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallInternalError, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallInternalError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1212,11 +1348,20 @@ namespace GetStoreApp.Views.Pages
                                         // 非法错误
                                         case InstallResultStatus.InvalidOptions:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallInvalidOptions) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallInvalidOptions, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallInvalidOptions, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1231,11 +1376,20 @@ namespace GetStoreApp.Views.Pages
                                         // 下载错误
                                         case InstallResultStatus.DownloadError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallDownloadError) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallDownloadError, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallDownloadError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1250,11 +1404,20 @@ namespace GetStoreApp.Views.Pages
                                         // 安装错误
                                         case InstallResultStatus.InstallError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallError) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallError, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1269,11 +1432,20 @@ namespace GetStoreApp.Views.Pages
                                         // 清单错误
                                         case InstallResultStatus.ManifestError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallManifestError) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallManifestError, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallManifestError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1288,11 +1460,20 @@ namespace GetStoreApp.Views.Pages
                                         // 没有合适的应用安装包
                                         case InstallResultStatus.NoApplicableInstallers:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallNoApplicableInstallers) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallNoApplicableInstallers, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallNoApplicableInstallers, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1307,11 +1488,20 @@ namespace GetStoreApp.Views.Pages
                                         // 未接受许可协议
                                         case InstallResultStatus.PackageAgreementsNotAccepted:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageInstallFailedContentList = [];
+                                                    packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallAgreementsNotAccepted) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallAgreementsNotAccepted, installResult.ExtendedErrorCode.Message));
+                                                    packageInstallFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageInstallFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallAgreementsNotAccepted, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1367,8 +1557,29 @@ namespace GetStoreApp.Views.Pages
                                 // 安装任务发生其他异常
                                 else
                                 {
-                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                    packageOperation.PackageOperationFailedContent = string.Format(PackageInstallFailedContent, WinGetPackageInstallOtherError, exception is not null ? exception.HResult : Unknown);
+                                    string packageOperationFailedContent = await Task.Run(() =>
+                                    {
+                                        List<string> packageInstallFailedContentList = [];
+                                        packageInstallFailedContentList.Add(PackageInstallFailedContent1);
+                                        packageInstallFailedContentList.Add(exception is not null ? string.Format(PackageInstallFailedContent2, WinGetPackageInstallOtherError) : string.Format(PackageInstallFailedContent3, WinGetPackageInstallOtherError, exception.Message));
+                                        packageInstallFailedContentList.Add(exception is not null ? string.Format(PackageInstallFailedContent4, exception.HResult) : Unknown);
+                                        return string.Join(Environment.NewLine, packageInstallFailedContentList);
+                                    });
+
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = Unknown;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
                                 }
                             }
 
@@ -1468,11 +1679,20 @@ namespace GetStoreApp.Views.Pages
                                         // 被组策略阻止
                                         case UninstallResultStatus.BlockedByPolicy:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUninstallFailedContentList = [];
+                                                    packageUninstallFailedContentList.Add(PackageUninstallFailedContent1);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2, WinGetPackageUninstallBlockedByPolicy) : string.Format(PackageUninstallFailedContent3, WinGetPackageUninstallBlockedByPolicy, uninstallResult.ExtendedErrorCode.Message));
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4, uninstallResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUninstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallBlockedByPolicy, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1487,11 +1707,20 @@ namespace GetStoreApp.Views.Pages
                                         // 数据源错误
                                         case UninstallResultStatus.CatalogError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUninstallFailedContentList = [];
+                                                    packageUninstallFailedContentList.Add(PackageUninstallFailedContent1);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2, WinGetPackageUninstallCatalogError) : string.Format(PackageUninstallFailedContent3, WinGetPackageUninstallCatalogError, uninstallResult.ExtendedErrorCode.Message));
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4, uninstallResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUninstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallCatalogError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1506,11 +1735,20 @@ namespace GetStoreApp.Views.Pages
                                         // 内部错误
                                         case UninstallResultStatus.InternalError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUninstallFailedContentList = [];
+                                                    packageUninstallFailedContentList.Add(PackageUninstallFailedContent1);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2, WinGetPackageUninstallInternalError) : string.Format(PackageUninstallFailedContent3, WinGetPackageUninstallInternalError, uninstallResult.ExtendedErrorCode.Message));
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4, uninstallResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUninstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallInternalError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1525,11 +1763,20 @@ namespace GetStoreApp.Views.Pages
                                         // 非法错误
                                         case UninstallResultStatus.InvalidOptions:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUninstallFailedContentList = [];
+                                                    packageUninstallFailedContentList.Add(PackageUninstallFailedContent1);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2, WinGetPackageUninstallInvalidOptions) : string.Format(PackageUninstallFailedContent3, WinGetPackageUninstallInvalidOptions, uninstallResult.ExtendedErrorCode.Message));
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4, uninstallResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUninstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallInvalidOptions, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1544,11 +1791,20 @@ namespace GetStoreApp.Views.Pages
                                         // 卸载错误
                                         case UninstallResultStatus.UninstallError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUninstallFailedContentList = [];
+                                                    packageUninstallFailedContentList.Add(PackageUninstallFailedContent1);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2, WinGetPackageUninstallError) : string.Format(PackageUninstallFailedContent3, WinGetPackageUninstallError, uninstallResult.ExtendedErrorCode.Message));
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4, uninstallResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUninstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1563,11 +1819,20 @@ namespace GetStoreApp.Views.Pages
                                         // 清单错误
                                         case UninstallResultStatus.ManifestError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUninstallFailedContentList = [];
+                                                    packageUninstallFailedContentList.Add(PackageUninstallFailedContent1);
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent2, WinGetPackageUninstallManifestError) : string.Format(PackageUninstallFailedContent3, WinGetPackageUninstallManifestError, uninstallResult.ExtendedErrorCode.Message));
+                                                    packageUninstallFailedContentList.Add(uninstallResult.ExtendedErrorCode is not null ? string.Format(PackageUninstallFailedContent4, uninstallResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUninstallFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallManifestError, uninstallResult.ExtendedErrorCode is not null ? uninstallResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1603,8 +1868,29 @@ namespace GetStoreApp.Views.Pages
                             // 应用包操作失败
                             else
                             {
-                                packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                packageOperation.PackageOperationFailedContent = string.Format(PackageUninstallFailedContent, WinGetPackageUninstallOtherError, exception is not null ? exception.HResult : Unknown);
+                                string packageOperationFailedContent = await Task.Run(() =>
+                                {
+                                    List<string> packageUninstallFailedContentList = [];
+                                    packageUninstallFailedContentList.Add(PackageUninstallFailedContent1);
+                                    packageUninstallFailedContentList.Add(exception is not null ? string.Format(PackageUninstallFailedContent2, WinGetPackageUninstallOtherError) : string.Format(PackageUninstallFailedContent3, WinGetPackageUninstallOtherError, exception.Message));
+                                    packageUninstallFailedContentList.Add(exception is not null ? string.Format(PackageUninstallFailedContent4, exception.HResult) : Unknown);
+                                    return string.Join(Environment.NewLine, packageUninstallFailedContentList);
+                                });
+
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
                             }
 
                             ShowTaskCompletedNotification();
@@ -1701,11 +1987,20 @@ namespace GetStoreApp.Views.Pages
                                         // 被组策略阻止
                                         case RepairResultStatus.BlockedByPolicy:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairBlockedByPolicy) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairBlockedByPolicy, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationFailedContent = Unknown;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairBlockedByPolicy, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1720,11 +2015,20 @@ namespace GetStoreApp.Views.Pages
                                         // 数据源错误
                                         case RepairResultStatus.CatalogError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairCatalogError) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairCatalogError, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationFailedContent = Unknown;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairCatalogError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1739,11 +2043,20 @@ namespace GetStoreApp.Views.Pages
                                         // 内部错误
                                         case RepairResultStatus.InternalError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairInternalError) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairInternalError, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairInternalError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1758,11 +2071,20 @@ namespace GetStoreApp.Views.Pages
                                         // 非法错误
                                         case RepairResultStatus.InvalidOptions:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairInvalidOptions) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairInvalidOptions, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairInvalidOptions, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1777,11 +2099,20 @@ namespace GetStoreApp.Views.Pages
                                         // 修复错误
                                         case RepairResultStatus.RepairError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairError) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairError, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1796,11 +2127,20 @@ namespace GetStoreApp.Views.Pages
                                         // 清单错误
                                         case RepairResultStatus.ManifestError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairManifestError) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairManifestError, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairManifestError, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1815,11 +2155,20 @@ namespace GetStoreApp.Views.Pages
                                         // 没有合适的应用修复包
                                         case RepairResultStatus.NoApplicableRepairer:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairNoApplicableRepairer) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairNoApplicableRepairer, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairNoApplicableRepairer, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1834,11 +2183,20 @@ namespace GetStoreApp.Views.Pages
                                         // 未接受许可协议
                                         case RepairResultStatus.PackageAgreementsNotAccepted:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageRepairFailedContentList = [];
+                                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairAgreementsNotAccepted) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairAgreementsNotAccepted, repairResult.ExtendedErrorCode.Message));
+                                                    packageRepairFailedContentList.Add(repairResult.ExtendedErrorCode is not null ? string.Format(PackageRepairFailedContent4, repairResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairAgreementsNotAccepted, repairResult.ExtendedErrorCode is not null ? repairResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1874,8 +2232,29 @@ namespace GetStoreApp.Views.Pages
                             // 应用包操作失败
                             else
                             {
-                                packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                packageOperation.PackageOperationFailedContent = string.Format(PackageRepairFailedContent, WinGetPackageRepairOtherError, exception is not null ? exception.HResult : Unknown);
+                                string packageOperationFailedContent = await Task.Run(() =>
+                                {
+                                    List<string> packageRepairFailedContentList = [];
+                                    packageRepairFailedContentList.Add(PackageRepairFailedContent1);
+                                    packageRepairFailedContentList.Add(exception is not null ? string.Format(PackageRepairFailedContent2, WinGetPackageRepairOtherError) : string.Format(PackageRepairFailedContent3, WinGetPackageRepairOtherError, exception.Message));
+                                    packageRepairFailedContentList.Add(exception is not null ? string.Format(PackageRepairFailedContent4, exception.HResult) : Unknown);
+                                    return string.Join(Environment.NewLine, packageRepairFailedContentList);
+                                });
+
+                                PackageOperationLock.Enter();
+                                try
+                                {
+                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
+                                }
+                                catch (Exception e)
+                                {
+                                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                }
+                                finally
+                                {
+                                    PackageOperationLock.Exit();
+                                }
                             }
 
                             ShowTaskCompletedNotification();
@@ -1980,11 +2359,20 @@ namespace GetStoreApp.Views.Pages
                                         // 被组策略阻止
                                         case InstallResultStatus.BlockedByPolicy:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeBlockedByPolicy) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeBlockedByPolicy, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeBlockedByPolicy, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -1999,11 +2387,20 @@ namespace GetStoreApp.Views.Pages
                                         // 数据源错误
                                         case InstallResultStatus.CatalogError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeCatalogError) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeCatalogError, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeCatalogError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2018,11 +2415,20 @@ namespace GetStoreApp.Views.Pages
                                         // 内部错误
                                         case InstallResultStatus.InternalError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeInternalError) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeInternalError, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeInternalError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2037,11 +2443,20 @@ namespace GetStoreApp.Views.Pages
                                         // 非法错误
                                         case InstallResultStatus.InvalidOptions:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeInvalidOptions) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeInvalidOptions, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeInvalidOptions, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2056,11 +2471,20 @@ namespace GetStoreApp.Views.Pages
                                         // 下载错误
                                         case InstallResultStatus.DownloadError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeDownloadError) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeDownloadError, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeDownloadError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2075,11 +2499,20 @@ namespace GetStoreApp.Views.Pages
                                         // 安装错误
                                         case InstallResultStatus.InstallError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeError) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeError, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2094,11 +2527,20 @@ namespace GetStoreApp.Views.Pages
                                         // 清单错误
                                         case InstallResultStatus.ManifestError:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeManifestError) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeManifestError, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeManifestError, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2113,11 +2555,20 @@ namespace GetStoreApp.Views.Pages
                                         // 没有合适的应用安装包
                                         case InstallResultStatus.NoApplicableInstallers:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeNoApplicableInstallers) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeNoApplicableInstallers, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeNoApplicableInstallers, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2132,11 +2583,20 @@ namespace GetStoreApp.Views.Pages
                                         // 没有合适的应用更新包
                                         case InstallResultStatus.NoApplicableUpgrade:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeNoApplicableUpgrade) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeNoApplicableUpgrade, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeNoApplicableUpgrade, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2151,11 +2611,20 @@ namespace GetStoreApp.Views.Pages
                                         // 未接受许可协议
                                         case InstallResultStatus.PackageAgreementsNotAccepted:
                                             {
+                                                string packageOperationFailedContent = await Task.Run(() =>
+                                                {
+                                                    List<string> packageUpgradeFailedContentList = [];
+                                                    packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeAgreementsNotAccepted) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeAgreementsNotAccepted, installResult.ExtendedErrorCode.Message));
+                                                    packageUpgradeFailedContentList.Add(installResult.ExtendedErrorCode is not null ? string.Format(PackageUpgradeFailedContent4, installResult.ExtendedErrorCode.HResult) : Unknown);
+                                                    return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                                });
+
                                                 PackageOperationLock.Enter();
                                                 try
                                                 {
                                                     packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeAgreementsNotAccepted, installResult.ExtendedErrorCode is not null ? installResult.ExtendedErrorCode.HResult : Unknown);
+                                                    packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
                                                 }
                                                 catch (Exception e)
                                                 {
@@ -2211,8 +2680,29 @@ namespace GetStoreApp.Views.Pages
                                 // 安装任务发生其他异常
                                 else
                                 {
-                                    packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
-                                    packageOperation.PackageOperationFailedContent = string.Format(PackageUpgradeFailedContent, WinGetPackageUpgradeOtherError, exception is not null ? exception.HResult : Unknown);
+                                    string packageOperationFailedContent = await Task.Run(() =>
+                                    {
+                                        List<string> packageUpgradeFailedContentList = [];
+                                        packageUpgradeFailedContentList.Add(PackageUpgradeFailedContent1);
+                                        packageUpgradeFailedContentList.Add(exception is not null ? string.Format(PackageUpgradeFailedContent2, WinGetPackageUpgradeOtherError) : string.Format(PackageUpgradeFailedContent3, WinGetPackageUpgradeOtherError, exception.Message));
+                                        packageUpgradeFailedContentList.Add(exception is not null ? string.Format(PackageUpgradeFailedContent4, exception.HResult) : Unknown);
+                                        return string.Join(Environment.NewLine, packageUpgradeFailedContentList);
+                                    });
+
+                                    PackageOperationLock.Enter();
+                                    try
+                                    {
+                                        packageOperation.PackageOperationResultKind = PackageOperationResultKind.Failed;
+                                        packageOperation.PackageOperationFailedContent = packageOperationFailedContent;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                                    }
+                                    finally
+                                    {
+                                        PackageOperationLock.Exit();
+                                    }
                                 }
                             }
 
