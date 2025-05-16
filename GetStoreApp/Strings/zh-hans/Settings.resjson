@@ -1,6 +1,9 @@
 {
   "About": "关于",
-  "AcceptSourceAgreements": "是否接受源参数：",
+  "CancelAutoUpdate": "取消自动更新",
+  "CancelAutoUpdateDescription": "检测到应用更新后自动取消更新",
+  "CancelAutoUpdateOffContent": "否",
+  "CancelAutoUpdateOnContent": "是",
   "AdditionalPackageCatalogArguments": "额外数据源参数：",
   "AddNewSource": "添加数据源",
   "Advanced": "高级",

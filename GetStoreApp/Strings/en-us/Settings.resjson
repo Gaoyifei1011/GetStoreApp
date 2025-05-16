@@ -1,5 +1,9 @@
 ﻿{
   "About": "About",
+  "CancelAutoUpdate": "Cancel auto update",
+  "CancelAutoUpdateDescription": "Automatically cancel the update when an app update is detected",
+  "CancelAutoUpdateOffContent": "No",
+  "CancelAutoUpdateOnContent": "Yes",
   "AcceptSourceAgreements": "Whether to accept source agreements: ",
   "AdditionalPackageCatalogArguments": "Extra package catalog arguments: ",
   "AddNewSource": "Add data source",
