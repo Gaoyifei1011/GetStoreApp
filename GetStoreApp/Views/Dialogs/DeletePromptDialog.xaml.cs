@@ -2,7 +2,7 @@
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.UI.Dialogs.Common
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 删除提示对话框

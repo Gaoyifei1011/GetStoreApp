@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
 
-namespace GetStoreApp.UI.Dialogs.Download
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 文件信息对话框

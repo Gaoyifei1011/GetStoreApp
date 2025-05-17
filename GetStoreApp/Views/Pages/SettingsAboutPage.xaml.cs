@@ -1,8 +1,8 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Dialogs.About;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

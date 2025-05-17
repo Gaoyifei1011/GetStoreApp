@@ -20,7 +20,7 @@ using Windows.UI.Text;
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
 
-namespace GetStoreApp.UI.Dialogs.About
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 应用信息对话框

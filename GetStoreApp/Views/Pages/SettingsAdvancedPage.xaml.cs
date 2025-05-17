@@ -2,8 +2,8 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Dialogs.Settings;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.Rstrtmgr;

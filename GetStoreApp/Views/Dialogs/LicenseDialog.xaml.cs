@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using System.ComponentModel;
 using Windows.Security.Cryptography;
 
-namespace GetStoreApp.UI.Dialogs.About
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 许可证文字内容对话框

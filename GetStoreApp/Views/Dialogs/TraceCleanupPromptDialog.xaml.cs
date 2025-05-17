@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
 
-namespace GetStoreApp.UI.Dialogs.Settings
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 痕迹清理对话框

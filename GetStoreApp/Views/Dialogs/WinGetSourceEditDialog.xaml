@@ -1,5 +1,5 @@
 <ContentDialog
-    x:Class="GetStoreApp.UI.Dialogs.Settings.WinGetSourceEditDialog"
+    x:Class="GetStoreApp.Views.Dialogs.WinGetSourceEditDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:GetStoreApp.Helpers.Converters"

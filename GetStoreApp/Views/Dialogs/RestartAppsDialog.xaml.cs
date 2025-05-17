@@ -4,7 +4,7 @@ using Microsoft.Windows.AppLifecycle;
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
 
-namespace GetStoreApp.UI.Dialogs.Settings
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 应用重启对话框

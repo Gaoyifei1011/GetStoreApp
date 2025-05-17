@@ -3,7 +3,7 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.Dialogs.WinGet;
+using GetStoreApp.Views.Dialogs;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;

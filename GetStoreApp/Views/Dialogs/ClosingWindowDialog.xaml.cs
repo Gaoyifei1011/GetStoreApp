@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace GetStoreApp.UI.Dialogs.Common
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
     /// 任务下载中提示对话框

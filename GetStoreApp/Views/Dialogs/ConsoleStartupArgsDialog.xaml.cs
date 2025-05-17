@@ -1,20 +1,20 @@
-﻿using GetStoreApp.Models.Dialogs;
+using GetStoreApp.Models.Dialogs;
 using GetStoreApp.Services.Root;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 
-namespace GetStoreApp.UI.Dialogs.About
+namespace GetStoreApp.Views.Dialogs
 {
     /// <summary>
-    /// 桌面程序参数对话框
+    /// 控制台程序参数对话框
     /// </summary>
-    public sealed partial class DesktopStartupArgsDialog : ContentDialog
+    public sealed partial class ConsoleStartupArgsDialog : ContentDialog
     {
-        private List<StartupArgsModel> DesktopStartupArgsList { get; } =
+        private List<StartupArgsModel> ConsoleStartupArgsList { get; } =
         [
             new StartupArgsModel()
             {
-                ArgumentName = ResourceService.GetLocalized("Dialog/Type") ,
+                ArgumentName = ResourceService.GetLocalized("Dialog/Type"),
                 Argument = "-t; --type",
                 IsRequired = ResourceService.GetLocalized("Dialog/No"),
                 ArgumentContent = @"""url"",""pid"""
@@ -35,7 +35,7 @@ namespace GetStoreApp.UI.Dialogs.About
             }
         ];
 
-        public DesktopStartupArgsDialog()
+        public ConsoleStartupArgsDialog()
         {
             InitializeComponent();
         }
