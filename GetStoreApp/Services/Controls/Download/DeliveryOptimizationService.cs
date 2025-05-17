@@ -270,12 +270,11 @@ namespace GetStoreApp.Services.Controls.Download
             }
             else if (status.State is DODownloadState.DODownloadState_Transferred)
             {
-                DownloadCompleted?.Invoke(callback.DownloadID, status);
                 try
                 {
                     callback.StatusChanged -= OnStatusChanged;
                     doDownload.Finalize();
-
+                    DownloadCompleted?.Invoke(callback.DownloadID, status);
                     deliveryOptimizationLock.Enter();
 
                     try

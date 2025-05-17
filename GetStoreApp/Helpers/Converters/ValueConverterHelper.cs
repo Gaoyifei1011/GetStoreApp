@@ -13,7 +13,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static double DownloadProgress(double finishedSize, double totalSize)
         {
-            return Equals(totalSize, default) ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
+            return totalSize.Equals(default) ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
         }
 
         /// <summary>
