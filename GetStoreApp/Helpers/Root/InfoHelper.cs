@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GetStoreApp.WindowsAPI.PInvoke.KernelBase;
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Store.Preview;
 using Windows.Storage;
@@ -30,10 +33,34 @@ namespace GetStoreApp.Helpers.Root
         // 传递优化是否可用
         public static bool IsDeliveryOptimizationEnabled { get; }
 
+        // 判断 Windows 11 是否为 26100（24H1）以后的版本
+        public static bool IsWindows11_24H1OrGreater { get; }
+
         static InfoHelper()
         {
             DeliveryOptimizationSettings deliveryOptimizationSettings = DeliveryOptimizationSettings.GetCurrentSettings();
             IsDeliveryOptimizationEnabled = deliveryOptimizationSettings.DownloadMode is DeliveryOptimizationDownloadMode.HttpOnly || deliveryOptimizationSettings.DownloadMode is DeliveryOptimizationDownloadMode.Lan || deliveryOptimizationSettings.DownloadMode is DeliveryOptimizationDownloadMode.Group || deliveryOptimizationSettings.DownloadMode is DeliveryOptimizationDownloadMode.Internet;
+
+            try
+            {
+                IntPtr handle = NativeLibrary.Load(KernelBaseLibrary.KernelBase);
+                try
+                {
+                    IsWindows11_24H1OrGreater = NativeLibrary.TryGetExport(handle, "TryCreatePackageDependency2", out _);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    NativeLibrary.Free(handle);
+                }
+            }
+            catch (Exception e)
+            {
+                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+            }
         }
     }
 }

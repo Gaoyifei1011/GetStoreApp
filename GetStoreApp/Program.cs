@@ -128,15 +128,51 @@ namespace GetStoreApp
 
                 foreach (Package dependencyPacakge in dependencyPackageList)
                 {
-                    if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime") && KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new Windows.ApplicationModel.PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind.Process, string.Empty, WindowsAPI.PInvoke.KernelBase.CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
+                    // 系统版本大于 Windows 11（24H1，26100），使用 Windows App SDK 包装好的 API。不是则直接调用系统的 API
+
+                    if (dependencyPacakge.DisplayName.Contains("WindowsAppRuntime"))
                     {
-                        if (KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, WindowsAPI.PInvoke.KernelBase.AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out _, out _) is 0)
+                        if (InfoHelper.IsWindows11_24H1OrGreater)
                         {
-                            break;
+                            PackageDependency packageDependency = PackageDependency.Create(dependencyPacakge.Id.FamilyName, new Windows.ApplicationModel.PackageVersion(), new Microsoft.Windows.ApplicationModel.DynamicDependency.CreatePackageDependencyOptions()
+                            {
+                                Architectures = packageDependencyProcessorArchitectures,
+                                LifetimeArtifact = string.Empty,
+                                LifetimeArtifactKind = PackageDependencyLifetimeArtifactKind.Process,
+                                VerifyDependencyResolution = false
+                            });
+
+                            if (packageDependency is not null)
+                            {
+                                PackageDependencyContext packageDependencyContext = packageDependency.Add(new Microsoft.Windows.ApplicationModel.DynamicDependency.AddPackageDependencyOptions()
+                                {
+                                    Rank = 0,
+                                    PrependIfRankCollision = true,
+                                });
+
+                                if (packageDependencyContext is null)
+                                {
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
                         else
                         {
-                            return;
+                            if (KernelBaseLibrary.TryCreatePackageDependency(IntPtr.Zero, dependencyPacakge.Id.FamilyName, new Windows.ApplicationModel.PackageVersion(), packageDependencyProcessorArchitectures, PackageDependencyLifetimeArtifactKind.Process, string.Empty, WindowsAPI.PInvoke.KernelBase.CreatePackageDependencyOptions.CreatePackageDependencyOptions_None, out string packageDependencyId) is 0)
+                            {
+                                if (KernelBaseLibrary.AddPackageDependency(packageDependencyId, 0, WindowsAPI.PInvoke.KernelBase.AddPackageDependencyOptions.AddPackageDependencyOptions_PrependIfRankCollision, out _, out _) is 0)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    return;
+                                }
+                            }
                         }
                     }
                 }

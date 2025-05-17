@@ -9,7 +9,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.KernelBase
     /// </summary>
     public static partial class KernelBaseLibrary
     {
-        private const string KernelBase = "kernelBase.dll";
+        public const string KernelBase = "kernelBase.dll";
 
         /// <summary>
         /// 使用 TryCreatePackageDependency 方法添加前面创建的框架包依赖项的运行时引用和指定选项。 此方法成功返回后，应用可以激活类型并使用框架包中的内容。
