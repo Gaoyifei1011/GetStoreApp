@@ -43,13 +43,13 @@ namespace GetStoreAppWebView.Services.Controls.Settings
                     return defaultWebKernel;
                 }
 
-                string selectedWebKernel = WebKernelList.Find(item => item.Equals(webKernel, StringComparison.OrdinalIgnoreCase));
+                string selectedWebKernel = WebKernelList.Find(item => string.Equals(item, webKernel, StringComparison.OrdinalIgnoreCase));
 
                 return string.IsNullOrEmpty(selectedWebKernel) ? defaultWebKernel : selectedWebKernel;
             }
             else
             {
-                return WebKernelList.Find(item => item.Equals("IE"));
+                return WebKernelList.Find(item => Equals(item, "IE"));
             }
         }
     }

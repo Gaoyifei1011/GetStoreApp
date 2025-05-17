@@ -63,7 +63,7 @@ namespace GetStoreApp.Services.Controls.Settings
                             // 保存检查完成后的数据
                             foreach (KeyValuePair<string, PredefinedPackageCatalog> predefinedPackageCatalogReferenceName in PredefinedPackageCatalogList)
                             {
-                                if (winGetDataSourceName.Key.Equals(predefinedPackageCatalogReferenceName.Key) && winGetDataSourceName.Value)
+                                if (string.Equals(winGetDataSourceName.Key, predefinedPackageCatalogReferenceName.Key) && winGetDataSourceName.Value)
                                 {
                                     wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
                                     isModified = true;
@@ -84,7 +84,7 @@ namespace GetStoreApp.Services.Controls.Settings
                                 // 保存检查完成后的数据
                                 foreach (string packageCatalogReferenceName in packageCatalogReferenceNameList)
                                 {
-                                    if (winGetDataSourceName.Key.Equals(packageCatalogReferenceName) && !winGetDataSourceName.Value)
+                                    if (string.Equals(winGetDataSourceName.Key, packageCatalogReferenceName) && !winGetDataSourceName.Value)
                                     {
                                         wingetDataSourceContainer.Values[WinetDataSource] = compositeValue;
                                         break;
@@ -168,12 +168,9 @@ namespace GetStoreApp.Services.Controls.Settings
 
             try
             {
-                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue)
+                if (wingetDataSourceContainer.Values.TryGetValue(WinetDataSource, out object value) && value is ApplicationDataCompositeValue compositeValue && compositeValue.TryGetValue("Name", out object nameValue) && Equals(Convert.ToString(nameValue), winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Equals(Convert.ToBoolean(isInternalValue), winGetDataSourceName.Value))
                 {
-                    if (compositeValue.TryGetValue("Name", out object nameValue) && Convert.ToString(nameValue).Equals(winGetDataSourceName.Key) && compositeValue.TryGetValue("IsInternal", out object isInternalValue) && Convert.ToBoolean(isInternalValue).Equals(winGetDataSourceName.Value))
-                    {
-                        wingetDataSourceContainer.Values.Remove(WinetDataSource);
-                    }
+                    wingetDataSourceContainer.Values.Remove(WinetDataSource);
                 }
             }
             catch (Exception e)

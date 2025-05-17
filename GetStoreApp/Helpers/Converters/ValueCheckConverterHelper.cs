@@ -24,7 +24,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static Visibility IsCurrentControl(int selectedIndex, int index)
         {
-            return selectedIndex.Equals(index) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(selectedIndex, index) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace GetStoreApp.Helpers.Converters
         /// </summary>
         public static Visibility CheckDownloadStatus(DownloadStatus downloadStatus, DownloadStatus comparedDownloadStatus)
         {
-            return downloadStatus.Equals(comparedDownloadStatus) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(downloadStatus, comparedDownloadStatus) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

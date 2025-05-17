@@ -59,14 +59,14 @@ namespace GetStoreAppShellExtension.Commands
             if (ShellMenuService.GetShellMenuValue() && psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
-                if (Path.GetFileName(filePath).Equals("AppxManifest.xml", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(Path.GetFileName(filePath), "AppxManifest.xml", StringComparison.OrdinalIgnoreCase))
                 {
                     pCmdState = EXPCMDSTATE.ECS_ENABLED;
                 }
                 else
                 {
                     string extensionName = Path.GetExtension(filePath);
-                    pCmdState = extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) ? EXPCMDSTATE.ECS_ENABLED : EXPCMDSTATE.ECS_HIDDEN;
+                    pCmdState = string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) ? EXPCMDSTATE.ECS_ENABLED : EXPCMDSTATE.ECS_HIDDEN;
                 }
             }
             else

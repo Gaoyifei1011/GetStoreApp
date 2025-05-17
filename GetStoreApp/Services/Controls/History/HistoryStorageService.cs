@@ -59,8 +59,8 @@ namespace GetStoreApp.Services.Controls.History
                     {
                         if (queryLinksContainer.Values.TryGetValue(QueryLinks + index.ToString(), out object value) && value is ApplicationDataCompositeValue compositeValue)
                         {
-                            TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
-                            ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel typeItem = ResourceService.TypeList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryType] as string, StringComparison.OrdinalIgnoreCase));
+                            ChannelModel channelItem = ResourceService.ChannelList.Find(item => string.Equals(item.InternalName, compositeValue[HistoryChannel] as string, StringComparison.OrdinalIgnoreCase));
 
                             queryLinksHistoryList.Add(new HistoryModel()
                             {
@@ -104,8 +104,8 @@ namespace GetStoreApp.Services.Controls.History
                     {
                         if (value is ApplicationDataCompositeValue compositeValue)
                         {
-                            TypeModel typeItem = ResourceService.TypeList.Find(item => item.InternalName.Equals(compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
-                            ChannelModel channelItem = ResourceService.ChannelList.Find(item => item.InternalName.Equals(compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
+                            TypeModel typeItem = ResourceService.TypeList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryType"] as string, StringComparison.OrdinalIgnoreCase));
+                            ChannelModel channelItem = ResourceService.ChannelList.Find(item => string.Equals(item.InternalName, compositeValue["HistoryChannel"] as string, StringComparison.OrdinalIgnoreCase));
 
                             searchStoreHistoryList.Add(new HistoryModel()
                             {

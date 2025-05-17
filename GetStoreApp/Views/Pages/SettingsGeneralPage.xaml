@@ -98,7 +98,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
-                                IsChecked="{x:Bind Theme.Key.Equals(ThemeList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(Theme.Key, ThemeList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind ThemeList[0].Value}" />
 
@@ -107,7 +107,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
-                                IsChecked="{x:Bind Theme.Key.Equals(ThemeList[1].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(Theme.Key, ThemeList[1].Key), Mode=OneWay}"
                                 Tag="1"
                                 Text="{x:Bind ThemeList[1].Value}" />
 
@@ -116,7 +116,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnThemeSelectClicked}"
                                 GroupName="ThemeRadioGroup"
-                                IsChecked="{x:Bind Theme.Key.Equals(ThemeList[2].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(Theme.Key, ThemeList[2].Key), Mode=OneWay}"
                                 Tag="2"
                                 Text="{x:Bind ThemeList[2].Value}" />
                         </MenuFlyout>
@@ -192,7 +192,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnBackdropSelectClicked}"
                                 GroupName="BackdropRadioGroup"
-                                IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(Backdrop.Key, BackdropList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind BackdropList[0].Value}" />
 
@@ -208,7 +208,7 @@
                                     Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
-                                    IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[1].Key), Mode=OneWay}"
+                                    IsChecked="{x:Bind x:Object.Equals(Backdrop.Key, BackdropList[1].Key), Mode=OneWay}"
                                     Tag="1"
                                     Text="{x:Bind BackdropList[1].Value}" />
 
@@ -217,7 +217,7 @@
                                     Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
-                                    IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[2].Key), Mode=OneWay}"
+                                    IsChecked="{x:Bind x:Object.Equals(Backdrop.Key, BackdropList[2].Key), Mode=OneWay}"
                                     Tag="2"
                                     Text="{x:Bind BackdropList[2].Value}" />
                             </MenuFlyoutSubItem>
@@ -234,7 +234,7 @@
                                     Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
-                                    IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[3].Key), Mode=OneWay}"
+                                    IsChecked="{x:Bind x:Object.Equals(Backdrop.Key, BackdropList[3].Key), Mode=OneWay}"
                                     Tag="3"
                                     Text="{x:Bind BackdropList[3].Value}" />
 
@@ -243,7 +243,7 @@
                                     Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
-                                    IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[4].Key), Mode=OneWay}"
+                                    IsChecked="{x:Bind x:Object.Equals(Backdrop.Key, BackdropList[4].Key), Mode=OneWay}"
                                     Tag="4"
                                     Text="{x:Bind BackdropList[4].Value}" />
 
@@ -252,7 +252,7 @@
                                     Padding="11,0"
                                     Click="{x:Bind OnBackdropSelectClicked}"
                                     GroupName="BackdropRadioGroup"
-                                    IsChecked="{x:Bind Backdrop.Key.Equals(BackdropList[5].Key), Mode=OneWay}"
+                                    IsChecked="{x:Bind x:Object.Equals(Backdrop.Key, BackdropList[5].Key), Mode=OneWay}"
                                     Tag="5"
                                     Text="{x:Bind BackdropList[5].Value}" />
                             </MenuFlyoutSubItem>

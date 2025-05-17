@@ -41,7 +41,7 @@ namespace GetStoreAppWebView
                         IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
                         foreach (AppListEntry appListEntry in appListEntryList)
                         {
-                            if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
+                            if (Equals(appListEntry.AppUserModelId, "Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
                             {
                                 appListEntry.LaunchAsync().GetResults();
                                 break;
@@ -54,7 +54,7 @@ namespace GetStoreAppWebView
 
             InitializeResources();
 
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1])
+            if (Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[1]))
             {
                 Environment.SetEnvironmentVariable("WEBVIEW2_USE_VISUAL_HOSTING_FOR_OWNED_WINDOWS", "1");
 

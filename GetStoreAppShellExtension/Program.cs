@@ -33,7 +33,7 @@ namespace GetStoreAppShellExtension
         [UnmanagedCallersOnly(EntryPoint = "DllGetClassObject")]
         public static unsafe int DllGetClassObject(Guid clsid, Guid riid, IntPtr* ppv)
         {
-            if (clsid.Equals(typeof(RootExplorerCommand).GUID))
+            if (Equals(clsid, typeof(RootExplorerCommand).GUID))
             {
                 ShellMenuClassFactory classFactory = new();
                 IntPtr pIUnknown = StrategyBasedComWrappers.GetOrCreateComInterfaceForObject(classFactory, CreateComInterfaceFlags.None);

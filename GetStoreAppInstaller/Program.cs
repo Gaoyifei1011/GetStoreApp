@@ -96,7 +96,7 @@ namespace GetStoreAppInstaller
                 {
                     string[] argumentsArray = Environment.GetCommandLineArgs();
 
-                    if (argumentsArray.Length > 0 && Path.GetExtension(argumentsArray[0]).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+                    if (argumentsArray.Length > 0 && string.Equals(Path.GetExtension(argumentsArray[0]), ".dll", StringComparison.OrdinalIgnoreCase))
                     {
                         argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
                     }
@@ -307,7 +307,7 @@ namespace GetStoreAppInstaller
                 // 处理 Alt + space 按键弹出窗口右键菜单的消息
                 case WindowMessage.WM_SYSKEYDOWN:
                     {
-                        if ((wParam == (UIntPtr)Windows.System.VirtualKey.Space) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is MainPage mainPage)
+                        if ((Equals(wParam, (UIntPtr)Windows.System.VirtualKey.Space)) && ((lParam & 0x20000000) is not 0) && Window.Current is not null && Window.Current.Content is MainPage mainPage)
                         {
                             FlyoutShowOptions options = new()
                             {

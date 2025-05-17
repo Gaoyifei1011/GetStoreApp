@@ -38,12 +38,12 @@ namespace GetStoreApp.Services.Shell
         public static async Task GetLinksAsync()
         {
             // 解析链接对应的产品 ID
-            string productId = selectedType.Equals(TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(linkText) : linkText;
+            string productId = string.Equals(selectedType, TypeList[0], StringComparison.OrdinalIgnoreCase) ? QueryLinksHelper.ParseRequestContent(linkText) : linkText;
             InfoBarSeverity state = InfoBarSeverity.Informational;
             bool requestState = true;
             Console.WriteLine(ResourceService.GetLocalized("Console/GettingNow"));
 
-            if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[0]))
+            if (Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[0]))
             {
                 while (requestState)
                 {
@@ -132,7 +132,7 @@ namespace GetStoreApp.Services.Shell
                 }
             }
             // 第三方接口
-            else if (QueryLinksModeService.QueryLinksMode.Equals(QueryLinksModeService.QueryLinksModeList[1]))
+            else if (Equals(QueryLinksModeService.QueryLinksMode, QueryLinksModeService.QueryLinksModeList[1]))
             {
                 while (requestState)
                 {

@@ -684,7 +684,7 @@ namespace GetStoreApp.Views.Pages
         {
             PackageOperation.InstallOptions = await Task.Run(() =>
             {
-                InstallOptions installOptions = new InstallOptions()
+                InstallOptions installOptions = new()
                 {
                     AcceptPackageAgreements = true,
                     AdditionalInstallerArguments = AdditionalInstallerArguments,
@@ -1167,7 +1167,7 @@ namespace GetStoreApp.Views.Pages
         {
             PackageOperation.InstallOptions = await Task.Run(() =>
             {
-                InstallOptions installOptions = new InstallOptions()
+                InstallOptions installOptions = new()
                 {
                     AcceptPackageAgreements = true,
                     AdditionalInstallerArguments = AdditionalInstallerArguments,

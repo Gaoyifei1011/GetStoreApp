@@ -60,7 +60,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 return defaultQueryLinksMode;
             }
 
-            KeyValuePair<string, string> selectedQueryLinksMode = QueryLinksModeList.Find(item => item.Key.Equals(queryLinksModeValue, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<string, string> selectedQueryLinksMode = QueryLinksModeList.Find(item => string.Equals(item.Key, queryLinksModeValue, StringComparison.OrdinalIgnoreCase));
 
             return selectedQueryLinksMode.Key is null ? defaultQueryLinksMode : selectedQueryLinksMode;
         }

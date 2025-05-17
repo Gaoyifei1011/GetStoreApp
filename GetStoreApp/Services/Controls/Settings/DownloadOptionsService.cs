@@ -35,7 +35,6 @@ namespace GetStoreApp.Services.Controls.Settings
         public static async Task InitializeDownloadOptionsAsync()
         {
             defaultDoEngineMode = InfoHelper.IsDeliveryOptimizationEnabled ? DoEngineModeList[0] : DoEngineModeList[1];
-
             DefaultDownloadFolder = await ApplicationData.Current.LocalCacheFolder.CreateFolderAsync("Downloads", CreationCollisionOption.OpenIfExists);
             DownloadFolder = await GetFolderAsync();
             DoEngineMode = GetDoEngineMode();
@@ -78,10 +77,10 @@ namespace GetStoreApp.Services.Controls.Settings
             if (string.IsNullOrEmpty(doEngineMode))
             {
                 SetDoEngineMode(defaultDoEngineMode);
-                return DoEngineModeList.Find(item => item.Key.Equals(defaultDoEngineMode.Key));
+                return DoEngineModeList.Find(item => Equals(item.Key, defaultDoEngineMode.Key));
             }
 
-            KeyValuePair<string, string> selectedDoEngine = DoEngineModeList.Find(item => item.Key.Equals(doEngineMode, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<string, string> selectedDoEngine = DoEngineModeList.Find(item => string.Equals(item.Key, doEngineMode, StringComparison.OrdinalIgnoreCase));
 
             return string.IsNullOrEmpty(selectedDoEngine.Key) ? defaultDoEngineMode : selectedDoEngine;
         }

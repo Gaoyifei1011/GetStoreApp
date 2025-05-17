@@ -59,7 +59,7 @@ namespace GetStoreAppShellExtension.Commands
             if (psiItemArray is not null && psiItemArray.GetCount(out uint count) is 0 && count >= 1 && psiItemArray.GetItemAt(0, out IShellItem shellItem) is 0)
             {
                 shellItem.GetDisplayName(SIGDN.SIGDN_FILESYSPATH, out string filePath);
-                pCmdState = Path.GetFileName(filePath).Equals("AppxManifest.xml", StringComparison.OrdinalIgnoreCase) ? EXPCMDSTATE.ECS_ENABLED : EXPCMDSTATE.ECS_HIDDEN;
+                pCmdState = string.Equals(Path.GetFileName(filePath), "AppxManifest.xml", StringComparison.OrdinalIgnoreCase) ? EXPCMDSTATE.ECS_ENABLED : EXPCMDSTATE.ECS_HIDDEN;
             }
             else
             {

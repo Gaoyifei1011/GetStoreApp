@@ -157,7 +157,7 @@ namespace GetStoreApp.Views.Pages
 
             foreach (KeyValuePair<string, string> languageItem in LanguageService.LanguageList)
             {
-                if (LanguageService.AppLanguage.Key.Equals(languageItem.Key))
+                if (Equals(LanguageService.AppLanguage.Key, languageItem.Key))
                 {
                     AppLanguage = languageItem;
                     LanguageCollection.Add(new LanguageModel()
@@ -176,7 +176,7 @@ namespace GetStoreApp.Views.Pages
                 }
             }
 
-            AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Backdrop.Key.Equals(BackdropList[0].Key);
+            AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Equals(Backdrop.Key, BackdropList[0].Key);
             uiSettings.AdvancedEffectsEnabledChanged += OnAdvancedEffectsEnabledChanged;
             GlobalNotificationService.ApplicationExit += OnApplicationExit;
         }
@@ -198,7 +198,7 @@ namespace GetStoreApp.Views.Pages
                 foreach (LanguageModel item in LanguageCollection)
                 {
                     item.IsChecked = false;
-                    if (languageItem.LangaugeInfo.Key.Equals(item.LangaugeInfo.Key))
+                    if (Equals(languageItem.LangaugeInfo.Key, item.LangaugeInfo.Key))
                     {
                         AppLanguage = item.LangaugeInfo;
                         item.IsChecked = true;
@@ -253,9 +253,9 @@ namespace GetStoreApp.Views.Pages
             {
                 Backdrop = BackdropList[Convert.ToInt32(tag)];
                 BackdropService.SetBackdrop(Backdrop);
-                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Backdrop.Key.Equals(BackdropList[0].Key);
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Equals(Backdrop.Key, BackdropList[0].Key);
 
-                if (Backdrop.Equals(BackdropList[0]))
+                if (Equals(Backdrop, BackdropList[0]))
                 {
                     AlwaysShowBackdropService.SetAlwaysShowBackdropValue(false);
                     AlwaysShowBackdropValue = false;
@@ -366,7 +366,7 @@ namespace GetStoreApp.Views.Pages
             DispatcherQueue.TryEnqueue(() =>
             {
                 AdvancedEffectsEnabled = uiSettings.AdvancedEffectsEnabled;
-                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Backdrop.Key.Equals(BackdropList[0].Key);
+                AlwaysShowBackdropEnabled = uiSettings.AdvancedEffectsEnabled && !Equals(Backdrop.Key, BackdropList[0].Key);
             });
         }
 
@@ -374,7 +374,7 @@ namespace GetStoreApp.Views.Pages
 
         private string LocalizeDisplayNumber(KeyValuePair<string, string> selectedBackdrop)
         {
-            int index = BackdropList.FindIndex(item => item.Key.Equals(selectedBackdrop.Key));
+            int index = BackdropList.FindIndex(item => Equals(item.Key, selectedBackdrop.Key));
 
             if (index is 0)
             {

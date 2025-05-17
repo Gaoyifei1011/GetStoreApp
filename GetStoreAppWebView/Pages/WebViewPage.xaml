@@ -209,7 +209,7 @@
         <WebView
             x:Name="WebViewBrowser"
             Grid.Row="2"
-            x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[0])}"
+            x:Load="{x:Bind x:Object.Equals(service:WebKernelService.WebKernel, service:WebKernelService.WebKernelList[0])}"
             NavigationCompleted="{x:Bind OnNavigationCompleted}"
             NavigationStarting="{x:Bind OnNavigationStarting}"
             NewWindowRequested="{x:Bind OnNewWindowRequested}"
@@ -219,7 +219,7 @@
         <muxc:WebView2
             x:Name="WebView2Browser"
             Grid.Row="2"
-            x:Load="{x:Bind service:WebKernelService.WebKernel.Equals(service:WebKernelService.WebKernelList[1])}"
+            x:Load="{x:Bind x:Object.Equals(service:WebKernelService.WebKernel, service:WebKernelService.WebKernelList[1])}"
             CoreProcessFailed="{x:Bind OnCoreProcessFailed}"
             CoreWebView2Initialized="{x:Bind OnCoreWebView2Initialized}"
             FlowDirection="LeftToRight"

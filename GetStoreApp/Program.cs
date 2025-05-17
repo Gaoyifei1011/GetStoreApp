@@ -53,7 +53,7 @@ namespace GetStoreApp
                         IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
                         foreach (AppListEntry appListEntry in appListEntryList)
                         {
-                            if (appListEntry.AppUserModelId.Equals("Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
+                            if (Equals(appListEntry.AppUserModelId, "Gaoyifei1011.GetStoreApp_pystbwmrmew8c!GetStoreApp"))
                             {
                                 appListEntry.LaunchAsync().GetResults();
                                 break;
@@ -74,7 +74,7 @@ namespace GetStoreApp
                 Windows.ApplicationModel.Activation.LaunchActivatedEventArgs launchActivatedEventArgs = Windows.ApplicationModel.Activation.LaunchActivatedEventArgs.FromAbi(inspectable.ThisPtr);
                 string[] arguments = launchActivatedEventArgs.Arguments.Split(' ');
 
-                if (arguments.Length >= 2 && arguments[1].Equals("Console", StringComparison.OrdinalIgnoreCase))
+                if (arguments.Length >= 2 && string.Equals(arguments[1], "Console", StringComparison.OrdinalIgnoreCase))
                 {
                     isDesktopProgram = false;
                 }

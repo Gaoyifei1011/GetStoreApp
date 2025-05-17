@@ -110,7 +110,7 @@ namespace GetStoreApp.Views.Dialogs
             {
                 foreach (TraceCleanupModel traceCleanupItem in TraceCleanupList)
                 {
-                    if (traceCleanupItem.InternalName.Equals(cleanKind))
+                    if (Equals(traceCleanupItem.InternalName, cleanKind))
                     {
                         traceCleanupItem.IsCleanFailed = !cleanResult;
                         break;

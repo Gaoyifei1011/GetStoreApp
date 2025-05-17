@@ -79,7 +79,7 @@
                 <DropDownButton
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Content="{x:Bind QueryLinksModeItem.Value, Mode=OneWay}">
+                    Content="{x:Bind QueryLinksMode.Value, Mode=OneWay}">
 
                     <DropDownButton.Flyout>
                         <MenuFlyout Placement="Bottom">
@@ -88,7 +88,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnQueryLinksModeSelectClicked}"
                                 GroupName="QueryLinksModeRadioGroup"
-                                IsChecked="{x:Bind QueryLinksModeItem.Key.Equals(QueryLinksModeList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(QueryLinksMode.Key, QueryLinksModeList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind QueryLinksModeList[0].Value}" />
 
@@ -97,7 +97,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnQueryLinksModeSelectClicked}"
                                 GroupName="QueryLinksModeRadioGroup"
-                                IsChecked="{x:Bind QueryLinksModeItem.Key.Equals(QueryLinksModeList[1].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(QueryLinksMode.Key, QueryLinksModeList[1].Key), Mode=OneWay}"
                                 Tag="1"
                                 Text="{x:Bind QueryLinksModeList[1].Value}" />
                         </MenuFlyout>
@@ -164,7 +164,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnInstallModeSelectClicked}"
                                 GroupName="InstallModeModeRadioGroup"
-                                IsChecked="{x:Bind InstallMode.Key.Equals(InstallModeList[0].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(InstallMode.Key, InstallModeList[0].Key), Mode=OneWay}"
                                 Tag="0"
                                 Text="{x:Bind InstallModeList[0].Value}" />
 
@@ -173,7 +173,7 @@
                                 Padding="11,0"
                                 Click="{x:Bind OnInstallModeSelectClicked}"
                                 GroupName="InstallModeModeRadioGroup"
-                                IsChecked="{x:Bind InstallMode.Key.Equals(InstallModeList[1].Key), Mode=OneWay}"
+                                IsChecked="{x:Bind x:Object.Equals(InstallMode.Key, InstallModeList[1].Key), Mode=OneWay}"
                                 Tag="1"
                                 Text="{x:Bind InstallModeList[1].Value}" />
                         </MenuFlyout>
@@ -917,7 +917,7 @@
                                             Padding="11,0"
                                             Click="{x:Bind OnDoEngineModeSelectClicked}"
                                             GroupName="DoEngineModeModeRadioGroup"
-                                            IsChecked="{x:Bind DoEngineMode.Key.Equals(DoEngineModeList[0].Key), Mode=OneWay}"
+                                            IsChecked="{x:Bind x:Object.Equals(DoEngineMode.Key, DoEngineModeList[0].Key), Mode=OneWay}"
                                             Tag="0"
                                             Text="{x:Bind DoEngineModeList[0].Value}" />
 
@@ -926,7 +926,7 @@
                                             Padding="11,0"
                                             Click="{x:Bind OnDoEngineModeSelectClicked}"
                                             GroupName="DoEngineModeModeRadioGroup"
-                                            IsChecked="{x:Bind DoEngineMode.Key.Equals(DoEngineModeList[1].Key), Mode=OneWay}"
+                                            IsChecked="{x:Bind x:Object.Equals(DoEngineMode.Key, DoEngineModeList[1].Key), Mode=OneWay}"
                                             Tag="1"
                                             Text="{x:Bind DoEngineModeList[1].Value}" />
                                     </MenuFlyout>

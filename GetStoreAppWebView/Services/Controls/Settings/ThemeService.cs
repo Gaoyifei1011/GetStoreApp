@@ -43,7 +43,7 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         {
             ThemeList = ResourceService.ThemeList;
 
-            defaultAppTheme = ThemeList.Find(item => item.Equals(nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
+            defaultAppTheme = ThemeList.Find(item => string.Equals(item, nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
 
             AppTheme = GetTheme();
         }
@@ -60,7 +60,7 @@ namespace GetStoreAppWebView.Services.Controls.Settings
                 return defaultAppTheme;
             }
 
-            string selectedTheme = ThemeList.Find(item => item.Equals(theme, StringComparison.OrdinalIgnoreCase));
+            string selectedTheme = ThemeList.Find(item => string.Equals(item, theme, StringComparison.OrdinalIgnoreCase));
             return string.IsNullOrEmpty(selectedTheme) ? defaultAppTheme : selectedTheme;
         }
     }

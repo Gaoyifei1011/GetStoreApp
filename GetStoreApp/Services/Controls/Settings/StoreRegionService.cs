@@ -36,11 +36,8 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void InitializeStoreRegion()
         {
             InitializeStoreRegionList();
-
             GeographicRegion systemRegion = new();
-
-            DefaultStoreRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
-
+            DefaultStoreRegion = StoreRegionList.Find(item => string.Equals(item.CodeTwoLetter, systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
             UseSystemRegionValue = GetUseSystemRegionValue();
             StoreRegion = GetRegion();
         }
@@ -54,7 +51,7 @@ namespace GetStoreApp.Services.Controls.Settings
 
             if (!systemRegion.CodeTwoLetter.Equals(DefaultStoreRegion.CodeTwoLetter))
             {
-                DefaultStoreRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
+                DefaultStoreRegion = StoreRegionList.Find(item => string.Equals(item.CodeTwoLetter, systemRegion.CodeTwoLetter, StringComparison.OrdinalIgnoreCase));
 
                 if (UseSystemRegionValue)
                 {
@@ -104,7 +101,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 return DefaultStoreRegion;
             }
 
-            GeographicRegion selectedRegion = StoreRegionList.Find(item => item.CodeTwoLetter.Equals(storeRegion, StringComparison.OrdinalIgnoreCase));
+            GeographicRegion selectedRegion = StoreRegionList.Find(item => string.Equals(item.CodeTwoLetter, storeRegion, StringComparison.OrdinalIgnoreCase));
 
             if (UseSystemRegionValue)
             {

@@ -42,9 +42,7 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void InitializeTheme()
         {
             ThemeList = ResourceService.ThemeList;
-
-            defaultAppTheme = ThemeList.Find(item => item.Key.Equals(nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
-
+            defaultAppTheme = ThemeList.Find(item => string.Equals(item.Key, nameof(ElementTheme.Default), StringComparison.OrdinalIgnoreCase));
             AppTheme = GetTheme();
         }
 
@@ -61,7 +59,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 return defaultAppTheme;
             }
 
-            KeyValuePair<string, string> selectedTheme = ThemeList.Find(item => item.Key.Equals(theme, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<string, string> selectedTheme = ThemeList.Find(item => string.Equals(item.Key, theme, StringComparison.OrdinalIgnoreCase));
 
             return string.IsNullOrEmpty(selectedTheme.Key) ? defaultAppTheme : selectedTheme;
         }

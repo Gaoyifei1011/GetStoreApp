@@ -32,9 +32,7 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void InitializeLanguage()
         {
             InitializeLanguageList();
-
-            DefaultAppLanguage = LanguageList.Find(item => item.Key.Equals("en-US", StringComparison.OrdinalIgnoreCase));
-
+            DefaultAppLanguage = LanguageList.Find(item => string.Equals(item.Key, "en-US", StringComparison.OrdinalIgnoreCase));
             AppLanguage = GetLanguage();
         }
 

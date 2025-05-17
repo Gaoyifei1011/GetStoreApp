@@ -193,7 +193,7 @@ namespace GetStoreApp.Views.Dialogs
                 CustomHeader = string.Empty;
                 SourceType = winGetSourceItem.Type;
                 Explicit = winGetSourceItem.PackageCatalogInformation.Explicit;
-                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => item.Key.Equals(winGetSourceItem.PackageCatalogInformation.TrustLevel));
+                SelectedCatalogTrustLevel = CatalogTrustLevelList.Find(item => Equals(item.Key, winGetSourceItem.PackageCatalogInformation.TrustLevel));
             }
         }
 

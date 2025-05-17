@@ -365,7 +365,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    if (downloadingItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadingItem.DownloadID, downloadID))
                     {
                         downloadingItem.IsNotOperated = true;
                         downloadingItem.DownloadStatus = DownloadStatus.Downloading;
@@ -384,7 +384,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    if (downloadingItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadingItem.DownloadID, downloadID))
                     {
                         downloadingItem.IsNotOperated = true;
                         downloadingItem.DownloadStatus = DownloadStatus.Pause;
@@ -402,7 +402,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    if (downloadingItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadingItem.DownloadID, downloadID))
                     {
                         DownloadingCollection.Remove(downloadingItem);
                         break;
@@ -421,7 +421,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    if (downloadingItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadingItem.DownloadID, downloadID))
                     {
                         downloadingItem.IsNotOperated = true;
                         downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;
@@ -443,7 +443,7 @@ namespace GetStoreApp.Views.Pages
             {
                 foreach (DownloadingModel downloadingItem in DownloadingCollection)
                 {
-                    if (downloadingItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadingItem.DownloadID, downloadID))
                     {
                         downloadingItem.IsNotOperated = true;
                         downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;

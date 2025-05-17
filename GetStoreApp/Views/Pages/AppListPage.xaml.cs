@@ -1772,7 +1772,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsLoading(AppManagerResultKind appManagerResultKind)
         {
-            return !Equals(appManagerResultKind, AppManagerResultKind.Loading);
+            return appManagerResultKind is not AppManagerResultKind.Loading;
         }
 
         /// <summary>

@@ -41,9 +41,7 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void InitializeBackdrop()
         {
             BackdropList = ResourceService.BackdropList;
-
-            defaultAppBackdrop = BackdropList.Find(item => item.Key.Equals(nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
-
+            defaultAppBackdrop = BackdropList.Find(item => string.Equals(item.Key, nameof(SystemBackdropTheme.Default), StringComparison.OrdinalIgnoreCase));
             AppBackdrop = GetBackdrop();
         }
 
@@ -60,7 +58,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 return defaultAppBackdrop;
             }
 
-            KeyValuePair<string, string> selectedBackdrop = BackdropList.Find(item => item.Key.Equals(backdrop, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<string, string> selectedBackdrop = BackdropList.Find(item => string.Equals(item.Key, backdrop, StringComparison.OrdinalIgnoreCase));
 
             return string.IsNullOrEmpty(selectedBackdrop.Key) ? defaultAppBackdrop : selectedBackdrop;
         }

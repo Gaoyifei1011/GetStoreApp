@@ -157,7 +157,7 @@ namespace GetStoreApp.Services.Shell
         /// </summary>
         private static double DownloadProgress(double finishedSize, double totalSize)
         {
-            return totalSize == default ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
+            return totalSize.Equals(default) ? 0 : Math.Round(finishedSize / totalSize * 100, 2);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace GetStoreApp.Services.Root
         {
             List<string> resultList = [];
 
-            if (resultContainer.Values[nameof(StorageDataKind)].Equals(dataKind.ToString()) && resultContainer.Containers.TryGetValue(parameter, out ApplicationDataContainer parameterContainer))
+            if (Equals(resultContainer.Values[nameof(StorageDataKind)], dataKind.ToString()) && resultContainer.Containers.TryGetValue(parameter, out ApplicationDataContainer parameterContainer))
             {
                 for (int index = 0; index < parameterContainer.Values.Count; index++)
                 {

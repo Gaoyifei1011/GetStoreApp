@@ -24,9 +24,7 @@ namespace GetStoreApp.Services.Controls.Settings
         public static void InitializeInstallMode()
         {
             InstallModeList = ResourceService.InstallModeList;
-
-            defaultInstallMode = InstallModeList.Find(item => item.Key.Equals("AppInstall", StringComparison.OrdinalIgnoreCase));
-
+            defaultInstallMode = InstallModeList.Find(item => string.Equals(item.Key, "AppInstall", StringComparison.OrdinalIgnoreCase));
             InstallMode = GetInstallMode();
         }
 
@@ -40,10 +38,10 @@ namespace GetStoreApp.Services.Controls.Settings
             if (string.IsNullOrEmpty(installMode))
             {
                 SetInstallMode(defaultInstallMode);
-                return InstallModeList.Find(item => item.Key.Equals(defaultInstallMode.Key, StringComparison.OrdinalIgnoreCase));
+                return InstallModeList.Find(item => string.Equals(item.Key, defaultInstallMode.Key, StringComparison.OrdinalIgnoreCase));
             }
 
-            KeyValuePair<string, string> selectedInstallMode = InstallModeList.Find(item => item.Key.Equals(installMode, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<string, string> selectedInstallMode = InstallModeList.Find(item => string.Equals(item.Key, installMode, StringComparison.OrdinalIgnoreCase));
 
             return string.IsNullOrEmpty(selectedInstallMode.Key) ? defaultInstallMode : selectedInstallMode;
         }

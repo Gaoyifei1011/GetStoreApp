@@ -87,7 +87,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
 
@@ -118,7 +118,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
 
@@ -149,7 +149,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         DownloadSchedulerList.Remove(downloadSchedulerItem);
 
@@ -180,7 +180,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
                         downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
@@ -213,7 +213,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
                         downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
@@ -305,7 +305,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
                         DownloadContinued?.Invoke(downloadID);
@@ -335,7 +335,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
                         DownloadPaused?.Invoke(downloadID);
@@ -365,7 +365,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         DownloadSchedulerList.Remove(downloadSchedulerItem);
 
@@ -396,7 +396,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
                         downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
@@ -429,7 +429,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                 {
-                    if (downloadSchedulerItem.DownloadID.Equals(downloadID))
+                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
                     {
                         downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
                         downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
@@ -514,7 +514,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 初始化下载服务
-                if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+                if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
                 {
                     DeliveryOptimizationService.DownloadCreated += OnDeliveryOptimizationCreated;
                     DeliveryOptimizationService.DownloadContinued += OnDeliveryOptimizationContinued;
@@ -555,7 +555,7 @@ namespace GetStoreApp.Services.Controls.Download
                 }
 
                 // 注销下载服务
-                if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+                if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
                 {
                     DeliveryOptimizationService.DownloadCreated -= OnDeliveryOptimizationCreated;
                     DeliveryOptimizationService.DownloadContinued -= OnDeliveryOptimizationContinued;
@@ -581,7 +581,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void CreateDownload(string fileLink, string filePath)
         {
-            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.CreateDownload(fileLink, filePath);
             }
@@ -596,7 +596,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void ContinueDownload(Guid downloadID)
         {
-            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.ContinueDownload(downloadID);
             }
@@ -611,7 +611,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void PauseDownload(Guid downloadID)
         {
-            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.PauseDownload(downloadID);
             }
@@ -626,7 +626,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void DeleteDownload(Guid downloadID)
         {
-            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.DeleteDownload(downloadID);
             }
@@ -641,7 +641,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         public static void TerminateDownload()
         {
-            if (doEngineMode.Equals(DownloadOptionsService.DoEngineModeList[0]))
+            if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.TerminateDownload();
             }

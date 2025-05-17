@@ -43,7 +43,7 @@ namespace GetStoreApp.Services.Controls.Settings
                 return defaultWebKernel;
             }
 
-            KeyValuePair<string, string> selectedWebKernel = WebKernelList.Find(item => item.Key.Equals(webKernel, StringComparison.OrdinalIgnoreCase));
+            KeyValuePair<string, string> selectedWebKernel = WebKernelList.Find(item => string.Equals(item.Key, webKernel, StringComparison.OrdinalIgnoreCase));
 
             return string.IsNullOrEmpty(selectedWebKernel.Key) ? defaultWebKernel : selectedWebKernel;
         }

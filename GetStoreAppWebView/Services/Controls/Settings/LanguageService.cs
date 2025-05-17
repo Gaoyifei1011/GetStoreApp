@@ -30,9 +30,10 @@ namespace GetStoreAppWebView.Services.Controls.Settings
         {
             foreach (string language in AppLanguagesList)
             {
-                if (language.Equals("en-US", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(language, "en-US", StringComparison.OrdinalIgnoreCase))
                 {
                     DefaultAppLanguage = language;
+                    break;
                 }
             }
 

@@ -229,7 +229,7 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private void OnWindowPositionChanged(object sender, EventArgs args)
         {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[1] && WebView2Browser is not null && WebView2Browser.CoreWebView2 is not null && WebView2Browser.CoreWebView2.IsDefaultDownloadDialogOpen)
+            if (Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[1]) && WebView2Browser is not null && WebView2Browser.CoreWebView2 is not null && WebView2Browser.CoreWebView2.IsDefaultDownloadDialogOpen)
             {
                 WebView2Browser.CoreWebView2.CloseDefaultDownloadDialog();
             }
@@ -244,7 +244,7 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private void OnBrowserBackClicked(object sender, RoutedEventArgs args)
         {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
+            if (Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[0]))
             {
                 if (WebViewBrowser is not null && WebViewBrowser.CanGoBack)
                 {
@@ -265,7 +265,7 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private void OnBrowserForwardClicked(object sender, RoutedEventArgs args)
         {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
+            if (Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[0]))
             {
                 if (WebViewBrowser is not null && WebViewBrowser.CanGoForward)
                 {
@@ -286,7 +286,7 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private void OnRefreshClicked(object sender, RoutedEventArgs args)
         {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
+            if (Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[0]))
             {
                 WebViewBrowser?.Refresh();
             }
@@ -302,7 +302,7 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private async void OnDownloadClicked(object sender, RoutedEventArgs args)
         {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
+            if (Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[0]))
             {
                 await Launcher.LaunchFolderPathAsync(InfoHelper.UserDataPath.Downloads);
             }
@@ -343,7 +343,7 @@ namespace GetStoreAppWebView.Pages
         /// </summary>
         private async void OnClearWebCacheClicked(object sender, RoutedEventArgs args)
         {
-            if (WebKernelService.WebKernel == WebKernelService.WebKernelList[0])
+            if (Equals(WebKernelService.WebKernel, WebKernelService.WebKernelList[0]))
             {
                 await WebView.ClearTemporaryWebDataAsync();
             }

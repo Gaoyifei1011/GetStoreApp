@@ -31,18 +31,18 @@ namespace GetStoreApp.Views.Pages
     /// </summary>
     public sealed partial class SettingsStoreAndUpdatePage : Page, INotifyPropertyChanged
     {
-        private KeyValuePair<string, string> _queryLinksModeItem = QueryLinksModeService.QueryLinksMode;
+        private KeyValuePair<string, string> _queryLinksMode = QueryLinksModeService.QueryLinksMode;
 
-        public KeyValuePair<string, string> QueryLinksModeItem
+        public KeyValuePair<string, string> QueryLinksMode
         {
-            get { return _queryLinksModeItem; }
+            get { return _queryLinksMode; }
 
             set
             {
-                if (!Equals(_queryLinksModeItem, value))
+                if (!Equals(_queryLinksMode, value))
                 {
-                    _queryLinksModeItem = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksModeItem)));
+                    _queryLinksMode = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryLinksMode)));
                 }
             }
         }
@@ -207,7 +207,7 @@ namespace GetStoreApp.Views.Pages
 
             foreach (GeographicRegion geographicItem in StoreRegionService.StoreRegionList)
             {
-                if (StoreRegionService.StoreRegion.CodeTwoLetter.Equals(geographicItem.CodeTwoLetter))
+                if (Equals(StoreRegionService.StoreRegion.CodeTwoLetter, geographicItem.CodeTwoLetter))
                 {
                     StoreRegion = geographicItem;
                     StoreRegionCollection.Add(new StoreRegionModel()
@@ -247,7 +247,7 @@ namespace GetStoreApp.Views.Pages
                 foreach (StoreRegionModel storeRegionItem in StoreRegionCollection)
                 {
                     storeRegionItem.IsChecked = false;
-                    if (storeRegion.StoreRegionInfo.CodeTwoLetter.Equals(storeRegionItem.StoreRegionInfo.CodeTwoLetter))
+                    if (Equals(storeRegion.StoreRegionInfo.CodeTwoLetter, storeRegionItem.StoreRegionInfo.CodeTwoLetter))
                     {
                         StoreRegion = storeRegionItem.StoreRegionInfo;
                         storeRegionItem.IsChecked = true;
@@ -269,8 +269,8 @@ namespace GetStoreApp.Views.Pages
         {
             if (sender is RadioMenuFlyoutItem radioMenuFlyoutItem && radioMenuFlyoutItem.Tag is string tag)
             {
-                QueryLinksModeItem = QueryLinksModeList[Convert.ToInt32(tag)];
-                QueryLinksModeService.SetQueryLinksMode(QueryLinksModeItem);
+                QueryLinksMode = QueryLinksModeList[Convert.ToInt32(tag)];
+                QueryLinksModeService.SetQueryLinksMode(QueryLinksMode);
             }
         }
 
@@ -334,7 +334,7 @@ namespace GetStoreApp.Views.Pages
                     foreach (StoreRegionModel item in StoreRegionCollection)
                     {
                         item.IsChecked = false;
-                        if (StoreRegion.CodeTwoLetter.Equals(item.StoreRegionInfo.CodeTwoLetter))
+                        if (Equals(StoreRegion.CodeTwoLetter, item.StoreRegionInfo.CodeTwoLetter))
                         {
                             StoreRegion = item.StoreRegionInfo;
                             item.IsChecked = true;
@@ -512,11 +512,11 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnServicePropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName.Equals(nameof(StoreRegionService.StoreRegion)))
+            if (Equals(args.PropertyName, nameof(StoreRegionService.StoreRegion)))
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (!CurrentCountryOrRegion.CodeTwoLetter.Equals(StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
+                    if (!Equals(CurrentCountryOrRegion.CodeTwoLetter, StoreRegionService.DefaultStoreRegion.CodeTwoLetter))
                     {
                         CurrentCountryOrRegion = StoreRegionService.DefaultStoreRegion;
                     }
@@ -528,7 +528,7 @@ namespace GetStoreApp.Views.Pages
                         foreach (StoreRegionModel item in StoreRegionCollection)
                         {
                             item.IsChecked = false;
-                            if (StoreRegion.CodeTwoLetter.Equals(item.StoreRegionInfo.CodeTwoLetter))
+                            if (Equals(StoreRegion.CodeTwoLetter, item.StoreRegionInfo.CodeTwoLetter))
                             {
                                 StoreRegion = item.StoreRegionInfo;
                                 item.IsChecked = true;

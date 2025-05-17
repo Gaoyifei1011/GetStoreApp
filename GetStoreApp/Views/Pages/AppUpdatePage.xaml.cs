@@ -576,7 +576,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsCheckingUpdate(AppUpdateResultKind appUpdateResultKind)
         {
-            return !Equals(appUpdateResultKind, AppUpdateResultKind.Querying);
+            return appUpdateResultKind is not AppUpdateResultKind.Querying;
         }
     }
 }

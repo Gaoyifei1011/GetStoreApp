@@ -909,7 +909,7 @@ namespace GetStoreAppInstaller.Views.Pages
                 {
                     string extensionName = Path.GetExtension(dragItemsList[0].Name);
 
-                    if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
                         args.AcceptedOperation = DataPackageOperation.Copy;
                         args.DragUIOverride.IsCaptionVisible = true;
@@ -917,7 +917,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         args.DragUIOverride.IsGlyphVisible = true;
                         args.DragUIOverride.Caption = OpenPackage;
                     }
-                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    else if (string.Equals(extensionName, ".appinstaller", StringComparison.OrdinalIgnoreCase))
                     {
                         args.AcceptedOperation = DataPackageOperation.Copy;
                         args.DragUIOverride.IsCaptionVisible = true;
@@ -1071,7 +1071,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (InstallDependencyModel installDependencyItem in InstallDependencyCollection)
                 {
-                    if (installDependencyItem.DependencyFullName.Equals(dependencyFullName))
+                    if (Equals(installDependencyItem.DependencyFullName, dependencyFullName))
                     {
                         InstallDependencyCollection.Remove(installDependencyItem);
                         break;
@@ -1119,7 +1119,7 @@ namespace GetStoreAppInstaller.Views.Pages
                 string[] argumentsArray = Environment.GetCommandLineArgs();
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
 
-                if (argumentsArray.Length > 0 && Path.GetExtension(argumentsArray[0]).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+                if (argumentsArray.Length > 0 && string.Equals(Path.GetExtension(argumentsArray[0]), ".dll", StringComparison.OrdinalIgnoreCase))
                 {
                     argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
                 }
@@ -1389,11 +1389,11 @@ namespace GetStoreAppInstaller.Views.Pages
         {
             if ((sender as Button).Tag is string tag)
             {
-                if (tag.Equals("AddDependencyFlyout", StringComparison.OrdinalIgnoreCase) && AddDependencyFlyout.IsOpen)
+                if (string.Equals(tag, "AddDependencyFlyout", StringComparison.OrdinalIgnoreCase) && AddDependencyFlyout.IsOpen)
                 {
                     AddDependencyFlyout.Hide();
                 }
-                else if (tag.Equals("ViewErrorInformationFlyout", StringComparison.OrdinalIgnoreCase) && ViewErrorInformationFlyout.IsOpen)
+                else if (string.Equals(tag, "ViewErrorInformationFlyout", StringComparison.OrdinalIgnoreCase) && ViewErrorInformationFlyout.IsOpen)
                 {
                     ViewErrorInformationFlyout.Hide();
                 }
@@ -1417,11 +1417,11 @@ namespace GetStoreAppInstaller.Views.Pages
                 {
                     string extensionName = Path.GetExtension(fileName);
 
-                    if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
                         try
                         {
-                            if (PackageFamilyName.Equals(Windows.ApplicationModel.Package.Current.Id.FamilyName, StringComparison.OrdinalIgnoreCase))
+                            if (string.Equals(PackageFamilyName, Windows.ApplicationModel.Package.Current.Id.FamilyName, StringComparison.OrdinalIgnoreCase))
                             {
                                 await Task.Run(() =>
                                 {
@@ -1458,7 +1458,7 @@ namespace GetStoreAppInstaller.Views.Pages
                             return ValueTuple.Create<bool, DeploymentResult, Exception>(true, null, e);
                         }
                     }
-                    else if (extensionName.Equals(".appinstaller"))
+                    else if (Equals(extensionName, ".appinstaller"))
                     {
                         try
                         {
@@ -1587,7 +1587,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
                 {
-                    if (package.Id.FamilyName.Equals(PackageFamilyName))
+                    if (Equals(package.Id.FamilyName, PackageFamilyName))
                     {
                         IReadOnlyList<AppListEntry> appListEntryList = package.GetAppListEntries();
 
@@ -1610,7 +1610,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
                 {
-                    if (package.Id.FamilyName.Equals(PackageFamilyName))
+                    if (Equals(package.Id.FamilyName, PackageFamilyName))
                     {
                         try
                         {
@@ -1810,7 +1810,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     string extensionName = Path.GetExtension(filePath);
 
                     // 第一部分：解析以 appx 或 msix 格式结尾的单个应用包
-                    if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase))
                     {
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
@@ -1894,7 +1894,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     }
 
                     // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
-                    else if (extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                    else if (string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
@@ -1944,7 +1944,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
                                                     foreach (KeyValuePair<string, Dictionary<string, string>> parseResourceItem in parseResourceDict)
                                                     {
-                                                        if (parseResourceItem.Key.Equals(specifiedLanguageResource.Key, StringComparison.OrdinalIgnoreCase))
+                                                        if (string.Equals(parseResourceItem.Key, specifiedLanguageResource.Key, StringComparison.OrdinalIgnoreCase))
                                                         {
                                                             resourceDict.TryAdd(specifiedLanguageResource.Key, parseResourceItem.Value);
                                                         }
@@ -2017,7 +2017,7 @@ namespace GetStoreAppInstaller.Views.Pages
                         {
                             foreach (Windows.ApplicationModel.Package package in packageManager.FindPackagesForUser(string.Empty))
                             {
-                                if (package.Id.FamilyName.Equals(packageInformation.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
+                                if (string.Equals(package.Id.FamilyName, packageInformation.PackageFamilyName, StringComparison.OrdinalIgnoreCase))
                                 {
                                     Version installedVersion = new(package.Id.Version.Major, package.Id.Version.Minor, package.Id.Version.Build, package.Id.Version.Revision);
                                     packageInformation.AppInstalledState = packageInformation.Version > installedVersion ? AppInstalledNotNewVersion : AppInstalledNewVersion; packageInformation.IsAppInstalled = true;
@@ -2038,7 +2038,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     }
 
                     // 解析以 appinstaller 格式结尾的应用安装文件
-                    else if (extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+                    else if (string.Equals(extensionName, ".appinstaller", StringComparison.OrdinalIgnoreCase))
                     {
                         // 解析应用安装文件
                         XmlLoadSettings xmlLoadSettings = new()
@@ -2223,7 +2223,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     string extensionName = Path.GetExtension(filePath);
 
                     // 第一部分：解析以 appx 或 msix 格式结尾的单个应用包
-                    if (extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase))
                     {
                         IRandomAccessStream randomAccessStream = await FileRandomAccessStream.OpenAsync(filePath, FileAccessMode.Read);
                         if (randomAccessStream is not null && ShCoreLibrary.CreateStreamOverRandomAccessStream((randomAccessStream as IWinRTObject).NativeObject.ThisPtr, typeof(IStream).GUID, out IStream fileStream) is 0)
@@ -2244,7 +2244,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     }
 
                     // 解析以 appxbundle 或 msixbundle 格式结尾的应用包
-                    else if (extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase))
+                    else if (string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase))
                     {
                         if (Ole32Library.CoCreateInstance(CLSID_AppxBundleFactory, IntPtr.Zero, CLSCTX.CLSCTX_INPROC_SERVER, typeof(IAppxBundleFactory2).GUID, out IntPtr appxBundleFactoryPtr) is 0)
                         {
@@ -2658,7 +2658,7 @@ namespace GetStoreAppInstaller.Views.Pages
                                         {
                                             if (sectionArray[candidateSet.ResourceMapSectionAndIndex.SchemaSectionIndex] is HierarchicalSchemaSection hierarchicalSchemaSection)
                                             {
-                                                ResourceMapScopeAndItem resourceMapScopeAndItem = hierarchicalSchemaSection.ItemsList[candidateSet.ResourceMapSectionAndIndex.Item2];
+                                                ResourceMapScopeAndItem resourceMapScopeAndItem = hierarchicalSchemaSection.ItemsList[candidateSet.ResourceMapSectionAndIndex.ResourceMapItemIndex];
 
                                                 string key = string.Empty;
 
@@ -3040,7 +3040,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
                     foreach (string scaleResourceItem in scaleResourceList)
                     {
-                        if (packageFileName.Equals(scaleResourceItem, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(packageFileName, scaleResourceItem, StringComparison.OrdinalIgnoreCase))
                         {
                             bundleFileDict.TryAdd(packageFileName, appxFile);
                             break;
@@ -3081,7 +3081,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
                     foreach (KeyValuePair<string, string> resourceItem in resourceDict)
                     {
-                        if (resourceItem.Key.Equals(resourceKey, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(resourceItem.Key, resourceKey, StringComparison.OrdinalIgnoreCase))
                         {
                             resource = resourceItem.Value;
                             break;
@@ -3166,7 +3166,7 @@ namespace GetStoreAppInstaller.Views.Pages
 
             foreach (KeyValuePair<string, IAppxFile> fileItem in fileDict)
             {
-                if (fileItem.Key.Equals("resources.pri", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(fileItem.Key, "resources.pri", StringComparison.OrdinalIgnoreCase))
                 {
                     fileItem.Value.GetStream(out resourceFileStream);
                     break;
@@ -3195,7 +3195,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
                 {
-                    if (resourceItem.Key.Equals(appCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(resourceItem.Key, appCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         return resourceItem.Value;
                     }
@@ -3209,7 +3209,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
                 {
-                    if (resourceItem.Key.Equals(systemCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(resourceItem.Key, systemCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         return resourceItem.Value;
                     }
@@ -3223,7 +3223,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
                 {
-                    if (resourceItem.Key.Equals(defaultCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(resourceItem.Key, defaultCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         return resourceItem.Value;
                     }
@@ -3235,7 +3235,7 @@ namespace GetStoreAppInstaller.Views.Pages
             // 不符合，如果存在未指定的语言，返回未指定的语言资源信息
             foreach (KeyValuePair<string, Dictionary<string, string>> resourceItem in resourceDict)
             {
-                if (resourceItem.Key.Equals("Neutral", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(resourceItem.Key, "Neutral", StringComparison.OrdinalIgnoreCase))
                 {
                     return resourceItem.Value;
                 }
@@ -3292,7 +3292,7 @@ namespace GetStoreAppInstaller.Views.Pages
                     else
                     {
                         // 若设备的缩放大小超过应用包提供的缩放大小，则使用最后一个
-                        if (logoIndex.Equals(logoList.Count - 1))
+                        if (Equals(logoIndex, logoList.Count - 1))
                         {
                             logoItem.Value.GetStream(out imageFileStream);
                         }
@@ -3304,7 +3304,7 @@ namespace GetStoreAppInstaller.Views.Pages
                 {
                     foreach (KeyValuePair<string, IAppxFile> logoItem in logoList)
                     {
-                        if (logoItem.Key.Equals(logo, StringComparison.OrdinalIgnoreCase))
+                        if (string.Equals(logoItem.Key, logo, StringComparison.OrdinalIgnoreCase))
                         {
                             logoItem.Value.GetStream(out imageFileStream);
                             break;
@@ -3346,7 +3346,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (KeyValuePair<string, string> resourceItem in resourceDict)
                 {
-                    if (resourceItem.Key.Equals(appCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(resourceItem.Key, appCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         specifiedLanguageResourceList.Add(resourceItem);
                         break;
@@ -3361,7 +3361,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (KeyValuePair<string, string> resourceItem in resourceDict)
                 {
-                    if (resourceItem.Key.Equals(systemCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(resourceItem.Key, systemCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         specifiedLanguageResourceList.Add(resourceItem);
                         break;
@@ -3376,7 +3376,7 @@ namespace GetStoreAppInstaller.Views.Pages
             {
                 foreach (KeyValuePair<string, string> resourceItem in resourceDict)
                 {
-                    if (resourceItem.Key.Equals(defaultCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(resourceItem.Key, defaultCultureInfo.Name, StringComparison.OrdinalIgnoreCase))
                     {
                         specifiedLanguageResourceList.Add(resourceItem);
                         break;
@@ -3389,7 +3389,7 @@ namespace GetStoreAppInstaller.Views.Pages
             // 不符合，如果存在未指定的语言，返回未指定的语言资源信息
             foreach (KeyValuePair<string, string> resourceItem in resourceDict)
             {
-                if (resourceItem.Key.Equals("Neutral", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(resourceItem.Key, "Neutral", StringComparison.OrdinalIgnoreCase))
                 {
                     specifiedLanguageResourceList.Add(resourceItem);
                     break;
@@ -3641,7 +3641,7 @@ namespace GetStoreAppInstaller.Views.Pages
         {
             string extensionName = Path.GetExtension(filePath);
 
-            if (CanDragFile && extensionName.Equals(".appx", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msix", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appxbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".msixbundle", StringComparison.OrdinalIgnoreCase) || extensionName.Equals(".appinstaller", StringComparison.OrdinalIgnoreCase))
+            if (CanDragFile && string.Equals(extensionName, ".appx", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msix", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appxbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".msixbundle", StringComparison.OrdinalIgnoreCase) || string.Equals(extensionName, ".appinstaller", StringComparison.OrdinalIgnoreCase))
             {
                 fileName = filePath;
 

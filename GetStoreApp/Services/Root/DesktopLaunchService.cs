@@ -37,7 +37,7 @@ namespace GetStoreApp.Services.Root
                 string[] argumentsArray = Environment.GetCommandLineArgs();
                 string executableFileName = Path.GetFileName(Environment.ProcessPath);
 
-                if (argumentsArray.Length > 0 && Path.GetExtension(argumentsArray[0]).Equals(".dll", StringComparison.OrdinalIgnoreCase))
+                if (argumentsArray.Length > 0 && string.Equals(Path.GetExtension(argumentsArray[0]), ".dll", StringComparison.OrdinalIgnoreCase))
                 {
                     argumentsArray[0] = argumentsArray[0].Replace(".dll", ".exe");
                 }
@@ -108,12 +108,12 @@ namespace GetStoreApp.Services.Root
                     // 带参数启动：包含多个参数
                     if (argumentsList.Count % 2 is 0)
                     {
-                        int typeNameParameterIndex = argumentsList.FindIndex(item => item.Equals("-t", StringComparison.OrdinalIgnoreCase) || item.Equals("--type", StringComparison.OrdinalIgnoreCase));
-                        int channelNameParameterIndex = argumentsList.FindIndex(item => item.Equals("-c", StringComparison.OrdinalIgnoreCase) || item.Equals("--channel", StringComparison.OrdinalIgnoreCase));
-                        int linkParameterIndex = argumentsList.FindIndex(item => item.Equals("-l", StringComparison.OrdinalIgnoreCase) || item.Equals("--link", StringComparison.OrdinalIgnoreCase));
+                        int typeNameParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-t", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--type", StringComparison.OrdinalIgnoreCase));
+                        int channelNameParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-c", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--channel", StringComparison.OrdinalIgnoreCase));
+                        int linkParameterIndex = argumentsList.FindIndex(item => string.Equals(item, "-l", StringComparison.OrdinalIgnoreCase) || string.Equals(item, "--link", StringComparison.OrdinalIgnoreCase));
 
-                        int typeNameIndex = typeNameParameterIndex is -1 ? -1 : ResourceService.TypeList.FindIndex(item => item.ShortName.Equals(argumentsList[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
-                        int channelNameIndex = channelNameParameterIndex is -1 ? -1 : ResourceService.ChannelList.FindIndex(item => item.ShortName.Equals(argumentsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        int typeNameIndex = typeNameParameterIndex is -1 ? -1 : ResourceService.TypeList.FindIndex(item => string.Equals(item.ShortName, argumentsList[typeNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
+                        int channelNameIndex = channelNameParameterIndex is -1 ? -1 : ResourceService.ChannelList.FindIndex(item => string.Equals(item.ShortName, argumentsList[channelNameParameterIndex + 1], StringComparison.OrdinalIgnoreCase));
                         string link = linkParameterIndex is -1 ? null : argumentsList[linkParameterIndex + 1];
 
                         dataList.Add("Console");

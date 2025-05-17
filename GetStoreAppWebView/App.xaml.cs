@@ -130,7 +130,7 @@ namespace GetStoreAppWebView
                                 {
                                     foreach (AppListEntry applistItem in package.GetAppListEntries())
                                     {
-                                        if (applistItem.AppUserModelId.Equals(protocolActivatedEventArgs.Data["AppUserModelId"]))
+                                        if (Equals(applistItem.AppUserModelId, protocolActivatedEventArgs.Data["AppUserModelId"]))
                                         {
                                             isPinnedSuccessfully = await TaskbarManager.GetDefault().RequestPinAppListEntryAsync(applistItem);
                                             break;

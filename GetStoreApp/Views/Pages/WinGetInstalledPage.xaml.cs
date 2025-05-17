@@ -860,11 +860,11 @@ namespace GetStoreApp.Views.Pages
         {
             if (isSuccessfully)
             {
-                if (InstalledAppsResultKind.Equals(InstalledAppsResultKind.Successfully))
+                if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully)
                 {
                     return Visibility.Visible;
                 }
-                else if (InstalledAppsResultKind.Equals(InstalledAppsResultKind.SearchResult))
+                else if (InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
                 {
                     return count > 0 ? Visibility.Visible : Visibility.Collapsed;
                 }
@@ -875,11 +875,11 @@ namespace GetStoreApp.Views.Pages
             }
             else
             {
-                if (InstalledAppsResultKind.Equals(InstalledAppsResultKind.Successfully))
+                if (InstalledAppsResultKind is InstalledAppsResultKind.Successfully)
                 {
                     return Visibility.Collapsed;
                 }
-                else if (InstalledAppsResultKind.Equals(InstalledAppsResultKind.SearchResult))
+                else if (InstalledAppsResultKind is InstalledAppsResultKind.SearchResult)
                 {
                     return count > 0 ? Visibility.Collapsed : Visibility.Visible;
                 }
@@ -895,7 +895,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private Visibility CheckInstalledAppsState(InstalledAppsResultKind installedAppsResultKind, InstalledAppsResultKind comparedInstalledAppsResultKind)
         {
-            return installedAppsResultKind.Equals(comparedInstalledAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(installedAppsResultKind, comparedInstalledAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -904,7 +904,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsInstalling(InstalledAppsResultKind installedAppsResultKind)
         {
-            return !installedAppsResultKind.Equals(InstalledAppsResultKind.Querying);
+            return installedAppsResultKind is not InstalledAppsResultKind.Querying;
         }
     }
 }

@@ -853,7 +853,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsLoading(CompletedResultKind completedKind)
         {
-            return !Equals(completedKind, CompletedResultKind.Loading);
+            return completedKind is not CompletedResultKind.Loading;
         }
     }
 }

@@ -606,7 +606,7 @@ namespace GetStoreApp.Views.Pages
 
         public bool GetSearchBoxEnabled(SearchAppsResultKind searchAppsResultKind)
         {
-            return !Equals(searchAppsResultKind, SearchAppsResultKind.Searching);
+            return searchAppsResultKind is not SearchAppsResultKind.Searching;
         }
 
         /// <summary>

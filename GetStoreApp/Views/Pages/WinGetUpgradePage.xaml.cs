@@ -594,7 +594,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private Visibility GetUpgradableAppsSuccessfullyState(UpgradableAppsResultKind upgradableAppsResultKind, bool isSuccessfully)
         {
-            return isSuccessfully ? upgradableAppsResultKind.Equals(UpgradableAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed : !upgradableAppsResultKind.Equals(UpgradableAppsResultKind.Successfully) ? Visibility.Visible : Visibility.Collapsed;
+            return isSuccessfully ? upgradableAppsResultKind is UpgradableAppsResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed : upgradableAppsResultKind is not UpgradableAppsResultKind.Successfully ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -602,7 +602,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private Visibility CheckUpgradableAppsState(UpgradableAppsResultKind upgradableAppsResultKind, UpgradableAppsResultKind comparedSearchAppsResultKind)
         {
-            return upgradableAppsResultKind.Equals(comparedSearchAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
+            return Equals(upgradableAppsResultKind, comparedSearchAppsResultKind) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace GetStoreApp.Views.Pages
 
         private bool GetIsCheckingUpdate(UpgradableAppsResultKind upgradableAppsResultKind)
         {
-            return !upgradableAppsResultKind.Equals(UpgradableAppsResultKind.Querying);
+            return upgradableAppsResultKind is not UpgradableAppsResultKind.Querying;
         }
     }
 }
