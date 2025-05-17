@@ -548,7 +548,7 @@ namespace GetStoreApp.Views.Windows
                     }
                     finally
                     {
-                        await ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+                        await ShowNotificationAsync(new OperationResultTip(OperationKind.StartScreen, isPinnedSuccessfully));
                     }
                 }
             }
@@ -975,7 +975,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
+                        await ShowNotificationAsync(new OperationResultTip(OperationKind.StartScreen, Convert.ToBoolean(dataList[0])));
                     });
                 }
             }
@@ -986,7 +986,7 @@ namespace GetStoreApp.Views.Windows
                 {
                     DispatcherQueue.TryEnqueue(async () =>
                     {
-                        await ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Taskbar, Convert.ToBoolean(dataList[0])));
+                        await ShowNotificationAsync(new OperationResultTip(OperationKind.Taskbar, Convert.ToBoolean(dataList[0])));
                     });
                 }
             }

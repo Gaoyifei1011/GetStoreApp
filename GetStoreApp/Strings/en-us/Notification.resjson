@@ -7,6 +7,7 @@
   "AppUpdateSuccessfully": "App {0} update successfully",
   "AppUserModelIdCopy": "The AUMID has been successfully copied to the clipboard",
   "CheckNetWorkConnection": "Check the network connection",
+  "CopyToClipboardSuccessfully": "Content has been successfully copied to the clipboard",
   "CopyToClipboardFailed": "Failed to copy the content to the clipboard. Please check the access permission of the clipboard",
   "DependencyInformationCopy": "The dependency name was successfully copied to the clipboard",
   "DependencyNameCopy": "The dependency information was successfully copied to the clipboard",

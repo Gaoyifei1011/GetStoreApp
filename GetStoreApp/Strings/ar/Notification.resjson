@@ -7,6 +7,7 @@
   "AppUpdateSuccessfully": "تم تحديث التطبيق {0} بنجاح",
   "AppUserModelIdCopy": "تم نسخ AUMID بنجاح إلى الحافظة",
   "CheckNetWorkConnection": "تحقق من اتصال الشبكة",
+  "CopyToClipboardSuccessfully": "Content has been successfully copied to the clipboard",
   "CopyToClipboardFailed": "فشل في نسخ المحتوى إلى الحافظة. يرجى التحقق من أذونات الوصول إلى الحافظة",
   "DependencyInformationCopy": "تم نسخ اسم الاعتماد بنجاح إلى الحافظة",
   "DependencyNameCopy": "تم نسخ معلومات الاعتماد بنجاح إلى الحافظة",

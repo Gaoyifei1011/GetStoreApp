@@ -2,7 +2,7 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
@@ -257,7 +257,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(uninstallCommand);
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUninstall, copyResult));
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
 

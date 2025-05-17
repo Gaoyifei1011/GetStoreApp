@@ -2,7 +2,7 @@
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -119,7 +119,7 @@ namespace GetStoreApp.Views.Dialogs
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyFileInformationCopyStringList));
             sender.Hide();
-            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.FileInformation, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
     }
 }

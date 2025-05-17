@@ -5,6 +5,7 @@
     <AssemblyName>GetStoreAppShellExtension</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <Deterministic>true</Deterministic>
     <DisableXbfLineInfo>false</DisableXbfLineInfo>
     <ForceAotCompile>true</ForceAotCompile>

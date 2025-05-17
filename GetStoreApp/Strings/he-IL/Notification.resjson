@@ -7,6 +7,7 @@
   "AppUpdateSuccessfully": "עדכון האפליקציה {0} הצליח",
   "AppUserModelIdCopy": "ה-AUMID הועתק בהצלחה ללוח",
   "CheckNetWorkConnection": "בדוק את החיבור לרשת",
+  "CopyToClipboardSuccessfully": "Content has been successfully copied to the clipboard",
   "CopyToClipboardFailed": "ההעתקה של התוכן ללוח נכשלה. אנא בדוק את הרשאת הגישה ללוח",
   "DependencyInformationCopy": "שם התלות הועתק בהצלחה ללוח",
   "DependencyNameCopy": "מידע התלות הועתק בהצלחה ללוח",

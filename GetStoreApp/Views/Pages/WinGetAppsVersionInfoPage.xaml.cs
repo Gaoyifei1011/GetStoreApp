@@ -3,8 +3,8 @@ using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.WinGet;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.Management.Deployment;
 using Microsoft.UI.Xaml;
@@ -692,7 +692,7 @@ namespace GetStoreApp.Views.Pages
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(string.Join(Environment.NewLine, copyInformationList));
-            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetAppInformation, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
         /// <summary>

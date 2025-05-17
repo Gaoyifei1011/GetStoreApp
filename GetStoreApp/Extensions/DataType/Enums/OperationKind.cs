@@ -16,5 +16,8 @@
         SourceUriEmpty = 11,
         TerminateProcess = 12,
         WinGetSource = 13,
+        Desktop = 14,
+        StartScreen = 15,
+        Taskbar = 16
     }
 }

@@ -204,7 +204,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
 
-            await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Desktop, isCreatedSuccessfully));
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.Desktop, isCreatedSuccessfully));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace GetStoreApp.Views.Pages
                 }
             });
 
-            await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.StartScreen, isPinnedSuccessfully));
+            await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.StartScreen, isPinnedSuccessfully));
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace GetStoreApp.Views.Pages
 
             if (pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.Available || pinnedRsult.limitedAccessFeatureStatus is LimitedAccessFeatureStatus.AvailableWithoutToken)
             {
-                await MainWindow.Current.ShowNotificationAsync(new QuickOperationTip(QuickOperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
+                await MainWindow.Current.ShowNotificationAsync(new OperationResultTip(OperationKind.Taskbar, pinnedRsult.isPinnedSuccessfully));
             }
         }
 

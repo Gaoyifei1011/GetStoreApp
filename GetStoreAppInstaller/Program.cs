@@ -1,7 +1,7 @@
 ﻿using GetStoreAppInstaller.Helpers.Root;
-using GetStoreAppInstaller.Pages;
 using GetStoreAppInstaller.Services.Controls.Settings;
 using GetStoreAppInstaller.Services.Root;
+using GetStoreAppInstaller.Views.Pages;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Comctl32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32;

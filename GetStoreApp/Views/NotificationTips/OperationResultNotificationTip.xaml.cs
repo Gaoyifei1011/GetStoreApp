@@ -146,6 +146,45 @@ namespace GetStoreApp.UI.TeachingTips
                     OperationContent = ResourceService.GetLocalized("Notification/TerminateFailed");
                 }
             }
+            else if (operationKind is OperationKind.Desktop)
+            {
+                if (operationResult)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("Notification/DesktopShortcutSuccessfully");
+                }
+                else
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/DesktopShortFailed");
+                }
+            }
+            else if (operationKind is OperationKind.StartScreen)
+            {
+                if (operationResult)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("Notification/StartScreenSuccessfully");
+                }
+                else
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/StartScreenFailed");
+                }
+            }
+            else if (operationKind is OperationKind.Taskbar)
+            {
+                if (operationResult)
+                {
+                    IsSuccessOperation = true;
+                    OperationContent = ResourceService.GetLocalized("Notification/TaskbarSuccessfully");
+                }
+                else
+                {
+                    IsSuccessOperation = false;
+                    OperationContent = ResourceService.GetLocalized("Notification/TaskbarFailed");
+                }
+            }
         }
 
         public OperationResultTip(OperationKind operationKind, bool isMultiSelected, int count)

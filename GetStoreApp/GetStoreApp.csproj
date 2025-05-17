@@ -5,6 +5,7 @@
     <AssemblyName>GetStoreApp</AssemblyName>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -245,9 +246,6 @@
     <None Remove="Strings\zh-hans\WebView.resjson" />
     <None Remove="Strings\zh-hans\Window.resjson" />
     <None Remove="Strings\zh-hans\WinGet.resjson" />
-    <None Remove="UI\TeachingTips\MainDataCopyTip.xaml" />
-    <None Remove="UI\TeachingTips\OperationResultTip.xaml" />
-    <None Remove="UI\TeachingTips\QuickOperationTip.xaml" />
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
     <None Remove="Views\Dialogs\AppRunningDialog.xaml" />
     <None Remove="Views\Dialogs\ClosingWindowDialog.xaml" />
@@ -261,6 +259,8 @@
     <None Remove="Views\Dialogs\TraceCleanupPromptDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetAppsVersionDialog.xaml" />
     <None Remove="Views\Dialogs\WinGetSourceEditDialog.xaml" />
+    <None Remove="Views\NotificationTips\CopyPasteMainNotificationTip.xaml" />
+    <None Remove="Views\NotificationTips\OperationResultNotificationTip.xaml" />
     <None Remove="Views\Pages\AppInformationPage.xaml" />
     <None Remove="Views\Pages\AppListPage.xaml" />
     <None Remove="Views\Pages\AppManagerPage.xaml" />
@@ -296,9 +296,6 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250401001" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
 
-    <Page Update="UI\TeachingTips\MainDataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\OperationResultTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="UI\TeachingTips\QuickOperationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppRunningDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\ClosingWindowDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
@@ -312,6 +309,8 @@
     <Page Update="Views\Dialogs\TraceCleanupPromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetAppsVersionDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\WinGetSourceEditDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\NotificationTips\CopyPasteMainNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\NotificationTips\OperationResultNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppInformationPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppListPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Pages\AppManagerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />

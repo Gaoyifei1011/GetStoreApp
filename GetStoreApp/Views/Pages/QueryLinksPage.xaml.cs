@@ -8,6 +8,7 @@ using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -337,7 +338,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyContent);
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.History, copyResult, false));
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
 
@@ -474,7 +475,7 @@ namespace GetStoreApp.Views.Pages
             if (args.Parameter is string fileLink && !string.IsNullOrEmpty(fileLink))
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(fileLink);
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.ResultLink, copyResult, false));
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
 
@@ -491,7 +492,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(copyInformation);
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.ResultInformation, copyResult, false));
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
 
@@ -557,7 +558,7 @@ namespace GetStoreApp.Views.Pages
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(appInformationCopyString);
-            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.AppInformation, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
         /// <summary>
@@ -706,7 +707,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(queryLinksCopyString);
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.ResultInformation, copyResult, true, selectedQueryLinksList.Count));
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
 
@@ -763,7 +764,7 @@ namespace GetStoreApp.Views.Pages
                 });
 
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(queryLinksCopyString);
-                await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.ResultLink, copyResult, true, selectedQueryLinksList.Count));
+                await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
             }
         }
 

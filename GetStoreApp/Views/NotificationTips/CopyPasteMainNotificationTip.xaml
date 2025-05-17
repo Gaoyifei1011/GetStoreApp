@@ -1,7 +1,8 @@
 <TeachingTip
-    x:Class="GetStoreApp.UI.TeachingTips.MainDataCopyTip"
+    x:Class="GetStoreApp.Views.NotificationTips.CopyPasteMainNotificationTip"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:GetStoreApp.Helpers.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:root="using:GetStoreApp.Services.Root"
@@ -22,11 +23,14 @@
     </TeachingTip.CloseButtonStyle>
 
     <Grid>
-        <TextBlock x:Name="CopySuccess" Foreground="{ThemeResource SystemFillColorSuccessBrush}" />
+        <TextBlock
+            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyToClipboardSuccessfully')}"
+            Visibility="{x:Bind IsSuccessfully, Mode=OneWay}" />
 
         <TextBlock
-            x:Name="CopyFailed"
             Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-            Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyToClipboardFailed')}" />
+            Text="{x:Bind root:ResourceService.GetLocalized('Notification/CopyToClipboardFailed')}"
+            Visibility="{x:Bind converter:ValueConverterHelper.BooleanToVisibilityReverseConvert(IsSuccessfully), Mode=OneWay}" />
     </Grid>
 </TeachingTip>

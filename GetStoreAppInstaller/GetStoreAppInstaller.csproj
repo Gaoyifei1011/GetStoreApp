@@ -6,6 +6,7 @@
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <CsWinRTEnableDynamicObjectsSupport>false</CsWinRTEnableDynamicObjectsSupport>
     <CustomAfterMicrosoftCommonTargets>$(Pkg_Microsoft_Windows_SDK_BuildTools_MSIX)\build\Microsoft.Windows.SDK.BuildTools.MSIX.MrtCore.PriGen.targets</CustomAfterMicrosoftCommonTargets>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     <Deterministic>true</Deterministic>
     <DesktopCompatible>true</DesktopCompatible>
@@ -61,14 +62,14 @@
     <ApplicationDefinition Include="XamlIslandsApp.xaml" SubType="Designer" />
     
     <Manifest Include="$(ApplicationManifest)" />
-    <None Remove="MainPage.xaml" />
+    
     <None Remove="XamlIslandsApp.xaml" />
-    <None Remove="UI\TeachingTips\InstallerDataCopyTip.xaml" />
-    <None Remove="Pages\MainPage.xaml" />
+    <None Remove="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" />
+    <None Remove="Views\Pages\MainPage.xaml" />
 
     <Page Remove="XamlIslandsApp.xaml" />
-    <Page Update="UI\TeachingTips\InstallerDataCopyTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\NotificationTips\CopyPasteInstallerNotificationTip.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\MainPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />

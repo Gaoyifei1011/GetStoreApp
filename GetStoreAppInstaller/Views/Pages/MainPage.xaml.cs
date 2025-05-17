@@ -6,7 +6,7 @@ using GetStoreAppInstaller.Helpers.Root;
 using GetStoreAppInstaller.Models;
 using GetStoreAppInstaller.Services.Controls.Settings;
 using GetStoreAppInstaller.Services.Root;
-using GetStoreAppInstaller.UI.TeachingTips;
+using GetStoreAppInstaller.Views.NotificationTips;
 using GetStoreAppInstaller.WindowsAPI.ComTypes;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.Ole32;
 using GetStoreAppInstaller.WindowsAPI.PInvoke.SHCore;
@@ -55,7 +55,7 @@ using WinRT;
 // 抑制 CA1822，CS8305，IDE0060 警告
 #pragma warning disable CA1822,CS8305,IDE0060
 
-namespace GetStoreAppInstaller.Pages
+namespace GetStoreAppInstaller.Views.Pages
 {
     /// <summary>
     /// 应用主页面
@@ -1378,7 +1378,7 @@ namespace GetStoreAppInstaller.Pages
             {
                 bool copyResult = CopyPasteHelper.CopyTextToClipBoard(InstallFailedInformation);
 
-                await Program.ShowNotificationAsync(new InstallerDataCopyTip(copyResult));
+                await Program.ShowNotificationAsync(new CopyPasteInstallerNotificationTip(copyResult));
             }
         }
 

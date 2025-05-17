@@ -8,6 +8,7 @@
   "AppUserModelIdCopy": "应用程序用户模型 ID 已成功复制到剪贴板",
   "CheckNetWorkConnection": "检查网络连接",
   "CopyToClipboardFailed": "复制内容到剪贴板失败，请检查剪贴板的访问权限",
+  "CopyToClipboardSuccessfully": "成功复制内容到剪贴板",
   "DependencyInformationCopy": "依赖包信息已成功复制到剪贴板",
   "DependencyNameCopy": "依赖包名称已成功复制到剪贴板",
   "DesktopShortcutSuccessfully": "应用的桌面快捷方式已成功创建",

@@ -5,6 +5,7 @@ using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
 using GetStoreApp.Views.Dialogs;
+using GetStoreApp.Views.NotificationTips;
 using GetStoreApp.Views.Windows;
 using GetStoreApp.WindowsAPI.PInvoke.Shell32;
 using Microsoft.Management.Deployment;
@@ -512,7 +513,7 @@ namespace GetStoreApp.Views.Pages
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(downloadCommand);
-            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchDownload, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
         /// <summary>
@@ -790,7 +791,7 @@ namespace GetStoreApp.Views.Pages
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(installCommand);
-            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchInstall, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
         /// <summary>
@@ -1073,7 +1074,7 @@ namespace GetStoreApp.Views.Pages
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(repairCommand);
-            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetSearchRepair, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
         /// <summary>
@@ -1273,7 +1274,7 @@ namespace GetStoreApp.Views.Pages
             });
 
             bool copyResult = CopyPasteHelper.CopyTextToClipBoard(upgradeCommand);
-            await MainWindow.Current.ShowNotificationAsync(new MainDataCopyTip(DataCopyKind.WinGetUpgradeInstall, copyResult));
+            await MainWindow.Current.ShowNotificationAsync(new CopyPasteMainNotificationTip(copyResult));
         }
 
         /// <summary>
