@@ -295,6 +295,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.3916" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250401001" />
     <PackageReference Include="Microsoft.WindowsPackageManager.ComInterop" Version="1.10.340" GeneratePathProperty="true" />
+    <PackageReference Include="Mile.Aria2" Version="1.0.230" />
 
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppRunningDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
