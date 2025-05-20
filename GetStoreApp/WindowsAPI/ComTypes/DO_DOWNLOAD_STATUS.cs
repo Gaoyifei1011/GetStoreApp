@@ -24,12 +24,12 @@ namespace GetStoreApp.WindowsAPI.ComTypes
         public DODownloadState State;
 
         /// <summary>
-        /// 如果存在与当前下载关联的) ，则 (错误信息。
+        /// 如果存在与当前下载关联的错误信息。
         /// </summary>
         public int Error;
 
         /// <summary>
-        /// 如果存在与当前下载关联的) ，则扩展的错误信息 (。
+        /// 如果存在与当前下载关联的扩展的错误信息。
         /// </summary>
         public int ExtendedError;
     }
