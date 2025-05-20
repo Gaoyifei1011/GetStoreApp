@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using System;
 
 namespace GetStoreApp.Models.Controls.Download
 {
@@ -16,17 +15,12 @@ namespace GetStoreApp.Models.Controls.Download
         /// <summary>
         /// 任务下载时创建下载 ID
         /// </summary>
-        public Guid DownloadID { get; set; }
+        public string DownloadID { get; set; }
 
         /// <summary>
         /// 下载文件名称
         /// </summary>
         public string FileName { get; set; }
-
-        /// <summary>
-        /// 文件下载链接
-        /// </summary>
-        public string FileLink { get; set; }
 
         /// <summary>
         /// 文件下载保存的路径
@@ -36,21 +30,21 @@ namespace GetStoreApp.Models.Controls.Download
         /// <summary>
         /// 文件下载状态
         /// </summary>
-        public DownloadStatus DownloadStatus { get; set; }
+        public DownloadProgressState DownloadProgressState { get; set; }
 
         /// <summary>
-        /// 下载文件的总大小
+        /// 已下载完成的大小
+        /// </summary>
+        public double CompletedSize { get; set; }
+
+        /// <summary>
+        /// 文件总大小
         /// </summary>
         public double TotalSize { get; set; }
 
         /// <summary>
-        /// 下载文件已完成的进度
-        /// </summary>
-        public double FinishedSize { get; set; }
-
-        /// <summary>
         /// 文件下载速度
         /// </summary>
-        public double CurrentSpeed { get; set; }
+        public double DownloadSpeed { get; set; }
     }
 }
