@@ -1,4 +1,6 @@
-﻿using GetStoreApp.Services.Root;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
+using GetStoreApp.Services.Root;
 using GetStoreApp.WindowsAPI.ComTypes;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using System;
@@ -13,7 +15,7 @@ using Windows.Foundation.Diagnostics;
 namespace GetStoreApp.Services.Controls.Download
 {
     /// <summary>
-    /// 传递优化服务（仅支持 Winodws 11 22621 及更高版本）
+    /// 传递优化服务
     /// </summary>
     public static class DeliveryOptimizationService
     {
@@ -21,70 +23,35 @@ namespace GetStoreApp.Services.Controls.Download
         private static readonly Lock deliveryOptimizationLock = new();
         private static readonly Guid CLSID_DeliveryOptimization = new("5B99FA76-721C-423C-ADAC-56D03C8A8007");
 
-        private static Dictionary<Guid, (IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback)> DeliveryOptimizationDict { get; } = [];
+        private static Dictionary<string, (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback)> DeliveryOptimizationDict { get; } = [];
 
-        public static event Action<Guid, string, string, string, double> DownloadCreated;
-
-        public static event Action<Guid> DownloadContinued;
-
-        public static event Action<Guid> DownloadPaused;
-
-        public static event Action<Guid> DownloadDeleted;
-
-        public static event Action<Guid, DO_DOWNLOAD_STATUS> DownloadProgressing;
-
-        public static event Action<Guid, DO_DOWNLOAD_STATUS> DownloadCompleted;
+        public static event Action<DownloadProgress> DownloadProgress;
 
         /// <summary>
-        /// 获取下载任务的数量
-        /// </summary>
-        public static int GetDownloadCount()
-        {
-            int count = 0;
-            deliveryOptimizationLock.Enter();
-
-            try
-            {
-                count = DeliveryOptimizationDict.Count;
-            }
-            catch (Exception e)
-            {
-                ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
-            }
-            finally
-            {
-                deliveryOptimizationLock.Exit();
-            }
-
-            return count;
-        }
-
-        /// <summary>
-        /// 终止所有下载任务，仅用于应用关闭时
+        /// 应用关闭时终止所有下载任务
         /// </summary>
         public static void TerminateDownload()
         {
             Task.Factory.StartNew((param) =>
             {
-                if (GetDownloadCount() > 0)
-                {
-                    deliveryOptimizationLock.Enter();
+                deliveryOptimizationLock.Enter();
 
-                    try
+                try
+                {
+                    foreach (KeyValuePair<string, (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback)> deliveryOptimization in DeliveryOptimizationDict)
                     {
-                        foreach (KeyValuePair<Guid, (IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback)> deliveryOptimizationKeyValue in DeliveryOptimizationDict)
-                        {
-                            deliveryOptimizationKeyValue.Value.doDownload.Abort();
-                        }
+                        deliveryOptimization.Value.doDownload.Abort();
                     }
-                    catch (Exception e)
-                    {
-                        LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
-                    }
-                    finally
-                    {
-                        deliveryOptimizationLock.Exit();
-                    }
+
+                    DeliveryOptimizationDict.Clear();
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Error, "Terminate all task failed", e);
+                }
+                finally
+                {
+                    deliveryOptimizationLock.Exit();
                 }
             }, null, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler.Default);
         }
@@ -128,19 +95,11 @@ namespace GetStoreApp.Services.Controls.Download
                         ComVariant foregroundVariant = ComVariant.Create(true);
                         doDownload.SetProperty(DODownloadProperty.DODownloadProperty_ForegroundPriority, foregroundVariant);
 
-                        ComVariant idVariant = ComVariant.Null;
-                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_Id, out idVariant);
-                        ComVariant totalSizeVariant = ComVariant.Null;
-                        doDownload.GetProperty(DODownloadProperty.DODownloadProperty_TotalSizeBytes, out totalSizeVariant);
-                        doDownloadStatusCallback.DownloadID = new(idVariant.As<string>());
-                        double size = Convert.ToDouble(totalSizeVariant.As<ulong>());
-                        DownloadCreated?.Invoke(doDownloadStatusCallback.DownloadID, Path.GetFileName(saveFilePath), saveFilePath, url, Convert.ToDouble(totalSizeVariant.As<ulong>()));
-
                         deliveryOptimizationLock.Enter();
 
                         try
                         {
-                            DeliveryOptimizationDict.TryAdd(doDownloadStatusCallback.DownloadID, ValueTuple.Create(doDownload, doDownloadStatusCallback));
+                            DeliveryOptimizationDict.TryAdd(doDownloadStatusCallback.DownloadID.ToString(), ValueTuple.Create(saveFilePath, doDownload, doDownloadStatusCallback));
                         }
                         catch (Exception e)
                         {
@@ -150,6 +109,17 @@ namespace GetStoreApp.Services.Controls.Download
                         {
                             deliveryOptimizationLock.Exit();
                         }
+
+                        DownloadProgress?.Invoke(new DownloadProgress()
+                        {
+                            DownloadID = doDownloadStatusCallback.DownloadID.ToString(),
+                            DownloadProgressState = DownloadProgressState.Queued,
+                            FileName = Path.GetFileName(saveFilePath),
+                            FilePath = saveFilePath,
+                            DownloadSpeed = 0,
+                            CompletedSize = 0,
+                            TotalSize = 0,
+                        });
 
                         doDownload.Start(IntPtr.Zero);
                     }
@@ -164,7 +134,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 继续下载
         /// </summary>
-        public static void ContinueDownload(Guid downloadID)
+        public static void ContinueDownload(string downloadID)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -172,13 +142,22 @@ namespace GetStoreApp.Services.Controls.Download
 
                 try
                 {
-                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out (IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                     {
                         int continueResult = downloadValue.doDownload.Start(IntPtr.Zero);
 
                         if (continueResult is 0)
                         {
-                            DownloadContinued?.Invoke(downloadID);
+                            DownloadProgress?.Invoke(new DownloadProgress()
+                            {
+                                DownloadID = downloadID,
+                                DownloadProgressState = DownloadProgressState.Queued,
+                                FileName = Path.GetFileName(downloadValue.saveFilePath),
+                                FilePath = downloadValue.saveFilePath,
+                                DownloadSpeed = 0,
+                                CompletedSize = 0,
+                                TotalSize = 0,
+                            });
                         }
                     }
                 }
@@ -196,7 +175,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 暂停下载
         /// </summary>
-        public static void PauseDownload(Guid downloadID)
+        public static void PauseDownload(string downloadID)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -204,13 +183,22 @@ namespace GetStoreApp.Services.Controls.Download
 
                 try
                 {
-                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out (IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                     {
                         int pauseResult = downloadValue.doDownload.Pause();
 
                         if (pauseResult is 0)
                         {
-                            DownloadPaused?.Invoke(downloadID);
+                            DownloadProgress?.Invoke(new DownloadProgress()
+                            {
+                                DownloadID = downloadID,
+                                DownloadProgressState = DownloadProgressState.Paused,
+                                FileName = Path.GetFileName(downloadValue.saveFilePath),
+                                FilePath = downloadValue.saveFilePath,
+                                DownloadSpeed = 0,
+                                CompletedSize = 0,
+                                TotalSize = 0,
+                            });
                         }
                     }
                 }
@@ -228,7 +216,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 删除下载
         /// </summary>
-        public static void DeleteDownload(Guid downloadID)
+        public static void DeleteDownload(string downloadID)
         {
             Task.Factory.StartNew((param) =>
             {
@@ -236,15 +224,24 @@ namespace GetStoreApp.Services.Controls.Download
 
                 try
                 {
-                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out (IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                    if (DeliveryOptimizationDict.TryGetValue(downloadID, out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                     {
                         int deleteResult = downloadValue.doDownload.Abort();
 
                         if (deleteResult is 0)
                         {
                             downloadValue.doDownloadStatusCallback.StatusChanged -= OnStatusChanged;
-                            DownloadDeleted?.Invoke(downloadID);
                             DeliveryOptimizationDict.Remove(downloadID);
+                            DownloadProgress?.Invoke(new DownloadProgress()
+                            {
+                                DownloadID = downloadID,
+                                DownloadProgressState = DownloadProgressState.Deleted,
+                                FileName = Path.GetFileName(downloadValue.saveFilePath),
+                                FilePath = downloadValue.saveFilePath,
+                                DownloadSpeed = 0,
+                                CompletedSize = 0,
+                                TotalSize = 0,
+                            });
                         }
                     }
                 }
@@ -264,24 +261,49 @@ namespace GetStoreApp.Services.Controls.Download
         /// </summary>
         private static void OnStatusChanged(DODownloadStatusCallback callback, IDODownload doDownload, DO_DOWNLOAD_STATUS status)
         {
+            // 下载文件中
             if (status.State is DODownloadState.DODownloadState_Transferring)
             {
-                DownloadProgressing?.Invoke(callback.DownloadID, status);
+                if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                {
+                    DownloadProgress?.Invoke(new DownloadProgress()
+                    {
+                        DownloadID = callback.DownloadID.ToString(),
+                        DownloadProgressState = DownloadProgressState.Downloading,
+                        FileName = Path.GetFileName(downloadValue.saveFilePath),
+                        FilePath = downloadValue.saveFilePath,
+                        DownloadSpeed = 0,
+                        CompletedSize = status.BytesTransferred,
+                        TotalSize = status.BytesTotal,
+                    });
+                }
             }
+            // 下载完成
             else if (status.State is DODownloadState.DODownloadState_Transferred)
             {
                 try
                 {
                     callback.StatusChanged -= OnStatusChanged;
                     doDownload.Finalize();
-                    DownloadCompleted?.Invoke(callback.DownloadID, status);
+
                     deliveryOptimizationLock.Enter();
 
                     try
                     {
-                        if (DeliveryOptimizationDict.ContainsKey(callback.DownloadID))
+                        if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
                         {
-                            DeliveryOptimizationDict.Remove(callback.DownloadID);
+                            DownloadProgress?.Invoke(new DownloadProgress()
+                            {
+                                DownloadID = callback.DownloadID.ToString(),
+                                DownloadProgressState = DownloadProgressState.Finished,
+                                FileName = Path.GetFileName(downloadValue.saveFilePath),
+                                FilePath = downloadValue.saveFilePath,
+                                DownloadSpeed = 0,
+                                CompletedSize = status.BytesTransferred,
+                                TotalSize = status.BytesTotal,
+                            });
+
+                            DeliveryOptimizationDict.Remove(callback.DownloadID.ToString());
                         }
                     }
                     catch (Exception e)
@@ -298,9 +320,48 @@ namespace GetStoreApp.Services.Controls.Download
                     LogService.WriteLog(LoggingLevel.Warning, "Finalize delivery optimization download task failed", e);
                 }
             }
-            else if (status.State is DODownloadState.DODownloadState_Paused)
+
+            // 下载错误
+            if (status.Error is not 0 || status.ExtendedError is not 0)
             {
-                DownloadPaused?.Invoke(callback.DownloadID);
+                try
+                {
+                    callback.StatusChanged -= OnStatusChanged;
+                    doDownload.Finalize();
+
+                    deliveryOptimizationLock.Enter();
+
+                    try
+                    {
+                        if (DeliveryOptimizationDict.TryGetValue(callback.DownloadID.ToString(), out (string saveFilePath, IDODownload doDownload, DODownloadStatusCallback doDownloadStatusCallback) downloadValue))
+                        {
+                            DownloadProgress?.Invoke(new DownloadProgress()
+                            {
+                                DownloadID = callback.DownloadID.ToString(),
+                                DownloadProgressState = DownloadProgressState.Failed,
+                                FileName = Path.GetFileName(downloadValue.saveFilePath),
+                                FilePath = downloadValue.saveFilePath,
+                                DownloadSpeed = 0,
+                                CompletedSize = status.BytesTransferred,
+                                TotalSize = status.BytesTotal,
+                            });
+
+                            DeliveryOptimizationDict.Remove(callback.DownloadID.ToString());
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                    }
+                    finally
+                    {
+                        deliveryOptimizationLock.Exit();
+                    }
+                }
+                catch (Exception e)
+                {
+                    LogService.WriteLog(LoggingLevel.Warning, "Remove delivery optimization download failed task failed", e);
+                }
             }
         }
     }
