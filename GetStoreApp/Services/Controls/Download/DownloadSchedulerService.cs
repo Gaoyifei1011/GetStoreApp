@@ -144,6 +144,33 @@ namespace GetStoreApp.Services.Controls.Download
                     DownloadSchedulerSemaphoreSlim?.Release();
                 }
             }
+            // 下载任务已失败
+            else if (downloadProgress.DownloadProgressState is DownloadProgressState.Failed)
+            {
+                DownloadSchedulerSemaphoreSlim?.Wait();
+
+                try
+                {
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    {
+                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        {
+                            downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
+                            DownloadSchedulerList.Remove(downloadSchedulerItem);
+                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                            return;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    DownloadSchedulerSemaphoreSlim?.Release();
+                }
+            }
             // 下载任务已完成
             else if (downloadProgress.DownloadProgressState is DownloadProgressState.Finished)
             {
