@@ -1,13 +1,13 @@
-﻿using GetStoreApp.Extensions.DataType.Enums;
+﻿using GetStoreApp.Extensions.DataType.Classes;
+using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.Views.Windows;
-using GetStoreApp.WindowsAPI.ComTypes;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading;
 using Windows.Foundation.Diagnostics;
 
@@ -26,6 +26,8 @@ namespace GetStoreApp.Services.Controls.Download
 
         public static List<DownloadSchedulerModel> DownloadSchedulerList { get; } = [];
 
+        public static event Action<DownloadSchedulerModel> DownloadProgress;
+
         public static event Action<Guid, DownloadSchedulerModel> DownloadCreated;
 
         public static event Action<Guid> DownloadContinued;
@@ -40,441 +42,169 @@ namespace GetStoreApp.Services.Controls.Download
 
         public static event Action<int> CollectionCountChanged;
 
-        #region 第一部分：传递优化服务挂载的事件
-
         /// <summary>
-        /// 传递优化：下载任务已创建事件
+        /// 下载状态发生改变时触发的事件
         /// </summary>
-        private static void OnDeliveryOptimizationCreated(Guid downloadID, string fileName, string filePath, string url, double totalSize)
+        private static void OnDownloadProgress(DownloadProgress downloadProgress)
         {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
+            // 处于等待中（新添加下载任务或者已经恢复下载）
+            if (downloadProgress.DownloadProgressState is DownloadProgressState.Queued)
             {
-                DownloadSchedulerModel downloadSchedulerItem = new()
+                DownloadSchedulerSemaphoreSlim?.Wait();
+
+                try
                 {
-                    DownloadID = downloadID,
-                    DownloadStatus = DownloadStatus.Downloading,
-                    FileName = fileName,
-                    FilePath = filePath,
-                    FileLink = url,
-                    FinishedSize = 0,
-                    TotalSize = totalSize
-                };
-
-                DownloadSchedulerList.Add(downloadSchedulerItem);
-                DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
-                CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationCreated event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 传递优化：下载任务已继续下载事件
-        /// </summary>
-        private static void OnDeliveryOptimizationContinued(Guid downloadID)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-                {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
+                    // 下载任务已经存在，更新下载状态
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
                     {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
+                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        {
+                            downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
+                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            return;
+                        }
+                    }
 
-                        DownloadContinued?.Invoke(downloadID);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
+                    // 不存在则添加任务
+                    DownloadSchedulerModel downloadScheduler = new()
+                    {
+                        DownloadID = downloadProgress.DownloadID,
+                        DownloadProgressState = downloadProgress.DownloadProgressState,
+                        FileName = downloadProgress.FileName,
+                        FilePath = downloadProgress.FilePath,
+                        CompletedSize = downloadProgress.CompletedSize,
+                        TotalSize = downloadProgress.TotalSize,
+                        DownloadSpeed = downloadProgress.DownloadSpeed,
+                    };
+
+                    DownloadSchedulerList.Add(downloadScheduler);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    DownloadSchedulerSemaphoreSlim?.Release();
+                }
+            }
+            // 下载任务正在下载中
+            else if (downloadProgress.DownloadProgressState is DownloadProgressState.Downloading)
+            {
+                DownloadSchedulerSemaphoreSlim?.Wait();
+
+                try
+                {
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    {
+                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        {
+                            downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
+                            downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
+                            downloadSchedulerItem.CompletedSize = downloadProgress.CompletedSize;
+                            downloadSchedulerItem.TotalSize = downloadProgress.TotalSize;
+                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            return;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationContinued event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 传递优化：下载任务已暂停下载事件
-        /// </summary>
-        private static void OnDeliveryOptimizationPaused(Guid downloadID)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                catch (Exception e)
                 {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    DownloadSchedulerSemaphoreSlim?.Release();
+                }
+            }
+            // 下载任务已暂停
+            else if (downloadProgress.DownloadProgressState is DownloadProgressState.Paused)
+            {
+                DownloadSchedulerSemaphoreSlim?.Wait();
 
-                        DownloadPaused?.Invoke(downloadID);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
+                try
+                {
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    {
+                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        {
+                            downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
+                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            return;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationPaused event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 传递优化：下载任务已删除事件
-        /// </summary>
-        private static void OnDeliveryOptimizationDeleted(Guid downloadID)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                catch (Exception e)
                 {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        DownloadSchedulerList.Remove(downloadSchedulerItem);
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    DownloadSchedulerSemaphoreSlim?.Release();
+                }
+            }
+            // 下载任务已完成
+            else if (downloadProgress.DownloadProgressState is DownloadProgressState.Finished)
+            {
+                DownloadSchedulerSemaphoreSlim?.Wait();
 
-                        DownloadDeleted?.Invoke(downloadID);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
+                try
+                {
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    {
+                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        {
+                            downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
+                            downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
+                            downloadSchedulerItem.CompletedSize = downloadProgress.CompletedSize;
+                            downloadSchedulerItem.TotalSize = downloadProgress.TotalSize;
+                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            DownloadStorageService.AddDownloadData(downloadSchedulerItem);
+                            DownloadSchedulerList.Remove(downloadSchedulerItem);
+                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                            return;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationDeleted event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 传递优化：下载任务下载进度发生变化事件
-        /// </summary>
-        private static void OnDeliveryOptimizationProgressing(Guid downloadID, DO_DOWNLOAD_STATUS status)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                catch (Exception e)
                 {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
-                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                        downloadSchedulerItem.FinishedSize = status.BytesTransferred;
-                        downloadSchedulerItem.TotalSize = status.BytesTotal;
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    DownloadSchedulerSemaphoreSlim?.Release();
+                }
+            }
+            // 下载任务已删除
+            else if (downloadProgress.DownloadProgressState is DownloadProgressState.Deleted)
+            {
+                DownloadSchedulerSemaphoreSlim?.Wait();
 
-                        DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
-                        break;
+                try
+                {
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                    {
+                        if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
+                        {
+                            downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
+                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            DownloadSchedulerList.Remove(downloadSchedulerItem);
+                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                            return;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationProgressing event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 传递优化：下载任务已下载完成事件
-        /// </summary>
-        private static void OnDeliveryOptimizationCompleted(Guid downloadID, DO_DOWNLOAD_STATUS status)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
+                catch (Exception e)
                 {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
-                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(status.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                        downloadSchedulerItem.FinishedSize = status.BytesTransferred;
-                        downloadSchedulerItem.TotalSize = status.BytesTotal;
-
-                        DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
-                        DownloadStorageService.AddDownloadData(downloadSchedulerItem);
-                        DownloadSchedulerList.Remove(downloadSchedulerItem);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
-                    }
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
                 }
-
-                if (DownloadSchedulerList.Count is 0)
+                finally
                 {
-                    // 显示下载文件完成通知
-                    AppNotificationBuilder appNotificationBuilder = new();
-                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted1"));
-                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted2"));
-                    AppNotificationButton viewDownloadPageButton = new(ResourceService.GetLocalized("Notification/ViewDownloadPage"));
-                    viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
-                    appNotificationBuilder.AddButton(viewDownloadPageButton);
-                    AppNotification appNotification = appNotificationBuilder.BuildNotification();
-
-                    MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        ToastNotificationService.Show(appNotification);
-                    });
+                    DownloadSchedulerSemaphoreSlim?.Release();
                 }
             }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnDeliveryOptimizationCompleted event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
         }
-
-        #endregion 第一部分：传递优化服务挂载的事件
-
-        #region 第二部分：后台智能传输服务挂载的事件
-
-        /// <summary>
-        /// 后台智能传输任务：下载任务已创建事件
-        /// </summary>
-        private static void OnBitsCreated(Guid downloadID, string fileName, string filePath, string url, double totalSize)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                DownloadSchedulerModel downloadSchedulerItem = new()
-                {
-                    DownloadID = downloadID,
-                    DownloadStatus = DownloadStatus.Downloading,
-                    FileName = fileName,
-                    FilePath = filePath,
-                    FileLink = url,
-                    FinishedSize = 0,
-                    TotalSize = totalSize
-                };
-
-                DownloadSchedulerList.Add(downloadSchedulerItem);
-                DownloadCreated?.Invoke(downloadID, downloadSchedulerItem);
-                CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsCreated event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 后台智能传输任务：下载任务已继续下载事件
-        /// </summary>
-        private static void OnBitsContinued(Guid downloadID)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-                {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
-                        DownloadContinued?.Invoke(downloadID);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsContinued event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 后台智能传输任务：下载任务已暂停下载事件
-        /// </summary>
-        private static void OnBitsPaused(Guid downloadID)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-                {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Pause;
-                        DownloadPaused?.Invoke(downloadID);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsPaused event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 后台智能传输任务：下载任务已删除事件
-        /// </summary>
-        private static void OnBitsDeleted(Guid downloadID)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-                {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        DownloadSchedulerList.Remove(downloadSchedulerItem);
-
-                        DownloadDeleted?.Invoke(downloadID);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsDeleted event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 后台智能传输任务：下载任务下载进度发生变化事件
-        /// </summary>
-        private static void OnBitsProgressing(Guid downloadID, BG_JOB_PROGRESS progress)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-                {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Downloading;
-                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                        downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
-                        downloadSchedulerItem.TotalSize = progress.BytesTotal;
-
-                        DownloadProgressing?.Invoke(downloadID, downloadSchedulerItem);
-                        break;
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsProgressing event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        /// <summary>
-        /// 后台智能传输任务：下载任务已下载完成事件
-        /// </summary>
-        private static void OnBitsCompleted(Guid downloadID, BG_JOB_PROGRESS progress)
-        {
-            DownloadSchedulerSemaphoreSlim?.Wait();
-
-            try
-            {
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerList)
-                {
-                    if (Equals(downloadSchedulerItem.DownloadID, downloadID))
-                    {
-                        downloadSchedulerItem.DownloadStatus = DownloadStatus.Completed;
-                        downloadSchedulerItem.CurrentSpeed = Convert.ToDouble(progress.BytesTransferred) - downloadSchedulerItem.FinishedSize;
-                        downloadSchedulerItem.FinishedSize = progress.BytesTransferred;
-                        downloadSchedulerItem.TotalSize = progress.BytesTotal;
-
-                        DownloadCompleted?.Invoke(downloadID, downloadSchedulerItem);
-                        DownloadStorageService.AddDownloadData(downloadSchedulerItem);
-                        DownloadSchedulerList.Remove(downloadSchedulerItem);
-                        CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
-                        break;
-                    }
-                }
-
-                if (DownloadSchedulerList.Count is 0)
-                {
-                    // 显示下载文件完成通知
-                    AppNotificationBuilder appNotificationBuilder = new();
-                    appNotificationBuilder.AddArgument("action", "OpenApp");
-                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted1"));
-                    appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted2"));
-                    AppNotificationButton viewDownloadPageButton = new(ResourceService.GetLocalized("Notification/ViewDownloadPage"));
-                    viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
-                    appNotificationBuilder.AddButton(viewDownloadPageButton);
-                    AppNotification appNotification = appNotificationBuilder.BuildNotification();
-
-                    MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
-                    {
-                        ToastNotificationService.Show(appNotification);
-                    });
-                }
-            }
-            catch (Exception e)
-            {
-                LogService.WriteLog(LoggingLevel.Warning, "Deal OnBitsCompleted event failed", e);
-            }
-            finally
-            {
-                DownloadSchedulerSemaphoreSlim?.Release();
-            }
-        }
-
-        #endregion 第二部分：后台智能传输服务挂载的事件
-
-        #region 第三部分：下载控制服务：自定义事件
 
         /// <summary>
         /// 集合的数量发生变化时修改任务栏徽标下载调度任务数量
@@ -487,9 +217,21 @@ namespace GetStoreApp.Services.Controls.Download
                 BadgeNotificationService.Show(count);
                 badgeCount = count;
             }
-        }
 
-        #endregion 第三部分：下载控制服务：自定义事件
+            if (DownloadSchedulerList.Count is 0)
+            {
+                // 显示下载文件完成通知
+                AppNotificationBuilder appNotificationBuilder = new();
+                appNotificationBuilder.AddArgument("action", "OpenApp");
+                appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted1"));
+                appNotificationBuilder.AddText(ResourceService.GetLocalized("Notification/DownloadCompleted2"));
+                AppNotificationButton viewDownloadPageButton = new(ResourceService.GetLocalized("Notification/ViewDownloadPage"));
+                viewDownloadPageButton.Arguments.Add("action", "ViewDownloadPage");
+                appNotificationBuilder.AddButton(viewDownloadPageButton);
+                AppNotification appNotification = appNotificationBuilder.BuildNotification();
+                ToastNotificationService.Show(appNotification);
+            }
+        }
 
         /// <summary>
         /// 初始化后台下载调度器
@@ -516,22 +258,17 @@ namespace GetStoreApp.Services.Controls.Download
                 // 初始化下载服务
                 if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
                 {
-                    DeliveryOptimizationService.DownloadCreated += OnDeliveryOptimizationCreated;
-                    DeliveryOptimizationService.DownloadContinued += OnDeliveryOptimizationContinued;
-                    DeliveryOptimizationService.DownloadPaused += OnDeliveryOptimizationPaused;
-                    DeliveryOptimizationService.DownloadDeleted += OnDeliveryOptimizationDeleted;
-                    DeliveryOptimizationService.DownloadProgressing += OnDeliveryOptimizationProgressing;
-                    DeliveryOptimizationService.DownloadCompleted += OnDeliveryOptimizationCompleted;
+                    DeliveryOptimizationService.DownloadProgress += OnDownloadProgress;
                 }
-                else
+                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
                 {
                     BitsService.Initialize();
-                    BitsService.DownloadCreated += OnBitsCreated;
-                    BitsService.DownloadContinued += OnBitsContinued;
-                    BitsService.DownloadPaused += OnBitsPaused;
-                    BitsService.DownloadDeleted += OnBitsDeleted;
-                    BitsService.DownloadProgressing += OnBitsProgressing;
-                    BitsService.DownloadCompleted += OnBitsCompleted;
+                    BitsService.DownloadProgress += OnDownloadProgress;
+                }
+                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+                {
+                    Aria2Service.Initialize();
+                    Aria2Service.DownloadProgress += OnDownloadProgress;
                 }
             }
         }
@@ -557,21 +294,17 @@ namespace GetStoreApp.Services.Controls.Download
                 // 注销下载服务
                 if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
                 {
-                    DeliveryOptimizationService.DownloadCreated -= OnDeliveryOptimizationCreated;
-                    DeliveryOptimizationService.DownloadContinued -= OnDeliveryOptimizationContinued;
-                    DeliveryOptimizationService.DownloadPaused -= OnDeliveryOptimizationPaused;
-                    DeliveryOptimizationService.DownloadDeleted -= OnDeliveryOptimizationDeleted;
-                    DeliveryOptimizationService.DownloadProgressing -= OnDeliveryOptimizationProgressing;
-                    DeliveryOptimizationService.DownloadCompleted -= OnDeliveryOptimizationCompleted;
+                    DeliveryOptimizationService.DownloadProgress -= OnDownloadProgress;
                 }
-                else
+                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
                 {
-                    BitsService.DownloadCreated -= OnBitsCreated;
-                    BitsService.DownloadContinued -= OnBitsContinued;
-                    BitsService.DownloadPaused -= OnBitsPaused;
-                    BitsService.DownloadDeleted -= OnBitsDeleted;
-                    BitsService.DownloadProgressing -= OnBitsProgressing;
-                    BitsService.DownloadCompleted -= OnBitsCompleted;
+                    BitsService.Initialize();
+                    BitsService.DownloadProgress -= OnDownloadProgress;
+                }
+                else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+                {
+                    Aria2Service.Initialize();
+                    Aria2Service.DownloadProgress -= OnDownloadProgress;
                 }
             }
         }
@@ -585,59 +318,75 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 DeliveryOptimizationService.CreateDownload(fileLink, filePath);
             }
-            else
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.CreateDownload(fileLink, filePath);
+            }
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            {
+                Aria2Service.CreateDownload(fileLink, filePath);
             }
         }
 
         /// <summary>
         /// 继续下载任务
         /// </summary>
-        public static void ContinueDownload(Guid downloadID)
+        public static void ContinueDownload(string downloadID)
         {
             if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.ContinueDownload(downloadID);
             }
-            else
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.ContinueDownload(downloadID);
+            }
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            {
+                Aria2Service.ContinueDownload(downloadID);
             }
         }
 
         /// <summary>
         /// 暂停下载任务
         /// </summary>
-        public static void PauseDownload(Guid downloadID)
+        public static void PauseDownload(string downloadID)
         {
             if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.PauseDownload(downloadID);
             }
-            else
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.PauseDownload(downloadID);
+            }
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            {
+                Aria2Service.PauseDownload(downloadID);
             }
         }
 
         /// <summary>
         /// 删除下载任务
         /// </summary>
-        public static void DeleteDownload(Guid downloadID)
+        public static void DeleteDownload(string downloadID)
         {
             if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
             {
                 DeliveryOptimizationService.DeleteDownload(downloadID);
             }
-            else
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.DeleteDownload(downloadID);
+            }
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
+            {
+                Aria2Service.DeleteDownload(downloadID);
             }
         }
 
         /// <summary>
-        /// 终止所有下载任务，仅用于应用关闭时
+        /// 应用关闭时终止所有下载任务
         /// </summary>
         public static void TerminateDownload()
         {
@@ -645,7 +394,7 @@ namespace GetStoreApp.Services.Controls.Download
             {
                 DeliveryOptimizationService.TerminateDownload();
             }
-            else
+            else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
             {
                 BitsService.TerminateDownload();
             }
