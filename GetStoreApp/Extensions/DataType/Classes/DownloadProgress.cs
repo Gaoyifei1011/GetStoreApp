@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using System;
 
 namespace GetStoreApp.Extensions.DataType.Classes
 {
