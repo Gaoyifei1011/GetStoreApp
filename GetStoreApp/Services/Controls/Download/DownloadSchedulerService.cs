@@ -28,18 +28,6 @@ namespace GetStoreApp.Services.Controls.Download
 
         public static event Action<DownloadSchedulerModel> DownloadProgress;
 
-        public static event Action<Guid, DownloadSchedulerModel> DownloadCreated;
-
-        public static event Action<Guid> DownloadContinued;
-
-        public static event Action<Guid> DownloadPaused;
-
-        public static event Action<Guid> DownloadDeleted;
-
-        public static event Action<Guid, DownloadSchedulerModel> DownloadProgressing;
-
-        public static event Action<Guid, DownloadSchedulerModel> DownloadCompleted;
-
         public static event Action<int> CollectionCountChanged;
 
         /// <summary>
@@ -156,6 +144,8 @@ namespace GetStoreApp.Services.Controls.Download
                         if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
+                            downloadSchedulerItem.CompletedSize = 1;
+                            downloadProgress.TotalSize = 1;
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
                             CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
                             return;
