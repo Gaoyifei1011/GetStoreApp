@@ -13,6 +13,8 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     {
         private const string Kernel32 = "kernel32.dll";
 
+        public const int MAX_PATH = 260;
+
         public static IntPtr INVALID_HANDLE_VALUE { get; } = new IntPtr(-1);
 
         /// <summary>
