@@ -3,6 +3,8 @@
   "CancelToolTip": "צא ממצב בחירה מרובה",
   "Completed": "הושלם",
   "CompletedCountInfo": "יש {0} רשומות שהורדו",
+  "DownloadQueued": "Download waiting",
+  "DownloadPaused": "Download paused",
   "CompletedEmpty": "אין רשומות שהורדו",
   "CompletedEmptyDescription": "לאחר שתוריד אפליקציה כלשהיא, היא תופיע כאן",
   "CompleteDownload": "ההורדה הושלמה",

@@ -8,6 +8,8 @@
   "CompleteDownload": "اكتمل التحميل",
   "Continue": "استمرار التحميل",
   "ContinueAll": "تحميل الكل",
+  "DownloadQueued": "Download waiting",
+  "DownloadPaused": "Download paused",
   "ContinueAllToolTip": "استئناف تحميل المهمة المتوقفة",
   "ContinueToolTip": "استئناف تحميل المهمة الحالية",
   "CurrentSpeedToolTip": "السرعة الحالية:",
