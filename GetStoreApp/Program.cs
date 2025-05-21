@@ -3,7 +3,6 @@ using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.History;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
-using GetStoreApp.WindowsAPI.PInvoke.Kernel32;
 using GetStoreApp.WindowsAPI.PInvoke.KernelBase;
 using GetStoreApp.WindowsAPI.PInvoke.Ole32;
 using Microsoft.UI.Dispatching;
@@ -183,19 +182,6 @@ namespace GetStoreApp
                     SynchronizationContext.SetSynchronizationContext(new DispatcherQueueSynchronizationContext(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread()));
                     new WinUIApp();
                 });
-            }
-            // 以控制台程序方式启动
-            else
-            {
-                AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-                bool attachResult = Kernel32Library.AttachConsole();
-
-                if (!attachResult)
-                {
-                    Kernel32Library.AllocConsole();
-                }
-                ConsoleLaunchService.InitializeLaunchAsync(appActivationArguments).Wait();
-                Kernel32Library.FreeConsole();
             }
         }
 
