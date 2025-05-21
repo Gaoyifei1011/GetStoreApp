@@ -249,7 +249,6 @@
     <None Remove="Views\Dialogs\AppInformationDialog.xaml" />
     <None Remove="Views\Dialogs\AppRunningDialog.xaml" />
     <None Remove="Views\Dialogs\ClosingWindowDialog.xaml" />
-    <None Remove="Views\Dialogs\ConsoleStartupArgsDialog.xaml" />
     <None Remove="Views\Dialogs\DeletePromptDialog.xaml" />
     <None Remove="Views\Dialogs\DesktopStartupArgsDialog.xaml" />
     <None Remove="Views\Dialogs\FileInformationDialog.xaml" />
@@ -300,7 +299,6 @@
     <Page Update="Views\Dialogs\AppInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\AppRunningDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\ClosingWindowDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Views\Dialogs\ConsoleStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\DeletePromptDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\DesktopStartupArgsDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
     <Page Update="Views\Dialogs\FileInformationDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
