@@ -178,15 +178,6 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 控制台程序启动参数说明
-        /// </summary>
-        private async void OnConsoleLaunchClicked(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            StoreSplitView.IsPaneOpen = false;
-            await MainWindow.Current.ShowDialogAsync(new ConsoleStartupArgsDialog());
-        }
-
-        /// <summary>
         /// 检查网络
         /// </summary>
         private void OnCheckNetWorkClicked(Hyperlink sender, HyperlinkClickEventArgs args)

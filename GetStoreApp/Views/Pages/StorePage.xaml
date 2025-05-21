@@ -294,12 +294,6 @@
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/DesktopLaunch')}" />
                                 </Hyperlink>
                             </TextBlock>
-
-                            <TextBlock>
-                                <Hyperlink Click="{x:Bind OnConsoleLaunchClicked}" UnderlineStyle="None">
-                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Store/ConsoleLaunch')}" />
-                                </Hyperlink>
-                            </TextBlock>
                         </StackPanel>
 
                         <MenuFlyoutSeparator Grid.Row="7" />
