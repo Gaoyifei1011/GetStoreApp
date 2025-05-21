@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
-using System;
 using System.ComponentModel;
 
 namespace GetStoreApp.Models.Controls.Download
@@ -73,7 +72,7 @@ namespace GetStoreApp.Models.Controls.Download
         /// <summary>
         /// 任务下载时创建下载 ID
         /// </summary>
-        public Guid DownloadID { get; set; }
+        public string DownloadID { get; set; }
 
         /*
         2.下载文件的基础信息
@@ -85,19 +84,9 @@ namespace GetStoreApp.Models.Controls.Download
         public string FileName { get; set; }
 
         /// <summary>
-        /// 文件下载链接
-        /// </summary>
-        public string FileLink { get; set; }
-
-        /// <summary>
         /// 文件下载保存的路径
         /// </summary>
         public string FilePath { get; set; }
-
-        /// <summary>
-        /// 文件SHA256值，用来校验文件
-        /// </summary>
-        public string FileSHA256 { get; set; }
 
         /*
         3.下载文件的状态信息
@@ -106,18 +95,37 @@ namespace GetStoreApp.Models.Controls.Download
         /// <summary>
         /// 文件下载状态
         /// </summary>
-        private DownloadStatus _downloadStatus;
+        private DownloadProgressState _downloadProgressState;
 
-        public DownloadStatus DownloadStatus
+        public DownloadProgressState DownloadProgressState
         {
-            get { return _downloadStatus; }
+            get { return _downloadProgressState; }
 
             set
             {
-                if (!Equals(_downloadStatus, value))
+                if (!Equals(_downloadProgressState, value))
                 {
-                    _downloadStatus = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadStatus)));
+                    _downloadProgressState = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadProgressState)));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 下载文件已完成的进度
+        /// </summary>
+        private double _completedSize;
+
+        public double CompletedSize
+        {
+            get { return _completedSize; }
+
+            set
+            {
+                if (!Equals(_completedSize, value))
+                {
+                    _completedSize = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CompletedSize)));
                 }
             }
         }
@@ -142,39 +150,20 @@ namespace GetStoreApp.Models.Controls.Download
         }
 
         /// <summary>
-        /// 下载文件已完成的进度
-        /// </summary>
-        private double _finishedSize;
-
-        public double FinishedSize
-        {
-            get { return _finishedSize; }
-
-            set
-            {
-                if (!Equals(_finishedSize, value))
-                {
-                    _finishedSize = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FinishedSize)));
-                }
-            }
-        }
-
-        /// <summary>
         /// 文件下载速度
         /// </summary>
-        private double _currentSpeed;
+        private double _downloadSpeed;
 
-        public double CurrentSpeed
+        public double DownloadSpeed
         {
-            get { return _currentSpeed; }
+            get { return _downloadSpeed; }
 
             set
             {
-                if (!Equals(_currentSpeed, value))
+                if (!Equals(_downloadSpeed, value))
                 {
-                    _currentSpeed = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSpeed)));
+                    _downloadSpeed = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DownloadSpeed)));
                 }
             }
         }
