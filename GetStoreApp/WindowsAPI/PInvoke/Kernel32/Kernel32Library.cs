@@ -13,30 +13,7 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
     {
         private const string Kernel32 = "kernel32.dll";
 
-        public const int APPMODEL_ERROR_NO_PACKAGE = 15700;
-
-        public const int MAX_PATH = 260;
-
         public static IntPtr INVALID_HANDLE_VALUE { get; } = new IntPtr(-1);
-
-        /// <summary>
-        /// 为调用进程分配一个新的控制台。
-        /// </summary>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "AllocConsole", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AllocConsole();
-
-        /// <summary>
-        /// 将调用进程附加到指定进程的控制台作为客户端应用程序
-        /// </summary>
-        /// <param name="dwProcessId">
-        /// 将调用进程附加到指定进程的控制台作为客户端应用程序，默认值为ATTACH_PARENT_PROCESS = -1
-        /// </param>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "AttachConsole", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool AttachConsole(int dwProcessId = -1);
 
         /// <summary>
         /// 获取指定进程的快照，以及这些进程使用的堆、模块和线程。
@@ -63,14 +40,6 @@ namespace GetStoreApp.WindowsAPI.PInvoke.Kernel32
         [LibraryImport(Kernel32, EntryPoint = "EnumSystemGeoNames", SetLastError = false), PreserveSig]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static partial bool EnumSystemGeoNames(SYSGEOCLASS geoClass, GEO_ENUMNAMEPROC geoEnumProc, IntPtr data);
-
-        /// <summary>
-        /// 从其控制台中分离调用进程。
-        /// </summary>
-        /// <returns>如果该函数成功，则返回值为非零值。如果函数失败，则返回值为零。</returns>
-        [LibraryImport(Kernel32, EntryPoint = "FreeConsole", SetLastError = false), PreserveSig]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool FreeConsole();
 
         /// <summary>
         /// 检索当前进程的伪句柄。
