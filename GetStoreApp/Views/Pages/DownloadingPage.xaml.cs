@@ -14,8 +14,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
-using Windows.Foundation;
 using Windows.Foundation.Diagnostics;
 
 // 抑制 CA1822，IDE0060 警告
@@ -70,34 +70,39 @@ namespace GetStoreApp.Views.Pages
                 isInitialized = true;
 
                 DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
-                foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
+
+                try
                 {
-                    DownloadingCollection.Add(new DownloadingModel()
+                    foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadSchedulerList)
                     {
-                        DownloadID = downloadSchedulerItem.DownloadID,
-                        DownloadStatus = downloadSchedulerItem.DownloadStatus,
-                        FileName = downloadSchedulerItem.FileName,
-                        FilePath = downloadSchedulerItem.FilePath,
-                        FileLink = downloadSchedulerItem.FileLink,
-                        FinishedSize = downloadSchedulerItem.FinishedSize,
-                        IsNotOperated = true,
-                        CurrentSpeed = 0,
-                        TotalSize = downloadSchedulerItem.TotalSize,
-                        IsSelected = false,
-                        IsSelectMode = false
-                    });
+                        DownloadingCollection.Add(new DownloadingModel()
+                        {
+                            IsSelected = false,
+                            IsSelectMode = false,
+                            IsNotOperated = true,
+                            DownloadID = downloadSchedulerItem.DownloadID,
+                            FileName = downloadSchedulerItem.FileName,
+                            FilePath = downloadSchedulerItem.FilePath,
+                            DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                            CompletedSize = downloadSchedulerItem.CompletedSize,
+                            TotalSize = downloadSchedulerItem.TotalSize,
+                            DownloadSpeed = downloadSchedulerItem.DownloadSpeed
+                        });
+                    }
                 }
-                DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+                finally
+                {
+                    DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Release();
+                }
 
                 await Task.Run(() =>
                 {
                     GlobalNotificationService.ApplicationExit += OnApplicationExit;
-                    DownloadSchedulerService.DownloadCreated += OnDownloadCreated;
-                    DownloadSchedulerService.DownloadContinued += OnDownloadContinued;
-                    DownloadSchedulerService.DownloadPaused += OnDownloadPaused;
-                    DownloadSchedulerService.DownloadDeleted += OnDownloadDeleted;
-                    DownloadSchedulerService.DownloadProgressing += OnDownloadProgressing;
-                    DownloadSchedulerService.DownloadCompleted += OnDownloadCompleted;
+                    DownloadSchedulerService.DownloadProgress += OnDownloadProgress;
                 });
             }
         }
@@ -111,7 +116,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnContinueExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is DownloadingModel downloading && !Equals(downloading.DownloadID, GuidHelper.Empty))
+            if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
                 downloading.IsNotOperated = false;
                 DownloadSchedulerService.ContinueDownload(downloading.DownloadID);
@@ -123,7 +128,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnDeleteExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is DownloadingModel downloading && !Equals(downloading.DownloadID, GuidHelper.Empty))
+            if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
                 downloading.IsNotOperated = false;
                 DownloadSchedulerService.DeleteDownload(downloading.DownloadID);
@@ -135,7 +140,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnPauseExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
-            if (args.Parameter is DownloadingModel downloading && !Equals(downloading.DownloadID, GuidHelper.Empty))
+            if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
                 downloading.IsNotOperated = false;
                 DownloadSchedulerService.PauseDownload(downloading.DownloadID);
@@ -153,7 +158,7 @@ namespace GetStoreApp.Views.Pages
         {
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                if (downloadingItem.DownloadStatus is DownloadStatus.Pause)
+                if (downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
                 {
                     downloadingItem.IsNotOperated = false;
                     DownloadSchedulerService.ContinueDownload(downloadingItem.DownloadID);
@@ -168,7 +173,7 @@ namespace GetStoreApp.Views.Pages
         {
             foreach (DownloadingModel downloadingItem in DownloadingCollection)
             {
-                if (downloadingItem.DownloadStatus is DownloadStatus.Downloading)
+                if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading)
                 {
                     downloadingItem.IsNotOperated = false;
                     DownloadSchedulerService.PauseDownload(downloadingItem.DownloadID);
@@ -215,9 +220,12 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开默认保存的文件夹
         /// </summary>
-        private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
+        private void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
-            await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
+            Task.Run(async () =>
+            {
+                await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
+            });
         }
 
         /// <summary>
@@ -270,7 +278,7 @@ namespace GetStoreApp.Views.Pages
                         downloadingItem.IsSelected = false;
                         downloadingItem.IsNotOperated = false;
 
-                        if (downloadingItem.DownloadStatus is DownloadStatus.Downloading || downloadingItem.DownloadStatus is DownloadStatus.Pause)
+                        if (downloadingItem.DownloadProgressState is DownloadProgressState.Queued || downloadingItem.DownloadProgressState is DownloadProgressState.Downloading || downloadingItem.DownloadProgressState is DownloadProgressState.Paused)
                         {
                             DownloadSchedulerService.DeleteDownload(downloadingItem.DownloadID);
                         }
@@ -319,12 +327,7 @@ namespace GetStoreApp.Views.Pages
             try
             {
                 GlobalNotificationService.ApplicationExit -= OnApplicationExit;
-                DownloadSchedulerService.DownloadCreated -= OnDownloadCreated;
-                DownloadSchedulerService.DownloadContinued -= OnDownloadContinued;
-                DownloadSchedulerService.DownloadPaused -= OnDownloadPaused;
-                DownloadSchedulerService.DownloadDeleted -= OnDownloadDeleted;
-                DownloadSchedulerService.DownloadProgressing -= OnDownloadProgressing;
-                DownloadSchedulerService.DownloadCompleted -= OnDownloadCompleted;
+                DownloadSchedulerService.DownloadProgress -= OnDownloadProgress;
             }
             catch (Exception e)
             {
@@ -333,128 +336,112 @@ namespace GetStoreApp.Views.Pages
         }
 
         /// <summary>
-        /// 下载任务已创建
+        /// 下载状态发生改变时触发的事件
         /// </summary>
-        private void OnDownloadCreated(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
+        private void OnDownloadProgress(DownloadSchedulerModel downloadScheduler)
         {
-            DispatcherQueue.TryEnqueue(() =>
+            // 处于等待中（新添加下载任务或者已经恢复下载）
+            if (downloadScheduler.DownloadProgressState is DownloadProgressState.Queued)
             {
-                DownloadingCollection.Add(new DownloadingModel()
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    DownloadID = downloadSchedulerItem.DownloadID,
-                    DownloadStatus = downloadSchedulerItem.DownloadStatus,
-                    FileName = downloadSchedulerItem.FileName,
-                    FilePath = downloadSchedulerItem.FilePath,
-                    FileLink = downloadSchedulerItem.FileLink,
-                    FinishedSize = 0,
-                    IsNotOperated = true,
-                    CurrentSpeed = 0,
-                    TotalSize = downloadSchedulerItem.TotalSize,
-                    IsSelected = false,
-                    IsSelectMode = false
+                    // 下载任务已经存在，更新下载状态
+                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                    {
+                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        {
+                            downloadingItem.DownloadProgressState = downloadingItem.DownloadProgressState;
+                            return;
+                        }
+                    }
+
+                    // 不存在则添加任务
+                    DownloadingModel downloading = new()
+                    {
+                        IsSelected = false,
+                        IsSelectMode = false,
+                        IsNotOperated = true,
+                        DownloadID = downloadScheduler.DownloadID,
+                        FileName = downloadScheduler.FileName,
+                        FilePath = downloadScheduler.FilePath,
+                        DownloadProgressState = downloadScheduler.DownloadProgressState,
+                        CompletedSize = downloadScheduler.CompletedSize,
+                        TotalSize = downloadScheduler.TotalSize,
+                        DownloadSpeed = downloadScheduler.DownloadSpeed
+                    };
+
+                    DownloadingCollection.Add(downloading);
                 });
-            });
-        }
-
-        /// <summary>
-        /// 下载任务已继续下载
-        /// </summary>
-        private void OnDownloadContinued(Guid downloadID)
-        {
-            DispatcherQueue.TryEnqueue(() =>
+            }
+            // 下载任务正在下载中
+            else if (downloadScheduler.DownloadProgressState is DownloadProgressState.Downloading)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (Equals(downloadingItem.DownloadID, downloadID))
+                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        downloadingItem.IsNotOperated = true;
-                        downloadingItem.DownloadStatus = DownloadStatus.Downloading;
+                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        {
+                            downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
+                            downloadingItem.DownloadSpeed = downloadScheduler.DownloadSpeed;
+                            downloadingItem.CompletedSize = downloadScheduler.CompletedSize;
+                            downloadingItem.TotalSize = downloadScheduler.TotalSize;
+                            return;
+                        }
                     }
-                }
-            });
-        }
-
-        /// <summary>
-        /// 下载任务已暂停下载
-        /// </summary>
-
-        private void OnDownloadPaused(Guid downloadID)
-        {
-            DispatcherQueue.TryEnqueue(() =>
+                });
+            }
+            // 下载任务已暂停或已失败
+            else if (downloadScheduler.DownloadProgressState is DownloadProgressState.Paused || downloadScheduler.DownloadProgressState is DownloadProgressState.Failed)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (Equals(downloadingItem.DownloadID, downloadID))
+                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        downloadingItem.IsNotOperated = true;
-                        downloadingItem.DownloadStatus = DownloadStatus.Pause;
+                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        {
+                            downloadingItem.IsNotOperated = true;
+                            downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
+                            return;
+                        }
                     }
-                }
-            });
-        }
-
-        /// <summary>
-        /// 下载任务已删除
-        /// </summary>
-        private void OnDownloadDeleted(Guid downloadID)
-        {
-            DispatcherQueue.TryEnqueue(() =>
+                });
+            }
+            // 下载任务已完成
+            else if (downloadScheduler.DownloadProgressState is DownloadProgressState.Finished)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (Equals(downloadingItem.DownloadID, downloadID))
+                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        DownloadingCollection.Remove(downloadingItem);
-                        break;
+                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        {
+                            downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
+                            downloadingItem.DownloadSpeed = downloadScheduler.DownloadSpeed;
+                            downloadingItem.CompletedSize = downloadScheduler.CompletedSize;
+                            downloadingItem.TotalSize = downloadScheduler.TotalSize;
+                            downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
+                            DownloadingCollection.Remove(downloadingItem);
+                            return;
+                        }
                     }
-                }
-            });
-        }
-
-        /// <summary>
-        /// 下载任务下载进度发生变化
-        /// </summary>
-
-        private void OnDownloadProgressing(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
-        {
-            DispatcherQueue.TryEnqueue(() =>
+                });
+            }
+            // 下载任务已删除
+            else if (downloadScheduler.DownloadProgressState is DownloadProgressState.Deleted)
             {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (Equals(downloadingItem.DownloadID, downloadID))
+                    foreach (DownloadingModel downloadingItem in DownloadingCollection)
                     {
-                        downloadingItem.IsNotOperated = true;
-                        downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;
-                        downloadingItem.CurrentSpeed = downloadSchedulerItem.CurrentSpeed;
-                        downloadingItem.FinishedSize = downloadSchedulerItem.FinishedSize;
-                        downloadingItem.TotalSize = downloadSchedulerItem.TotalSize;
+                        if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
+                        {
+                            DownloadingCollection.Remove(downloadingItem);
+                            return;
+                        }
                     }
-                }
-            });
-        }
-
-        /// <summary>
-        /// 下载任务已下载完成
-        /// </summary>
-
-        private void OnDownloadCompleted(Guid downloadID, DownloadSchedulerModel downloadSchedulerItem)
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                foreach (DownloadingModel downloadingItem in DownloadingCollection)
-                {
-                    if (Equals(downloadingItem.DownloadID, downloadID))
-                    {
-                        downloadingItem.IsNotOperated = true;
-                        downloadingItem.DownloadStatus = downloadSchedulerItem.DownloadStatus;
-                        downloadingItem.CurrentSpeed = downloadSchedulerItem.CurrentSpeed;
-                        downloadingItem.FinishedSize = downloadSchedulerItem.FinishedSize;
-                        downloadingItem.TotalSize = downloadSchedulerItem.TotalSize;
-                        DownloadingCollection.Remove(downloadingItem);
-                        break;
-                    }
-                }
-            });
+                });
+            }
         }
 
         #endregion 第三部分：自定义事件

@@ -298,8 +298,16 @@
                             Margin="0,0,12,0"
                             FontSize="18"
                             FontWeight="Thin"
+                            Glyph="&#xE958;"
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}" />
+
+                        <FontIcon
+                            Grid.Column="1"
+                            Margin="0,0,12,0"
+                            FontSize="18"
+                            FontWeight="Thin"
                             Glyph="&#xE896;"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}" />
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
 
                         <FontIcon
                             Grid.Column="1"
@@ -307,7 +315,7 @@
                             FontSize="18"
                             FontWeight="Thin"
                             Glyph="&#xE769;"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}" />
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}" />
 
                         <FontIcon
                             Grid.Column="1"
@@ -315,7 +323,7 @@
                             FontSize="18"
                             FontWeight="Thin"
                             Glyph="&#xEA39;"
-                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Error), Mode=OneWay}" />
+                            Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}" />
 
                         <Grid
                             Grid.Column="2"
@@ -327,7 +335,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" Margin="0,0,0,6">
+                            <Grid Grid.Row="0">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -356,45 +364,46 @@
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
-                                <FontIcon
-                                    Grid.Column="1"
-                                    Margin="0,2,2,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    Glyph="&#xE74B;"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}" />
-
                                 <TextBlock
-                                    Grid.Column="2"
-                                    Margin="0,0,8,0"
+                                    Grid.Column="1"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}"
+                                    Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}"
                                     TextAlignment="Right"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}">
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/CurrentSpeedToolTip')}" />
-                                                <Run Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(CurrentSpeed), Mode=OneWay}" />
+                                                <Run Text="{x:Bind helper:SpeedHelper.ConvertSpeedToString(DownloadSpeed), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
                                 </TextBlock>
 
                                 <TextBlock
+                                    Grid.Column="2"
+                                    Margin="4,0,4,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="|"
+                                    TextAlignment="Right"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+
+                                <TextBlock
                                     Grid.Column="3"
                                     VerticalAlignment="Center"
                                     FontSize="16"
-                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}"
-                                    TextAlignment="Right">
+                                    Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}"
+                                    TextAlignment="Right"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}">
 
                                     <ToolTipService.ToolTip>
                                         <ToolTip MaxWidth="9999">
                                             <TextBlock>
                                                 <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/FinishedSizeToolTip')}" />
-                                                <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(FinishedSize), Mode=OneWay}" />
+                                                <Run Text="{x:Bind helper:FileSizeHelper.ConvertFileSizeToString(CompletedSize), Mode=OneWay}" />
                                             </TextBlock>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
@@ -402,11 +411,12 @@
 
                                 <TextBlock
                                     Grid.Column="4"
-                                    Margin="2,0,2,0"
+                                    Margin="4,0,4,0"
                                     VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="/"
-                                    TextAlignment="Right" />
+                                    FontSize="14"
+                                    Text="|"
+                                    TextAlignment="Right"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
 
                                 <TextBlock
                                     Grid.Column="5"
@@ -426,11 +436,48 @@
                                 </TextBlock>
                             </Grid>
 
-                            <ProgressBar
-                                Grid.Row="1"
-                                IsIndeterminate="False"
-                                ShowPaused="{x:Bind x:Object.Equals(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}"
-                                Value="{x:Bind converter:ValueConverterHelper.DownloadProgress(FinishedSize, TotalSize), Mode=OneWay}" />
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadQueued')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}" />
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/Downloading')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Downloading), Mode=OneWay}" />
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadPaused')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}" />
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadFailed')}"
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}" />
+
+                                <ProgressBar
+                                    Grid.Column="1"
+                                    Margin="10,0,0,0"
+                                    IsIndeterminate="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Queued), Mode=OneWay}"
+                                    ShowError="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Failed), Mode=OneWay}"
+                                    ShowPaused="{x:Bind x:Object.Equals(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}"
+                                    Value="{x:Bind converter:ValueConverterHelper.DownloadProgress(CompletedSize, TotalSize), Mode=OneWay}" />
+                            </Grid>
                         </Grid>
 
                         <ContentControl
@@ -452,7 +499,7 @@
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/ContinueToolTip')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Pause), Mode=OneWay}">
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadProgressState(DownloadProgressState, enum:DownloadProgressState.Paused), Mode=OneWay}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE768;" />
@@ -469,7 +516,7 @@
                                     CornerRadius="{StaticResource ControlCornerRadius}"
                                     IsEnabled="{x:Bind IsNotOperated, Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind root:ResourceService.GetLocalized('Download/PauseToolTip')}"
-                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadStatus(DownloadStatus, enum:DownloadStatus.Downloading), Mode=OneWay}">
+                                    Visibility="{x:Bind converter:ValueCheckConverterHelper.CheckDownloadingState(DownloadProgressState), Mode=OneWay}">
 
                                     <Button.Content>
                                         <FontIcon FontSize="14" Glyph="&#xE769;" />
