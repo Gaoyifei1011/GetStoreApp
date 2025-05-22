@@ -53,6 +53,7 @@ namespace GetStoreApp.Views.Pages
             new ContentLinkInfo() { DisplayText = "Microsoft.Windows.SDK.BuildTools.MSIX",Uri = new Uri("https://aka.ms/WinSDKProjectURL") },
             new ContentLinkInfo() { DisplayText = "Microsoft.WindowsAppSDK",Uri = new Uri("https://github.com/microsoft/windowsappsdk") },
             new ContentLinkInfo() { DisplayText = "Microsoft.WindowsPackageManager.ComInterop",Uri = new Uri("https://github.com/microsoft/winget-cli") },
+            new ContentLinkInfo() { DisplayText = "Mile.Aria2",Uri = new Uri("https://github.com/ProjectMile/Mile.Aria2") },
         ];
 
         //项目感谢者信息

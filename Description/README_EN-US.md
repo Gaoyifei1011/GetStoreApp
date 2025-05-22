@@ -125,6 +125,7 @@ All the content of the program has been developed
 > * [Microsoft.Windows.SDK.BuildTools.MSIX](https://aka.ms/WinSDKProjectURL)&emsp;
 > * [Microsoft.WindowsAppSDK](https://github.com/microsoft/windowsappsdk)&emsp;
 > * [Microsoft.WindowsPackageManager.ComInterop](https://github.com/microsoft/winget-cli)&emsp;
+> * [Mile.Aria2](https://github.com/ProjectMile/Mile.Aria2)&emsp;
   
 [Code referenced or used during the learning process](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/StudyReferenceCode.md)&emsp;
 [Auxiliary Tools](https://github.com/Gaoyifei1011/GetStoreApp/blob/main/Description/AuxiliaryTools.md)&emsp;
