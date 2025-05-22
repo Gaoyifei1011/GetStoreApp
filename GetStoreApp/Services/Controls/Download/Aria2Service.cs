@@ -93,7 +93,7 @@ namespace GetStoreApp.Services.Controls.Download
                 try
                 {
                     downloadSchedulerTimer?.Cancel();
-                    Aria2SemaphoreSlim.Dispose();
+                    Aria2SemaphoreSlim?.Dispose();
                     Aria2SemaphoreSlim = null;
                 }
                 catch (Exception e)
@@ -155,7 +155,7 @@ namespace GetStoreApp.Services.Controls.Download
                                 new JsonArray() { JsonValue.CreateStringValue(url) },
                                 new JsonObject()
                                 {
-                                    ["dir"] = JsonValue.CreateStringValue(saveFilePath),
+                                    ["dir"] = JsonValue.CreateStringValue(Path.GetDirectoryName(saveFilePath)),
                                     ["out"] = JsonValue.CreateStringValue(Path.GetFileName(saveFilePath))
                                 }
                             }
@@ -230,7 +230,7 @@ namespace GetStoreApp.Services.Controls.Download
                             ["method"] = JsonValue.CreateStringValue("aria2.unpause"),
                             ["params"] = new JsonArray()
                             {
-                                new JsonArray() { JsonValue.CreateStringValue(downloadID) },
+                                JsonValue.CreateStringValue(downloadID),
                             }
                         };
 
@@ -304,7 +304,7 @@ namespace GetStoreApp.Services.Controls.Download
                             ["method"] = JsonValue.CreateStringValue("aria2.forcePause"),
                             ["params"] = new JsonArray()
                             {
-                                new JsonArray() { JsonValue.CreateStringValue(downloadID) },
+                                JsonValue.CreateStringValue(downloadID),
                             }
                         };
 
@@ -365,7 +365,7 @@ namespace GetStoreApp.Services.Controls.Download
                             ["method"] = JsonValue.CreateStringValue("aria2.forceRemove"),
                             ["params"] = new JsonArray()
                             {
-                                new JsonArray() { JsonValue.CreateStringValue(downloadID) },
+                                JsonValue.CreateStringValue(downloadID),
                             }
                         };
 
@@ -445,7 +445,7 @@ namespace GetStoreApp.Services.Controls.Download
                         ["method"] = JsonValue.CreateStringValue("aria2.tellStatus"),
                         ["params"] = new JsonArray()
                         {
-                            new JsonArray() { JsonValue.CreateStringValue(downloadID) },
+                            JsonValue.CreateStringValue(downloadID),
                             new JsonArray()
                             {
                                 JsonValue.CreateStringValue("gid"),
