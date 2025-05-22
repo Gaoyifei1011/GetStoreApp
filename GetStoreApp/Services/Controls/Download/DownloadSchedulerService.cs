@@ -28,7 +28,7 @@ namespace GetStoreApp.Services.Controls.Download
 
         public static event Action<DownloadSchedulerModel> DownloadProgress;
 
-        public static event Action<int> CollectionCountChanged;
+        public static event Action<int, bool> CollectionCountChanged;
 
         /// <summary>
         /// 下载状态发生改变时触发的事件
@@ -48,7 +48,16 @@ namespace GetStoreApp.Services.Controls.Download
                         if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
-                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            {
+                                DownloadID = downloadSchedulerItem.DownloadID,
+                                FileName = downloadSchedulerItem.FileName,
+                                FilePath = downloadSchedulerItem.FilePath,
+                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                CompletedSize = downloadSchedulerItem.CompletedSize,
+                                TotalSize = downloadSchedulerItem.TotalSize,
+                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
+                            });
                             return;
                         }
                     }
@@ -66,7 +75,17 @@ namespace GetStoreApp.Services.Controls.Download
                     };
 
                     DownloadSchedulerList.Add(downloadScheduler);
-                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                    CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, true);
+                    DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                    {
+                        DownloadID = downloadScheduler.DownloadID,
+                        FileName = downloadScheduler.FileName,
+                        FilePath = downloadScheduler.FilePath,
+                        DownloadProgressState = downloadScheduler.DownloadProgressState,
+                        CompletedSize = downloadScheduler.CompletedSize,
+                        TotalSize = downloadScheduler.TotalSize,
+                        DownloadSpeed = downloadScheduler.DownloadSpeed,
+                    });
                 }
                 catch (Exception e)
                 {
@@ -92,7 +111,16 @@ namespace GetStoreApp.Services.Controls.Download
                             downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
                             downloadSchedulerItem.CompletedSize = downloadProgress.CompletedSize;
                             downloadSchedulerItem.TotalSize = downloadProgress.TotalSize;
-                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            {
+                                DownloadID = downloadSchedulerItem.DownloadID,
+                                FileName = downloadSchedulerItem.FileName,
+                                FilePath = downloadSchedulerItem.FilePath,
+                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                CompletedSize = downloadSchedulerItem.CompletedSize,
+                                TotalSize = downloadSchedulerItem.TotalSize,
+                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
+                            });
                             return;
                         }
                     }
@@ -118,7 +146,16 @@ namespace GetStoreApp.Services.Controls.Download
                         if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
-                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            {
+                                DownloadID = downloadSchedulerItem.DownloadID,
+                                FileName = downloadSchedulerItem.FileName,
+                                FilePath = downloadSchedulerItem.FilePath,
+                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                CompletedSize = downloadSchedulerItem.CompletedSize,
+                                TotalSize = downloadSchedulerItem.TotalSize,
+                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
+                            });
                             return;
                         }
                     }
@@ -147,7 +184,7 @@ namespace GetStoreApp.Services.Controls.Download
                             downloadSchedulerItem.CompletedSize = 1;
                             downloadProgress.TotalSize = 1;
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, true);
                             return;
                         }
                     }
@@ -176,10 +213,19 @@ namespace GetStoreApp.Services.Controls.Download
                             downloadSchedulerItem.DownloadSpeed = downloadProgress.CompletedSize - downloadSchedulerItem.CompletedSize;
                             downloadSchedulerItem.CompletedSize = downloadProgress.CompletedSize;
                             downloadSchedulerItem.TotalSize = downloadProgress.TotalSize;
-                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            {
+                                DownloadID = downloadSchedulerItem.DownloadID,
+                                FileName = downloadSchedulerItem.FileName,
+                                FilePath = downloadSchedulerItem.FilePath,
+                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                CompletedSize = downloadSchedulerItem.CompletedSize,
+                                TotalSize = downloadSchedulerItem.TotalSize,
+                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
+                            });
                             DownloadStorageService.AddDownloadData(downloadSchedulerItem);
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, true);
                             return;
                         }
                     }
@@ -205,9 +251,18 @@ namespace GetStoreApp.Services.Controls.Download
                         if (Equals(downloadSchedulerItem.DownloadID, downloadProgress.DownloadID))
                         {
                             downloadSchedulerItem.DownloadProgressState = downloadProgress.DownloadProgressState;
-                            DownloadProgress?.Invoke(downloadSchedulerItem);
+                            DownloadProgress?.Invoke(new DownloadSchedulerModel()
+                            {
+                                DownloadID = downloadSchedulerItem.DownloadID,
+                                FileName = downloadSchedulerItem.FileName,
+                                FilePath = downloadSchedulerItem.FilePath,
+                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                CompletedSize = downloadSchedulerItem.CompletedSize,
+                                TotalSize = downloadSchedulerItem.TotalSize,
+                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed,
+                            });
                             DownloadSchedulerList.Remove(downloadSchedulerItem);
-                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count);
+                            CollectionCountChanged?.Invoke(DownloadSchedulerList.Count, false);
                             return;
                         }
                     }
@@ -226,7 +281,7 @@ namespace GetStoreApp.Services.Controls.Download
         /// <summary>
         /// 集合的数量发生变化时修改任务栏徽标下载调度任务数量
         /// </summary>
-        private static void OnCollectionCountChanged(int count)
+        private static void OnCollectionCountChanged(int count, bool needNotification)
         {
             // 当前下载任务数量发生变化时，更新当前下载任务数量通知
             if (badgeCount != count)
@@ -235,7 +290,7 @@ namespace GetStoreApp.Services.Controls.Download
                 badgeCount = count;
             }
 
-            if (DownloadSchedulerList.Count is 0)
+            if (DownloadSchedulerList.Count is 0 && needNotification)
             {
                 // 显示下载文件完成通知
                 AppNotificationBuilder appNotificationBuilder = new();
@@ -312,16 +367,17 @@ namespace GetStoreApp.Services.Controls.Download
                 // 注销下载服务
                 if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[0]))
                 {
+                    DeliveryOptimizationService.TerminateDownload();
                     DeliveryOptimizationService.DownloadProgress -= OnDownloadProgress;
                 }
                 else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[1]))
                 {
-                    BitsService.Initialize();
+                    BitsService.TerminateDownload();
                     BitsService.DownloadProgress -= OnDownloadProgress;
                 }
                 else if (Equals(doEngineMode, DownloadOptionsService.DoEngineModeList[2]))
                 {
-                    Aria2Service.Initialize();
+                    Aria2Service.Release();
                     Aria2Service.DownloadProgress -= OnDownloadProgress;
                 }
             }
