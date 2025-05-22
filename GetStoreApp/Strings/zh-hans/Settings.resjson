@@ -1,5 +1,7 @@
 {
   "About": "关于",
+  "Aria2Configuration": "Aria2 下载配置",
+  "Aria2ConfigurationDescription": "通过配置文件自定义 Aria2 下载方式",
   "CancelAutoUpdate": "取消自动更新",
   "CancelAutoUpdateDescription": "检测到应用更新后自动取消更新",
   "CancelAutoUpdateOffContent": "否",

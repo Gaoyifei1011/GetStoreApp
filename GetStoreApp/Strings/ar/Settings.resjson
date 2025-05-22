@@ -1,6 +1,8 @@
 {
   "About": "About",
   "CancelAutoUpdate": "Cancel auto update",
+  "Aria2Configuration": "Aria2 download configuration",
+  "Aria2ConfigurationDescription": "Customize how Aria2 is downloaded via the configuration file",
   "CancelAutoUpdateDescription": "Automatically cancel the update when an app update is detected",
   "CancelAutoUpdateOffContent": "No",
   "CancelAutoUpdateOnContent": "Yes",
