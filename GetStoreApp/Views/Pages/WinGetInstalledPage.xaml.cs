@@ -562,6 +562,7 @@ namespace GetStoreApp.Views.Pages
                             if (Equals(installedApps.AppID, installedAppsItem.AppID) && Equals(installedApps.AppVersion, installedAppsItem.AppVersion))
                             {
                                 InstalledAppsList.Remove(installedAppsItem);
+                                InstalledAppsCollection.Remove(installedAppsItem);
                                 break;
                             }
                         }
