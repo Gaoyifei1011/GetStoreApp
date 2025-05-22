@@ -21,12 +21,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <!--  下载文件路径设置  -->
@@ -280,6 +274,60 @@
                     VerticalAlignment="Center"
                     Click="{x:Bind OnOpenDeliveryOptimizationClicked}"
                     Content="{x:Bind root:ResourceService.GetLocalized('Settings/OpenDeliveryOptimzationSettings')}" />
+            </Grid>
+
+            <!--  Aria2 下载文件配置  -->
+            <Grid
+                Grid.Row="3"
+                Height="60"
+                Margin="0,0,0,2"
+                Padding="16,12"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    FontSize="16"
+                    Glyph="&#xE90F;" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+
+                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind root:ResourceService.GetLocalized('Settings/Aria2Configuration')}" />
+
+                    <TextBlock
+                        x:Name="Aria2ConfigurationDescription"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{x:Bind root:ResourceService.GetLocalized('Settings/Aria2ConfigurationDescription')}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip
+                                MaxWidth="9999"
+                                Content="{x:Bind root:ResourceService.GetLocalized('Settings/Aria2ConfigurationDescription')}"
+                                Visibility="{x:Bind Aria2ConfigurationDescription.IsTextTrimmed, Mode=OneWay}" />
+                        </ToolTipService.ToolTip>
+                    </TextBlock>
+                </StackPanel>
+
+                <Button
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Click="{x:Bind OnConfigurationClicked}"
+                    Content="{x:Bind root:ResourceService.GetLocalized('Settings/Configuration')}" />
             </Grid>
         </Grid>
     </ScrollViewer>

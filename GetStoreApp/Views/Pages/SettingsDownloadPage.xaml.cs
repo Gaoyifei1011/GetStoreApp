@@ -1,5 +1,6 @@
 ﻿using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
+using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
 using GetStoreApp.Services.Root;
 using GetStoreApp.UI.TeachingTips;
@@ -11,6 +12,7 @@ using Microsoft.Windows.Storage.Pickers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
@@ -173,6 +175,29 @@ namespace GetStoreApp.Views.Pages
                 DoEngineMode = DoEngineModeList[Convert.ToInt32(tag)];
                 DownloadOptionsService.SetDoEngineMode(DoEngineMode);
             }
+        }
+
+        /// <summary>
+        /// 打开 Aria2 配置文件
+        /// </summary>
+        private void OnConfigurationClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                if (!File.Exists(Aria2Service.Aria2ConfPath))
+                {
+                    Aria2Service.InitializeAria2Conf();
+                }
+
+                try
+                {
+                    await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(Aria2Service.Aria2ConfPath));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
     }
 }
