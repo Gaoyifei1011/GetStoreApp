@@ -350,7 +350,8 @@ namespace GetStoreApp.Views.Pages
                     {
                         if (Equals(downloadingItem.DownloadID, downloadScheduler.DownloadID))
                         {
-                            downloadingItem.DownloadProgressState = downloadingItem.DownloadProgressState;
+                            downloadingItem.IsNotOperated = true;
+                            downloadingItem.DownloadProgressState = downloadScheduler.DownloadProgressState;
                             return;
                         }
                     }
