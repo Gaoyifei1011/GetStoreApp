@@ -89,6 +89,30 @@ namespace GetStoreApp.Views.Pages
                             DownloadSpeed = downloadSchedulerItem.DownloadSpeed
                         });
                     }
+
+                    if (!DownloadSchedulerService.IsDownloadingPageInitialized)
+                    {
+                        DownloadSchedulerService.IsDownloadingPageInitialized = true;
+
+                        foreach (DownloadSchedulerModel downloadSchedulerItem in DownloadSchedulerService.DownloadFailedList)
+                        {
+                            DownloadingCollection.Add(new DownloadingModel()
+                            {
+                                IsSelected = false,
+                                IsSelectMode = false,
+                                IsNotOperated = true,
+                                DownloadID = downloadSchedulerItem.DownloadID,
+                                FileName = downloadSchedulerItem.FileName,
+                                FilePath = downloadSchedulerItem.FilePath,
+                                DownloadProgressState = downloadSchedulerItem.DownloadProgressState,
+                                CompletedSize = downloadSchedulerItem.CompletedSize,
+                                TotalSize = downloadSchedulerItem.TotalSize,
+                                DownloadSpeed = downloadSchedulerItem.DownloadSpeed
+                            });
+                        }
+
+                        DownloadSchedulerService.DownloadFailedList.Clear();
+                    }
                 }
                 catch (Exception e)
                 {
@@ -130,8 +154,14 @@ namespace GetStoreApp.Views.Pages
         {
             if (args.Parameter is DownloadingModel downloading && !string.IsNullOrEmpty(downloading.DownloadID))
             {
-                downloading.IsNotOperated = false;
-                DownloadSchedulerService.DeleteDownload(downloading.DownloadID);
+                if (downloading.DownloadProgressState is DownloadProgressState.Queued || downloading.DownloadProgressState is DownloadProgressState.Downloading || downloading.DownloadProgressState is DownloadProgressState.Paused)
+                {
+                    DownloadSchedulerService.DeleteDownload(downloading.DownloadID);
+                }
+                else
+                {
+                    DownloadingCollection.Remove(downloading);
+                }
             }
         }
 
@@ -222,10 +252,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
-            Task.Run(async () =>
-            {
-                await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
-            });
+            Task.Run(DownloadOptionsService.OpenFolderAsync);
         }
 
         /// <summary>
@@ -233,7 +260,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
-            if (MainWindow.Current.Content is DownloadPage downloadPage)
+            if (MainWindow.Current.GetFrameContent() is DownloadPage downloadPage)
             {
                 downloadPage.ShowUseInstruction();
             }

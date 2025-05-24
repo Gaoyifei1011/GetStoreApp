@@ -436,9 +436,9 @@ namespace GetStoreApp.Views.Pages
         /// <summary>
         /// 打开默认保存的文件夹
         /// </summary>
-        private async void OnOpenFolderClicked(object sender, RoutedEventArgs args)
+        private void OnOpenFolderClicked(object sender, RoutedEventArgs args)
         {
-            await DownloadOptionsService.OpenFolderAsync(DownloadOptionsService.DownloadFolder);
+            Task.Run(DownloadOptionsService.OpenFolderAsync);
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace GetStoreApp.Views.Pages
         /// </summary>
         private void OnUseInstructionClicked(object sender, RoutedEventArgs args)
         {
-            if (MainWindow.Current.Content is DownloadPage downloadPage)
+            if (MainWindow.Current.GetFrameContent() is DownloadPage downloadPage)
             {
                 downloadPage.ShowUseInstruction();
             }

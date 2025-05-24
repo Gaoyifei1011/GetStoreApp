@@ -8,8 +8,10 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
 using System.Threading.Tasks;
 using Windows.Foundation.Diagnostics;
+using Windows.System;
 
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
@@ -141,6 +143,24 @@ namespace GetStoreApp.Views.Pages
             {
                 settingsPage.ShowSettingsInstruction();
             }
+        }
+
+        /// <summary>
+        /// 打开网络和 Internet 设置
+        /// </summary>
+        private void OnNetworkInternetClicked(object sender, RoutedEventArgs args)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri("ms-settings:network-status"));
+                }
+                catch (Exception e)
+                {
+                    ExceptionAsVoidMarshaller.ConvertToUnmanaged(e);
+                }
+            });
         }
 
         /// <summary>

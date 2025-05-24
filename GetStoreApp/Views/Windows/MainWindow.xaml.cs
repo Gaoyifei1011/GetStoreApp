@@ -1,7 +1,6 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
-using GetStoreApp.Models.Controls.Download;
 using GetStoreApp.Models.Window;
 using GetStoreApp.Services.Controls.Download;
 using GetStoreApp.Services.Controls.Settings;
@@ -303,11 +302,11 @@ namespace GetStoreApp.Views.Windows
         {
             args.Cancel = true;
 
-            List<DownloadSchedulerModel> downloadSchedulerList = null;
+            int count = 0;
             DownloadSchedulerService.DownloadSchedulerSemaphoreSlim?.Wait();
             try
             {
-                downloadSchedulerList = DownloadSchedulerService.GetDownloadSchedulerList();
+                count = DownloadSchedulerService.DownloadSchedulerList.Count;
             }
             catch (Exception e)
             {
@@ -319,7 +318,7 @@ namespace GetStoreApp.Views.Windows
             }
 
             // 下载队列存在任务时，弹出对话窗口确认是否要关闭窗口
-            if (downloadSchedulerList is not null && downloadSchedulerList.Count > 0)
+            if (count > 0)
             {
                 Show();
 

@@ -151,7 +151,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock
-                            Grid.Row="19"
+                            Grid.Row="0"
                             Margin="16,10,16,10"
                             FontSize="15"
                             FontWeight="Normal"
@@ -159,7 +159,7 @@
                             TextAlignment="Left" />
 
                         <TextBlock
-                            Grid.Row="20"
+                            Grid.Row="1"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -168,7 +168,7 @@
                             TextWrapping="Wrap" />
 
                         <TextBlock
-                            Grid.Row="21"
+                            Grid.Row="2"
                             Margin="16,0,16,5"
                             FontSize="14"
                             FontWeight="Normal"
@@ -176,8 +176,17 @@
                             TextAlignment="Justify"
                             TextWrapping="Wrap" />
 
+                        <TextBlock
+                            Grid.Row="3"
+                            Margin="16,0,16,5"
+                            FontSize="14"
+                            FontWeight="Normal"
+                            Text="{x:Bind root:ResourceService.GetLocalized('Download/DownloadInstruction3')}"
+                            TextAlignment="Justify"
+                            TextWrapping="Wrap" />
+
                         <StackPanel
-                            Grid.Row="22"
+                            Grid.Row="4"
                             Margin="16,0,16,5"
                             Spacing="5">
 
@@ -188,13 +197,17 @@
                             </TextBlock>
 
                             <TextBlock>
+                                <Hyperlink Click="{x:Bind OnNetworkInternetClicked}" UnderlineStyle="None">
+                                    <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/NetworkAndInternet')}" />
+                                </Hyperlink>
+                            </TextBlock>
+
+                            <TextBlock>
                                 <Hyperlink Click="{x:Bind OnOpenDownloadSettingsClicked}" UnderlineStyle="None">
                                     <Run Text="{x:Bind root:ResourceService.GetLocalized('Download/OpenDownloadSettings')}" />
                                 </Hyperlink>
                             </TextBlock>
                         </StackPanel>
-
-                        <MenuFlyoutSeparator Grid.Row="23" />
                     </Grid>
                 </ScrollViewer>
             </Grid>
