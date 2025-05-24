@@ -138,8 +138,7 @@ namespace GetStoreApp
             if (!isDisposed && disposing)
             {
                 GlobalNotificationService.SendNotification();
-                MainWindow.Current?.SaveWindowInformation();
-                DownloadSchedulerService.CloseDownloadScheduler(true);
+                DownloadSchedulerService.CloseDownloadScheduler();
                 LogService.CloseLog();
                 isDisposed = true;
             }

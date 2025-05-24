@@ -1,5 +1,4 @@
 ﻿using GetStoreApp.Extensions.Backdrop;
-using GetStoreApp.Extensions.DataType.Constant;
 using GetStoreApp.Extensions.DataType.Enums;
 using GetStoreApp.Helpers.Root;
 using GetStoreApp.Models.Controls.Download;
@@ -1125,32 +1124,11 @@ namespace GetStoreApp.Views.Windows
         /// </summary>
         public void Show(bool isFirstActivate = false)
         {
-            if (isFirstActivate)
+            // 默认直接显示到窗口中间
+            if (isFirstActivate && DisplayArea.GetFromWindowId(AppWindow.Id, DisplayAreaFallback.Nearest) is DisplayArea displayArea)
             {
-                bool? isWindowMaximized = LocalSettingsService.ReadSetting<bool?>(ConfigKey.IsWindowMaximizedKey);
-                int? windowWidth = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowWidthKey);
-                int? windowHeight = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowHeightKey);
-                int? windowPositionXAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionXAxisKey);
-                int? windowPositionYAxis = LocalSettingsService.ReadSetting<int?>(ConfigKey.WindowPositionYAxisKey);
-
-                if (isWindowMaximized.HasValue && isWindowMaximized.Value)
-                {
-                    overlappedPresenter.Maximize();
-                }
-                else
-                {
-                    if (windowWidth.HasValue && windowHeight.HasValue && windowPositionXAxis.HasValue && windowPositionYAxis.HasValue)
-                    {
-                        AppWindow.MoveAndResize(new RectInt32(windowPositionXAxis.Value, windowPositionYAxis.Value, windowWidth.Value, windowHeight.Value));
-                    }
-                }
-            }
-            else
-            {
-                if (overlappedPresenter.IsMinimizable)
-                {
-                    overlappedPresenter.Restore();
-                }
+                RectInt32 workArea = displayArea.WorkArea;
+                AppWindow.Move(new PointInt32((workArea.Width - AppWindow.Size.Width) / 2, (workArea.Height - AppWindow.Size.Height) / 2));
             }
 
             Activate();
@@ -1162,18 +1140,6 @@ namespace GetStoreApp.Views.Windows
         private void SetTopMost()
         {
             overlappedPresenter.IsAlwaysOnTop = TopMostService.TopMostValue;
-        }
-
-        /// <summary>
-        /// 关闭窗口时保存窗口的大小和位置信息
-        /// </summary>
-        public void SaveWindowInformation()
-        {
-            LocalSettingsService.SaveSetting(ConfigKey.IsWindowMaximizedKey, IsWindowMaximized);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowWidthKey, AppWindow.Size.Width);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowHeightKey, AppWindow.Size.Height);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionXAxisKey, AppWindow.Position.X);
-            LocalSettingsService.SaveSetting(ConfigKey.WindowPositionYAxisKey, AppWindow.Position.Y);
         }
 
         #endregion 第七部分：窗口属性设置

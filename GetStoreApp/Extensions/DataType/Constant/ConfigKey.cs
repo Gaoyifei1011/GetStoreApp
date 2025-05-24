@@ -25,8 +25,6 @@
 
         public const string InstallModeKey = "InstallMode";
 
-        public const string IsWindowMaximizedKey = "IsWindowMaximized";
-
         public const string LanguageKey = "AppLanguage";
 
         public const string NotificationKey = "AppNotification";
@@ -44,14 +42,6 @@
         public const string TopMostKey = "TopMostValue";
 
         public const string WebKernelKey = "WebKernel";
-
-        public const string WindowHeightKey = "WindowHeight";
-
-        public const string WindowWidthKey = "WindowWidth";
-
-        public const string WindowPositionXAxisKey = "WindowPositionXAxis";
-
-        public const string WindowPositionYAxisKey = "WindowPositionYAxis";
 
         public const string UseSystemRegionKey = "UseSystemRegion";
     }
