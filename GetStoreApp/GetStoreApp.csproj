@@ -173,7 +173,6 @@
 
     <Content Remove="Assets\GetStoreApp.ico" />
     <Content Remove="Assets\Embed\cookie.xml" />
-    <Content Remove="Assets\Embed\Lengths.bin" />
     <Content Remove="Assets\Embed\Mile.Aria2.conf" />
     <Content Remove="Assets\Embed\LICENSE" />
     <Content Remove="Assets\Embed\url.xml" />
@@ -182,7 +181,6 @@
     <Manifest Include="$(ApplicationManifest)" />
 
     <MainAppEmbeddedItem Include="Assets\Embed\cookie.xml" />
-    <MainAppEmbeddedItem Include="Assets\Embed\Lengths.bin" />
     <MainAppEmbeddedItem Include="Assets\Embed\LICENSE" />
     <MainAppEmbeddedItem Include="Assets\Embed\Mile.Aria2.conf" />
     <MainAppEmbeddedItem Include="Assets\Embed\url.xml" />
@@ -191,8 +189,7 @@
     <None Remove="Assets\LICENSE" />
     <None Remove="Strings\ar\About.resjson" />
     <None Remove="Strings\ar\AppManager.resjson" />
-    <None Remove="Strings\ar\AppUpdate.resjson" />
-    <None Remove="Strings\ar\Console.resjson" />
+    <None Remove="Strings\ar\AppUpdate.resjson" />    
     <None Remove="Strings\ar\Dialog.resjson" />
     <None Remove="Strings\ar\Download.resjson" />
     <None Remove="Strings\ar\Installer.resjson" />
@@ -205,8 +202,7 @@
     <None Remove="Strings\ar\WinGet.resjson" />
     <None Remove="Strings\en-us\About.resjson" />
     <None Remove="Strings\en-us\AppManager.resjson" />
-    <None Remove="Strings\en-us\AppUpdate.resjson" />
-    <None Remove="Strings\en-us\Console.resjson" />
+    <None Remove="Strings\en-us\AppUpdate.resjson" />    
     <None Remove="Strings\en-us\Dialog.resjson" />
     <None Remove="Strings\en-us\Download.resjson" />
     <None Remove="Strings\en-us\Installer.resjson" />
@@ -220,8 +216,7 @@
     <None Remove="Strings\en-us\WinGet.resjson" />
     <None Remove="Strings\he-IL\About.resjson" />
     <None Remove="Strings\he-IL\AppManager.resjson" />
-    <None Remove="Strings\he-IL\AppUpdate.resjson" />
-    <None Remove="Strings\he-IL\Console.resjson" />
+    <None Remove="Strings\he-IL\AppUpdate.resjson" />   
     <None Remove="Strings\he-IL\Dialog.resjson" />
     <None Remove="Strings\he-IL\Download.resjson" />
     <None Remove="Strings\he-IL\Installer.resjson" />
@@ -235,8 +230,7 @@
     <None Remove="Strings\he-IL\WinGet.resjson" />
     <None Remove="Strings\zh-hans\About.resjson" />
     <None Remove="Strings\zh-hans\AppManager.resjson" />
-    <None Remove="Strings\zh-hans\AppUpdate.resjson" />
-    <None Remove="Strings\zh-hans\Console.resjson" />
+    <None Remove="Strings\zh-hans\AppUpdate.resjson" />  
     <None Remove="Strings\zh-hans\Dialog.resjson" />
     <None Remove="Strings\zh-hans\Download.resjson" />
     <None Remove="Strings\zh-hans\Installer.resjson" />
@@ -342,7 +336,6 @@
     <PRIResource Include="Strings\ar\About.resjson" />
     <PRIResource Include="Strings\ar\AppManager.resjson" />
     <PRIResource Include="Strings\ar\AppUpdate.resjson" />
-    <PRIResource Include="Strings\ar\Console.resjson" />
     <PRIResource Include="Strings\ar\Dialog.resjson" />
     <PRIResource Include="Strings\ar\Download.resjson" />
     <PRIResource Include="Strings\ar\Installer.resjson" />
@@ -356,7 +349,6 @@
     <PRIResource Include="Strings\en-us\About.resjson" />
     <PRIResource Include="Strings\en-us\AppManager.resjson" />
     <PRIResource Include="Strings\en-us\AppUpdate.resjson" />
-    <PRIResource Include="Strings\en-us\Console.resjson" />
     <PRIResource Include="Strings\en-us\Dialog.resjson" />
     <PRIResource Include="Strings\en-us\Download.resjson" />
     <PRIResource Include="Strings\en-us\Installer.resjson" />
@@ -371,7 +363,6 @@
     <PRIResource Include="Strings\he-IL\About.resjson" />
     <PRIResource Include="Strings\he-IL\AppManager.resjson" />
     <PRIResource Include="Strings\he-IL\AppUpdate.resjson" />
-    <PRIResource Include="Strings\he-IL\Console.resjson" />
     <PRIResource Include="Strings\he-IL\Dialog.resjson" />
     <PRIResource Include="Strings\he-IL\Download.resjson" />
     <PRIResource Include="Strings\he-IL\Installer.resjson" />
@@ -386,7 +377,6 @@
     <PRIResource Include="Strings\zh-hans\About.resjson" />
     <PRIResource Include="Strings\zh-hans\AppManager.resjson" />
     <PRIResource Include="Strings\zh-hans\AppUpdate.resjson" />
-    <PRIResource Include="Strings\zh-hans\Console.resjson" />
     <PRIResource Include="Strings\zh-hans\Dialog.resjson" />
     <PRIResource Include="Strings\zh-hans\Download.resjson" />
     <PRIResource Include="Strings\zh-hans\Installer.resjson" />
