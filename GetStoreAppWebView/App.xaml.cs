@@ -1,6 +1,6 @@
 ﻿using GetStoreAppWebView.Extensions.DataType.Enums;
-using GetStoreAppWebView.Pages;
 using GetStoreAppWebView.Services.Root;
+using GetStoreAppWebView.Views.Pages;
 using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel;

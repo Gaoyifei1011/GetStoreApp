@@ -1,6 +1,6 @@
 using Windows.UI.Xaml.Controls;
 
-namespace GetStoreAppWebView.UI.Dialogs
+namespace GetStoreAppWebView.Views.Dialogs
 {
     /// <summary>
     /// 浏览器进程异常退出提示对话框

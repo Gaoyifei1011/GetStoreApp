@@ -63,9 +63,9 @@
     <Content Remove="Assets\GetStoreAppWebView.ico" />
     <Manifest Include="$(ApplicationManifest)" />
 
-    <None Remove="Dialogs\ProcessFailedDialog.xaml" />
-    <None Remove="Pages\PinnerPage.xaml" />
-    <None Remove="Pages\WebViewPage.xaml" />
+    <None Remove="Views\Dialogs\ProcessFailedDialog.xaml" />
+    <None Remove="Views\Pages\PinnerPage.xaml" />
+    <None Remove="Views\Pages\WebViewPage.xaml" />
     
     <PackageReference Include="Microsoft.UI.Xaml" Version="2.8.7" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
@@ -76,9 +76,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     
-    <Page Update="Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
-    <Page Update="Pages\WebViewPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Dialogs\ProcessFailedDialog.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\PinnerPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
+    <Page Update="Views\Pages\WebViewPage.xaml" XamlRuntime="$(DefaultXamlRuntime)" />
   </ItemGroup>
 
   <!-- 测试 AOT 发布后的文件 -->

@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Controls;
 // 抑制 IDE0060 警告
 #pragma warning disable IDE0060
 
-namespace GetStoreAppWebView.Pages
+namespace GetStoreAppWebView.Views.Pages
 {
     /// <summary>
     /// 固定应用提示页面

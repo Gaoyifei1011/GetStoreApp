@@ -1,7 +1,7 @@
 ﻿using GetStoreAppWebView.Helpers.Root;
 using GetStoreAppWebView.Services.Root;
 using GetStoreAppWebView.Services.Settings;
-using GetStoreAppWebView.UI.Dialogs;
+using GetStoreAppWebView.Views.Dialogs;
 using GetStoreAppWebView.WindowsAPI.ComTypes;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
@@ -29,7 +29,7 @@ using WinRT;
 // 抑制 CA1822，IDE0060 警告
 #pragma warning disable CA1822,IDE0060
 
-namespace GetStoreAppWebView.Pages
+namespace GetStoreAppWebView.Views.Pages
 {
     /// <summary>
     /// 显示网页
